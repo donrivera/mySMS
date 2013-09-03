@@ -1,0 +1,1 @@
+UPDATE `schedule_040513_final`.`quick_menu` SET `link_name` = 'Single certificate' WHERE `quick_menu`.`id` =63

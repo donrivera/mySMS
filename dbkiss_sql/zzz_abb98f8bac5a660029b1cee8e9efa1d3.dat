@@ -1,0 +1,1 @@
+UPDATE quick_menu SET link_name = 'Single certificate' WHERE id =63

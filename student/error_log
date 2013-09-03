@@ -1,0 +1,365 @@
+[24-Aug-2013 03:38:30 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/home.php on line 4
+[24-Aug-2013 12:38:30 Asia/Riyadh] PHP Notice:  Undefined index: ALERT_DISPLAY in /home3/berlitzk/public_html/mySMS/student/home.php on line 34
+[24-Aug-2013 12:38:30 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/home.php on line 55
+[24-Aug-2013 12:38:30 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/home.php on line 55
+[24-Aug-2013 12:38:30 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/home.php on line 59
+[24-Aug-2013 12:38:30 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/home.php on line 59
+[24-Aug-2013 12:38:30 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/home.php on line 134
+[24-Aug-2013 12:38:30 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[24-Aug-2013 12:38:30 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[24-Aug-2013 12:38:30 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[24-Aug-2013 12:38:30 Asia/Riyadh] PHP Notice:  Use of undefined constant first_name - assumed 'first_name' in /home3/berlitzk/public_html/mySMS/student/home.php on line 204
+[24-Aug-2013 12:38:30 Asia/Riyadh] PHP Notice:  Undefined variable: string in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 502
+[24-Aug-2013 03:38:46 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 4
+[24-Aug-2013 12:38:46 Asia/Riyadh] PHP Notice:  Use of undefined constant students_uid - assumed 'students_uid' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 25
+[24-Aug-2013 12:38:46 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 31
+[24-Aug-2013 12:38:46 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 31
+[24-Aug-2013 12:38:46 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 35
+[24-Aug-2013 12:38:46 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 35
+[24-Aug-2013 12:38:46 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 79
+[24-Aug-2013 12:38:46 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[24-Aug-2013 12:38:46 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[24-Aug-2013 12:38:46 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[24-Aug-2013 12:38:46 Asia/Riyadh] PHP Notice:  Use of undefined constant name - assumed 'name' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 152
+[24-Aug-2013 03:39:06 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 4
+[24-Aug-2013 12:39:06 Asia/Riyadh] PHP Notice:  Use of undefined constant students_uid - assumed 'students_uid' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 24
+[24-Aug-2013 12:39:06 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 35
+[24-Aug-2013 12:39:06 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 35
+[24-Aug-2013 12:39:06 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 39
+[24-Aug-2013 12:39:06 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 39
+[24-Aug-2013 12:39:06 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 80
+[24-Aug-2013 12:39:06 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[24-Aug-2013 12:39:06 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[24-Aug-2013 12:39:06 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[24-Aug-2013 12:39:06 Asia/Riyadh] PHP Notice:  Undefined variable: string in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 502
+[24-Aug-2013 12:39:06 Asia/Riyadh] PHP Notice:  Undefined variable: i in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 250
+[24-Aug-2013 12:39:06 Asia/Riyadh] PHP Notice:  Use of undefined constant name - assumed 'name' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 258
+[24-Aug-2013 12:39:06 Asia/Riyadh] PHP Notice:  Use of undefined constant symbol - assumed 'symbol' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 259
+[24-Aug-2013 12:39:06 Asia/Riyadh] PHP Notice:  Use of undefined constant name - assumed 'name' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 258
+[24-Aug-2013 12:39:06 Asia/Riyadh] PHP Notice:  Use of undefined constant symbol - assumed 'symbol' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 259
+[24-Aug-2013 03:39:30 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/audit.php on line 4
+[24-Aug-2013 12:39:30 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/audit.php on line 30
+[24-Aug-2013 12:39:30 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/audit.php on line 30
+[24-Aug-2013 12:39:30 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/audit.php on line 36
+[24-Aug-2013 12:39:30 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/audit.php on line 36
+[24-Aug-2013 12:39:30 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/audit.php on line 116
+[24-Aug-2013 12:39:30 Asia/Riyadh] PHP Notice:  Use of undefined constant user_name - assumed 'user_name' in /home3/berlitzk/public_html/mySMS/top.php on line 38
+[24-Aug-2013 12:39:30 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[24-Aug-2013 12:39:30 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[24-Aug-2013 03:39:44 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 4
+[24-Aug-2013 12:39:44 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 31
+[24-Aug-2013 12:39:44 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 31
+[24-Aug-2013 12:39:44 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 35
+[24-Aug-2013 12:39:44 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 35
+[24-Aug-2013 12:39:44 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 76
+[24-Aug-2013 12:39:44 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[24-Aug-2013 12:39:44 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[24-Aug-2013 12:39:44 Asia/Riyadh] PHP Notice:  Undefined variable: string in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 502
+[24-Aug-2013 12:39:44 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 135
+[24-Aug-2013 12:39:44 Asia/Riyadh] PHP Notice:  Use of undefined constant name - assumed 'name' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 155
+[24-Aug-2013 12:39:44 Asia/Riyadh] PHP Notice:  Use of undefined constant units - assumed 'units' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 160
+[24-Aug-2013 12:39:44 Asia/Riyadh] PHP Notice:  Use of undefined constant start_date - assumed 'start_date' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 179
+[24-Aug-2013 12:39:44 Asia/Riyadh] PHP Notice:  Use of undefined constant end_date - assumed 'end_date' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 193
+[24-Aug-2013 12:39:44 Asia/Riyadh] PHP Notice:  Use of undefined constant units - assumed 'units' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 220
+[24-Aug-2013 12:39:44 Asia/Riyadh] PHP Notice:  Use of undefined constant comment - assumed 'comment' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 307
+[24-Aug-2013 03:39:52 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 4
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant students_uid - assumed 'students_uid' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 24
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 33
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 33
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 39
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 39
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 83
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Undefined variable: string in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 502
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant attendance - assumed 'attendance' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 213
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant units - assumed 'units' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 214
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant end_of_level - assumed 'end_of_level' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 221
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant nos - assumed 'nos' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 224
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant fluency - assumed 'fluency' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 228
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant pronunciation - assumed 'pronunciation' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 229
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant grammer - assumed 'grammer' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 230
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant vocabulary - assumed 'vocabulary' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 231
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant listening - assumed 'listening' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 232
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant end_of_level - assumed 'end_of_level' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 235
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant name - assumed 'name' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 244
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant fluency - assumed 'fluency' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 246
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant pronunciation - assumed 'pronunciation' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 249
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant grammer - assumed 'grammer' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 252
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant vocabulary - assumed 'vocabulary' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 255
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant listening - assumed 'listening' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 258
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant end_of_level - assumed 'end_of_level' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 261
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant name - assumed 'name' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 264
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant attendance - assumed 'attendance' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 269
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant units - assumed 'units' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 272
+[24-Aug-2013 12:39:52 Asia/Riyadh] PHP Notice:  Use of undefined constant name - assumed 'name' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 280
+[24-Aug-2013 03:40:03 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/calc_converter.php on line 4
+[24-Aug-2013 12:40:03 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/calc_converter.php on line 27
+[24-Aug-2013 12:40:03 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/calc_converter.php on line 27
+[24-Aug-2013 12:40:03 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/calc_converter.php on line 31
+[24-Aug-2013 12:40:03 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/calc_converter.php on line 31
+[24-Aug-2013 12:40:03 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/calc_converter.php on line 72
+[24-Aug-2013 12:40:03 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[24-Aug-2013 12:40:03 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[24-Aug-2013 12:40:03 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[24-Aug-2013 03:40:04 America/Denver] PHP Notice:  Undefined variable: pageTitle in /home3/berlitzk/public_html/mySMS/application_top.php on line 5
+[24-Aug-2013 03:40:04 America/Denver] PHP Notice:  Undefined variable: _SESSION in /home3/berlitzk/public_html/mySMS/includes/language.php on line 4
+[24-Aug-2013 03:40:16 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/leave_manage.php on line 4
+[24-Aug-2013 12:40:16 Asia/Riyadh] PHP Notice:  Undefined index: action in /home3/berlitzk/public_html/mySMS/student/leave_manage.php on line 24
+[24-Aug-2013 12:40:16 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/leave_manage.php on line 36
+[24-Aug-2013 12:40:16 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/leave_manage.php on line 36
+[24-Aug-2013 12:40:16 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/leave_manage.php on line 40
+[24-Aug-2013 12:40:16 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/leave_manage.php on line 40
+[24-Aug-2013 12:40:16 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/leave_manage.php on line 59
+[24-Aug-2013 12:40:16 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[24-Aug-2013 12:40:16 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[24-Aug-2013 12:40:16 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[24-Aug-2013 03:40:22 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/leave_add.php on line 4
+[24-Aug-2013 12:40:22 Asia/Riyadh] PHP Notice:  Undefined index: action in /home3/berlitzk/public_html/mySMS/student/leave_add.php on line 23
+[24-Aug-2013 12:40:22 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/leave_add.php on line 39
+[24-Aug-2013 12:40:22 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/leave_add.php on line 39
+[24-Aug-2013 12:40:22 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/leave_add.php on line 43
+[24-Aug-2013 12:40:22 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/leave_add.php on line 43
+[24-Aug-2013 12:40:22 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/leave_add.php on line 58
+[24-Aug-2013 12:40:22 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[24-Aug-2013 12:40:22 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[24-Aug-2013 12:40:22 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[24-Aug-2013 12:40:22 Asia/Riyadh] PHP Notice:  Use of undefined constant msg - assumed 'msg' in /home3/berlitzk/public_html/mySMS/student/leave_add.php on line 203
+[24-Aug-2013 12:40:22 Asia/Riyadh] PHP Notice:  Undefined index: msg in /home3/berlitzk/public_html/mySMS/student/leave_add.php on line 203
+[24-Aug-2013 12:40:22 Asia/Riyadh] PHP Notice:  Use of undefined constant msg - assumed 'msg' in /home3/berlitzk/public_html/mySMS/student/leave_add.php on line 214
+[24-Aug-2013 12:40:22 Asia/Riyadh] PHP Notice:  Undefined index: msg in /home3/berlitzk/public_html/mySMS/student/leave_add.php on line 214
+[24-Aug-2013 03:41:07 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 4
+[24-Aug-2013 12:41:07 Asia/Riyadh] PHP Notice:  Use of undefined constant students_uid - assumed 'students_uid' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 25
+[24-Aug-2013 12:41:07 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 31
+[24-Aug-2013 12:41:07 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 31
+[24-Aug-2013 12:41:07 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 35
+[24-Aug-2013 12:41:07 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 35
+[24-Aug-2013 12:41:07 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 79
+[24-Aug-2013 12:41:07 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[24-Aug-2013 12:41:07 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[24-Aug-2013 12:41:07 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[24-Aug-2013 12:41:07 Asia/Riyadh] PHP Notice:  Use of undefined constant name - assumed 'name' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 152
+[24-Aug-2013 03:44:49 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 4
+[24-Aug-2013 12:44:49 Asia/Riyadh] PHP Notice:  Use of undefined constant students_uid - assumed 'students_uid' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 24
+[24-Aug-2013 12:44:49 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 35
+[24-Aug-2013 12:44:49 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 35
+[24-Aug-2013 12:44:49 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 39
+[24-Aug-2013 12:44:49 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 39
+[24-Aug-2013 12:44:49 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 80
+[24-Aug-2013 12:44:49 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[24-Aug-2013 12:44:49 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[24-Aug-2013 12:44:49 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[24-Aug-2013 12:44:49 Asia/Riyadh] PHP Notice:  Undefined variable: string in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 502
+[24-Aug-2013 12:44:49 Asia/Riyadh] PHP Notice:  Undefined variable: i in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 250
+[24-Aug-2013 12:44:49 Asia/Riyadh] PHP Notice:  Use of undefined constant name - assumed 'name' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 258
+[24-Aug-2013 12:44:49 Asia/Riyadh] PHP Notice:  Use of undefined constant symbol - assumed 'symbol' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 259
+[24-Aug-2013 12:44:49 Asia/Riyadh] PHP Notice:  Use of undefined constant name - assumed 'name' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 258
+[24-Aug-2013 12:44:49 Asia/Riyadh] PHP Notice:  Use of undefined constant symbol - assumed 'symbol' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 259
+[24-Aug-2013 03:45:36 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/home.php on line 4
+[24-Aug-2013 12:45:36 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/home.php on line 55
+[24-Aug-2013 12:45:36 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/home.php on line 55
+[24-Aug-2013 12:45:36 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/home.php on line 59
+[24-Aug-2013 12:45:36 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/home.php on line 59
+[24-Aug-2013 12:45:36 Asia/Riyadh] PHP Notice:  Undefined variable: alert_count in /home3/berlitzk/public_html/mySMS/student/home.php on line 122
+[24-Aug-2013 12:45:36 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/home.php on line 134
+[24-Aug-2013 12:45:36 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[24-Aug-2013 12:45:36 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[24-Aug-2013 12:45:36 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[24-Aug-2013 12:45:36 Asia/Riyadh] PHP Notice:  Use of undefined constant first_name - assumed 'first_name' in /home3/berlitzk/public_html/mySMS/student/home.php on line 204
+[24-Aug-2013 12:45:36 Asia/Riyadh] PHP Notice:  Undefined variable: string in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 502
+[27-Aug-2013 03:16:55 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/home.php on line 4
+[27-Aug-2013 12:16:55 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/home.php on line 55
+[27-Aug-2013 12:16:55 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/home.php on line 55
+[27-Aug-2013 12:16:55 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/home.php on line 59
+[27-Aug-2013 12:16:55 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/home.php on line 59
+[27-Aug-2013 12:16:55 Asia/Riyadh] PHP Notice:  Undefined variable: alert_count in /home3/berlitzk/public_html/mySMS/student/home.php on line 122
+[27-Aug-2013 12:16:55 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/home.php on line 134
+[27-Aug-2013 12:16:55 Asia/Riyadh] PHP Notice:  Use of undefined constant user_name - assumed 'user_name' in /home3/berlitzk/public_html/mySMS/top_right.php on line 22
+[27-Aug-2013 12:16:55 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header_right.php on line 3
+[27-Aug-2013 12:16:56 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 12:16:56 Asia/Riyadh] PHP Notice:  Use of undefined constant first_name - assumed 'first_name' in /home3/berlitzk/public_html/mySMS/student/home.php on line 344
+[27-Aug-2013 12:16:56 Asia/Riyadh] PHP Notice:  Undefined variable: string in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 502
+[27-Aug-2013 12:16:56 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 12:16:56 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/left_menu_right.php on line 3
+[27-Aug-2013 12:16:56 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 03:17:02 America/Denver] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/lang_change.php on line 5
+[27-Aug-2013 03:17:02 America/Denver] PHP Notice:  Use of undefined constant page - assumed 'page' in /home3/berlitzk/public_html/mySMS/student/lang_change.php on line 10
+[27-Aug-2013 03:17:02 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/home.php on line 4
+[27-Aug-2013 12:17:02 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/home.php on line 55
+[27-Aug-2013 12:17:02 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/home.php on line 55
+[27-Aug-2013 12:17:02 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/home.php on line 59
+[27-Aug-2013 12:17:02 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/home.php on line 59
+[27-Aug-2013 12:17:02 Asia/Riyadh] PHP Notice:  Undefined variable: alert_count in /home3/berlitzk/public_html/mySMS/student/home.php on line 122
+[27-Aug-2013 12:17:02 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/home.php on line 134
+[27-Aug-2013 12:17:02 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[27-Aug-2013 12:17:02 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[27-Aug-2013 12:17:02 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 12:17:02 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/left_menu.php on line 3
+[27-Aug-2013 12:17:02 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 12:17:02 Asia/Riyadh] PHP Notice:  Use of undefined constant first_name - assumed 'first_name' in /home3/berlitzk/public_html/mySMS/student/home.php on line 204
+[27-Aug-2013 12:17:02 Asia/Riyadh] PHP Notice:  Undefined variable: string in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 502
+[27-Aug-2013 12:17:02 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 03:17:11 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 4
+[27-Aug-2013 12:17:11 Asia/Riyadh] PHP Notice:  Use of undefined constant students_uid - assumed 'students_uid' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 25
+[27-Aug-2013 12:17:11 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 31
+[27-Aug-2013 12:17:11 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 31
+[27-Aug-2013 12:17:11 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 35
+[27-Aug-2013 12:17:11 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 35
+[27-Aug-2013 12:17:11 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 79
+[27-Aug-2013 12:17:11 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[27-Aug-2013 12:17:11 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[27-Aug-2013 12:17:11 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 12:17:11 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/left_menu.php on line 3
+[27-Aug-2013 12:17:11 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 03:17:13 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 4
+[27-Aug-2013 12:17:13 Asia/Riyadh] PHP Notice:  Use of undefined constant students_uid - assumed 'students_uid' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 24
+[27-Aug-2013 12:17:13 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 35
+[27-Aug-2013 12:17:13 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 35
+[27-Aug-2013 12:17:13 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 39
+[27-Aug-2013 12:17:13 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 39
+[27-Aug-2013 12:17:13 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 80
+[27-Aug-2013 12:17:13 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[27-Aug-2013 12:17:13 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[27-Aug-2013 12:17:13 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 12:17:13 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/left_menu.php on line 3
+[27-Aug-2013 12:17:13 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 12:17:13 Asia/Riyadh] PHP Notice:  Undefined variable: string in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 502
+[27-Aug-2013 12:17:13 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 03:17:18 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 4
+[27-Aug-2013 12:17:18 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 31
+[27-Aug-2013 12:17:18 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 31
+[27-Aug-2013 12:17:18 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 35
+[27-Aug-2013 12:17:18 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 35
+[27-Aug-2013 12:17:18 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 76
+[27-Aug-2013 12:17:18 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[27-Aug-2013 12:17:18 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[27-Aug-2013 12:17:18 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 03:17:20 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 4
+[27-Aug-2013 12:17:20 Asia/Riyadh] PHP Notice:  Use of undefined constant students_uid - assumed 'students_uid' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 24
+[27-Aug-2013 12:17:20 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 33
+[27-Aug-2013 12:17:20 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 33
+[27-Aug-2013 12:17:20 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 39
+[27-Aug-2013 12:17:20 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 39
+[27-Aug-2013 12:17:20 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 83
+[27-Aug-2013 12:17:20 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[27-Aug-2013 12:17:20 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[27-Aug-2013 12:17:20 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 12:17:20 Asia/Riyadh] PHP Notice:  Undefined variable: string in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 502
+[27-Aug-2013 12:17:20 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 04:28:45 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/home.php on line 4
+[27-Aug-2013 13:28:46 Asia/Riyadh] PHP Notice:  Undefined index: ALERT_DISPLAY in /home3/berlitzk/public_html/mySMS/student/home.php on line 34
+[27-Aug-2013 13:28:47 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/home.php on line 55
+[27-Aug-2013 13:28:47 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/home.php on line 55
+[27-Aug-2013 13:28:47 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/home.php on line 59
+[27-Aug-2013 13:28:47 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/home.php on line 59
+[27-Aug-2013 13:28:47 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/home.php on line 134
+[27-Aug-2013 13:28:47 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[27-Aug-2013 13:28:47 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[27-Aug-2013 13:28:47 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 13:28:47 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/left_menu.php on line 3
+[27-Aug-2013 13:28:48 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 13:28:48 Asia/Riyadh] PHP Notice:  Use of undefined constant first_name - assumed 'first_name' in /home3/berlitzk/public_html/mySMS/student/home.php on line 204
+[27-Aug-2013 13:28:48 Asia/Riyadh] PHP Notice:  Undefined variable: string in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 502
+[27-Aug-2013 04:29:00 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 4
+[27-Aug-2013 13:29:00 Asia/Riyadh] PHP Notice:  Use of undefined constant students_uid - assumed 'students_uid' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 25
+[27-Aug-2013 13:29:00 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 31
+[27-Aug-2013 13:29:00 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 31
+[27-Aug-2013 13:29:00 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 35
+[27-Aug-2013 13:29:00 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 35
+[27-Aug-2013 13:29:00 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 79
+[27-Aug-2013 13:29:00 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[27-Aug-2013 13:29:00 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[27-Aug-2013 13:29:00 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 13:29:00 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/left_menu.php on line 3
+[27-Aug-2013 13:29:00 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 13:29:01 Asia/Riyadh] PHP Notice:  Use of undefined constant name - assumed 'name' in /home3/berlitzk/public_html/mySMS/student/myschedule.php on line 152
+[27-Aug-2013 04:29:44 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 4
+[27-Aug-2013 13:29:44 Asia/Riyadh] PHP Notice:  Use of undefined constant students_uid - assumed 'students_uid' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 24
+[27-Aug-2013 13:29:44 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 35
+[27-Aug-2013 13:29:44 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 35
+[27-Aug-2013 13:29:44 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 39
+[27-Aug-2013 13:29:44 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 39
+[27-Aug-2013 13:29:44 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 80
+[27-Aug-2013 13:29:44 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[27-Aug-2013 13:29:44 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[27-Aug-2013 13:29:44 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 13:29:44 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/left_menu.php on line 3
+[27-Aug-2013 13:29:44 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 13:29:44 Asia/Riyadh] PHP Notice:  Undefined variable: string in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 502
+[27-Aug-2013 13:29:44 Asia/Riyadh] PHP Notice:  Undefined variable: i in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 250
+[27-Aug-2013 13:29:44 Asia/Riyadh] PHP Notice:  Use of undefined constant name - assumed 'name' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 258
+[27-Aug-2013 13:29:44 Asia/Riyadh] PHP Notice:  Use of undefined constant symbol - assumed 'symbol' in /home3/berlitzk/public_html/mySMS/student/myaccount.php on line 259
+[27-Aug-2013 04:29:53 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/audit.php on line 4
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/audit.php on line 30
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/audit.php on line 30
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/audit.php on line 36
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/audit.php on line 36
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/audit.php on line 116
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Use of undefined constant user_name - assumed 'user_name' in /home3/berlitzk/public_html/mySMS/top.php on line 38
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/left_menu.php on line 3
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Undefined index: updated_by in /home3/berlitzk/public_html/mySMS/student/audit.php on line 179
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Undefined variable: color in /home3/berlitzk/public_html/mySMS/student/audit.php on line 182
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Use of undefined constant fld_name - assumed 'fld_name' in /home3/berlitzk/public_html/mySMS/student/audit.php on line 183
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Use of undefined constant chg_from - assumed 'chg_from' in /home3/berlitzk/public_html/mySMS/student/audit.php on line 184
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Use of undefined constant chg_to - assumed 'chg_to' in /home3/berlitzk/public_html/mySMS/student/audit.php on line 185
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Use of undefined constant user_name - assumed 'user_name' in /home3/berlitzk/public_html/mySMS/student/audit.php on line 186
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Use of undefined constant date_time - assumed 'date_time' in /home3/berlitzk/public_html/mySMS/student/audit.php on line 187
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Undefined index: updated_by in /home3/berlitzk/public_html/mySMS/student/audit.php on line 179
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Undefined variable: color in /home3/berlitzk/public_html/mySMS/student/audit.php on line 182
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Use of undefined constant fld_name - assumed 'fld_name' in /home3/berlitzk/public_html/mySMS/student/audit.php on line 183
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Use of undefined constant chg_from - assumed 'chg_from' in /home3/berlitzk/public_html/mySMS/student/audit.php on line 184
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Use of undefined constant chg_to - assumed 'chg_to' in /home3/berlitzk/public_html/mySMS/student/audit.php on line 185
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Use of undefined constant user_name - assumed 'user_name' in /home3/berlitzk/public_html/mySMS/student/audit.php on line 186
+[27-Aug-2013 13:29:53 Asia/Riyadh] PHP Notice:  Use of undefined constant date_time - assumed 'date_time' in /home3/berlitzk/public_html/mySMS/student/audit.php on line 187
+[27-Aug-2013 04:30:02 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 4
+[27-Aug-2013 13:30:02 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 31
+[27-Aug-2013 13:30:02 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 31
+[27-Aug-2013 13:30:02 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 35
+[27-Aug-2013 13:30:02 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 35
+[27-Aug-2013 13:30:02 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 76
+[27-Aug-2013 13:30:02 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[27-Aug-2013 13:30:02 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[27-Aug-2013 13:30:02 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 13:30:02 Asia/Riyadh] PHP Notice:  Undefined variable: string in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 502
+[27-Aug-2013 13:30:02 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 135
+[27-Aug-2013 13:30:02 Asia/Riyadh] PHP Notice:  Use of undefined constant name - assumed 'name' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 155
+[27-Aug-2013 13:30:02 Asia/Riyadh] PHP Notice:  Use of undefined constant units - assumed 'units' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 160
+[27-Aug-2013 13:30:02 Asia/Riyadh] PHP Notice:  Use of undefined constant start_date - assumed 'start_date' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 179
+[27-Aug-2013 13:30:02 Asia/Riyadh] PHP Notice:  Use of undefined constant end_date - assumed 'end_date' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 193
+[27-Aug-2013 13:30:02 Asia/Riyadh] PHP Notice:  Use of undefined constant units - assumed 'units' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 220
+[27-Aug-2013 13:30:02 Asia/Riyadh] PHP Notice:  Use of undefined constant comment - assumed 'comment' in /home3/berlitzk/public_html/mySMS/student/progress_report.php on line 307
+[27-Aug-2013 04:30:08 America/Denver] PHP Notice:  Undefined index: cook_username in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 4
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant students_uid - assumed 'students_uid' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 24
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 33
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 33
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant font - assumed 'font' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 39
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Undefined index: font in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 39
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant lang - assumed 'lang' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 83
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant students_user_name - assumed 'students_user_name' in /home3/berlitzk/public_html/mySMS/top_student.php on line 26
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  A session had already been started - ignoring session_start() in /home3/berlitzk/public_html/mySMS/student/header.php on line 3
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Undefined variable: result_array in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 159
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Undefined variable: string in /home3/berlitzk/public_html/mySMS/includes/class.Main.php on line 502
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant attendance - assumed 'attendance' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 213
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant units - assumed 'units' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 214
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant end_of_level - assumed 'end_of_level' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 221
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant nos - assumed 'nos' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 224
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant fluency - assumed 'fluency' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 228
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant pronunciation - assumed 'pronunciation' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 229
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant grammer - assumed 'grammer' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 230
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant vocabulary - assumed 'vocabulary' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 231
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant listening - assumed 'listening' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 232
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant end_of_level - assumed 'end_of_level' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 235
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant name - assumed 'name' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 244
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant fluency - assumed 'fluency' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 246
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant pronunciation - assumed 'pronunciation' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 249
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant grammer - assumed 'grammer' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 252
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant vocabulary - assumed 'vocabulary' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 255
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant listening - assumed 'listening' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 258
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant end_of_level - assumed 'end_of_level' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 261
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant name - assumed 'name' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 264
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant attendance - assumed 'attendance' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 269
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant units - assumed 'units' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 272
+[27-Aug-2013 13:30:08 Asia/Riyadh] PHP Notice:  Use of undefined constant name - assumed 'name' in /home3/berlitzk/public_html/mySMS/student/certificate_report.php on line 280

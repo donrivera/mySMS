@@ -1,0 +1,3 @@
+UPDATE quick_menu SET link_name = 'Single certificate' WHERE id =63
+
+UPDATE quick_menu SET link_name = 'Multiple certificate' WHERE id =64

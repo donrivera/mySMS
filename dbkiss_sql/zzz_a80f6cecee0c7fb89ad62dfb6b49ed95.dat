@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS `help` (
+  `id` bigint(100) NOT NULL AUTO_INCREMENT,
+  `title` varchar(500) CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL,
+  `descr` longtext CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL,
+  `cen_dr` int(11) NOT NULL,
+  `stu_ad` int(11) NOT NULL,
+  `rep` int(11) NOT NULL,
+  `student` int(11) NOT NULL,
+  `teacher` int(11) NOT NULL,
+  `ac` int(11) NOT NULL,
+  `lis` int(11) NOT NULL,
+  `lism` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `help`
+--
+
+INSERT INTO `help` (`id`, `title`, `descr`, `cen_dr`, `stu_ad`, `rep`, `student`, `teacher`, `ac`, `lis`, `lism`) VALUES
+(1, 'Navigation', '<p>\r\n	Navigation -&nbsp;&#1605;&#1604;&#1575;&#1581;&#1577;</p>\r\n', 0, 0, 0, 0, 1, 1, 0, 0);

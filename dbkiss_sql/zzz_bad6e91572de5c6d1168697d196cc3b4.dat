@@ -1,0 +1,3 @@
+UPDATE `schedule_040513_final`.`quick_menu` SET `link_name` = 'Single certificate' WHERE `quick_menu`.`id` =63 LIMIT 1 ;
+
+UPDATE `schedule_040513_final`.`quick_menu` SET `link_name` = 'Multiple certificate' WHERE `quick_menu`.`id` =64 LIMIT 1 ;

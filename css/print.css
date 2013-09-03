@@ -1,0 +1,82 @@
+@charset "utf-8";
+
+.suc_msg{	color:#336699;	font: Arial, Helvetica, sans-serif;	font-size:12px;	font-weight:normal;}
+.tabledetailtext{	font:Arial, Helvetica, sans-serif;	color:#000099;	font-size:12px;	font-weight:normal;	padding-left:2px;	}	
+.error_msg{	color:#FF0000;	font: Arial, Helvetica, sans-serif;	font-size:12px;	font-weight:normal;}
+.topheader{  background: #2a2a2a;  height:50px;  }  
+.tableborder{ border:solid 2px #0e509a; font-weight:bold; } 
+.tableborder2{ border:solid 1px #0e509a; font-weight:bold; color:#ffffff; }
+.tableborder3{ border:solid 1px #6f999c; font-weight:bold; color:#000000; }
+.logintext11{ font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:normal; color:#ffffff; } 
+.yrtext{ font-family:Arial, Helvetica, sans-serif; font-size:10px; font-weight:normal; color:#ffffff; } 
+.logintext111{ font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:normal; color:#FF6600; }  
+.passwordtext{ font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:bold; color:#000000; padding-left:10px; } 
+.forgottext{ font-family:Arial, Helvetica, sans-serif; font-size:11px; font-weight:normal; color:#0066cc; padding-left:10px; text-decoration:none; }  
+.footertext{ font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:bold; color:#ffffff; } 
+ .footertext1{ font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:normal; color:#000000; } 
+.logouttext{font-family:Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;color:#ffffff;text-decoration:none;} 
+.lefttableborder{border-right:solid 1px #0e509a;background-color:#0e509a;}
+.righttableborder{border-right:solid 1px #e8e8e8;border-left:solid 1px #e8e8e8;background-color:#f1f4f4;}
+.headingbg{background:url(../images/box-top.jpg) no-repeat;width:238px;height:30px;}
+.headingbotbg{background:url(../images/box-bot.jpg) no-repeat;width:238px;height:20px;}
+.headingmidbg{background:url(../images/box-mid.jpg) repeat-x;width:238px;background-color:#333d3c;}
+.righttableborder2{ border-right:solid 1px #96966a; border-left:solid 1px #96966a;}
+h1{font-family:Arial, Helvetica, sans-serif;font-size:24px;color:#ffffff;font-weight:bold;margin:0px;padding-left:20px;}
+h1 a{font-family:Arial, Helvetica, sans-serif;font-size:24px;color:#ffffff;font-weight:bold;margin:0px;padding-left:20px;text-decoration:none;}
+h2{font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;font-weight:bold;margin:0px;padding-left:20px;}
+.leftmenu{font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#c0c091;font-weight:normal;text-decoration:none;}
+.nametext{ font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:bold; color:#000000; } 
+.nametext1{ font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:bold; color: #FF0000; }  
+.labeltext{ font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:bold; color:#006600; } 
+.headingtext{ font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#ffffff; padding-left:5px; }
+.menutext{ font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:bold; color:#0000CC; padding-left:5px; text-decoration:none; }
+.menutext a{ color:#0000CC; text-decoration:none; } 
+.menutextlogin{ font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:bold; color:#996600; padding-left:5px; text-decoration:none; } 
+.activemenutext{ font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:bold; color:#CC0000; padding-left:5px; text-decoration:none; } 
+.activemenutext a{ color:#CC0000; text-decoration:none; }
+.itemtext{ font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#006666; font-style:italic; text-decoration:underline; }
+.itemtext1{ font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#006666; font-style:italic; } 
+.chtext{ font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:normal; color:#000000; font-style:italic; } 
+.smalltext{ font-family:Arial, Helvetica, sans-serif; font-size:11px; font-weight:bold; color:#000000; padding-left:10px; }  
+.green{font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:bold; color:#ffffff; background-color:#00ff00; width:60px; }  
+.whitetext{ font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:bold; color:#ffffff;}
+.heading{ font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#000000; text-decoration:none; } 
+.heading a{ text-decoration:none; } 
+.leftmenu{  padding-left:10px;  font-family:Arial, Helvetica, sans-serif;  font-size:12px;  color:#000000;  font-weight:bold;  }
+.leftmenu a{  color:#000000;  text-decoration:none;}
+.heading1{ font-family:Arial, Helvetica, sans-serif; font-size:16px; font-weight:bold; color:#000000; text-decoration:underline; }
+.rotate_text{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+    -webkit-transform: rotate(323deg);
+    -moz-transform: rotate(323deg);
+    -o-transform: rotate(323deg);
+    writing-mode: lr-tb;
+	font-size:10px;
+	font-weight:bold;
+	
+	/* for firefox, safari, chrome, etc. 
+-webkit-transform: rotate(-60deg);
+-moz-transform: rotate(-60deg);
+/* for ie 
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);*/
+	
+}
+.login_header{ font-family:Arial, Helvetica, sans-serif; font-size:16px; font-weight:bold; color:#000066;}
+.login_header1{ font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#000066;}
+.hometest_name{font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#6a81b1;font-weight:bold;}
+.amt_head{font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#FFFFFF;font-weight:bold;padding-left:2px;}
+.text_structure{font-family:Arial, Helvetica, sans-serif;font-size:12px;font-weight:normal;color:#663300;}
+.hometest_time{font-family:Arial, Helvetica, sans-serif;font-size:10px;color:#9c9c9c;}
+.textfield_amt{width:100px;height:20px;border:solid 1px;border-color:#FFCC33;}
+.cer1{font-family:Arial, Helvetica, sans-serif;font-size:10px;color:#333333;}
+.cer2{font-family:Arial, Helvetica, sans-serif;font-size:9px;font-weight:normal;color:#333333;}
+.cer3{font-family:Arial, Helvetica, sans-serif;font-size:14px;font-weight:normal;color:#333333;}
+.test{font:Geneva, Arial, Helvetica, sans-serif;color:#00CC99;font-size:18px;font-weight:bold;}
+
+.pedtext{font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:7px;font-weight:bold;}
+.pedtext_normal{font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:7px;font-weight:normal;}
+.content{ font-family:Verdana, Geneva, sans-serif; font-size:12px; color:#000000; padding-left:3px;}
+
+.shop1{font-family:Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;color:#204B9A;padding-left:2px;}
+.shop2{font-family:Arial, Helvetica, sans-serif;font-size:12px;font-weight:normal;color:#204B9A;padding-left:2px;}
+.red_smalltext{font-family:Arial, Helvetica, sans-serif; font-size:11px; font-weight:bold; color:#990000; padding-left:3px; }

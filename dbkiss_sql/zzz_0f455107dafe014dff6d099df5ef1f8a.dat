@@ -1,0 +1,1 @@
+SELECT COUNT(id) from student WHERE DATE_FORMAT(created_datetime,'%Y-%m-%d') BETWEEN '2013-07-01' AND '2013-07-31'
