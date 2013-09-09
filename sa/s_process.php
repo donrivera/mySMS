@@ -21,7 +21,7 @@ $Arabic = new I18N_Arabic('Transliteration');
 $res = $dbf->strRecordID("student","*","id='$_REQUEST[student_id]'");
 
 if($_REQUEST['action']=='classic'){
-	
+
 	if($_REQUEST[mytxt_src] == ''){
 		$first_name=$_REQUEST[txt_src];
 	}else{
@@ -48,6 +48,10 @@ if($_REQUEST['action']=='classic'){
 		
 	$student_name = $first_name.' '.$family_name;
 	$last_name_arabic = $Arabic->en2ar($family_name);
+	$ar_familyname=$_REQUEST[ar_mytxt_src3];//aaaa
+	$ar_gfathrname=$_REQUEST[ar_mytxt_src2];//bbbb
+	$ar_fathername=$_REQUEST[ar_mytxt_src1];//cccc
+	$ar_firstname=$_REQUEST[ar_mytxt_src];//dddd
 	
 	$_SESSION[gender] = $_REQUEST[gender];
 	$_SESSION[gender1] = $_REQUEST[gender1];
@@ -122,7 +126,30 @@ if($_REQUEST['action']=='classic'){
 		move_uploaded_file($_FILES[signature][tmp_name],"photo/".$filename1);
 	}
 		
-	 $string="first_name='$student_name',first_name1='$first_name',student_first_name='$ar_first_name',father_name='$father_name',grandfather_name='$grandfather_name',family_name='$family_name',family_name1='$last_name_arabic',guardian_name='$_REQUEST[gname]',age='$_REQUEST[age]',guardian_contact='$_REQUEST[pcontact]',guardian_comment='$_REQUEST[information]',gender='$gender',country_id='$_REQUEST[country]',student_id='$national_id',student_mobile='$_REQUEST[mobile]',alt_contact='$_REQUEST[altmobile]',email='$_REQUEST[email]',student_comment='$comment',photo='$filename1',created_datetime='$dt',centre_id='$_SESSION[centre_id]',id_type='$_POST[id_type]',sms_status='1'";
+	 $string="	first_name='$first_name',
+				first_name1='$ar_firstname',
+				father_name='$father_name',
+				father_name1='$ar_fathername',
+				grandfather_name='$grandfather_name',
+				grandfather_name1='$ar_gfathrname',
+				family_name='$family_name',
+				family_name1='$ar_familyname',
+				guardian_name='$_REQUEST[gname]',
+				age='$_REQUEST[age]',
+				guardian_contact='$_REQUEST[pcontact]',
+				guardian_comment='$_REQUEST[information]',
+				gender='$gender',
+				country_id='$_REQUEST[country]',
+				student_id='$national_id',
+				student_mobile='$_REQUEST[mobile]',
+				alt_contact='$_REQUEST[altmobile]',
+				email='$_REQUEST[email]',
+				student_comment='$comment',
+				photo='$filename1',
+				created_datetime='$dt',
+				centre_id='$_SESSION[centre_id]',
+				id_type='$_POST[id_type]',
+				sms_status='1'";
 		
 	$sid = $dbf->insertSet("student",$string);
 	
@@ -605,9 +632,11 @@ if($_REQUEST['action']=='classic'){
 		
 	header("Location:search.php");
 	exit;
+
 }
 
 if($_REQUEST['action']=='edit'){
+
 	
 	$student_id = $_REQUEST['student_id'];
 	$res_photo = $dbf->strRecordID("student","*","id='$student_id'");
@@ -662,7 +691,10 @@ if($_REQUEST['action']=='edit'){
 	}
 	
 	$last_name_arabic = $Arabic->en2ar($family_name);
-	
+	$ar_familyname=$_REQUEST[ar_mytxt_src3];//aaaa
+	$ar_gfathrname=$_REQUEST[ar_mytxt_src2];//bbbb
+	$ar_fathername=$_REQUEST[ar_mytxt_src1];//cccc
+	$ar_firstname=$_REQUEST[ar_mytxt_src];//dddd
 	//Get Gender from Student Table
 	if($res[age]>16){		
 		$gender = $_REQUEST["gender"];
@@ -670,7 +702,22 @@ if($_REQUEST['action']=='edit'){
 		$gender = $_REQUEST["gender1"];
 	}
 	
-	$string="first_name='$student_name',first_name1='$first_name1',student_first_name='$ar_first_name',father_name='$father_name',grandfather_name='$grandfather_name',family_name='$family_name',family_name1='$last_name_arabic',gender='$gender',country_id='$_POST[country]',alt_contact='$_POST[altmobile]',age='$_REQUEST[age]',guardian_name='$_REQUEST[gname]',guardian_contact='$_REQUEST[pcontact]',guardian_comment='$_REQUEST[information]',id_type='$_REQUEST[id_type]'";
+	$string="	first_name='$_REQUEST[mytxt_src]',
+				first_name1='$ar_firstname',
+				father_name='$father_name',
+				father_name1='$ar_fathername',
+				grandfather_name='$grandfather_name',
+				grandfather_name1='$ar_gfathrname',
+				family_name='$family_name',
+				family_name1='$ar_familyname',
+				gender='$gender',
+				country_id='$_POST[country]',
+				alt_contact='$_POST[altmobile]',
+				age='$_REQUEST[age]',
+				guardian_name='$_REQUEST[gname]',
+				guardian_contact='$_REQUEST[pcontact]',
+				guardian_comment='$_REQUEST[information]',
+				id_type='$_REQUEST[id_type]'";
 	
 	$dbf->updateTable("student",$string,"id='$student_id'");
 	
@@ -771,7 +818,7 @@ if($_REQUEST['action']=='edit'){
 			exit;
 		}
 	}*/
-		
+/*		
 	//Delete from student course table
 	$dbf->deleteFromTable("student_lead","student_id='$student_id'");
 	
@@ -966,7 +1013,8 @@ if($_REQUEST['action']=='edit'){
 }
 
 if($_REQUEST['action'] == 'edit_from_student_profile'){
-	
+
+
 	$student_id = $_REQUEST['student_id'];
 	$res_photo = $dbf->strRecordID("student","*","id='$student_id'");
 				
@@ -1019,7 +1067,10 @@ if($_REQUEST['action'] == 'edit_from_student_profile'){
 		$family_name = $_REQUEST["txt_src3"];
 	}
 	$last_name_arabic = $Arabic->en2ar($family_name);
-	
+	$ar_familyname=$_REQUEST[ar_mytxt_src3];//aaaa
+	$ar_gfathrname=$_REQUEST[ar_mytxt_src2];//bbbb
+	$ar_fathername=$_REQUEST[ar_mytxt_src1];//cccc
+	$ar_firstname=$_REQUEST[ar_mytxt_src];//dddd
 	//Get Gender from Student Table
 	if($res[age]>16){		
 		$gender = $_REQUEST["gender"];
@@ -1027,7 +1078,22 @@ if($_REQUEST['action'] == 'edit_from_student_profile'){
 		$gender = $_REQUEST["gender1"];
 	}
 	
-	$string="first_name='$student_name',first_name1='$first_name1',father_name='$father_name',student_first_name='$ar_first_name',grandfather_name='$grandfather_name',family_name='$family_name',family_name1='$last_name_arabic',gender='$gender',country_id='$_POST[country]',alt_contact='$_POST[altmobile]',age='$_REQUEST[age]',guardian_name='$_REQUEST[gname]',guardian_contact='$_REQUEST[pcontact]',guardian_comment='$_REQUEST[information]',id_type='$_REQUEST[id_type]'";
+	$string="	first_name='$_POST[mytxt_src]',
+				first_name1='$ar_firstname',
+				father_name='$father_name',
+				father_name1='$ar_fathername',
+				grandfather_name='$grandfather_name',
+				grandfather_name1='$ar_gfathrname',
+				family_name='$family_name',
+				family_name1='$ar_familyname',
+				gender='$gender',
+				country_id='$_POST[country]',
+				alt_contact='$_POST[altmobile]',
+				age='$_REQUEST[age]',
+				guardian_name='$_REQUEST[gname]',
+				guardian_contact='$_REQUEST[pcontact]',
+				guardian_comment='$_REQUEST[information]',
+				id_type='$_REQUEST[id_type]'";
 	
 	$dbf->updateTable("student",$string,"id='$student_id'");
 	
@@ -1135,6 +1201,7 @@ if($_REQUEST['action'] == 'edit_from_student_profile'){
 	}
 	header("Location:single-myprofile.php?student_id=$student_id&token=0_k_0");
 	exit;
+	
 }
 
 if($_REQUEST['action']=='delete'){
@@ -1143,4 +1210,5 @@ if($_REQUEST['action']=='delete'){
 	header("Location:search.php");
 	exit;
 }
+
 ?>

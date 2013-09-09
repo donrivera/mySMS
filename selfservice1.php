@@ -115,7 +115,18 @@ if($LANGUAGE=='AR'){
 $(document).ready(function() {	
 
 	$("#frm").validationEngine()
-
+	$('#frm').submit(function() 
+	{
+		var t4=$('input:text[id=t4]').val();
+		var t3=$('input:text[id=t3]').val();
+		var t2=$('input:text[id=t2]').val();
+		var t1=$('input:text[id=t1]').val();
+		document.getElementById('ar_mytxt_src').value=t4;
+		document.getElementById('ar_mytxt_src1').value=t3;
+		document.getElementById('ar_mytxt_src2').value=t2;
+		document.getElementById('ar_mytxt_src3').value=t1;
+		
+	});
 });
 
 
@@ -247,15 +258,15 @@ function ageinfo()
 }
 
 
-
+/*
 function show_js(){	
 
 	var textlang = document.getElementById('src').value;
 
-	document.location.href='s_classic.php?textlang='+textlang;	
+	//document.location.href='s_classic.php?textlang='+textlang;	
 
 }
-
+*/
 
 
 function get_arabic(){
@@ -891,6 +902,9 @@ color:#FFFFFF;border:none;text-align:center;cursor:pointer;padding-bottom:5px;}
                                 <input name="mytxt_src3" type="hidden" id="mytxt_src3"/>
 
                                 <input name="ar_mytxt_src" type="hidden" id="ar_mytxt_src"/>
+								<input name="ar_mytxt_src1" type="hidden" id="ar_mytxt_src1"/>
+								<input name="ar_mytxt_src2" type="hidden" id="ar_mytxt_src2"/>
+								<input name="ar_mytxt_src3" type="hidden" id="ar_mytxt_src3"/>
 
                                 <input type="hidden" name="mycentre_id" id="mycentre_id" value="<?php echo $page;?>" />
                                 

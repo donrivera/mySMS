@@ -297,6 +297,9 @@ function show_js(){
 function get_arabic(){
 
 	document.getElementById('ar_mytxt_src').value = document.getElementById('t4').value;
+	document.getElementById('ar_mytxt_src1').value = document.getElementById('t3').value;
+	document.getElementById('ar_mytxt_src2').value = document.getElementById('t2').value;
+	document.getElementById('ar_mytxt_src3').value = document.getElementById('t1').value;
 
 }
 
@@ -1121,6 +1124,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <input name="mytxt_src3" type="hidden" id="mytxt_src3"/>
 
                                 <input name="ar_mytxt_src" type="hidden" id="ar_mytxt_src"/>
+								<input name="ar_mytxt_src1" type="hidden" id="ar_mytxt_src1"/>
+								<input name="ar_mytxt_src2" type="hidden" id="ar_mytxt_src2"/>
+								<input name="ar_mytxt_src3" type="hidden" id="ar_mytxt_src3"/>
 
                                 </td>
 

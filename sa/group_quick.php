@@ -547,7 +547,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								  ?>
                                     <tr>
                                       <td align="center" valign="middle">&nbsp;</td>
-                                      <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valstudent[first_name];?>&nbsp;(<?php echo $Arabic->en2ar($valstudent[first_name]);?>)</td>
+                                      <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valstudent[first_name]."&nbsp;".$valstudent[father_name]."&nbsp;".$valstudent[family_name]."&nbsp;(".$valstudent[first_name1]."&nbsp;".$valstudent[father_name1]."&nbsp;".$valstudent[grandfather_name1]."&nbsp;".$valstudent[family_name1].")";?></td>
                                       <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valstudent[email];?></td>
                                       <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valstudent[student_mobile];?></td>
                                       </tr>

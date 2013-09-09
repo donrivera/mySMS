@@ -46,7 +46,7 @@ function postvalue(){
 	
 	var family_name = document.getElementById('txt_src3').value;
 	var family_name1 = document.getElementById('t1').value;
-	
+	//alert(stname);
 	window.location.href='s1_process.php?action=stname&ename='+name+'&name1='+name1+'&father_name='+father_name+'&father_name1='+father_name1+'&grandfather_name='+grandfather_name+'&grandfather_name1='+grandfather_name1+'&family_name='+family_name+'&family_name1='+family_name1;
 	
 }
