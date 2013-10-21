@@ -144,11 +144,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <th colspan="6" align="center" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("COMMON_ACTION");?></th>
                 </tr>
               </thead>
-              <?php
+              <?php $auto_search=explode(" ",$_REQUEST[testinput]);echo $key=$auto_search[0];
 				$i = 1;
 				$color = "#ECECFF";
-				$num=$dbf->countRows('student',"(family_name LIKE '$_REQUEST[testinput]%' OR family_name1 LIKE '$_REQUEST[testinput]%' OR first_name LIKE '%$_REQUEST[testinput]%' OR student_first_name LIKE '%$_REQUEST[testinput]%' OR first_name1 LIKE '%$_REQUEST[testinput]%') And centre_id='$_SESSION[centre_id]'");
-				foreach($dbf->fetchOrder('student',"(family_name LIKE '$_REQUEST[testinput]%' OR family_name1 LIKE '$_REQUEST[testinput]%' OR first_name LIKE '%$_REQUEST[testinput]%' OR student_first_name LIKE '%$_REQUEST[testinput]%' OR first_name1 LIKE '%$_REQUEST[testinput]%') And centre_id='$_SESSION[centre_id]'","id DESC ") as $val){
+				$num=$dbf->countRows('student',"(family_name LIKE '$key%' OR family_name1 LIKE '$key%' OR first_name LIKE '%$key%' OR student_first_name LIKE '%$key%' OR first_name1 LIKE '%$key%') And centre_id='$_SESSION[centre_id]'");
+				foreach($dbf->fetchOrder('student',"(family_name LIKE '$key%' OR family_name1 LIKE '$key%' OR first_name LIKE '%$key%' OR student_first_name LIKE '%$key%' OR first_name1 LIKE '%$key%') And centre_id='$_SESSION[centre_id]'","id DESC ") as $val){
 					$num_comment=$dbf->countRows('student_comment',"student_id='$val[id]'");
 					$valc = $dbf->strRecordID("common","*","id='$val[studentstatus_id]'");
 					
@@ -158,7 +158,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 			  ?>
               <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" onClick="javascript:window.location.href='s_edit.php?id=<?php echo $val[id];?>'" style="cursor:pointer;">
                 <td height="25" align="center" valign="middle" class="mycon" ><?php echo $i;?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val[id];?>" style="cursor:pointer;"><?php echo $val[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></a></td>
+                <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val[id];?>" style="cursor:pointer;"><?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?></a></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php if($val[student_id] > 0) { echo $val[student_id]; } ?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
@@ -173,7 +173,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <img src="../images/group.png" width="16" height="16" border="0" title="Adding to Group">
                   <?php //} ?>
                 </a></td>
-                <td width="3%" align="center" valign="middle" ><a href="search_manage.php?id=<?php echo $val[id];?>">
+                <td width="3%" align="center" valign="middle" ><a href="search_manage.php?student_id=<?php echo $val[id];?>">
                   <?php if($num_group > 0) { ?>
                   <img src="../images/additional.png"  border="0" title="Adding additional Information">
                   <?php } else { ?>
@@ -315,7 +315,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php if($val[student_id] > 0) { echo $val[student_id]; } ?></td>
                         <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
                         <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
-                        <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></td>
+                        <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?></td>
                         <td height="25" align="center" valign="middle" class="mycon" ><?php echo $i;?></td>                        
                         <?php
 						  $i = $i + 1;

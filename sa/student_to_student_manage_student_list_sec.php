@@ -29,7 +29,7 @@ if($_SESSION['lang']=='EN'){
           ?>
           <tr>
             <td align="center" valign="middle" bgcolor="#FFFFFF" ><input type="radio" name="tostudent_id" id="tostudent_id<?php echo $kk;?>" value="<?php echo $mygroup["student_id"];?>"  onchange="show_save();"/></td>
-            <td align="left" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+            <td align="left" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";?></td>
             <td align="left" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php echo $student["student_mobile"];?></td>
             <td height="20" align="left" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php if($student["student_id"]!='0') { echo $student["student_id"]; }?></td>
             <td align="right" valign="middle" bgcolor="#FFFFFF" class="pedtext"><?php echo number_format($course_fee, 2);?>&nbsp;</td>
@@ -60,7 +60,7 @@ if($_SESSION['lang']=='EN'){
           <tr>
             <td align="center" valign="middle" bgcolor="#FFFFFF" ><?php //echo $student["id"];?>
             <input type="radio" name="tostudent_id" id="tostudent_id<?php echo $kk;?>" value="<?php echo $student["id"];?>"  onchange="show_save();"/></td>
-            <td align="left" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+            <td align="left" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";?></td>
             <td align="left" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php echo $student["student_mobile"];?></td>
             <td height="20" align="left" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php if($student["student_id"]!='0') { echo $student["student_id"]; }?></td>
             <td align="right" valign="middle" bgcolor="#FFFFFF" class="pedtext"><?php echo number_format($course_fee, 2);?>&nbsp;</td>
@@ -94,7 +94,7 @@ if($_SESSION['lang']=='EN'){
             <td align="left" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php echo number_format($course_fee, 2);?></td>    
             <td height="20" align="right" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php if($student["student_id"]!='0') { echo $student["student_id"]; }?></td>
             <td align="right" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php echo $student["student_mobile"];?></td>
-            <td align="right" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+            <td align="right" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";?></td>
             <td align="center" valign="middle" bgcolor="#FFFFFF" >
             <input type="radio" name="tostudent_id" id="tostudent_id<?php echo $kk;?>" value="<?php echo $mygroup["student_id"];?>"  onchange="show_save();"/>
             </td>
@@ -126,7 +126,7 @@ if($_SESSION['lang']=='EN'){
             <td align="left" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php echo number_format($course_fee, 2);?></td>    
             <td height="20" align="right" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php if($student["student_id"]!='0') { echo $student["student_id"]; }?></td>
             <td align="right" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php echo $student["student_mobile"];?></td>
-            <td align="right" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+            <td align="right" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";?></td>
             <td align="center" valign="middle" bgcolor="#FFFFFF" >
             <input type="radio" name="tostudent_id" id="tostudent_id<?php echo $kk;?>" value="<?php echo $student["id"];?>"  onchange="show_save();"/></td>
           </tr>

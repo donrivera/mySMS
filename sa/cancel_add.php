@@ -293,9 +293,16 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         <select name="student" id="student" class="chzn-select validate[required,minListOptions[]]" onChange="show_course();">
                                             <option value="">-- Select Student --</option>
                                             <?php
-                                            foreach($dbf->fetchOrder('student s,student_moving m',"s.id=m.student_id And (m.status_id='4' OR m.status_id='5') And s.centre_id='$_SESSION[centre_id]'","s.first_name","s.*") as $ress2) {
+												foreach($dbf->fetchOrder(	'student s,student_moving m',
+																			"s.id=m.student_id And (m.status_id='4' OR m.status_id='5') And s.centre_id='$_SESSION[centre_id]'",
+																			"s.first_name","s.*") as $ress2) {
                                             ?>
-                                            <option value="<?php echo $ress2['id']?>"><?php echo $ress2['first_name'];?> <?php echo $Arabic->en2ar($dbf->StudentName($ress2["id"]));?></option>
+												<option value="<?php echo $ress2['id']?>">
+													<?php 
+															//echo $ress2['first_name'];echo $Arabic->en2ar($dbf->StudentName($ress2["id"]));
+															echo $ress2[first_name]."&nbsp;".$ress2[father_name]."&nbsp;".$ress2[family_name]."&nbsp;(".$ress2[first_name1]."&nbsp;".$ress2[father_name1]."&nbsp;".$ress2[grandfather_name1]."&nbsp;".$ress2[family_name1].")";
+													?>
+												</option>
                                             <?php }?>
                                         </select>
 										<script type="text/javascript">

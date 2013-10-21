@@ -11,6 +11,7 @@ include '../application_top.php';
 //Object initialization
 $dbf = new User();
 include_once '../includes/language.php';
+
 $cmbgroup = $_REQUEST[cmbgroup];
 
 $res_ped = $dbf->strRecordID("ped","*","group_id='$cmbgroup'");
@@ -50,14 +51,14 @@ text-decoration:none;
 <table width="1000" border="0" align="center" cellpadding="0" cellspacing="0" style="border:solid 2px; border-color:#CC9900;">
     <tr>
       <td width="17%" align="left" valign="top" class="loginheading1"><?php echo constant("STUDENT_ADVISOR_PED_TNAME");?></td>
-      <td width="61%" align="left" valign="middle" class="heading"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <td width="63%" align="left" valign="middle" class="heading"><table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td width="36%" align="left" valign="middle" class="heading"><?php echo $res_teacher["name"];?></td>
           <td width="32%">&nbsp;</td>
           <td width="32%" align="left" valign="middle" class="heading">&nbsp;</td>
         </tr>
       </table></td>
-      <td width="22%" align="center" valign="middle" class="heading">&nbsp;</td>
+      <td width="20%" align="center" valign="middle" class="heading">&nbsp;</td>
     </tr>
     <tr>
       <td colspan="2" align="left" valign="top" style="padding-left:5px;">
@@ -92,7 +93,7 @@ text-decoration:none;
           </table>
       
       </td>
-      <td align="left" valign="middle" class="heading"><img src="../logo/logo.png" width="215" height="62"></td>
+      <td align="center" valign="middle" class="heading"><img src="../logo/logo.png" width="215" height="62"></td>
     </tr>
     <tr>
       <td colspan="2" align="right" valign="top" class="loginheading"><span class="heading"><?php echo constant("STUDENT_ADVISOR_PED_PEDAGOCARD");?></span></td>
@@ -104,6 +105,8 @@ text-decoration:none;
       $res_group_name = $dbf->strRecordID("common","*","id='$course[group_id]'");
       $res_cource_name = $dbf->strRecordID("course","*","id='$course[group_id]'");
       
+	  $teacher_id = $res_teacher_group[teacher_id];
+	  
       $unit = $res_size["units"];      
     ?>
     <tr>
@@ -121,6 +124,7 @@ text-decoration:none;
           $no_student = $dbf->countRows('student_group_dtls',"parent_id='$_REQUEST[cmbgroup]'");
           foreach($dbf->fetchOrder('student_group',"id='$_REQUEST[cmbgroup]'","","") as $res_group)
           {
+
                 $res_sa_name = $dbf->strRecordID("user","*","id='$res_group[sa_id]'");
                 if($sa_name == '')
                 {
@@ -140,7 +144,7 @@ text-decoration:none;
           ?>
           <tr>
             <td width="35%" height="25" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_UNITS");?> : <?php echo $res_size[units];?></td>
-            <td width="65%" align="left" valign="middle" class="pedtext"><?php echo constant("CD_EP_ADDING_STUDENT_GROUPADD");?> : <?php echo $res_group_name[name];?></td>
+            <td width="65%" align="left" valign="middle" class="pedtext"><?php echo constant("CD_EP_ADDING_STUDENT_GROUPADD");?> : <?php echo $res_teacher_group[group_name];/*$res_group_name[name];*/?></td>
             </tr>
           <tr>
           <?php
@@ -172,7 +176,7 @@ text-decoration:none;
                   foreach($dbf->fetchOrder('common',"type='material type'","") as $valmate){
                       $chk = in_array($valmate["id"],$chk_list);
                   ?>
-                    <td align="left" valign="top" class="pedtext"><input type="checkbox" name="mate[]" id="mate[]" value="<?php echo $valmate[id];?>" <?php if($chk == 1) { ?> checked="checked" <?php } ?>>&nbsp;<?php echo $valmate[name];?></td>
+                    <td align="left" valign="middle" class="pedtext"><input type="checkbox" name="mate[]" id="mate[]" value="<?php echo $valmate[id];?>" <?php if($chk == 1) { ?> checked="checked" <?php } ?>>&nbsp;<?php echo $valmate[name];?></td>
                     <?php
                     }
                     ?>
@@ -243,11 +247,6 @@ text-decoration:none;
             <td height="25" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_NOFSTUDENT");?>  : <?php echo $no_student;?></td>
             <td align="left" valign="middle" class="pedtext"><strong><?php echo constant("STUDENT_ADVISOR_PED_TXT");?></strong></td>
             </tr>
-          <?php
-          //Get Student Advisor Name (who had create the Grouping)
-          //$res_sa_name = $dbf->strRecordID("user","*","id='$teacher_id'");
-          //$sa_name = $res_sa_name[""];
-          ?>
           <tr>
             <td height="25" align="left" valign="middle" class="pedtext"><strong><?php echo constant("STUDENT_ADVISOR_PED_SLSPERSON");?></strong> : <?php echo $sa_name;?></td>
             <td align="left" valign="middle" class="pedtext"><strong><?php echo constant("STUDENT_ADVISOR_PED_TXT1");?> :<?php echo constant("STUDENT_ADVISOR_PED_STANDARD");?></strong></td>
@@ -261,15 +260,28 @@ text-decoration:none;
                 </tr>
               <?php
               $center_name = '';
-			  $c_id = $dbf->getDataFromTable("student_group", "centre_id", "id='$_REQUEST[cmbgroup]'");
-			  $res_center = $dbf->strRecordID("centre", "*", "id='$c_id'");
-			  $center_name = $res_center["name"];
+              
+              foreach($dbf->fetchOrder('centre c,teacher_centre t',"c.id=t.centre_id AND t.teacher_id='$teacher_id'","","c.*") as $res_center)
+              {
+                    //Sum according to Course
+                    $res_count = $dbf->strRecordID("student_course","COUNT(id)","course_id='$res_group[course_id]'");
+                    if($center_name == '')	
+                    {
+                        $center_name = $res_center["name"];
+                    }
+                    else
+                    {
+                        $center_name = $center_name." , ".$res_center["name"];
+                    }
+              
+              }
               ?>
               <tr>
                 <td height="30" align="left" valign="middle" class="pedtext" style="border-right:solid 1px; border-top:solid 1px;"><strong><?php echo constant("STUDENT_ADVISOR_PED_LOCADIRECTION");?></strong>: </td>
                 <td align="left" valign="middle" class="pedtext" style="border-top:solid 1px;"><?php echo $center_name;?>&nbsp;&nbsp;
                   <?php echo $res_ped["location"];?></td>
                 </tr>
+
               </table></td>
             </tr>
           <tr>
@@ -288,12 +300,12 @@ text-decoration:none;
                 $chk = in_array("Level Test explained",$chk_list);
                 ?>
                 <td width="4%" align="center" valign="middle" style="border-bottom:solid 1px; border-color:#000000;"><input type="checkbox" name="checklist[]" id="checklist[]" value="Level Test explained" <?php if($chk == 1) { ?> checked="checked" <?php } ?>></td>
-                <td width="25%" align="left" valign="middle" class="pedtext_normal" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px; border-color:#000000;"><?php echo constant("STUDENT_ADVISOR_PED_TXT4");?></td>
+                <td width="28%" align="left" valign="middle" class="pedtext_normal" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px; border-color:#000000;"><?php echo constant("STUDENT_ADVISOR_PED_TXT4");?></td>
                 <?php
                 $chk = in_array("Guide arround centre and location of facilities",$chk_list);
                 ?>
                 <td width="4%" align="center" valign="middle" style="border-bottom:solid 1px; border-color:#000000;"><input type="checkbox" name="checklist[]" id="checklist[]" value="Guide arround centre and location of facilities" <?php if($chk == 1) { ?> checked="checked" <?php } ?>></td>
-                <td width="33%" align="left" valign="middle" class="pedtext_normal" style="border-bottom:solid 1px; border-color:#000000;"><?php echo constant("STUDENT_ADVISOR_PED_TXT5");?></td>
+                <td width="30%" align="left" valign="middle" class="pedtext_normal" style="border-bottom:solid 1px; border-color:#000000;"><?php echo constant("STUDENT_ADVISOR_PED_TXT5");?></td>
                 </tr>
               <tr>
                 <?php
@@ -347,8 +359,8 @@ text-decoration:none;
                 <td height="25" colspan="4" align="left" valign="middle" style="border-right:solid 1px; border-color:#000000;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <td width="2%" height="25" align="center" valign="middle" >&nbsp;</td>
-                    <td width="28%" height="30" align="left" valign="middle" class="pedtext_normal" ><?php echo constant("STUDENT_ADVISOR_PED_TXT13");?> :</td>
-                    <td width="34%" align="left" valign="middle" class="pedtext_normal" ><?php echo $res_ped["point_cover1"];?></td>
+                    <td width="24%" height="30" align="left" valign="middle" class="pedtext_normal" ><?php echo constant("STUDENT_ADVISOR_PED_TXT13");?> :</td>
+                    <td width="38%" align="left" valign="middle" class="pedtext_normal" ><?php echo $res_ped["point_cover1"];?></td>
                     <td width="9%" align="center" valign="middle" class="pedtext_normal"><?php echo constant("STUDENT_ADVISOR_PED_DATE");?> :</td>
                     <?php if($res_ped["point_date1"] != '0000-00-00') {
                         $point_date1 = $res_ped["point_date1"];
@@ -360,8 +372,8 @@ text-decoration:none;
                 <td colspan="2" align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <td width="2%" height="25" align="center" valign="middle" >&nbsp;</td>
-                    <td width="43%" align="left" valign="middle" class="pedtext_normal" ><?php echo constant("STUDENT_ADVISOR_PED_TXT13");?> :</td>
-                    <td width="15%" align="left" valign="middle" class="pedtext_normal" ><?php echo $res_ped["point_cover2"];?></td>
+                    <td width="42%" align="left" valign="middle" class="pedtext_normal" ><?php echo constant("STUDENT_ADVISOR_PED_TXT13");?> :</td>
+                    <td width="16%" align="left" valign="middle" class="pedtext_normal" ><?php echo $res_ped["point_cover2"];?></td>
                     <td width="12%" align="center" valign="middle" class="pedtext_normal"><?php echo constant("STUDENT_ADVISOR_PED_DATE");?>:</td>
                     <?php if($res_ped["point_date2"] != '0000-00-00') {
                         $point_date2 = $res_ped["point_date2"];
@@ -381,14 +393,14 @@ text-decoration:none;
             <table width="1000" border="1" cellspacing="0" bordercolor="#000000" cellpadding="0" style="border-collapse:collapse;">
               <tr>
                 <td width="230" height="25" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_TXT14");?></td>
-                <td width="37" align="center" valign="middle"><img src="../images/ped_lis.jpg" width="37" height="54"></td>
-                <td width="31" align="center" valign="middle"><img src="../images/ped-units.jpg" width="31" height="41"></td>
-                <td width="100" align="center" valign="middle"><img src="../images/ped-date.jpg" width="31" height="41"></td>
-                <td width="31" align="center" valign="middle"><img src="../images/ped-attd.jpg" width="31" height="41"></td>
-                <td width="130" align="center" valign="middle" class="pedtext2"><?php echo constant("STUDENT_ADVISOR_PED_INSTRUCTOR");?></td>
-                <td width="230" align="center" valign="middle" class="pedtext2"><?php echo constant("STUDENT_ADVISOR_PED_MATERIALCOVER");?></td>
-                <td align="center" valign="middle" class="pedtext2"><?php echo constant("STUDENT_ADVISOR_PED_HOMEWORK");?></td>
-                </tr>
+                <td width="37" align="center" valign="middle" class="pedtext">LIS</td>
+                <td width="35" align="center" valign="middle" class="pedtext">Units</td>
+                <td width="100" align="center" valign="middle" class="pedtext">Date</td>
+                <td width="35" align="center" valign="middle" class="pedtext">Attd.</td>
+                <td width="130" align="center" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_INSTRUCTOR");?></td>
+                <td width="230" align="center" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_MATERIALCOVER");?></td>
+                <td align="center" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_HOMEWORK");?></td>
+              </tr>
               <tr bgcolor="#E9EFEF">
                 <td width="230" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
@@ -785,20 +797,20 @@ text-decoration:none;
                 for($i = 1; $i<=$unit; $i++) { 
                 
                 //Get record from PED units
-                $res_unit = $dbf->strRecordID("ped_units","*","group_id='$_REQUEST[cmbgroup]' And teacher_id='$_SESSION[uid]' AND units='$i'");
+                $res_unit = $dbf->strRecordID("ped_units","*","group_id='$_REQUEST[cmbgroup]' And teacher_id='$teacher_id' AND units='$i'");
                 
                 //Get the Number of Present in a particular Units
-                $present = $dbf->strRecordID("ped_attendance","COUNT(id)","unit='$res_unit[units]' And teacher_id='$_SESSION[uid]' And group_id='$_REQUEST[cmbgroup]' And (shift1='X' OR shift2='X' OR shift3='X' OR shift4='X' OR shift5='X' OR shift6='X' OR shift7='X' OR shift8='X' OR shift9='X')");
+                $present = $dbf->strRecordID("ped_attendance","COUNT(id)","unit='$res_unit[units]' And teacher_id='$teacher_id' And group_id='$_REQUEST[cmbgroup]' And (shift1='X' OR shift2='X' OR shift3='X' OR shift4='X' OR shift5='X' OR shift6='X' OR shift7='X' OR shift8='X' OR shift9='X')");
                 
-                $res_teacher = $dbf->strRecordID("teacher","*","id='$res_teacher_group[teacher_id]'");
+                $res_teacher = $dbf->strRecordID("teacher","*","id='$teacher_id'");
                 ?>
                   <tr>
-                    <td width="24" height="30" align="center" valign="middle" bgcolor="#F7F3F8" class="pedtext_normal" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;"><?php echo $i;?></td>
-                    <td width="100" align="center" valign="middle" bgcolor="#F7F3F8" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;"><?php echo $res_unit["dated"];?></td>
-                    <td width="24" align="center" valign="middle" bgcolor="#F7F3F8" class="pedtext_normal" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;"><?php echo $present["COUNT(id)"];?></td>
-                    <td width="130" align="center" valign="middle" bgcolor="#F7F3F8" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px; ">
+                    <td width="35" height="30" align="center" valign="middle" bgcolor="#F7F3F8" class="pedtext_normal" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;"><?php echo $i;?></td>
+                    <td width="107" align="center" valign="middle" bgcolor="#F7F3F8" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;"><?php echo $res_unit["dated"];?></td>
+                    <td width="35" align="center" valign="middle" bgcolor="#F7F3F8" class="pedtext_normal" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;"><?php echo $present["COUNT(id)"];?></td>
+                    <td width="137" align="center" valign="middle" bgcolor="#F7F3F8" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px; ">
                     <?php echo $res_teacher[name];?></td>
-                    <td width="230" align="middle" valign="middle" bgcolor="#F7F3F8" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;">
+                    <td width="237" align="middle" valign="middle" bgcolor="#F7F3F8" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;">
                     <?php echo $res_unit["material_overed"];?></td>
                     <td  align="left" valign="middle" bgcolor="#F7F3F8" style="border-bottom:solid 1px; border-color:#000000;">&nbsp;
                       <?php echo $res_unit["homework"];?></td>
@@ -867,8 +879,9 @@ text-decoration:none;
                 foreach($dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*") as $r) {
                 ?>
                     <tr>
-                      <td width="10%" align="left" bgcolor="#E9EFEF" class="pedtext"><?php echo $r[first_name];?>
-                        </td>
+                      <td width="10%" align="left" bgcolor="#E9EFEF" class="pedtext">
+						<?php echo $r[first_name]."&nbsp;".$r[father_name]."&nbsp;".$r[family_name]."&nbsp;(".$r[first_name1]."&nbsp;".$r[father_name1]."&nbsp;".$r[grandfather_name1]."&nbsp;".$r[family_name1].")";?></a>
+                      </td>
                       <?php
                     $no_cols = $unit / 2;
                     $num = cal_days_in_month(CAL_GREGORIAN, $month, $year); 

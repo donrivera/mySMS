@@ -14,7 +14,7 @@ include_once '../includes/class.Main.php';
 
 $pageTitle='Welcome to Berlitz-KSA';
 
-//include '../application_top.php';
+include 'application_top.php';
 
 //Object initialization
 $dbf = new User();

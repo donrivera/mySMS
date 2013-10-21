@@ -7,7 +7,8 @@ include("../includes/saudismsNET-API.php");
 //Object initialization
 $dbf = new User();
 
-if($_REQUEST['action']=='delete'){
+if($_REQUEST['action']=='delete'){echo var_dump($_REQUEST);
+/*
 	//Get the logo path
 	$res_logo = $dbf->strRecordID("conditions","*","type='Logo path'");
 	
@@ -305,5 +306,6 @@ if($_REQUEST['action']=='delete'){
 	
 	header("Location:ep_removing_student.php");
 	exit;
+	*/
 }
 ?>

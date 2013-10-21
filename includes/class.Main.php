@@ -126,9 +126,27 @@ class User extends Dbfunctions{
 			//found
 			return $rec[0];
 		}
-	}	
+	}
+	/*Query to use JOINS BY (DON PAR RIVERA)*/
+	function genericQuery($sql)
+	{
+		$result = mysql_query($sql);
+		if(!$result){
+			trigger_error("Problem selecting data");
+		}
+		while($row = mysql_fetch_array($result, MYSQL_ASSOC)){
+			$result_array[] = $row;
+		}
+		if(count($result_array)>0){
+			return $result_array;	
+		}else{
+			$default_val=array();
+			return $default_val;
+		}
+	}
+	/*Query to use JOINS BY (DON PAR RIVERA)*/
 	// ********************************************END**********************************************************************	
-
+	
 	//FETCH ALL ROWS FROM A TABLE WITH ORDER BY (Kishor - 16-09-2011)
 	function fetchOrder($tblName,$optCondition="",$orderby="",$field="",$groupby="",$having=""){
 		if($field==""){
@@ -511,8 +529,8 @@ class User extends Dbfunctions{
 		$dbf = new User();
 		
 		$group = $dbf->strRecordID("student_group","*","id='$group_id'");
-		$string = $string.' ('.$group["group_name"].', '.date('d/m/Y', strtotime($group["start_date"])).' - '.date('d/m/Y', strtotime($group["end_date"])).', '.$group["group_time"].'-'.$dbf->GetGroupTime($grroup["id"]).')';
-		
+		//$string = $string.' ('.$group["group_name"].', '.date('d/m/Y', strtotime($group["start_date"])).' - '.date('d/m/Y', strtotime($group["end_date"])).', '.$group["group_time"].'-'.$dbf->GetGroupTime($grroup["id"]).')';
+		$string = $string.' ('.$group["group_name"].', '.date('d/m/Y', strtotime($group["start_date"])).' - '.date('d/m/Y', strtotime($group["end_date"])).', '.$group["group_start_time"].'-'.$group["group_end_time"].')';
 		return $string;
 
 	}
@@ -556,55 +574,90 @@ class User extends Dbfunctions{
 		
 		$dbf = new User();
 		
-		$user_start_time = strtotime($start_time);		
-		$result = false;
-						
-		foreach($dbf->fetchOrder('student_group',"teacher_id='$teacher_id' And  ('$start_date' BETWEEN start_date And end_date)","") as $enroll) {
-			
-			$db_start_time = strtotime($enroll["group_time"]);
-			$db_end_time = strtotime($enroll["group_time_end"]);
-			
-			if($user_start_time >= $db_start_time && $user_start_time < $db_end_time){
-				$result = true;
-				break;
-			}
+		//$user_start_time = strtotime($start_time) + 1;		
+		$user_start_time=date('Hi',strtotime(date("H:i:s", strtotime($start_time)) . " +1 minutes"));
+		//$result = false;
+		/*				
+		foreach($dbf->fetchOrder('student_group',"teacher_id='$teacher_id' And  ('$user_start_time' BETWEEN group_time And group_time_end)","") as $enroll) 
+		{
+			echo count($enroll);
+			//$result=(count($enroll)==1? true : false);
+			//$db_start_time = strtotime($enroll["group_time"]);
+			//$db_end_time = strtotime($enroll["group_time_end"]);
+			//$range=range($db_start_time,$db_end_time);
+			//if(in_array($user_start_time,$range)):$result=true;
+			//else:$result=false;
+			//endif;
+			//if($user_start_time >= $db_start_time && $user_start_time < $db_end_time){
+			//	$result = true;
+			//	break;
+			//}
 		}
+		*/
+		$q=$dbf->fetchOrder(	'student_group',
+								"teacher_id='$teacher_id' 
+								AND ('$start_date' BETWEEN start_date AND end_date)
+								AND ('$user_start_time' BETWEEN group_time And group_time_end)
+								","");
+		//echo count($q)."-".$user_start_time;
+		if(count($q)==1)
+		{$result=true;}
+		else{$result=false;}
 		return $result;
 	}
 	
 	//Get time available or not
-	function teacherSlotAvailable($teacher_id, $start_date, $start_time, $end_time){
+	function teacherSlotAvailable($teacher_id, $start_date,$end_date,$start_time, $end_time){
 		
 		$dbf = new User();
+		//echo $start_time.$end_time."<BR/>";
+		$start = $start_time+1;
+		$end = $end_time+1;
+		$q=$dbf->fetchOrder(	'student_group',
+								"teacher_id='$teacher_id' 
+								 AND ('$end_date' BETWEEN start_date And end_date) 
+								 AND (('$start' BETWEEN group_time AND group_time_end) OR ('$end' BETWEEN group_time AND group_time_end))
+								","");
 		
-		$start = strtotime($start_time);
-		$end = strtotime($end_time);
 		
+		if($q <= 0 || empty($q)):
+		$result=false;
+		elseif($q>0):
+		$result=true;
+		else:
+		$result=false;
+		endif;
+		return $result;
+		
+		/*
 		$result = false;
-		
 		foreach($dbf->fetchOrder('student_group',"teacher_id='$teacher_id' And  ('$start_date' BETWEEN start_date And end_date)","") as $enroll) {
 			
 			$frm = strtotime($enroll["group_time"]);
 			$tto = strtotime($enroll["group_time_end"]);
+			$range=range($frm,$tto);
+			if(in_array($start,$range) && in_array($end,$range)):echo $start.$end;$result=false;
+			else:$result=true;
+			endif;
+			//if($start <= $tto && $end >= $frm){
+			//	$result = true;
+			//	break;
+			//}
 			
-			if($start <= $tto && $end >= $frm){
-				$result = true;
-				break;
-			}
-			
-			/*if(($end >= $frm && $end <= $tto) || ($start >= $frm && $start <= $tto)){
-				if(($end >= $frm && $end <= $tto) && ($start >= $frm && $start <= $tto)){
-					echo "ok";
-					$result = true;
-					break;
-				}else{
-					echo "no";
-				}
-			}*/
+			//if(($end >= $frm && $end <= $tto) || ($start >= $frm && $start <= $tto)){
+			//	if(($end >= $frm && $end <= $tto) && ($start >= $frm && $start <= $tto)){
+			//		echo "ok";
+			//		$result = true;
+			//		break;
+			//	}else{
+			//		echo "no";
+			//	}
+			//}
 		}
 		return $result;
+		*/
+		
 	}
-	
 	//Get Group Timing
 	function GetGroupTime($group_id){
 		
@@ -720,8 +773,8 @@ class User extends Dbfunctions{
 		
 		//Start Generate Invoice Number
 		//Maximum Serial No of the Centre in Student Table
-		$invoice_sl = $dbf->getDataFromTable("student_fees","MAX(invoice_sl)","centre_id='$centre_id'");
-		
+		//$invoice_sl = $dbf->getDataFromTable("student_fees","MAX(invoice_sl)","centre_id='$centre_id'");
+		$invoice_sl = $dbf->getDataFromTable("student_fees","COUNT(*)","centre_id='$centre_id'");
 		//Check serial no exist or not
 		if($invoice_sl == '0'){
 			$inv_no = "1";
@@ -1052,6 +1105,519 @@ class User extends Dbfunctions{
 		//Invoice No
 		// Return values like Enrollment Serial No + Course Code + Student Serial No
 		return $inv_no = str_pad($enroll_dtls["id"], 2, "0", STR_PAD_LEFT).$course_dtls["code"].str_pad($student_id, 5, "0", STR_PAD_LEFT);
+	}
+	# CORE SCHEDULING 
+	# Created On: 9-22-2013
+	# Created By: DON PAR RIVERA
+	
+	function scheduleCall($prev_num,$student_id,$group,$teacher_id)
+	{	
+		$dbf = new User();
+		$new_enrolee=$dbf->countRows('student',"id='$student_id'");
+		$total_students=$prev_num + $new_enrolee;
+		$student_group=$dbf->strRecordID("student_group","start_date","id='$group'");
+		$current_total_unit=$dbf->strRecordID("student_group","units,teacher_id,start_date","id='$group'");
+		$teacher_id=$current_total_unit['teacher_id'];
+		$start_date=$current_total_unit['start_date'];
+		$query=$dbf->genericQuery("SELECT units FROM centre_group_size WHERE('$total_students' BETWEEN size_from AND size_to)");
+		foreach($query as $q):
+			$week_total=round($q['units']/10,0);
+			$new_unit=$q['units'];
+		endforeach;
+		$compute_date = strtotime($student_group['start_date'] .'+ '.$week_total.' week');
+		$end_date=date('Y-m-d',$compute_date);
+		$checknextclass= $dbf->genericQuery(" 	SELECT *
+												FROM student_group
+												WHERE teacher_id='$teacher_id' 
+												AND id != '$group'
+												AND ('$end_date' BETWEEN start_date AND end_date)
+											");
+		if(empty($checknextclass) || $checknextclass==NULL)
+		{echo"1";
+			$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
+			if(empty($max_ped) || $max_ped==NULL)
+			{echo"2";
+				
+				$dbf->updateTable("student_group","units='$new_unit',end_date='$end_date'","id='$group'");
+			}
+			else
+			{	echo"3";
+				$adj=$dbf->computeAdjustments($total_students,$current_total_unit['units'],$max_ped['max'],$new_unit);
+				$new_computed_units=$adj[units];
+				$dbf->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
+			}
+		}
+		else
+		{ echo "query";
+			foreach($checknextclass as $next_class):
+				$nc_group_id=$next_class[id];
+				$nc_start_date=$next_class[start_date];
+				$nc_end_date=$next_class[end_date];
+				$nc_units=$next_class[units] / 10;
+				$nc_set_unit=$next_class[units];
+			endforeach;
+			//$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
+			//$days = (strtotime($end_date) - strtotime($nc_start_date)) / (60 * 60 * 24);
+			//echo "<BR/>".$difference_weeks=($days <0 ? $days * -1 /7 : $days/7);
+			//$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
+			$nc_compute_date = date('Y-m-d',strtotime($end_date .'+ 1 day'));
+			if(date("D",$nc_compute_date)==Fri)
+			{$nc_compute_date = date('Y-m-d',strtotime($end_date .'+ 2 day'));}
+			$nc_compute_end_date=date('Y-m-d',strtotime($nc_compute_date.'+'.$nc_units.'week'));
+			$thirdchecknextclass= $dbf->genericQuery(" 	SELECT *
+														FROM student_group
+														WHERE teacher_id='$teacher_id' 
+														AND (id != '$group' AND id !='$nc_group_id')
+														AND ('$nc_compute_end_date' BETWEEN start_date AND end_date)
+													");
+			if(empty($thirdchecknextclass) || $thirdchecknextclass==NULL)
+			{	
+				$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
+				
+				if(empty($max_ped) || $max_ped==NULL)
+				{	
+					$dbf->updateTable("student_group","units='$new_unit',end_date='$end_date'","id='$group'");
+				}
+				else
+				{	
+					$adj=$dbf->computeAdjustments($total_students,$current_total_unit['units'],$max_ped['max'],$new_unit);
+					$new_computed_units=$adj[units];
+					$dbf->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
+				}
+				
+				$nc_compute_date = date('Y-m-d',strtotime($end_date .'+ 1 day'));
+				if(date("D",$nc_compute_date)==Fri)
+				{$nc_compute_date = date('Y-m-d',strtotime($end_date .'+ 2 day'));}
+				$nc_compute_end_date=date('Y-m-d',strtotime($nc_compute_date.'+'.$nc_units.'week'));
+				$dbf->updateTable("student_group","units='$nc_set_unit',start_date='$nc_compute_date',end_date='$nc_compute_end_date'","id='$nc_group_id'");
+				
+			}
+			else
+			{	
+				foreach($thirdchecknextclass as $third_class):
+					$thirdc_group_id=$third_class[id];
+					$thirdc_start_date=$third_class[start_date];
+					$thirdc_end_date=$third_class[end_date];
+					$thirdc_units=$third_class[units] / 10;
+					$thirdc_set_units=$third_class[units];
+				endforeach;
+				//echo "adjust current group end date".$end_date."<BR/>";
+				//echo "adjust second group end_date".$nc_end_date=$next_class[end_date]."<BR/>";
+				$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
+				//echo var_dump($max_ped);
+				if(empty($max_ped) || $max_ped==NULL)
+				{	
+					$dbf->updateTable("student_group","units='$new_unit',end_date='$end_date'","id='$group'");
+				}
+				else
+				{	
+					$adj=$dbf->computeAdjustments($total_students,$current_total_unit['units'],$max_ped['max'],$new_unit);
+					$new_computed_units=$adj[units];
+					$dbf->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
+				}
+				$nc_compute_date = date('Y-m-d',strtotime($end_date .'+ 1 day'));
+				if(date("D",$nc_compute_date)==Fri)
+				{$nc_compute_date = date('Y-m-d',strtotime($end_date .'+ 2 day'));}
+				$nc_compute_end_date=date('Y-m-d',strtotime($nc_compute_date.'+'.$nc_units.'week'));
+				$dbf->updateTable("student_group","units='$nc_set_unit',start_date='$nc_compute_date',end_date='$nc_compute_end_date'","id='$nc_group_id'");
+				//ADJUSTMENT FRO 3rd Schedule
+				$thirdc_compute_date = date('Y-m-d',strtotime($nc_compute_end_date .'+ 1 day'));
+				if(date("D",$thirdc_compute_date)==Fri)
+				{$thirdc_compute_date = date('Y-m-d',strtotime($nc_compute_end_date .'+ 2 day'));}
+				$thirdc_compute_end_date=date('Y-m-d',strtotime($thirdc_compute_date.'+'.$thirdc_units.'week'));
+				$dbf->updateTable("student_group","units='$thirdc_set_units',start_date='$thirdc_compute_date',end_date='$thirdc_compute_end_date'","id='$thirdc_group_id'");
+			}
+		}
+	}
+	function computeAdjustments($total_students,$current_total_unit,$max_ped,$new_unit)
+	{
+		$dbf = new User();
+		echo "TOTAL UPDATED STUDENTS:".$total_students."<BR/>";
+		echo "CURRENT UNITS:".$current_total_unit."<BR/>";
+		echo "GET CURRENT UNITS USED PED CARD:".$max_ped."<BR/>";
+		echo "COURSE COMPLETED:";
+		$current_course_completed=$max_ped / $current_total_unit;
+		echo "PERCENTAGE WITH UPDATED UNIT/S:";
+		$percentage_with_new_unit=$current_course_completed * $new_unit;
+		echo "<BR/>";
+		echo "UPDATED UNIT:";
+		$updated_unit=$new_unit - $percentage_with_new_unit;
+			if($updated_unit % 2==0):
+				echo $new_computed_units=intval($updated_unit);//floor($updated_unit);(integer) trim('.', $one);
+			else:
+				echo $new_computed_units=ceil($updated_unit);
+			endif;
+		$result=array("units"=>$new_computed_units);
+		return $result;
+	}
+	function getschedLeaves($range,$start,$end,$group_id,$s_days)
+	{		//echo $s_days;
+		if(in_array($start,$range))
+		{//echo "1<BR/>";	//$s_days=$this->dateDiff($start, $end)+1;
+			$s_week_day=date('D',strtotime($start.'+ '.$s_days.'  day'));
+			switch($s_week_day)
+			{
+				case 'Fri':	{$s_new_days=$s_days+2;}break;
+				case 'Sat':	{$s_new_days=$s_days+1;}break;
+				default:	{$s_new_days=$s_days;}break;
+			}
+			$new_start_date=date('Y-m-d',strtotime($start.'+ '.$s_new_days.'  day'));
+			$e_week_day=date('D',strtotime($end.'+ '.$s_new_days.'  day'));
+			switch($e_week_day)
+			{
+				case 'Fri':	{$e_days=$s_new_days+2;}break;
+				case 'Sat':	{$e_days=$s_new_days+1;}break;
+				default:	{$e_days=$s_new_days;}break;
+			}
+			$new_end_date=date('Y-m-d',strtotime($end.'+ '.$e_days.'  day'));
+			$this->updateTable("student_group","start_date='$new_start_date',end_date='$new_end_date'","id='$group_id'");
+			//echo $start."-".$end."<BR/>";
+			//echo $new_start_date."-".$new_end_date."<BR/>";
+		}
+		else
+		{//echo "2<BR/>";
+			$days=date('D',strtotime($end.'+ '.$s_days.'  day'));
+			switch($days)
+			{	case 'Fri':	{$days=$s_days+2;}break;
+				case 'Sat':	{$days=$s_days+1;}break;
+				default:	{$days=$s_days;}break;
+			}
+			$new_end_date=date('Y-m-d',strtotime($end.'+ '.$days.'  day'));
+			$this->updateTable("student_group","end_date='$new_end_date'","id='$group_id'");
+			//echo $new_start_date."-".$new_end_date."<BR/>";
+		}
+		return array('date_end'=>$new_end_date);
+	}
+	function schedLeaves($type,$id="",$start,$end,$center="")
+	{
+		
+		switch($type)
+		{
+			case 'Center':		{	
+									$days=$this->dateDiff($start, $end)+1;
+									$groups= $this->genericQuery("SELECT * FROM student_group WHERE centre_id='$center' AND ('$start' BETWEEN start_date AND end_date) OR ('$end' BETWEEN start_date AND end_date)");
+									//echo var_dump($groups);
+									$range = array($start); 
+									while ($start != $end) 
+									{ 
+										$start=date('Y-m-d', strtotime($start.' +1 day')); 
+										$range[] = $start; 
+									} 
+									foreach($groups as $g):
+										//$range=range($start,$end);
+										$g_result=$this->getschedLeaves($range,$g[start_date],$g[end_date],$g[id],$days);
+										$groups1=$this->genericQuery("SELECT * FROM student_group WHERE centre_id='$center' AND (id != '$g[id]') AND ('$g_result[date_end]' BETWEEN start_date AND end_date)");
+										foreach($groups1 as $g1):
+											$range1result=range($start,$end);
+											//$range1=range($g1[start_date],$g_result[date_end]);
+											//echo $g1[start_date]."-".$g1[end_date]."<BR/>";
+											
+											$range1 = array($g1[start_date]); 
+											while ($g1[start_date] != $g_result[date_end]) 
+											{ 
+												$g1[start_date]=date('Y-m-d', strtotime($g1[start_date].' +1 day')); 
+												$range1[] = $g1[start_date]; 
+											}
+											if(in_array($g1[start_date],$range1))
+											{
+												$second_start_date=date('Y-m-d', strtotime($g_result[date_end].' +1 day')); 
+												$second_end_date=date('Y-m-d', strtotime($g1[end_date].' +'.$days.' day'));
+												//echo "UPDATE TO DB:".$second_start_date."-".$second_end_date;
+												$this->updateTable("student_group","start_date='$second_start_date',end_date='$second_end_date'","id='$g1[id]'");
+											}
+											else
+											{$g1_result=$this->getschedLeaves($range1result,$g1[start_date],$g1[end_date],$g1[id],$days);}
+										endforeach;
+									endforeach;
+									
+									
+								}break;
+			case 'Teacher':		{	
+									
+									$days=$this->dateDiff($start, $end)+1;
+									$groups= $this->genericQuery("SELECT * FROM student_group WHERE teacher_id='$id' AND ('$start' BETWEEN start_date AND end_date) OR ('$end' BETWEEN start_date AND end_date)");
+									//echo var_dump($groups);
+									$range = array($start); 
+									while ($start != $end) 
+									{ 
+										$start=date('Y-m-d', strtotime($start.' +1 day')); 
+										$range[] = $start; 
+									} 
+									foreach($groups as $g):
+										$g_result=$this->getschedLeaves($range,$g[start_date],$g[end_date],$g[id],$days);
+										$groups1=$this->genericQuery("SELECT * FROM student_group WHERE teacher_id='$id' AND (id != '$g[id]') AND ('$g_result[date_end]' BETWEEN start_date AND end_date)");
+										foreach($groups1 as $g1):
+											$range1result=range($start,$end);
+											//$range1=range($g1[start_date],$g_result[date_end]);
+											//echo $g1[start_date]."-".$g1[end_date]."<BR/>";
+											$range1 = array($g1[start_date]); 
+											while ($g1[start_date] != $g_result[date_end]) 
+											{ 
+												$g1[start_date]=date('Y-m-d', strtotime($g1[start_date].' +1 day')); 
+												$range1[] = $g1[start_date]; 
+											}
+											if(in_array($g1[start_date],$range1))
+											{
+												$second_start_date=date('Y-m-d', strtotime($g_result[date_end].' +1 day')); 
+												$second_end_date=date('Y-m-d', strtotime($g1[end_date].' +'.$days.' day'));
+												//echo "UPDATE TO DB:".$second_start_date."-".$second_end_date;
+												$this->updateTable("student_group","start_date='$second_start_date',end_date='$second_end_date'","id='$g1[id]'");
+											}
+											else
+											{$g1_result=$this->getschedLeaves($range1result,$g1[start_date],$g1[end_date],$g1[id],$days);}
+										endforeach;
+									endforeach;
+								}break;
+			case 'Exam':		{	echo $type.$id.$start.$end;
+									$days=$this->dateDiff($start, $end)+1;
+									$groups= $this->genericQuery("SELECT * FROM student_group WHERE (group_name='$id' AND centre_id='$center') AND (('$start' BETWEEN start_date AND end_date) OR ('$end' BETWEEN start_date AND end_date))");
+									echo var_dump($groups);
+									$range = array($start); 
+									while ($start != $end) 
+									{ 
+										$start=date('Y-m-d', strtotime($start.' +1 day')); 
+										$range[] = $start; 
+									} 
+									foreach($groups as $g):
+										$g_result=$this->getschedLeaves($range,$g[start_date],$g[end_date],$g[id],$days);
+										$groups1=$this->genericQuery("SELECT * FROM student_group WHERE (group_name='$id' AND centre_id='$center') AND (id != '$g[id]') AND ('$g_result[date_end]' BETWEEN start_date AND end_date)");
+										//echo var_dump($groups1);
+										foreach($groups1 as $g1):
+											$range1result=range($start,$end);
+											//$range1=range($g1[start_date],$g_result[date_end]);
+											//echo $g1[start_date]."-".$g1[end_date]."<BR/>";
+											$range1 = array($g1[start_date]); 
+											while ($g1[start_date] != $g_result[date_end]) 
+											{ 
+												$g1[start_date]=date('Y-m-d', strtotime($g1[start_date].' +1 day')); 
+												$range1[] = $g1[start_date]; 
+											}
+											if(in_array($g1[start_date],$range1))
+											{
+												$second_start_date=date('Y-m-d', strtotime($g_result[date_end].' +1 day')); 
+												$second_end_date=date('Y-m-d', strtotime($g1[end_date].' +'.$days.' day'));
+												//echo "UPDATE TO DB:".$second_start_date."-".$second_end_date;
+												$this->updateTable("student_group","start_date='$second_start_date',end_date='$second_end_date'","id='$g1[id]'");
+											}
+											else
+											{$g1_result=$this->getschedLeaves($range1result,$g1[start_date],$g1[end_date],$g1[id],$days);}
+										endforeach;
+									endforeach;
+								}break;
+			default:			{}break;
+		}
+		
+		
+	}
+	function updategetschedLeaves($end_date,$days,$count_days)
+	{
+		if($days>$count_days)
+		{	
+			//echo $days.$count_days;
+			$update_days = $days - $count_days;
+			$new_end_date=date('Y-m-d',strtotime($end_date.'- '.$update_days.'  day'));
+		}
+		elseif($days==$count_days)
+		{
+			$update_days = $days;
+			$new_end_date=date('Y-m-d',strtotime($end_date.'+ 0  day'));
+		}
+		else
+		{	
+			$update_days = $count_days - $days ;
+			$new_end_date=date('Y-m-d',strtotime($end_date.'+ '.$update_days.'  day'));
+		}
+		/*
+			$day=date('D',strtotime($end_date.'+'.$updatedays.'  day'));
+			switch($day)
+			{	case 'Fri':	{$days=$days+2;}break;
+				case 'Sat':	{$days=$days+1;}break;
+				default:	{$days=$days;}break;
+			}
+		*/
+		return array('date_end'=>$new_end_date);
+	}
+	function updateSchedLeaves($type,$id="",$start,$end,$center_id="")
+	{
+		switch($type)
+		{
+			case 'Center':		{
+									$center=$this->strRecordID("centre_vacation","centre_id,no_days","id='$id'");
+									$days=$center[no_days];
+									$count_days = $this->dateDiff($start,$end)+1;
+									$groups= $this->genericQuery("SELECT * FROM student_group WHERE id='$center_id' AND ('$start' BETWEEN start_date AND end_date) OR ('$end' BETWEEN start_date AND end_date)");
+									foreach($groups as $g):
+										$g_result=$this->updategetschedLeaves($g[end_date],$days,$count_days);
+										//echo $g[end_date]."<BR/>".$g_result[date_end]."<BR/>".$g[id];
+										$this->updateTable("centre_vacation","frm='$start',tto='$end',no_days='$count_days'","id='$id'");
+										$this->updateTable("student_group","end_date='$g_result[date_end]'","id='$g[id]'");
+										$groups1=$this->genericQuery("SELECT * FROM student_group WHERE (id != '$g[id]') AND ('$g_result[date_end]' BETWEEN start_date AND end_date)");
+										foreach($groups1 as $g1):
+											//echo $g1[id];//.$g1[start_date].$g1[end_date];
+											$second_start_date=date('Y-m-d',strtotime($g_result[date_end].' +1 day')); 
+											$second_end_date=$this->updategetschedLeaves($g1[end_date],$days,$count_days);
+											//echo "<BR/>".$second_start_date."<BR/>".$second_end_date[date_end]."<BR/>".$g1[id];
+											//echo "UPDATE TO DB:".$second_start_date."-".$second_end_date;
+											$this->updateTable("student_group","start_date='$second_start_date',end_date='$second_end_date[date_end]'","id='$g1[id]'");
+										endforeach;
+									endforeach;
+								}break;
+			case 'Teacher':		{
+									$teacher_id=$center_id;
+									$teacher=$this->strRecordID("teacher_vacation","no_days","id='$id'");
+									$days=$teacher[no_days];
+									$count_days = $this->dateDiff($start,$end)+1;
+									$groups= $this->genericQuery("SELECT * FROM student_group WHERE teacher_id='$teacher_id' AND ('$start' BETWEEN start_date AND end_date) OR ('$end' BETWEEN start_date AND end_date)");
+									foreach($groups as $g):
+										$g_result=$this->updategetschedLeaves($g[end_date],$days,$count_days);
+										//echo $g[end_date]."<BR/>".$g_result[date_end]."<BR/>".$g[id];
+										$this->updateTable("teacher_vacation","frm='$start',tto='$end',no_days='$count_days'","id='$id'");
+										$this->updateTable("student_group","end_date='$g_result[date_end]'","id='$g[id]'");
+										$groups1=$this->genericQuery("SELECT * FROM student_group WHERE (id != '$g[id]') AND ('$g_result[date_end]' BETWEEN start_date AND end_date)");
+										foreach($groups1 as $g1):
+											//echo $g1[id];//.$g1[start_date].$g1[end_date];
+											$second_start_date=date('Y-m-d',strtotime($g_result[date_end].' +1 day')); 
+											$second_end_date=$this->updategetschedLeaves($g1[end_date],$days,$count_days);
+											//echo "<BR/>".$second_start_date."<BR/>".$second_end_date[date_end]."<BR/>".$g1[id];
+											//echo "UPDATE TO DB:".$second_start_date."-".$second_end_date;
+											$this->updateTable("student_group","start_date='$second_start_date',end_date='$second_end_date[date_end]'","id='$g1[id]'");
+										endforeach;
+									endforeach;
+								}break;
+			case 'Exam':		{
+									$exam=$this->strRecordID("exam_vacation","name,no_days","id='$id'");
+									$group_name=$exam[name];
+									
+									$count_days = $this->dateDiff($start,$end)+1;
+									$groups= $this->genericQuery("SELECT * FROM student_group WHERE group_name='$group_name' AND ('$start' BETWEEN start_date AND end_date) OR ('$end' BETWEEN start_date AND end_date)");
+									foreach($groups as $g):
+										$g_result=$this->updategetschedLeaves($g[end_date],$days,$count_days);
+										//echo "<BR/>".$g_result[date_end].$g[id];
+										$this->updateTable("exam_vacation","frm='$start',tto='$end',no_days='$count_days'","id='$id'");
+										$this->updateTable("student_group","end_date='$g_result[date_end]'","id='$g[id]'");
+									endforeach;
+								}break;
+		}
+	}
+	function deleteSchedLeaves($type,$id="")
+	{
+		switch($type)
+		{
+			case 'Center':		{	
+									
+									$center=$this->strRecordID("centre_vacation","centre_id,no_days,frm,tto","id='$id'");
+									$groups= $this->genericQuery("SELECT * FROM student_group WHERE centre_id='$center[centre_id]' AND ('$center[frm]' BETWEEN start_date AND end_date) OR ('$center[tto]' BETWEEN start_date AND end_date)");
+									$days=$center[no_days];
+									foreach($groups as $g):
+										$new_end_date=date('Y-m-d',strtotime($g[end_date] .'- '.$days.'  day'));
+										$this->updateTable("student_group","end_date='$new_end_date'","id='$g[id]'");
+										$current_group_end_date=strtotime($g['end_date'] .'+ 1 week');
+										$group1_end_date=date('Y-m-d',$current_group_end_date);
+										$groups1=$this->genericQuery("SELECT * FROM student_group WHERE (id != '$g[id]') AND ('$group1_end_date' BETWEEN start_date AND end_date)");
+										
+										foreach($groups1 as $g1):
+											$second_start_date=date('Y-m-d',strtotime($new_end_date.' +1 day')); 
+											$second_end_date=date('Y-m-d',strtotime($g1[end_date] .'- '.$days.'  day'));
+											$this->updateTable("student_group","start_date='$second_start_date',end_date='$second_end_date'","id='$g1[id]'");
+										endforeach;
+									endforeach;
+									
+								}break;
+			case 'Teacher':		{
+									$teacher=$this->strRecordID("teacher_vacation","teacher_id,no_days,frm,tto","id='$id'");
+									$groups= $this->genericQuery("SELECT * FROM student_group WHERE teacher_id='$teacher[teacher_id]' AND ('$teacher[frm]' BETWEEN start_date AND end_date) OR ('$teacher[tto]' BETWEEN start_date AND end_date)");
+									$days=$teacher[no_days];
+									foreach($groups as $g):
+										$new_end_date=date('Y-m-d',strtotime($g[end_date] .'- '.$days.'  day'));
+										$this->updateTable("student_group","end_date='$new_end_date'","id='$g[id]'");
+										$current_group_end_date=strtotime($g['end_date'] .'+ 1 week');
+										$group1_end_date=date('Y-m-d',$current_group_end_date);
+										$groups1=$this->genericQuery("SELECT * FROM student_group WHERE (id != '$g[id]') AND ('$group1_end_date' BETWEEN start_date AND end_date)");
+										foreach($groups1 as $g1):
+											$second_start_date=date('Y-m-d',strtotime($new_end_date.' +1 day')); 
+											$second_end_date=date('Y-m-d',strtotime($g1[end_date] .'- '.$days.'  day'));
+											$this->updateTable("student_group","start_date='$second_start_date',end_date='$second_end_date'","id='$g1[id]'");
+										endforeach;
+									endforeach;
+								}break;
+			case 'Exam':		{
+									$exam=$this->strRecordID("exam_vacation","name,no_days","id='$id'");
+									$group_name=$exam[name];
+									$days=$exam[no_days];
+									$groups= $this->genericQuery("SELECT * FROM student_group WHERE group_name='$group_name' AND ('$start' BETWEEN start_date AND end_date) OR ('$end' BETWEEN start_date AND end_date)");
+									foreach($groups as $g):
+										$new_end_date=date('Y-m-d',strtotime($g[end_date] .'- '.$days.'  day'));
+										$this->updateTable("student_group","end_date='$new_end_date'","id='$g[id]'");
+									endforeach;
+								}break;
+			default:			{}break;
+		}
+	}
+	function pullSchedule($group)
+	{	//echo "Function".$group."<BR/>";
+		$prev_num = $this->countRows('student_group_dtls',"parent_id='$group'")-1;
+		$new_group = $this->strRecordID("group_size","units","(size_to>='$prev_num' And size_from<='$prev_num')");
+		$current_group=$this->strRecordID("student_group","*","id='$group'");
+		$teacher_id=$current_group[teacher_id];
+		if($new_group[units] < $current_group[units])
+		{
+			
+			$weeks=$new_group[units]/10;
+			$compute_date = strtotime($current_group['start_date'] .'+ '.$weeks.' week');
+			$end_date=date('Y-m-d',$compute_date);
+			$current_group_end_date=strtotime($current_group['end_date'] .'+ 1 week');
+			$group1_end_date=date('Y-m-d',$current_group_end_date);
+			$second_group=$this->genericQuery(" SELECT * FROM student_group 
+												WHERE teacher_id='$teacher_id' 
+												AND (id != '$current_group[id]') 
+												AND ('$group1_end_date' BETWEEN start_date AND end_date)");
+			if(empty($second_group) || $second_group==NULL)
+			{	//echo "Group 1:".$group."-".$new_group[units]."-".$end_date."<BR/>";
+				$this->updateTable("student_group","units='$new_group[units]',end_date='$end_date'","id='$group'");
+			}
+			else
+			{
+				foreach($second_group as $sg):
+					$second_group_id=$sg[id];
+					$second_count_weeks=$sg[units]/10;
+					$second_group_end_date=strtotime($sg['end_date'] .'+ 1 week');
+				endforeach;
+				$group2_end_date=date('Y-m-d',$second_group_end_date);
+				$third_group= $this->genericQuery(" SELECT * FROM student_group 
+													WHERE teacher_id='$teacher_id' 
+													AND (id != '$group' AND id !='$second_group[id]')
+													AND ('$group2_end_date' BETWEEN start_date AND end_date)");
+				if(empty($third_group) || $third_group==NULL)
+				{
+					$this->updateTable("student_group","units='$new_group[units]',end_date='$end_date'","id='$group'");
+					$second_start_date=date('Y-m-d',strtotime($end_date.' +1 day')); 
+					$second_compute_date = strtotime($second_start_date .'+ '.$second_count_weeks.' week');
+					$second_end_date=date('Y-m-d',$second_compute_date);
+					$this->updateTable("student_group","start_date='$second_start_date',end_date='$second_end_date'","id='$second_group_id'");
+					//echo "Group 1".$group.$new_group[units].$end_date."<BR/>";
+					//echo "Group 2".$second_group_id.$second_start_date.$second_end_date."<BR/>";
+				}
+				else
+				{
+					foreach($third_group as $tg):
+						$third_group_id=$tg[id];
+						$third_count_weeks=$tg[units]/10;
+					endforeach;
+					$this->updateTable("student_group","units='$new_group[units]',end_date='$end_date'","id='$group'");
+					$second_start_date=date('Y-m-d',strtotime($end_date.' +1 day')); 
+					$second_compute_date = strtotime($second_start_date .'+ '.$second_count_weeks.' week');
+					$second_end_date=date('Y-m-d',$second_compute_date);
+					$this->updateTable("student_group","start_date='$second_start_date',end_date='$second_end_date'","id='$second_group_id'");
+					$third_start_date=date('Y-m-d',strtotime($second_end_date.'+1 day')); 
+					$third_compute_date = strtotime($third_start_date .'+ '.$third_count_weeks.' week');
+					$third_end_date=date('Y-m-d',$third_compute_date);
+					//echo "Group 1:".$group."-".$new_group[units]."-".$end_date."<BR/>";
+					//echo "Group 2:".$second_group_id."-".$second_start_date.$second_end_date."<BR/>";
+					//echo "Group 3:".$third_group_id."-".$third_start_date.$third_end_date."<BR/>";
+					$this->updateTable("student_group","start_date='$third_start_date',end_date='$third_end_date'","id='$third_group_id'");
+				}
+			}
+		}
 	}
 }
 ?>

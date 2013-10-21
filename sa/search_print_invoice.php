@@ -44,7 +44,7 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
         </td>
         
         <td width="44" align="center" valign="middle">&nbsp;</td>
-        <td width="208" height="50" align="center" valign="middle" class="login_header"><?php echo $Arabic->en2ar($dbf->getDataFromTable("course","name","id='$course_id'"));?></td>
+        <td width="208" height="50" align="center" valign="middle" class="login_header"><?php echo $dbf->getDataFromTable("course","name","id='$course_id'");?></td>
         <td width="75" align="center" valign="middle">&nbsp;</td>
         <td width="165" align="center" valign="middle">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -55,7 +55,7 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
             <td align="right" valign="middle" class="heading">&nbsp;<?php echo $Arabic->en2ar('The Berlitz Language Center');?></td>
           </tr>
           <tr>
-            <td align="right" valign="middle" class="hometest_name"><?php echo $Arabic->en2ar('Al Ahsa - Soudi Arabia');?></td>
+            <td align="right" valign="middle" class="hometest_name"><?php echo $Arabic->en2ar('Al Ahsa - Saudi Arabia');?></td>
           </tr>
         </table>
         </td>
@@ -74,10 +74,10 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
             <td width="49%" align="right" valign="middle" bgcolor="#FFF2F7"><?php echo $Arabic->en2ar('Name');?>&nbsp;</td>
           </tr>
           <tr class="suc_msg">
-            <td height="70" align="left" valign="top" bgcolor="#FFF2F7">&nbsp;<?php echo $val["first_name"];?><br />
+            <td height="70" align="left" valign="top" bgcolor="#FFF2F7">&nbsp;<?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?><br />
               <br />
               Mobile :</td>
-            <td align="right" valign="top" bgcolor="#FFF2F7"><?php echo $Arabic->en2ar($val["first_name"]);?>&nbsp;<br />
+            <td align="right" valign="top" bgcolor="#FFF2F7"><?php echo $val[family_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[first_name1];//$Arabic->en2ar($val["first_name"]);?>&nbsp;<br />
               <br />
               <?php echo $val["student_mobile"];?></td>
           </tr>
@@ -245,7 +245,7 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 		$comm = $fee["comments"];
 		?>
       <tr>
-        <td height="30" colspan="5" align="right" valign="middle" class="chtext"><?php echo $Arabic->en2ar($res_enroll["invoice_note"]);?> : Note &nbsp;</td>
+        <td height="30" colspan="5" align="right" valign="middle" class="chtext"><?php echo $res_enroll["invoice_note"];?> : Note &nbsp;</td>
       </tr>      
       <tr>
         <td height="30" colspan="5" align="center" valign="middle" class="chtext"><table width="100%" border="0" cellspacing="0" cellpadding="0">

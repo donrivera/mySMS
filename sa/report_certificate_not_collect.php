@@ -256,7 +256,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <span id="plusArrow<?php echo $val[id];?>"><img src="../images/plus.gif" border="0" ></span>
                 </a></td>
                 <td width="3%" height="25" align="center" valign="middle" class="mycon"><?php echo $k; ?></td>
-				<td width="28%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?> <?php echo " [".$num_dtls."]";?></td>
+				<td width="28%" align="left" valign="middle" class="mycon" style="padding-left:5px;">
+					<?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?>
+					<?php echo " [".$num_dtls."]";?>
+				</td>
                 <td width="19%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
                 <td width="30%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
                 <td width="4%" align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[age];?></td>
@@ -322,7 +325,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
                   <tr bgcolor="<?php echo $color1;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color1;?>'">
                     <td align="center" valign="middle"><?php echo $j;?></td>
-                    <td height="25" align="left" valign="middle"><?php echo $val_group[group_name];?> <?php echo $val_group["group_time"];?>-<?php echo $dbf->GetGroupTime($val_group["id"]);?></td>
+                    <td height="25" align="left" valign="middle"><?php echo $val_group[group_name];?> <?php echo $val_group["group_start_time"];?>-<?php echo $val_group["group_end_time"];?></td>
                     <td align="left" valign="middle"><?php echo $res_course[name];?></td>
                     <td align="left" valign="middle"><?php echo $res_teacher[name];?></td>
                     <td align="left" valign="middle"><?php echo $dbf->GetBillNo($valinv["student_id"], $valinv["course_id"]);?></td>
@@ -497,7 +500,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <td width="18%" align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
                         <td width="28%" align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
                         <td width="7%" align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[age];?></td>
-                        <td width="18%" align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?> <?php echo " [".$num_dtls."]";?></td>
+                        <td width="18%" align="right" valign="middle" class="mycon" style="padding-left:5px;">
+						<?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?>
+						<?php echo " [".$num_dtls."]";?>
+						</td>
                         <td width="5%" height="25" align="center" valign="middle" class="mycon"><?php echo $k; ?></td>
                         <td width="3%" height="25" align="center" valign="middle" class="contenttext"><a href="javascript:void(0);" onClick="show_details('<?php echo $val[id];?>');">
                           <span id="plusArrow<?php echo $val[id];?>"><img src="../images/plus.gif" border="0" ></span>
@@ -559,7 +565,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <td align="right" valign="middle"><?php echo $dbf->GetBillNo($valinv["student_id"], $valinv["course_id"]);?></td>
                               <td width="14%" align="center" valign="middle"><?php echo $bal_amt.'&nbsp;'.$res_currency[symbol];?></td>
                               <td align="right" valign="middle"><?php echo $val_group[status];?></td>
-                              <td height="25" align="right" valign="middle"><?php echo $val_group[group_name];?> <?php echo $val_group["group_time"];?>-<?php echo $dbf->GetGroupTime($val_group["id"]);?></td>
+                              <td height="25" align="right" valign="middle"><?php echo $val_group[group_name];?> <?php echo $val_group["group_start_time"];?>-<?php echo $val_group["group_end_time"];?></td>
                               <td align="center" valign="middle"><?php echo $j;?></td>
                               </tr>
                             <?php

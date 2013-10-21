@@ -465,7 +465,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         <td width="118" height="30" align="right" class="nametext">
 										<?php echo constant("TEACHER_ARF_MANAGE_STUDENTNAME");?> : <span class="nametext1">*</span></td>
                                         <td width="283" align="left" valign="middle" class="pedtext">
-										<?php echo $dbf->getDataFromTable("student", "first_name", "id='$student_id'")." ".$Arabic->en2ar($dbf->StudentName($student_id));?>
+										<?php $student = $dbf->strRecordID("student", "*", "id='$student_id'");?>
+										<?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";?>
                                         </td>
                                         <td width="330" rowspan="4" align="center" valign="top" id="lbl_student">&nbsp;</td>
                                         </tr>

@@ -727,7 +727,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 										  $centre_time = date('h:i A', strtotime($start_time));
 									  }
 									  //echo $line;				  
-									  $starttime = date('H:i:s',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));									  
+									  $starttime = date('H:i:s',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));		
+									  $stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));									  
                                       ?>
                                         <tr>
                                           <td width="70" height="25" align="center" valign="middle" bgcolor="#CCCCCC" class="pedtext"><?php echo $centre_time;?></td>
@@ -736,8 +737,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                               <tr onMouseOver="this.style.backgroundColor='#EBDDE2'" onMouseOut="this.style.backgroundColor=''">
                                                 <td width="3" align="left" valign="middle"></td>
                                                 <?php                                            
-                                            $num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$sun1' BETWEEN start_date And end_date)");
-                                            if($num==0){
+                                            //$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$sun1' BETWEEN start_date And end_date)");
+                                            $num = $dbf->timeSlotAvailable($teacher_id, $sun1, $stime); 
+											//echo $stime;
+											if($num==false){
                                                 $class = 'teachertext';
                                                 $text = 'Available';
                                                 $img = "../images/tick.png";
@@ -766,8 +769,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                               <tr onMouseOver="this.style.backgroundColor='#EBDDE2'" onMouseOut="this.style.backgroundColor=''">
                                                 <td width="3" align="left" valign="middle"></td>
                                                 <?php
-											$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$mon1' BETWEEN start_date And end_date)");
-											if($num==0){
+											//$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$mon1' BETWEEN start_date And end_date)");
+											$stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+											$num = $dbf->timeSlotAvailable($teacher_id, $mon1, $stime); 
+											if($num==false){
 												$class = 'teachertext';
 												$text = 'Available';
 												$img = "../images/tick.png";
@@ -796,8 +801,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                               <tr onMouseOver="this.style.backgroundColor='#EBDDE2'" onMouseOut="this.style.backgroundColor=''">
                                                 <td width="3" align="left" valign="middle"></td>
                                                 <?php
-										$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$tue1' BETWEEN start_date And end_date)");
-										if($num==0){
+										//$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$tue1' BETWEEN start_date And end_date)");
+										$stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+										$num = $dbf->timeSlotAvailable($teacher_id, $tue1, $stime); 
+										if($num==false){
 											$class = 'teachertext';
 											$text = 'Available';
 											$img = "../images/tick.png";
@@ -827,8 +834,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                               <tr onMouseOver="this.style.backgroundColor='#EBDDE2'" onMouseOut="this.style.backgroundColor=''">
                                                 <td width="3" align="left" valign="middle"></td>
                                                 <?php
-										$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$wed1' BETWEEN start_date And end_date)");
-										if($num==0){
+										//$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$wed1' BETWEEN start_date And end_date)");
+										$stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+										$num = $dbf->timeSlotAvailable($teacher_id, $wed1, $stime); 
+										if($num==false){
 											$class = 'teachertext';
 											$text = 'Available';
 											$img = "../images/tick.png";
@@ -858,8 +867,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                               <tr onMouseOver="this.style.backgroundColor='#EBDDE2'" onMouseOut="this.style.backgroundColor=''">
                                                 <td width="3" align="left" valign="middle"></td>
                                                 <?php
-										$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$thu1' BETWEEN start_date And end_date)");
-										if($num==0){
+										//$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$thu1' BETWEEN start_date And end_date)");
+										$stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+										$num = $dbf->timeSlotAvailable($teacher_id, $thu1, $stime); 
+										if($num==false){
 											$class = 'teachertext';
 											$text = 'Available';
 											$img = "../images/tick.png";
@@ -888,8 +899,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                               <tr onMouseOver="this.style.backgroundColor='#EBDDE2'" onMouseOut="this.style.backgroundColor=''">
                                                 <td width="3" align="left" valign="middle"></td>
                                                 <?php
-										$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$fri1' BETWEEN start_date And end_date)");
-										if($num==0){
+										//$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$fri1' BETWEEN start_date And end_date)");
+										$stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+										$num = $dbf->timeSlotAvailable($teacher_id, $fri1, $stime); 
+										if($num==false){
 											$class = 'teachertext';
 											$text = 'Available';
 											$img = "../images/tick.png";
@@ -918,8 +931,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                               <tr onMouseOver="this.style.backgroundColor='#EBDDE2'" onMouseOut="this.style.backgroundColor=''">
                                                 <td width="3" align="left" valign="middle"></td>
                                                 <?php
-										$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$sat1' BETWEEN start_date And end_date)");
-										if($num==0){
+										//$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$sat1' BETWEEN start_date And end_date)");
+										$stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+										$num = $dbf->timeSlotAvailable($teacher_id, $sat1, $stime); 
+										if($num==false){
 											$class = 'teachertext';
 											$text = 'Available';
 											$img = "../images/tick.png";

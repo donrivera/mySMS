@@ -262,7 +262,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                             <td height="28" align="left" valign="middle" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_S3_STDMOBNO");?><span class="nametext1">*</span> : </td>
                             <td>&nbsp;</td>
-                            <?php if($_SESSION[mobile_no] == '') { $mobile = '009665'; } else { $mobile = $_SESSION[mobile_no];}?>
+                            <?php if($_SESSION[mobile_no] == '') { $mobile = '00966'; } else { $mobile = $_SESSION[mobile_no];}?>
                             <td align="left" valign="middle"><span class="leftmenu">
                               <input name="mobile_no" type="text" class="validate[required] new_textbox140" id="mobile_no" value="<?php echo $mobile;?>" onKeyPress="return PhoneNo(event);" maxlength="20"/>
                             </span></td>
@@ -277,7 +277,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                             <td height="28" align="left" valign="middle" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_S3_TEXT3");?>: </td>
                             <td>&nbsp;</td>
-                            <?php if($_SESSION[alt_no] == '') { $mobile1 = '009665'; } else { $mobile1 = $_SESSION[alt_no];}?>
+                            <?php if($_SESSION[alt_no] == '') { $mobile1 = '00966'; } else { $mobile1 = $_SESSION[alt_no];}?>
                             <td width="26%" align="left" valign="middle" class="leftmenu"><input name="alt_no" type="text" class="new_textbox140" id="alt_no" value="<?php echo $mobile1;?>" onKeyPress="return PhoneNo(event);" maxlength="20" onBlur="checkTab('alt_no');"/></td>
                             </tr>
                           <tr>
@@ -486,7 +486,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                           </tr>
                           <tr>
-                            <?php if($_SESSION[mobile_no] == '') { $mobile = '009665'; } else { $mobile = $_SESSION[mobile_no];}?>
+                            <?php if($_SESSION[mobile_no] == '') { $mobile = '00966'; } else { $mobile = $_SESSION[mobile_no];}?>
                             <td width="29%" height="28" align="right" valign="middle" class="leftmenu"><input name="mobile_no" type="text" class="validate[required] new_textbox140_ar" id="mobile_no" value="<?php echo $mobile;?>" onKeyPress="return PhoneNo(event);" maxlength="20"/></td>
                             <td>&nbsp;</td>
                             
@@ -501,7 +501,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                           </tr>
                           <tr>
-                            <?php if($_SESSION[alt_no] == '') { $mobile1 = '009665'; } else { $mobile1 = $_SESSION[alt_no];}?>
+                            <?php if($_SESSION[alt_no] == '') { $mobile1 = '00966'; } else { $mobile1 = $_SESSION[alt_no];}?>
                             <td height="28" align="right" valign="middle" class="leftmenu"><input name="alt_no" type="text" class="new_textbox140_ar" id="alt_no" value="<?php echo $mobile1;?>" onKeyPress="return PhoneNo(event);" maxlength="20" onBlur="checkTab('alt_no');"/></td>
                             <td>&nbsp;</td>
                             <td align="right" valign="middle"><span class="leftmenu"> : <?php echo constant("STUDENT_ADVISOR_S3_TEXT3");?></span></td>

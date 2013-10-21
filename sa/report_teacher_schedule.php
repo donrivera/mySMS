@@ -185,7 +185,7 @@ function show_details(a)
                     <span id="plusArrow<?php echo $val[id];?>"><img src="../images/plus.gif" border="0" ></span>
                     </a></td>
                   <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $k; ?></td>
-                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[group_name];?> <?php echo $val["group_time"];?>-<?php echo $dbf->GetGroupTime($val["id"]);?></td>
+                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[group_name];?> <?php echo $val["group_start_time"];?>-<?php echo $val["group_end_time"];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[start_date];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[end_date];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $std["COUNT(student_id)"];?></td>
@@ -212,7 +212,7 @@ function show_details(a)
 							?>
                           <tr bgcolor="<?php echo $color1;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color1;?>'" style="cursor:pointer;">
                             <td align="center" valign="middle"><?php echo $j; ?></td>
-                          <td align="left" valign="middle"><?php echo $val_student[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($val_student["id"]));?></td>
+                          <td align="left" valign="middle"><?php echo $val_student[first_name]."&nbsp;".$val_student[father_name]."&nbsp;".$val_student[family_name]."&nbsp;(".$val_student[first_name1]."&nbsp;".$val_student[father_name1]."&nbsp;".$val_student[grandfather_name1]."&nbsp;".$val_student[family_name1].")";?></td>
                           <td align="left" valign="middle"><?php echo $val_student[student_id];?></td>
                           <td align="left" valign="middle"><?php echo $val_student[student_mobile];?></td>
                           <td align="left" valign="middle"><?php echo $val_student[email];?>&nbsp;&nbsp;</td>
@@ -373,7 +373,7 @@ function show_details(a)
                           <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[end_date];?></td>
                           <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $std["COUNT(student_id)"];?></td>
                           <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $room["name"];?></td>
-                          <td height="25" align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[group_name];?> <?php echo $val["group_time"];?>-<?php echo $dbf->GetGroupTime($val["id"]);?></td>
+                          <td height="25" align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[group_name];?> <?php echo $val["group_start_time"];?>-<?php echo $val["group_end_time"];?></td>
                            <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $k; ?></td>
                           <td align="center" valign="middle" class="contenttext" style="padding-left:5px;"> <a href="javascript:void(0);" onClick="show_details('<?php echo $val[id];?>');">
                             <span id="plusArrow<?php echo $val[id];?>"><img src="../images/plus.gif" border="0" ></span>
@@ -407,7 +407,7 @@ function show_details(a)
                                 <td align="right" valign="middle"><?php echo $val_student[student_id];?></td>
                                 <td align="right" valign="middle"><?php echo $val_student[student_mobile];?></td>
                                 <td align="right" valign="middle"><?php echo $val_student[email];?>&nbsp;&nbsp;</td>
-                                 <td height="25" align="right" valign="middle"><?php echo $val_student[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($val_student["id"]));?></td>
+                                 <td height="25" align="right" valign="middle"><?php echo $val_student[first_name]."&nbsp;".$val_student[father_name]."&nbsp;".$val_student[family_name]."&nbsp;(".$val_student[first_name1]."&nbsp;".$val_student[father_name1]."&nbsp;".$val_student[grandfather_name1]."&nbsp;".$val_student[family_name1].")";?></td>
                                 <td align="center" valign="middle"><?php echo $j; ?></td>
                                 </tr>
                               <?php

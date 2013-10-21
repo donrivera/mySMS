@@ -368,13 +368,14 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 					//echo '<br>';			
 					//echo $end_date;
 					//loop start
+					
 					foreach($dbf->fetchOrder('common',"type='payment type'","") as $valpay) {
 						
 						//Get Amount from Student Enrolled Table with enrolled_date according to payment Type
 						if($_REQUEST[centre_id] != ''){
-							$cond = "payment_type='$valpay[id]' And centre_id='$_REQUEST[centre_id]' And (paid_date BETWEEN '$start_date' And '$end_date')";
+							$cond = "payment_type='$valpay[id]' And centre_id='$_REQUEST[centre_id]' AND (paid_date BETWEEN '$start_date' And '$end_date')";
 						}else{
-							$cond = "payment_type='$valpay[id]' And (paid_date BETWEEN '$start_date' And '$end_date')";
+							$cond = "payment_type='$valpay[id]' AND (paid_date BETWEEN '$start_date' And '$end_date')";
 						}
 						//echo $cond;
 						//echo '<br>';						
@@ -412,9 +413,10 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 						
 						$inv = $dbf->strRecordID("student_enroll","*","student_id='$valinv[student_id]' And course_id='$valinv[course_id]'");
 						$enrolled_status = $inv["enrolled_status"];
+						//echo var_dump($val_student);
 						?>
 						<tr onMouseOver="this.bgColor='#FDE6D0'" onMouseOut="this.bgColor='<?php echo $color1;?>'" style="cursor:pointer;">
-						  <td height="25" align="left" valign="middle"><a href="single-home.php?student_id=<?php echo $valinv[student_id];?>" style="cursor:pointer;">&nbsp;<?php echo $val_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($valinv["student_id"]));?></a></td>
+						  <td height="25" align="left" valign="middle"><a href="single-home.php?student_id=<?php echo $valinv[student_id];?>" style="cursor:pointer;">&nbsp;<?php echo $val_student[first_name]."&nbsp;".$val_student[father_name]."&nbsp;".$val_student[family_name]."&nbsp;(".$val_student[family_name1]."&nbsp;".$val_student[grandfather_name1]."&nbsp;".$val_student[father_name1]."&nbsp;".$val_student[first_name1].")";?></a></td>
 						  <td align="left" valign="middle"><?php echo $res_course["name"]; ?></td>
 						  <td align="center" valign="middle"><?php echo $valinv["paid_date"];?></td>
 						  <td align="center" valign="middle"><?php echo $dbf->GetBillNo($valinv["student_id"], $valinv["course_id"]);?></td>

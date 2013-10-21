@@ -523,7 +523,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td align="center" valign="middle" bgcolor="#FFFFFF" >
                     <input type="radio" name="student_id" id="student_id<?php echo $i-1;?>" value="<?php echo $student["id"];?>" onchange="show_save();" />
                     </td>
-                    <td align="left" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                    <td align="left" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";?></td>
                     <td align="left" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php echo $student["student_mobile"];?></td>
                     <td height="20" align="left" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php if($student["student_id"]!='0') { echo $student["student_id"]; }?></td>
                   </tr>
@@ -547,7 +547,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				  ?>
                   <tr>
                     <td align="center" valign="middle" bgcolor="#FFFFFF" ><input type="checkbox" name="id<?php echo $i;?>2" id="id<?php echo $i;?>2" value="<?php echo $mygroup[id];?>" /></td>
-                    <td align="left" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                    <td align="left" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";?></td>
                     <td align="left" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php echo $student["student_mobile"];?></td>
                     <td height="20" align="left" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;
                       <?php if($student["student_id"]!='0') { echo $student["student_id"]; }?></td>
@@ -736,7 +736,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <td height="20" align="right" valign="middle" bgcolor="#FFFFFF" class="pedtext" style="padding-right:5px;">&nbsp;
                       <?php if($student["student_id"]!='0') { echo $student["student_id"]; }?></td>
                       <td align="right" valign="middle" bgcolor="#FFFFFF" class="pedtext" style="padding-right:5px;">&nbsp;<?php echo $student["student_mobile"];?></td>
-                     <td align="right" valign="middle" bgcolor="#FFFFFF"  style="padding-right:5px;">&nbsp;<?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                     <td align="right" valign="middle" bgcolor="#FFFFFF"  style="padding-right:5px;">&nbsp;<?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";?></td>
                      
                     <td align="center" valign="middle" bgcolor="#FFFFFF" ><input type="checkbox" name="id<?php echo $i;?>2" id="id<?php echo $i;?>2" value="<?php echo $mygroup[id];?>" /></td>
                    
@@ -764,7 +764,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr>
                    <td height="20" align="right" valign="middle" bgcolor="#FFFFFF" class="pedtext" style="padding-right:5px;">&nbsp;<?php if($student["student_id"]!='0') { echo $student["student_id"]; }?></td>
                    <td align="right" valign="middle" bgcolor="#FFFFFF" class="pedtext" style="padding-right:5px;">&nbsp;<?php echo $student["student_mobile"];?></td>
-                   <td align="right" valign="middle" bgcolor="#FFFFFF" style="padding-right:5px;" >&nbsp;<?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                   <td align="right" valign="middle" bgcolor="#FFFFFF" style="padding-right:5px;" >&nbsp;<?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";?></td>
                    
                     <td align="center" valign="middle" bgcolor="#FFFFFF"  >
                     <input type="checkbox" name="student_id<?php echo $i;?>" id="student_id<?php echo $i;?>" />

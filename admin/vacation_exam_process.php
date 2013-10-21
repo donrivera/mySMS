@@ -14,8 +14,8 @@ if($_REQUEST['action']=='insert')
 	//Current date and Time
 	$cr_date = date('Y-m-d H:i:s A');
 	
-	$string="centre_id='$_POST[center]',name='$_POST[name]',frm='$_POST[startdate]',tto='$_POST[enddate]',no_days='$days',type='$_POST[type]',created_datetime='$cr_date',created_by='$_SESSION[id]'";
-	$dbf->insertSet("exam_vacation",$string);
+	//$string="centre_id='$_POST[center]',name='$_POST[name]',frm='$_POST[startdate]',tto='$_POST[enddate]',no_days='$days',type='$_POST[type]',created_datetime='$cr_date',created_by='$_SESSION[id]'";
+	//$dbf->insertSet("exam_vacation",$string);
 	
 	$start = $_POST[startdate];
 	$end = $_POST[enddate];
@@ -28,6 +28,29 @@ if($_REQUEST['action']=='insert')
 	$res_e = $dbf->strRecordID("student_group","MAX(end_date)","centre_id='$_POST[center]'");
 	$tto = $res_e["MAX(end_date)"];
 	
+	$duplicate=$dbf->genericQuery("	SELECT * 
+									FROM exam_vacation 
+									WHERE name='$_POST[name]' AND center_id='$_POST[center]'
+									AND (('$start' BETWEEN frm AND tto) OR ('$end' BETWEEN frm AND tto))");
+	
+	
+	if($duplicate <= 0 || empty($duplicate))
+	{	
+		$getDates=$dbf->schedLeaves("Exam",$_POST[name],$start,$end,$_POST[center]);
+		$string="centre_id='$_POST[center]',name='$_POST[name]',frm='$_POST[startdate]',tto='$_POST[enddate]',no_days='$days',type='$_POST[type]',created_datetime='$cr_date',created_by='$_SESSION[id]'";
+		$dbf->insertSet("exam_vacation",$string);
+	}
+	else
+	{
+	?>
+		<script type="text/javascript">
+			alert("Duplicate Transaction!");
+			window.history.back();
+		</script>
+	<?
+	}
+	header("Location:vacation_exam_manage.php");
+	/*
 	//Check entry end date is BETWEEN then (group Start and End date)
 	if(($end >= $frm && $end <= $tto) || ($start >= $frm && $start <= $tto))
 	{
@@ -218,13 +241,14 @@ if($_REQUEST['action']=='insert')
 	}
 
 	header("Location:vacation_exam_manage.php");	
+	*/
 }
 
 
 
 if($_REQUEST['action']=='edit')
 {
-
+	
 	//Detail of centre vacation according to ID
 	$res_vac = $dbf->strRecordID("exam_vacation","*","id='$_REQUEST[id]'");
 	
@@ -243,7 +267,9 @@ if($_REQUEST['action']=='edit')
 	//Get Maximum date of the Group / Course
 	$res_e = $dbf->strRecordID("student_group","MAX(end_date)","centre_id='$centre_id'");
 	$tto = $res_e["MAX(end_date)"];
-	
+	$dbf->updateSchedLeaves("Exam",$_REQUEST[id],$_POST[startdate],$_POST[enddate],"");
+	header("Location:vacation_exam_manage.php");
+	/*
 	//Check entry end date is BETWEEN then (group Start and End date)
 	if(($end >= $frm && $end <= $tto) || ($start >= $frm && $start <= $tto))
 	{
@@ -635,8 +661,8 @@ if($_REQUEST['action']=='edit')
 	
 	$string="name='$_POST[name]',frm='$_POST[startdate]',tto='$_POST[enddate]',type='$_POST[type]',last_updated='$cr_date',updated_by='$_SESSION[id]'";
 	$dbf->updateTable("exam_vacation",$string,"id='$_REQUEST[id]'");
+	*/
 	
-	header("Location:vacation_exam_manage.php");
 }
 
 
@@ -664,7 +690,10 @@ if($_REQUEST['action']=='delete')
 	//Get Maximum date of the Group / Course
 	$res_e = $dbf->strRecordID("student_group","MAX(end_date)","centre_id='$centre_id'");
 	$tto = $res_e["MAX(end_date)"];
-	
+	$dbf->deleteSchedLeaves("Exam",$_REQUEST[id]);
+	$dbf->deleteFromTable("exam_vacation","id='$_REQUEST[id]'");
+	header("Location:vacation_exam_manage.php");
+	/*
 	//Check entry end date is BETWEEN then (group Start and End date)
 	if(($end >= $frm && $end <= $tto) || ($start >= $frm && $start <= $tto))
 	{
@@ -847,8 +876,7 @@ if($_REQUEST['action']=='delete')
 		}
 		
 	}
+	*/
 	
-	$dbf->deleteFromTable("exam_vacation","id='$_REQUEST[id]'");
-	header("Location:vacation_exam_manage.php");
 }
 ?>

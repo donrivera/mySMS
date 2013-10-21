@@ -1376,7 +1376,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 
                               <td>&nbsp;</td>
 
-                              <td align="left" valign="middle"><input name="mobile" value="009665" type="text" class="validate[required] new_textbox190" id="mobile" onkeypress="return PhoneNo(event);"/></td>
+                              <td align="left" valign="middle"><input name="mobile" value="00966" type="text" class="validate[required] new_textbox190" id="mobile" onkeypress="return PhoneNo(event);"/></td>
 
                               <td>&nbsp;</td>
 
@@ -1392,7 +1392,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 
                               <td align="left" valign="middle">
 
-                              <input name="altmobile" type="text" class="new_textbox190" value="009665" id="altmobile" size="45" minlength="4" onkeypress="return PhoneNo(event);"/></td>
+                              <input name="altmobile" type="text" class="new_textbox190" value="00966" id="altmobile" size="45" minlength="4" onkeypress="return PhoneNo(event);"/></td>
 
                               <td>&nbsp;</td>
 
@@ -2372,7 +2372,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 
 							if(document.getElementById('id_typen').checked == true){
 
-								alert(document.getElementById('sidn').value);
+								//alert(document.getElementById('sidn').value);
 
 								if(document.getElementById('sidn').value == ''){									
 
@@ -2686,7 +2686,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 
                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
 
-                              <td align="right" valign="middle"><input name="mobile" value="009665" type="text" class="validate[required] new_textbox190_ar" id="mobile" onkeypress="return PhoneNo(event);"/></td>
+                              <td align="right" valign="middle"><input name="mobile" value="00966" type="text" class="validate[required] new_textbox190_ar" id="mobile" onkeypress="return PhoneNo(event);"/></td>
 
                               <td>&nbsp;</td>
 
@@ -2702,7 +2702,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 
                               <td align="right" valign="middle">
 
-                              <input name="altmobile" type="text" class="new_textbox190_ar" value="009665" id="altmobile" size="45" minlength="4" onkeypress="return PhoneNo(event);"/></td>
+                              <input name="altmobile" type="text" class="new_textbox190_ar" value="00966" id="altmobile" size="45" minlength="4" onkeypress="return PhoneNo(event);"/></td>
 
                               <td>&nbsp;</td>
 

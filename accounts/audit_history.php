@@ -243,7 +243,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $alerts[fld_name];?></td>
                   <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $alerts[chg_from];?></td>                  
                   <td align="left" valign="middle"><?php echo $alerts[chg_to];?></td>                  
-                  <td align="left" valign="middle"><a href="single-home.php?student_id=<?php echo $alerts[id];?>"><?php echo $student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($alerts["id"]));?></a></td>                  
+                  <td align="left" valign="middle"><a href="single-home.php?student_id=<?php echo $alerts[id];?>"><?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[family_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[first_name1].")";?></a></td>                  
                   <?php
 						  $i = $i + 1;
 						  if($color=="#ECECFF"){

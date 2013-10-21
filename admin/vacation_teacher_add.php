@@ -280,7 +280,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <tr>
                               <td height="30" align="right" valign="top" class="leftmenu">&nbsp;<?php echo constant("ADMIN_REPORT_TEACHER_BOARD_TEACHERNAME");?>   <span class="nametext1">*</span> :</td>
                               <td align="left" valign="top">
-                              <select name="center" id="center" style="width:190px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onchange="getteacher();">
+                              <select name="teacher" id="teacher" style="width:190px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onchange="getteacher();">
                               <option value="">Select Teacher</option>
                                 <?php
 								foreach($dbf->fetchOrder('teacher',"","") as $res) {

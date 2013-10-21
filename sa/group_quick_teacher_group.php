@@ -9,7 +9,7 @@ $dbf = new User();
 
 include_once '../includes/language.php';
 $teacher_id = $_REQUEST["teacher_id"];
-
+sleep(1);
  if($_SESSION[lang]=="EN"){?>
 <table width="98%" border="1" cellspacing="0" cellpadding="0" bordercolor="#cccccc" style="border-collapse:collapse;">
     <tr class="logintext">
@@ -19,7 +19,7 @@ $teacher_id = $_REQUEST["teacher_id"];
       <td width="15%" align="left" valign="middle" bgcolor="#000066"> % <?php echo constant("STUDENT_ADVISOR_AUDITING_COMPLETED");?></td>
   </tr>
     <?php
-    foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And teacher_id='$teacher_id'","","") as $valstudent){
+    foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And teacher_id='$teacher_id'","id ASC","") as $valstudent){
 	$course = $dbf->strRecordID("course","*","id='$valstudent[course_id]'");
 	
 	# Calculate Percentanges of Complition
@@ -41,7 +41,7 @@ $teacher_id = $_REQUEST["teacher_id"];
 	}
     ?>
     <tr>
-      <td align="left" valign="middle">&nbsp;<?php echo $valstudent[group_name];?> <?php echo $valstudent["group_time"];?>-<?php echo $dbf->GetGroupTime($valstudent["id"]);?></td>
+      <td align="left" valign="middle">&nbsp;<?php echo $valstudent[group_name];?> <?php echo $valstudent["group_start_time"];?>-<?php echo $valstudent["group_end_time"];?></td>
       <td align="left" valign="middle">&nbsp;<?php echo $course[name];?></td>
       <td align="center" valign="middle">&nbsp;<?php echo date('d-M-Y',strtotime($valstudent[start_date]));?>&nbsp;<br />        <?php echo date('d-M-Y',strtotime($valstudent[end_date]));?></td>
       <td align="left" valign="middle">&nbsp;<?php echo $completed;?>&nbsp;%</td>

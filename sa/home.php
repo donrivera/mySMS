@@ -433,10 +433,11 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                   <table width="450" border="0" cellspacing="0" cellpadding="0">
                   
                   
-                   <?php
+                   <?php //echo var_dump($_SESSION); 
 					$i = 1;
 					$dt = date('Y-m-d');
-					foreach($dbf->fetchOrder('student_appointment',"dated>='$dt' AND status='1'","dated") as $val_s) {
+					$centre_id=$_SESSION['centre_id'];
+					foreach($dbf->fetchOrder('student_appointment',"dated>='$dt' AND status='1' AND centre_id='$centre_id'","dated") as $val_s) {
 					//foreach($dbf->fetchOrder('student_appointment',"user_id='$_SESSION[id]' AND dated>='$dt' AND status='0'","dated") as $val_s) {
 						
 						//Get student name
@@ -456,7 +457,7 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                     <td width="4">&nbsp;</td>
                     <td width="432" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                       <tr>
-                        <td width="59%" align="left" valign="middle" class="hometest_name"><?php echo $vals[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($vals["id"]));?></td>
+                        <td width="59%" align="left" valign="middle" class="hometest_name"><a href="single-home.php?student_id=<?php echo $vals[id];?>" style="cursor:pointer;"><?php echo $vals[first_name]."&nbsp;".$vals[father_name]."&nbsp;".$vals[family_name]."&nbsp;(".$vals[family_name1]."&nbsp;".$vals[grandfather_name1]."&nbsp;".$vals[father_name1]."&nbsp;".$vals[first_name1].")";?></a></td>
                         <td width="41%" align="left" valign="middle" class="hometest_time"><?php echo date("d l, M Y",strtotime($val_s["dated"]));?></td>
                       </tr>
                       <tr>
@@ -895,7 +896,7 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                           <tr>
                             <td width="432" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                               <tr>
-                                <td width="49%" align="right" valign="middle" class="hometest_name"><?php echo $vals[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($vals["id"]));?></td>
+                                <td width="49%" align="right" valign="middle" class="hometest_name"><a href="single-home.php?student_id=<?php echo $vals[id];?>" style="cursor:pointer;"><?php echo $vals[first_name]."&nbsp;".$vals[father_name]."&nbsp;".$vals[family_name]."&nbsp;(".$vals[first_name1]."&nbsp;".$vals[father_name1]."&nbsp;".$vals[grandfather_name1]."&nbsp;".$vals[family_name1].")";?></a></td>
                                 <td width="51%" align="right" valign="middle" class="hometest_time"><?php echo date("d l, M Y",strtotime($val_s["dated"]));?></td>
                                 </tr>
                               <tr>

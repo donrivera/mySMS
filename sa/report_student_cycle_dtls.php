@@ -145,7 +145,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <?php
 						foreach($dbf->fetchOrder('student',"first_name<>'' And centre_id='$_SESSION[centre_id]'","first_name") as $val) {
 						?>
-                    <option value="<?php echo $val[id]; ?>"<?php if($student_id==$val["id"]){?> selected="selected"<?php } ?>><?php echo $val[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></option>
+                    <option value="<?php echo $val[id]; ?>"<?php if($student_id==$val["id"]){?> selected="selected"<?php } ?>>
+						<?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?>
+					</option>
                     <?php } ?>
                     </select>
                 </td>
@@ -552,7 +554,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <?php
 						foreach($dbf->fetchOrder('student',"first_name<>'' And centre_id='$_SESSION[centre_id]'","first_name") as $val) {
 						?>
-                                <option value="<?php echo $val[id]; ?>"<?php if($student_id==$val["id"]){?> selected="selected"<?php } ?>><?php echo $val[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></option>
+                                <option value="<?php echo $val[id]; ?>"<?php if($student_id==$val["id"]){?> selected="selected"<?php } ?>>
+									<?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?>
+								</option>
                                 <?php } ?>
                                 </select>
                               </td>

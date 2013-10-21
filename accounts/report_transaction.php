@@ -285,7 +285,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <td align="center" valign="middle" class="mycon"><?php echo $i;?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $valfee[paid_date];?></td>
                   <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $enroll;?></td>
-                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $student[id];?>"><?php echo $student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></a></td>
+                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $student[id];?>"><?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[family_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[first_name1].")";?></a></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $course[name];?></td>
                   <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $valfee[paid_amt];?> <?php echo $res_currency[symbol];?></td>
                   <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $ptype[name];?></td>

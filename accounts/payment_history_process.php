@@ -7,8 +7,8 @@ include("../includes/saudismsNET-API.php");
 //Object initialization
 $dbf = new User();
   
-if($_REQUEST['action']=='edit_payment'){
-	
+if($_REQUEST['action']=='edit_payment'){ 
+
 	$student_id = $_REQUEST["student_id"];
 	$course_id = $_REQUEST["course_id"];
 	$fee_id = $_REQUEST["fee_id"];

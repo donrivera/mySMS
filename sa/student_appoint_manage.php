@@ -238,7 +238,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" >
                 <td align="center" valign="middle" class="mycon"><?php echo $i;?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[dated];?></td>
-				  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $res[id];?>" style="cursor:pointer;"><?php echo $res[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res["id"]));?></a></td>
+				  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $res[id];?>" style="cursor:pointer;"><?php echo $res[first_name]."&nbsp;".$res[father_name]."&nbsp;".$res[family_name]."&nbsp;(".$res[first_name1]."&nbsp;".$res[father_name1]."&nbsp;".$res[grandfather_name1]."&nbsp;".$res[family_name1].")";?></a></td>
 				    <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[comments];?></td>
 				    <td width="4%" align="center" valign="middle">
                     <?php

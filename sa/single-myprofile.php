@@ -359,7 +359,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								return false;
 							}
 							if(document.getElementById('id_typen').checked == true){
-								alert(document.getElementById('sidn').value);
+								alert("Same ID"+document.getElementById('sidn').value);
 								if(document.getElementById('sidn').value == ''){									
 									document.getElementById('sidn').focus();
 									return false;

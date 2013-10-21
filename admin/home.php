@@ -1,4 +1,5 @@
 <?php
+
 ob_start();
 session_start();
 if(($_COOKIE['cook_username'])=='')
@@ -65,7 +66,7 @@ function countdown_trigger(){
 	}
 }
 </script>
-<?php
+<?php	
 //Get from the table
 $res_logout = $dbf->strRecordID("conditions","*","type='Logout Time'");
 $count = $res_logout["name"]; // Set timeout period in seconds

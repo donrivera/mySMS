@@ -145,7 +145,7 @@ text-decoration:none;
           ?>
           <tr>
             <td width="35%" height="25" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_UNITS");?> : <?php echo $res_size[units];?></td>
-            <td width="65%" align="left" valign="middle" class="pedtext"><?php echo constant("CD_EP_ADDING_STUDENT_GROUPADD");?> : <?php echo $res_group_name[name];?></td>
+            <td width="65%" align="left" valign="middle" class="pedtext"><?php echo constant("CD_EP_ADDING_STUDENT_GROUPADD");?> : <?php echo $res_teacher_group[group_name];/*$res_group_name[name];*/?></td>
             </tr>
           <tr>
           <?php
@@ -207,8 +207,9 @@ text-decoration:none;
               <?php
               if($_REQUEST[cmbgroup] != '')
               {
-                $dt = date("Y-m-d",strtotime($res_teacher_group[start_date]));
-                echo $dt = $dt." - ".$res_teacher_group[group_time];
+                $dt = date("Y-m-d",strtotime($res_teacher_group[start_date])).' TO '.date("Y-m-d",strtotime($res_teacher_group[end_date]));
+						
+				echo $dt = $dt." TIME- ".$res_teacher_group[group_start_time]."-".$res_teacher_group[group_end_time];
               }
             ?>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -246,7 +247,7 @@ text-decoration:none;
             </tr>
           <tr>
             <td height="25" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_NOFSTUDENT");?>  : <?php echo $no_student;?></td>
-            <td align="left" valign="middle" class="pedtext"><strong><?php echo constant("STUDENT_ADVISOR_PED_TXT");?></strong></td>
+            <td align="left" valign="middle" class="pedtext"><strong><?php echo "Frequency: ".$res_group[unit_per_day]."&nbsp;x 5 days";/*constant("STUDENT_ADVISOR_PED_TXT");*/?></strong></td>
             </tr>
           <tr>
             <td height="25" align="left" valign="middle" class="pedtext"><strong><?php echo constant("STUDENT_ADVISOR_PED_SLSPERSON");?></strong> : <?php echo $sa_name;?></td>
@@ -395,11 +396,11 @@ text-decoration:none;
               <tr>
                 <td width="230" height="25" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_TXT14");?></td>
                 <td width="37" align="center" valign="middle" class="pedtext">LIS</td>
-                <td width="31" align="center" valign="middle" class="pedtext">Units</td>
+                <td width="42" align="center" valign="middle" class="pedtext">Units</td>
                 <td width="100" align="center" valign="middle" class="pedtext">Date</td>
-                <td width="31" align="center" valign="middle" class="pedtext">Attd.</td>
+                <td width="42" align="center" valign="middle" class="pedtext">Attd.</td>
                 <td width="130" align="center" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_INSTRUCTOR");?></td>
-                <td width="230" align="center" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_MATERIALCOVER");?></td>
+                <td width="231" align="center" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_MATERIALCOVER");?></td>
                 <td align="center" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_HOMEWORK");?></td>
               </tr>
               <tr bgcolor="#E9EFEF">
@@ -880,7 +881,7 @@ text-decoration:none;
                 foreach($dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*") as $r) {
                 ?>
                     <tr>
-                      <td width="10%" align="left" bgcolor="#E9EFEF" class="pedtext"><?php echo $r[first_name];?>
+                      <td width="10%" align="left" bgcolor="#E9EFEF" class="pedtext"><?php echo $r[first_name]."&nbsp;".$r[father_name]."&nbsp;".$r[family_name]."&nbsp;(".$r[family_name1]."&nbsp;".$r[grandfather_name1]."&nbsp;".$r[father_name1]."&nbsp;".$r[first_name1].")";?>
                         </td>
                       <?php
                     $no_cols = $unit / 2;

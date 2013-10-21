@@ -405,7 +405,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								return false;
 							}
 							if(document.getElementById('id_typen').checked == true){
-								alert(document.getElementById('sidn').value);
+								//alert(document.getElementById('sidn').value);
 								if(document.getElementById('sidn').value == ''){									
 									document.getElementById('sidn').focus();
 									return false;
@@ -413,7 +413,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							}
 						}
 						</script>
-                        <form action="s_process.php?action=edit&student_id=<?=$student_id;?>" name="frm" method="post" id="frm" enctype="multipart/form-data" onsubmit="return checkid();">
+                        <form action="s_process.php?action=edit_from_student_profile&student_id=<?=$student_id;?>" name="frm" method="post" id="frm" enctype="multipart/form-data" onsubmit="return checkid();"><!--action=edit&student_id=<?=$student_id;?>"-->
                           <table width="100%" border="0" cellpadding="0" cellspacing="0" >
                             <tr>
                               <td width="7%">&nbsp;</td>
@@ -703,7 +703,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                   <?php
 									$t = 1;
 									foreach($dbf->fetchOrder('common',"type='Type'","") as $valt){
-										$n11=$dbf->countRows('student_type',"student_id='$student_id' AND type_id='$valc[id]'");
+										$n11=$dbf->countRows('student_type',"student_id='$student_id' AND type_id='$valt[id]'");
 									?>
                                   <tr>
                                     <td width="6%" align="left" valign="middle">
@@ -715,6 +715,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 									$t = $t + 1;
 									}
 									?>
+									
                                 </table>
 								
 								<input type="hidden" name="tcount" id="tcount" value="<?php echo $t-1;?>">
@@ -868,7 +869,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       <tr>
                                         <td align="left" valign="middle">&nbsp;</td>
                                         <td height="28" align="left" valign="middle">
-                                          <input name="txt_src" type="text" class="new_textbox140" id="txt_src" value="<?php echo $res_edit_student["first_name1"];?>" onBlur="setvalue('mytxt_src',this.value);"/></td>
+                                          <input name="txt_src" type="text" class="new_textbox140" id="txt_src" value="<?php echo $res_edit_student["first_name"];?>" onBlur="setvalue('mytxt_src',this.value);"/></td>
                                         <td align="left" valign="middle">
                                           <input name="txt_src1" type="text" class="new_textbox140" id="txt_src1" value="<?php echo $res_edit_student["father_name"];?>" onBlur="setvalue('mytxt_src1',this.value);"/></td>
                                         <td align="left" valign="middle">
@@ -924,13 +925,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       <tr>
                                         <td align="left" valign="middle">&nbsp;</td>
                                         <td height="28" align="left" valign="middle">
-                                          <input name="t1" type="text" class="new_textbox140_ar" id="t1" value="<?php echo $res_edit_student["family_name"]."don";?>"/></td>
+                                          <input name="t1" type="text" class="new_textbox140_ar" id="t1" value="<?php echo $res_edit_student["family_name1"];?>"/></td>
                                         <td align="left" valign="middle">
-                                          <input name="t2" type="text" class="new_textbox140_ar" id="t2" value="<?php echo $Arabic->en2ar($res_edit_student["grandfather_name"]);?>" /></td>
+                                          <input name="t2" type="text" class="new_textbox140_ar" id="t2" value="<?php echo $res_edit_student["grandfather_name1"];?>" /></td>
                                         <td align="left" valign="middle">
-                                          <input name="t3" type="text" class="new_textbox140_ar" id="t3" value="<?php echo $Arabic->en2ar($res_edit_student["father_name"]);?>" /></td>
+                                          <input name="t3" type="text" class="new_textbox140_ar" id="t3" value="<?php echo $res_edit_student["father_name1"];?>" /></td>
                                         <td align="left" valign="middle">
-                                          <input name="t4" type="text" class="new_textbox140_ar" id="t4" value="<?php echo $Arabic->en2ar($res_edit_student["first_name1"]);?>" /></td>
+                                          <input name="t4" type="text" class="new_textbox140_ar" id="t4" value="<?php echo $res_edit_student["first_name1"];?>" /></td>
                                         </tr>
                                       <tr class="shop2">
                                         <td align="left" valign="top">&nbsp;</td>
@@ -977,7 +978,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 										return false;
 									}						
 									if(document.getElementById('id_typen').checked == true){
-										alert(document.getElementById('sidn').value);
+										//alert(document.getElementById('sidn').value);
 										if(document.getElementById('sidn').value == ''){									
 											document.getElementById('sidn').focus();
 											return false;

@@ -50,9 +50,11 @@ if($_SESSION[font]=='big'){
 <script type="text/javascript" src="dropdowntabs.js"></script>
 <link rel="stylesheet" type="text/css" href="glowtabs.css" />
 
+<script type="text/javascript" src="../modal/thickbox.js"></script>
+<link rel="stylesheet" href="../modal/thickbox.css" type="text/css" media="screen" />
 <!--UI JQUERY DATE PICKER-->
 <link rel="stylesheet" href="datepicker/jquery.ui.all.css">
-
+<script type="text/javascript" src="../modal/thickbox.js"></script>
 <script src="datepicker/jquery.ui.core.js"></script>
 <script src="datepicker/jquery.ui.widget.js"></script>
 <script src="datepicker/jquery.ui.datepicker.js"></script>
@@ -191,7 +193,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <td width="15" align="left" valign="top"><img src="../images/left_top_bg.png" width="15" height="31" alt="left_top" /></td>
-                    <td width="100%" class="amt_head" style="background:url(../images/left_mid_bg.png) repeat-x;"><?php echo constant("CD_SEARCH_INVOICE_PAYMENTRECEIVE");?> <?php echo $val_student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($val_student["id"]));?></td>
+                    <td width="100%" class="amt_head" style="background:url(../images/left_mid_bg.png) repeat-x;"><?php echo constant("CD_SEARCH_INVOICE_PAYMENTRECEIVE");?> <?php echo $val_student[first_name]."&nbsp;".$val_student[father_name]."&nbsp;".$val_student[family_name]."&nbsp;(".$val_student[first_name1]."&nbsp;".$val_student[father_name1]."&nbsp;".$val_student[grandfather_name1]."&nbsp;".$val_student[family_name1].")";?></td>
                     <td width="15" align="right" valign="top"><img src="../images/top_right_bg.png" width="15" height="31" /></td>
                   </tr>
                 </table></td>
@@ -228,7 +230,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td width="25%" align="left" valign="middle" bgcolor="#CCCCCC">&nbsp;Advance Date</td>
                             <td width="27%" align="right" valign="middle" bgcolor="#CCCCCC">Amount&nbsp;</td>
                             <td width="20%" align="center" valign="middle" bgcolor="#CCCCCC">Payment Type</td>
-                            </tr>
+							</tr>
                           <?php
 						  $m = 1;
 						  $is_advance_exist = $dbf->countRows("student_fees", "student_id='$student_id' And course_id='$course_id' And type='advance'");
@@ -238,7 +240,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td height="22" align="center" valign="middle" class="mytext"><?php echo $m;?></td>
                             <td align="left" valign="middle" class="mytext">&nbsp;<?php echo $adv["paid_date"];?></td>
                             <td align="right" valign="middle" class="mytext">&nbsp;<?php echo $adv["paid_amt"];?> <?php echo $res_currency[symbol];?>&nbsp;</td>
-                            <td align="center" valign="middle" class="mytext"><?php echo $dbf->getDataFromTable("common", "name", "id='$adv[payment_type]'");?></td>
+                            <td align="center" valign="middle" class="mytext"><?php echo $dbf->getDataFromTable("common", "name", "id='$adv[payment_type]'");?>
+							<a href="search_print_challan_admission.php?course_id=<?php echo $course_id;?>&amp;fee_id=<?php echo $adv[id];?>&amp;id=<?php echo $student_id;?>&amp;page=search_print_challan_admission.php&amp;TB_iframe=true&amp;height=440&amp;width=675&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox"><img src="../images/print.png" width="16" height="16" border="0" title="Print" /></a>
+							<!--<a href="search_print_invoice.php?course_id=<?php echo $_REQUEST["course_id"];?>&amp;student_id=<?php echo $student_id;?>&amp;page=search_print_invoice.php&amp;TB_iframe=true&amp;height=600&amp;width=690&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox"><img src="../images/print.png" width="16" height="16" border="0" title="Print" /></a>-->
+							</td>
                             </tr>
                           <?php $m++; } ?>
                           <?php if($is_advance_exist == 0){?>
@@ -409,7 +414,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                           <td width="15" align="left" valign="top"><img src="../images/left_top_bg.png" width="15" height="31" alt="left_top" /></td>
-                          <td width="100%" align="right" class="amt_head" style="background:url(../images/left_mid_bg.png) repeat-x;"><?php echo constant("CD_SEARCH_INVOICE_PAYMENTRECEIVE");?> <?php echo $val_student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($val_student["id"]));?></td>
+                          <td width="100%" align="right" class="amt_head" style="background:url(../images/left_mid_bg.png) repeat-x;"><?php echo constant("CD_SEARCH_INVOICE_PAYMENTRECEIVE");?> <?php echo $val_student[first_name]."&nbsp;".$val_student[father_name]."&nbsp;".$val_student[family_name]."&nbsp;(".$val_student[first_name1]."&nbsp;".$val_student[father_name1]."&nbsp;".$val_student[grandfather_name1]."&nbsp;".$val_student[family_name1].")";?></td>
                           <td width="15" align="right" valign="top"><img src="../images/top_right_bg.png" width="15" height="31" /></td>
                           </tr>
                         </table></td>

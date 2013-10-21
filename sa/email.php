@@ -220,7 +220,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <?php
 					foreach($dbf->fetchOrder('student',"centre_id='$_SESSION[centre_id]' And student_mobile<>'' And first_name <> ''","first_name","","") as $move){
 					?>
-					<option value="<?php echo $move['id'];?>"><?php echo $move['first_name'];?> <?php echo $Arabic->en2ar($dbf->StudentName($move["id"]));?></option>
+					<option value="<?php echo $move['id'];?>">
+						<?php echo $move[first_name]."&nbsp;".$move[father_name]."&nbsp;".$move[family_name]."&nbsp;(".$move[first_name1]."&nbsp;".$move[father_name1]."&nbsp;".$move[grandfather_name1]."&nbsp;".$move[family_name1].")";?>
+					</option>
 					<?php } ?>
                   </select>
                 </td>
@@ -352,7 +354,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <?php
 							foreach($dbf->fetchOrder('student',"centre_id='$_SESSION[centre_id]' And student_mobile<>'' And first_name <> ''","first_name","","") as $move){
 							?>
-							<option value="<?php echo $move['id'];?>"><?php echo $move['first_name'];?> <?php echo $Arabic->en2ar($dbf->StudentName($move["id"]));?></option>
+							<option value="<?php echo $move['id'];?>">
+								<?php echo $move[first_name]."&nbsp;".$move[father_name]."&nbsp;".$move[family_name]."&nbsp;(".$move[first_name1]."&nbsp;".$move[father_name1]."&nbsp;".$move[grandfather_name1]."&nbsp;".$move[family_name1].")";?>
+							</option>
 							<?php } ?>
                           </select>
                         </td>

@@ -68,7 +68,6 @@ if($_REQUEST['action']=='insert'){
 	$reg_dt = date('Y-m-d');
 	$string="first_name='$first_name',
 	         first_name1='$ar_firstname',
-			 student_first_name='$ar_first_name',
 			 father_name='$father_name',
 			 father_name1='$ar_fathername',
 			 grandfather_name='$grandfather_name',
@@ -178,7 +177,6 @@ if($_REQUEST['action']=='edit'){
 	
 	$string="first_name='$first_name',
 			 first_name1='$ar_firstname',
-			 student_first_name='$ar_first_name',
 			 father_name='$father_name',
 			 father_name1='$ar_fathername',
 			 grandfather_name='$grandfather_name',

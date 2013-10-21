@@ -246,7 +246,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				  ?>
                   <tr>
                     <td height="22" align="center" valign="middle" class="pedtext"><?php echo $k;?></td>
-                    <td align="left" valign="middle" class="mytext"><?php echo $group["group_name"];?> <?php echo $group["group_time"];?>-<?php echo $dbf->GetGroupTime($group["id"]);?></td>
+                    <td align="left" valign="middle" class="mytext"><?php echo $group["group_name"];?> <?php echo $group["group_start_time"];?>-<?php echo $group["group_end_time"];?></td>
                     <td align="left" valign="middle" class="mytext"><?php echo $dbf->getDataFromTable("course","name","id='$group[course_id]'");?></td>
                     <td align="left" valign="middle" class="mytext"><?php echo 'From '.$group["start_date"].' To '.$group["end_date"];?></td>
                     <td align="center" valign="middle" class="mytext"><?php echo $group["status"];?></td>
@@ -429,7 +429,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                           <td align="center" valign="middle" class="mytext"><?php echo $group["status"];?></td>
                           <td align="right" valign="middle" class="mytext"><?php echo $dbf->getDataFromTable("course","name","id='$group[course_id]'");?></td>
                           <td align="right" valign="middle" class="mytext"><?php echo 'From '.$group["start_date"].' To '.$group["end_date"];?></td>
-                          <td align="right" valign="middle" class="mytext"><?php echo $group["group_name"];?> <?php echo $group["group_time"];?>-<?php echo $dbf->GetGroupTime($group["id"]);?></td>
+                          <td align="right" valign="middle" class="mytext"><?php echo $group["group_name"];?> <?php echo $group["group_start_time"];?>-<?php echo $group["group_end_time"];?></td>
                           <td height="22" align="center" valign="middle" class="pedtext"><?php echo $k;?></td>
                         </tr>
                         <?php $k++; } ?>

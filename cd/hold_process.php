@@ -38,11 +38,14 @@ if($_REQUEST['action']=='update'){
 	$group = $groupdtls["group_id"];
 	
 	//Resize if Approved here
-	if($_REQUEST["status"] == 'Approved'){
-		
+	if($_REQUEST["status"] == 'Approved')
+	{
+		//DON RIVERA 10-11-2013 Deflate Group/s If not in their current group size.
+		$dbf->pullSchedule($group);
+		//DON RIVERA 10-11-2013 Deflate Group/s If not in their current group size.
 		//Previous group id
+
 		$prev_group_id = $dbf->getDataFromTable("student_group","group_id","id='$group'");
-		
 		# update in the student_enroll table for Hold
 		# 6 = Status in the database
 		$string="status_id='6'";
@@ -69,9 +72,12 @@ if($_REQUEST['action']=='update'){
 		
 		//Get the range from (group_size) Table
 		$sizegroup = $dbf->strRecordID("group_size","*","(size_to>='$prev_num_student' And size_from<='$prev_num_student')");
-		if($prev_num_student == 0){
+		if($prev_num_student == 0)
+		{
 			$my_group_id = 0;
-		}else{
+		}
+		else
+		{
 			$my_group_id = $sizegroup["group_id"];
 		}
 		//update the Group ID to Student_group Table means we can get the student according to group_id
@@ -98,10 +104,12 @@ if($_REQUEST['action']=='update'){
 		$dec_right_value = substr($curr_pending_unit,0,2);
 		
 		//Check Odd or Even Number
-		if ($dec_right_value % 2 == 0){
+		if ($dec_right_value % 2 == 0)
+		{
 			//echo "number is even";
 			$dec_right_value_is = substr($curr_pending_unit,0,2); // 18.66 => 18
-		}else{
+		}else
+		{
 			//echo "number is odd";
 			$dec_right_value_is = ceil($curr_pending_unit); // 63.44 => 64
 		}
@@ -216,6 +224,7 @@ if($_REQUEST['action']=='update'){
 		$str_d="parent_id='$hid',student_id='$student_id'";
 		$dbf->insertSet("student_group_history_dtls",$str_d);
 		// End ==============================================	
+
 	}	
 	
 	// Start Mail to Student Advisor
@@ -349,6 +358,7 @@ if($_REQUEST['action']=='update'){
 	// End Save Mail
 	
 	header("Location:hold_manage.php");
+
 }
 
 if($_REQUEST['action']=='delete'){

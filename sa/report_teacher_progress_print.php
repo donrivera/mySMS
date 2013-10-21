@@ -128,7 +128,7 @@ font-weight:bold;
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="41%" height="20" align="left" valign="middle" class="leftmenu"><?php echo constant("CD_GROUP_PROGRESS_COMPANYGROUP");?> : </td>
-                <td width="59%" align="left" valign="middle" class="content" ><?php echo $res_g[group_name];?> <?php echo $res_g["group_time"];?>-<?php echo $dbf->GetGroupTime($res_g["id"]);?></td>
+                <td width="59%" align="left" valign="middle" class="content" ><?php echo $res_g[group_name];?> <?php echo $res_g["group_start_time"];?>-<?php echo $res_g["group_end_time"];?></td>
               </tr>
             </table></td>
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">

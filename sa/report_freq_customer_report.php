@@ -249,7 +249,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				?> 
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                   <td height="25" align="center" valign="middle" class="mycon"><?php echo $i;?></td>
-                  <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $faq["first_name"];?> <?php echo $Arabic->en2ar($dbf->StudentName($faq["id"]));?></td>
+                  <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $faq[first_name]."&nbsp;".$faq[father_name]."&nbsp;".$faq[family_name]."&nbsp;(".$faq[first_name1]."&nbsp;".$faq[father_name1]."&nbsp;".$faq[grandfather_name1]."&nbsp;".$faq[family_name1].")";?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $faq["email"];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $faq["student_mobile"];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $course;?></td>
@@ -452,7 +452,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $course;?></td>
                       <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $faq["student_mobile"];?></td>
                       <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $faq["email"];?></td>
-                      <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $faq["first_name"];?> <?php echo $Arabic->en2ar($dbf->StudentName($faq["id"]));?></td>
+                      <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $faq[first_name]."&nbsp;".$faq[father_name]."&nbsp;".$faq[family_name]."&nbsp;(".$faq[first_name1]."&nbsp;".$faq[father_name1]."&nbsp;".$faq[grandfather_name1]."&nbsp;".$faq[family_name1].")";?></td>
                       <td height="25" align="center" valign="middle" class="mycon"><?php echo $i;?></td>
                       <?php
                               $i = $i + 1;

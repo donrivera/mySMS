@@ -341,7 +341,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <td  align="center" valign="middle">
                         <a href="javascript:void(0);" onClick="show_details('<?php echo "dtls".$valgroup["id"].'-'.$enroll_dtls["id"];?>');"> <span id="plusArrow<?php echo "dtls".$valgroup["id"].'-'.$enroll_dtls["id"];?>"><img src="../images/plus.gif" border="0" /></span></a>
                         </td>
-                        <td  align="left" valign="middle">&nbsp;<a href="single-home.php?student_id=<?php echo $student["id"];?>" style="cursor:pointer;"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></a></td>
+                        <td  align="left" valign="middle">&nbsp;<a href="single-home.php?student_id=<?php echo $student["id"];?>" style="cursor:pointer;"><?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[family_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[first_name1].")";?></a></td>
                         <td align="left" valign="middle">&nbsp;<?php echo date('d-M-Y',strtotime($enroll_dtls["enroll_date"]));?></td>
                         <td align="center" valign="middle"><?php echo $dbf->GetBillNo($enroll_dtls["student_id"], $enroll_dtls["course_id"]);?></td>
                         <td align="right" valign="middle"><?php echo $course_fees;?>&nbsp;<?php echo $res_currency[symbol];?></td>

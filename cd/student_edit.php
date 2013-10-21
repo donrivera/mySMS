@@ -75,6 +75,17 @@ if($LANGUAGE=='AR'){
 <script>	
 $(document).ready(function() {	
 	$("#frm").validationEngine()
+	$('#frm').submit(function() 
+	{
+		var t4=$('input:text[id=t4]').val();
+		var t3=$('input:text[id=t3]').val();
+		var t2=$('input:text[id=t2]').val();
+		var t1=$('input:text[id=t1]').val();
+		document.getElementById('ar_mytxt_src').value=t4;
+		document.getElementById('ar_mytxt_src1').value=t3;
+		document.getElementById('ar_mytxt_src2').value=t2;
+		document.getElementById('ar_mytxt_src3').value=t1;
+	});
 });
 
 // JUST AN EXAMPLE OF CUSTOM VALIDATI0N FUNCTIONS : funcCall[validate2fields]
@@ -286,7 +297,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <tr>
                                 <td align="left" valign="middle">&nbsp;</td>
                                 <td height="28" align="left" valign="middle">
-                                  <input name="txt_src" type="text" class="new_textbox140" id="txt_src" value="<?php echo $red_edit_dtls["first_name1"];?>" onblur="setvalue('mytxt_src',this.value);"/></td>
+                                  <input name="txt_src" type="text" class="new_textbox140" id="txt_src" value="<?php echo $red_edit_dtls["first_name"];?>" onblur="setvalue('mytxt_src',this.value);"/></td>
                                 <td align="left" valign="middle">
                                   <input name="txt_src1" type="text" class="new_textbox140" id="txt_src1" value="<?php echo $red_edit_dtls["father_name"];?>" onblur="setvalue('mytxt_src1',this.value);"/></td>
                                 <td align="left" valign="middle">
@@ -344,11 +355,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <td height="28" align="left" valign="middle">
                                   <input name="t1" type="text" class="new_textbox140_ar" id="t1" value="<?php echo $red_edit_dtls["family_name1"];?>" /></td>
                                 <td align="left" valign="middle">
-                                  <input name="t2" type="text" class="new_textbox140_ar" id="t2" value="<?php echo $Arabic->en2ar($red_edit_dtls["grandfather_name"]);?>"/></td>
+                                  <input name="t2" type="text" class="new_textbox140_ar" id="t2" value="<?php echo $red_edit_dtls["grandfather_name1"];?>"/></td>
                                 <td align="left" valign="middle">
-                                  <input name="t3" type="text" class="new_textbox140_ar" id="t3" value="<?php echo $Arabic->en2ar($red_edit_dtls["father_name"]);?>"/></td>
+                                  <input name="t3" type="text" class="new_textbox140_ar" id="t3" value="<?php echo $red_edit_dtls["father_name1"];?>"/></td>
                                 <td align="left" valign="middle">
-                                  <input name="t4" type="text" class="new_textbox140_ar" id="t4" value="<?php echo $red_edit_dtls["student_first_name"];?>" /></td>
+                                  <input name="t4" type="text" class="new_textbox140_ar" id="t4" value="<?php echo $red_edit_dtls["first_name1"];?>" /></td>
                                 </tr>
                               <tr class="shop2">
                                 <td align="left" valign="top">&nbsp;</td>
@@ -385,7 +396,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <input name="mytxt_src1" type="hidden" id="mytxt_src1" value="<?php echo $red_edit_dtls["father_name"];?>"/>
                                 <input name="mytxt_src2" type="hidden" id="mytxt_src2" value="<?php echo $red_edit_dtls["grandfather_name"];?>"/>
                                 <input name="mytxt_src3" type="hidden" id="mytxt_src3" value="<?php echo $red_edit_dtls["family_name"];?>"/>
-                                <input name="ar_mytxt_src" type="hidden" id="ar_mytxt_src" value="<?php echo $red_edit_dtls["student_first_name"];?>"/>
+                                <input name="ar_mytxt_src" type="hidden" id="ar_mytxt_src"/>
+								<input name="ar_mytxt_src1" type="hidden" id="ar_mytxt_src1"/>
+								<input name="ar_mytxt_src2" type="hidden" id="ar_mytxt_src2"/>
+								<input name="ar_mytxt_src3" type="hidden" id="ar_mytxt_src3"/>
                                 <input name="stud_id" type="hidden" id="stud_id" value="<?php echo $_REQUEST["id"];?>"/>
                                 </td>
                               <td width="1%">&nbsp;</td>
@@ -610,7 +624,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <tr>
                                 <td align="left" valign="middle">&nbsp;</td>
                                 <td height="28" align="right" valign="middle">
-                                  <input name="txt_src" type="text" class="new_textbox140_ar" id="txt_src" value="<?php echo $red_edit_dtls["first_name1"];?>" onblur="setvalue('mytxt_src',this.value);"/></td>
+                                  <input name="txt_src" type="text" class="new_textbox140_ar" id="txt_src" value="<?php echo $red_edit_dtls["first_name"];?>" onblur="setvalue('mytxt_src',this.value);"/></td>
                                 <td align="right" valign="middle">
                                   <input name="txt_src1" type="text" class="new_textbox140_ar" id="txt_src1" value="<?php echo $red_edit_dtls["father_name"];?>" onblur="setvalue('mytxt_src1',this.value);"/></td>
                                 <td align="right" valign="middle">
@@ -684,11 +698,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <td height="28" align="right" valign="middle">
                                   <input name="t1" type="text" class="new_textbox140_ar" id="t1" value="<?php echo $red_edit_dtls["family_name1"];?>"/></td>
                                 <td align="right" valign="middle">
-                                  <input name="t2" type="text" class="new_textbox140_ar" id="t2" value="<?php echo $Arabic->en2ar($red_edit_dtls["grandfather_name"]);?>"/></td>
+                                  <input name="t2" type="text" class="new_textbox140_ar" id="t2" value="<?php echo $red_edit_dtls["grandfather_name1"];?>"/></td>
                                 <td align="right" valign="middle">
-                                  <input name="t3" type="text" class="new_textbox140_ar" id="t3" value="<?php echo $Arabic->en2ar($red_edit_dtls["father_name"]);?>"/></td>
+                                  <input name="t3" type="text" class="new_textbox140_ar" id="t3" value="<?php echo $red_edit_dtls["father_name1"];?>"/></td>
                                 <td align="center" valign="middle">
-                                  <input name="t4" type="text" class="new_textbox140_ar" id="t4" value="<?php echo $red_edit_dtls["student_first_name"];?>" /></td>
+                                  <input name="t4" type="text" class="new_textbox140_ar" id="t4" value="<?php echo $red_edit_dtls["first_name1"];?>" /></td>
                                 </tr>
                               <tr class="shop2">
                                 <td align="left" valign="top">&nbsp;</td>
@@ -720,7 +734,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                           <table width="100%" border="0" cellpadding="0" cellspacing="0" >
                             <tr>
                               <td width="6%">&nbsp;</td>
-                              <td width="52%"><input name="mytxt_src" type="hidden" id="mytxt_src" value="<?php echo $red_edit_dtls["first_name1"];?>"/>
+                              <td width="52%"><input name="mytxt_src" type="hidden" id="mytxt_src" value="<?php echo $red_edit_dtls["first_name"];?>"/>
                                 <input name="mytxt_src1" type="hidden" id="mytxt_src1" value="<?php echo $red_edit_dtls["father_name"];?>"/>
                                 <input name="mytxt_src2" type="hidden" id="mytxt_src2" value="<?php echo $red_edit_dtls["grandfather_name"];?>"/>
                                 <input name="mytxt_src3" type="hidden" id="mytxt_src3" value="<?php echo $red_edit_dtls["family_name"];?>"/>

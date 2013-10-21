@@ -813,7 +813,7 @@ if($_REQUEST['action']=='search'){
 		//Get Invoice Number
 		# -------------------------------------------------------
 		$inv_no = $dbf->GenerateInvoiceNo($centre_id);
-		$inv_sl = substr($inv_no,5);
+		$inv_sl = $dbf->GetBillNo($student_id, $course_id);//substr($inv_no,5);
 		//=======================================================
 		
 		# if not available then save
@@ -912,7 +912,7 @@ if($_REQUEST['action']=='invoice'){
 	//Get Invoice Number
 	# -------------------------------------------------------
 	$inv_no = $dbf->GenerateInvoiceNo($centre_id);
-	$inv_sl = substr($inv_no,5);
+	$inv_sl = $dbf->GetBillNo($student_id, $course_id);//substr($inv_no,5);
 	//=======================================================
 	
 	$dt = date('Y-m-d h:m:s');
@@ -1041,7 +1041,7 @@ if($_REQUEST['action']=='advance'){
 	//Get Invoice Number
 	# -------------------------------------------------------
 	$inv_no = $dbf->GenerateInvoiceNo($centre_id);
-	$inv_sl = substr($inv_no,5);
+	$inv_sl = $dbf->GetBillNo($student_id, $course_id);//substr($inv_no,5);
 	//=======================================================
 	
 	//insert into student_fee table

@@ -252,7 +252,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" onClick="javascript:window.location.href='arf_view.php?id=<?php echo $val[id];?>'" style="cursor:pointer;">
                     <td align="center" valign="middle" class="mycon"><?php echo $i;?></td>
                     <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[dated];?></td>
-                    <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val[student_id];?>" style="cursor:pointer;"><?php echo $res_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val["student_id"]));?></a></td>
+                    <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val[student_id];?>" style="cursor:pointer;"><?php echo $res_student[first_name]."&nbsp;".$res_student[father_name]."&nbsp;".$res_student[family_name]."&nbsp;(".$res_student[first_name1]."&nbsp;".$res_student[father_name1]."&nbsp;".$res_student[grandfather_name1]."&nbsp;".$res_student[family_name1].")";?></a></td>
                     <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[action_owner];?></td>
                     <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[report_by];?></td>
                     <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[report_to];?></td>                    
@@ -452,7 +452,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                           <td width="5%" align="center" valign="middle"><a href="arf_print.php?id=<?php echo $val[id];?>" target="_blank">
                             <img src="../images/print.png" width="16" height="16" title="<?php echo STUDENT_ADVISOR_SEARCH_MANAGE_PRINT ?>"/></a></td>
                           <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[report_to];?></td>
-                          <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></td>
+                          <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res_student[first_name]."&nbsp;".$res_student[father_name]."&nbsp;".$res_student[family_name]."&nbsp;(".$res_student[first_name1]."&nbsp;".$res_student[father_name1]."&nbsp;".$res_student[grandfather_name1]."&nbsp;".$res_student[family_name1].")";?></td>
                           <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[action_owner];?></td>
                           <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[report_by];?></td>
                           

@@ -220,7 +220,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <?php
 						foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]'","") as $val) {	
 					  ?>
-                    <option value="<?php echo $val[id];?>" <?php if($_REQUEST[cmbgroup]==$val[id]){?> selected="selected"<?php }?>><?php echo $val['group_name'] ?>, <?php echo date('d/m/Y',strtotime($val['start_date']));?> - <?php echo date('d/m/Y',strtotime($val['end_date'])) ?>, <?php echo $val["group_time"];?>-<?php echo $dbf->GetGroupTime($val["id"]);?></option>
+                    <option value="<?php echo $val[id];?>" <?php if($_REQUEST[cmbgroup]==$val[id]){?> selected="selected"<?php }?>><?php echo $val['group_name'] ?>, <?php echo date('d/m/Y',strtotime($val['start_date']));?> - <?php echo date('d/m/Y',strtotime($val['end_date'])) ?>, <?php echo $val["group_start_time"];?>-<?php echo $val["group_end_time"];?></option>
                     <?php
 					   }
 					   ?>
@@ -274,9 +274,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                   <td align="center" valign="middle" class="mycon"><?php echo $i;?></td>
-                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[first_name];?>&nbsp;<?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></td>
+                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_id];?></td>
-                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res_group[group_name];?> <?php echo $res_group["group_time"];?>-<?php echo $dbf->GetGroupTime($res_group["id"]);?></td>
+                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res_group[group_name];?> <?php echo $res_group["group_start_time"];?>-<?php echo $res_group["group_end_time"];?></td>
                   <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $percentage;?>%</td>
                   <td align="center" valign="middle" class="mycon" style="padding-left:5px;">
 				  <?php echo $res_group[start_date] ." / ". $res_group[end_date];?></td>
@@ -377,7 +377,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <?php
                                     foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]'","") as $val) {	
                                   ?>
-                                <option value="<?php echo $val[id];?>" <?php if($_REQUEST[cmbgroup]==$val[id]){?> selected="selected"<?php }?>><?php echo $val['group_name'] ?>, <?php echo date('d/m/Y',strtotime($val['start_date']));?> - <?php echo date('d/m/Y',strtotime($val['end_date'])) ?>, <?php echo $val["group_time"];?>-<?php echo $dbf->GetGroupTime($val["id"]);?></option>
+                                <option value="<?php echo $val[id];?>" <?php if($_REQUEST[cmbgroup]==$val[id]){?> selected="selected"<?php }?>><?php echo $val['group_name'] ?>, <?php echo date('d/m/Y',strtotime($val['start_date']));?> - <?php echo date('d/m/Y',strtotime($val['end_date'])) ?>, <?php echo $val["group_start_time"];?>-<?php echo $val["group_end_time"];?></option>
                                 <?php
                                    }
                                    ?>
@@ -442,10 +442,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								$percentage = $res_per[final_percent];
 						?>                        
                         <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">                          <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_id];?></td>
-                          <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res_group[group_name];?> <?php echo $res_group["group_time"];?>-<?php echo $dbf->GetGroupTime($res_group["id"]);?></td>
+                          <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res_group[group_name];?> <?php echo $res_group["group_start_time"];?>-<?php echo $res_group["group_end_time"];?></td>
                           <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $percentage;?>%</td>
                           <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res_group[start_date] ." And ". $res_group[end_date];?></td>
-                          <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?>&nbsp;<?php echo $val[first_name];?></td>
+                          <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?></td>
                           <td align="center" valign="middle" class="mycon"><?php echo $i;?></td>
                           <?php
 						  $i = $i + 1;

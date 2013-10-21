@@ -17,7 +17,7 @@ $page_name = $parts[count($parts) - 1];
 <script type="text/javascript" language="javascript">
 $(document).ready(function() {
 	$("#testinput").autocomplete("autosuggest_tech.php?centre_id=<?php echo $_SESSION['centre_id'];?>", {
-		width: 260,
+		width: 300,
 		matchContains: true,
 		selectFirst: false
 	});

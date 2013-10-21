@@ -8,17 +8,19 @@ $dbf = new User();
 
 if($_REQUEST['action']=='insert')
 {	
+	
 	//Date diffeerent in two dates
 	$days = $dbf->dateDiff($_POST[startdate], $_POST[enddate])+1;
 	
 	//Current date and Time
 	$cr_date = date('Y-m-d H:i:s A');
 	
-	$string="centre_id='$_POST[center]',frm='$_POST[startdate]',tto='$_POST[enddate]',no_days='$days',type='$_POST[type]',created_datetime='$cr_date',created_by='$_SESSION[id]'";
-	$dbf->insertSet("centre_vacation",$string);
+	//$string="centre_id='$_POST[center]',frm='$_POST[startdate]',tto='$_POST[enddate]',no_days='$days',type='$_POST[type]',created_datetime='$cr_date',created_by='$_SESSION[id]'";
+	//$dbf->insertSet("centre_vacation",$string);
 		
 	$start = $_POST[startdate];
 	$end = $_POST[enddate];
+	$center=$_POST[center];
 	
 	//Get Minimum date of the Group / Course
 	$res_s = $dbf->strRecordID("student_group","MIN(start_date)","centre_id='$_POST[center]'");
@@ -27,7 +29,29 @@ if($_REQUEST['action']=='insert')
 	//Get Maximum date of the Group / Course
 	$res_e = $dbf->strRecordID("student_group","MAX(end_date)","centre_id='$_POST[center]'");
 	$tto = $res_e["MAX(end_date)"];
+	$duplicate=$dbf->genericQuery("	SELECT * 
+									FROM centre_vacation 
+									WHERE centre_id='$center' 
+									AND (('$start' BETWEEN frm AND tto) OR ('$end' BETWEEN frm AND tto))");
 	
+	
+	if($duplicate <= 0 || empty($duplicate))
+	{
+		$getDates=$dbf->schedLeaves("Center","",$start,$end,$center);
+		$string="centre_id='$_POST[center]',frm='$_POST[startdate]',tto='$_POST[enddate]',no_days='$days',type='$_POST[type]',created_datetime='$cr_date',created_by='$_SESSION[id]'";
+		$dbf->insertSet("centre_vacation",$string);
+	}
+	else
+	{
+	?>
+		<script type="text/javascript">
+			alert("Duplicate Transaction!");
+			window.history.back();
+		</script>
+	<?
+	}
+	header("Location:vacation_center_manage.php");
+	/*
 	//Check entry end date is BETWEEN then (group Start and End date)
 	if(($end >= $frm && $end <= $tto) || ($start >= $frm && $start <= $tto))
 	{
@@ -209,8 +233,8 @@ if($_REQUEST['action']=='insert')
 		}
 		
 	}	
-
-	header("Location:vacation_center_manage.php");
+*/
+	//header("Location:vacation_center_manage.php");
 	
 }
 
@@ -234,7 +258,35 @@ if($_REQUEST['action']=='edit')
 	//Get Maximum date of the Group / Course
 	$res_e = $dbf->strRecordID("student_group","MAX(end_date)","centre_id='$centre_id'");
 	$tto = $res_e["MAX(end_date)"];
+	//$getDates=$dbf->schedLeaves("Center","",$start,$end,$centre_id);
+	$vacation_id=$_REQUEST[id];
+	$dbf->updateSchedLeaves("Center",$_REQUEST[id],$_POST[startdate],$_POST[enddate],$centre_id);
+	header("Location:vacation_center_manage.php");
 	
+	/*
+	$duplicate=$dbf->genericQuery("	SELECT * 
+									FROM centre_vacation 
+									WHERE centre_id='$center' 
+									AND (('$start' BETWEEN frm AND tto) OR ('$end' BETWEEN frm AND tto))");
+	
+	
+	if($duplicate <= 0 || empty($duplicate))
+	{
+		$getDates=$dbf->schedLeaves("Center","",$start,$end,$centre_id);
+		$dbf->updateTable("centre_vacation","frm='$start',tto='$end'","id='$_REQUEST[id]'");
+	}
+	else
+	{
+	?>
+		<script type="text/javascript">
+			alert("Duplicate Transaction!");
+			window.history.back();
+		</script>
+	<?
+	}
+	header("Location:vacation_center_manage.php");
+	*/
+	/*
 	//Check entry end date is BETWEEN then (group Start and End date)
 	if(($end >= $frm && $end <= $tto) || ($start >= $frm && $start <= $tto))
 	{
@@ -626,8 +678,8 @@ if($_REQUEST['action']=='edit')
 	
 	$string="frm='$_POST[startdate]',tto='$_POST[enddate]',type='$_POST[type]',last_updated='$cr_date',updated_by='$_SESSION[id]'";
 	$dbf->updateTable("centre_vacation",$string,"id='$_REQUEST[id]'");
-	
 	header("Location:vacation_center_manage.php");
+	*/
 }
 
 if($_REQUEST['action']=='delete')
@@ -650,7 +702,10 @@ if($_REQUEST['action']=='delete')
 	//Get Maximum date of the Group / Course
 	$res_e = $dbf->strRecordID("student_group","MAX(end_date)","centre_id='$centre_id'");
 	$tto = $res_e["MAX(end_date)"];
-	
+	$dbf->deleteSchedLeaves("Center",$_REQUEST[id]);
+	$dbf->deleteFromTable("centre_vacation","id='$_REQUEST[id]'");
+	header("Location:vacation_center_manage.php");
+	/*
 	//Check entry end date is BETWEEN then (group Start and End date)
 	if(($end >= $frm && $end <= $tto) || ($start >= $frm && $start <= $tto))
 	{
@@ -834,7 +889,7 @@ if($_REQUEST['action']=='delete')
 		
 	}
 	
-	$dbf->deleteFromTable("centre_vacation","id='$_REQUEST[id]'");
-	header("Location:vacation_center_manage.php");
+	
+	*/
 }
 ?>

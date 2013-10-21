@@ -112,7 +112,7 @@ $fee = $dbf->strRecordID("student_fees","*","id='$_REQUEST[fee_id]'");
             </table></td>
             <td width="375"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <td width="201" align="right" valign="middle" class="suc_msg"><?php echo $val["first_name"];?>&nbsp;/&nbsp;<?php echo $Arabic->en2ar($val["first_name"]);?><br />
+                <td width="201" align="right" valign="middle" class="suc_msg"><?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?><br />
                   <?php echo $val["student_mobile"];?></td>
                 <td width="10">&nbsp;</td>
                 <td height="30" align="right" valign="middle" class="smalltext">Received From / <?php echo $Arabic->en2ar('Received From');?><br />

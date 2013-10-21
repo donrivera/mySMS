@@ -203,7 +203,7 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                         <td height="25" align="center" valign="middle" class="contenttext"><?php echo $i;?></td>
                         <td align="left" valign="middle" class="contenttext"><?php echo $dbf->FullGroupInfo($val["id"]);?></td>
                         <td align="left" valign="middle" class="contenttext"><?php echo $val_course[name];?></td>
-                        <td align="center" valign="middle" class="contenttext"><?php echo $val_unit[name];?>&nbsp;<?php echo constant("TEACHER_MY_SCHEDULES_PERDAY");?></td>
+                        <td align="center" valign="middle" class="contenttext"><?php echo $val[unit_per_day];?>&nbsp;<?php echo constant("TEACHER_MY_SCHEDULES_PERDAY");?></td>
                         <?php
 						$dt = "Starting from ".date("l",strtotime($val[start_date]))." - ".date("d-M-Y",strtotime($val[start_date]));
 						$dt = $dt." - ".date("d-M-Y",strtotime($val[end_date]));//." - ".$val[group_time];

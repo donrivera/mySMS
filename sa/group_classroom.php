@@ -236,7 +236,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <select name="class_room" id="class_room" style="width:150px; border:solid 1px; border-color:#999999;" onBlur="checkTab('class_room');">
                                 <option value="">--Select Classroom--</option>
                                 <?php
-								foreach($dbf->fetchOrder('centre_room',"centre_id='$_SESSION[centre_id]' And id not in(select room_id from student_group where status<>'Completed')","") as $resu) {
+								//foreach($dbf->fetchOrder('centre_room',"centre_id='$_SESSION[centre_id]' And id not in(select room_id from student_group where status<>'Completed')","") as $resu) {
+								foreach($dbf->fetchOrder('centre_room',"centre_id='$_SESSION[centre_id]'","") as $resu){
 							  ?>
                                 <option value="<?php echo $resu['id']?>" <?php if($resu["id"]==$_SESSION[gr_class_room]){?> selected="selected"<?php }?>> <?php echo $resu['name'];?></option>
                                 <?php }?>

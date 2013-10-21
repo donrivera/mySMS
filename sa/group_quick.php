@@ -52,7 +52,13 @@ if($LANGUAGE=='AR'){
 
 <script>	
 $(document).ready(function() {	
-	$("#frm").validationEngine()
+	$("#frm").validationEngine();
+	$('#frm').submit(function() 
+	{
+		// Get all the forms elements and their values in one step
+		//var values = $('#frm').serialize();
+		//return false;
+	});
 });
 
 // JUST AN EXAMPLE OF CUSTOM VALIDATI0N FUNCTIONS : funcCall[validate2fields]
@@ -263,8 +269,8 @@ function show_students(){
 		document.getElementById('id_show_student').innerHTML=c;
 		}
 	}
-	var course_id = document.getElementById('course').value;	
-	ajaxRequest.open("GET", "group_quick_students.php" + "?course_id=" + course_id, true);
+	var course_id = document.getElementById('course').value;
+    ajaxRequest.open("GET", "group_quick_students.php" + "?course_id=" + course_id, true);
 	ajaxRequest.send(null);
 }
 
@@ -613,9 +619,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <?php
 							$sdt = $_SESSION[gr_course_strdt];
 							$is_exist = '';
-							$teacher_id = $_SESSION[gr_course_teacher];					
 							foreach($dbf->fetchOrder('student_group',"teacher_id='$teacher_id'","id") as $val_group){								
 								$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$_REQUEST[sdt]' BETWEEN start_date And end_date)");
+								$q=$dbf->fetchOrder('student_group',"teacher_id='$teacher_id'","");
+								echo var_dump($q);
 								if($num>0){
 									$is_exist = 'true';
 									break;
@@ -639,7 +646,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <td height="28" align="left" valign="middle">&nbsp;</td>
                                 
                                 <td>&nbsp;</td>
-                                <td colspan="2" align="left" valign="middle" class="mytext">Teacher not available for  <?php echo $_SESSION["tm"];?> to <?php echo $_SESSION["end_tm"];?>
+                                <td colspan="2" align="left" valign="middle" class="mytext"><?=$teacher_id?>Teacher not available for  <?php echo $_SESSION["tm"];?> to <?php echo $_SESSION["end_tm"];?>
                                 </td>
                             </tr>
 							<?php } ?>
@@ -772,7 +779,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <td width="12%" height="30" align="center" valign="middle" bordercolor="#FF9933" bgcolor="#FFF8E6"><span class="pedtext"><?php echo constant("CD_GROUP_TEACHER_TIME");?></span></td>
                                 <td width="88%" bordercolor="#FF9933" bgcolor="#FFF8E6"><table width="98%" border="0" cellspacing="0" cellpadding="0">
                                   <tr class="pedtext">
-                                    <td width="98" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><?php echo $sum_day.'<br>'.$sat?></td>
+                                    <td width="98" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><?php echo  $sum_day.'<br>'.$sat?></td>
                                     <td width="110" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><?php echo $mon_day.'<br>'.$sun?></td>
                                     <td width="110" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><?php echo $tue_day.'<br>'.$mon?></td>
                                     <td width="101" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><?php echo $wed_day.'<br>'.$tue?></td>
@@ -798,7 +805,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 									  if($k == 1){
 										  $centre_time = date('h:i A', strtotime($start_time));
 									  }									  
-									  $starttime = date('H:i:s',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));									  
+									  $starttime = date('H:i:s',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+									  $stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
                                       ?>
                                         <tr>
                                             <td width="12%" height="25" align="center" valign="middle" bgcolor="#CCCCCC" class="pedtext"><?php echo $centre_time;?></td>
@@ -808,8 +816,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                             <td width="3" align="left" valign="middle"></td>
                                             <?php											
                                             //$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$sun1' BETWEEN start_date And end_date)");
-											$num = $dbf->timeSlotAvailable($teacher_id, $sun1, $centre_time); 
-                                            if($num == false){
+											//echo $user_start_time = strtotime($centre_time);
+											//echo $start_time=strtotime(date('h:i A', strtotime($starttime)));
+											$num = $dbf->timeSlotAvailable($teacher_id, $sun1, $stime); 
+											if($num == false){
                                                 $class = 'teachertext';
                                                 $text = 'Available';
                                                 $img = "../images/tick.png";
@@ -817,6 +827,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                                 $class = 'teachertext1';
                                                 $text = 'Not Available';
                                                 $img = "../images/block.png";
+												
                                             }
 											
 											$each_day = date('l', strtotime($sStartDate));
@@ -839,7 +850,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                             <td width="3" align="left" valign="middle"></td>
                                             <?php
 											//$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$mon1' BETWEEN start_date And end_date)");
-											$num = $dbf->timeSlotAvailable($teacher_id, $mon1, $centre_time); 
+											$stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+											$num = $dbf->timeSlotAvailable($teacher_id, $mon1, $stime); 
 											if($num == false){
 												$class = 'teachertext';
 												$text = 'Available';
@@ -870,7 +882,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         <td width="3" align="left" valign="middle"></td>
                                         <?php
 										//$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$tue1' BETWEEN start_date And end_date)");
-										$num = $dbf->timeSlotAvailable($teacher_id, $tue1, $centre_time); 
+										$stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+										$num = $dbf->timeSlotAvailable($teacher_id, $tue1, $stime);
 										if($num == false){
 											$class = 'teachertext';
 											$text = 'Available';
@@ -902,7 +915,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         <td width="3" align="left" valign="middle"></td>
                                         <?php
 										//$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$wed1' BETWEEN start_date And end_date)");
-										$num = $dbf->timeSlotAvailable($teacher_id, $wed1, $centre_time); 
+										$stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+										$num = $dbf->timeSlotAvailable($teacher_id, $wed1, $stime);
 										if($num == false){
 											$class = 'teachertext';
 											$text = 'Available';
@@ -934,7 +948,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         <td width="3" align="left" valign="middle"></td>
                                         <?php
 										//$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$thu1' BETWEEN start_date And end_date)");
-										$num = $dbf->timeSlotAvailable($teacher_id, $thu1, $centre_time); 
+										$stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+										$num = $dbf->timeSlotAvailable($teacher_id, $thu1, $stime);
 										if($num == false){
 											$class = 'teachertext';
 											$text = 'Available';
@@ -965,7 +980,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         <td width="3" align="left" valign="middle"></td>
                                         <?php
 										//$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$fri1' BETWEEN start_date And end_date)");
-										$num = $dbf->timeSlotAvailable($teacher_id, $fri1, $centre_time); 
+										$stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+										$num = $dbf->timeSlotAvailable($teacher_id, $fri1, $stime); 
 										if($num == false){
 											$class = 'teachertext';
 											$text = 'Available';
@@ -996,7 +1012,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         <td width="3" align="left" valign="middle"></td>
                                         <?php
 										//$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$sat1' BETWEEN start_date And end_date)");
-										$num = $dbf->timeSlotAvailable($teacher_id, $sat1, $centre_time); 
+										$stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+										$num = $dbf->timeSlotAvailable($teacher_id, $sat1, $stime); 
 										if($num == false){
 											$class = 'teachertext';
 											$text = 'Available';
@@ -1542,8 +1559,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             
                             $minutes = intval($time[0])*60 + intval($time[1]);
                             $minutes = $minutes / 15;
-                            ?>              
-                            <table width="99%" border="1" cellspacing="0" cellpadding="0" bordercolor="#EBE5CD" style="border-collapse:collapse;">
+                            ?>   
+							<table width="99%" border="1" cellspacing="0" cellpadding="0" bordercolor="#EBE5CD" style="border-collapse:collapse;">
                               <tr>
                                 <td width="12%" height="30" align="center" valign="middle" bordercolor="#FF9933" bgcolor="#FFF8E6"><span class="pedtext"><?php echo constant("CD_GROUP_TEACHER_TIME");?></span></td>
                                 <td width="88%" bordercolor="#FF9933" bgcolor="#FFF8E6"><table width="98%" border="0" cellspacing="0" cellpadding="0" >
@@ -1584,7 +1601,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                             <td width="3" align="left" valign="middle"></td>
                                             <?php                                            
                                             $num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$sun1' BETWEEN start_date And end_date)");
-                                            if($num==0){
+                                            
+											if($num==0){
                                                 $class = 'teachertext';
                                                 $text = 'Available';
                                                 $img = "../images/tick.png";

@@ -154,7 +154,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						if($_REQUEST["mystatus"] != ""){ $cond = " And status='$_REQUEST[mystatus]'";}else{ $cond = ""; }
 						foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]'".$cond,"","") as $res_group) {
 						?>
-                        <option value="<?php echo $res_group['id'];?>" <?php if($_REQUEST[cmbgroup]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>, <?php echo $res_group["group_time"];?>-<?php echo $dbf->GetGroupTime($res_group["id"]);?></option>
+                        <option value="<?php echo $res_group['id'];?>" <?php if($_REQUEST[cmbgroup]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>, <?php echo $res_group["group_start_time"];?>-<?php echo $res_group["group_end_time"];?></option>
                         <?php
 						  }
 						  ?>
@@ -232,7 +232,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   ?>
                   <tr>
                     <td width="35%" height="25" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_UNITS");?> : <?php echo $res_size[units];?></td>
-                    <td width="65%" align="left" valign="middle" class="pedtext"><?php echo constant("CD_EP_ADDING_STUDENT_GROUPADD");?> : <?php echo $res_group_name[name];?></td>
+                    <td width="65%" align="left" valign="middle" class="pedtext"><?php echo constant("CD_EP_ADDING_STUDENT_GROUPADD");?> : <?php echo $res_group[group_name];?></td>
                     </tr>
                   <tr>
                   <?php
@@ -298,8 +298,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <?php
 					  if($_REQUEST[cmbgroup] != '')
 					  {
-						$dt = date("Y-m-d",strtotime($res_teacher_group[start_date]));
-						echo $dt = $dt." - ".$res_teacher_group[group_time];
+						//$dt = date("Y-m-d",strtotime($res_teacher_group[start_date]));
+						$dt = date("Y-m-d",strtotime($res_teacher_group[start_date])).' TO '.date("Y-m-d",strtotime($res_teacher_group[end_date]));
+						
+						echo $dt = $dt." TIME- ".$res_teacher_group[group_start_time]."-".$res_teacher_group[group_end_time];
 					  }
 					?>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -337,11 +339,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     </tr>
                   <tr>
                     <td height="25" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_NOFSTUDENT");?>  : <?php echo $no_student;?></td>
-                    <td align="left" valign="middle" class="pedtext"><strong><?php echo constant("STUDENT_ADVISOR_PED_TXT");?></strong></td>
+                    <td align="left" valign="middle" class="pedtext"><strong><?php echo "Frequency: ".$res_group[unit_per_day]."&nbsp;x 5 days";/*constant("STUDENT_ADVISOR_PED_TXT");*/?></strong></td>
                     </tr>
                   <tr>
                     <td height="25" align="left" valign="middle" class="pedtext"><strong><?php echo constant("STUDENT_ADVISOR_PED_SLSPERSON");?></strong> : <?php echo $sa_name;?></td>
-                    <td align="left" valign="middle" class="pedtext"><strong><?php echo constant("STUDENT_ADVISOR_PED_TXT1");?> :<?php echo constant("STUDENT_ADVISOR_PED_STANDARD");?></strong></td>
+                    <td align="left" valign="middle" class="pedtext"><strong><?php echo constant("STUDENT_ADVISOR_PED_TXT1");?>:<?php echo constant("STUDENT_ADVISOR_PED_STANDARD");?></strong></td>
                     </tr>
                   <tr>
                     <td height="25" colspan="2" align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -485,9 +487,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <tr>
                         <td width="230" height="25" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_TXT14");?></td>
                         <td width="37" align="center" valign="middle"><img src="../images/ped_lis.jpg" width="37" height="54"></td>
-                        <td width="31" align="center" valign="middle"><img src="../images/ped-units.jpg" width="31" height="41"></td>
+                        <td width="31" align="center" valign="middle"><img src="../images/ped-units.jpg" width="32" height="41"></td>
                         <td width="100" align="center" valign="middle"><img src="../images/ped-date.jpg" width="31" height="41"></td>
-                        <td width="31" align="center" valign="middle"><img src="../images/ped-attd.jpg" width="31" height="41"></td>
+                        <td width="31" align="center" valign="middle"><img src="../images/ped-attd.jpg" width="32" height="41"></td>
                         <td width="130" align="center" valign="middle" class="pedtext2"><?php echo constant("STUDENT_ADVISOR_PED_INSTRUCTOR");?></td>
                         <td width="230" align="center" valign="middle" class="pedtext2"><?php echo constant("STUDENT_ADVISOR_PED_MATERIALCOVER");?></td>
                         <td align="center" valign="middle" class="pedtext2"><?php echo constant("STUDENT_ADVISOR_PED_HOMEWORK");?></td>
@@ -956,10 +958,16 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							$z = 1;
 							for($i=0;$i<$no_cols;$i++){
 								
-							$dayNum = date('d/m', strtotime($hs_date));
 							
+							//echo $i;
 							//Get per unit date
-							$attend_date=$dbf->strRecordID('ped_units','*',"units='$z' And ped_id='$res_ped[id]'");
+							$get_attend_date=$dbf->strRecordID('ped_attendance','DISTINCT(attend_date) as attend_date',"ped_id='$res_ped[id]' LIMIT 1");
+							$var_attend_date=date('Y-m-d',strtotime($get_attend_date[attend_date].'+'.$i.' day'));
+							$attend_date=$dbf->strRecordID('ped_attendance','attend_date as dated',"attend_date='$var_attend_date' AND ped_id='$res_ped[id]'");
+							//don=$dbf->genericQuery("SELECT DISTINCT(attend_date) as dated FROM ped_attendance WHERE ped_id='$res_ped[id]' ORDER BY dated DESC");
+							//$don=$dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name");
+							//$attend_date=$dbf->strRecordID('ped_units','attend_date as dated',"ped_id='$res_ped[id]' ORDER BY dated ASC");
+							//echo $res_ped[id].var_dump($don);
 							if($attend_date["dated"] == '0000-00-00'){ $attend_dt = '';}else{ $attend_dt = $attend_date["dated"]; }
 							?>
                               <td height="28" colspan="3" align="center" bgcolor="#4D7373" class="logouttext"><strong><?php echo $j;?></strong>
@@ -980,8 +988,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         foreach($dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*") as $r) {
                         ?>
                             <tr>
-                              <td width="10%" align="left" bgcolor="#E9EFEF" class="pedtext"><?php echo $r[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($r["id"]));?>
-                                </td>
+                              <td width="10%" align="left" bgcolor="#E9EFEF" class="pedtext">
+									<?php //echo $r[first_name];?> <?php //echo $Arabic->en2ar($dbf->StudentName($r["id"]));?>
+									<?php echo $r[first_name]."&nbsp;".$r[father_name]."&nbsp;".$r[family_name]."&nbsp;(".$r[first_name1]."&nbsp;".$r[father_name1]."&nbsp;".$r[grandfather_name1]."&nbsp;".$r[family_name1].")";?></a>
+                              </td>
                               <?php
 							$no_cols = $unit / 2;
 							$num = cal_days_in_month(CAL_GREGORIAN, $month, $year); 
@@ -1282,7 +1292,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   ?>
                   <tr>
                     <td width="35%" height="25" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_UNITS");?> : <?php echo $res_size[units];?></td>
-                    <td width="65%" align="left" valign="middle" class="pedtext"><?php echo constant("CD_EP_ADDING_STUDENT_GROUPADD");?> : <?php echo $res_group_name[name];?></td>
+                    <td width="65%" align="left" valign="middle" class="pedtext"><?php echo constant("CD_EP_ADDING_STUDENT_GROUPADD");?> : <?php echo $res_teacher_group[group_name];/*$res_group_name[name];*/?></td>
                     </tr>
                   <tr>
                   <?php

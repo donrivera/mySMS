@@ -36,7 +36,10 @@ if($_REQUEST['action']=='insert'){
 		
 	$student_name = $first_name.' '.$family_name;
 	$last_name_arabic = $Arabic->en2ar($family_name);
-			
+	$ar_familyname=$_REQUEST[ar_mytxt_src3];//aaaa
+	$ar_gfathrname=$_REQUEST[ar_mytxt_src2];//bbbb
+	$ar_fathername=$_REQUEST[ar_mytxt_src1];//cccc
+	$ar_firstname=$_REQUEST[ar_mytxt_src];//dddd		
 	//$_SESSION['quick_name'] = $_POST[name];
 	$_SESSION['quick_mobile'] = $_POST[mobile];
 	$_SESSION['quick_app_date'] = $_POST[app_date];
@@ -53,7 +56,21 @@ if($_REQUEST['action']=='insert'){
 	$comm = mysql_real_escape_string($_POST[comment]);	
 	$reg_dt = date('Y-m-d');
 	
-	$string="first_name='$student_name',first_name1='$first_name',student_first_name='$ar_first_name',father_name='$father_name',grandfather_name='$grandfather_name',family_name='$family_name',family_name1='$last_name_arabic',student_mobile='$_REQUEST[mobile]',student_comment='$comm',created_datetime='$dt',centre_id='$_SESSION[centre_id]',app_date='$_POST[app_date]',register_date='$reg_dt',sms_status='1'";	
+	$string="	first_name='$first_name',
+				first_name1='$ar_firstname',
+				father_name='$father_name',
+				father_name1='$ar_fathername',
+				grandfather_name='$grandfather_name',
+				grandfather_name1='$ar_gfathrname',
+				family_name='$family_name',
+				family_name1='$ar_familyname',
+				student_mobile='$_REQUEST[mobile]',
+				student_comment='$comm',
+				created_datetime='$dt',
+				centre_id='$_SESSION[centre_id]',
+				app_date='$_POST[app_date]',
+				register_date='$reg_dt',
+				sms_status='1'";	
 	$ids = $dbf->insertSet("student",$string);
 	
 	$count = $_POST[count];
@@ -142,10 +159,24 @@ if($_REQUEST['action']=='edit'){
 		
 	$student_name = $first_name.' '.$family_name;
 	$last_name_arabic = $Arabic->en2ar($family_name);
-		
+	$ar_familyname=$_REQUEST[ar_mytxt_src3];//aaaa
+	$ar_gfathrname=$_REQUEST[ar_mytxt_src2];//bbbb
+	$ar_fathername=$_REQUEST[ar_mytxt_src1];//cccc
+	$ar_firstname=$_REQUEST[ar_mytxt_src];//dddd	
 	$comm = mysql_real_escape_string($_POST["comment"]);
 	
-	$string="first_name='$student_name',first_name1='$first_name',student_first_name='$ar_first_name',father_name='$father_name',grandfather_name='$grandfather_name',family_name='$family_name',family_name1='$last_name_arabic',student_mobile='$_REQUEST[mobile]',app_date='$_POST[app_date]',student_comment='$comm'";
+	$string="
+				first_name='$first_name',
+				first_name1='$ar_firstname',
+				father_name='$father_name',
+				father_name1='$ar_fathername',
+				grandfather_name='$grandfather_name',
+				grandfather_name1='$ar_gfathrname',
+				family_name='$family_name',
+				family_name1='$ar_familyname',
+				student_mobile='$_REQUEST[mobile]',
+				app_date='$_POST[app_date]',
+				student_comment='$comm'";
 	$dbf->updateTable("student",$string,"id='$_REQUEST[stud_id]'");
 	
 	$dbf->deleteFromTable("student_lead","student_id='$_REQUEST[stud_id]'");

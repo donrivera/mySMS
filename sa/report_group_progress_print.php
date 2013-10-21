@@ -108,7 +108,7 @@ if($_SESSION[font]=='big'){
 		  ?>
       <tr>
         <td height="20" align="left" valign="middle" class="leftmenu">&nbsp;<?php echo constant("CD_GROUP_PROGRESS_COMPANYGROUP");?> : </td>
-        <td align="left" valign="middle" class="pedtext"><?php echo $res_g[group_name];?> <?php echo $res_g["group_time"];?>-<?php echo $dbf->GetGroupTime($res_g["id"]);?></td>
+        <td align="left" valign="middle" class="pedtext"><?php echo $res_g[group_name];?> <?php echo $res_g["group_start_time"];?>-<?php echo $res_g["group_end_time"];?></td>
         <td>&nbsp;</td>
         <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
@@ -245,7 +245,7 @@ if($_SESSION[font]=='big'){
 					$comp = $res_progress["course_comp"];								
 				?>
           <tr>
-            <td height="25" align="left" valign="middle" class="pedtext_normal" bgcolor="#F7F7F7" style=" border-bottom:solid 1px;">&nbsp;<?php echo $r[first_name];?></td>
+            <td height="25" align="left" valign="middle" class="pedtext_normal" bgcolor="#F7F7F7" style=" border-bottom:solid 1px;">&nbsp;<?php echo $r[first_name]."&nbsp;".$r[father_name]."&nbsp;".$r[family_name]."&nbsp;(".$r[first_name1]."&nbsp;".$r[father_name1]."&nbsp;".$r[grandfather_name1]."&nbsp;".$r[family_name1].")";?></td>
             <td align="center" valign="middle" class="pedtext_normal" style="border-left:solid 1px; border-bottom:solid 1px; border-color:#999999;"><?php if($parti>0) { echo $parti; }?></td>
             <td align="center" valign="middle" class="pedtext_normal" style="border-left:solid 1px;  border-bottom:solid 1px;border-color:#999999;"><?php if($home) { echo $home; }?></td>
             <td align="center" valign="middle" class="pedtext_normal" style="border-left:solid 1px;  border-bottom:solid 1px;border-color:#999999;"><?php if($flu>0) { echo $flu; }?></td>

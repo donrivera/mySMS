@@ -197,7 +197,9 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
                   <?php
 					foreach($dbf->fetchOrder('student',"first_name<>'' And id in (select student_id from student_enroll)","first_name") as $valc) {	
 				  ?>
-                  <option value="<?php echo $valc[id];?>" <?php if($valc["id"]==$_REQUEST["student_id"]){?> selected="" <?php } ?>><?php echo $valc[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($valc["id"]));?></option>
+                  <option value="<?php echo $valc[id];?>" <?php if($valc["id"]==$_REQUEST["student_id"]){?> selected="" <?php } ?>>
+						<?php echo $valc[first_name]."&nbsp;".$valc[father_name]."&nbsp;".$valc[family_name]."&nbsp;(".$valc[family_name1]."&nbsp;".$valc[grandfather_name1]."&nbsp;".$valc[father_name1]."&nbsp;".$valc[first_name1].")";?>
+				  </option>
                   <?php
 				   }
 				   ?>
@@ -241,7 +243,7 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
                   <?php
 					foreach($dbf->fetchOrder('student',"first_name<>''","first_name") as $valc) {
 				  ?>
-                  <option value="<?php echo $valc["id"];?>" <?php if($valc["id"]==$_REQUEST["student_id"]){?> selected="" <?php } ?>><?php echo $valc[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($valc["id"]));?></option>
+                  <option value="<?php echo $valc["id"];?>" <?php if($valc["id"]==$_REQUEST["student_id"]){?> selected="" <?php } ?>><?php echo $valc[first_name]."&nbsp;".$valc[father_name]."&nbsp;".$valc[family_name]."&nbsp;(".$valc[family_name1]."&nbsp;".$valc[grandfather_name1]."&nbsp;".$valc[father_name1]."&nbsp;".$valc[first_name1].")";?></option>
                   <?php
 				   }
 				   ?>

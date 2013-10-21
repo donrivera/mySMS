@@ -7,7 +7,7 @@ include_once '../includes/language.php';
 //Object initialization
 $dbf = new User();
 
-$teacher_id =  $_REQUEST[teacher_id];
+echo $teacher_id =  $_REQUEST[teacher_id];
 
 if($teacher_id == '')
 {
@@ -38,7 +38,7 @@ else
 	?>
     <table width="90%" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#FF99FF;">
       <tr>
-        <td align="center" valign="middle" bgcolor="#FFECFF" class="red_smalltext"><?php echo constant("CD_SLOT_MANAGE_BOOKEDSLOT");?></td>
+        <td align="center" valign="middle" bgcolor="#FFECFF" class="red_smalltext"><?php echo "don".constant("CD_SLOT_MANAGE_BOOKEDSLOT");?></td>
       </tr>
     </table>
 <?php

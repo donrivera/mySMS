@@ -275,7 +275,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$val_room = $dbf->strRecordID("centre_room","*","id='$val[room_id]'");
 					
 					//Get Unit
-					$val_unit = $dbf->strRecordID("common","*","id='$val[units]'");
+					//$val_unit = $dbf->strRecordID("common","*","id='$val[group_id]'");
 					
 			        $num_dtls=$dbf->countRows('student_group_dtls',"parent_id='$val[id]' And student_id in (select id from student)");
 					?>
@@ -287,7 +287,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 </td>
                 <td width="12%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val_course[name];?></td>
                 <td width="15%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val_teacher[name];?></td>
-                <td width="8%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val_unit[name];?> <?php echo constant("RECEPTION_GROUP_MANAGE_UNITDAY");?></td>
+                <td width="8%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo  $val[units];?> <?php //echo constant("RECEPTION_GROUP_MANAGE_UNITDAY");?></td>
                 <?php
 				if($val[room_id] != "0"){
 					$no = $val_room["name"];
@@ -297,7 +297,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				?>
                 <td width="11%" align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo date('d-M-Y',strtotime($val[start_date]));?></td>
                 <td width="11%" align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo date('d-M-Y',strtotime($val[end_date]));?></td>
-                <td width="12%" align="center" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $val[group_time];?>-<?php echo $dbf->GetGroupTime($val["id"]);?></td>
+                <td width="12%" align="center" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $val[group_start_time];?>-<?php echo $val[group_end_time];?></td>
                 <td width="12%" height="25" align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $no;?></td>
                 <td width="4%" align="center" valign="middle" style="background-color:<?php echo $color;?>" ><a href="group_course_process.php?action=delete&amp;id=<?php echo $val[id];?>"  class="linktext" onclick="return confirm('Are you sure you want to delete this record ?')">
                   <?php if($num_dtls <=0 ) { ?>
@@ -378,7 +378,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
                     <tr bgcolor="<?php echo $color1;?>" onmouseover="this.bgColor='#FDE6D0'" onmouseout="this.bgColor='<?php echo $color1;?>'" style="cursor:pointer;">
                       <td align="center" valign="middle"><?php echo $j;?></td>
-                      <td height="25" align="left" valign="middle"><a href="single-home.php?student_id=<?php echo $val_student[id];?>" style="cursor:pointer;"><?php echo $val_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val_student["id"]));?></a></td>
+                      <td height="25" align="left" valign="middle"><a href="single-home.php?student_id=<?php echo $val_student[id];?>" style="cursor:pointer;"><?php echo $val_student[first_name]."&nbsp;".$val_student[father_name]."&nbsp;".$val_student[family_name]."&nbsp;(".$val_student[first_name1]."&nbsp;".$val_student[father_name1]."&nbsp;".$val_student[grandfather_name1]."&nbsp;".$val_student[family_name1].")";?></a></td>
                       <td align="left" valign="middle"><?php if($val_student[student_id]>0) { echo $val_student[student_id]; } ?></td>
                       <td align="left" valign="middle"><?php echo $val_student[student_mobile];?></td>
                       <td align="left" valign="middle"><?php echo $val_student[email];?></td>
@@ -580,7 +580,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         }
                         ?>
                       <td width="12%" align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo date('d-M-Y',strtotime($val[start_date]));?></td>
-                      <td width="12%" align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[group_time];?>-<?php echo $dbf->GetGroupTime($val["id"]);?></td>
+                      <td width="12%" align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[group_start_time];?>-<?php $val[group_end_time];?></td>
                       <td width="10%" align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo date('d-M-Y',strtotime($val[end_date]));?></td>
                       <td width="11%" height="25" align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $no;?></td>
                       <td width="11%" align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val_teacher[name];?></td>
@@ -664,7 +664,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td align="right" valign="middle"><?php echo $val_student[email];?></td>
                             <td align="right" valign="middle"><?php echo $val_student[student_mobile];?></td>
                             <td align="right" valign="middle"><?php if($val_student[student_id]>0) { echo $val_student[student_id]; } ?></td>                          
-                            <td height="25" align="right" valign="middle"><a href="javascript:void(0);" onclick="window.open('authonication.php?student_id=<?php echo $val[id];?>','_blank');" style="cursor:pointer;"><?php echo $val_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val_student["id"]));?></a></td>
+                            <td height="25" align="right" valign="middle"><a href="javascript:void(0);" onclick="window.open('authonication.php?student_id=<?php echo $val[id];?>','_blank');" style="cursor:pointer;"><?php echo $val_student[first_name]."&nbsp;".$val_student[father_name]."&nbsp;".$val_student[family_name]."&nbsp;(".$val_student[first_name1]."&nbsp;".$val_student[father_name1]."&nbsp;".$val_student[grandfather_name1]."&nbsp;".$val_student[family_name1].")";?></a></td>
                             <td align="center" valign="middle"><?php echo $j;?></td>
                           </tr>
                           <?php

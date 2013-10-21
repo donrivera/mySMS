@@ -200,7 +200,29 @@ if($_REQUEST['action']=='insert'){
 	$student_name = $_SESSION["name"].' '.$_SESSION["family_name"];
 	
 	//Insert into student table
-	$string="first_name='$student_name',first_name1='$_SESSION[name]',father_name='$_SESSION[father_name]',grandfather_name='$_SESSION[grandfather_name]',family_name='$_SESSION[family_name]',age='$_SESSION[age]',guardian_name='$_SESSION[gname]',guardian_contact='$_SESSION[pcontact]',guardian_comment ='$_SESSION[information]', gender='$gender',country_id='$_SESSION[country]',id_type='$_SESSION[id_type]',student_id='$_SESSION[student_id]',student_mobile='$_SESSION[mobile_no]',alt_contact='$_SESSION[alt_no]',email='$_SESSION[email]',centre_id='$_SESSION[centre_id]',created_datetime='$dt1',created_by='$_SESSION[id]',sms_status='1'";
+	$string="	first_name='$_SESSION[name]',
+				first_name1='$_SESSION[name1]',
+				father_name='$_SESSION[father_name]',
+				father_name1='$_SESSION[father_name1]',
+				grandfather_name='$_SESSION[grandfather_name]',
+				grandfather_name1='$_SESSION[grandfather_name1]',
+				family_name='$_SESSION[family_name]',
+				father_name1='$_SESSION[father_name1]',
+				age='$_SESSION[age]',
+				guardian_name='$_SESSION[gname]',
+				guardian_contact='$_SESSION[pcontact]',
+				guardian_comment ='$_SESSION[information]',
+				gender='$gender',
+				country_id='$_SESSION[country]',
+				id_type='$_SESSION[id_type]',
+				student_id='$_SESSION[student_id]',
+				student_mobile='$_SESSION[mobile_no]',
+				alt_contact='$_SESSION[alt_no]',
+				email='$_SESSION[email]',
+				centre_id='$_SESSION[centre_id]',
+				created_datetime='$dt1',
+				created_by='$_SESSION[id]',
+				sms_status='1'";
 	
 	$ids = $dbf->insertSet("student",$string);
 	

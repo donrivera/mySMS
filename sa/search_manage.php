@@ -472,7 +472,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                   <td align="left" valign="middle"><input name="othertext" type="text" class="new_textbox190" id="othertext" value="<?php echo $res_enroll["othertext"];?>" /></td>
                                 </tr>
                                 <?php
-								$opening_amt = $dbf->getDataFromTable('student_fees',"paid_amt","course_id='$course_id' And student_id='$student_id' And type='opening'");
+								$opening_amt = $dbf->getDataFromTable('student_fees',"SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' And type='advance'");
+								
 								?>
                                 <tr>
                                   <td height="28" align="left" valign="middle"><input name="payment" type="text" <?php if($opening_amt > 0){?> readonly="" <?php } ?> class="new_textbox100" id="payment" value="<?php echo $opening_amt;?>"  onKeyPress="return isNumberKey(event);"/></td>
@@ -516,7 +517,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             </tr>
                             <tr>
                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                              <td height="28" align="right" valign="middle" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_SEARCH_MANAGE_INITIPAY");?> : </td>
+                              <td height="28" align="right" valign="middle" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_SEARCH_MANAGE_INITIPAY");?> :</td>
                               <td>&nbsp;</td>
                             </tr>
                             <tr>
@@ -540,9 +541,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             </tr>
                             <?php
                                 //Check Initial Payment Amount  > 0 OR Payment Structure > 0
-                                
+                               
                                 //Get Structure of the Particular student with Course
-                                $num_structure = $dbf->countRows('student_fees',"course_id='$course_id' And student_id='$student_id'");                                
+                                $num_structure = $dbf->countRows('student_fees',"course_id='$course_id' And student_id='$student_id'");  
+								
                                 if($num_structure > 0){
                                 ?>
                             <tr>
@@ -590,7 +592,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 									//Get Course has been finished or not (If 0 = Not completed else Completed)
 									$num_complete = $dbf->countRows('student_group g,student_group_dtls d',"g.id=d.parent_id And g.status='Completed' And g.course_id='$course_id' And d.student_id='$student_id'");
 									
-                                    foreach($dbf->fetchOrder('student_fees',"course_id='$course_id' And student_id='$student_id'","") as $vali) {
+                                    foreach($dbf->fetchOrder('student_fees',"course_id='$course_id' And student_id='$student_id' AND type !='advance'","") as $vali) { //added payment_type 06-10-2013
                                         
                                     $dt="";                                    
                                     $ptype = $dbf->strRecordID("common","*","id='$vali[payment_type]'");                                    
@@ -744,7 +746,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             </tr>
                             <tr>
                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                              <td height="28" align="right" valign="top" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_SEARCH_MANAGE_MATERIALRECI");?> : </td>
+                              <td height="28" align="right" valign="top" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_SEARCH_MANAGE_MATERIALRECI");?> :</td>
                               <td>&nbsp;</td>
                               <td align="left" valign="middle"><table width="250" cellpadding="0" cellspacing="0">
                                 <?php
@@ -1159,7 +1161,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                                 <?php } ?>
                                                 </td>
                                                 <?php
-												$opening_amt = $dbf->getDataFromTable('student_fees',"paid_amt","course_id='$course_id' And student_id='$student_id' And type='opening'");
+												$opening_amt = $dbf->getDataFromTable('student_fees',"paid_amt","course_id='$course_id' And student_id='$student_id' And type='advance'");
 												?>
                                                 <td height="25" align="right" valign="middle"><input name="payment" type="text" class="new_textbox100_ar" id="payment" value="<?php echo $opening_amt;?>" <?php if($opening_amt > 0){?> readonly="" <?php } ?> onKeyPress="return isNumberKey(event);"/></td>
                                                 <td align="left" valign="middle" class="leftmenu">: <?php echo constant("STUDENT_ADVISOR_SEARCH_MANAGE_INITIPAY");?></td>
@@ -1205,6 +1207,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 											//Check Initial Payment Amount  > 0 OR Payment Structure > 0
 											
 											//Get Structure of the Particular student with Course
+										
 											$num_structure = $dbf->countRows('student_fees',"course_id='$course_id' And student_id='$student_id'");
 											
 											if($num_structure > 0){ ?>
