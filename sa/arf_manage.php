@@ -240,13 +240,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$condition = "s.id>'0'";
 					}
 					
-					$condition = $condition."  And c.centre_id='$centre_id' And s.id=c.student_id";
+					$condition = $condition."  And c.centre_id='$centre_id' And s.id=c.student_id AND c.sa_status='0'";
 					
 					//End 4.					
 					$num=$dbf->countRows('student s, arf c', $condition);
 					foreach($dbf->fetchOrder('student s, arf c', $condition ,"c.dated desc") as $val) {
 																
-					$res_student = $dbf->strRecordID("student","first_name","id='$val[student_id]'");
+					$res_student = $dbf->strRecordID("student","*","id='$val[student_id]'");
 					?>
                     
                   <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" onClick="javascript:window.location.href='arf_view.php?id=<?php echo $val[id];?>'" style="cursor:pointer;">
@@ -436,13 +436,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							$condition = "s.id>'0'";
 						}
 						
-						$condition = $condition."  And c.centre_id='$centre_id' And s.id=c.student_id";
+						$condition = $condition."  And c.centre_id='$centre_id' And s.id=c.student_id AND c.sa_status='0'";
 						
 						//End 4.					
 						$num=$dbf->countRows('student s, arf c', $condition);
 						foreach($dbf->fetchOrder('student s, arf c', $condition ,"c.dated desc") as $val) {
 																	
-						$res_student = $dbf->strRecordID("student","first_name","id='$val[student_id]'");
+						$res_student = $dbf->strRecordID("student","*","id='$val[student_id]'");
 					?>
                         
                         <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" onClick="javascript:window.location.href='arf_view.php?id=<?php echo $val[id];?>'" style="cursor:pointer;">                          

@@ -244,7 +244,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" onClick="javascript:window.location.href='arf_edit.php?id=<?php echo $val[id];?>'" style="cursor:pointer;">
                     <td height="25" align="center" valign="middle" class="contenttext"><?php echo $i;?></td>
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[dated];?></td>
-                    <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $res_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></td>
+                    <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $res_student[first_name]."&nbsp;".$res_student[father_name]."&nbsp;".$res_student[family_name]."&nbsp;(".$res_student[first_name1]."&nbsp;".$res_student[father_name1]."&nbsp;".$res_student[grandfather_name1]."&nbsp;".$res_student[family_name1].")";?></td>
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[action_owner];?></td>
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[report_by];?></td>
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[report_to];?></td>
@@ -440,7 +440,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[report_to];?></td>
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[report_by];?></td>
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[action_owner];?></td>
-                    <td align="right" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $res_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></td>
+                    <td align="right" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $res_student[first_name]."&nbsp;".$res_student[father_name]."&nbsp;".$res_student[family_name]."&nbsp;(".$res_student[first_name1]."&nbsp;".$res_student[father_name1]."&nbsp;".$res_student[grandfather_name1]."&nbsp;".$res_student[family_name1].")";?></td>
                     <td height="25" align="center" valign="middle" class="contenttext"><?php echo $val[dated];?></td>
                     <td height="25" align="center" valign="middle" class="contenttext"><?php echo $i;?></td>
                     <?php

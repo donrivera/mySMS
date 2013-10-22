@@ -9,13 +9,41 @@ $dbf = new User();
 $teacher_id = $_SESSION[uid];
 
 if($_REQUEST['action']=='insert')
-{
-	$cr_date = date('Y-m-d H:i:s A');
+{	
+	//echo var_dump($_SESSION);
 	
+	$function=$_REQUEST["function"];
+	$cr_date = date('Y-m-d H:i:s A');
+	$string="
+				teacher_id='$_SESSION[id]',
+				student_id='$_REQUEST[student]',
+				centre_id='$_SESSION[centre_id]',
+				group_id='$_REQUEST[group_id]',
+				dated='$_REQUEST[dated]',
+				nr='$_REQUEST[nr]',
+				action_owner='$_REQUEST[report_by]',
+				report_by='$_REQUEST[report_by]',
+				report_to='$_REQUEST[report_to]',
+				function='$function',
+				subject='$_REQUEST[subject]',
+				other1='$_REQUEST[other1]',
+				other2='$_REQUEST[other2]',
+				other3='$_REQUEST[other3]',
+				created_datetime='$cr_date',
+				created_by='$SESSION[id]',
+				action_report='$_REQUEST[action_report]',
+				action_report_date='$_REQUEST[action_report_date]',
+				action_taken='$_REQUEST[action_taken]',
+				action_taken_date='$_REQUEST[action_taken_date]',
+				result_check='$_REQUEST[result_check]',
+				result_check_date='$_REQUEST[result_check_date]',
+				last_updated='',
+				updated_by=''
+			";
 	//Get Centre ID
 	$res_centre = $dbf->strRecordID("student_group","*","id='$_REQUEST[group_id]'");
 	
-	$string="teacher_id='$teacher_id',student_id='$_POST[student]',centre_id='$res_centre[centre_id]',group_id='$_REQUEST[group_id]',dated='$_POST[dated]',nr='$_POST[nr]',action_owner='$_POST[owner]',report_by='$_POST[report_by]',report_to='$_POST[report_to]',customer='$_POST[customer]',teacher='$_POST[teacher]',reception1='$_POST[reception1]',cs1='$_POST[cs1]',other1='$_POST[other1]',reception2='$_POST[reception2]',lcd='$_POST[lcd]',lis='$_POST[lis]',cs2='$_POST[cs2]',other2='$_POST[other2]',instruction='$_POST[instruction]',material='$_POST[material]',programme='$_POST[programme]',premisses='$_POST[premisses]',administration='$_POST[administration]',other3='$_POST[other3]',created_datetime='$cr_date',created_by='$_SESSION[uid]'";
+	//$string="teacher_id='$teacher_id',student_id='$_POST[student]',centre_id='$res_centre[centre_id]',group_id='$_REQUEST[group_id]',dated='$_POST[dated]',nr='$_POST[nr]',action_owner='$_POST[owner]',report_by='$_POST[report_by]',report_to='$_POST[report_to]',customer='$_POST[customer]',teacher='$_POST[teacher]',reception1='$_POST[reception1]',cs1='$_POST[cs1]',other1='$_POST[other1]',reception2='$_POST[reception2]',lcd='$_POST[lcd]',lis='$_POST[lis]',cs2='$_POST[cs2]',other2='$_POST[other2]',instruction='$_POST[instruction]',material='$_POST[material]',programme='$_POST[programme]',premisses='$_POST[premisses]',administration='$_POST[administration]',other3='$_POST[other3]',created_datetime='$cr_date',created_by='$_SESSION[uid]'";
 	
 	$ids = $dbf->insertSet("arf",$string);
 	
@@ -78,6 +106,7 @@ if($_REQUEST['action']=='insert')
 	// End Save Mail
 	
 	header("Location:arf_manage.php?ids=$ids&msg=xAmX");
+	
 }
 
 if($_REQUEST['action']=='delete')
@@ -90,9 +119,35 @@ if($_REQUEST['action']=='edit')
 {
 	$cr_date = date('Y-m-d H:i:s A');
 	
-	$string="teacher_id='$_SESSION[uid]',student_id='$_POST[student]',group_id='$_REQUEST[group_id]',dated='$_POST[dated]',nr='$_POST[nr]',action_owner='$_POST[owner]',report_by='$_POST[report_by]',report_to='$_POST[report_to]',customer='$_POST[customer]',teacher='$_POST[teacher]',reception1='$_POST[reception1]',cs1='$_POST[cs1]',other1='$_POST[other1]',reception2='$_POST[reception2]',lcd='$_POST[lcd]',lis='$_POST[lis]',cs2='$_POST[cs2]',other2='$_POST[other2]',instruction='$_POST[instruction]',material='$_POST[material]',programme='$_POST[programme]',premisses='$_POST[premisses]',administration='$_POST[administration]',other3='$_POST[other3]',last_updated='$cr_date',updated_by='$_SESSION[uid]'";
-	
-	$dbf->updateTable("arf",$string,"id='$_REQUEST[id]'");
+	//$string="teacher_id='$_SESSION[uid]',student_id='$_POST[student]',group_id='$_REQUEST[group_id]',dated='$_POST[dated]',nr='$_POST[nr]',action_owner='$_POST[owner]',report_by='$_POST[report_by]',report_to='$_POST[report_to]',customer='$_POST[customer]',teacher='$_POST[teacher]',reception1='$_POST[reception1]',cs1='$_POST[cs1]',other1='$_POST[other1]',reception2='$_POST[reception2]',lcd='$_POST[lcd]',lis='$_POST[lis]',cs2='$_POST[cs2]',other2='$_POST[other2]',instruction='$_POST[instruction]',material='$_POST[material]',programme='$_POST[programme]',premisses='$_POST[premisses]',administration='$_POST[administration]',other3='$_POST[other3]',last_updated='$cr_date',updated_by='$_SESSION[uid]'";
+	$function=$_REQUEST["function"];
+	$string="
+				teacher_id='$_SESSION[id]',
+				student_id='$_REQUEST[student]',
+				centre_id='$_SESSION[centre_id]',
+				group_id='$_REQUEST[group_id]',
+				dated='$_REQUEST[dated]',
+				nr='$_REQUEST[nr]',
+				action_owner='$_REQUEST[report_by]',
+				report_by='$_REQUEST[report_by]',
+				report_to='$_REQUEST[report_to]',
+				function='$function',
+				subject='$_REQUEST[subject]',
+				other1='$_REQUEST[other1]',
+				other2='$_REQUEST[other2]',
+				other3='$_REQUEST[other3]',
+				created_datetime='$cr_date',
+				created_by='$SESSION[id]',
+				action_report='$_REQUEST[action_report]',
+				action_report_date='$_REQUEST[action_report_date]',
+				action_taken='$_REQUEST[action_taken]',
+				action_taken_date='$_REQUEST[action_taken_date]',
+				result_check='$_REQUEST[result_check]',
+				result_check_date='$_REQUEST[result_check_date]',
+				last_updated='',
+				updated_by=''
+			";
+	$dbf->updateTable("arf",$string,"id='$_REQUEST[record_id]'");
 	
 	header("Location:arf_manage.php");
 }

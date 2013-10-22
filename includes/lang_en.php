@@ -1640,7 +1640,7 @@ define("SA_MENU_TIME_SLOT","Manage time slot");
 define("SA_MENU_GROUP_SIZE","Group sizes");
 define("SA_MENU_CLASSIC","Quick enrollment");
 define("SA_MENU_STUDENT_DETAILS","Edit student details"); // 2012
-define("SA_MENU_APPOINT","Edit student appointment");// 2012
+define("SA_MENU_APPOINT","Manage student appointment");// 2012
 //SA
 
 //CD

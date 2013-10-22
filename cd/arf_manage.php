@@ -192,7 +192,7 @@ $count = $res_logout[name]+1; // Set timeout period in seconds
 					$color="#ECECFF";					
 					$centre_id = $_SESSION['centre_id'];
 					
-					$condition = $dbf->getSearchStrings($_REQUEST["fname"],$_REQUEST["stid"],$_REQUEST["mobile"],$_REQUEST["email"], $centre_id,"s."," And s.id=c.student_id");
+					$condition = $dbf->getSearchStrings($_REQUEST["fname"],$_REQUEST["stid"],$_REQUEST["mobile"],$_REQUEST["email"], $centre_id,"s."," And s.id=c.student_id AND sa_status='1'");
 
 					//End 4.					
 					$num=$dbf->countRows('student s, arf c', $condition);
@@ -330,7 +330,7 @@ $count = $res_logout[name]+1; // Set timeout period in seconds
 						$i = 1;
 						$color="#ECECFF";					
 						$centre_id = $_SESSION['centre_id'];
-						$condition = $dbf->getSearchStrings($_REQUEST["fname"],$_REQUEST["stid"],$_REQUEST["mobile"],$_REQUEST["email"], $centre_id,"s."," And s.id=c.student_id");
+						$condition = $dbf->getSearchStrings($_REQUEST["fname"],$_REQUEST["stid"],$_REQUEST["mobile"],$_REQUEST["email"], $centre_id,"s."," And s.id=c.student_id AND sa_status='1'");
 						
 						//End 4.					
 						$num=$dbf->countRows('student s, arf c', $condition);

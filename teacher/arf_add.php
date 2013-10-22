@@ -94,6 +94,36 @@ $(function() {
 
 		dateFormat: 'yy-mm-dd'
 	});
+	$( "#action_report_date" ).datepicker({
+		changeMonth: true,
+		changeYear: true,
+		//numberOfMonths: 2,
+		minDate: new Date(),
+		
+		//maxDate: new Date(2011, 10, 25, 17, 30),
+
+		dateFormat: 'yy-mm-dd'
+	});
+	$( "#action_taken_date" ).datepicker({
+		changeMonth: true,
+		changeYear: true,
+		//numberOfMonths: 2,
+		minDate: new Date(),
+		
+		//maxDate: new Date(2011, 10, 25, 17, 30),
+
+		dateFormat: 'yy-mm-dd'
+	});
+	$( "#result_check_date" ).datepicker({
+		changeMonth: true,
+		changeYear: true,
+		//numberOfMonths: 2,
+		minDate: new Date(),
+		
+		//maxDate: new Date(2011, 10, 25, 17, 30),
+
+		dateFormat: 'yy-mm-dd'
+	});
 });
 
 function gotfocus(){
@@ -365,7 +395,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         foreach($dbf->fetchOrder('student s',"s.centre_id='$res_arf[centre_id]'","s.first_name","s.*") as $ress2) {
                                       ?>
                                         <option value="<?php echo $ress2['id']?>" <?php if($ress2[id]==$res_arf[student_id]) { ?> selected="selected" <?php } ?>>
-                                        <?php echo $ress2['first_name'];?> <?php echo $Arabic->en2ar($dbf->StudentName($ress2["id"]));?></option>
+											<?php echo $ress2[first_name]."&nbsp;".$ress2[father_name]."&nbsp;".$ress2[family_name]."&nbsp;(".$ress2[first_name1]."&nbsp;".$ress2[father_name1]."&nbsp;".$ress2[grandfather_name1]."&nbsp;".$ress2[family_name1].")";?>
+										</option>
                                         <?php }?>
                                       </select>
                                     </td>
@@ -386,7 +417,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                   <tr>
                                     <td>&nbsp;</td>
                                     <td height="30" align="left" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_ACTIONOWENER");?> : <span class="nametext1">*</span></td>
-                                    <td align="left" valign="middle"  class="leftmenu"><input name="owner" type="text" class="validate[required] new_textbox190" id="owner" value="<?php echo $res_arf[action_owner];?>" /></td>
+                                    <td align="left" valign="middle"  class="leftmenu">
+										<input name="owner" type="text" class="validate[required] new_textbox190" id="owner" value="<?php echo $_SESSION[user_type]."-".$_SESSION[user_name];?>" readonly="readonly" /></td>
                                     <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                     <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                     <td align="left" valign="middle">&nbsp;</td>
@@ -402,7 +434,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                   <tr>
                                     <td>&nbsp;</td>
                                     <td height="30" align="left" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_REPORTBY");?> : <span class="nametext1">*</span></td>
-                                    <td align="left" valign="middle" class="leftmenu"><input name="report_by" type="text" class="validate[required] new_textbox190" id="report_by" value="<?php echo $res_arf[report_by];?>"/></td>
+                                    <td align="left" valign="middle" class="leftmenu"><input name="report_by" type="text" class="validate[required] new_textbox190" id="report_by" value="<?php echo $_SESSION[user_name];?>" readonly="readonly"/></td>
                                     <td align="left" valign="middle">&nbsp;</td>
                                     <td align="left" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_REPORTEDTO");?>:</td>
                                     <td align="left" valign="middle">
@@ -428,51 +460,73 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                <tr>		
                                 <td>&nbsp;</td>
                                 <td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_CUSTOMER");?> : </td>
-                                <td height="25" align="left" valign="middle" class="leftmenu"><input name="customer" type="text" value="<?php echo $res_arf[customer];?>" class="new_textbox100" id="customer"></td>
+                                <td height="25" align="left" valign="middle" class="leftmenu">
+									<!--<input name="customer" type="text" value="<?php echo $res_arf[customer];?>" class="new_textbox100" id="customer">-->
+									<input type="radio" name="function" value="customer">
+								</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td width="74" align="right" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_RECEPTION");?> : </td>
                                 <td height="25" align="left" valign="middle"><span class="leftmenu">
-                                  <input name="reception2" type="text" class="new_textbox100" id="reception2" value="<?php echo $res_arf[reception2];?>">
+                                 <!-- <input name="reception2" type="text" class="new_textbox100" id="reception2" value="<?php echo $res_arf[reception2];?>">-->
+								 <input type="radio" name="function" value="reception">
                                 </span></td>
                               </tr>
                               <tr>
                                 <td>&nbsp;</td>
                                 <td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_TEACHER");?> : </td>
-                                <td height="25" align="left" valign="middle" class="leftmenu"><input name="teacher" type="text" value="<?php echo $res_arf[teacher];?>" class="new_textbox100" id="teacher"></td>
+                                <td height="25" align="left" valign="middle" class="leftmenu">
+									<!--<input name="teacher" type="text" value="<?php echo $res_arf[teacher];?>" class="new_textbox100" id="teacher">-->
+									<input type="radio" name="function" value="teacher">
+								</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td align="right" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_LCD");?> : </td>
                                 <td height="25" align="left" valign="middle"><span class="leftmenu">
-                                  <input name="lcd" type="text" class="new_textbox100" id="lcd" value="<?php echo $res_arf[lcd];?>">
+                                  <!--<input name="lcd" type="text" class="new_textbox100" id="lcd" value="<?php echo $res_arf[lcd];?>">-->
+								  <input type="radio" name="function" value="lcd">
                                 </span> </td>
                               </tr>
                               <tr>
                                 <td>&nbsp;</td>
                                 <td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_RECEPTION");?> : </td>
-                                <td height="25" align="left" valign="middle" class="leftmenu"><input name="reception1" type="text" value="<?php echo $res_arf[reception1];?>" class="new_textbox100" id="reception1"></td>
+                                <td height="25" align="left" valign="middle" class="leftmenu">
+									<!--<input name="reception1" type="text" value="<?php echo $res_arf[reception1];?>" class="new_textbox100" id="reception1">-->
+									<input type="radio" name="function" value="reception1">
+								</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td align="right" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_LIS");?> : </td>
                                 <td height="25" align="left" valign="middle"><span class="leftmenu">
-                                  <input name="lis" type="text" class="new_textbox100" value="<?php echo $res_arf[lis];?>" id="lis">
+                                  <!--<input name="lis" type="text" class="new_textbox100" value="<?php echo $res_arf[lis];?>" id="lis">-->
+								  <input type="radio" name="function" value="lis">
                                 </span></td>
                               </tr>
                               <tr>
                                 <td>&nbsp;</td>
                                 <td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_CS");?> : </td>
-                                <td height="25" align="left" valign="middle" class="leftmenu"><input name="cs1" type="text" value="<?php echo $res_arf[cs1];?>" class="new_textbox100" id="cs1"></td>
+                                <td height="25" align="left" valign="middle" class="leftmenu">
+									<!--<input name="cs1" type="text" value="<?php echo $res_arf[cs1];?>" class="new_textbox100" id="cs1">-->
+									<input type="radio" name="function" value="customer_service">
+								</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td align="right" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_CS");?> : </td>
                                 <td height="25" align="left" valign="middle"><span class="leftmenu">
-                                  <input name="cs2" type="text" class="new_textbox100" value="<?php echo $res_arf[cs2];?>" id="cs2">
+                                  <!--<input name="cs2" type="text" class="new_textbox100" value="<?php echo $res_arf[cs2];?>" id="cs2">-->
+								  <input type="radio" name="function" value="customer_service1">
                                 </span></td>
                               </tr>
                               <tr>
                                 <td>&nbsp;</td>
                                 <td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_OTHER");?> : </td>
-                                <td height="25" align="left" valign="middle" class="leftmenu"><input name="other1" type="text" class="new_textbox190" id="other1" value="<?php echo $res_arf[other1];?>" size="45" minlength="4"/></td>
+                                <td height="25" align="left" valign="middle" class="leftmenu">
+									<input type="radio" name="function" value="other1">
+									<!--<input name="other1" type="text" class="new_textbox190" id="other1" value="<?php echo $res_arf[other1];?>" size="30" minlength="4"/>-->
+									<input name="other1" type="text" id="other1" value="<?php echo $res_arf[other1];?>" class="new_textbox100"/>
+								</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td align="right" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_OTHER");?> :</td>
-                                <td height="25" align="left" valign="middle">
-                                  <input name="other2" type="text" class="new_textbox190" id="other2" value="<?php echo $res_arf[other2];?>" size="45" minlength="4"/>
+                                <td height="25" align="left" valign="middle">&nbsp;&nbsp;
+									<input type="radio" name="function" value="other2">
+									<!--<input name="other2" type="text" class="new_textbox190" id="other2" value="<?php echo $res_arf[other2];?>" size="30" minlength="4"/>-->
+									<input name="other2" type="text" id="other2" value="<?php echo $res_arf[other2];?>" class="new_textbox100"/>
                                 </td>
                               </tr>
                               <tr>
@@ -494,7 +548,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <tr>
                                 <td align="center" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_SUBJECT");?> : </td>
                                 <td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_INSTRUCTION");?> : </td>
-                                <td height="25" align="left" valign="middle" class="leftmenu"><input name="instruction" value="<?php echo $res_arf[instruction];?>" type="text" class="new_textbox100" id="instruction"></td>
+                                <td height="25" align="left" valign="middle" class="leftmenu">
+									<!--<input name="instruction" value="<?php echo $res_arf[instruction];?>" type="text" class="new_textbox100" id="instruction">-->
+									<input type="radio" name="subject" value="instruction">
+								</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td align="left" valign="middle">&nbsp;</td>
@@ -502,7 +559,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <tr>
                                 <td>&nbsp;</td>
                                 <td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_MATERIAL");?> : </td>
-                                <td height="25" align="left" valign="middle" class="leftmenu"><input name="material" value="<?php echo $res_arf[material];?>" type="text" class="new_textbox100" id="material"></td>
+                                <td height="25" align="left" valign="middle" class="leftmenu">
+									<!--<input name="material" value="<?php echo $res_arf[material];?>" type="text" class="new_textbox100" id="material">-->
+									<input type="radio" name="subject" value="material">
+								</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td align="left" valign="middle">&nbsp;</td>
@@ -510,7 +570,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <tr>
                                 <td>&nbsp;</td>
                                 <td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_PROGRAMME");?> : </td>
-                                <td height="25" align="left" valign="middle" class="leftmenu"><input name="programme" value="<?php echo $res_arf[programme];?>" type="text" class="new_textbox100" id="programme"></td>
+                                <td height="25" align="left" valign="middle" class="leftmenu">
+									<!--<input name="programme" value="<?php echo $res_arf[programme];?>" type="text" class="new_textbox100" id="programme">-->
+									<input type="radio" name="subject" value="programme">
+								</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td align="left" valign="middle">&nbsp;</td>
@@ -519,7 +582,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <tr>
                                 <td>&nbsp;</td>
                                 <td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_PREMISSES");?> : </td>
-                                <td height="25" align="left" valign="middle" class="leftmenu"><input name="premisses" value="<?php echo $res_arf[premisses];?>" type="text" class="new_textbox100" id="premisses"></td>
+                                <td height="25" align="left" valign="middle" class="leftmenu">
+									<!--<input name="premisses" value="<?php echo $res_arf[premisses];?>" type="text" class="new_textbox100" id="premisses">-->
+									<input type="radio" name="subject" value="premises">
+								</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td align="left" valign="middle">&nbsp;</td>
@@ -527,7 +593,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <tr>
                                 <td>&nbsp;</td>
                                 <td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_ADMINST");?> : </td>
-                                <td height="25" align="left" valign="middle" class="leftmenu"><input name="administration" value="<?php echo $res_arf[administration];?>" type="text" class="new_textbox100" id="administration"></td>
+                                <td height="25" align="left" valign="middle" class="leftmenu">
+									<!--<input name="administration" value="<?php echo $res_arf[administration];?>" type="text" class="new_textbox100" id="administration">-->
+									<input type="radio" name="subject" value="administration">
+								</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td align="left" valign="middle">&nbsp;</td>
@@ -535,7 +604,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <tr>
                                 <td>&nbsp;</td>
                                 <td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_OTHER");?> : </td>
-                                <td height="25" align="left" valign="middle" class="leftmenu"><input name="other3" type="text" class="new_textbox190" id="other3" value="<?php echo $res_arf[other3];?>"size="45" minlength="4"/></td>
+                                <td height="25" align="left" valign="middle" class="leftmenu">
+									<input type="radio" name="subject" value="other3">
+									<input name="other3" type="text" class="new_textbox100" id="other3" value="<?php echo $res_arf[other3];?>"size="45" minlength="4"/>
+								</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td align="left" valign="middle">&nbsp;</td>
@@ -549,39 +621,66 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <td align="left" valign="middle">&nbsp;</td>
                               </tr>
                               <tr>
-                                <td align="center" bgcolor="#FFC058" class="leftmenu" ><?php echo constant("TEACHER_ARF_MANAGE_REPORT");?></td>
-                                <td height="30" align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td>&nbsp;</td>
+                                <td align="center"  class="leftmenu" ><!--bgcolor="#FFC058"--><?php echo constant("TEACHER_ARF_MANAGE_REPORT");?>:</td>
+                                <td height="30" align="left" valign="middle" class="leftmenu">&nbsp;
+									<input name="action_report"  type="text" class="new_textbox190" id="action_report" size="45"/>
+								</td>
                                 <td align="left" valign="middle">&nbsp;</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                                <td align="left" valign="middle">&nbsp;</td>
+                                
                               </tr>
                               <tr>
                                 <td>&nbsp;</td>
                                 <td height="30" align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                                <td align="left" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_DATE");?> : </td>
-                                <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+                                <td align="left" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_DATE");?> : 
+									<input name="action_report_date"  type="text" class="new_textbox100" id="action_report_date" size="45"/>
+								</td>
+                                <td align="left" valign="middle" class="leftmenu"></td>
                                 <td align="left" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_SIGNED");?>:</td>
                                 <td align="left" valign="middle">&nbsp;</td>
                               </tr>
                               <tr>
-                                <td align="right" valign="top" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_ACTIONTAKEN");?></td>
-                                <td height="30" colspan="3" align="left" valign="top" class="leftmenu">&nbsp;</td>
-                                <td colspan="2" align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td>&nbsp;</td>
+                                <td align="center" valign="top" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_ACTIONTAKEN");?>:</td>
+                                <td height="30" align="left" valign="middle" class="leftmenu">&nbsp;
+									<input name="action_taken"  type="text" class="new_textbox190" id="action_taken" size="45"/>
+								</td>
+                                <td align="left" valign="middle">&nbsp;</td>
+                                <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+                                <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 </tr>
                               <tr>
                                 <td align="right" valign="top" class="leftmenu">&nbsp;</td>
                                 <td height="30" align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                                <td align="left" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_DATE");?> : </td>
+                                <td align="left" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_DATE");?> : 
+									<input name="action_taken_date"  type="text" class="new_textbox100" id="action_taken_date" size="45"/>
+								</td>
                                 <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td align="left" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_SIGNED");?>:</td>
                                 <td align="left" valign="middle">&nbsp;</td>
                               </tr>
                               <tr>
-                                <td align="right" valign="top" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_RESULTCHECKED");?></td>
-                                <td height="30" colspan="3" align="left" valign="top" class="leftmenu">&nbsp;</td>
-                                <td colspan="2" align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                                </tr>
+								<td>&nbsp;</td>
+                                <td align="right" valign="top" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_RESULTCHECKED");?>:</td>
+                                <td height="30" align="left" valign="middle" class="leftmenu">&nbsp;
+									<input name="result_check"  type="text" class="new_textbox190" id="result_check" size="45"/>
+								</td>
+                                <td align="left" valign="middle">&nbsp;</td>
+                                <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+                                <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+                               </tr>
+							    <tr>
+                                <td align="right" valign="top" class="leftmenu">&nbsp;</td>
+                                <td height="30" align="left" valign="middle" class="leftmenu">&nbsp;</td>
+                                <td align="left" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_DATE");?> : 
+									<input name="result_check_date"  type="text" class="new_textbox100" id="result_check_date" size="45"/>
+								</td>
+                                <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+                                <td align="left" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_SIGNED");?>:</td>
+                                <td align="left" valign="middle">&nbsp;</td>
+                              </tr>
                                   <tr>
                                     <td>&nbsp;</td>
                                     <td height="30" align="left" valign="middle" class="leftmenu"></td>
@@ -725,7 +824,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         foreach($dbf->fetchOrder('student',"certificate_collect='0'","first_name") as $ress2) {
                                         ?>
                                         <option value="<?php echo $ress2['id']?>" <?php if($ress2[id]==$res_arf[student_id]) { ?> selected="selected" <?php } ?>>
-                                        <?php echo $ress2['first_name'];?> <?php echo $Arabic->en2ar($dbf->StudentName($ress2["id"]));?></option>
+											<?php echo $ress2[first_name]."&nbsp;".$ress2[father_name]."&nbsp;".$ress2[family_name]."&nbsp;(".$ress2[first_name1]."&nbsp;".$ress2[father_name1]."&nbsp;".$ress2[grandfather_name1]."&nbsp;".$ress2[family_name1].")";?>
+										</option>
                                         <?php }?>
                                       </select>
                                     </td>
