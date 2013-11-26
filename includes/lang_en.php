@@ -1391,14 +1391,15 @@ define("TEACHER_ARF_MANAGE_LIS","LIS");
 define("TEACHER_ARF_MANAGE_SUBJECT","Subject");
 define("TEACHER_ARF_MANAGE_INSTRUCTION","Instruction");
 define("TEACHER_ARF_MANAGE_MATERIAL","Material");
-define("TEACHER_ARF_MANAGE_PROGRAMME","Programme");
-define("TEACHER_ARF_MANAGE_PREMISSES","Premisses");
+define("TEACHER_ARF_MANAGE_PROGRAMME","Program");
+define("TEACHER_ARF_MANAGE_PREMISSES","Premises");
 define("TEACHER_ARF_MANAGE_ADMINST","Administration");
 
 define("TEACHER_ARF_MANAGE_REPORT","Report");
 define("TEACHER_ARF_MANAGE_ACTIONTAKEN","Action taken");
 define("TEACHER_ARF_MANAGE_RESULTCHECKED","Result checked");
 define("TEACHER_ARF_MANAGE_SIGNED","Signed");
+define("TEACHER_ARF_MANAGE_ADDARF","Add ARF");
 define("TEACHER_ARF_MANAGE_EDITARF","Edit ARF");
 
 // teacher manage_sick_leave

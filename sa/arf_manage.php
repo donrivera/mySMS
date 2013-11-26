@@ -192,70 +192,21 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$i = 1;
 					$color="#ECECFF";					
 					$centre_id = $_SESSION['centre_id'];
-					//Concate the Condition
-					//1.
-					if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[email]==''){
-						$condition = "s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%'";
-					}else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[email]==''){
-						$condition = "d.student_id LIKE '$_REQUEST[stid]%'";
-					}else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[email]==''){
-						$condition = "s.student_mobile LIKE '$_REQUEST[mobile]%'";
-					}else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[email]!=''){
-						$condition = "s.email LIKE '$_REQUEST[email]%'";
-					}
-					//End 1.
-					
-					//2.
-					else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[email]==''){
-						$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.student_id LIKE '$_REQUEST[stid]%'";
-					}else if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[email]==''){
-						$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.student_mobile LIKE '$_REQUEST[mobile]%'";
-					}else if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[email]!=''){
-						$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.email LIKE '$_REQUEST[email]%'";
-					}else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[email]==''){
-						$condition = "s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.student_id LIKE '$_REQUEST[stid]%'";
-					}else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[email]!=''){
-						$condition = "s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.email LIKE '$_REQUEST[email]%'";
-					}else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[email]!=''){
-						$condition = "s.student_id LIKE  '$_REQUEST[stid]%' AND s.email LIKE '%$_REQUEST[email]%'";
-					}
-					//End 2.
-					
-					//3.
-					else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[email]==''){
-						$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.student_id LIKE '$_REQUEST[stid]%' AND s.student_mobile LIKE '$_REQUEST[mobile]%'";
-					}else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[email]!=''){
-						$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.student_id LIKE '$_REQUEST[stid]%' AND s.email LIKE '$_REQUEST[email]%'";
-					}else if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[email]!=''){
-						$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.email LIKE '$_REQUEST[email]%'";
-					}else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[email]!=''){
-						$condition = "s.student_id LIKE '$_REQUEST[stid]%' AND s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.email LIKE '$_REQUEST[email]%'";
-					}
-					//End 3.
-					
-					//4.
-					else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[email]!=''){
-						$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.student_id LIKE  '$_REQUEST[stid]%' AND s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.email LIKE '$_REQUEST[email]%'";
-					}else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[email]==''){
-						$condition = "s.id>'0'";
-					}
-					
-					$condition = $condition."  And c.centre_id='$centre_id' And s.id=c.student_id AND c.sa_status='0'";
-					
+					$condition = $dbf->getSearchStrings($_REQUEST["fname"],$_REQUEST["stid"],$_REQUEST["mobile"],$_REQUEST["email"], $centre_id,"s."," And s.id=c.student_id AND sa_status='1'");
 					//End 4.					
 					$num=$dbf->countRows('student s, arf c', $condition);
 					foreach($dbf->fetchOrder('student s, arf c', $condition ,"c.dated desc") as $val) {
-																
 					$res_student = $dbf->strRecordID("student","*","id='$val[student_id]'");
+					$user = $dbf->strRecordID("user","user_type,user_name","id='$val[teacher_id]'");
 					?>
-                    
+                    <?php $student_name=$res_student[first_name]."&nbsp;".$res_student[father_name]."&nbsp;".$res_student[family_name]."&nbsp;(".$res_student[first_name1]."&nbsp;".$res_student[father_name1]."&nbsp;".$res_student[grandfather_name1]."&nbsp;".$res_student[family_name1].")";?>
                   <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" onClick="javascript:window.location.href='arf_view.php?id=<?php echo $val[id];?>'" style="cursor:pointer;">
                     <td align="center" valign="middle" class="mycon"><?php echo $i;?></td>
                     <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[dated];?></td>
-                    <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val[student_id];?>" style="cursor:pointer;"><?php echo $res_student[first_name]."&nbsp;".$res_student[father_name]."&nbsp;".$res_student[family_name]."&nbsp;(".$res_student[first_name1]."&nbsp;".$res_student[father_name1]."&nbsp;".$res_student[grandfather_name1]."&nbsp;".$res_student[family_name1].")";?></a></td>
-                    <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[action_owner];?></td>
-                    <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[report_by];?></td>
-                    <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[report_to];?></td>                    
+                    <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val[student_id];?>" style="cursor:pointer;"><?php echo ($res_student[first_name] != '' ? $student_name:'N/A'); ?></a></td>
+                    <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $user[user_type]."-".$user[user_name];?></td>
+                    <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $user[user_type]."-".$user[user_name];?></td>
+                    <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo "Student Advisor";?></td>                    
                     <td width="4%" align="center" valign="middle"><a href="arf_view.php?id=<?php echo $val[id];?>">
                     <img src="images/search.png" width="20" height="20" border="0" title="<?php echo ICON_VIEW ?>" /></a></td>                    
                     <td width="5%" align="center" valign="middle"><a href="arf_print.php?id=<?php echo $val[id];?>" target="_blank">
@@ -436,7 +387,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							$condition = "s.id>'0'";
 						}
 						
-						$condition = $condition."  And c.centre_id='$centre_id' And s.id=c.student_id AND c.sa_status='0'";
+						$condition = $condition."  And c.centre_id='$centre_id' And s.id=c.student_id AND c.sa_status='1'";
 						
 						//End 4.					
 						$num=$dbf->countRows('student s, arf c', $condition);

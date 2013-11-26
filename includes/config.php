@@ -1,7 +1,7 @@
 <?php
 define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '');
+define('DB_PASSWORD', 'mamamia');
 define('DB_DATABASE', 'berlitzk_smtest');
 
 class DB_Class

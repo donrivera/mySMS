@@ -1,7 +1,7 @@
 <?php
 ob_start();
 session_start();
-
+include_once '../includes/receipt_ar.php';
 include_once '../includes/class.Main.php';
 include_once '../includes/language.php';
 require '../I18N/Arabic.php';
@@ -59,7 +59,7 @@ $fee = $dbf->strRecordID("student_fees","*","id='$_REQUEST[fee_id]'");
       </tr>
       <tr>
         <td height="30" align="center" valign="middle" class="chtext">&nbsp;</td>
-        <td colspan="3" align="center" valign="middle" class="login_header"><?php echo $Arabic->en2ar('CONTRACT and RECEIPT');?></td>
+        <td colspan="3" align="center" valign="middle" class="login_header"><?php echo RECEIPT_CONTRACT_AND_RECEIPT;//$Arabic->en2ar('CONTRACT and RECEIPT');?></td>
         <td align="center" valign="middle">&nbsp;</td>
       </tr>
       <tr>
@@ -71,12 +71,12 @@ $fee = $dbf->strRecordID("student_fees","*","id='$_REQUEST[fee_id]'");
         <td height="30" colspan="5" align="center" valign="middle" style="border-top:solid 1px; border-bottom:solid 1px; border-color:#999;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td width="7%" height="50">&nbsp;</td>
-            <td width="24%" class="suc_msg">Receipt No. / <?php echo $Arabic->en2ar('Receipt No');?></td>
+            <td width="24%" class="suc_msg">Receipt No. / <?php echo RECEIPT_NO;//$Arabic->en2ar('Receipt No');?></td>
             <td width="34%" class="suc_msg"><?php echo $fee["invoice_no"];?></td>
             <td width="17%" align="center" valign="middle" class="suc_msg">
             <?php echo date('d/m/Y',strtotime($fee["paid_date"]));?>
             </td>
-            <td width="18%" class="suc_msg">Date / <?php echo $Arabic->en2ar('Date');?></td>
+            <td width="18%" class="suc_msg">Date / <?php echo RECEIPT_DATE;//$Arabic->en2ar('Date');?></td>
           </tr>
         </table></td>
         </tr>
@@ -115,28 +115,28 @@ $fee = $dbf->strRecordID("student_fees","*","id='$_REQUEST[fee_id]'");
                 <td width="201" align="right" valign="middle" class="suc_msg"><?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?><br />
                   <?php echo $val["student_mobile"];?></td>
                 <td width="10">&nbsp;</td>
-                <td height="30" align="right" valign="middle" class="smalltext">Received From / <?php echo $Arabic->en2ar('Received From');?><br />
+                <td height="30" align="right" valign="middle" class="smalltext">Received From / <?php echo RECEIPT_RECEIVE_FROM;//$Arabic->en2ar('Received From');?><br />
                   Mobile / <?php echo $Arabic->en2ar('Mobile');?></td>
               </tr>
               <tr>
                 <td align="right" valign="middle" class="suc_msg"><?php echo $amt;?> <?php echo $res_currency[symbol];?> /-</td>
                 <td>&nbsp;</td>
-                <td height="30" align="right" valign="middle" class="smalltext">Amount / <?php echo $Arabic->en2ar('Amount');?></td>
+                <td height="30" align="right" valign="middle" class="smalltext">Amount / <?php echo RECEIPT_AMOUNT;//$Arabic->en2ar('Amount');?></td>
               </tr>
               <tr>
                 <td align="right" valign="middle" class="suc_msg"><?php echo $course_name;?></td>
                 <td>&nbsp;</td>
-                <td height="40" align="right" valign="middle" class="smalltext">Course / <?php echo $Arabic->en2ar('Course');?></td>
+                <td height="40" align="right" valign="middle" class="smalltext">Course / <?php echo RECEIPT_COURSE;//$Arabic->en2ar('Course');?></td>
               </tr>
               <tr>
                 <td align="right" valign="middle" class="suc_msg"><?php echo $dbf->getDataFromTable("common","name","id='$fee[payment_type]'"); ?></td>
                 <td>&nbsp;</td>
-                <td height="30" align="right" valign="middle" class="smalltext">On Account / <?php echo $Arabic->en2ar('On Account');?></td>
+                <td height="30" align="right" valign="middle" class="smalltext">On Account / <?php echo RECEIPT_ON_ACCOUNT;//$Arabic->en2ar('On Account');?></td>
               </tr>
               <tr>
                 <td align="right" valign="middle" class="suc_msg"><?php echo $comm;?></td>
                 <td>&nbsp;</td>
-                <td width="152" height="30" align="right" valign="middle" class="smalltext">Details / <?php echo $Arabic->en2ar('Details');?></td>
+                <td width="152" height="30" align="right" valign="middle" class="smalltext">Details / <?php echo RECEIPT_DETAILS;//$Arabic->en2ar('Details');?></td>
               </tr>
             </table></td>
           </tr>

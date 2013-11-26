@@ -607,7 +607,7 @@ class User extends Dbfunctions{
 	}
 	
 	//Get time available or not
-	function teacherSlotAvailable($teacher_id, $start_date,$end_date,$start_time, $end_time){
+	function teacherSlotAvailable($teacher_id,$start_date,$end_date,$start_time, $end_time){
 		
 		$dbf = new User();
 		//echo $start_time.$end_time."<BR/>";
@@ -619,7 +619,7 @@ class User extends Dbfunctions{
 								 AND (('$start' BETWEEN group_time AND group_time_end) OR ('$end' BETWEEN group_time AND group_time_end))
 								","");
 		
-		
+		echo $q;
 		if($q <= 0 || empty($q)):
 		$result=false;
 		elseif($q>0):

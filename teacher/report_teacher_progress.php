@@ -460,7 +460,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$course_mark = $dbf->strRecordID("teacher_progress_course","*","student_id='$r[id]' AND teacher_id='$teacher_id' AND group_id='$_REQUEST[group_id]'");					
 					?>
                       <tr>                  
-                        <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($r["id"]));?></td>
+                        <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[first_name]."&nbsp;".$r[father_name]."&nbsp;".$r[family_name]."&nbsp;(".$r[first_name1]."&nbsp;".$r[father_name1]."&nbsp;".$r[grandfather_name1]."&nbsp;".$r[family_name1].")";?></td>
                         <td align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $res_country[value];?></td>
                         <td align="center" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[student_id];?>
                         <input type="hidden" name="student_id<?php echo "_".$student_count;?>" id="student_id<?php echo "_".$student_count;?>" value="<?php echo $r[id];?>"></td>
@@ -682,7 +682,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 									
 					?>
                     <tr>
-                      <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($r["id"]));?></td>
+                      <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[first_name]."&nbsp;".$r[father_name]."&nbsp;".$r[family_name]."&nbsp;(".$r[first_name1]."&nbsp;".$r[father_name1]."&nbsp;".$r[grandfather_name1]."&nbsp;".$r[family_name1].")";?></td>
                       <td align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $res_country[value];?></td>
                       <td align="center" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[student_id];?>
                       <input type="hidden" name="student_id1<?php echo "_".$student_count;?>" id="student_id1<?php echo "_".$student_count;?>" value="<?php echo $r[id];?>">

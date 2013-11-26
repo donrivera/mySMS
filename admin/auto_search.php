@@ -132,14 +132,18 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 			  </thead>
 			  
               <?php
+					$auto_search=explode(" ",$_REQUEST[testinput]);
+					$fname=$auto_search[0];
+					$father_name=$auto_search[1];
+					$family_name=$auto_search[2];
 					$i = 1;
 					$color = "#ECECFF";
-					$num=$dbf->countRows('student',"first_name like '$_REQUEST[testinput]%' OR student_first_name like '$_REQUEST[testinput]%'");
-					foreach($dbf->fetchOrder('student',"first_name like '$_REQUEST[testinput]%' OR student_first_name like '$_REQUEST[testinput]%'","") as $val) {
+					$num=$dbf->countRows('student',"(family_name='$family_name' AND father_name='$father_name' AND first_name LIKE '$fname')");
+				foreach($dbf->fetchOrder('student',"(family_name='$family_name' AND father_name='$father_name' AND first_name LIKE '$fname')","id DESC ") as $val){
 					?>
               <tr bgcolor="<?php echo $color;?>"  onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                 <td height="25" align="center" valign="middle" class="contenttext" style=""><?php echo $i;?></td>
-                <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></td>
+                <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?></td>
                 <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[email];?></td>
                 <td align="center" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[age];?></td>
                 <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>

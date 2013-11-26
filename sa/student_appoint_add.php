@@ -258,7 +258,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                     <?php
                                     foreach($dbf->fetchOrder('student',"centre_id='$_SESSION[centre_id]'","first_name") as $ress2) {
                                     ?>
-                                    <option value="<?php echo $ress2['id']?>"><?php echo $ress2['first_name'];?> <?php echo $Arabic->en2ar($dbf->StudentName($ress2["id"]));?></option>
+                                    <option value="<?php echo $ress2['id']?>"><?php echo $ress2[first_name]."&nbsp;".$ress2[father_name]."&nbsp;".$ress2[family_name]."&nbsp;(".$ress2[first_name1]."&nbsp;".$ress2[father_name1]."&nbsp;".$ress2[grandfather_name1]."&nbsp;".$ress2[family_name1].")";?></option>
                                     <?php }?>
                                 </select>
                                 

@@ -163,7 +163,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
                   <tr>
                     <td height="25" align="center" valign="middle"><img src="<?php echo $photo;?>" oncontextmenu="return false;" width="20" height="20" /></td>
-                    <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $res_stu[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res_stu["id"]));?></td>
+                    <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $res_stu[first_name]."&nbsp;".$res_stu[father_name]."&nbsp;".$res_stu[family_name]."&nbsp;(".$res_stu[first_name1]."&nbsp;".$res_stu[father_name1]."&nbsp;".$res_stu[grandfather_name1]."&nbsp;".$res_stu[family_name1].")";?></td>
                     <td align="center" valign="middle" class="mycon"><?php echo date('d-M-Y',strtotime($val_pay[paid_date]));?></td>
                     <td align="right" valign="middle" class="mycon"><?php echo $val_pay[paid_amt];?>&nbsp;<?php echo $res_currency[symbol];?>&nbsp;</td>
                   </tr>
@@ -205,7 +205,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td width="50%" align="center" valign="middle" bgcolor="#CCCCCC" class="logintext"><?php echo constant("ADMIN_DASHBOARD_DATED_TIME");?></td>
                   </tr>
                   <?php
-					foreach($dbf->fetchOrder('student',"","id DESC LIMIT 0,7") as $val_en) {
+					foreach($dbf->fetchOrder('student',"*","id DESC LIMIT 0,7") as $val_en) {
 						if($val_en["photo"]!=''){
 							$photo = "../sa/photo/".$val_en["photo"];
 						}else{
@@ -219,7 +219,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
                   <tr>
                     <td height="25" align="center" valign="middle"><img src="<?php echo $photo;?>" oncontextmenu="return false;" width="20" height="20" /></td>
-                    <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $val_en[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val_en["id"]));?></td>
+                    <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $val_en[first_name]."&nbsp;".$val_en[father_name]."&nbsp;".$val_en[family_name]."&nbsp;(".$val_en[first_name1]."&nbsp;".$val_en[father_name1]."&nbsp;".$val_en[grandfather_name1]."&nbsp;".$val_en[family_name1].")";?></td>
                     <td align="center" valign="middle" class="mycon" ><?php echo $dt;?></td>
                   </tr>
                   <?php } ?>

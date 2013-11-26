@@ -473,7 +473,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$res_grade = $dbf->strRecordID("grade","*","'$final_grade' BETWEEN frm and tto");
 				?>
                 <tr>
-                  <td height="25" align="left" valign="middle" class="smalltext"><?php echo $r[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($r["id"]));?></td>
+                  <td height="25" align="left" valign="middle" class="smalltext"><?php echo $r[first_name]."&nbsp;".$r[father_name]."&nbsp;".$r[family_name]."&nbsp;(".$r[first_name1]."&nbsp;".$r[father_name1]."&nbsp;".$r[grandfather_name1]."&nbsp;".$r[family_name1].")";?></td>
                   <td align="left" valign="middle"><?php echo $res_country[value];?></td>
                   <td align="left" valign="middle" class="smalltext"><?php echo $r[student_id];?></td>
 				  <input type="hidden" name="st<?php echo $student_count;?>" id="st<?php echo $student_count;?>" value="<?php echo $r[id];?>">
@@ -977,7 +977,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <td align="center" valign="middle" bgcolor="#FFFFFF"><?php if($course_mark[fluency]>0) { echo get_percent($course_mark[fluency]); }?></td>
                   <td align="left" valign="middle" class="smalltext"><?php echo $r[student_id];?></td>
                   <td align="left" valign="middle"><?php echo $res_country[value];?></td>
-                  <td height="25" align="left" valign="middle" class="smalltext"><?php echo $r[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($r["id"]));?></td>
+                  <td height="25" align="left" valign="middle" class="smalltext"><?php echo $r[first_name]."&nbsp;".$r[father_name]."&nbsp;".$r[family_name]."&nbsp;(".$r[first_name1]."&nbsp;".$r[father_name1]."&nbsp;".$r[grandfather_name1]."&nbsp;".$r[family_name1].")";?></td>
                 </tr>
 				 <?php
 				 $student_count++; 

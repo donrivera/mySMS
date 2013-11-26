@@ -141,67 +141,87 @@ $count = $res_logout["name"]; // Set timeout period in seconds
           <p>&nbsp;</p>
           <p>&nbsp;</p></td>
         <td width="79%" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td height="0" align="left" valign="middle" bgcolor="#b4b4b4" style="background:url(../images/footer_repeat.png) repeat-x;"><table width="100%" border="0" cellspacing="0">
-              <tr>
-                <td width="54%" height="30" align="left" class="logintext"><?php echo constant("RECEPTION_STUDENT_APPOINT_MANAGE_MANAGE_STUDENT_APPOINTMENT");?> </td>
-                <td width="22%">&nbsp;</td>
-                <td width="8%" align="left">&nbsp;</td>
-                <td width="8%" align="left">&nbsp;</td>
-                <td width="8%" align="left"><a href="student_appoint_add.php"> 
-                  <input type="button" value="<?php echo constant("btn_add_btn");?>" class="btn1" border="0" align="left" /></a></td>
-              </tr>
-            </table></td>
+			<tr>
+            <td height="0" align="left" valign="middle" bgcolor="#b4b4b4" style="background:url(../images/footer_repeat.png) repeat-x;">
+				<table width="100%" border="0" cellspacing="0">
+				<tr>
+					<td width="54%" height="30" align="left" class="logintext"><?php echo constant("RECEPTION_STUDENT_APPOINT_MANAGE_MANAGE_STUDENT_APPOINTMENT");?> </td>
+					<td width="22%">&nbsp;</td>
+					<td width="8%" align="left">&nbsp;</td>
+					<td width="8%" align="left">&nbsp;</td>
+					<td width="8%" align="left"><a href="student_appoint_add.php"> 
+						<input type="button" value="<?php echo constant("btn_add_btn");?>" class="btn1" border="0" align="left" /></a>
+					</td>
+				</tr>
+				</table>
+			</td>
           </tr>
           <tr>
             <td  align="left" valign="top" >
 			<form name="frm" id="frm" >
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-              <tr>
-                <td width="35%" height="22" align="center" valign="middle"><table width="99%" border="0" cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td width="10%" align="left" valign="middle">Note :</td>
-                    <td width="5%" align="left" valign="middle" bgcolor="#FF0000" style="border:solid 1px;">&nbsp;</td>
-                    <td width="39%" align="left" valign="middle" class="mycon">&nbsp;Appointment Pending</td>
-                    <td width="5%" align="left" valign="middle" bgcolor="#3366FF" style="border:solid 1px;">&nbsp;</td>
-                    <td width="41%" align="left" valign="middle" class="mycon">&nbsp;Appointment Finished</td>
-                  </tr>
-                </table></td>
-                <td width="8%">&nbsp;</td>
-                <td width="11%">&nbsp;</td>
-                <td width="26%">&nbsp;</td>
-                <td width="20%">&nbsp;</td>
-              </tr>
-              <tr>
-                <td height="22" align="center" valign="middle">
-                
-                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td width="56%" align="right" valign="middle">Display only future appointment</td>
-                    <td width="27%" align="left" valign="middle">
-                    <?php if($_REQUEST["future"] == "1"){
-						$is_future = "0";
-					}else{
-						$is_future = "1";
-					}
-					?>
-                    <input type="checkbox" name="future" id="future" value="<?php echo $is_future;?>" <?php if($_REQUEST["future"]=="1"){?> checked="checked" <?php }?> />
-                    </td>
-                    <td width="17%" align="right" valign="middle">Note :</td>
-                  </tr>
-                </table>                
-                </td>
-                <td align="center" valign="middle">
-                <select name="status" id="status" style="font-family:Arial, Helvetica, sans-serif; font-size:10px; border:solid 1px;">
-                <option value="Both" <?php if($_REQUEST["status"] == "Both"){?> selected="selected" <?php }?>>Both</option>
-                <option value="Red" <?php if($_REQUEST["status"] == "Red"){?> selected="selected" <?php }?>>Red</option>
-                <option value="Blue" <?php if($_REQUEST["status"] == "Blue"){?> selected="selected" <?php }?>>Blue</option>
-                </select></td>
-                <td align="left" valign="middle"><input type="submit" value="Search" class="btn_yes" border="0" align="left" /></td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-              </tr>
-            </table>
+				<!--SEARCH TABLE-->
+				<table width="100%" height="36" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td width="71" height="36" align="right" valign="middle" bgcolor="#FFFFFF" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_SEARCH_FIRSTNAME");?> :&nbsp;</td>
+					<td width="155" height="36" align="left" valign="middle" bgcolor="#FFFFFF" ><input name="fname" type="text" class="new_textbox100" id="fname" value="<?php echo $_REQUEST[fname];?>"></td>
+					<td width="81" height="36" align="right" valign="middle" bgcolor="#FFFFFF" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_SEARCH_STUDENTID");?> :&nbsp;</td>
+					<td width="102" height="36" align="left" valign="middle" bgcolor="#FFFFFF"><input name="stid" type="text" class="new_textbox100" id="stid" value="<?php echo $_REQUEST[stid];?>" onKeyPress="return PhoneNo(event);"></td>
+					<td width="68" height="36" align="right" valign="middle" bgcolor="#FFFFFF" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_SEARCH_MOBILENO");?> :&nbsp;</td>
+					<td width="102" height="36" align="left" valign="middle" bgcolor="#FFFFFF"><input name="mobile" type="text" class="new_textbox100" id="mobile" value="<?php echo $_REQUEST[mobile];?>" onKeyPress="return PhoneNo(event);"></td>
+					<td width="58" height="36" align="right" valign="middle" bgcolor="#FFFFFF" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_SEARCH_EMAIL");?> :&nbsp;</td>
+					<td width="113" height="36" align="left" valign="middle" bgcolor="#FFFFFF"><input name="email" type="text" class="new_textbox100" id="email" value="<?php echo $_REQUEST[email];?>"></td>
+					<td width="164" align="right" valign="middle" bgcolor="#FFFFFF">
+					<input type="submit" name="submit_student" id="submit_student" value="<?php echo constant("btn_search");?>" class="btn1"/></td>
+				</tr>
+				</table>
+				<!--SEARCH TABLE-->
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					
+					<tr>
+						<td width="35%" height="22" align="center" valign="middle">
+						<table width="99%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td width="10%" align="left" valign="middle">Note :</td>
+								<td width="5%" align="left" valign="middle" bgcolor="#FF0000" style="border:solid 1px;">&nbsp;</td>
+								<td width="39%" align="left" valign="middle" class="mycon">&nbsp;Appointment Pending</td>
+								<td width="5%" align="left" valign="middle" bgcolor="#3366FF" style="border:solid 1px;">&nbsp;</td>
+								<td width="41%" align="left" valign="middle" class="mycon">&nbsp;Appointment Finished</td>
+							</tr>
+						</table>
+						</td>
+						<td width="8%">&nbsp;</td>
+						<td width="11%">&nbsp;</td>
+						<td width="26%">&nbsp;</td>
+						<td width="20%">&nbsp;</td>
+					</tr>
+					<tr>
+						<td height="22" align="center" valign="middle">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td width="56%" align="right" valign="middle">Display only future appointment</td>
+									<td width="27%" align="left" valign="middle">
+									<?php 
+											if($_REQUEST["future"] == "1"){$is_future = "0";}else{$is_future = "1";}
+									?>
+										<input type="checkbox" name="future" id="future" value="<?php echo $is_future;?>" 
+										<?php if($_REQUEST["future"]=="1"){?> checked="checked" <?php }?> />
+									</td>
+									<td width="17%" align="right" valign="middle">Note :</td>
+								</tr>
+							</table>                
+						</td>
+						<td align="center" valign="middle">
+							<select name="status" id="status" style="font-family:Arial, Helvetica, sans-serif; font-size:10px; border:solid 1px;">
+								<option value="Both" <?php if($_REQUEST["status"] == "Both"){?> selected="selected" <?php }?>>Both</option>
+								<option value="Red" <?php if($_REQUEST["status"] == "Red"){?> selected="selected" <?php }?>>Red</option>
+								<option value="Blue" <?php if($_REQUEST["status"] == "Blue"){?> selected="selected" <?php }?>>Blue</option>
+							</select>
+						</td>
+						<td align="left" valign="middle"><input type="submit" value="Search" class="btn_yes" border="0" align="left" /></td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+				</table>
             </form>
             <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#000000" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
 			  <thead>
@@ -213,26 +233,71 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <th colspan="5" align="center" valign="middle" bgcolor="#99CC99" class="pedtext" ><?php echo constant("COMMON_ACTION");?></th>
               </tr>
 			  </thead>
-              <?php			
+              <?php
+				//echo $_REQUEST[fname];
+				
 				$i = 1;
 				$color="#ECECFF";
 				$dated = date('Y-m-d');
-				if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Red"){
-					$cond = " And dated > '$dated' And action_status='0'";
-				}else if($_REQUEST["future"] == "" && $_REQUEST["status"] == "Red"){
-					$cond = " And action_status='0'";
-				}else if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Blue"){
-					$cond = " And dated > '$dated' And action_status='1'";
-				}else if($_REQUEST["future"] == "" && $_REQUEST["status"] == "Blue"){
-					$cond = " And action_status='1'";					
-				}else if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Both"){
-					$cond = " And dated > '$dated'";
-				}else{
-					$cond = "";
+				//echo var_dump($_SESSION);
+				$centre_id=$_SESSION[centre_id];
+				
+				if(isset($_REQUEST["fname"]) || isset($_REQUEST["mobile"]) || isset($_REQUEST["email"]) || isset($_REQUEST["stid"]))
+				{	
+					/*
+					$condition = "s.first_name LIKE '$_REQUEST[fname]%' OR
+								  s.student_mobile ='$_REQUEST[mobile]' OR
+								  s.email LIKE '$_REQUEST[email]%' OR
+								  s.student_id LIKE '$_REQUEST[stid]%' OR s.centre_id='$centre_id'";
+					*/
+					if($_REQUEST["fname"]!="")
+					{
+						$condition="s.first_name LIKE '$_REQUEST[fname]%' AND s.centre_id='$centre_id'";
+						
+					}
+					elseif($_REQUEST["mobile"]!="")
+					{
+						$condition="s.student_mobile ='$_REQUEST[mobile]' AND s.centre_id='$centre_id'";
+					}
+					elseif($_REQUEST["email"]!="")
+					{
+						$condition="s.email = '$_REQUEST[email]' AND s.centre_id='$centre_id'";
+					}
+					elseif($_REQUEST["stid"]!="")
+					{
+						$condition="s.student_id ='$_REQUEST[stid]' AND s.centre_id='$centre_id'";
+					}
+					else{$condition="";}
+					$query=$dbf->genericQuery("	SELECT sa.student_id,sa.dated,sa.comments,sa.id 
+												FROM student s
+												INNER JOIN student_appointment sa ON sa.student_id=s.id
+												WHERE $condition");
+					if($query>0)
+					{$num=count($query);}
+					else{$num=0;}
+					
+					
+					
+					
 				}
-				$num=$dbf->countRows('student_appointment',"user_id='$_SESSION[id]' And centre_id='$_SESSION[centre_id]'".$cond);
-				foreach($dbf->fetchOrder('student_appointment',"user_id='$_SESSION[id]' And centre_id='$_SESSION[centre_id]'".$cond,"dated DESC") as $val) {
-				$res = $dbf->strRecordID("student","*","id='$val[student_id]'");
+				else
+				{
+					if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Red")
+					{$cond = " And dated > '$dated' And action_status='0'";}
+					else if($_REQUEST["future"] == "" && $_REQUEST["status"] == "Red")
+					{$cond = " And action_status='0'";}
+					else if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Blue")
+					{$cond = " And dated > '$dated' And action_status='1'";}
+					else if($_REQUEST["future"] == "" && $_REQUEST["status"] == "Blue")
+					{$cond = " And action_status='1'";}
+					else if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Both")
+					{$cond = " And dated > '$dated'";}
+					else{$cond = "";}
+					$num=$dbf->countRows('student_appointment',"user_id='$_SESSION[id]' And centre_id='$_SESSION[centre_id]'".$cond);
+					$query=$dbf->fetchOrder('student_appointment',"user_id='$_SESSION[id]' And centre_id='$_SESSION[centre_id]'".$cond,"dated DESC");
+				}	
+					foreach($query as $val) {
+					$res = $dbf->strRecordID("student","*","id='$val[student_id]'");
 				?>
                 
               <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" >

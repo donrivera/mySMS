@@ -1,7 +1,7 @@
 <?php
 ob_start();
 session_start();
-
+include_once '../includes/invoice_ar.php';
 include_once '../includes/class.Main.php';
 require '../I18N/Arabic.php';
 
@@ -71,7 +71,7 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
         <td colspan="2" align="left" valign="top" class="chtext"><table width="100%" border="0" cellspacing="0" cellpadding="0" style=" border:solid 1px; border-color:#66F;">
           <tr class="smalltext">
             <td width="51%" height="25" align="left" valign="middle" bgcolor="#FFF2F7">&nbsp;Name</td>
-            <td width="49%" align="right" valign="middle" bgcolor="#FFF2F7"><?php echo $Arabic->en2ar('Name');?>&nbsp;</td>
+            <td width="49%" align="right" valign="middle" bgcolor="#FFF2F7"><?php echo INVOICE_STUDENT_NAME;//$Arabic->en2ar('Name');?>&nbsp;</td>
           </tr>
           <tr class="suc_msg">
             <td height="70" align="left" valign="top" bgcolor="#FFF2F7">&nbsp;<?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?><br />
@@ -86,11 +86,11 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
         <td colspan="2" align="left" valign="top">
         <table width="100%" border="1" bordercolor="#6666FF" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
           <tr class="smalltext">
-            <td width="31%" align="center" valign="middle" bgcolor="#DED2FF"><?php echo $Arabic->en2ar('Invoice No');?><br />
+            <td width="31%" align="center" valign="middle" bgcolor="#DED2FF"><?php echo INVOICE_STUDENT_INVOICE_NO;//$Arabic->en2ar('Invoice No');?><br />
               Invoice No</td>
-            <td width="30%" height="25" align="center" valign="middle" bgcolor="#DED2FF"><?php echo $Arabic->en2ar('Date');?><br />
+            <td width="30%" height="25" align="center" valign="middle" bgcolor="#DED2FF"><?php echo INVOICE_DATE;//$Arabic->en2ar('Date');?><br />
               Date</td>
-            <td width="39%" align="center" valign="middle" bgcolor="#DED2FF"><?php echo $Arabic->en2ar('Status/Type');?><br />
+            <td width="39%" align="center" valign="middle" bgcolor="#DED2FF"><?php echo INVOICE_STATUS_TYPE;//$Arabic->en2ar('Status/Type');?><br />
               Status/Type</td>
           </tr>
           <tr class="suc_msg">
@@ -118,11 +118,11 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
         <br />
         <table width="100%" border="1" bordercolor="#6666FF" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
           <tr class="smalltext">
-            <td width="31%" align="center" valign="middle" bgcolor="#DED2FF"><?php echo $Arabic->en2ar('Date');?><br />
+            <td width="31%" align="center" valign="middle" bgcolor="#DED2FF"><?php echo INVOICE_DATE;//$Arabic->en2ar('Date');?><br />
               Date</td>
-            <td width="30%" height="25" align="center" valign="middle" bgcolor="#DED2FF"><?php echo $Arabic->en2ar('Order');?><br />
+            <td width="30%" height="25" align="center" valign="middle" bgcolor="#DED2FF"><?php echo INVOICE_ORDER;//$Arabic->en2ar('Order');?><br />
               Order</td>
-            <td width="39%" align="center" valign="middle" bgcolor="#DED2FF"><?php echo $Arabic->en2ar('Future Payment');?><br />
+            <td width="39%" align="center" valign="middle" bgcolor="#DED2FF"><?php echo INVOICE_FUTURE_PAYMENT;//$Arabic->en2ar('Future Payment');?><br />
               Future Payment</td>
           </tr>
           <tr class="suc_msg">
@@ -156,18 +156,24 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
         <td height="30" colspan="5" align="center" valign="middle">
         <table width="100%" border="2" align="center" cellpadding="0" cellspacing="0" bordercolor="#6666FF" style="border-collapse:collapse;">
           <tr>
-            <td width="15%" height="25" align="center" valign="middle" bgcolor="#DED2FF" class="smalltext"><?php echo $Arabic->en2ar('Net Amount');?><br />
-              Net Amount</td>
-            <td width="16%" align="center" valign="middle" bgcolor="#DED2FF" class="smalltext"><?php echo $Arabic->en2ar('Pay Mode');?><br />
-              Pay Mode</td>
-            <td width="14%" align="center" valign="middle" bgcolor="#DED2FF" class="smalltext"><?php echo $Arabic->en2ar('Payment Date');?><br />
-              Payment Date</td>
-            <td width="5%" align="center" valign="middle" bgcolor="#DED2FF" class="smalltext"><?php echo $Arabic->en2ar('Qty');?><br />
-              Qty</td>
-            <td width="44%" align="center" valign="middle" bgcolor="#DED2FF" class="smalltext"><?php echo $Arabic->en2ar('Course Name');?><br />
-              Course Name</td>
-            <td width="6%" align="center" valign="middle" bgcolor="#DED2FF" class="smalltext"><?php echo $Arabic->en2ar('No');?><br />
-              No</td>
+            <td width="15%" height="25" align="center" valign="middle" bgcolor="#DED2FF" class="smalltext">
+				<?php echo INVOICE_NET_AMOUNT;//$Arabic->en2ar('Net Amount');?><br />Net Amount
+			</td>
+            <td width="16%" align="center" valign="middle" bgcolor="#DED2FF" class="smalltext">
+				<?php echo INVOICE_PAY_MODE;//$Arabic->en2ar('Pay Mode');?><br />Pay Mode
+			</td>
+            <td width="14%" align="center" valign="middle" bgcolor="#DED2FF" class="smalltext">
+				<?php echo INVOICE_PAYMENT_DATE;//$Arabic->en2ar('Payment Date');?><br />Payment Date
+			</td>
+            <td width="5%" align="center" valign="middle" bgcolor="#DED2FF" class="smalltext">
+				<?php echo INVOICE_QTY;//$Arabic->en2ar('Qty');?><br />Qty
+			</td>
+            <td width="44%" align="center" valign="middle" bgcolor="#DED2FF" class="smalltext">
+				<?php echo INVOICE_COURSE_NAME;//$Arabic->en2ar('Course Name');?><br />Course Name
+			</td>
+            <td width="6%" align="center" valign="middle" bgcolor="#DED2FF" class="smalltext">
+				<?php echo INVOICE_NO;//$Arabic->en2ar('No');?><br />No
+			</td>
           </tr>
           <?php
 			$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");			
@@ -204,7 +210,7 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
                 <td height="30" align="center" valign="middle" class="smalltext"><?php echo $feeamt;?> <?php echo $res_currency[symbol];?></td>
               </tr>
               <tr>
-                <td align="center" valign="middle" class="smalltext"><?php echo $Arabic->en2ar('Paid Amount');?><br />
+                <td align="center" valign="middle" class="smalltext"><?php echo INVOICE_PAID_AMOUNT;//$Arabic->en2ar('Paid Amount');?><br />
                   Paid Amount</td>
               </tr>
             </table></td>
@@ -220,19 +226,19 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
                 <td>&nbsp;</td>
                 <td align="left" valign="middle" class="smalltext">Grand Total :</td>
                 <td align="left" valign="middle" class="menutext"><?php echo $camt;?> <?php echo $res_currency[symbol];?></td>
-                <td align="left" valign="middle" class="smalltext"><?php echo $Arabic->en2ar('Grand Total');?></td>
+                <td align="left" valign="middle" class="smalltext"><?php echo INVOICE_GRAND_TOTAL;//$Arabic->en2ar('Grand Total');?></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
                 <td align="left" valign="middle" class="smalltext">Net Amount :</td>
                 <td align="left" valign="middle" class="menutext"><?php echo $net_amt;?> <?php echo $res_currency[symbol];?></td>
-                <td align="left" valign="middle" class="smalltext"><?php echo $Arabic->en2ar('Paid Amount');?></td>
+                <td align="left" valign="middle" class="smalltext"><?php echo INVOICE_PAID_AMOUNT//$Arabic->en2ar('Paid Amount');?></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
                 <td align="left" valign="middle" class="smalltext">Balance to Pay :</td>
                 <td align="left" valign="middle" class="menutext"><?php echo $bal_amt;?> <?php echo $res_currency[symbol];?></td>
-                <td align="left" valign="middle" class="smalltext"><?php echo $Arabic->en2ar('Balance to Pay');?></td>
+                <td align="left" valign="middle" class="smalltext"><?php echo INVOICE_BALANCE_TO_PAY;//$Arabic->en2ar('Balance to Pay');?></td>
               </tr>
             </table></td>
             </tr>
@@ -250,11 +256,11 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
       <tr>
         <td height="30" colspan="5" align="center" valign="middle" class="chtext"><table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr class="menutext">
-            <td width="33%" height="70" align="center" valign="bottom"><?php echo $Arabic->en2ar("Reciever's Signature / Name");?><br />
+            <td width="33%" height="70" align="center" valign="bottom"><?php echo INVOICE_RECEIVER_SIGNATURE_NAME;//$Arabic->en2ar("Reciever's Signature / Name");?><br />
               Reciever's Signature / Name</td>
-            <td width="36%" align="center" valign="bottom"><?php echo $Arabic->en2ar("Student Advisor's Signature / Name");?><br />
+            <td width="36%" align="center" valign="bottom"><?php echo INVOICE_STUDENT_ADVISOR_SIGNATURE_NAME;//$Arabic->en2ar("Student Advisor's Signature / Name");?><br />
               Student Advisor's Signature / Name</td>
-            <td width="31%" align="center" valign="bottom"><?php echo $Arabic->en2ar('Issued From');?><br />
+            <td width="31%" align="center" valign="bottom"><?php echo INVOICE_ISSUED_FROM;//$Arabic->en2ar('Issued From');?><br />
               Issued From</td>
           </tr>
         </table></td>

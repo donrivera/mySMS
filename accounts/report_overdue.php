@@ -280,7 +280,7 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
                     
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                   <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valfee[fee_date];?></td>
-                  <td align="left" valign="middle" class="mycon">&nbsp;<a href="single-home.php?student_id=<?php echo $student[id];?>"><?php echo $student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></a></td>
+                  <td align="left" valign="middle" class="mycon">&nbsp;<a href="single-home.php?student_id=<?php echo $student[id];?>"><?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";?></a></td>
                   <td align="right" valign="middle" class="mycon" ><?php echo $valfee[fee_amt];?>&nbsp;<?php echo $res_currency[symbol];?></td>
                   <td align="left" valign="middle" class="mycon" ><?php echo $enroll;?></td>
                   <td align="left" valign="middle" class="mycon" >&nbsp;<?php echo $group["group_name"];?> <?php echo $group["group_time"];?>-<?php echo $dbf->GetGroupTime($group["id"]);?></td>

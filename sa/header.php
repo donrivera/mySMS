@@ -49,7 +49,7 @@ $(document).ready(function() {
           </tr>
         </table>
         </td>
-        <td width="2%" align="left" valign="middle"><input type="image" src="images/search.png" alt="add_btn" width="30" height="27" title="<?php echo RE_MENU_SEARCH ?>"/></td>
+        <td width="2%" align="left" valign="middle"><input type="image" src="images/search.png" alt="add_btn" width="30" height="27"/></td>
         <td width="3%" align="center" valign="middle"><a href="lang_change.php?lang=AR&page=<?php echo $page;?>"><img src="../images/favicon.ico" alt="Arabic" width="24" height="18" border="0" title="Arabic"/></a></td>
         <td width="5%" align="left" valign="middle"><a href="lang_change.php?lang=EN&page=<?php echo $page;?>"><img src="../images/english.png" alt="English" width="24" height="24" border="0" title="English" /></a></td>
       </tr>

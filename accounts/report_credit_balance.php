@@ -287,7 +287,7 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
                     <a href="javascript:void(0);" onClick="show_details('<?php echo $valstudent[id];?>');"> <span id="plusArrow<?php echo $valstudent[id];?>">
                     <img src="../images/plus.gif" border="0" /></span></a></td>
                     <td width="5%" height="25" align="center" valign="middle" class="mycon"><?php echo $k; ?></td>
-                    <td width="33%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $valstudent[id];?>"><?php echo $valstudent[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($valstudent["id"]));?></a></td>
+                    <td width="33%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $valstudent[id];?>"><?php echo $valstudent[first_name]."&nbsp;".$valstudent[father_name]."&nbsp;".$valstudent[family_name]."&nbsp;(".$valstudent[first_name1]."&nbsp;".$valstudent[father_name1]."&nbsp;".$valstudent[grandfather_name1]."&nbsp;".$valstudent[family_name1].")";?></a></td>
                     <td width="29%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $valstudent[email];?></td>
                     <td width="19%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $valstudent[student_mobile];?></td>
                     <td width="10%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $moving["name"];?></td>

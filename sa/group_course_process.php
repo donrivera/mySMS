@@ -50,9 +50,11 @@ if($_REQUEST['action']=='teacher'){
 	$group_end_time = date('h:i A',strtotime("+$event_length minutes", $timestamp));
 	$start=date('Hi',strtotime($_REQUEST['tm']));
 	$end=date('Hi',strtotime("+$event_length minutes", $timestamp));
-	echo "<BR/>".$start.$end;
-	$num = $dbf->teacherSlotAvailable($teacher_id,$_REQUEST[dt],$_REQUEST[gr_course_endt],$start,$end);
 	
+	$num = $dbf->teacherSlotAvailable($teacher_id,$_REQUEST[dt],$_REQUEST[gr_course_endt],$start,$end);
+	//echo var_dump($_REQUEST);
+	//echo "<BR/>";
+	//echo var_dump($num);
 		
 	$_SESSION["tm"] = $_REQUEST["tm"];
 	$_SESSION["end_tm"] = $group_end_time;
@@ -260,12 +262,12 @@ if($_REQUEST['action']=='quick_add_group'){
 	//echo var_dump($_SESSION);
 	//echo "<BR/>";
 	//echo var_dump($_POST);
-	//$end_date=$_REQUEST[gr_course_endt];
+	$end_date=$_REQUEST[gr_course_endt];
 	
 	$students=$_REQUEST[student_id];
 	if(empty($students) || $students==NULL):
 	$end_date=$_REQUEST[gr_course_endt];
-	$compute_units=60;
+	$compute_units=$_REQUEST[totalunit];
 	else:
 	$c_students=count($students);
 	$query=$dbf->genericQuery("	SELECT units
@@ -301,7 +303,7 @@ if($_REQUEST['action']=='quick_add_group'){
 	$timestamp = strtotime("$event_time");
 	
 	$group_end_time = date('h:i A',strtotime("+$event_length minutes", $timestamp));
-	echo $group_s_time."-".$group_end_time;
+	//echo $group_s_time."-".$group_end_time;
 	$start=date('Hi',strtotime($_REQUEST['tm']));
 	$end=date('Hi',strtotime("+$event_length minutes", $timestamp));
 	$num = $dbf->teacherSlotAvailable($teacher_id,$choosen_date,$end_date,$start,$end);
@@ -310,9 +312,9 @@ if($_REQUEST['action']=='quick_add_group'){
 
 	$_SESSION["tm"] = $_REQUEST["tm"];
 	$_SESSION["end_tm"] = $group_end_time;
-	
+
 	if($num == true){
-		//header("Location:group_quick.php?msg=o0k9b4");
+		header("Location:group_quick.php?msg=o0k9b4");
 		exit;
 	}
 	//$_REQUEST[unit]

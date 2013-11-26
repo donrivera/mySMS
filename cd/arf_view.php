@@ -65,7 +65,28 @@ if($LANGUAGE=='AR'){
 }
 ?>
 <script src="js/jquery.validationEngine.js" type="text/javascript"></script>
+<!--UI JQUERY DATE PICKER-->
+<link rel="stylesheet" href="../datepicker/jquery.ui.all.css">
 
+<script src="../datepicker/jquery.ui.core.js"></script>
+<script src="../datepicker/jquery.ui.widget.js"></script>
+<script src="../datepicker/jquery.ui.datepicker.js"></script>
+<link rel="stylesheet" href="../datepicker/demos.css">
+<script>
+$(function() 
+{
+	$( "#result_check_date" ).datepicker({
+		changeMonth: true,
+		changeYear: true,
+		//numberOfMonths: 2,
+		minDate: new Date(),
+		
+		//maxDate: new Date(2011, 10, 25, 17, 30),
+
+		dateFormat: 'yy-mm-dd'
+	});
+});
+</script>
 <script>	
 $(document).ready(function() {	
 	$("#frm").validationEngine()
@@ -182,238 +203,237 @@ $count = $res_logout[name]+1; // Set timeout period in seconds
 					  <?php
                       $res_arf = $dbf->strRecordID("arf","*","id='$student_id'");
 					  $res_std = $dbf->strRecordID("student","*","id='$res_arf[student_id]'");
+					  $user = $dbf->strRecordID("user","user_type,user_name","id='$res_arf[teacher_id]'");
 					  ?>
-					
-					    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-color:#CCCCCC;">
-                          <tr>
+						<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-color:#CCCCCC;">
+							<tr>
+								<td width="63">&nbsp;</td>
+								<td width="115" height="30" align="right" class="leftmenu"><?php echo constant("TEACHER_REPORT_TEACHER_GROUP");?> :</td>
+								<td width="202" class="leftmenu">
+									<?php $sg=$dbf->strRecordID("student_group","group_name","id='$res_arf[group_id]'");?>
+									<input name="group" type="text" id="group" value="<?php echo $sg[group_name];?>" readonly="readonly"/>
+								</td>
+								<td width="16">&nbsp;</td>
+								<td width="74">&nbsp;</td>
+								<td width="196" class="mytext">&nbsp;</td>
+							</tr>
+							<?php $student_name=$res_std[first_name]."&nbsp;".$res_std[father_name]."&nbsp;".$res_std[family_name]."&nbsp;(".$res_std[first_name1]."&nbsp;".$res_std[father_name1]."&nbsp;".$res_std[grandfather_name1]."&nbsp;".$res_std[family_name1].")";?>
+                            <tr>
                             <td width="63">&nbsp;</td>
                             <td width="115" height="30" align="right" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_STUDENTNAME");?> :</td>
-                            <td width="202" class="leftmenu"><input name="owner2" type="text" class="validate[required] new_textbox190" id="owner2" value="<?php echo $res_std[first_name]; ?>" readonly="readonly"/></td>
+                            <td width="202" class="leftmenu"><input name="owner2" type="text"  id="owner2" value="<?php echo ($res_std[first_name] != '' ? $student_name:'N/A'); ?>" readonly="readonly"/></td><!--class="validate[required] new_textbox190"-->
                             <td width="16">&nbsp;</td>
                             <td width="74">&nbsp;</td>
                             <td width="196" align="left" valign="middle">
-                            <a href="arf_print.php?student_id=<?php echo $student_id;?>" target="_blank">
-                    <img src="../images/print.png" width="16" height="16" border="0" title="Print"/></a>
+								<a href="arf_print.php?id=<?php echo $_REQUEST[student_id];?>" target="_blank">
+									<img src="../images/print.png" width="16" height="16" title="Print"/>
+								</a>
                             </td>
                           </tr>
                           <tr>
                             <td>&nbsp;</td>
                             <td height="30" align="right" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_DATE");?> :</td>
-                            <td align="left" valign="middle"  class="leftmenu"><input name="nr" type="text" class="validate[required] new_textbox190" id="nr" value="<?php echo $res_arf[dated];?>" readonly="readonly"/>
+                            <td align="left" valign="middle"  class="leftmenu"><input name="nr" type="text" id="nr" value="<?php echo $res_arf[dated];?>" readonly="readonly"/>
                               
                             </td>
                             <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                             <td align="right" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_NR");?> :</td>
-                            <td align="left" valign="middle"><input name="nr" type="text" class="validate[required] new_textbox190" id="nr" value="<?php echo $res_arf[nr];?>" readonly="readonly"/></td>
+                            <td align="left" valign="middle"><input name="nr" type="text" id="nr" value="<?php echo $res_arf[nr];?>" readonly="readonly"/></td><!--class="validate[required] new_textbox190"-->
                           </tr>
                           <tr>
                             <td>&nbsp;</td>
                             <td height="30" align="right" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_ACTIONOWNER");?> :</td>
-                            <td align="left" valign="middle"  class="leftmenu"><input name="owner" type="text" class="validate[required] new_textbox190" id="owner" value="<?php echo $res_arf[action_owner];?>" readonly="readonly"/></td>
+                            <td align="left" valign="middle"  class="leftmenu"><input name="owner" type="text"  id="owner" value="<?php echo $user[user_type]."-".$user[user_name];?>" readonly="readonly"/></td><!--class="validate[required] new_textbox190"-->
                             <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                             <td align="right" valign="middle" class="leftmenu">&nbsp;</td>
                             <td align="left" valign="middle">&nbsp;</td>
                           </tr>
-                          <tr>
+                        <tr>
                             <td>&nbsp;</td>
-                            <td height="30" align="right" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="center" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="right" valign="middle" class="leftmenu">&nbsp;</td>
+                            <td height="30" align="left" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_REPORTBY");?> : <span class="nametext1">*</span></td>
+                            <td align="left" valign="middle" class="leftmenu"></td>
                             <td align="left" valign="middle">&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td height="30" align="right" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_REPORTBY");?> :</td>
-                            <td align="left" valign="middle"><input name="report_by" type="text" class="validate[required] new_textbox190" id="report_by" value="<?php echo $res_arf[report_by];?>" readonly="readonly"/></td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="right" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_REPORTEDTO");?>:</td>
-                            <td align="left" valign="middle">
-                              <input name="report_to"  type="text" class="new_textbox190" id="report_to" value="<?php echo $res_arf[report_to];?>" size="45" readonly="readonly" minlength="4"/>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td height="30" align="right" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="center" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="right" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td height="30" align="right" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_FUNCTION");?> : </td>
-                            <td align="center" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="right" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_FUNCTION");?>:</td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td align="right" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_CUSTOMER");?> : </td>
-                            <td height="25" align="left" valign="middle" class="leftmenu"><input name="customer" type="text" class="new_textbox140" id="customer" value="<?php echo $res_arf[customer];?>" readonly="readonly"></td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td width="74" align="right" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_RECEPTION");?> : </td>
-                            <td height="25" align="left" valign="middle"><span class="leftmenu">
-                              <input name="reception2" type="text" class="new_textbox140" id="reception2" value="<?php echo $res_arf[reception2];?>" readonly="readonly">
-                            </span></td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td align="right" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_TEACHER");?> : </td>
-                            <td height="25" align="left" valign="middle" class="leftmenu"><input name="teacher" type="text" class="new_textbox140" id="teacher" value="<?php echo $res_arf[teacher];?>" readonly="readonly"></td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="right" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_LCD");?> : </td>
-                            <td height="25" align="left" valign="middle"><span class="leftmenu">
-                              <input name="lcd" type="text" class="new_textbox140" id="lcd" value="<?php echo $res_arf[lcd];?>" readonly="readonly">
-                            </span> </td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td align="right" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_RECEPTION");?> : </td>
-                            <td height="25" align="left" valign="middle" class="leftmenu"><input name="reception1" type="text" class="new_textbox140" id="reception1" value="<?php echo $res_arf[reception1];?>" readonly="readonly"></td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="right" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_LIS");?> : </td>
-                            <td height="25" align="left" valign="middle"><span class="leftmenu">
-                              <input name="lis" type="text" class="new_textbox140" id="lis" value="<?php echo $res_arf[lis];?>" readonly="readonly">
-                            </span></td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td align="right" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_CS");?> : </td>
-                            <td height="25" align="left" valign="middle" class="leftmenu">
-                            <input name="cs1" type="text" class="new_textbox140" id="cs1" value="<?php echo $res_arf[cs1];?>" readonly="readonly"></td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="right" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_CS");?> : </td>
-                            <td height="25" align="left" valign="middle">
-                              <input name="cs2" type="text" class="new_textbox140" id="cs2" value="<?php echo $res_arf[cs2];?>" readonly="readonly">
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td align="right" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_OTHER");?> : </td>
-                            <td height="25" align="left" valign="middle" class="leftmenu"><input name="other1" type="text" class="new_textbox140" id="other1" value="<?php echo $res_arf[other1];?>" size="45" readonly="readonly" minlength="4"/></td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="right" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_OTHER");?> :</td>
-                            <td height="25" align="left" valign="middle">
-                            <input name="other2" type="text" class="new_textbox140" id="other2" value="<?php echo $res_arf[other2];?>" size="45" readonly="readonly" minlength="4"/>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td height="30" align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td height="30" align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td align="center" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_SUBJECT");?> : </td>
-                            <td align="right" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_INSTRUCTION");?> : </td>
-                            <td height="25" align="left" valign="middle" class="leftmenu"><input name="instruction" type="text" class="new_textbox140" id="instruction" value="<?php echo $res_arf[instruction];?>" readonly="readonly"></td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td align="right" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_MATERIAL");?> : </td>
-                            <td height="25" align="left" valign="middle" class="leftmenu"><input name="material" type="text" class="new_textbox140" id="material" value="<?php echo $res_arf[material];?>" readonly="readonly"></td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td align="right" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_PROGRAMME");?> : </td>
-                            <td height="25" align="left" valign="middle" class="leftmenu"><input name="programme" type="text" class="new_textbox140" id="programme" value="<?php echo $res_arf[programme];?>" readonly="readonly"></td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td align="right" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_PREMISSES");?> : </td>
-                            <td height="25" align="left" valign="middle" class="leftmenu"><input name="premisses" type="text" class="new_textbox140" id="premisses" value="<?php echo $res_arf[premisses];?>" readonly="readonly"></td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td align="right" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_ADMINST");?> : </td>
-                            <td height="25" align="left" valign="middle" class="leftmenu"><input name="administration" type="text" class="new_textbox140" id="administration" value="<?php echo $res_arf[administration];?>" readonly="readonly"></td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td align="right" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_OTHER");?> : </td>
-                            <td height="25" align="left" valign="middle" class="leftmenu"><input name="other3" type="text" class="new_textbox140" id="other3" value="<?php echo $res_arf[other3];?>"size="45" readonly="readonly" minlength="4"/></td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td height="30" align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td align="center" bgcolor="#FFCCCC" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_REPORT");?></td>
-                            <td height="30" align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td height="30" align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_DATE");?> : </td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_SIGNED");?>:</td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td align="right" valign="top" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_ACTIONTAKEN");?></td>
-                            <td height="30" colspan="3" align="left" valign="top" class="leftmenu">&nbsp;</td>
-                            <td colspan="2" align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            </tr>
-                          <tr>
-                            <td align="right" valign="top" class="leftmenu">&nbsp;</td>
-                            <td height="30" align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_DATE");?> : </td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_SIGNED");?>:</td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td align="right" valign="top" class="leftmenu"><?php echo constant("RECEPTION_ARF_MANAGE_RESULTCHECKED");?> </td>
-                            <td height="30" colspan="3" align="left" valign="top" class="leftmenu">&nbsp;</td>
-                            <td colspan="2" align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td height="30" align="left" valign="middle" class="leftmenu"><a href="#"></a></td>
-                            <td align="left" valign="middle">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                            <td align="center" valign="middle">&nbsp;</td>
-                          </tr>
-                        </table>
+                            <td align="left" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_REPORTEDTO");?>:</td>
+                            <td align="left" valign="middle"></td>
+						</tr>
+						<tr>		
+							<td>&nbsp;</td>
+							<td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_CUSTOMER");?> : </td>
+							<td height="25" align="left" valign="middle" class="leftmenu">
+								<input type="radio" name="function" value="customer" <?php echo ($res_arf["arf_function"] == 'customer' ? 'checked' : '')?>>
+							</td>
+							<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+							<td width="74" align="right" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_RECEPTION");?> : </td>
+							<td height="25" align="left" valign="middle">
+								<span class="leftmenu">
+									<input type="radio" name="function1" value="reception" <?php echo ($res_arf["arf_function1"] == 'reception' ? 'checked' : '')?>>
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_TEACHER");?> : </td>
+							<td height="25" align="left" valign="middle" class="leftmenu">
+								<input type="radio" name="function" value="teacher" <?php echo ($res_arf["arf_function"] == 'teacher' ? 'checked' : '')?>>
+							</td>
+							<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+							<td align="right" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_LCD");?> : </td>
+							<td height="25" align="left" valign="middle">
+								<span class="leftmenu">
+									<input type="radio" name="function1" value="lcd" <?php echo ($res_arf["arf_function1"] == 'lcd' ? 'checked' : '')?>>
+								</span> 
+							</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_RECEPTION");?> : </td>
+							<td height="25" align="left" valign="middle" class="leftmenu">
+								<input type="radio" name="function" value="reception" <?php echo ($res_arf["arf_function"] == 'reception' ? 'checked' : '')?>>
+							</td>
+							<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+							<td align="right" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_LIS");?> : </td>
+							<td height="25" align="left" valign="middle">
+								<span class="leftmenu">
+									<input type="radio" name="function1" value="lis" <?php echo ($res_arf["arf_function1"] == 'lis' ? 'checked' : '')?>>
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_CS");?> : </td>
+							<td height="25" align="left" valign="middle" class="leftmenu">
+								<input type="radio" name="function" value="customer service" <?php echo ($res_arf["arf_function"] == 'customer service' ? 'checked' : '')?>>
+							</td>
+							<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+							<td align="right" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_CS");?> : </td>
+							<td height="25" align="left" valign="middle">
+								<span class="leftmenu">
+									<input type="radio" name="function1" value="customer service" <?php echo ($res_arf["arf_function1"] == 'customer service' ? 'checked' : '')?>>
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_OTHER");?> : </td>
+							<td height="25" align="left" valign="middle" class="leftmenu">
+								<input type="radio" name="function" value="other" <?php echo ($res_arf["arf_function"] == 'other' ? 'checked' : '')?>>
+								<input name="other1" type="text" id="other1" value="<?php echo $res_arf[other1];?>" class="new_textbox100"/>
+							</td>
+							<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+							<td align="right" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_OTHER");?> :</td>
+							<td height="25" align="left" valign="middle">&nbsp;&nbsp;
+								<input type="radio" name="function1" value="other" <?php echo ($res_arf["arf_function1"] == 'other' ? 'checked' : '')?>>
+								<input name="other2" type="text" id="other2" value="<?php echo $res_arf[other1];?>" class="new_textbox100"/>
+							</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td height="30" align="left" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_SUBJECT");?> :</td>
+							<td align="left" valign="middle" class="leftmenu"></td>
+						</tr>
+						<tr>
+							<td align="center" class="leftmenu"></td>
+							<td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_INSTRUCTION");?> : </td>
+							<td height="25" align="left" valign="middle" class="leftmenu">
+								<input type="radio" name="subject" value="instruction" <?php echo ($res_arf["subject"] == 'instruction' ? 'checked' : '')?>>
+							</td>
+							<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+							<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+							<td align="left" valign="middle">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_MATERIAL");?> : </td>
+							<td height="25" align="left" valign="middle" class="leftmenu">
+								<input type="radio" name="subject" value="material" <?php echo ($res_arf["subject"] == 'material' ? 'checked' : '')?>>
+							</td>
+							<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+							<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+							<td align="left" valign="middle">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_PROGRAMME");?> : </td>
+							<td height="25" align="left" valign="middle" class="leftmenu">
+								<input type="radio" name="subject" value="program" <?php echo ($res_arf["subject"] == 'program' ? 'checked' : '')?>>
+							</td>
+							<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+							<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+							<td align="left" valign="middle">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_PREMISSES");?> : </td>
+							<td height="25" align="left" valign="middle" class="leftmenu">
+								<input type="radio" name="subject" value="premises" <?php echo ($res_arf["subject"] == 'premises' ? 'checked' : '')?>>
+							</td>
+							<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+							<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+							<td align="left" valign="middle">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_ADMINST");?> : </td>
+							<td height="25" align="left" valign="middle" class="leftmenu">
+								<input type="radio" name="subject" value="administration" <?php echo ($res_arf["subject"] == 'administration' ? 'checked' : '')?>>
+							</td>
+							<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+							<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+							<td align="left" valign="middle">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td align="right" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_OTHER");?> : </td>
+							<td height="25" align="left" valign="middle" class="leftmenu">
+								<input type="radio" name="subject" value="other" <?php echo ($res_arf["subject"] == 'other' ? 'checked' : '')?>>
+								<input name="other3" type="text" class="new_textbox100" id="other3" value="<?php echo $res_arf[other3];?>"size="45" minlength="4"/>
+							</td>
+							<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+							<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+							<td align="left" valign="middle">&nbsp;</td>
+						</tr>
+					</table>
+				<table>
+					<tr>
+						<td align="center" valign="top" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_REPORT");?>:</td>
+						<td><textarea name="action_report" cols="50" rows="10" readonly><?php echo $res_arf[action_report];?></textarea></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td align="left" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_DATE");?> : 
+							<input name="action_report_date"  type="text" class="new_textbox100" id="action_report_date" size="45" value="<?php echo $res_arf[action_report_date];?>" readonly="readonly"/>
+							<?php echo constant("TEACHER_ARF_MANAGE_SIGNED");?>:
+						</td>
+					</tr>
+					<tr>
+						<td align="center" valign="top" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_ACTIONTAKEN");?>:</td>
+						<td><textarea name="action_taken" cols="50" rows="10" readonly><?php echo $res_arf[action_taken];?></textarea></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td align="left" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_DATE");?> : 
+							<input name="action_taken_date"  type="text" class="new_textbox100" id="action_taken_date" size="45" value="<?php echo $res_arf[action_taken_date];?>" readonly="readonly"/>
+							<?php echo constant("TEACHER_ARF_MANAGE_SIGNED");?>:
+						</td>
+					</tr>
+					<tr>
+						<td align="center" valign="top" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_RESULTCHECKED");?>:</td>
+						<td><textarea name="result_check" cols="50" rows="10"><?php echo $res_arf[result_check];?></textarea></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td align="left" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_DATE");?> : 
+							<input name="result_check_date"  type="text" class="new_textbox100" id="result_check_date" size="45" value=""/>
+							<?php echo constant("TEACHER_ARF_MANAGE_SIGNED");?>:
+						</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td height="30" align="left" valign="middle" class="leftmenu"></td>
+						<td align="center" valign="middle"><input type="submit" name="submit" id="submit" value="Update" class="btn1"/></td>
+					</tr>
+                </table>
+						<input type="hidden" name="record_id" value="<?php echo $res_arf["id"];?>">
 					  </form></td>
       </tr>
     </table></td>
@@ -520,6 +540,7 @@ $count = $res_logout[name]+1; // Set timeout period in seconds
                                           <?php
 										  $res_arf = $dbf->strRecordID("arf","*","id='$student_id'");
 										  $res_std = $dbf->strRecordID("student","*","id='$res_arf[student_id]'");
+										  $user = $dbf->strRecordID("user","user_type,user_name","id='$res_arf[teacher_id]'");
 										  ?>
                                           
                                           <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-color:#CCCCCC;">
@@ -530,7 +551,7 @@ $count = $res_logout[name]+1; // Set timeout period in seconds
                                                 </td>
                                                 <td width="74">&nbsp;</td>
                                                 <td width="16">&nbsp;</td>
-                                                <td width="202" align="right" class="leftmenu"><input name="owner2" type="text" class="validate[required] new_textbox190_ar" id="owner2" value="<?php echo $res_std[first_name]; ?>" readonly="readonly"/></td>
+                                                <td width="202" align="right" class="leftmenu"><input name="owner2" type="text" class="validate[required] new_textbox190_ar" id="owner2" value="<?php echo $res_std[first_name]."&nbsp;".$res_std[father_name]."&nbsp;".$res_std[family_name]."&nbsp;(".$res_std[first_name1]."&nbsp;".$res_std[father_name1]."&nbsp;".$res_std[grandfather_name1]."&nbsp;".$res_std[family_name1].")";?>" readonly="readonly"/></td>
                                                 <td width="115" height="30" align="left" class="leftmenu"> : <?php echo constant("RECEPTION_ARF_MANAGE_STUDENTNAME");?></td>
                                                 <td width="63">&nbsp;</td>
                                               </tr>
@@ -546,7 +567,7 @@ $count = $res_logout[name]+1; // Set timeout period in seconds
                                               <td align="right" valign="middle">&nbsp;</td>
                                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                                              <td align="right" valign="middle"  class="leftmenu"><input name="owner" type="text" class="validate[required] new_textbox190_ar" id="owner" value="<?php echo $res_arf[action_owner];?>" readonly="readonly"/></td>
+                                              <td align="right" valign="middle"  class="leftmenu"><input name="owner" type="text" class="validate[required] new_textbox190_ar" id="owner" value="<?php echo $user[user_type]."-".$user[user_name];?>" readonly="readonly"/></td>
                                               <td height="30" align="left" valign="middle" class="leftmenu"> : <?php echo constant("RECEPTION_ARF_MANAGE_ACTIONOWNER");?></td>
                                                <td>&nbsp;</td>
                                             </tr>

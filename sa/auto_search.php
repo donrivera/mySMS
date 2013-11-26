@@ -144,11 +144,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <th colspan="6" align="center" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("COMMON_ACTION");?></th>
                 </tr>
               </thead>
-              <?php $auto_search=explode(" ",$_REQUEST[testinput]);echo $key=$auto_search[0];
+              <?php $auto_search=explode(" ",$_REQUEST[testinput]);
+					$fname=$auto_search[0];
+					$father_name=$auto_search[1];
+					$family_name=$auto_search[2];
 				$i = 1;
 				$color = "#ECECFF";
-				$num=$dbf->countRows('student',"(family_name LIKE '$key%' OR family_name1 LIKE '$key%' OR first_name LIKE '%$key%' OR student_first_name LIKE '%$key%' OR first_name1 LIKE '%$key%') And centre_id='$_SESSION[centre_id]'");
-				foreach($dbf->fetchOrder('student',"(family_name LIKE '$key%' OR family_name1 LIKE '$key%' OR first_name LIKE '%$key%' OR student_first_name LIKE '%$key%' OR first_name1 LIKE '%$key%') And centre_id='$_SESSION[centre_id]'","id DESC ") as $val){
+				$num=$dbf->countRows('student',"(family_name='$family_name' AND father_name='$father_name' AND first_name LIKE '$fname')  And centre_id='$_SESSION[centre_id]'");
+				foreach($dbf->fetchOrder('student',"(family_name='$family_name' AND father_name='$father_name' AND first_name LIKE '$fname')  And centre_id='$_SESSION[centre_id]'","id DESC ") as $val){
 					$num_comment=$dbf->countRows('student_comment',"student_id='$val[id]'");
 					$valc = $dbf->strRecordID("common","*","id='$val[studentstatus_id]'");
 					

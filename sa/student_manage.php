@@ -67,7 +67,7 @@ if($_SESSION[font]=='big'){
             },
         } 
     })			
-	.tablesorterPager({container: $("#pager"), size: 15});
+	.tablesorterPager({container: $("#pager"), size: 30});
 });
 </script>
 <?php }else{?>
@@ -81,7 +81,7 @@ if($_SESSION[font]=='big'){
             },
         } 
     })			
-	.tablesorterPager({container: $("#pager"), size: 15});
+	.tablesorterPager({container: $("#pager"), size: 30});
 });
 </script>
 <?php } ?>

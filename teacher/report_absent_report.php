@@ -250,7 +250,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
                     
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
-                  <td align="left" valign="middle" class="contenttext"><?php echo $res[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($res["id"]));?></td>
+                  <td align="left" valign="middle" class="contenttext"><?php echo $res[first_name]."&nbsp;".$res[father_name]."&nbsp;".$res[family_name]."&nbsp;(".$res[first_name1]."&nbsp;".$res[father_name1]."&nbsp;".$res[grandfather_name1]."&nbsp;".$res[family_name1].")";?></td>
                   <td align="left" valign="middle" class="contenttext"><?php echo $course[name];?></td>
                   <td align="left" valign="middle" class="contenttext"><?php echo $group_dtls[group_name];?></td>
                   <td align="left" valign="middle" class="contenttext"><?php echo $res3[name];?></td>
@@ -472,7 +472,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                   
-                  <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></td>
+                  <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $res[first_name]."&nbsp;".$res[father_name]."&nbsp;".$res[family_name]."&nbsp;(".$res[first_name1]."&nbsp;".$res[father_name1]."&nbsp;".$res[grandfather_name1]."&nbsp;".$res[family_name1].")";?></td>
                   <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $course[name];?></td>
                   <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $res2[name];?></td>
                   <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $res3[name];?></td>

@@ -9,8 +9,7 @@ $dbf = new User();
 $teacher_id = $_SESSION[uid];
 
 if($_REQUEST['action']=='insert')
-{	
-	//echo var_dump($_SESSION);
+{//echo var_dump($_REQUEST);	
 	
 	$function=$_REQUEST["function"];
 	$cr_date = date('Y-m-d H:i:s A');
@@ -24,7 +23,8 @@ if($_REQUEST['action']=='insert')
 				action_owner='$_REQUEST[report_by]',
 				report_by='$_REQUEST[report_by]',
 				report_to='$_REQUEST[report_to]',
-				function='$function',
+				arf_function='$function',
+				arf_function1='$_REQUEST[function1]',
 				subject='$_REQUEST[subject]',
 				other1='$_REQUEST[other1]',
 				other2='$_REQUEST[other2]',
@@ -37,6 +37,7 @@ if($_REQUEST['action']=='insert')
 				action_taken_date='$_REQUEST[action_taken_date]',
 				result_check='$_REQUEST[result_check]',
 				result_check_date='$_REQUEST[result_check_date]',
+				sa_status='1',
 				last_updated='',
 				updated_by=''
 			";
@@ -118,6 +119,7 @@ if($_REQUEST['action']=='delete')
 if($_REQUEST['action']=='edit')
 {
 	$cr_date = date('Y-m-d H:i:s A');
+	//echo var_dump($_REQUEST);
 	
 	//$string="teacher_id='$_SESSION[uid]',student_id='$_POST[student]',group_id='$_REQUEST[group_id]',dated='$_POST[dated]',nr='$_POST[nr]',action_owner='$_POST[owner]',report_by='$_POST[report_by]',report_to='$_POST[report_to]',customer='$_POST[customer]',teacher='$_POST[teacher]',reception1='$_POST[reception1]',cs1='$_POST[cs1]',other1='$_POST[other1]',reception2='$_POST[reception2]',lcd='$_POST[lcd]',lis='$_POST[lis]',cs2='$_POST[cs2]',other2='$_POST[other2]',instruction='$_POST[instruction]',material='$_POST[material]',programme='$_POST[programme]',premisses='$_POST[premisses]',administration='$_POST[administration]',other3='$_POST[other3]',last_updated='$cr_date',updated_by='$_SESSION[uid]'";
 	$function=$_REQUEST["function"];
@@ -131,7 +133,8 @@ if($_REQUEST['action']=='edit')
 				action_owner='$_REQUEST[report_by]',
 				report_by='$_REQUEST[report_by]',
 				report_to='$_REQUEST[report_to]',
-				function='$function',
+				arf_function='$function',
+				arf_function1='$_REQUEST[function1]',
 				subject='$_REQUEST[subject]',
 				other1='$_REQUEST[other1]',
 				other2='$_REQUEST[other2]',
@@ -144,11 +147,13 @@ if($_REQUEST['action']=='edit')
 				action_taken_date='$_REQUEST[action_taken_date]',
 				result_check='$_REQUEST[result_check]',
 				result_check_date='$_REQUEST[result_check_date]',
+				sa_status='1',
 				last_updated='',
 				updated_by=''
 			";
 	$dbf->updateTable("arf",$string,"id='$_REQUEST[record_id]'");
 	
 	header("Location:arf_manage.php");
+	
 }
 ?>
