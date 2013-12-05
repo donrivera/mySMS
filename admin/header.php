@@ -103,7 +103,7 @@ $(document).ready(function() {
         
         <?php
 		$mystyle = '';
-		  if($page_name == "payment_manage.php" || $page_name=="payment_add.php" || $page_name=="payment_edit.php" || $page_name =="challan_cond.php" || $page_name =="invoice_cond.php" || $page_name=="bed_debt_config.php")
+		  if($page_name == "payment_manage.php" || $page_name=="payment_add.php" || $page_name=="payment_edit.php" || $page_name =="challan_cond.php" || $page_name =="invoice_cond.php" || $page_name=="bed_debt_config.php" || $page_name="cancel_manage.php")
 		  {
 			  $mystyle = 'style="background-color:#003399; background-image:none;"';
 		  }
@@ -286,10 +286,11 @@ $(document).ready(function() {
         </div>
 			
       <div id="accounts_dr" class="dropmenudiv_d">
-	  	<a href="payment_manage.php"><?php echo constant("ADMIN_MENU_TYPEOFPAYMENT");?></a>
+		<a href="payment_manage.php"><?php echo constant("ADMIN_MENU_TYPEOFPAYMENT");?></a>
 		<a href="challan_cond.php"><?php echo constant("ADMIN_MENU_RECEIPT");?></a>
 		<a href="invoice_cond.php"><?php echo constant("ADMIN_MENU_INVOICE");?></a>
         <a href="bed_debt_config.php"><?php echo constant("ADMIN_BED_DEBT_CONFIRE");?></a>
+		<a href="cancel_manage.php"><?php echo constant("ADMIN_MENU_CANCEL_STUDENT");?></a>
 	  </div>
               
       <div id="pre" class="dropmenudiv_d">

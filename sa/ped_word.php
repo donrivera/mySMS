@@ -24,33 +24,35 @@ header("Content-Disposition: attachment; Filename=ped.doc");
 
 ?>
 <style>
-.pedtext{font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:7px;font-weight:bold;}
+.pedtext{font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:2px;font-weight:bold;}
 .pedtext_normal{
 font-family:Arial, Helvetica, sans-serif;
-font-size:12px;
+font-size:9px;
 color:#000000;
-padding-left:7px;
+padding-left:2px;
 font-weight:normal;
 }
 .logouttext{
 font-family:Arial, Helvetica, sans-serif;
-font-size:12px;
+font-size:9px;
 font-weight:bold;
 color:#ffffff;
 text-decoration:none;
 }
 .heading{
  font-family:Arial, Helvetica, sans-serif;
- font-size:14px;
+ font-size:9px;
  font-weight:bold;
  color:#000000;
  text-decoration:none;
  }
 </style>
-<!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
 
-<table width="1000" border="0" align="center" cellpadding="0" cellspacing="0" style="border:solid 2px; border-color:#CC9900;">
+<!--Important-->
+<!--<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">-->
+
+<!--<meta http-equiv="Content-Type" content="text/html;" charset="Windows-1252">-->
+<table width="50%" border="0" align="center" cellpadding="0" cellspacing="0" style="border:solid 2px; border-color:#CC9900;">
     <tr>
       <td width="17%" align="left" valign="top" class="loginheading1"><?php echo constant("STUDENT_ADVISOR_PED_TNAME");?></td>
       <td width="62%" align="left" valign="middle" class="heading"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -113,7 +115,7 @@ text-decoration:none;
     ?>
     <tr>
       <td colspan="3" align="left" valign="top">
-        <table width="1000" border="1" align="center" cellpadding="0" cellspacing="0" style="border-collapse:collapse;" bgcolor="#FFFFFF">
+        <table width="100" border="1" align="center" cellpadding="0" cellspacing="0" style="border-collapse:collapse;" bgcolor="#FFFFFF">
           <?php
           //===================================================
           // Get Number of Students in a Group
@@ -144,7 +146,7 @@ text-decoration:none;
           
           ?>
           <tr>
-            <td width="35%" height="25" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_UNITS");?> : <?php echo $res_size[units];?></td>
+            <td width="35%" height="25" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_UNITS");?> : <?php echo $course[units];//$res_size[units];?></td>
             <td width="65%" align="left" valign="middle" class="pedtext"><?php echo constant("CD_EP_ADDING_STUDENT_GROUPADD");?> : <?php echo $res_teacher_group[group_name];/*$res_group_name[name];*/?></td>
             </tr>
           <tr>
@@ -889,10 +891,10 @@ text-decoration:none;
                     $j=1;
                     $st = 1;
                     $shift_count = 1;
-                    //$no_shift = $val_course[units];
+                    $no_shift = $val_course[units];
                     
                     //Get the number of shift in a Days
-                    $no_shift = $dbf->getDataFromTable("common","name","id='$val_course[units]'");
+                    //$no_shift = $dbf->getDataFromTable("common","name","id='$val_course[units]'");
                     
                     for($i=0;$i<$no_cols;$i++)
                     {
@@ -924,7 +926,7 @@ text-decoration:none;
                 $shift_no = 1;
                 for($k=0;$k<$no_shift;$k++){?>
                 
-                <div style="padding:3px;">
+                <div style="padding:0px;">
                 
                 <?php
                 //echo "shift".$shift_no."_".$s_count."_".$st."_".$count_course;

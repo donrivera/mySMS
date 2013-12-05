@@ -143,7 +143,7 @@ text-decoration:none;
           
           ?>
           <tr>
-            <td width="35%" height="25" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_UNITS");?> : <?php echo $res_size[units];?></td>
+            <td width="35%" height="25" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_UNITS");?> : <?php echo $course[units];//$res_size[units];?></td>
             <td width="65%" align="left" valign="middle" class="pedtext"><?php echo constant("CD_EP_ADDING_STUDENT_GROUPADD");?> : <?php echo $res_teacher_group[group_name];/*$res_group_name[name];*/?></td>
             </tr>
           <tr>
@@ -206,8 +206,9 @@ text-decoration:none;
               <?php
               if($_REQUEST[cmbgroup] != '')
               {
-                $dt = date("Y-m-d",strtotime($res_teacher_group[start_date]));
-                echo $dt = $dt." - ".$res_teacher_group[group_time];
+                //$dt = date("Y-m-d",strtotime($res_teacher_group[start_date]));
+                $dt = date("Y-m-d",strtotime($res_teacher_group[start_date])).' TO '.date("Y-m-d",strtotime($res_teacher_group[end_date]));
+				echo $dt = $dt." TIME- ".$res_teacher_group[group_start_time]."-".$res_teacher_group[group_end_time];
               }
             ?>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -888,10 +889,10 @@ text-decoration:none;
                     $j=1;
                     $st = 1;
                     $shift_count = 1;
-                    //$no_shift = $val_course[units];
+                    $no_shift = $val_course[units];
                     
                     //Get the number of shift in a Days
-                    $no_shift = $dbf->getDataFromTable("common","name","id='$val_course[units]'");
+                    //$no_shift = $dbf->getDataFromTable("common","name","id='$val_course[units]'");
                     
                     for($i=0;$i<$no_cols;$i++)
                     {
@@ -923,7 +924,7 @@ text-decoration:none;
                 $shift_no = 1;
                 for($k=0;$k<$no_shift;$k++){?>
                 
-                <div style="padding:3px;">
+                <div style="padding:0px;">
                 
                 <?php
                 //echo "shift".$shift_no."_".$s_count."_".$st."_".$count_course;
@@ -964,7 +965,7 @@ text-decoration:none;
                 {
                     $status_shift1 = $status_shift9;
                 }
-                echo '<span class="pedtext">'.$status_shift1.'</span>';
+				echo $status_shift1;//echo '<span class="pedtext">'.$status_shift1.'</span>';
                 ?>
                   
                   </div>

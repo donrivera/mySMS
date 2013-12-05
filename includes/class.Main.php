@@ -570,47 +570,25 @@ class User extends Dbfunctions{
 	}
 	
 	//Get time available or not
-	function timeSlotAvailable($teacher_id, $start_date, $start_time){
-		
+	function timeSlotAvailable($teacher_id, $start_date, $start_time)
+	{
 		$dbf = new User();
-		
-		//$user_start_time = strtotime($start_time) + 1;		
 		$user_start_time=date('Hi',strtotime(date("H:i:s", strtotime($start_time)) . " +1 minutes"));
-		//$result = false;
-		/*				
-		foreach($dbf->fetchOrder('student_group',"teacher_id='$teacher_id' And  ('$user_start_time' BETWEEN group_time And group_time_end)","") as $enroll) 
-		{
-			echo count($enroll);
-			//$result=(count($enroll)==1? true : false);
-			//$db_start_time = strtotime($enroll["group_time"]);
-			//$db_end_time = strtotime($enroll["group_time_end"]);
-			//$range=range($db_start_time,$db_end_time);
-			//if(in_array($user_start_time,$range)):$result=true;
-			//else:$result=false;
-			//endif;
-			//if($user_start_time >= $db_start_time && $user_start_time < $db_end_time){
-			//	$result = true;
-			//	break;
-			//}
-		}
-		*/
 		$q=$dbf->fetchOrder(	'student_group',
 								"teacher_id='$teacher_id' 
 								AND ('$start_date' BETWEEN start_date AND end_date)
 								AND ('$user_start_time' BETWEEN group_time And group_time_end)
 								","");
-		//echo count($q)."-".$user_start_time;
 		if(count($q)==1)
 		{$result=true;}
 		else{$result=false;}
 		return $result;
 	}
-	
 	//Get time available or not
-	function teacherSlotAvailable($teacher_id,$start_date,$end_date,$start_time, $end_time){
+	function teacherSlotAvailable($teacher_id,$start_date,$end_date,$start_time, $end_time)
+	{
 		
 		$dbf = new User();
-		//echo $start_time.$end_time."<BR/>";
 		$start = $start_time+1;
 		$end = $end_time+1;
 		$q=$dbf->fetchOrder(	'student_group',
@@ -618,8 +596,6 @@ class User extends Dbfunctions{
 								 AND ('$end_date' BETWEEN start_date And end_date) 
 								 AND (('$start' BETWEEN group_time AND group_time_end) OR ('$end' BETWEEN group_time AND group_time_end))
 								","");
-		
-		echo $q;
 		if($q <= 0 || empty($q)):
 		$result=false;
 		elseif($q>0):
@@ -628,35 +604,6 @@ class User extends Dbfunctions{
 		$result=false;
 		endif;
 		return $result;
-		
-		/*
-		$result = false;
-		foreach($dbf->fetchOrder('student_group',"teacher_id='$teacher_id' And  ('$start_date' BETWEEN start_date And end_date)","") as $enroll) {
-			
-			$frm = strtotime($enroll["group_time"]);
-			$tto = strtotime($enroll["group_time_end"]);
-			$range=range($frm,$tto);
-			if(in_array($start,$range) && in_array($end,$range)):echo $start.$end;$result=false;
-			else:$result=true;
-			endif;
-			//if($start <= $tto && $end >= $frm){
-			//	$result = true;
-			//	break;
-			//}
-			
-			//if(($end >= $frm && $end <= $tto) || ($start >= $frm && $start <= $tto)){
-			//	if(($end >= $frm && $end <= $tto) && ($start >= $frm && $start <= $tto)){
-			//		echo "ok";
-			//		$result = true;
-			//		break;
-			//	}else{
-			//		echo "no";
-			//	}
-			//}
-		}
-		return $result;
-		*/
-		
 	}
 	//Get Group Timing
 	function GetGroupTime($group_id){
@@ -766,23 +713,12 @@ class User extends Dbfunctions{
 	}
 	
 	//Generate Invoice No --Kishor--11-Sept-2012 ()
-	function GenerateInvoiceNo($centre_id){
-		
+	function GenerateInvoiceNo($centre_id)
+	{
 		$dbf = new User();
 		$invoice_from = $dbf->getDataFromTable("centre","invoice_from","id='$centre_id'");
-		
-		//Start Generate Invoice Number
-		//Maximum Serial No of the Centre in Student Table
-		//$invoice_sl = $dbf->getDataFromTable("student_fees","MAX(invoice_sl)","centre_id='$centre_id'");
-		$invoice_sl = $dbf->getDataFromTable("student_fees","COUNT(*)","centre_id='$centre_id'");
-		//Check serial no exist or not
-		if($invoice_sl == '0'){
-			$inv_no = "1";
-		}else{
-			$inv_no = $invoice_sl + 1;
-		}
-		
-		//Invoice No
+		$invoice_sl = $dbf->getDataFromTable("student_fees","MAX(id)","centre_id='$centre_id'");
+		$inv_no = $invoice_sl + 1;
 		return $inv_no = date("y").date("m").$invoice_from.str_pad($inv_no, 5, "0", STR_PAD_LEFT);
 	}
 	
@@ -1133,7 +1069,7 @@ class User extends Dbfunctions{
 												AND ('$end_date' BETWEEN start_date AND end_date)
 											");
 		if(empty($checknextclass) || $checknextclass==NULL)
-		{echo"1";
+		{//echo"1";
 			$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
 			if(empty($max_ped) || $max_ped==NULL)
 			{echo"2";
@@ -1148,7 +1084,7 @@ class User extends Dbfunctions{
 			}
 		}
 		else
-		{ echo "query";
+		{ //echo "query";
 			foreach($checknextclass as $next_class):
 				$nc_group_id=$next_class[id];
 				$nc_start_date=$next_class[start_date];
@@ -1251,9 +1187,9 @@ class User extends Dbfunctions{
 		return $result;
 	}
 	function getschedLeaves($range,$start,$end,$group_id,$s_days)
-	{		//echo $s_days;
+	{		
 		if(in_array($start,$range))
-		{//echo "1<BR/>";	//$s_days=$this->dateDiff($start, $end)+1;
+		{
 			$s_week_day=date('D',strtotime($start.'+ '.$s_days.'  day'));
 			switch($s_week_day)
 			{
@@ -1271,11 +1207,11 @@ class User extends Dbfunctions{
 			}
 			$new_end_date=date('Y-m-d',strtotime($end.'+ '.$e_days.'  day'));
 			$this->updateTable("student_group","start_date='$new_start_date',end_date='$new_end_date'","id='$group_id'");
-			//echo $start."-".$end."<BR/>";
-			//echo $new_start_date."-".$new_end_date."<BR/>";
+			//echo $new_start_date.$new_end_date."<BR/>";
+			
 		}
 		else
-		{//echo "2<BR/>";
+		{
 			$days=date('D',strtotime($end.'+ '.$s_days.'  day'));
 			switch($days)
 			{	case 'Fri':	{$days=$s_days+2;}break;
@@ -1284,7 +1220,8 @@ class User extends Dbfunctions{
 			}
 			$new_end_date=date('Y-m-d',strtotime($end.'+ '.$days.'  day'));
 			$this->updateTable("student_group","end_date='$new_end_date'","id='$group_id'");
-			//echo $new_start_date."-".$new_end_date."<BR/>";
+			//echo $new_start_date.$new_end_date."<BR/>";
+			
 		}
 		return array('date_end'=>$new_end_date);
 	}
@@ -1304,6 +1241,7 @@ class User extends Dbfunctions{
 										$range[] = $start; 
 									} 
 									foreach($groups as $g):
+										/*
 										//$range=range($start,$end);
 										$g_result=$this->getschedLeaves($range,$g[start_date],$g[end_date],$g[id],$days);
 										$groups1=$this->genericQuery("SELECT * FROM student_group WHERE centre_id='$center' AND (id != '$g[id]') AND ('$g_result[date_end]' BETWEEN start_date AND end_date)");
@@ -1328,15 +1266,16 @@ class User extends Dbfunctions{
 											else
 											{$g1_result=$this->getschedLeaves($range1result,$g1[start_date],$g1[end_date],$g1[id],$days);}
 										endforeach;
+										*/
+										$g_result=$this->getschedLeaves($range,$g[start_date],$g[end_date],$g[id],$days);
 									endforeach;
 									
 									
 								}break;
 			case 'Teacher':		{	
-									
 									$days=$this->dateDiff($start, $end)+1;
 									$groups= $this->genericQuery("SELECT * FROM student_group WHERE teacher_id='$id' AND ('$start' BETWEEN start_date AND end_date) OR ('$end' BETWEEN start_date AND end_date)");
-									//echo var_dump($groups);
+									echo var_dump($groups);
 									$range = array($start); 
 									while ($start != $end) 
 									{ 
@@ -1360,11 +1299,13 @@ class User extends Dbfunctions{
 											{
 												$second_start_date=date('Y-m-d', strtotime($g_result[date_end].' +1 day')); 
 												$second_end_date=date('Y-m-d', strtotime($g1[end_date].' +'.$days.' day'));
-												//echo "UPDATE TO DB:".$second_start_date."-".$second_end_date;
+												echo "UPDATE TO DB:".$second_start_date."-".$second_end_date;
 												$this->updateTable("student_group","start_date='$second_start_date',end_date='$second_end_date'","id='$g1[id]'");
 											}
 											else
-											{$g1_result=$this->getschedLeaves($range1result,$g1[start_date],$g1[end_date],$g1[id],$days);}
+											{	//echo $range1result.$g1[start_date].$g1[end_date].$g1[id];
+												//$g1_result=$this->getschedLeaves($range1result,$g1[start_date],$g1[end_date],$g1[id],$days);
+											}
 										endforeach;
 									endforeach;
 								}break;
@@ -1413,14 +1354,16 @@ class User extends Dbfunctions{
 	{
 		if($days>$count_days)
 		{	
-			//echo $days.$count_days;
+			
 			$update_days = $days - $count_days;
 			$new_end_date=date('Y-m-d',strtotime($end_date.'- '.$update_days.'  day'));
+			echo $new_end_date."first";
 		}
 		elseif($days==$count_days)
 		{
 			$update_days = $days;
 			$new_end_date=date('Y-m-d',strtotime($end_date.'+ 0  day'));
+			
 		}
 		else
 		{	
@@ -1451,6 +1394,7 @@ class User extends Dbfunctions{
 										//echo $g[end_date]."<BR/>".$g_result[date_end]."<BR/>".$g[id];
 										$this->updateTable("centre_vacation","frm='$start',tto='$end',no_days='$count_days'","id='$id'");
 										$this->updateTable("student_group","end_date='$g_result[date_end]'","id='$g[id]'");
+										/*
 										$groups1=$this->genericQuery("SELECT * FROM student_group WHERE (id != '$g[id]') AND ('$g_result[date_end]' BETWEEN start_date AND end_date)");
 										foreach($groups1 as $g1):
 											//echo $g1[id];//.$g1[start_date].$g1[end_date];
@@ -1460,6 +1404,7 @@ class User extends Dbfunctions{
 											//echo "UPDATE TO DB:".$second_start_date."-".$second_end_date;
 											$this->updateTable("student_group","start_date='$second_start_date',end_date='$second_end_date[date_end]'","id='$g1[id]'");
 										endforeach;
+										*/
 									endforeach;
 								}break;
 			case 'Teacher':		{
@@ -1487,7 +1432,7 @@ class User extends Dbfunctions{
 			case 'Exam':		{
 									$exam=$this->strRecordID("exam_vacation","name,no_days","id='$id'");
 									$group_name=$exam[name];
-									
+									$days=$exam[no_days];
 									$count_days = $this->dateDiff($start,$end)+1;
 									$groups= $this->genericQuery("SELECT * FROM student_group WHERE group_name='$group_name' AND ('$start' BETWEEN start_date AND end_date) OR ('$end' BETWEEN start_date AND end_date)");
 									foreach($groups as $g):
@@ -1508,20 +1453,20 @@ class User extends Dbfunctions{
 									$center=$this->strRecordID("centre_vacation","centre_id,no_days,frm,tto","id='$id'");
 									$groups= $this->genericQuery("SELECT * FROM student_group WHERE centre_id='$center[centre_id]' AND ('$center[frm]' BETWEEN start_date AND end_date) OR ('$center[tto]' BETWEEN start_date AND end_date)");
 									$days=$center[no_days];
+									echo var_dump($groups);
+									
 									foreach($groups as $g):
 										$new_end_date=date('Y-m-d',strtotime($g[end_date] .'- '.$days.'  day'));
 										$this->updateTable("student_group","end_date='$new_end_date'","id='$g[id]'");
 										$current_group_end_date=strtotime($g['end_date'] .'+ 1 week');
 										$group1_end_date=date('Y-m-d',$current_group_end_date);
 										$groups1=$this->genericQuery("SELECT * FROM student_group WHERE (id != '$g[id]') AND ('$group1_end_date' BETWEEN start_date AND end_date)");
-										
 										foreach($groups1 as $g1):
 											$second_start_date=date('Y-m-d',strtotime($new_end_date.' +1 day')); 
 											$second_end_date=date('Y-m-d',strtotime($g1[end_date] .'- '.$days.'  day'));
 											$this->updateTable("student_group","start_date='$second_start_date',end_date='$second_end_date'","id='$g1[id]'");
 										endforeach;
 									endforeach;
-									
 								}break;
 			case 'Teacher':		{
 									$teacher=$this->strRecordID("teacher_vacation","teacher_id,no_days,frm,tto","id='$id'");
@@ -1544,7 +1489,7 @@ class User extends Dbfunctions{
 									$exam=$this->strRecordID("exam_vacation","name,no_days","id='$id'");
 									$group_name=$exam[name];
 									$days=$exam[no_days];
-									$groups= $this->genericQuery("SELECT * FROM student_group WHERE group_name='$group_name' AND ('$start' BETWEEN start_date AND end_date) OR ('$end' BETWEEN start_date AND end_date)");
+									$groups= $this->genericQuery("SELECT * FROM student_group WHERE group_name='$group_name'");
 									foreach($groups as $g):
 										$new_end_date=date('Y-m-d',strtotime($g[end_date] .'- '.$days.'  day'));
 										$this->updateTable("student_group","end_date='$new_end_date'","id='$g[id]'");

@@ -616,4 +616,87 @@ if($_REQUEST['action']=='quick_add_group'){
 	exit;
 	
 }
+if($_REQUEST['action']=='update_group')
+{
+	echo var_dump($_POST);
+	
+	$end_date=$_REQUEST[gr_course_endt];
+	$students=$_REQUEST[student_id];
+	if(empty($students) || $students==NULL):
+	
+	$end_date=$_REQUEST[gr_course_endt];
+	$compute_units=$_REQUEST[totalunit];
+	else:
+	$c_students=count($students);
+	$query=$dbf->genericQuery("	SELECT units
+								FROM centre_group_size
+								WHERE ('$c_students' BETWEEN size_from AND size_to)
+								");
+	foreach($query as $q):$week_total=round($q['units']/10,0);endforeach;
+	$compute_units=$week_total * 10;
+	$compute_date=strtotime($_REQUEST['date_value'] .'+ '.$week_total.' week');
+	$end_date=date('Y-m-d',$compute_date);
+	endif;
+	
+	
+	//Get the Centre Invoice No
+	$centre_id = $_SESSION['centre_id'];
+	$course_id = $_REQUEST['course'];
+	
+	# Check time validate
+	$teacher_id = $_REQUEST["teacher"];
+	$choosen_date = $_REQUEST["dt"];
+	$group_start_time = $_REQUEST['tm'];
+	$perday = $dbf->getDataFromTable("common", "name", "id='$_REQUEST[unit]'");		
+	
+	
+	//Time calculation
+	$unit = $perday * 45;
+	
+	$group_s_time = date('h:i A',strtotime($_REQUEST['tm']));
+	
+	$event_time = $group_s_time;
+	$event_length = $unit;
+	 
+	$timestamp = strtotime("$event_time");
+	
+	$group_end_time = date('h:i A',strtotime("+$event_length minutes", $timestamp));
+	//echo $group_s_time."-".$group_end_time;
+	$start=date('Hi',strtotime($_REQUEST['tm']));
+	$end=date('Hi',strtotime("+$event_length minutes", $timestamp));
+	$num = $dbf->teacherSlotAvailable($teacher_id,$choosen_date,$end_date,$start,$end);
+
+	//echo var_dump($num);	
+
+	$_SESSION["tm"] = $_REQUEST["tm"];
+	$_SESSION["end_tm"] = $group_end_time;
+	
+	if($num == true){
+		header("Location:group_quick.php?msg=o0k9b4");
+		exit;
+	}
+	
+	//$_REQUEST[unit]
+	$string="
+				group_name='$_REQUEST[group]',
+				centre_id='$centre_id',
+				course_id='$course_id',
+				teacher_id='$_REQUEST[teacher]',
+				units='$compute_units',
+				unit_per_day='$perday',
+				status='Not Started',
+				room_id='$_REQUEST[class_room]',
+				start_date='$_REQUEST[dt]',
+				group_time='$start',
+				group_time_end='$end',
+				group_start_time='$group_s_time',
+				group_end_time='$group_end_time',
+				end_date='$end_date',
+				sa_id='$_SESSION[id]'";
+	
+	$my_group_id = $dbf->updateTable("student_group",$string,"id='$_REQUEST[group_id]'");	
+	header("Location:group_manage.php");
+	exit;
+	
+}
 ?>

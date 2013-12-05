@@ -472,7 +472,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                   <td align="left" valign="middle"><input name="othertext" type="text" class="new_textbox190" id="othertext" value="<?php echo $res_enroll["othertext"];?>" /></td>
                                 </tr>
                                 <?php
-								$opening_amt = $dbf->getDataFromTable('student_fees',"SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' And type='advance'");
+								$opening_amt = $dbf->getDataFromTable('student_fees',"SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' And (type='advance' OR type='opening')");
 								
 								?>
                                 <tr>
@@ -1161,7 +1161,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                                 <?php } ?>
                                                 </td>
                                                 <?php
-												$opening_amt = $dbf->getDataFromTable('student_fees',"paid_amt","course_id='$course_id' And student_id='$student_id' And type='advance'");
+												$opening_amt = $dbf->getDataFromTable('student_fees',"paid_amt","course_id='$course_id' And student_id='$student_id' And (type='advance' OR type='opening')");
 												?>
                                                 <td height="25" align="right" valign="middle"><input name="payment" type="text" class="new_textbox100_ar" id="payment" value="<?php echo $opening_amt;?>" <?php if($opening_amt > 0){?> readonly="" <?php } ?> onKeyPress="return isNumberKey(event);"/></td>
                                                 <td align="left" valign="middle" class="leftmenu">: <?php echo constant("STUDENT_ADVISOR_SEARCH_MANAGE_INITIPAY");?></td>

@@ -246,7 +246,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                     <td align="center" valign="middle" class="mycon"><?php echo $i;?></td>
                     <td align="left" valign="middle" class="mycon" >&nbsp;<?php echo $valcancel[dated];?></td>
-                    <td align="left" valign="middle" class="mycon" >&nbsp;<a href="single-home.php?student_id=<?php echo $res_student[id];?>" style="cursor:pointer;"><?php echo $res_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></a></td>
+                    <td align="left" valign="middle" class="mycon" >&nbsp;<a href="single-home.php?student_id=<?php echo $res_student[id];?>" style="cursor:pointer;"><?php echo $res_student[first_name]."&nbsp;".$res_student[father_name]."&nbsp;".$res_student[family_name]."&nbsp;(".$res_student[first_name1]."&nbsp;".$res_student[father_name1]."&nbsp;".$res_student[grandfather_name1]."&nbsp;".$res_student[family_name1].")";?></a></td>
                     <td align="left" valign="middle" class="mycon" >&nbsp;<?php echo $res_student[student_mobile];?></td>
                     <td align="left" valign="middle" class="mycon" >&nbsp;<?php echo $valcancel[comment];?></td>
                     <?php
@@ -451,7 +451,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							$condition = "s.id>'0'";
 						}
 						
-						$condition = $condition."  And s.centre_id='$centre_id' And s.id=c.student_id";
+						$condition = $condition."And s.centre_id='$centre_id' And s.id=c.student_id";
 						
 						//End 4.					
 						$num=$dbf->countRows('student s, student_cancel c', $condition);
@@ -486,7 +486,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td align="right" valign="middle" class="mycon" >&nbsp;<?php echo $comment;?></td>
                             
                           <td align="right" valign="middle" class="mycon" >&nbsp;<?php echo $valcancel[dated];?></td>
-                          <td align="right" valign="middle" class="mycon" >&nbsp;<a href="single-home.php?student_id=<?php echo $res_student[id];?>" style="cursor:pointer;"><?php echo $res_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></a></td>
+                          <td align="right" valign="middle" class="mycon" >&nbsp;<a href="single-home.php?student_id=<?php echo $res_student[id];?>" style="cursor:pointer;"><?php echo $res_student[first_name]."&nbsp;".$res_student[father_name]."&nbsp;".$res_student[family_name]."&nbsp;(".$res_student[first_name1]."&nbsp;".$res_student[father_name1]."&nbsp;".$res_student[grandfather_name1]."&nbsp;".$res_student[family_name1].")";?></a></td>
                           <td align="center" valign="middle" class="mycon"><?php echo $i;?></td>
                             <?php
 					  	  $i = $i + 1;

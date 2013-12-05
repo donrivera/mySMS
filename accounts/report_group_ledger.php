@@ -202,7 +202,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <?php
 					foreach($dbf->fetchOrder('student_group',"","") as $val_group_dtls) {
 				  ?>
-                  <option value="<?php echo $val_group_dtls[id];?>"<?php if($_REQUEST[group_id]==$val_group_dtls["id"]){?> selected="selected"<?php } ?>><?php echo $val_group_dtls['group_name'] ?>, <?php echo date('d/m/Y',strtotime($val_group_dtls['start_date']));?> - <?php echo date('d/m/Y',strtotime($val_group_dtls['end_date'])) ?>, <?php echo $val_group_dtls["group_time"];?>-<?php echo $dbf->GetGroupTime($val_group_dtls["id"]);?></option>
+                  <option value="<?php echo $val_group_dtls[id];?>"<?php if($_REQUEST[group_id]==$val_group_dtls["id"]){?> selected="selected"<?php } ?>><?php echo $val_group_dtls['group_name'] ?>, <?php echo date('d/m/Y',strtotime($val_group_dtls['start_date']));?> - <?php echo date('d/m/Y',strtotime($val_group_dtls['end_date'])) ?>, <?php echo $val_group_dtls["group_start_time"];?>-<?php echo $val_group_dtls["group_end_time"];?></option>
                   <?php
 				   }
 				   ?>
@@ -298,7 +298,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <td align="center" valign="middle" class="mycon">
                   <a href="javascript:void(0);" onClick="show_details('<?php echo "kk".$valgroup["id"];?>');"> <span id="plusArrow<?php echo "kk".$valgroup["id"];?>"><img src="../images/plus.gif" border="0" /></span></a>
                   </td>
-                  <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valgroup["group_name"];?> <?php echo $valgroup["group_time"];?>-<?php echo $dbf->GetGroupTime($valgroup["id"]);?></td>
+                  <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valgroup["group_name"];?> <?php echo $valgroup["group_start_time"];?>-<?php echo $valgroup["group_end_time"];?></td>
                   <td align="left" valign="middle" class="mycon">&nbsp;<?php echo date('d-M-Y',strtotime($valgroup["start_date"]));?>&nbsp;/&nbsp;<?php echo date('d-M-Y',strtotime($valgroup["end_date"]));?></td>
                   <td align="center" valign="middle" class="mycon">&nbsp;<?php echo $numofstudent;?></td>
                   <td align="center" valign="middle" class="mycon">&nbsp;<?php echo $course_fee;?>&nbsp;<?php echo $res_currency[symbol];?></td>

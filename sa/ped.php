@@ -231,7 +231,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   
                   ?>
                   <tr>
-                    <td width="35%" height="25" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_UNITS");?> : <?php echo $res_size[units];?></td>
+                    <td width="35%" height="25" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_UNITS");?> : <?php echo $course[units];//$res_size[units];?></td>
                     <td width="65%" align="left" valign="middle" class="pedtext"><?php echo constant("CD_EP_ADDING_STUDENT_GROUPADD");?> : <?php echo $res_group[group_name];?></td>
                     </tr>
                   <tr>
@@ -998,10 +998,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							$j=1;
 							$st = 1;
 							$shift_count = 1;
-							//$no_shift = $val_course[units];
+							$no_shift = $val_course[units];
 							
 							//Get the number of shift in a Days
-							$no_shift = $dbf->getDataFromTable("common","name","id='$val_course[units]'");
+							//$no_shift = $dbf->getDataFromTable("common","name","id='$val_course[units]'");
 							
 							for($i=0;$i<$no_cols;$i++)
 							{
@@ -1033,7 +1033,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$shift_no = 1;
 						for($k=0;$k<$no_shift;$k++){?>
                         
-                        <div style="padding:3px;">
+                        <div style="padding:0px;">
                         
                         <?php
 						//echo "shift".$shift_no."_".$s_count."_".$st."_".$count_course;
@@ -1074,7 +1074,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						{
 							$status_shift1 = $status_shift9;
 						}
-						echo '<span class="pedtext">'.$status_shift1.'</span>';
+						echo $status_shift1;//echo '<span class="pedtext">'.$status_shift1.'</span>';
 						?>
                           </div>
                         <?php

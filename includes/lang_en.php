@@ -1555,6 +1555,7 @@ define("ADMIN_MENU_ACCOUNTS","Accounts");
 define("ADMIN_MENU_TYPEOFPAYMENT","Type of payment");
 define("ADMIN_MENU_RECEIPT","Receipts terms and condition");
 define("ADMIN_MENU_INVOICE","Invoice terms and condition");
+define("ADMIN_MENU_CANCEL_STUDENT","Manage Cancel Request");
 
 define("ADMIN_MENU_CENTRE","Centre");
 

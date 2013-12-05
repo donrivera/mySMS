@@ -7,8 +7,8 @@ include("../includes/saudismsNET-API.php");
 //Object initialization
 $dbf = new User();
 
-if($_REQUEST['action']=='update'){
-		
+if($_REQUEST['action']=='update'){ 
+	
 	$res_logo = $dbf->strRecordID("conditions","*","type='Logo path'");
 	$dt = date('Y-m-d');
 	$comm = mysql_real_escape_string($_REQUEST[comment]);
@@ -213,9 +213,9 @@ if($_REQUEST['action']=='update'){
 		$pending_units = round($original_unit - ($original_unit * $dec_point_finish));		
 		
 		//Delete from grouping details table
-		$dbf->deleteFromTable("student_group_dtls","parent_id='$my_prev_group_id' AND student_id='$student_id'");				
-		$dbf->deleteFromTable("student_enroll","group_id='$my_prev_group_id' AND student_id='$student_id' And centre_id='$centre_id'");				
-		$dbf->deleteFromTable("student_fees","course_id='$course_id' And student_id='$student_id' And centre_id='$centre_id'");
+		//$dbf->deleteFromTable("student_group_dtls","parent_id='$my_prev_group_id' AND student_id='$student_id'");				
+		//$dbf->deleteFromTable("student_enroll","group_id='$my_prev_group_id' AND student_id='$student_id' And centre_id='$centre_id'");				
+		//$dbf->deleteFromTable("student_fees","course_id='$course_id' And student_id='$student_id' And centre_id='$centre_id'");
 						
 		$no_student_remove = $no_student_remove+1;
 	
@@ -397,9 +397,10 @@ if($_REQUEST['action']=='update'){
 	}else{
 		//Delete IN details table
 		//Delete from grouping details table
-		$dbf->deleteFromTable("student_group_dtls","parent_id='$my_prev_group_id' AND student_id='$student_id'");								
-		$dbf->deleteFromTable("student_enroll","group_id='$my_prev_group_id' AND student_id='$id2' And centre_id='$centre_id'");
-		$dbf->deleteFromTable("student_fees","course_id='$course_id' And student_id='$student_id' And centre_id='$centre_id'");		
+		//$dbf->deleteFromTable("student_group_dtls","parent_id='$my_prev_group_id' AND student_id='$student_id'");
+		//$dbf->pullSchedule($my_prev_group_id);		
+		//$dbf->deleteFromTable("student_enroll","group_id='$my_prev_group_id' AND student_id='$id2' And centre_id='$centre_id'");
+		//$dbf->deleteFromTable("student_fees","course_id='$course_id' And student_id='$student_id' And centre_id='$centre_id'");		
 	}
 	
 	//=============================================================
