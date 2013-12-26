@@ -102,10 +102,10 @@ $(document).ready(function() {
         <li><a <?php echo $mystyle;?> href="grade_manage.php" title="<?php echo constant("ADMIN_MENU_GRADES");?>"><span <?php echo $mystyle;?>><?php echo constant("ADMIN_MENU_GRADES");?></span></a></li>
         
         <?php
-		$mystyle = '';
+		$mystyle_acc = '';
 		  if($page_name == "payment_manage.php" || $page_name=="payment_add.php" || $page_name=="payment_edit.php" || $page_name =="challan_cond.php" || $page_name =="invoice_cond.php" || $page_name=="bed_debt_config.php" || $page_name="cancel_manage.php")
 		  {
-			  $mystyle = 'style="background-color:#003399; background-image:none;"';
+			  $mystyle_acc = 'style="background-color:#003399; background-image:none;"';
 		  }
 		  ?>
         <li><a <?php echo $mystyle;?> href="#" title="<?php echo constant("ADMIN_MENU_ACCOUNTS");?>" rel="accounts_dr"><span <?php echo $mystyle;?>><?php echo constant("ADMIN_MENU_ACCOUNTS");?></span></a></li>

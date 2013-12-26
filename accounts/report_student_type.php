@@ -3,7 +3,7 @@ ob_start();
 session_start();
 if(($_COOKIE['cook_username'])=='')
 {
-	if($_SESSION['id']=="" || $_SESSION['user_type']!="Student Advisor")
+	if($_SESSION['id']=="" || $_SESSION['user_type']!="Accountant")
 	{
 		header("Location:../index.php");
 		exit;
@@ -120,10 +120,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
         <td align="left" height="25" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
               <td>&nbsp;</td>
-              <td width="36" align="center" valign="middle"><a href="report_student_not_enrolled_word.php?teacher=<?php echo $_REQUEST[teacher];?>"><img src="../images/word2007.png" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_WORD ?>"></a></td>
-              <td width="36" align="center" valign="middle"><a href="report_student_not_enrolled_csv.php?teacher=<?php echo $_REQUEST[teacher];?>"><img src="../images/excel2007.PNG" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_XLS ?>"></a></td>
-              <td width="36" align="center" valign="middle"><a href="report_student_not_enrolled_pdf_data.php?teacher=<?php echo $_REQUEST[teacher];?>"><img src="../images/pdf.png" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_PDF ?>"></a></td>
-              <td width="36" align="center" valign="middle"><a href="report_student_not_enrolled_print.php?teacher=<?php echo $_REQUEST[teacher];?>" target="_blank"><img src="../images/print.png" width="16" height="16" border="0" title="<?php echo STUDENT_ADVISOR_SEARCH_MANAGE_PRINT ?>"></a></td>
+              <td width="36" align="center" valign="middle"><a href="report_student_type_word.php?teacher=<?php echo $_REQUEST[teacher];?>"><img src="../images/word2007.png" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_WORD ?>"></a></td>
+              <td width="36" align="center" valign="middle"><a href="report_student_type_csv.php?teacher=<?php echo $_REQUEST[teacher];?>"><img src="../images/excel2007.PNG" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_XLS ?>"></a></td>
+              <td width="36" align="center" valign="middle"><a href="report_student_type_pdf.php?teacher=<?php echo $_REQUEST[teacher];?>"><img src="../images/pdf.png" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_PDF ?>"></a></td>
+              <td width="36" align="center" valign="middle"><a href="report_student_type_print.php?teacher=<?php echo $_REQUEST[teacher];?>" target="_blank"><img src="../images/print.png" width="16" height="16" border="0" title="<?php echo STUDENT_ADVISOR_SEARCH_MANAGE_PRINT ?>"></a></td>
             </tr>
           </table></td>
       </tr>
@@ -153,10 +153,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <img src="../images/rightarrow.png" width="16" height="16"><?php echo constant("ADMIN_MENU_REPORTS_NOT_ENROLLED");?></td>
                   <td width="7%"><span class="logintext"><?php echo constant("ADMIN_REPORT_STUDENT_NOT_ENROLLED_STATUS");?></span> :</td>
                   <td width="22%" align="left">
-                  <select name="teacher" id="teacher"  style="border:solid 1px; border-color:#FFCC33; height:20px; width:110px;" onChange="javascript:document.frm.action='report_student_not_enrolled.php',document.frm.submit();">
+                  <select name="teacher" id="teacher"  style="border:solid 1px; border-color:#FFCC33; height:20px; width:110px;" onChange="javascript:document.frm.action='report_student_type.php',document.frm.submit();">
                     <option value=""> Select Status </option>
                     <?php
-						foreach($dbf->fetchOrder('student_status',"","name") as $val1) {	
+						foreach($dbf->fetchOrder('common',"type='Type'","name") as $val1) {	
 					  ?>
                     <option value="<?php echo $val1[id];?>" <?php if($_REQUEST[teacher]==$val1["id"]) { ?> selected="selected" <?php } ?>><?php echo $val1[name];?></option>
                     <?php
@@ -177,28 +177,44 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <th width="7%" align="left" valign="middle" class="pedtext">&nbsp;</th>
                   <th width="17%" align="left" valign="middle" class="pedtext"><?php echo constant("ADMIN_REPORT_STUDENT_NOT_ENROLLED_MOBILENUMBER");?></th>
                   <th width="10%" align="left" valign="middle" class="pedtext"><?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_EMAIL");?></th>
-                  <th width="8%" align="left" valign="middle" class="pedtext"><?php echo constant("ADMIN_REPORT_STUDENT_NOT_ENROLLED_DATEOFENQU");?></th>
-                  <th width="14%" align="left" valign="middle" class="pedtext"><?php echo constant("ADMIN_REPORT_STUDENT_NOT_ENROLLED_LASTCOMT");?></th>
-                  <th width="12%" align="left" valign="middle" class="pedtext"><?php echo constant("ADMIN_REPORT_STUDENT_NOT_ENROLLED_LEADINFO");?></th>
-                  <th width="16%" colspan="2" align="center" class="pedtext"><?php echo constant("ADMIN_REPORT_STUDENT_NOT_ENROLLED_INTRESTEDIN");?></th>
+                 
+                 
+                  <th width="16%" colspan="2" align="center" class="pedtext"><?php echo "Group Name";?></th><!--constant("ADMIN_REPORT_STUDENT_NOT_ENROLLED_INTRESTEDIN");-->
+				  <th width="16%" colspan="2" align="center" class="pedtext"><?php echo "Center";?></th>
                 </tr>
 				</thead>
-                <?php
+                <?php 
+					$query=$dbf->genericQuery("	SELECT s.id,sg.group_name,ctr.name as centre_name
+												FROM student s
+												INNER JOIN student_type stype ON stype.student_id = s.id
+												INNER JOIN common c ON c.id = stype.type_id
+												INNER JOIN student_group_dtls sgdtls ON sgdtls.student_id=s.id
+												INNER JOIN student_group sg ON sg.id=sgdtls.parent_id
+												INNER JOIN centre ctr ON ctr.id=s.centre_id
+												WHERE c.id ='$_REQUEST[teacher]'
+											");
+					/*
+						INNER JOIN student_group_dtls sgdtls ON sgdtls.student_id=s.id
+						INNER JOIN student_group sg ON sg.id=sgdtls.parent_id
+					*/
 					if($_REQUEST[teacher]!=''){
-						$cond = "s.id=c.student_id AND c.status_id='$_REQUEST[teacher]'";
+						//$cond = "s.id=c.student_id AND c.status_id='$_REQUEST[teacher]'";
+						$cond ="stype.student_id = st.id AND c.id = stype.type_id AND c.id = '$_REQUEST[teacher]' ";
 					}else{
-						$cond = "s.id=c.student_id";
+						//$cond = "s.id=c.student_id";
+						$cond="stype.student_id = st.id AND c.id = stype.type_id";
 					}
 					
 					$i = 1;
 					$color="#ECECFF";
 					
 					//Get Number of Rows
-					$num=$dbf->countRows('student s,student_moving c',$cond,"");
-					
+					//$num=$dbf->countRows('student s,student_moving c',$cond,"");
+					$num=count($query);//$dbf->countRows('student s,student_type stype,common c',$cond,"");
 					 //Loop start
-					foreach($dbf->fetchOrder('student s,student_moving c',$cond,"s.id DESC","s.id","s.id") as $val) {
-					
+					//foreach($dbf->fetchOrder('student s,student_moving c',$cond,"s.id DESC","s.id","s.id") as $val) {
+					  //foreach($dbf->fetchOrder('student s,student_type stype,common c',$cond,"s.id DESC","s.id","s.id") as $val) {
+					foreach($query as $val){
 					$val_student = $dbf->strRecordID("student","*","id='$val[id]'");
 					
 					//Get Course Name
@@ -235,6 +251,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					//Last comment
 					$last_com = $dbf->getDataFromTable("student_comment", "MAX(id)", "student_id='$val[id]'");
 					$com = $dbf->strRecordID("student_comment", "*", "id='$last_com'");
+					
+					
 				?>                    
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                   <td height="25" align="center" valign="middle" class="mycon"><?php echo $i;?></td>
@@ -247,10 +265,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </table></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val_student[student_mobile];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val_student[email];?></td>
-                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dt;?></td>
-                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $com["comments"];?></td>
-                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $lead;?></td>
-				  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $course;?></td>
+                  <td align="left" valign="center" class="mycon" style="padding-left:5px;"><?php echo $val[group_name];?></td>
+				  <td style="border-top: 0;border:none;">&nbsp;</td>
+				  <td align="left" valign="center" class="mycon" style="padding-left:5px;"><?php echo $val[centre_name];?></td>
+				  
+				    
                   <?php
 					  $i = $i + 1;
 					  if($color=="#ECECFF"){

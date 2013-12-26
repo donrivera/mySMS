@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 28, 2013 at 07:11 AM
+-- Generation Time: Dec 26, 2013 at 06:37 AM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.3.13
 
@@ -242,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `centre_group_size` (
 
 INSERT INTO `centre_group_size` (`id`, `group_id`, `size_from`, `size_to`, `total_size`, `week_id`, `week_id1`, `units`, `effect_units`, `centre_id`) VALUES
 (1, 51, 1, 1, 0, '', 1, 40, 1, 1),
-(2, 52, 2, 3, 1, '', 1, 40, 1, 1),
+(2, 52, 2, 3, 1, '', 1, 50, 1, 1),
 (3, 53, 4, 6, 2, '', 2, 60, 0, 1),
 (4, 54, 7, 9, 2, '', 3, 70, 0, 1),
 (5, 55, 10, 12, 2, '', 4, 80, 0, 1),
@@ -293,7 +293,7 @@ CREATE TABLE IF NOT EXISTS `centre_vacation` (
   `last_updated` datetime NOT NULL,
   `updated_by` bigint(3) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -392,7 +392,7 @@ CREATE TABLE IF NOT EXISTS `common` (
   `last_updated` datetime NOT NULL,
   `updated_by` bigint(3) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=144 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=146 ;
 
 --
 -- Dumping data for table `common`
@@ -450,14 +450,15 @@ INSERT INTO `common` (`id`, `name`, `type`, `created_datetime`, `created_by`, `l
 (132, 'G6', 'group group', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (133, '5', 'Unit No', '2012-10-30 03:33:51', 7, '0000-00-00 00:00:00', 0),
 (134, 'Family - ?????', 'lead type', '2013-01-22 01:04:36', 1, '2013-05-28 18:04:15', 1),
-(135, 'Mixed', 'group group', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(144, 'Government Charity', 'Type', '2013-12-18 13:26:37', 1, '0000-00-00 00:00:00', 0),
 (136, 'Weekends', 'teacher preference', '2013-02-04 02:26:48', 1, '0000-00-00 00:00:00', 0),
 (137, 'Update', 'alert type', '2013-02-04 02:29:26', 1, '0000-00-00 00:00:00', 0),
 (138, 'DVD', 'material type', '2013-02-04 02:32:54', 1, '0000-00-00 00:00:00', 0),
 (139, '6', 'Unit No', '2013-02-04 02:33:49', 1, '0000-00-00 00:00:00', 0),
 (141, 'Brochure - ?????', 'lead type', '2013-02-04 02:49:01', 1, '2013-05-28 18:00:55', 1),
 (142, 'Action', 'alert type', '2013-05-28 17:57:56', 1, '0000-00-00 00:00:00', 0),
-(143, 'Government', 'group group', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0);
+(143, 'Government', 'group group', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(145, 'Government Charity', 'lead type', '2013-12-18 13:31:49', 1, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -974,7 +975,7 @@ CREATE TABLE IF NOT EXISTS `email_history` (
   `automatic` varchar(50) CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL,
   `page_full_path` longtext CHARACTER SET ucs2 COLLATE ucs2_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=51 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=80 ;
 
 --
 -- Dumping data for table `email_history`
@@ -1030,7 +1031,36 @@ INSERT INTO `email_history` (`id`, `dated`, `user_id`, `msg`, `send_to`, `email`
 (47, '2013-11-04 05:11:48', 130, '', 'Student Advisor and Center Director', 'ahmedv@gmail.com', 0, 1, '2013-11-04', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/teacher/arf_process.php?action=insert'),
 (48, '2013-11-04 05:14:06', 130, '', 'Student Advisor and Center Director', 'ahmedv@gmail.com', 0, 1, '2013-11-04', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/teacher/arf_process.php?action=insert'),
 (49, '2013-11-04 05:15:53', 130, '', 'Student Advisor and Center Director', 'ahmedv@gmail.com', 0, 1, '2013-11-04', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/teacher/arf_process.php?action=insert'),
-(50, '2013-11-05 04:30:35', 130, '', 'Student Advisor and Center Director', 'ahmedv@gmail.com', 0, 1, '2013-11-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/teacher/arf_process.php?action=insert');
+(50, '2013-11-05 04:30:35', 130, '', 'Student Advisor and Center Director', 'ahmedv@gmail.com', 0, 1, '2013-11-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/teacher/arf_process.php?action=insert'),
+(51, '2013-12-02 01:42:08', 125, 'Sick leave has been Approved', 'Student Advisor and Center Director', 'don@berlitz-ksa.com', 0, 1, '2013-12-02', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/cd/sick_leave_process.php'),
+(52, '2013-12-02 01:44:52', 125, 'Sick leave has been Approved', 'Student Advisor and Center Director', 'don@berlitz-ksa.com', 0, 1, '2013-12-02', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/cd/sick_leave_process.php'),
+(53, '2013-12-03 02:57:22', 126, 'The following student would like to hold their courses. ????? ?????? ??????? ???? ?? ??? ???????.', 'Student Advisor and Center Director', 'tarik@berlitz-ksa.com', 0, 1, '2013-12-03', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/hold_process.php?action=insert'),
+(54, '2013-12-03 03:04:19', 126, 'Cancellation request from ', 'Student Advisor and Center Director', 'tarik@berlitz-ksa.com', 0, 1, '2013-12-03', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/cancel_process.php?action=insert'),
+(55, '2013-12-04 01:45:13', 126, 'Cancellation request from ', 'Student Advisor and Center Director', 'tarik@berlitz-ksa.com', 0, 1, '2013-12-04', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/cancel_process.php?action=insert'),
+(56, '2013-12-04 03:51:11', 126, 'Cancellation request from ', 'Student Advisor and Center Director', 'tarik@berlitz-ksa.com', 0, 1, '2013-12-04', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/cancel_process.php?action=insert'),
+(57, '2013-12-04 03:57:49', 126, 'The following student would like to hold their courses. ????? ?????? ??????? ???? ?? ??? ???????.', 'Student Advisor and Center Director', 'tarik@berlitz-ksa.com', 0, 1, '2013-12-04', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/hold_process.php?action=insert'),
+(58, '2013-12-04 03:59:49', 125, '', 'Student Advisor and Center Director', '', 0, 1, '2013-12-04', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/cd/hold_process.php?cancel_id=1&action=update'),
+(59, '2013-12-05 01:28:22', 126, 'Group size has been changed Notification !!!', 'Student Advisor and Center Director', 'don@berlitz-ksa.com', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/search_adding_group_process.php'),
+(60, '2013-12-05 01:28:23', 126, 'Group size has been changed Notification !!!', 'Student Advisor and Center Director', '', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/search_adding_group_process.php'),
+(61, '2013-12-05 01:37:53', 126, 'Group size has been changed Notification !!!', 'Student Advisor and Center Director', 'don@berlitz-ksa.com', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/search_adding_group_process.php'),
+(62, '2013-12-05 01:37:54', 126, 'Group size has been changed Notification !!!', 'Student Advisor and Center Director', '', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/search_adding_group_process.php'),
+(63, '2013-12-05 01:42:42', 126, 'Group size has been changed Notification !!!', 'Student Advisor and Center Director', 'don@berlitz-ksa.com', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/search_adding_group_process.php'),
+(64, '2013-12-05 01:42:43', 126, 'Group size has been changed Notification !!!', 'Student Advisor and Center Director', '', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/search_adding_group_process.php'),
+(65, '2013-12-05 01:58:44', 126, 'Group size has been changed Notification !!!', 'Student Advisor and Center Director', 'don@berlitz-ksa.com', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/search_adding_group_process.php'),
+(66, '2013-12-05 01:58:45', 126, 'Group size has been changed Notification !!!', 'Student Advisor and Center Director', '', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/search_adding_group_process.php'),
+(67, '2013-12-05 01:59:39', 126, 'The following student would like to hold their courses. ????? ?????? ??????? ???? ?? ??? ???????.', 'Student Advisor and Center Director', 'tarik@berlitz-ksa.com', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/hold_process.php?action=insert'),
+(68, '2013-12-05 02:00:51', 125, '', 'Student Advisor and Center Director', '', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/cd/hold_process.php?cancel_id=1&action=update'),
+(69, '2013-12-05 02:16:05', 126, 'The following student would like to hold their courses. ????? ?????? ??????? ???? ?? ??? ???????.', 'Student Advisor and Center Director', 'tarik@berlitz-ksa.com', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/hold_process.php?action=insert'),
+(70, '2013-12-05 02:16:30', 125, '', 'Student Advisor and Center Director', '', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/cd/hold_process.php?cancel_id=2&action=update'),
+(71, '2013-12-05 02:43:13', 126, 'Cancellation request from ', 'Student Advisor and Center Director', 'tarik@berlitz-ksa.com', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/cancel_process.php?action=insert'),
+(72, '2013-12-05 03:13:44', 126, 'Cancellation request from ', 'Student Advisor and Center Director', 'tarik@berlitz-ksa.com', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/cancel_process.php?action=insert'),
+(73, '2013-12-05 04:19:40', 126, 'Cancellation request from ', 'Student Advisor and Center Director', 'tarik@berlitz-ksa.com', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/cancel_process.php?action=insert'),
+(74, '2013-12-05 04:32:54', 126, 'Group size has been changed Notification !!!', 'Student Advisor and Center Director', 'don@berlitz-ksa.com', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/search_adding_group_process.php'),
+(75, '2013-12-05 04:32:55', 126, 'Group size has been changed Notification !!!', 'Student Advisor and Center Director', '', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/search_adding_group_process.php'),
+(76, '2013-12-05 04:33:40', 126, 'Cancellation request from ', 'Student Advisor and Center Director', 'tarik@berlitz-ksa.com', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/cancel_process.php?action=insert'),
+(77, '2013-12-05 04:43:51', 126, 'Group size has been changed Notification !!!', 'Student Advisor and Center Director', 'don@berlitz-ksa.com', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/search_adding_group_process.php'),
+(78, '2013-12-05 04:43:52', 126, 'Group size has been changed Notification !!!', 'Student Advisor and Center Director', '', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/search_adding_group_process.php'),
+(79, '2013-12-05 04:44:30', 126, 'Cancellation request from ', 'Student Advisor and Center Director', 'tarik@berlitz-ksa.com', 0, 1, '2013-12-05', 'Admin for Approved or Rejected of the Cancellation', 'Yes', '/mySMS/sa/cancel_process.php?action=insert');
 
 -- --------------------------------------------------------
 
@@ -1107,7 +1137,7 @@ CREATE TABLE IF NOT EXISTS `exam_vacation` (
   `last_updated` datetime NOT NULL,
   `updated_by` bigint(3) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 -- --------------------------------------------------------
 
@@ -1339,7 +1369,7 @@ CREATE TABLE IF NOT EXISTS `ped` (
 --
 
 INSERT INTO `ped` (`id`, `teacher_id`, `group_id`, `course_id`, `estart_date`, `material`, `bl`, `arf_submit`, `level`, `comments`, `location`, `checklist`, `point_cover1`, `point_date1`, `point_cover2`, `point_date2`, `ini_feedback`, `inst1`, `date1`, `arf1`, `dby1`, `dby1_date1`, `cby1`, `cby1_date1`, `inst2`, `inst2_date2`, `counselling`, `inst3`, `inst3_date3`, `inst4`, `inst4_date4`, `not_apply`, `distrbute_by`, `distrbute_date`, `collect_by`, `collect_date`, `pro_report`) VALUES
-(1, 2, 1, 1, '0000-00-00', '', '', '', '', '', '', '', '', '0000-00-00', '', '0000-00-00', '', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', ''),
+(1, 2, 1, 1, '0000-00-00', '', '', '', '', '', '', '', '', '0000-00-00', '', '0000-00-00', '', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', '1'),
 (2, 2, 2, 1, '0000-00-00', '', '', '', '', '', '', '', '', '0000-00-00', '', '0000-00-00', '', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', '');
 
 -- --------------------------------------------------------
@@ -1369,7 +1399,73 @@ CREATE TABLE IF NOT EXISTS `ped_attendance` (
   `dated` date NOT NULL,
   `attend_date` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=61 ;
+
+--
+-- Dumping data for table `ped_attendance`
+--
+
+INSERT INTO `ped_attendance` (`id`, `ped_id`, `teacher_id`, `group_id`, `course_id`, `student_id`, `unit`, `shift1`, `shift2`, `shift3`, `shift4`, `shift5`, `shift6`, `shift7`, `shift8`, `shift9`, `status`, `dated`, `attend_date`) VALUES
+(1, 1, 2, 1, 1, 2, 1, 'X', 'X', '', '', '', '', '', '', '', '', '2013-12-02', '2013-12-02'),
+(2, 1, 2, 1, 1, 2, 2, 'X', 'E', '', '', '', '', '', '', '', '', '2013-12-02', '2013-12-03'),
+(3, 1, 2, 1, 1, 2, 3, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(4, 1, 2, 1, 1, 2, 4, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(5, 1, 2, 1, 1, 2, 5, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(6, 1, 2, 1, 1, 2, 6, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(7, 1, 2, 1, 1, 2, 7, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(8, 1, 2, 1, 1, 2, 8, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(9, 1, 2, 1, 1, 2, 9, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(10, 1, 2, 1, 1, 2, 10, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(11, 1, 2, 1, 1, 2, 11, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(12, 1, 2, 1, 1, 2, 12, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(13, 1, 2, 1, 1, 2, 13, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(14, 1, 2, 1, 1, 2, 14, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(15, 1, 2, 1, 1, 2, 15, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(16, 1, 2, 1, 1, 2, 16, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(17, 1, 2, 1, 1, 2, 17, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(18, 1, 2, 1, 1, 2, 18, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(19, 1, 2, 1, 1, 2, 19, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(20, 1, 2, 1, 1, 2, 20, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(21, 1, 2, 1, 1, 1, 1, 'X', 'X', '', '', '', '', '', '', '', '', '2013-12-02', '2013-12-02'),
+(22, 1, 2, 1, 1, 1, 2, 'L', 'A', '', '', '', '', '', '', '', '', '2013-12-02', '2013-12-03'),
+(23, 1, 2, 1, 1, 1, 3, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(24, 1, 2, 1, 1, 1, 4, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(25, 1, 2, 1, 1, 1, 5, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(26, 1, 2, 1, 1, 1, 6, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(27, 1, 2, 1, 1, 1, 7, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(28, 1, 2, 1, 1, 1, 8, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(29, 1, 2, 1, 1, 1, 9, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(30, 1, 2, 1, 1, 1, 10, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(31, 1, 2, 1, 1, 1, 11, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(32, 1, 2, 1, 1, 1, 12, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(33, 1, 2, 1, 1, 1, 13, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(34, 1, 2, 1, 1, 1, 14, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(35, 1, 2, 1, 1, 1, 15, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(36, 1, 2, 1, 1, 1, 16, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(37, 1, 2, 1, 1, 1, 17, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(38, 1, 2, 1, 1, 1, 18, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(39, 1, 2, 1, 1, 1, 19, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(40, 1, 2, 1, 1, 1, 20, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(41, 1, 2, 1, 1, 3, 1, 'X', 'X', '', '', '', '', '', '', '', '', '2013-12-02', '2013-12-02'),
+(42, 1, 2, 1, 1, 3, 2, 'A', 'L', '', '', '', '', '', '', '', '', '2013-12-02', '2013-12-03'),
+(43, 1, 2, 1, 1, 3, 3, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(44, 1, 2, 1, 1, 3, 4, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(45, 1, 2, 1, 1, 3, 5, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(46, 1, 2, 1, 1, 3, 6, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(47, 1, 2, 1, 1, 3, 7, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(48, 1, 2, 1, 1, 3, 8, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(49, 1, 2, 1, 1, 3, 9, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(50, 1, 2, 1, 1, 3, 10, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(51, 1, 2, 1, 1, 3, 11, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(52, 1, 2, 1, 1, 3, 12, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(53, 1, 2, 1, 1, 3, 13, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(54, 1, 2, 1, 1, 3, 14, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(55, 1, 2, 1, 1, 3, 15, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(56, 1, 2, 1, 1, 3, 16, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(57, 1, 2, 1, 1, 3, 17, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(58, 1, 2, 1, 1, 3, 18, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(59, 1, 2, 1, 1, 3, 19, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00'),
+(60, 1, 2, 1, 1, 3, 20, '', '', '', '', '', '', '', '', '', '', '2013-12-02', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -1400,6 +1496,15 @@ CREATE TABLE IF NOT EXISTS `ped_daily_status` (
   `course_id` bigint(100) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `ped_daily_status`
+--
+
+INSERT INTO `ped_daily_status` (`dated`, `teacher_id`, `ped_id`, `group_id`, `course_id`) VALUES
+('2013-12-02', 2, 0, 1, 1),
+('2013-12-02', 2, 0, 1, 1),
+('2013-12-02', 2, 0, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -1413,7 +1518,7 @@ CREATE TABLE IF NOT EXISTS `ped_daily_status_dtls` (
   `group_id` bigint(100) NOT NULL,
   `centre_id` bigint(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `ped_daily_status_dtls`
@@ -1426,7 +1531,8 @@ INSERT INTO `ped_daily_status_dtls` (`id`, `dated`, `teacher_id`, `group_id`, `c
 (4, '2013-10-26', 2, 0, 0),
 (5, '2013-10-29', 2, 0, 0),
 (6, '2013-11-04', 2, 0, 0),
-(7, '2013-11-05', 2, 0, 0);
+(7, '2013-11-05', 2, 0, 0),
+(8, '2013-12-02', 2, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1447,7 +1553,14 @@ CREATE TABLE IF NOT EXISTS `ped_units` (
   `material_overed` varchar(100) CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL,
   `homework` varchar(100) CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `ped_units`
+--
+
+INSERT INTO `ped_units` (`id`, `ped_id`, `teacher_id`, `group_id`, `course_id`, `units`, `dated`, `attd`, `instructor`, `material_overed`, `homework`) VALUES
+(1, 1, 2, 1, 1, 1, '2013-12-02', 0, '', 'adada', 'dadadd');
 
 -- --------------------------------------------------------
 
@@ -1490,7 +1603,7 @@ CREATE TABLE IF NOT EXISTS `quick_menu` (
   `links` varchar(100) CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL,
   `module_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=292 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=293 ;
 
 --
 -- Dumping data for table `quick_menu`
@@ -1787,7 +1900,8 @@ INSERT INTO `quick_menu` (`id`, `link_name`, `link_constant`, `arabic_menu`, `li
 (288, 'Leave', 'STUDENT_MENU_LEAVE', '', 'leave_manage.php', 'Student'),
 (289, 'Change Password', 'ADMIN_MENU_CHANGE_PASSWORD', '', 'password.php', 'Student'),
 (290, 'Quick Links', 'ADMIN_MENU_QUICK_LINKS', '', 'quicklink_manage.php', 'Student'),
-(291, 'SMS Gateway Configuration', 'ADMIN_SMS_GATEWAY_MANAGE_SMSGATEWAYCONFIGURATION', '', 'sms_allowed.php', 'Student');
+(291, 'SMS Gateway Configuration', 'ADMIN_SMS_GATEWAY_MANAGE_SMSGATEWAYCONFIGURATION', '', 'sms_allowed.php', 'Student'),
+(292, 'Student Type', 'REPORT_STUDENT_TYPE', '', 'report_student_type.php', 'Student Advisor');
 
 -- --------------------------------------------------------
 
@@ -1807,16 +1921,14 @@ CREATE TABLE IF NOT EXISTS `sick_leave` (
   `centre_id` bigint(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `sick_leave`
 --
 
 INSERT INTO `sick_leave` (`id`, `teacher_id`, `from_date`, `to_date`, `sick_reason`, `sick_attachment`, `sick_notes`, `sick_status`, `centre_id`) VALUES
-(1, 1, '2013-09-01', '2013-09-02', 'Medical report', '', '', 1, 0),
-(2, 2, '2013-09-21', '2013-09-22', 'fjnbcfb', '', '', 1, 0),
-(3, 2, '2013-10-07', '2013-10-07', 'test', '', 'test', 0, 0);
+(4, 2, '2013-12-02', '2013-12-03', 'adsada', '', 'dadad', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1830,7 +1942,7 @@ CREATE TABLE IF NOT EXISTS `sick_leave_centre` (
   `centre_id` bigint(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `sick_leave_centre`
@@ -1839,7 +1951,8 @@ CREATE TABLE IF NOT EXISTS `sick_leave_centre` (
 INSERT INTO `sick_leave_centre` (`id`, `parent_id`, `centre_id`) VALUES
 (1, 1, 1),
 (2, 2, 1),
-(3, 3, 1);
+(3, 3, 1),
+(4, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -2187,7 +2300,22 @@ CREATE TABLE IF NOT EXISTS `student` (
   `group_id` bigint(100) NOT NULL,
   `sms_status` bigint(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`id`, `age`, `guardian_name`, `guardian_contact`, `guardian_comment`, `first_name`, `first_name1`, `student_first_name`, `middle_name`, `last_name`, `arabic_name`, `father_name`, `grandfather_name`, `family_name`, `father_name1`, `grandfather_name1`, `family_name1`, `gender`, `country_id`, `id_type`, `student_id`, `student_mobile`, `alt_contact`, `email`, `studentstatus_id`, `student_comment`, `certificate_collect`, `photo`, `level_complete`, `ob_amt`, `discount`, `payment_type`, `payment_date`, `web`, `created_datetime`, `created_by`, `last_updated`, `updated_by`, `register_date`, `app_date`, `centre_id`, `invoice_sl`, `invoice_no`, `status_id`, `group_id`, `sms_status`) VALUES
+(1, 28, '', '', '', 'Don', 'Don', '', '', '', '', 'King', 'Victor', 'Rivera', 'King', 'Victor', 'Rivera', 'male', 171, 'Passport', 10161985, '00966561367402', '009665', 'don@berlitz-ksa.com', 0, 'Test', 0, '', 0, 0, 0, 0, '0000-00-00', 0, '2013-11-28 10:14:45', 126, '0000-00-00 00:00:00', 0, '2013-11-28', '2013-11-28', 1, 0, '', 0, 0, 1),
+(2, 22, '', '', '', 'Carlos', 'Carlos', '', '', '', '', 'Elmer', 'Elpidio', 'Par', 'Elmer', 'Elpidio', 'Par', 'male', 171, 'Passport', 10142001, '00966532145678', '009665', 'carlos_par@yahoo.com', 0, 'test', 0, '', 0, 0, 0, 0, '0000-00-00', 0, '2013-11-28 01:08:29', 126, '0000-00-00 00:00:00', 0, '2013-11-28', '2013-11-28', 1, 0, '', 0, 0, 1),
+(3, 17, '', '', '', 'Francis', 'Francis', '', '', '', '', 'Elmer', 'Elpidio', 'Par', 'Elmer', 'Elpidio', 'Par', 'male', 171, 'Passport', 10152010, '0096615151515', '009665', 'francis_par@yahoo.com', 0, 'test', 0, '', 0, 0, 0, 0, '0000-00-00', 0, '2013-11-28 01:11:29', 126, '0000-00-00 00:00:00', 0, '2013-11-28', '2013-11-28', 1, 0, '', 0, 0, 1),
+(4, 26, '', '', '', 'Donald', 'Donald', '', '', '', '', 'King', 'Victor', 'Rivera', 'King', 'Victor', 'Rivera', 'male', 171, 'Passport', 12281987, '00966282828', '009665', 'donald_rivera@yahoo.com', 0, 'test', 0, '', 0, 0, 0, 0, '0000-00-00', 0, '2013-11-28 01:13:08', 126, '0000-00-00 00:00:00', 0, '2013-11-28', '2013-11-28', 1, 0, '', 0, 0, 1),
+(5, 22, '', '', '', 'Denmark', 'Denmark', '', '', '', '', 'King', 'Victor', 'Rivera', 'King', 'Victor', 'Rivera', 'male', 171, 'Passport', 9171991, '00966171717', '009665', 'denmark_rivera@yahoo.com', 0, 'test', 0, '', 0, 0, 0, 0, '0000-00-00', 0, '2013-11-28 01:14:31', 126, '0000-00-00 00:00:00', 0, '2013-11-28', '2013-11-28', 1, 0, '', 0, 0, 1),
+(6, 28, '', '', '', 'Rudolf', 'Rudolf', '', '', '', '', 'Chelito', 'Pingkoy', 'Arriola', 'Chelito', 'Pingkoy', 'Arriola', 'male', 171, 'Passport', 10061985, '00966060606', '009665', 'rudolf_arriola@yahoo.com', 0, 'test', 0, '', 0, 0, 0, 0, '0000-00-00', 0, '2013-11-28 01:17:36', 126, '0000-00-00 00:00:00', 0, '2013-11-28', '2013-11-28', 1, 0, '', 0, 0, 1),
+(7, 28, '', '', '', 'Ryan', 'Ryan', '', '', '', '', 'Eddie', 'Murph', 'Baylin', 'Eddie', 'Murph', 'Baylin', 'male', 171, 'Passport', 11051985, '00966050505', '009665', 'ryan_baylin@yahoo.com', 0, 'Test', 0, '', 0, 0, 0, 0, '0000-00-00', 0, '2013-11-28 01:18:28', 126, '0000-00-00 00:00:00', 0, '2013-11-28', '2013-11-28', 1, 0, '', 0, 0, 1),
+(8, 0, '', '', '', 'A', 'd', '', '', '', '', 'B', 'C', 'D', 'c', 'b', 'a', 'male', 0, 'Passport', 0, '00966123456789', '009665', '', 0, 'dadad', 0, '', 0, 0, 0, 0, '0000-00-00', 0, '2013-12-12 03:33:08', 126, '0000-00-00 00:00:00', 0, '2013-12-12', '2013-12-12', 1, 0, '', 0, 0, 1),
+(9, 0, '', '', '', 'D', 'D', '', '', '', '', 'C', 'B', 'A', 'C', 'B', 'A', '', 0, '', 0, '0096654545455', '', '', 0, 'dsadada', 0, '', 0, 0, 0, 0, '0000-00-00', 0, '2013-12-26 09:15:45', 126, '0000-00-00 00:00:00', 0, '2013-12-26', '2013-12-26', 1, 0, '', 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -2206,7 +2334,22 @@ CREATE TABLE IF NOT EXISTS `student_appointment` (
   `centre_id` bigint(100) NOT NULL,
   `action_status` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+
+--
+-- Dumping data for table `student_appointment`
+--
+
+INSERT INTO `student_appointment` (`id`, `dated`, `student_id`, `comments`, `user_id`, `entry_date`, `status`, `centre_id`, `action_status`) VALUES
+(1, '2013-11-28', 1, 'Test', 126, '0000-00-00 00:00:00', 1, 1, 0),
+(2, '2013-11-28', 2, 'test', 126, '0000-00-00 00:00:00', 1, 1, 0),
+(3, '2013-11-28', 3, 'test', 126, '0000-00-00 00:00:00', 1, 1, 0),
+(4, '2013-11-28', 4, 'test', 126, '0000-00-00 00:00:00', 1, 1, 0),
+(5, '2013-11-28', 5, 'test', 126, '0000-00-00 00:00:00', 1, 1, 0),
+(6, '2013-11-28', 6, 'test', 126, '0000-00-00 00:00:00', 1, 1, 0),
+(7, '2013-11-28', 7, 'Test', 126, '0000-00-00 00:00:00', 1, 1, 0),
+(8, '2013-12-12', 8, 'dadad', 126, '0000-00-00 00:00:00', 1, 1, 0),
+(9, '2013-12-26', 9, 'dsadada', 126, '0000-00-00 00:00:00', 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -2230,7 +2373,14 @@ CREATE TABLE IF NOT EXISTS `student_cancel` (
   `created_date` date NOT NULL,
   `created_by` bigint(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `student_cancel`
+--
+
+INSERT INTO `student_cancel` (`id`, `dated`, `student_id`, `course_id`, `centre_id`, `comment`, `cd_status`, `cd_comment`, `cd_dated`, `admin_status`, `admin_comment`, `admin_dated`, `created_date`, `created_by`) VALUES
+(1, '2013-12-05', 1, 1, 1, 'dsadas', 'Approved', 'dadasd', '2013-12-05', 'Approved', 'dsadas', '2013-12-05', '2013-12-05', 126);
 
 -- --------------------------------------------------------
 
@@ -2262,7 +2412,61 @@ CREATE TABLE IF NOT EXISTS `student_comment` (
   `date_time` datetime NOT NULL,
   `status_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
+
+--
+-- Dumping data for table `student_comment`
+--
+
+INSERT INTO `student_comment` (`id`, `student_id`, `user_id`, `comments`, `date_time`, `status_id`) VALUES
+(1, 1, 126, 'Test', '2013-11-28 10:14:45', 1),
+(2, 2, 126, 'test', '2013-11-28 01:08:29', 1),
+(3, 3, 126, 'test', '2013-11-28 01:11:29', 1),
+(4, 4, 126, 'test', '2013-11-28 01:13:08', 1),
+(5, 5, 126, 'test', '2013-11-28 01:14:31', 1),
+(6, 6, 126, 'test', '2013-11-28 01:17:36', 1),
+(7, 7, 126, 'Test', '2013-11-28 01:18:28', 1),
+(8, 1, 126, 'Payment', '2013-11-28 01:11:27', 0),
+(9, 2, 126, 'Payment', '2013-11-28 01:11:11', 0),
+(10, 1, 126, 'Payment Second', '2013-11-28 02:11:35', 0),
+(11, 2, 126, 'level 2 pay 2', '2013-11-28 03:11:25', 0),
+(12, 2, 126, '2nd pay', '2013-11-28 03:11:12', 0),
+(13, 1, 126, '2nd pay', '2013-11-28 03:11:39', 0),
+(14, 3, 126, 'dsadad', '2013-11-28 04:11:40', 0),
+(15, 3, 126, 'dsada', '2013-11-28 04:11:58', 0),
+(16, 3, 126, '210', '2013-11-28 04:11:25', 0),
+(17, 2, 126, 'deadasd', '2013-11-28 04:11:27', 0),
+(18, 1, 126, 'dsadasd', '2013-12-03 14:57:21', 0),
+(19, 1, 126, 'fsfsdfds', '2013-12-03 03:04:18', 1),
+(20, 1, 126, 'dsadada', '2013-12-04 01:45:12', 1),
+(21, 1, 125, 'fdfdsfsf', '2013-12-04 01:47:26', 1),
+(22, 1, 126, 'dsadad', '2013-12-04 03:51:10', 1),
+(23, 1, 125, 'fdsffs', '2013-12-04 03:53:03', 1),
+(24, 1, 1, 'dsadadada', '2013-12-04 03:54:20', 1),
+(25, 2, 126, 'fffff', '2013-12-04 15:57:48', 0),
+(26, 2, 125, 'dsadsdsa', '2013-12-04 03:59:49', 1),
+(27, 2, 126, 'dasdadad', '2013-12-05 13:59:38', 0),
+(28, 2, 125, 'dadadad', '2013-12-05 02:00:51', 1),
+(29, 1, 126, 'dsadada', '2013-12-05 14:16:04', 0),
+(30, 1, 125, 'dadsad', '2013-12-05 02:16:30', 1),
+(31, 1, 126, 'fdsfsf', '2013-12-05 02:43:12', 1),
+(32, 1, 125, 'dsada', '2013-12-05 02:43:36', 1),
+(33, 1, 1, 'dadad', '2013-12-05 02:44:14', 1),
+(34, 1, 126, 'dadad', '2013-12-05 03:13:43', 1),
+(35, 1, 125, 'dasdada', '2013-12-05 03:14:15', 1),
+(36, 1, 1, 'dadada', '2013-12-05 03:17:52', 1),
+(37, 1, 126, 'dsadad', '2013-12-05 04:19:39', 1),
+(38, 1, 125, 'dsadad', '2013-12-05 04:20:05', 1),
+(39, 1, 1, 'dadsad', '2013-12-05 04:20:28', 1),
+(40, 2, 126, 'dasad', '2013-12-05 04:33:39', 1),
+(41, 2, 125, 'dsadsa', '2013-12-05 04:34:02', 1),
+(42, 2, 1, 'dadad', '2013-12-05 04:34:25', 1),
+(43, 2, 1, 'dadad', '2013-12-05 04:38:15', 1),
+(44, 1, 126, 'dsadas', '2013-12-05 04:44:29', 1),
+(45, 1, 125, 'dadasd', '2013-12-05 04:44:53', 1),
+(46, 1, 1, 'dsadas', '2013-12-05 04:45:26', 1),
+(47, 8, 126, 'dadad', '2013-12-12 03:33:08', 1),
+(48, 9, 126, 'dsadada', '2013-12-26 09:15:45', 1);
 
 -- --------------------------------------------------------
 
@@ -2275,7 +2479,22 @@ CREATE TABLE IF NOT EXISTS `student_course` (
   `student_id` bigint(100) NOT NULL,
   `course_id` bigint(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+
+--
+-- Dumping data for table `student_course`
+--
+
+INSERT INTO `student_course` (`id`, `student_id`, `course_id`) VALUES
+(1, 7, 1),
+(4, 6, 1),
+(5, 5, 1),
+(6, 4, 1),
+(7, 3, 1),
+(12, 2, 1),
+(10, 1, 1),
+(11, 1, 2),
+(13, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -2316,7 +2535,15 @@ CREATE TABLE IF NOT EXISTS `student_enroll` (
   `tr_other_amt` float NOT NULL,
   `enrolled_status` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `student_enroll`
+--
+
+INSERT INTO `student_enroll` (`id`, `student_id`, `certificate_collect`, `level_complete`, `ob_amt`, `discount`, `other_amt`, `payment_type`, `payment_date`, `beddebt_amt`, `beddebt_date`, `web`, `centre_id`, `invoice_sl`, `invoice_no`, `prev_invoice_no`, `status_id`, `group_id`, `course_id`, `fee_id`, `course_fee`, `created_by`, `enroll_date`, `othertext`, `invoice_note`, `balance_status_for_sms`, `page_full_path`, `tr_ob_amt`, `tr_discount`, `tr_other_amt`, `enrolled_status`) VALUES
+(1, 1, 0, 0, 0, 0, 0, 60, '0000-00-00', '0', '0000-00-00', 0, 1, 0, '', '', 7, 1, 1, 1, 0, 126, '2013-12-05', '', 'dsaa', 0, '/mySMS/sa/search_adding_group_process.php', 0, 0, 0, 'New Enrollment'),
+(2, 2, 0, 0, 0, 0, 0, 60, '0000-00-00', '0', '0000-00-00', 0, 1, 0, '', '', 5, 1, 1, 1, 0, 126, '2013-12-05', '', 'dsada', 0, '/mySMS/sa/search_adding_group_process.php', 0, 0, 0, 'New Enrollment');
 
 -- --------------------------------------------------------
 
@@ -2342,7 +2569,15 @@ CREATE TABLE IF NOT EXISTS `student_fees` (
   `created_date` datetime NOT NULL,
   `created_by` bigint(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `student_fees`
+--
+
+INSERT INTO `student_fees` (`id`, `student_id`, `fee_date`, `fee_amt`, `paid_date`, `payment_type`, `paid_amt`, `status`, `comments`, `course_id`, `centre_id`, `invoice_sl`, `invoice_no`, `type`, `created_date`, `created_by`) VALUES
+(1, 1, '2013-12-05', 100, '2013-12-05', 60, 100, 1, 'dsaa', 1, 1, '01BE100001', '13120100001', 'cancelled student', '2013-12-05 16:43:30', 126),
+(2, 2, '2013-12-05', 200, '2013-12-05', 60, 200, 1, 'dsada', 1, 1, '02BE100002', '13120100002', 'opening', '2013-12-05 16:44:05', 126);
 
 -- --------------------------------------------------------
 
@@ -2361,7 +2596,17 @@ CREATE TABLE IF NOT EXISTS `student_fee_edit_history` (
   `centre_id` bigint(100) NOT NULL,
   `create_date` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `student_fee_edit_history`
+--
+
+INSERT INTO `student_fee_edit_history` (`id`, `fld_name`, `chg_from`, `chg_to`, `by_user`, `date_time`, `student_id`, `centre_id`, `create_date`) VALUES
+(1, 'Payment Type', '', '', 126, '2013-12-05 04:12:34', 1, 1, '0000-00-00'),
+(2, 'Payment Type', '', '', 126, '2013-12-05 04:12:14', 2, 1, '0000-00-00'),
+(3, 'Payment Type', '', '', 126, '2013-12-05 04:12:30', 1, 1, '0000-00-00'),
+(4, 'Payment Type', '', '', 126, '2013-12-05 04:12:05', 2, 1, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -2403,17 +2648,17 @@ CREATE TABLE IF NOT EXISTS `student_group` (
   `updated_by` bigint(3) NOT NULL,
   `is_sms_cron` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `student_group`
 --
 
 INSERT INTO `student_group` (`id`, `group_id`, `group_name`, `centre_id`, `course_id`, `teacher_id`, `units`, `unit_per_day`, `week_no`, `dated`, `teacher_date`, `teacher_time`, `teacher_endtime`, `room_id`, `status`, `start_date`, `end_date`, `group_time`, `group_time_end`, `group_start_time`, `group_end_time`, `completed_date`, `sa_id`, `preport_update_date`, `preport_filled`, `certificate_update_date`, `certificate_filled`, `created_datetime`, `created_by`, `last_updated`, `updated_by`, `is_sms_cron`) VALUES
-(1, 52, 'test2', 1, 1, 2, 40, 2, 0, '0000-00-00', '0000-00-00', '00:00:00', '00:00:00', 0, 'Not Started', '2013-10-30', '2013-11-27', '0930', '1100', '09:30 AM', '11:00 AM', '0000-00-00', 126, '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
-(2, 0, 'test1', 1, 2, 2, 60, 2, 0, '0000-00-00', '0000-00-00', '00:00:00', '00:00:00', 0, 'Not Started', '2013-10-30', '2013-12-11', '0800', '0930', '08:00 AM', '09:30 AM', '0000-00-00', 126, '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
-(4, 0, 'place', 1, 1, 2, 80, 2, 0, '0000-00-00', '0000-00-00', '00:00:00', '00:00:00', 0, 'Not Started', '2013-11-28', '2014-01-09', '0930', '1100', '09:30 AM', '11:00 AM', '0000-00-00', 126, '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
-(5, 0, 'place_tarik', 1, 1, 1, 60, 2, 0, '0000-00-00', '0000-00-00', '00:00:00', '00:00:00', 0, 'Not Started', '2013-11-28', '2014-01-09', '0800', '0930', '08:00 AM', '09:30 AM', '0000-00-00', 126, '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0);
+(1, 52, 'test2', 1, 1, 2, 40, 2, 0, '0000-00-00', '0000-00-00', '00:00:00', '00:00:00', 0, 'Not Started', '2013-10-30', '2013-11-27', '1700', '1830', '05:00 PM', '06:30 PM', '0000-00-00', 126, '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
+(2, 52, 'test1', 1, 2, 2, 50, 2, 0, '0000-00-00', '0000-00-00', '00:00:00', '00:00:00', 0, 'Not Started', '2013-12-12', '2014-01-16', '0800', '0930', '08:00 AM', '09:30 AM', '0000-00-00', 126, '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
+(4, 0, 'place', 1, 1, 2, 80, 2, 0, '0000-00-00', '0000-00-00', '00:00:00', '00:00:00', 0, 'Not Started', '2014-01-17', '2014-03-14', '0930', '1100', '09:30 AM', '11:00 AM', '0000-00-00', 126, '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
+(5, 0, 'place_tarik', 1, 1, 1, 60, 2, 0, '0000-00-00', '0000-00-00', '00:00:00', '00:00:00', 0, 'Not Started', '2013-12-28', '2014-01-09', '0800', '0930', '08:00 AM', '09:30 AM', '0000-00-00', 126, '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -2431,7 +2676,14 @@ CREATE TABLE IF NOT EXISTS `student_group_dtls` (
   `room_id` bigint(100) NOT NULL,
   `book_received` bigint(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `student_group_dtls`
+--
+
+INSERT INTO `student_group_dtls` (`id`, `parent_id`, `student_id`, `group_id`, `course_id`, `centre_id`, `room_id`, `book_received`) VALUES
+(2, 1, 2, 52, 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -2447,7 +2699,18 @@ CREATE TABLE IF NOT EXISTS `student_group_history` (
   `user_id` bigint(100) NOT NULL,
   `type` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `student_group_history`
+--
+
+INSERT INTO `student_group_history` (`id`, `dated`, `centre_id`, `group_id`, `user_id`, `type`) VALUES
+(1, '2013-12-05 04:34:03', 1, 1, 125, 1),
+(2, '2013-12-05 04:34:26', 0, 1, 1, 1),
+(3, '2013-12-05 04:38:16', 0, 0, 1, 1),
+(4, '2013-12-05 04:44:54', 1, 1, 125, 1),
+(5, '2013-12-05 04:45:27', 0, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2460,7 +2723,15 @@ CREATE TABLE IF NOT EXISTS `student_group_history_dtls` (
   `parent_id` bigint(100) NOT NULL,
   `student_id` bigint(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `student_group_history_dtls`
+--
+
+INSERT INTO `student_group_history_dtls` (`id`, `parent_id`, `student_id`) VALUES
+(1, 4, 1),
+(2, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -2494,7 +2765,22 @@ CREATE TABLE IF NOT EXISTS `student_lead` (
   `student_id` bigint(100) NOT NULL,
   `lead_id` bigint(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+
+--
+-- Dumping data for table `student_lead`
+--
+
+INSERT INTO `student_lead` (`id`, `student_id`, `lead_id`) VALUES
+(16, 1, 44),
+(17, 2, 44),
+(12, 4, 44),
+(11, 5, 44),
+(10, 6, 44),
+(7, 7, 44),
+(13, 3, 44),
+(19, 8, 44),
+(20, 9, 145);
 
 -- --------------------------------------------------------
 
@@ -2527,7 +2813,22 @@ CREATE TABLE IF NOT EXISTS `student_moving` (
   `grade_online` longtext CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL,
   `grade_speak` longtext CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+
+--
+-- Dumping data for table `student_moving`
+--
+
+INSERT INTO `student_moving` (`id`, `student_id`, `course_id`, `group_id`, `status_id`, `date_time`, `user_id`, `grade_online`, `grade_speak`) VALUES
+(1, 1, 0, 1, 4, '2013-11-28 10:14:45', 126, '', ''),
+(2, 2, 0, 1, 4, '2013-11-28 01:08:29', 126, '', ''),
+(3, 3, 0, 0, 2, '2013-11-28 01:11:29', 126, '', ''),
+(4, 4, 0, 0, 2, '2013-11-28 01:13:08', 126, '', ''),
+(5, 5, 0, 0, 2, '2013-11-28 01:14:31', 126, '', ''),
+(6, 6, 0, 0, 2, '2013-11-28 01:17:36', 126, '', ''),
+(7, 7, 0, 2, 2, '2013-11-28 01:18:28', 126, '', ''),
+(8, 8, 0, 0, 2, '2013-12-12 03:33:08', 126, '', ''),
+(9, 9, 0, 0, 1, '2013-12-26 09:15:45', 126, '', '');
 
 -- --------------------------------------------------------
 
@@ -2544,7 +2845,17 @@ CREATE TABLE IF NOT EXISTS `student_moving_history` (
   `user_id` bigint(100) NOT NULL,
   `status_id` bigint(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `student_moving_history`
+--
+
+INSERT INTO `student_moving_history` (`id`, `student_id`, `course_id`, `group_id`, `date_time`, `user_id`, `status_id`) VALUES
+(1, 1, 1, 1, '2013-12-05 16:45:27', 1, 7),
+(2, 2, 1, 1, '0000-00-00 00:00:00', 126, 4),
+(3, 8, 0, 0, '2013-12-12 03:33:08', 126, 1),
+(4, 9, 0, 0, '2013-12-26 09:15:45', 126, 1);
 
 -- --------------------------------------------------------
 
@@ -2584,7 +2895,21 @@ CREATE TABLE IF NOT EXISTS `student_type` (
   `student_id` bigint(100) NOT NULL,
   `type_id` bigint(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+
+--
+-- Dumping data for table `student_type`
+--
+
+INSERT INTO `student_type` (`id`, `student_id`, `type_id`) VALUES
+(1, 7, 98),
+(4, 6, 98),
+(5, 5, 98),
+(6, 4, 98),
+(7, 3, 98),
+(11, 2, 98),
+(10, 1, 98),
+(12, 8, 144);
 
 -- --------------------------------------------------------
 
@@ -2791,7 +3116,7 @@ CREATE TABLE IF NOT EXISTS `teacher_vacation` (
   `last_updated` datetime NOT NULL,
   `updated_by` bigint(3) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 

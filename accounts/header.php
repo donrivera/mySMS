@@ -174,7 +174,7 @@ $(document).ready(function() {
         
       <?php
 	  $mystyle = '';
-	  if($page_name == "report_transaction.php" || $page_name=="report_student_ledger.php" || $page_name == "report_student_ledger_search.php" || $page_name == "report_group_ledger.php" || $page_name=="report_discount.php" || $page_name == "report_center_to_center.php" || $page_name == "student_to_different_center_manage.php" || $page_name=="report_student_to_center.php" || $page_name == "report_enrolled.php" || $page_name=="report_sales_summary.php" || $page_name == "report_overdue.php" || $page_name == "report_baddebt.php" || $page_name == "report_credit_balance.php")
+	  if($page_name == "report_transaction.php" || $page_name=="report_student_ledger.php" || $page_name == "report_student_ledger_search.php" || $page_name == "report_group_ledger.php" || $page_name=="report_discount.php" || $page_name == "report_center_to_center.php" || $page_name == "student_to_different_center_manage.php" || $page_name=="report_student_to_center.php" || $page_name == "report_enrolled.php" || $page_name=="report_sales_summary.php" || $page_name == "report_overdue.php" || $page_name == "report_baddebt.php" || $page_name == "report_credit_balance.php" || $page_name == "report_student_type.php")
 	  {
 		  $mystyle = 'style="background-color:#003399; background-image:none;"';
 	  }
@@ -221,6 +221,7 @@ $(document).ready(function() {
         <a href="report_overdue.php"><?php echo constant("ACCOUNTANT_OVERDUE");?></a> 
 		<a href="report_baddebt.php"><?php echo constant("ACCOUNTANT_BADDEBT");?></a>
         <a href="report_credit_balance.php"><?php echo constant("ACCOUNTANT_CREDIT");?></a>
+		<a href="report_student_type.php"><?php echo constant("REPORT_STUDENT_TYPE");?></a>
         </div>
         
         <!-- Transfer -->

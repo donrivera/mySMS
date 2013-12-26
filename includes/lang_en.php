@@ -2113,6 +2113,7 @@ define("MENU_STUDENT_SERVICES","Student services");
 define("ACTION_CAPTION_DELETE","Delete");
 
 define("REPORT_STUDENT_LIFE_CYCLE","Student life cycle");
+define("REPORT_STUDENT_TYPE","Student Type");
 define("PLACEMENT_TESTGRADE_ONLINE","Placement test grade - online");
 define("PLACEMENT_TESTGRADE_SPEAK","Placement test grade - speaking");
 

@@ -163,7 +163,7 @@ $(document).ready(function() {
 		
          <?php
 	  $mystyle = '';
-	  if($page_name == "report_centre_director_main.php" || $page_name=="report_group_progress.php" || $page_name == "report_teacher_progress.php" || $page_name=="report_teacher_board.php" || $page_name=="report_teacher_schedule.php" || $page_name=="report_student_awaiting.php"  || $page_name=="report_group_to_finish.php" || $page_name=="report_certificate_not_collect.php" || $page_name == "report_absent_report.php" || $page_name=="report_teacher_leave_report.php" || $page_name=="report_teacher_overtime_report.php" || $page_name=="report_teacher_capacity.php"  || $page_name=="report_certificate_report.php" || $page_name=="report_freq_customer_report.php" || $page_name == "view_student_comments_history_from_manage.php" || $page_name == "report_student_group_grade.php" || $page_name == "report_student_group_grade_dtls.php" || $page_name=="report_student_not_enrolled.php" || $page_name=="report_student_on_hold.php" || $page_name=="report_statistic.php"  || $page_name=="view_student_comments_history.php" || $page_name=="manage_sms_history.php" || $page_name == "report_management.php" || $page_name == "ped.php" || $page_name == "report_student_cycle.php")
+	  if($page_name == "report_centre_director_main.php" || $page_name=="report_group_progress.php" || $page_name == "report_teacher_progress.php" || $page_name=="report_teacher_board.php" || $page_name=="report_teacher_schedule.php" || $page_name=="report_student_awaiting.php"  || $page_name=="report_group_to_finish.php" || $page_name=="report_certificate_not_collect.php" || $page_name == "report_absent_report.php" || $page_name=="report_teacher_leave_report.php" || $page_name=="report_teacher_overtime_report.php" || $page_name=="report_teacher_capacity.php"  || $page_name=="report_certificate_report.php" || $page_name=="report_freq_customer_report.php" || $page_name == "view_student_comments_history_from_manage.php" || $page_name == "report_student_group_grade.php" || $page_name == "report_student_group_grade_dtls.php" || $page_name=="report_student_not_enrolled.php" || $page_name=="report_student_on_hold.php" || $page_name=="report_statistic.php"  || $page_name=="view_student_comments_history.php" || $page_name=="manage_sms_history.php" || $page_name == "report_management.php" || $page_name == "ped.php" || $page_name == "report_student_cycle.php" || $page_name == "report_student_type.php")
 	  {
 		  $mystyle = 'style="background-color:#003399; background-image:none;"';
 	  }
@@ -325,6 +325,7 @@ $(document).ready(function() {
         <a href="manage_sms_history.php"><?php echo constant("ADMIN_MENU_SMS_HISTORY");?></a>
         <a href="report_management.php"><?php echo constant("MANAGEMENT_REPORT");?></a>
         <a href="report_student_cycle.php"><?php echo constant("REPORT_STUDENT_LIFE_CYCLE");?></a>
+		<a href="report_student_type.php"><?php echo constant("REPORT_STUDENT_TYPE");?></a>
         </div>
             
         <div id="help" class="dropmenudiv_d">

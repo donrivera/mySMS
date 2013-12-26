@@ -19,8 +19,8 @@ require '../I18N/Arabic.php';
 $dbf = new User();
 $Arabic = new I18N_Arabic('Transliteration');
 
-if($_REQUEST['action']=='insert'){
-	
+if($_REQUEST['action']=='insert'){ 
+
 	if($_REQUEST[mytxt_src] == ''){
 		$first_name=$_REQUEST[txt_src];
 	}else{
@@ -132,7 +132,8 @@ if($_REQUEST['action']=='insert'){
 	session_unregister('quick_comment');
 		
 	header("Location:student_manage.php");
-	exit;	
+	exit;
+	
 }
 
 if($_REQUEST['action']=='edit'){

@@ -232,22 +232,29 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               </tr>
                             <tr>
                               <td align="left" valign="top"><table width="850" border="0" cellspacing="0" cellpadding="0">
+								
                                 <tr>
-                                  <td width="227" align="center" valign="middle" ><p align="center" dir="rtl"><strong><span dir="ltr" class="cer7_bold">Kingdom  of Saudi Arabia</span></strong><strong> </strong><br />
+                                  <td width="227" align="center" valign="middle" >
+									<!--
+									<p align="center" dir="rtl"><strong><span dir="ltr" class="cer7_bold">Kingdom  of Saudi Arabia</span></strong><strong> </strong><br />
                                     <strong><span dir="ltr" class="cer7_bold">Dar  Al-Khibrah Language Center </span></strong><br />
                                     <strong><span dir="ltr"  class="cer7_bold">Under  the Patronage of the <br />Ministry of Education - Al Ahsa <br />(Male)</span></strong><br /><strong><span class="cer7_bold">Licence No. :  05023006</span></strong></p>
-                                    </td>
+                                    -->
+								   </td>
                                   <td width="364" align="center" valign="middle"><img src="../images/logo_big.jpg" width="278" height="80" /></td>
                                   <td width="309" align="right" valign="middle">
                                   <table dir="rtl" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                       <td width="255" valign="top">
+									  <!--
                                       <p align="center" dir="rtl" class="cer7_normal">المملكة العربية السعودية<br />
                                         معهد دار الخبرة لتعليم اللغة الإنجليزية<br />
                                         تحت اشراف وزارة التربية والتعليم<br />
                                         الإدارة العامة للتربية والتعليم بمحافظة الاحساء <br />
                                         (بنين)<br />
-                                        ترخيص رقم: 05023006&nbsp;&nbsp;</p></td>
+                                        ترخيص رقم: 05023006&nbsp;&nbsp;</p>
+										-->
+										</td>
                                       </tr>
                                     </table></td>
                                   </tr>
@@ -421,21 +428,27 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <tr>
                               <td align="left" valign="top"><table width="850" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
-                                  <td width="227" align="center" valign="middle" ><p align="center" dir="rtl"><strong><span dir="ltr" class="cer7_bold">Kingdom  of Saudi Arabia</span></strong><strong> </strong><br />
+									<td width="227" align="center" valign="middle" >
+									<!--
+									<p align="center" dir="rtl"><strong><span dir="ltr" class="cer7_bold">Kingdom  of Saudi Arabia</span></strong><strong> </strong><br />
                                     <strong><span dir="ltr" class="cer7_bold">Dar  Al-Khibrah Language Center </span></strong><br />
                                     <strong><span dir="ltr"  class="cer7_bold">Under  the Patronage of the <br />Ministry of Education - Al Ahsa <br />(Male)</span></strong><br /><strong><span class="cer7_bold">Licence No. :  05023006</span></strong></p>
-                                    </td>
+                                    -->
+									</td>
                                   <td width="364" align="center" valign="middle"><img src="../images/logo_big.jpg" width="278" height="80" /></td>
                                   <td width="309" align="right" valign="middle">
                                   <table dir="rtl" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                       <td width="255" valign="top">
-                                      <p align="center" dir="rtl" class="cer7_normal">المملكة العربية السعودية<br />
+                                      <!--
+									  <p align="center" dir="rtl" class="cer7_normal">المملكة العربية السعودية<br />
                                         معهد دار الخبرة لتعليم اللغة الإنجليزية<br />
                                         تحت اشراف وزارة التربية والتعليم<br />
                                         الإدارة العامة للتربية والتعليم بمحافظة الاحساء <br />
                                         (بنين)<br />
-                                        ترخيص رقم: 05023006&nbsp;&nbsp;</p></td>
+                                        ترخيص رقم: 05023006&nbsp;&nbsp;</p>
+										-->
+										</td>
                                       </tr>
                                     </table></td>
                                   </tr>
