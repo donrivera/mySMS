@@ -208,7 +208,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <th width="9%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_CENTER_FROMGROUP");?></th>
                 <th width="9%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_CENTER_TO");?></th>
                 <th width="10%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_CENTER_TOGROUP");?></th>
-                <th width="8%" align="center" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_TRANSFER_NO");?></th>
+                <!--<th width="8%" align="center" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_TRANSFER_NO");?></th>-->
                 <th width="13%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext">Student Name(s)</th>
                 <th width="12%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("ADMIN_VIEW_COMMENTS_MANAGE_COMMENTS");?></th>
                 <th width="8%" align="center" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("ADMIN_WEEK_MANAGE_STATUS");?></th>
@@ -226,8 +226,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$cond = "(dated BETWEEN '$start_date' And '$end_date')";
 					}
 					
-                    $num=$dbf->countRows('transfer_different_centre',"centre_id='$_SESSION[centre_id]' And ".$cond,"");					
-					foreach($dbf->fetchOrder('transfer_different_centre',"centre_id='$_SESSION[centre_id]' And ".$cond,"id DESC ","*") as $transfer){
+                    $num=$dbf->countRows('transfer_different_centre',"(centre_id='$_SESSION[centre_id]' OR centre_to='$_SESSION[centre_id]') And ".$cond,"");					
+					foreach($dbf->fetchOrder('transfer_different_centre',"(centre_id='$_SESSION[centre_id]' OR centre_to='$_SESSION[centre_id]') And ".$cond,"id DESC ","*") as $transfer){
 					
 					//No. of students has been transfer
 					$noofstudent = $dbf->countRows("transfer_different_centre_dtls","parent_id='$transfer[id]'");
@@ -255,11 +255,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td height="25" align="center" valign="middle" class="mycon" ><?php echo $i;?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[dated];?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $centre_from;?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $from_id;?> <?php echo $group_from["group_time"];?>-<?php echo $dbf->GetGroupTime($group_from["id"]);?></td>
+                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($from_id ==''?'N/A':$from_id);?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $centre_to;?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $to_id;?> <?php echo $group_to["group_time"];?>-<?php echo $dbf->GetGroupTime($group_to["id"]);?></td>
-                <td align="center" valign="middle" class="mycon"><?php echo $noofstudent;?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $student;?></td>
+                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($to_id ==''?'N/A':$to_id);?></td>
+                <!--<td align="center" valign="middle" class="mycon"><?php echo $noofstudent;?></td>-->
+                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $dbf->printStudentName($dtls[student_id]);?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[comment];?></td>
                 <td align="center" valign="middle" class="mycon" ><?php echo $transfer[status];?></td>
                 <td align="center" valign="middle" >
@@ -395,7 +395,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <th width="9%" align="right" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_CENTER_FROMGROUP");?></th>
                         <th width="10%" align="right" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_CENTER_TO");?></th>
                         <th width="10%" align="right" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_CENTER_TOGROUP");?></th>
-                        <th width="4%" align="center" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_TRANSFER_NO");?></th>
+                        <!--<th width="4%" align="center" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_TRANSFER_NO");?></th>-->
                         <th width="14%" align="right" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("STUDENT_ADVISOR_STUDENT_MANAGE_STUDENTNAME");?></th>
                         <th width="16%" align="right" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("ADMIN_VIEW_COMMENTS_MANAGE_COMMENTS");?></th>
                         <th width="10%" align="center" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("ADMIN_WEEK_MANAGE_STATUS");?></th>
@@ -415,8 +415,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$cond = "(dated BETWEEN '$start_date' And '$end_date')";
 					}
 					
-                    $num=$dbf->countRows('transfer_different_centre',"centre_id='$_SESSION[centre_id]' And ".$cond,"");					
-					foreach($dbf->fetchOrder('transfer_different_centre',"centre_id='$_SESSION[centre_id]' And ".$cond,"id DESC ","*") as $transfer){
+                    $num=$dbf->countRows('transfer_different_centre',"(centre_id='$_SESSION[centre_id]' OR centre_to='$_SESSION[centre_id]') And ".$cond,"");					
+					foreach($dbf->fetchOrder('transfer_different_centre',"(centre_id='$_SESSION[centre_id]' OR centre_to='$_SESSION[centre_id]') And ".$cond,"id DESC ","*") as $transfer){
 					
 					//No. of students has been transfer
 					$noofstudent = $dbf->countRows("transfer_different_centre_dtls","parent_id='$transfer[id]'");
@@ -447,11 +447,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <?php } ?>
                 </td>                
                 <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $centre_from;?></td>
-                <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $from_id;?> <?php echo $group_from["group_time"];?>-<?php echo $dbf->GetGroupTime($group_from["id"]);?></td>
+                <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($from_id ==''?'N/A':$from_id);?></td>
                 <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $centre_to;?></td>
-                <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $to_id;?> <?php echo $group_to["group_time"];?>-<?php echo $dbf->GetGroupTime($group_to["id"]);?></td>
-                <td align="center" valign="middle" class="mycon"><?php echo $noofstudent;?></td>
-                <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $student;?></td>
+                <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($to_id ==''?'N/A':$to_id);?></td>
+                <!--<td align="center" valign="middle" class="mycon"><?php echo $noofstudent;?></td>-->
+                <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $dbf->printStudentName($dtls[student_id]);?></td>
                 <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[comment];?></td>
                 <td align="center" valign="middle" class="mycon" ><?php echo $transfer[status];?></td>
                 <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[dated];?></td>

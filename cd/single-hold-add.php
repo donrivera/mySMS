@@ -31,7 +31,7 @@ if($_REQUEST['action']=='insert'){
 	$dt = date('Y-m-d');
 	$comment = mysql_real_escape_string($_REQUEST[comment]);
 	
-	$string="dated='$_REQUEST[dated]',student_id='$_REQUEST[student]',course_id='$_REQUEST[course_id]',centre_id='$_SESSION[centre_id]',comment='$comment',cd_status='Pending',created_date='$dt',created_by='$_SESSION[id]'";
+	$string="dated='$_REQUEST[dated]',student_id='$_REQUEST[student_id]',course_id='$_REQUEST[course_id]',centre_id='$_SESSION[centre_id]',comment='$comment',cd_status='Pending',created_date='$dt',created_by='$_SESSION[id]'";
 	$dbf->insertSet("student_hold",$string);
 	
 	$course_id = $_REQUEST['course_id'];
@@ -413,7 +413,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         <td width="17">&nbsp;</td>
                                         <td width="118" height="30" align="right" class="pedtext"><?php echo constant("TEACHER_ARF_MANAGE_STUDENTNAME");?> : <span class="nametext1">*</span></td>
                                         <td width="283" align="left" valign="middle" class="pedtext">
-										<?php echo $dbf->getDataFromTable("student", "first_name", "id='$student_id'");?> <?php echo $Arabic->en2ar($dbf->StudentName($student_id));?>
+										<?php echo $dbf->printStudentName($student_id);?>
                                         </td>
                                         <td width="330" rowspan="4" align="center" valign="top" id="lbl_student">&nbsp;</td>
                                         </tr>
@@ -579,7 +579,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       <tr>
 									   <td width="330" rowspan="4" align="center" valign="top" id="lbl_student">&nbsp;</td>
                                        <td width="283" align="right" valign="middle" class="pedtext">
-                                       <?php echo $dbf->getDataFromTable("student", "first_name", "id='$student_id'");?> <?php echo $Arabic->en2ar($dbf->StudentName($student_id));?>
+                                       <?php echo $dbf->printStudentName($student_id);?>
                                        </td>
                                        <td width="118" height="30" align="left" class="pedtext"><span class="nametext1">*</span> : <?php echo constant("TEACHER_ARF_MANAGE_STUDENTNAME");?></td>
                                         <td width="17">&nbsp;</td>                                       

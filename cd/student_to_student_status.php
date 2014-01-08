@@ -95,7 +95,7 @@ background:url(../images/btn2.png) no-repeat;width:143px;height:25px;font-family
             <tr>
               <td align="right" valign="middle" class="leftmenu" style="font-family:Arial, Helvetica, sans-serif; color:#003333; font-weight:normal; font-size:12px;">&nbsp;</td>
               <td>&nbsp;</td>
-              <td align="left" valign="middle" class="nametext">Paid Amount : <?php echo $dbf->BalanceAmount($res_tran["student_id"], $res_tran["from_course_id"]);?></td>
+              <td align="left" valign="middle" class="nametext">Paid Amount : <?php echo $dbf->printFundAmount($res_tran["student_id"], $res_tran["from_course_id"]);?></td>
             </tr>
             <tr>
               <td align="right" valign="top" class="leftmenu" style="font-family:Arial, Helvetica, sans-serif; color:#003333; font-weight:normal; font-size:12px;"><?php echo constant("RECEPTION_STUDENT_APPOINT_MANAGE_COMMENT");?> : &nbsp;</td>

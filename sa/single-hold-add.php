@@ -25,13 +25,14 @@ $Arabic = new I18N_Arabic('Transliteration');
 
 $student_id = $_REQUEST["student_id"];
 
-if($_REQUEST['action']=='insert'){
+if($_REQUEST['action']=='insert'){echo var_dump($_REQUEST);
 		
 	$res_logo = $dbf->strRecordID("conditions","*","type='Logo path'");
 	$dt = date('Y-m-d');
 	$comment = mysql_real_escape_string($_REQUEST[comment]);
 	
-	$string="dated='$_REQUEST[dated]',student_id='$_REQUEST[student]',course_id='$_REQUEST[course_id]',centre_id='$_SESSION[centre_id]',comment='$comment',cd_status='Pending',created_date='$dt',created_by='$_SESSION[id]'";
+	$string="dated='$_REQUEST[dated]',student_id='$_REQUEST[student_id]',course_id='$_REQUEST[course_id]',centre_id='$_SESSION[centre_id]',comment='$comment',cd_status='Pending',created_date='$dt',created_by='$_SESSION[id]'";
+	
 	$dbf->insertSet("student_hold",$string);
 	
 	$course_id = $_REQUEST['course_id'];
@@ -173,6 +174,7 @@ if($_REQUEST['action']=='insert'){
 		
 	header("Location:single-hold.php?student_id=$student_id");
 	exit;
+	
 }
 ?>	
 

@@ -205,10 +205,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <th width="3%" height="25" align="center" valign="middle" bgcolor="#99CC99">&nbsp;</th>
                 <th width="10%" align="left" valign="middle" bgcolor="#DDDDDD" class="pedtext"><?php echo constant("CD_STUDENT_TRANSFER_DATE");?></th>
                 <th width="9%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_CENTER_FROM");?></th>
-                <th width="9%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_CENTER_FROMGROUP");?></th>
+                <!--<th width="9%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_CENTER_FROMGROUP");?></th>-->
                 <th width="10%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_CENTER_TO");?></th>
                 <th width="10%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_CENTER_TOGROUP");?></th>
-                <th width="14%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext">Student Name(s)</th>
+                <th width="14%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext">Student Name</th>
                 <th width="16%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("ADMIN_VIEW_COMMENTS_MANAGE_COMMENTS");?></th>
                 <th width="8%" align="center" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("ADMIN_WEEK_MANAGE_STATUS");?></th>
                 <th width="7%" align="center" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("COMMON_ACTION");?></th>
@@ -244,10 +244,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td height="25" align="center" valign="middle" class="mycon" ><?php echo $i;?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[dated];?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $centre_from;?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $from_id;?> <?php echo $group_from["group_time"];?>-<?php echo $dbf->GetGroupTime($group_from["id"]);?></td>
+                <!--<td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $from_id;?> <?php echo $group_from["group_time"];?>-<?php echo $dbf->GetGroupTime($group_from["id"]);?></td>-->
                 <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $centre_to;?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $to_id;?> <?php echo $group_to["group_time"];?>-<?php echo $dbf->GetGroupTime($group_to["id"]);?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $student;?></td>
+                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($to_id ==''?'N/A':$to_id);?></td>
+                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $dbf->printStudentName($transfer[student_id]);?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[comment];?></td>
                 <td align="center" valign="middle" class="mycon" ><?php echo $transfer[status];?></td>
                 <td align="center" valign="middle" >

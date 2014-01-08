@@ -1040,9 +1040,9 @@ if($_REQUEST['action']=='advance'){
 	//Get Invoice Number
 	# -------------------------------------------------------
 	$inv_no = $dbf->GenerateInvoiceNo($centre_id);
-	$inv_sl = $dbf->GetBillNo($student_id, $course_id);//substr($inv_no,5);
+	echo $inv_sl = $dbf->GetBillNo($student_id, $course_id);//substr($inv_no,5);
 	//=======================================================
-	
+
 	//insert into student_fee table
 	$string2="student_id='$student_id',course_id='$course_id',paid_amt='$_REQUEST[amts]',fee_amt='$_REQUEST[amts]',comments='$ad_comment',fee_date='$_REQUEST[dated]',paid_date='$_REQUEST[dated]',payment_type='$_REQUEST[payment_type]',centre_id='$centre_id',created_date=NOW(),created_by='$_SESSION[id]',type='advance',invoice_sl='$inv_sl',invoice_no='$inv_no',status='1'";
 	
@@ -1138,5 +1138,6 @@ if($_REQUEST['action']=='advance'){
 			
 	header("Location:search_advance.php?student_id=$student_id&course_id=$course_id");
 	exit;
+
 }
 ?>

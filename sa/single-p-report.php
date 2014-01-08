@@ -226,7 +226,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                           <select name="course" id="course" style="width:150px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onChange="show_payment();">
                             <option value="">---Select---</option>
                             <?php
-							foreach($dbf->fetchOrder('student_enroll',"student_id='$student_id'","") as $rescourse) {
+							foreach($dbf->fetchOrder('student_group_dtls',"student_id='$student_id'","") as $rescourse) {
 								$course = $dbf->strRecordID("course","*","id='$rescourse[course_id]'");
 						  ?>
                             <option value="<?php echo $course['id'];?>" <?php if($course_id==$course["id"]) { ?> selected="selected" <?php } ?>><?php echo $course['name'];?></option>
@@ -272,7 +272,6 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				  $res_g = $dbf->strRecordID("student_group","*","id='$group_id'");
 				  $res_course = $dbf->strRecordID("course","*","id='$res_g[course_id]'");
 				  $res_student = $dbf->strRecordID("student","*","id='$student_id'");
-				  
 				  $res_size = $dbf->strRecordID("group_size","*","group_id='$res_g[group_id]'");
 				  $res_group = $dbf->strRecordID("common","*","id='$res_g[group_id]'");
 				  if($group_id > 0){
@@ -288,7 +287,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
                       <tr>
                         <td width="41%" height="20" align="left" valign="middle" class="leftmenu"><?php echo constant("CD_GROUP_PROGRESS_COMPANYGROUP");?> : </td>
-                        <td width="59%" align="left" valign="middle" class="pedtext_normal" ><?php echo $res_g[group_name];?> <?php echo $res_g["group_time"];?>-<?php echo $dbf->GetGroupTime($res_g["id"]);?></td>
+                        <td width="59%" align="left" valign="middle" class="pedtext_normal" ><?php echo $res_g[group_name];?> <?php echo $res_g["group_start_time"];?>-<?php echo $res_g["group_end_time"];?></td>
                       </tr>
                     </table></td>
                     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -729,7 +728,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <td width="40%" height="30" align="right" valign="middle"><select name="course" id="course" style="width:150px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onChange="show_payment();">
                             <option value="">---<?php echo constant("SELECT");?>---</option>
                             <?php
-							foreach($dbf->fetchOrder('student_enroll',"student_id='$student_id'","") as $rescourse) {
+							foreach($dbf->fetchOrder('student_group_dtls',"student_id='$student_id'","") as $rescourse) {
 								$course = $dbf->strRecordID("course","*","id='$rescourse[course_id]'");
 						  ?>
                             <option value="<?php echo $course['id'];?>" <?php if($course_id==$course["id"]) { ?> selected="selected" <?php } ?>><?php echo $course['name'];?></option>

@@ -26,12 +26,16 @@ include_once '../includes/language.php';
 $student_id = $_REQUEST["student_id"];
 
 if($_REQUEST['action'] == 'insert'){
+
+
 	
+
 	$res_logo = $dbf->strRecordID("conditions","*","type='Logo path'");
 	$dt = date('Y-m-d');
 	$comment = mysql_real_escape_string($_REQUEST[comment]);
 	
-	$string="dated='$_REQUEST[dated]',student_id='$_REQUEST[student]',course_id='$_REQUEST[course_id]',centre_id='$_SESSION[centre_id]',comment='$comment',cd_status='Pending',admin_status='Pending',created_date='$dt',created_by='$_SESSION[id]'";
+	$string="dated='$_REQUEST[dated]',student_id='$_REQUEST[student_id]',course_id='$_REQUEST[course_id]',centre_id='$_SESSION[centre_id]',comment='$comment',cd_status='Pending',admin_status='Pending',created_date='$dt',created_by='$_SESSION[id]'";
+	//$string="dated='$_REQUEST[dated]',student_id='$_REQUEST[student]',course_id='$_REQUEST[course_id]',centre_id='$_SESSION[centre_id]',comment='$comm',cd_status='Pending',admin_status='Pending',created_date='$dt',created_by='$_SESSION[id]'";
 	$dbf->insertSet("student_cancel",$string);
 	
 	$course_id = $_REQUEST['course_id'];
@@ -233,6 +237,7 @@ if($_REQUEST['action'] == 'insert'){
 	
 	header("Location:single-cancel.php?student_id=$student_id");
 	exit;
+
 }
 ?>
 <link href="../css/stylesheet.css" rel="stylesheet" type="text/css" />

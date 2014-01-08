@@ -238,8 +238,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               <tr bgcolor="<?php echo $color;?>"  onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                 <td height="25" align="center" valign="middle" class="mycon" ><?php echo $i;?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[dated];?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $from_id;?> <?php echo $group_from["group_time"];?>-<?php echo $dbf->GetGroupTime($group_from["id"]);?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $to_id;?> <?php echo $group_to["group_time"];?>-<?php echo $dbf->GetGroupTime($group_to["id"]);?></td>
+                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($from_id ==''?'N/A':$from_id);?></td>
+                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($to_id ==''?'N/A':$to_id);?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $student;?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[comment];?></td>
                 <td align="center" valign="middle" class="mycon" ><?php echo $transfer[status];?></td>

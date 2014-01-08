@@ -107,7 +107,7 @@ function show_group(){
 	ajaxRequest.open("GET", "student_to_student_manage_group.php" + "?from_id=" + from_id, true);
 	ajaxRequest.send(null);
 }
-function show_group_dtls1(type){
+function show_group_dtls1(type){ 
 	var ajaxRequest;  // The variable that makes Ajax possible!	
 	try{
 		// Opera 8.0+, Firefox, Safari
@@ -339,7 +339,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <select name="from_status" id="from_status" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:80px;" onchange="show_student('first');">
                         <option value="">--Status--</option>
                         <?php
-							foreach($dbf->fetchOrder('student_status',"(id >2 And id < 9)","") as $valstatus) {
+							foreach($dbf->fetchOrder('student_status',"(id >2 And id < 8)","") as $valstatus) {
 						  ?>
                         <option value="<?php echo $valstatus[id];?>"><?php echo $valstatus[name];?></option>
                         <?php
@@ -381,7 +381,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td width="48%" align="left" valign="middle" bgcolor="#E9E9E9" class="hometest_name" style="border-left:solid 1px; border-top:solid 1px; border-bottom:solid 1px; border-color:#999;">&nbsp;<select name="to_status" id="to_status" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:80px;" onchange="show_student('second');">
                         <option value="">--Status--</option>
                         <?php
-							foreach($dbf->fetchOrder('student_status',"(id > 2 And id < 9)","") as $valstatus) {
+							foreach($dbf->fetchOrder('student_status',"(id > 2 And id < 8)","") as $valstatus) {
 						  ?>
                         <option value="<?php echo $valstatus[id];?>"><?php echo $valstatus[name];?></option>
                         <?php
@@ -417,6 +417,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               </tr>
               <tr>
                 <td align="left" valign="top" class="mymenutext" id="lbl_student1_dtls">
+				
                 <table width="100%" border="1" cellspacing="0" cellpadding="0" bordercolor="#CCCCCC" style="border-collapse:collapse;">
                   <tr>
                     <td width="6%" align="center" valign="middle" bgcolor="#E0E3FE" class="pedtext">&nbsp;</td>
@@ -424,7 +425,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td width="33%" align="left" valign="middle" bgcolor="#E0E3FE" class="pedtext"><?php echo constant("ADMIN_SMS_GATEWAY_MANAGE_MOBILENO");?></td>
                     <td width="23%" height="25" align="left" valign="middle" bgcolor="#E0E3FE" class="pedtext"><?php echo constant("ADMIN_S_MANAGE_STUDENTID");?></td>
                   </tr>
-                  <?php
+                  <!--
+				  <?php
 				  $i = 1;
 				  foreach($dbf->fetchOrder('student',"first_name<>'' And centre_id='$_SESSION[centre_id]'") as $student) {
 				  ?>
@@ -438,7 +440,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
                   <?php  $i = $i + 1; } ?>
 					<input type="hidden" name="count" id="count" value="<?php echo $i-1;?>">                  
-                  </table>
+                  -->
+				  </table>
+				  
                   </td>
                 <td align="left" valign="top">&nbsp;</td>
                 <td align="left" valign="top" class="mymenutext" id="lbl_student2_dtls" style="padding-right:8px;">

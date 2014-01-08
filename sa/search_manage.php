@@ -387,7 +387,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <select name="course" id="course" style="width:250px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onChange="show_payment();">
                                 <option value="">---Select---</option>
                                 <?php
-									foreach($dbf->fetchOrder('student_enroll',"student_id='$student_id'","") as $rescourse) {
+									$query=$dbf->genericQuery("SELECT course_id FROM student_group_dtls WHERE student_id ='$student_id'");
+									//$query=$dbf->fetchOrder('student_course',"student_id='$student_id'","");
+									foreach($query as $rescourse) {
 										$course = $dbf->strRecordID("course","*","id='$rescourse[course_id]'");
 								  ?>
                                 <option value="<?php echo $course['id'];?>" <?php if($_REQUEST[course_id]==$course["id"]) { ?> selected="selected" <?php } ?>><?php echo $course['name'];?></option>
@@ -472,7 +474,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                   <td align="left" valign="middle"><input name="othertext" type="text" class="new_textbox190" id="othertext" value="<?php echo $res_enroll["othertext"];?>" /></td>
                                 </tr>
                                 <?php
-								$opening_amt = $dbf->getDataFromTable('student_fees',"SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' And (type='advance' OR type='opening')");
+								$opening_amt = $dbf->getDataFromTable('student_fees',"SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' And (type='advance')");
 								
 								?>
                                 <tr>
@@ -1067,7 +1069,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                           <select name="course" id="course" style="width:250px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onChange="show_payment();">
                                               <option value="">---<?php echo constant("SELECT");?>---</option>
                                               <?php
-												foreach($dbf->fetchOrder('student_enroll',"student_id='$student_id'","") as $rescourse) {
+												$query=$dbf->genericQuery("SELECT course_id FROM student_group_dtls WHERE student_id ='$student_id'");
+												$query=$dbf->fetchOrder('student_course',"student_id='$student_id'","");
+												foreach($query as $rescourse) {
 													$course = $dbf->strRecordID("course","*","id='$rescourse[course_id]'");
 											  ?>
                                               <option value="<?php echo $course['id'];?>" <?php if($_REQUEST[course_id]==$course["id"]) { ?> selected="selected" <?php } ?>><?php echo $course['name'];?></option>
@@ -1161,7 +1165,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                                 <?php } ?>
                                                 </td>
                                                 <?php
-												$opening_amt = $dbf->getDataFromTable('student_fees',"paid_amt","course_id='$course_id' And student_id='$student_id' And (type='advance' OR type='opening')");
+												$opening_amt = $dbf->getDataFromTable('student_fees',"paid_amt","course_id='$course_id' And student_id='$student_id' And (type='advance')");
 												?>
                                                 <td height="25" align="right" valign="middle"><input name="payment" type="text" class="new_textbox100_ar" id="payment" value="<?php echo $opening_amt;?>" <?php if($opening_amt > 0){?> readonly="" <?php } ?> onKeyPress="return isNumberKey(event);"/></td>
                                                 <td align="left" valign="middle" class="leftmenu">: <?php echo constant("STUDENT_ADVISOR_SEARCH_MANAGE_INITIPAY");?></td>

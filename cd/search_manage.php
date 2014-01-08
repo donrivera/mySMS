@@ -1,4 +1,5 @@
 <?php
+
 ob_start();
 session_start();
 if(($_COOKIE['cook_username'])=='')
@@ -346,7 +347,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         </tr>
                         <tr>
                           <td>&nbsp;</td>
-                          <td colspan="2" align="left" valign="top" class="lable1">&nbsp;<?php echo $val_student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($val_student["id"]));?></td>
+                          <td colspan="2" align="left" valign="top" class="lable1">&nbsp;<?php echo $dbf->printStudentName($student_id);?></td>
                           <td>&nbsp;</td>
                           <td align="left" valign="top">&nbsp;</td>
                         </tr>
@@ -389,7 +390,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <select name="course" id="course" style="width:250px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onChange="show_payment();">
                                 <option value="">---Select---</option>
                                 <?php
-									foreach($dbf->fetchOrder('student_enroll',"student_id='$student_id'","") as $rescourse) {
+									
+									$query=$dbf->genericQuery("SELECT course_id FROM student_group_dtls WHERE student_id ='$student_id'");
+									//$query=$dbf->fetchOrder('student_course',"student_id='$student_id'","");
+									foreach($query as $rescourse) { 
 										$course = $dbf->strRecordID("course","*","id='$rescourse[course_id]'");
 								  ?>
                                 <option value="<?php echo $course['id'];?>" <?php if($_REQUEST[course_id]==$course["id"]) { ?> selected="selected" <?php } ?>><?php echo $course['name'];?></option>
@@ -1037,7 +1041,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       </tr>
                                       <tr>
                                         <td>&nbsp;</td>
-                                        <td colspan="2" align="right" valign="middle" class="leftmenu" style="padding-right:100px;"><?php echo $Arabic->en2ar($dbf->StudentName($val_student["id"]));?> <?php echo $val_student["first_name"];?></td>
+                                        <td colspan="2" align="right" valign="middle" class="leftmenu" style="padding-right:100px;"><?php echo $dbf->printStudentName($student_id);?></td>
                                         <td>&nbsp;</td>
                                       </tr>
                                       <tr>
@@ -1064,7 +1068,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                           <select name="course" id="course" style="width:250px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onChange="show_payment();">
                                               <option value="">---<?php echo constant("SELECT");?>---</option>
                                               <?php
-												foreach($dbf->fetchOrder('student_enroll',"student_id='$student_id'","") as $rescourse) {
+												$query=$dbf->genericQuery("SELECT course_id FROM student_group_dtls WHERE student_id ='$student_id'");
+												//$query=$dbf->fetchOrder('student_enroll',"student_id='$student_id'","");
+												foreach($query as $rescourse) {
 													$course = $dbf->strRecordID("course","*","id='$rescourse[course_id]'");
 											  ?>
                                               <option value="<?php echo $course['id'];?>" <?php if($_REQUEST[course_id]==$course["id"]) { ?> selected="selected" <?php } ?>><?php echo $course['name'];?></option>

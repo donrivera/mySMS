@@ -234,7 +234,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
                   <tr>
                     <td width="35%" height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?> : &nbsp;</td>
-                    <td width="65%" align="left" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                    <td width="65%" align="left" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student_id);?></td>
                   </tr>
                   <tr>
                     <td height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_VIEW_COMMENTS_MANAGE_STUDENT_ID");?> : &nbsp;</td>
@@ -306,7 +306,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <table width="650" border="1" cellspacing="0" bordercolor="#336699" cellpadding="0">
                       <tr>
                         <td height="30" align="center" valign="middle" class="loginheading" style="background-image:url(../images/phone-mid.png); ">
-                        <?php echo $res_student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></td>
+                        <?php echo $dbf->printStudentName($student_id);?></td>
                         </tr>
                       </table></td>
                   </tr>                   

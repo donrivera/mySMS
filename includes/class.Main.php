@@ -590,11 +590,11 @@ class User extends Dbfunctions{
 		
 		$dbf = new User();
 		$start = $start_time+1;
-		$end = $end_time+1;
+		$end = $end_time-1;
 		$q=$dbf->fetchOrder(	'student_group',
 								"teacher_id='$teacher_id' 
 								 AND ('$end_date' BETWEEN start_date And end_date) 
-								 AND (('$start' BETWEEN group_time AND group_time_end) OR ('$end' BETWEEN group_time AND group_time_end))
+								 AND (('$start' BETWEEN group_time AND group_time_end) AND ('$end' BETWEEN group_time AND group_time_end))
 								","");
 		if($q <= 0 || empty($q)):
 		$result=false;
@@ -1168,20 +1168,20 @@ class User extends Dbfunctions{
 	function computeAdjustments($total_students,$current_total_unit,$max_ped,$new_unit)
 	{
 		$dbf = new User();
-		echo "TOTAL UPDATED STUDENTS:".$total_students."<BR/>";
-		echo "CURRENT UNITS:".$current_total_unit."<BR/>";
-		echo "GET CURRENT UNITS USED PED CARD:".$max_ped."<BR/>";
-		echo "COURSE COMPLETED:";
+		//echo "TOTAL UPDATED STUDENTS:".$total_students."<BR/>";
+		//echo "CURRENT UNITS:".$current_total_unit."<BR/>";
+		//echo "GET CURRENT UNITS USED PED CARD:".$max_ped."<BR/>";
+		//echo "COURSE COMPLETED:";
 		$current_course_completed=$max_ped / $current_total_unit;
-		echo "PERCENTAGE WITH UPDATED UNIT/S:";
+		//echo "PERCENTAGE WITH UPDATED UNIT/S:";
 		$percentage_with_new_unit=$current_course_completed * $new_unit;
-		echo "<BR/>";
-		echo "UPDATED UNIT:";
+		//echo "<BR/>";
+		//echo "UPDATED UNIT:";
 		$updated_unit=$new_unit - $percentage_with_new_unit;
 			if($updated_unit % 2==0):
-				echo $new_computed_units=intval($updated_unit);//floor($updated_unit);(integer) trim('.', $one);
+				$new_computed_units=intval($updated_unit);//floor($updated_unit);(integer) trim('.', $one);
 			else:
-				echo $new_computed_units=ceil($updated_unit);
+				$new_computed_units=ceil($updated_unit);
 			endif;
 		$result=array("units"=>$new_computed_units);
 		return $result;
@@ -1564,5 +1564,78 @@ class User extends Dbfunctions{
 			}
 		}
 	}
+	function printStudentName($id)
+	{
+		$student = $this->strRecordID("student","*","id='$id'");
+		$student_name=$student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";
+		return $student_name;
+	}
+	function printBalanceAmount($student_id,$course_id)
+	{
+		//$res_enroll = $this->strRecordID("student_enroll","*","course_id='$course_id' And student_id='$student_id'");
+		$course = $this->getDataFromTable("course_fee","fees","course_id='$course_id'");
+		
+		//$camt = ($course - $res_enroll["discount"]) + $res_enroll["other_amt"];
+		$fee = $this->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1'");
+		$feeamt = $fee["SUM(paid_amt)"];
+		$bal_amt =$course - $feeamt;
+		return  $bal_amt;
+	}
+	function printFundAmount($student_id,$course_id)
+	{
+		$fee = $this->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1'");
+		$feeamt = $fee["SUM(paid_amt)"];
+		$bal_amt = $feeamt;
+		return  $bal_amt;
+	}
+	function studentTransferFee($f_sdt,$f_stat,$cou_id,$to_cou_id,$t_sdt,$comm,$user,$ctr)
+	{
+		$dt = date('Y-m-d h:i:s');
+		//$this->GetBillNo($student_id, $course_id);
+		$inv=$this->strRecordID("student_fees","invoice_sl","course_id='$to_cou_id' And student_id='$t_sdt'");
+		$invoice_sl=$inv["invoice_sl"];
+		$fees_string="student_id='$t_sdt',invoice_sl='$invoice_sl',course_id='$to_cou_id',comments='$comm'";
+		$this->updateTable("student_fees",$fees_string,"student_id='$f_sdt' AND course_id='$cou_id'");
+		$fees_history_string="fld_name='Transfer Fee',chg_from='$f_sdt',chg_to='$t_sdt',by_user='$user',date_time='$dt',student_id='$t_sdt',centre_id='$ctr'";
+		$this->insertSet("student_fee_edit_history",$fees_history_string);
+		$moving="status_id='2',group_id='0'";
+		$this->updateTable("student_moving",$moving,"student_id='$f_sdt'");	
+		$moving_history="student_id='$f_sdt',date_time='$dt',user_id='$user',status_id='2'";
+		$this->insertSet("student_moving_history",$moving_history);
+	}
+	function studentTransferFeeByCenter($f_sdt,$cou_id,$f_ctr,$t_ctr,$comm,$user,$ctr)
+	{
+		$dt = date('Y-m-d h:i:s');
+		
+		$inv=$this->GetBillNo($f_sdt,$cou_id);
+		$fees_string="invoice_sl='$inv',centre_id='$t_ctr',comments='$comm'";
+		$this->updateTable("student_fees",$fees_string,"student_id='$f_sdt' AND course_id='$cou_id'");
+		$fees_history_string="fld_name='Changed Center',chg_from='$f_ctr',chg_to='$t_ctr',by_user='$user',date_time='$dt',student_id='$f_sdt',centre_id='$ctr'";
+		$this->insertSet("student_fee_edit_history",$fees_history_string);
+		
+		$moving="status_id='3',group_id='0'";
+		$this->updateTable("student_moving",$moving,"student_id='$f_sdt'");	
+		$moving_history="student_id='$f_sdt',date_time='$dt',user_id='$user',status_id='3'";
+		$this->insertSet("student_moving_history",$moving_history);
+	}
+	function studentTransferClass($f_sdt,$cou_id)
+	{
+		
+		$grp=$this->strRecordID("student_group_dtls","parent_id","course_id='$cou_id' AND student_id='$f_sdt'");
+		
+		#Check Pull Schedule
+		$this->pullSchedule($grp["parent_id"]);
+		# Removing from Fees / Enrollment Table
+		$this->deleteFromTable("student_enroll","course_id='$cou_id' And student_id='$f_sdt'");
+		$this->deleteFromTable("student_group_dtls","course_id='$cou_id' And student_id='$f_sdt'");
+	}
+	
+	/*	type="radio"
+		SELECT s.*,sf.total
+		FROM student s
+		LEFT JOIN(SELECT student_id,course_id,SUM(paid_amt)AS total FROM student_fees GROUP BY student_id) sf ON sf.student_id=s.id 
+		INNER JOIN student_moving sm ON sm.student_id=s.id
+		WHERE s.centre_id='1' AND sm.status_id='3' AND sf.course_id='1'
+	*/
 }
 ?>

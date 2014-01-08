@@ -483,7 +483,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                     <?php
 									for($i = 1; $i <= $max; $i++) {
 									?>
-                                    <option value="<?php echo $i;?>" <?php if($i == 60){?> selected="selected" <?php }?>> <?php echo $i;?></option>
+                                    <option value="<?php echo $i;?>" <?php if($i == 40){?> selected="selected" <?php }?>> <?php echo $i;?></option>
                                     <?php } ?>
                                     </select>
                                   </td>

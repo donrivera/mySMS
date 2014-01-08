@@ -27,7 +27,7 @@ include_once '../includes/language.php';
 $student_id = $_REQUEST['student_id'];
 
 if($_REQUEST['action']=='transfer'){
-
+	
 	$comm = mysql_real_escape_string($_REQUEST["comment"]);
 	$reg_dt = date('Y-m-d');
 	

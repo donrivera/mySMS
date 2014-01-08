@@ -47,72 +47,90 @@ $res_inv = $dbf->strRecordID("centre","invoice_from","id='$centre_id'");
 //===============================================
 if($num_student == 0){
 
-	
-	//Insert IN details table
-	$str_d="parent_id='$group',student_id='$student_id',course_id='$course_id',centre_id='$centre_id',room_id='$room_id'";
-	$dbf->insertSet("student_group_dtls",$str_d);
-	//=====================================
-	
-	//UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
-	//=======================================================
-	$date_time = date('Y-m-d H:i:s A');
-	
-	$num_st = $dbf->countRows('student_moving',"student_id='$student_id' And course_id='$course_id'"); // Means If status is blank or Enrolled // And status_id <='3'
-	if($num_st > 0){
-		$string_st="group_id='$group',status_id='4'"; //Enrolled Status		
-		$dbf->updateTable("student_moving",$string_st,"student_id='$student_id' And course_id='$course_id'");
-		
-		$string2="student_id='$student_id',course_id='$course_id',group_id='$group',date_time='$date_time',user_id='$_SESSION[id]',status_id='4'";
-		$dbf->insertSet("student_moving_history",$string2);	
-	}else{
-		$string_st="group_id='$group',status_id='4'"; //Enrolled Status		
-		$dbf->updateTable("student_moving",$string_st,"student_id='$student_id'");
-		
-		$string2="student_id='$student_id',course_id='$course_id',group_id='$group',date_time='$date_time',user_id='$_SESSION[id]',status_id='4'";
-		$dbf->insertSet("student_moving_history",$string2);	
+	$duplicate_course=$dbf->countRows('student_group_dtls',"course_id='$course_id' && student_id='$student_id'");
+	if($duplicate_course > 0)
+	{
+		echo '
+					<script type="text/javascript">
+					alert("Duplicate Course!");
+					self.parent.location.href="search.php";
+					self.parent.tb_remove();
+					</script>
+			';
 	}
-	//=======================================================
-	//UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
+	else
+	{
+		//Insert IN details table
+		$str_d="parent_id='$group',student_id='$student_id',course_id='$course_id',centre_id='$centre_id',room_id='$room_id'";
+		$dbf->insertSet("student_group_dtls",$str_d);
+		//=====================================
+	
+		//UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
+		//=======================================================
+		$date_time = date('Y-m-d H:i:s A');
+	
+		$num_st = $dbf->countRows('student_moving',"student_id='$student_id' And course_id='$course_id'"); // Means If status is blank or Enrolled // And status_id <='3'
+		if($num_st > 0)
+		{
+			$string_st="group_id='$group',status_id='4'"; //Enrolled Status		
+			$dbf->updateTable("student_moving",$string_st,"student_id='$student_id' And course_id='$course_id'");
 		
-	//Current date
-	$current_date = date('Y-m-d');
-	
-	//Get Course fee
-	$course = $dbf->strRecordID("course","*","id='$course_id'");
-	$course_fees = $dbf->getDataFromTable("course_fee","fees","course_id='$course_id' And status='1'");
-	$course_fee = $course_fees;
+			$string2="student_id='$student_id',course_id='$course_id',group_id='$group',date_time='$date_time',user_id='$_SESSION[id]',status_id='4'";
+			$dbf->insertSet("student_moving_history",$string2);	
+		}
+		else
+		{
+			$string_st="group_id='$group',status_id='4'"; //Enrolled Status		
+			$dbf->updateTable("student_moving",$string_st,"student_id='$student_id'");
 		
-	# Get active course fee
-	$course_fee_id = $dbf->getDataFromTable("course_fee", "id", "course_id='$course_id' And status='1'");
+			$string2="student_id='$student_id',course_id='$course_id',group_id='$group',date_time='$date_time',user_id='$_SESSION[id]',status_id='4'";
+			$dbf->insertSet("student_moving_history",$string2);	
+		}
+		//=======================================================
+		//UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
+		
+		//Current date
+		$current_date = date('Y-m-d');
 	
-	//Insert / Update the Advance amount as Opening amount in ENROLLED Table
-	$string="student_id='$student_id',centre_id='$centre_id',group_id='$group',course_id='$course_id',fee_id='$course_fee_id',status_id='4',created_by='$_SESSION[id]',enroll_date='$current_date',page_full_path='$_SERVER[REQUEST_URI]'";				
-	$dbf->insertSet("student_enroll",$string);
+		//Get Course fee
+		$course = $dbf->strRecordID("course","*","id='$course_id'");
+		$course_fees = $dbf->getDataFromTable("course_fee","fees","course_id='$course_id' And status='1'");
+		$course_fee = $course_fees;
+		
+		# Get active course fee
+		$course_fee_id = $dbf->getDataFromTable("course_fee", "id", "course_id='$course_id' And status='1'");
 	
-	# update enrollment status
-	$is_enrollment = $dbf->countRows('student_enroll',"student_id='$student_id'");
-	if($is_enrollment == 1){
-		$string_status = "enrolled_status='New Enrollment'";
-	}else{
-		$string_status = "enrolled_status='Re-Enrollment'";
-	}
-	$dbf->updateTable("student_enroll", $string_status, "student_id='$student_id' And course_id='$course_id'");
-	# End
+		//Insert / Update the Advance amount as Opening amount in ENROLLED Table
+		$string="student_id='$student_id',centre_id='$centre_id',group_id='$group',course_id='$course_id',fee_id='$course_fee_id',status_id='4',created_by='$_SESSION[id]',enroll_date='$current_date',page_full_path='$_SERVER[REQUEST_URI]'";				
+		$dbf->insertSet("student_enroll",$string);
 	
-	//Get number of student recently added
-	$prev_num_student = $dbf->countRows('student_group_dtls',"parent_id='$group'");
+		# update enrollment status
+		$is_enrollment = $dbf->countRows('student_enroll',"student_id='$student_id'");
+		if($is_enrollment == 1)
+		{
+			$string_status = "enrolled_status='New Enrollment'";
+		}
+		else
+		{
+			$string_status = "enrolled_status='Re-Enrollment'";
+		}
+		$dbf->updateTable("student_enroll", $string_status, "student_id='$student_id' And course_id='$course_id'");
+		# End
 	
-	//Get the range from (group_size) Table
-	$sizegroup = $dbf->strRecordID("group_size","*","(size_to>='$prev_num_student' And size_from<='$prev_num_student')");
+		//Get number of student recently added
+		$prev_num_student = $dbf->countRows('student_group_dtls',"parent_id='$group'");
+	
+		//Get the range from (group_size) Table
+		$sizegroup = $dbf->strRecordID("group_size","*","(size_to>='$prev_num_student' And size_from<='$prev_num_student')");
 			
-	//update the Group ID to Student_group Table means we can get the student according to group_id
-	$string_g="group_id='$sizegroup[group_id]'";
-	$dbf->updateTable("student_group",$string_g,"id='$group'");
+		//update the Group ID to Student_group Table means we can get the student according to group_id
+		$string_g="group_id='$sizegroup[group_id]'";
+		$dbf->updateTable("student_group",$string_g,"id='$group'");
 	
-	//update in group details table
-	$string_g1="group_id='$sizegroup[group_id]'";
-	$dbf->updateTable("student_group_dtls",$string_g1,"parent_id='$group'");
-
+		//update in group details table
+		$string_g1="group_id='$sizegroup[group_id]'";
+		$dbf->updateTable("student_group_dtls",$string_g1,"parent_id='$group'");
+	}
 }
 else
 {
@@ -135,7 +153,7 @@ else
 		echo '
 					<script type="text/javascript">
 					alert("Group Status: Completed");
-					self.parent.location.href="search.php?";
+					self.parent.location.href="search.php";
 					self.parent.tb_remove();
 					</script>
 		';
@@ -145,7 +163,7 @@ else
 		echo '
 					<script type="text/javascript">
 					alert("Group has 12 students!!");
-					self.parent.location.href="search.php?";
+					self.parent.location.href="search.php";
 					self.parent.tb_remove();
 					</script>
 		';
@@ -155,7 +173,7 @@ else
 		echo '
 					<script type="text/javascript">
 					alert("Duplicate Course!");
-					self.parent.location.href="search.php?";
+					self.parent.location.href="search.php";
 					self.parent.tb_remove();
 					</script>
 			';
@@ -166,7 +184,7 @@ else
 		echo '
 				<script type="text/javascript">
 					alert("Duplicate Entry!");
-					self.parent.location.href="search.php?";
+					self.parent.location.href="search.php";
 					self.parent.tb_remove();
 				</script>
 			';

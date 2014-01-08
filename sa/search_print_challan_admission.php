@@ -32,10 +32,10 @@ $fee = $dbf->strRecordID("student_fees","*","id='$_REQUEST[fee_id]'");
       <tr>
         <td width="179" align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
-            <td align="center" valign="middle" class="heading"><?php echo $Arabic->en2ar('The Berlitz Language Center');?></td>
+            <td align="center" valign="middle" class="heading"><?php echo RECEIPT_THE_BERLITZ_LANGUAGE_CENTER;?></td>
           </tr>
           <tr>
-            <td align="center" valign="middle" class="hometest_name"><?php echo $Arabic->en2ar('Al Ahsa - Soudi Arabia');?></td>
+            <td align="center" valign="middle" class="hometest_name"><?php echo RECEIPT_AL_AHSA_SAUDI_ARABIA;?></td>
           </tr>
         </table></td>
         <td width="123" align="center" valign="middle"><img src="../logo/logo-ar.png" width="105" height="30" /></td>
@@ -162,7 +162,7 @@ $fee = $dbf->strRecordID("student_fees","*","id='$_REQUEST[fee_id]'");
       <tr>
         <td colspan="5" align="left" valign="middle" class="chtext"><table width="250" border="0" cellspacing="0" cellpadding="0">
           <tr class="smalltext">
-            <td width="158" height="25" align="center"><?php echo $dbf->getDataFromTable("centre","cen_tel_no","id='$res_enroll[centre_id]'");?>&nbsp; : <?php echo $Arabic->en2ar('Center');?></td>
+            <td width="158" height="25" align="center"><?php echo $dbf->getDataFromTable("centre","cen_tel_no","id='$res_enroll[centre_id]'");?>&nbsp; : <?php echo RECEIPT_CENTER;?></td>
             </tr>
         </table></td>
         </tr>

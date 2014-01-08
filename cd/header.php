@@ -296,7 +296,7 @@ $(document).ready(function() {
     <div id="rel_transfer" class="dropmenudiv_d">
         <a href="student_to_student_manage.php"><?php echo constant("SA_STUDENT_TO_STUDENT");?></a>
         <a href="student_to_different_center_manage.php"><?php echo constant("SA_STUDENT_TO_CENTER");?></a>
-        <a href="student_from_another_center_manage.php"><?php echo constant("DIFFERENT_CENTER");?></a>
+        <!--<a href="student_from_another_center_manage.php"><?php echo constant("DIFFERENT_CENTER");?></a>-->
         <a href="center_to_center_manage.php"><?php echo constant("SA_CENTER_CENTER");?></a>
     </div>
       

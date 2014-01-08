@@ -8,6 +8,7 @@ include_once '../includes/class.Main.php';
 $dbf = new User();
 
 include_once '../includes/language.php';
+$res_tran = $dbf->strRecordID("transfer_different_centre", "*", "id='$_REQUEST[tran_id]'");
 ?>	
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -117,7 +118,7 @@ text-transform:uppercase;
             <tr>
               <td align="right" valign="middle" class="leftmenu" style="font-family:Arial, Helvetica, sans-serif; color:#003333; font-weight:normal; font-size:12px;">&nbsp;</td>
               <td>&nbsp;</td>
-              <td align="left" valign="middle">&nbsp;</td>
+              <td align="left" valign="middle" class="nametext">Paid Amount : <?php echo $dbf->printFundAmount($res_tran["from_student"], $res_tran["from_course_id"]);?></td>
             </tr>
             <tr>
               <td align="right" valign="top" class="leftmenu" style="font-family:Arial, Helvetica, sans-serif; color:#003333; font-weight:normal; font-size:12px;"><?php echo constant("RECEPTION_STUDENT_APPOINT_MANAGE_COMMENT");?> : &nbsp;</td>

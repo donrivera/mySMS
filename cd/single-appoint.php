@@ -144,7 +144,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
                   <tr>
                     <td width="35%" height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?> : &nbsp;</td>
-                    <td width="65%" align="left" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                    <td width="65%" align="left" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student_id);?></td>
                   </tr>
                   <tr>
                     <td height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_VIEW_COMMENTS_MANAGE_STUDENT_ID");?> : &nbsp;</td>
@@ -229,7 +229,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   
                       <td width="3%" height="22" align="center" valign="middle" class="contenttext"><?php echo $i;?></td>
                       <td width="9%" align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[dated];?></td>
-                      <td width="28%" align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $res[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res["id"]));?></td>
+                      <td width="28%" align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $dbf->printStudentName($student_id);?></td>
                         <td width="42%" align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[comments];?></td>
                               <td width="4%" align="center" valign="middle"><a href="single-appoint.php?action=delete&amp;appoint_id=<?php echo $val[id];?>&student_id=<?php echo $student_id;?>"  class="linktext" onClick="return confirm('Are you sure you want to delete this record ?')"><img src="../images/delete.png" width="16" height="16" border="0" title="Delete" /></a></td>
                            
@@ -356,7 +356,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <td height="25" colspan="2" align="center" valign="middle" bgcolor="#DDDDFF" class="pedtext"><?php echo constant("STUDENT_INFORMATON");?></td>
                     </tr>
                     <tr>
-                      <td width="64%" height="22" align="right" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                      <td width="64%" height="22" align="right" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student_id);?></td>
                       <td width="36%" align="left" valign="middle" class="pedtext">: <?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?></td>
                     </tr>
                     <?php if($student["student_id"] > 0) { ?>
@@ -427,7 +427,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                     <td width="4%" align="center" valign="middle"><a href="single-appoint.php?action=delete&amp;appoint_id=<?php echo $val[id];?>&student_id=<?php echo $student_id;?>"  class="linktext" onClick="return confirm('Are you sure you want to delete this record ?')"><img src="../images/delete.png" width="16" height="16" border="0" title="Delete" /></a></td>
                     <td width="42%" align="right" valign="middle" class="contenttext" style="padding-right:2px;"><?php echo $val[comments];?></td>
-                    <td width="28%" align="right" valign="middle" class="contenttext" style="padding-right:2px;"><?php echo $res[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res["id"]));?></td>
+                    <td width="28%" align="right" valign="middle" class="contenttext" style="padding-right:2px;"><?php echo $dbf->printStudentName($student_id);?></td>
                     <td width="9%" align="right" valign="middle" class="contenttext" style="padding-right:2px;"><?php echo $val[dated];?></td>
                     <td width="3%" height="22" align="center" valign="middle" class="contenttext"><?php echo $i;?></td>
                     <?php                          

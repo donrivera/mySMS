@@ -38,4 +38,5 @@ else if($_REQUEST[type]=="Student")
 <input name="uname" type="text" class="validate[required] new_textbox190" id="uname" value="" size="45" minlength="4"/>
 <?php
 }
+
 ?>

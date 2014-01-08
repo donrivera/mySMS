@@ -111,8 +111,8 @@ function all_students(type){
 	}else{
 		lbl_group1_dtls = 'lbl_student2_dtls';
 		
-		//from_status = document.getElementById('to_status').value;
-		//course_id = document.getElementById('to_course_id').value;
+		status = document.getElementById('status_to_id').value;
+		course_id = document.getElementById('course_sec_id').value;
 		centre_from = document.getElementById('centre_to').value;
 		from_id = document.getElementById('to_id').value;
 	}
@@ -132,7 +132,7 @@ function all_students(type){
 		//ajaxRequest.open("GET", "s-to-s-different_studentlist.php" + "?centre_from=" + centre_from, true);
 		ajaxRequest.open("GET", "s-to-s-different_studentlist.php" + "?centre_from=" + centre_from +"&group=" + from_id + "&from_status=" + from_status + "&course_id=" + course_id, true);
 	}else{
-		ajaxRequest.open("GET", "s-to-s-different_studentlist_sec.php" + "?centre_from=" + centre_from, true);
+		ajaxRequest.open("GET", "s-to-s-different_studentlist_sec.php" + "?centre_from=" + centre_from+"&status=" +status+"&course_id="+course_id+"&group="+from_id, true);
 	}	
 	ajaxRequest.send(null);
 }
@@ -334,8 +334,11 @@ function show_student(type){
 }
 function show_save(){
 	document.getElementById('lblsave').style.display = 'none';
-	if(document.getElementById('centre_from').value != ''){
-		if(document.getElementById('centre_to').value != ''){
+	if(document.getElementById('centre_from').value != '')
+	{
+		/*
+		if(document.getElementById('centre_to').value != '')
+		{
 			var count = document.getElementById('count').value;
 			var is_ok = '';
 			for(k = 1; k <= count; k++){
@@ -350,6 +353,8 @@ function show_save(){
 				}
 			}
 		}
+		*/
+		document.getElementById('lblsave').style.display = 'block';
 	}else{
 		document.getElementById('lblsave').style.display = 'none';
 	}
@@ -463,7 +468,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <select name="from_status" id="from_status" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:80px;" onchange="all_students('first');">
                         <option value="">--Status--</option>
                         <?php
-							foreach($dbf->fetchOrder('student_status',"(id >2 And id < 9)","") as $valstatus) {
+							foreach($dbf->fetchOrder('student_status',"(id >2 And id < 8)","") as $valstatus) {
 						  ?>
                         <option value="<?php echo $valstatus[id];?>"><?php echo $valstatus[name];?></option>
                         <?php
@@ -505,6 +510,33 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <option value="">--Select--</option>
                       </select>
                     </td>
+                    <td width="16%" align="right" valign="middle" bgcolor="#E9E9E9" class="hometest_name" style="border-left:solid 1px; border-top:solid 1px; border-bottom:solid 1px; border-color:#999;"><?php echo "Status";?>:&nbsp;</td>
+                    <td width="34%" height="40" align="left" valign="middle" bgcolor="#E9E9E9" id="lbl_sec_status" style="border-right:solid 1px; border-top:solid 1px; border-bottom:solid 1px; border-color:#999;">
+                      <select name="status_to_id" id="status_to_id" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:140px;" onchange="all_students('sec');">
+                        <option value="">--Status--</option>
+                        <?php
+							foreach($dbf->fetchOrder('student_status',"(id >2 And id < 8)","") as $valstatus) {
+						  ?>
+                        <option value="<?php echo $valstatus[id];?>"><?php echo $valstatus[name];?></option>
+                        <?php
+					    }
+					    ?>
+                        </select></td>
+                    </tr>
+					<tr>
+                    <td width="15%" align="right" valign="middle" bgcolor="#E9E9E9" class="hometest_name" style="border-left:solid 1px; border-top:solid 1px; border-bottom:solid 1px; border-color:#999;"><?php echo "Course";?>:&nbsp;</td>
+                    <td width="35%" align="center" valign="middle" bgcolor="#E9E9E9" class="course_sec_name" style="border-left:solid 1px; border-top:solid 1px; border-bottom:solid 1px; border-color:#999;" id="lbl_centre_to">
+                      <select name="course_sec_id" id="course_sec_id" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:140px;" onchange="all_students('sec');">
+                        <option value="">--Status--</option>
+                        <?php
+							foreach($dbf->fetchOrder('course',"","") as $course) {
+						  ?>
+                        <option value="<?php echo $course[id];?>"><?php echo $course[name];?></option>
+                        <?php
+					    }
+					    ?>
+                      </select>
+                    </td>
                     <td width="16%" align="right" valign="middle" bgcolor="#E9E9E9" class="hometest_name" style="border-left:solid 1px; border-top:solid 1px; border-bottom:solid 1px; border-color:#999;"><?php echo constant("CD_STUDENT_CENTER_TOGROUP");?>:&nbsp;</td>
                     <td width="34%" height="40" align="left" valign="middle" bgcolor="#E9E9E9" id="lbl_sec_group" style="border-right:solid 1px; border-top:solid 1px; border-bottom:solid 1px; border-color:#999;">
                       <select name="to_id" id="to_id" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:140px;">
@@ -538,7 +570,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td align="center" valign="middle" bgcolor="#FFFFFF" >
                     <input type="checkbox" name="student_id<?php echo $i;?>" id="student_id<?php echo $i;?>" />
                     </td>
-                    <td align="left" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                    <td align="left" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $dbf->printStudentName($student["id"]);?></td>
                     <td align="left" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php echo $student["student_mobile"];?></td>
                     <td height="20" align="left" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php if($student["student_id"]!='0') { echo $student["student_id"]; }?></td>
                   </tr>
@@ -561,7 +593,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				  ?>
                   <tr>
                     <td align="center" valign="middle" bgcolor="#FFFFFF" ><input type="checkbox" name="id<?php echo $i;?>2" id="id<?php echo $i;?>2" value="<?php echo $mygroup[id];?>" /></td>
-                    <td align="left" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                    <td align="left" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $dbf->printStudentName($student["id"]);?></td>
                     <td align="left" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php echo $student["student_mobile"];?></td>
                     <td height="20" align="left" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;
                       <?php if($student["student_id"]!='0') { echo $student["student_id"]; }?></td>
@@ -646,7 +678,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
             <td height="450" align="left" valign="top" style="border:solid 1px; border-color:#CCC; background-color:#FFF;">
             <br />
             
-            <form action="center_to_center_process.php?action=transfer" name="frm" method="post" id="frm">
+            <form action="s-to-s-different-center-process.php" name="frm" method="post" id="frm">
             <table width="90%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" style="border:solid 1px; border-color:#CCC;">
               <tr>
                 <td width="458" align="left" valign="top"></td>
@@ -740,7 +772,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr>
                     <td height="20" align="right" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php if($student["student_id"]!='0') { echo $student["student_id"]; }?></td>
                     <td align="right" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php echo $student["student_mobile"];?></td>
-                    <td align="right" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                    <td align="right" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $dbf->printStudentName($student["id"]);?></td>
                     <td align="center" valign="middle" bgcolor="#FFFFFF" >
                     <input type="checkbox" name="student_id<?php echo $i;?>" id="student_id<?php echo $i;?>" />
                     </td>
@@ -766,7 +798,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td height="20" align="right" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;
                       <?php if($student["student_id"]!='0') { echo $student["student_id"]; }?></td>
                       <td align="right" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php echo $student["student_mobile"];?></td>
-                      <td align="right" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                      <td align="right" valign="middle" bgcolor="#FFFFFF" >&nbsp;<?php echo $dbf->printStudentName($student["id"]);?></td>
                       <td align="center" valign="middle" bgcolor="#FFFFFF" ><input type="checkbox" name="id<?php echo $i;?>2" id="id<?php echo $i;?>2" value="<?php echo $mygroup[id];?>" /></td>
                   </tr>
                   <?php  $i = $i + 1; } ?>

@@ -17,7 +17,8 @@ if($_REQUEST['action']=='transfer'){
 	
 	$string="dated='$_REQUEST[dated]',from_id='$_REQUEST[from_id]',to_id='$_REQUEST[to_id]',from_course_id='$_REQUEST[from_course_id]',to_course_id='$_REQUEST[to_course_id]',from_status_id='$_REQUEST[from_status]',to_status_id='$_REQUEST[to_status]',centre_id='$_SESSION[centre_id]',created_by='$_SESSION[id]',created_date='$reg_dt',status='Pending',comment='$comm',student_id='$student_id',to_student_id='$tostudent_id'";
 	$parent_id = $dbf->insertSet("transfer_student_to_student",$string);
-	
+	$dtl_string="parent_id='$parent_id',student_id='$student_id'";
+	$dbf->insertSet("transfer_student_to_student_dtls",$dtl_string);
 	//Insert in Student Comments Table (student_comment)
 	$dt = date('Y-m-d h:i:s');	
 	if($comm != ''){
@@ -128,6 +129,7 @@ if($_REQUEST['action']=='transfer'){
 	}	
 	header("Location:student_to_student_manage.php");
 	exit;
+
 }
 if($_REQUEST['action']=='delete'){
 	

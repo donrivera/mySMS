@@ -52,10 +52,10 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
             <td height="40" align="right" valign="middle" class="heading"><img src="../logo/logo-ar.png" width="105" height="30" /></td>
           </tr>
           <tr>
-            <td align="right" valign="middle" class="heading">&nbsp;<?php echo $Arabic->en2ar('The Berlitz Language Center');?></td>
+            <td align="right" valign="middle" class="heading">&nbsp;<?php echo INVOICE_THE_BERLITZ_LANGUAGE_CENTER;?></td>
           </tr>
           <tr>
-            <td align="right" valign="middle" class="hometest_name"><?php echo $Arabic->en2ar('Al Ahsa - Saudi Arabia');?></td>
+            <td align="right" valign="middle" class="hometest_name"><?php echo INVOICE_AL_AHSA_SAUDI_ARABIA;?></td>
           </tr>
         </table>
         </td>
@@ -285,7 +285,7 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
       <tr>
         <td colspan="5" align="left" valign="middle" class="chtext"><table width="250" border="0" cellspacing="0" cellpadding="0">
           <tr class="smalltext">
-            <td width="158" align="center"><?php echo $dbf->getDataFromTable("centre","cen_tel_no","id='$res_enroll[centre_id]'");?>&nbsp; : <?php echo $Arabic->en2ar('Center');?></td>
+            <td width="158" align="center"><?php echo $dbf->getDataFromTable("centre","cen_tel_no","id='$res_enroll[centre_id]'");?>&nbsp; : <?php echo INVOICE_CENTER;?></td>
           </tr>
         </table></td>
       </tr>

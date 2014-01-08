@@ -399,11 +399,15 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                               <td height="28" align="right" valign="middle" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_HOME_S_CLASSIC_MOBNUMB");?> : <span class="nametext1">*</span></td>
                               <td>&nbsp;</td>
-                              <?php if($_SESSION['quick_mobile'] == ''){
+                              <?php 
+							  
+							  if($_SESSION['quick_mobile'] == ''){
 								  $mobile = '00966';
 							  }else{
 								  $mobile = $_SESSION['quick_mobile'];
 							  }
+							  
+							  
 							  ?>
                               <td align="left" valign="middle"><input name="mobile" type="text" class="validate[required] new_textbox190" id="mobile" onkeypress="return PhoneNo(event);" onkeyup="show_mobile();" value="<?php echo $mobile;?>" onfocus="get_arabic();" autocomplete="off"/>&nbsp;
 							  <?php if($_REQUEST["msg"]=="existm"){ echo STUDENT_ADVISOR_STUDENT_MANAGE_MOBILEEXT; }?></td>

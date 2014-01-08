@@ -278,30 +278,30 @@ function show_student(type){
 	ajaxRequest.send(null);
 }
 function show_save(){
-	
-	var count = document.getElementById('count').value;
-	var is_ok = '';
-	if(document.getElementById('from_id').value != ''){		
+		
+	//var count = document.getElementById('count').value;
+	//var is_ok = '';
+	//if(document.getElementById('from_id').value != ''){		
 		/*for(k = 1; k <= count; k++){
 			if(document.getElementById('student_id'+k).checked){
 				is_ok = 'ok';
 				break;
 			}
 		}*/
-	}
-	var tocount = document.getElementById('tocount').value;
-	var tois_ok = '';
-	if(document.getElementById('to_id').value != ''){
+	//}
+	//var tocount = document.getElementById('tocount').value;
+	//var tois_ok = '';
+	//if(document.getElementById('to_id').value != ''){
 		/*for(k = 1; k <= count; k++){
 			if(document.getElementById('tostudent_id'+k).checked){
 				tois_ok = 'ok';
 				break;
 			}
 		}*/
-	}
+	//}
 	//is_ok != '' && tois_ok != '' &&
 	document.getElementById('lblsave').style.display = 'none';
-	if(document.getElementById('centre_from').value != '' && document.getElementById('centre_to').value != '' && document.getElementById('from_course_id').value != '' && document.getElementById('to_course_id').value != '' && document.getElementById('comment').value != ''){
+	if(document.getElementById('centre_from').value != '' && document.getElementById('centre_to').value != '' && document.getElementById('comment').value != ''){ /*&& document.getElementById('from_course_id').value != '' && document.getElementById('to_course_id').value != ''*/
 		document.getElementById('lblsave').style.display = 'block';
 	}else{
 		document.getElementById('lblsave').style.display = 'none';
@@ -407,7 +407,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
                   <tr>
                     <td width="30%" align="center" valign="middle" bgcolor="#CCCCCC" style="border-left:solid 1px; border-top:solid 1px; border-bottom:solid 1px; border-color:#666;">
-                    <select name="centre_from" id="centre_from" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:140px;" onchange="show_to_centre();show_from_group();">
+                    <select name="centre_from" id="centre_from" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:140px;" onchange="show_student('first');show_to_centre();show_from_group();">
                         <option value="">--Select--</option>
                         <?php
 							foreach($dbf->fetchOrder('centre',"","name") as $valc) {	
@@ -422,7 +422,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <select name="from_status" id="from_status" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:80px;" onchange="show_student('first');">
                         <option value="">--Status--</option>
                         <?php
-							foreach($dbf->fetchOrder('student_status',"(id >2 And id < 9)","") as $valstatus) {
+							foreach($dbf->fetchOrder('student_status',"(id >0 And id < 9)","") as $valstatus) {
 						  ?>
                         <option value="<?php echo $valstatus[id];?>"><?php echo $valstatus[name];?></option>
                         <?php
@@ -455,9 +455,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td align="left" valign="top"><table width="97%" border="0" align="center" cellpadding="0" cellspacing="0">
                   <tr>
                     <td align="center" valign="middle" bgcolor="#E9E9E9" class="hometest_name" style="border-left:solid 1px; border-top:solid 1px; border-bottom:solid 1px; border-color:#999;">Center</td>
-                    <td align="center" valign="middle" bgcolor="#E9E9E9" class="hometest_name" style="border-left:solid 1px; border-top:solid 1px; border-bottom:solid 1px; border-color:#999;" id="lbl_centre_to2">Status</td>
+                    
+					<td align="center" valign="middle" bgcolor="#E9E9E9" class="hometest_name" style="border-left:solid 1px; border-top:solid 1px; border-bottom:solid 1px; border-color:#999;" id="lbl_centre_to2">Status</td>
                     <td align="center" valign="middle" bgcolor="#E9E9E9" class="hometest_name" style="border-left:solid 1px; border-top:solid 1px; border-bottom:solid 1px; border-color:#999;">Course</td>
                     <td height="40" align="center" valign="middle" bgcolor="#E9E9E9" class="hometest_name" id="lbl_sec_group2" style="border-right:solid 1px; border-top:solid 1px; border-bottom:solid 1px; border-color:#999; border-left:solid 1px;">Group</td>
+					
                   </tr>
                   <tr>
                     <td width="30%" align="center" valign="middle" bgcolor="#E9E9E9" class="hometest_name" style="border-left:solid 1px; border-top:solid 1px; border-bottom:solid 1px; border-color:#999;" id="lbl_centre_to">
@@ -465,9 +467,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <option value="">--Select--</option>
                       </select>
                     </td>
-                    <td width="20%" align="center" valign="middle" bgcolor="#E9E9E9" class="hometest_name" style="border-left:solid 1px; border-top:solid 1px; border-bottom:solid 1px; border-color:#999; border-left:solid 1px;">
-                      
-                      <select name="to_status" id="to_status" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:80px;" onchange="show_student('second');">
+                    
+					<td width="20%" align="center" valign="middle" bgcolor="#E9E9E9" class="hometest_name" style="border-left:solid 1px; border-top:solid 1px; border-bottom:solid 1px; border-color:#999; border-left:solid 1px;">
+						<!--
+						<select name="to_status" id="to_status" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:80px;" onchange="show_student('second');">
                         <option value="">--Status--</option>
                         <?php
 							foreach($dbf->fetchOrder('student_status',"(id >2 And id < 9)","") as $valstatus) {
@@ -477,10 +480,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					    }
 					    ?>
                         </select>
-                      
+						-->
                     </td>
                     <td width="20%" align="center" valign="middle" bgcolor="#E9E9E9" class="hometest_name" style="border-left:solid 1px; border-top:solid 1px; border-bottom:solid 1px; border-color:#999;">
-                    <select name="to_course_id" id="to_course_id" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:120px;" onchange="show_student('second');">
+						<!--
+						<select name="to_course_id" id="to_course_id" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:120px;" onchange="show_student('second');">
                         <option value="">--Status--</option>
                         <?php
 							foreach($dbf->fetchOrder('course',"","") as $course) {
@@ -490,13 +494,17 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					    }
 					    ?>
                         </select>
+						-->
                     </td>
-                    <td width="30%" height="40" align="center" valign="middle" bgcolor="#E9E9E9" id="lbl_sec_group" style="border-right:solid 1px; border-top:solid 1px; border-bottom:solid 1px;border-left:solid 1px; border-color:#999999;">
-                      <select name="to_id" id="to_id" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:140px;">
+                    <td width="30%" height="40" align="center" valign="middle" bgcolor="#E9E9E9"  style="border-right:solid 1px; border-top:solid 1px; border-bottom:solid 1px;border-left:solid 1px; border-color:#999999;"><!--id="lbl_sec_group"-->
+						<!--
+						<select name="to_id" id="to_id" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:140px;">
                         <option value="">--Select--</option>
-                        </select></td>
-                    </tr>
-                  <tr>
+                        </select>
+						-->
+					</td>
+					</tr>
+					<tr>
                     <td colspan="4" align="left" valign="top" id="lbl_group2_dtls">&nbsp;</td>
                     </tr>
                   </table></td>
@@ -516,9 +524,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td width="23%" height="25" align="left" valign="middle" bgcolor="#E0E3FE" class="pedtext"><?php echo constant("ADMIN_S_MANAGE_STUDENTID");?></td>
                   </tr>
                   <?php
-				  $i = 1;
-				  foreach($dbf->fetchOrder('student',"first_name<>'' And centre_id='$_SESSION[centre_id]'") as $student) {
+				  //$i = 1;
+				  //foreach($dbf->fetchOrder('student',"first_name<>'' And centre_id='$_SESSION[centre_id]'") as $student) {
 				  ?>
+				  <!--
                   <tr>
                     <td align="center" valign="middle" bgcolor="#FFFFFF" >
                     <input type="radio" name="student_id" id="student_id<?php echo $i-1;?>" value="<?php echo $student["id"];?>" onchange="show_save();" />
@@ -527,8 +536,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td align="left" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php echo $student["student_mobile"];?></td>
                     <td height="20" align="left" valign="middle" bgcolor="#FFFFFF" class="pedtext">&nbsp;<?php if($student["student_id"]!='0') { echo $student["student_id"]; }?></td>
                   </tr>
-                  <?php  $i = $i + 1; } ?>
-					<input type="hidden" name="count" id="count" value="<?php echo $i-1;?>">                  
+				  -->
+                  <?php  //$i = $i + 1; } ?>
+					<input type="hidden" name="count" id="count" value="<?php// echo $i-1;?>">                  
                   </table>
                 </td>
                 <td align="left" valign="top">&nbsp;</td>

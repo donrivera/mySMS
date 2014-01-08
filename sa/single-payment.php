@@ -393,7 +393,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <select name="course" id="course" style="width:200px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onChange="show_payment();">
                           <option value="">---Select---</option>
                           <?php
-							foreach($dbf->fetchOrder('student_enroll',"student_id='$student_id'","") as $rescourse) {
+							foreach($dbf->fetchOrder('student_course',"student_id='$student_id'","") as $rescourse) {
 								$course = $dbf->strRecordID("course","*","id='$rescourse[course_id]'");
 						  ?>
                           <option value="<?php echo $course['id'];?>" <?php if($course_id==$course["id"]) { ?> selected="selected" <?php } ?>><?php echo $course['name'];?></option>
@@ -451,14 +451,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								 $fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1'");
 								 $feeamt = $fee["SUM(paid_amt)"];
 								  
-								 $bal_amt = $camt - $feeamt;
+								 $bal_amt = $course_fee - $feeamt;
 							
 								//Use currency
 								$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 								?>
                               <tr>
                                 <td width="62%" height="25" align="left" valign="middle" bgcolor="#A9CFFE" class="pedtext"><?php echo constant("ADMIN_COURSE_MANAGE_COURSEFEES");?> :</td>
-                                <td width="38%" align="left" valign="middle" bgcolor="#F1E8FF" class="mycon">&nbsp;<?php echo $camt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
+                                <td width="38%" align="left" valign="middle" bgcolor="#F1E8FF" class="mycon">&nbsp;<?php echo $course_fees;?>&nbsp;<?php echo $res_currency[symbol];?></td>
                                 </tr>
                               <tr>
                                 <td height="25" align="left" valign="middle" bgcolor="#A9CFFE" class="pedtext"><?php echo constant("CD_SEARCH_INVOICE_PAIDAMOUNT");?> :</td>
@@ -971,7 +971,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 								?>
                               <tr>
-                                <td width="38%" height="25" align="right" valign="middle" bgcolor="#F1E8FF" class="mycon">&nbsp;<?php echo $camt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
+                                <td width="38%" height="25" align="right" valign="middle" bgcolor="#F1E8FF" class="mycon">&nbsp;<?php echo $course_fees;?>&nbsp;<?php echo $res_currency[symbol];?></td>
                                 <td width="56%" align="left" valign="middle" bgcolor="#A9CFFE" class="pedtext">&nbsp; : <?php echo constant("ADMIN_COURSE_MANAGE_COURSEFEES");?></td>
                               </tr>
                               <tr>

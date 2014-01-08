@@ -7,17 +7,33 @@ include("../includes/saudismsNET-API.php");
 //Object initialization
 $dbf = new User();
 
-if($_REQUEST['action']=='transfer'){
+if($_REQUEST['action']=='transfer'){//echo var_dump($_REQUEST);
 
 	$comm = mysql_real_escape_string($_REQUEST["comment"]);
 	$reg_dt = date('Y-m-d');
 	
 	$student_id = $_REQUEST["student_id"];
-	$tostudent_id = $_REQUEST["tostudent_id"];
+	//$tostudent_id = $_REQUEST["tostudent_id"];
 	
-	$string="dated='$_REQUEST[dated]',centre_from='$_REQUEST[centre_from]',from_id='$_REQUEST[from_id]',centre_to='$_REQUEST[centre_to]',to_id='$_REQUEST[to_id]',from_course_id='$_REQUEST[from_course_id]',to_course_id='$_REQUEST[to_course_id]',from_status_id='$_REQUEST[from_status]',to_status_id='$_REQUEST[to_status]',centre_id='$_SESSION[centre_id]',created_by='$_SESSION[id]',created_date='$reg_dt',status='Pending',comment='$comm',student_id='$student_id',to_student_id='$tostudent_id'";
+	$string="	dated='$_REQUEST[dated]',
+				centre_from='$_REQUEST[centre_from]',
+				from_id='$_REQUEST[from_id]',
+				centre_to='$_REQUEST[centre_to]',
+				to_id='$_REQUEST[to_id]',
+				from_course_id='$_REQUEST[from_course_id]',
+				to_course_id='$_REQUEST[to_course_id]',
+				from_status_id='$_REQUEST[from_status]',
+				to_status_id='$_REQUEST[to_status]',
+				centre_id='$_SESSION[centre_id]',
+				created_by='$_SESSION[id]',
+				created_date='$reg_dt',
+				status='Pending',
+				comment='$comm',
+				student_id='$student_id'
+				";//center_to_center_process.php
 	$parent_id = $dbf->insertSet("transfer_centre_to_centre",$string);
-	
+	$dtl_string="parent_id='$parent_id',student_id='$student_id'";
+	$dbf->insertSet("transfer_centre_to_centre",$dtl_string);
 	//Insert in Student Comments Table (student_comment)
 	$dt = date('Y-m-d h:i:s');	
 	if($comm != ''){
@@ -129,6 +145,7 @@ if($_REQUEST['action']=='transfer'){
 	
 	header("Location:center_to_center_manage.php");
 	exit;
+	
 }
 if($_REQUEST['action']=='delete'){
 	

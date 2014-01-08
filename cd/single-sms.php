@@ -270,7 +270,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
                   <tr>
                     <td width="35%" height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?> : &nbsp;</td>
-                    <td width="65%" align="left" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                    <td width="65%" align="left" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student_id);?></td>
                   </tr>
                   <tr>
                     <td height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_VIEW_COMMENTS_MANAGE_STUDENT_ID");?> : &nbsp;</td>
@@ -363,7 +363,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>                  
                   <?php }?>
                   <tr>
-                    <td height="30" align="center" valign="middle" class="pedtext"><a href="single-sms-details.php?student_id=<?php echo $_REQUEST["student_id"];?>&amp;TB_iframe=true&amp;height=480&amp;width=675&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox">View All SMS</a> which is sent to <span class="red_smalltext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></span></td>
+                    <td height="30" align="center" valign="middle" class="pedtext"><a href="single-sms-details.php?student_id=<?php echo $_REQUEST["student_id"];?>&amp;TB_iframe=true&amp;height=480&amp;width=675&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox">View All SMS</a> which is sent to <span class="red_smalltext"><?php echo $dbf->printStudentName($student_id);?></span></td>
                   </tr> 
                   <?php if($is_disable == 0) {?>               
                   <tr>
@@ -442,7 +442,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr>
                     <td align="center" valign="middle">
                     <br>
-                    <span class="red_smalltext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></span>
+                    <span class="red_smalltext"><?php echo $dbf->printStudentName($student_id);?></span>
                     <br>
                     <br>
                     <form action="single-sms.php?action=email_sent&student_id=<?php echo $student_id;?>" name="frm2" method="post" id="frm2"  onSubmit="return validateemail();">
@@ -584,7 +584,7 @@ height:250,toolbar:[
                       <td height="25" colspan="2" align="center" valign="middle" bgcolor="#DDDDFF" class="pedtext"><?php echo constant("STUDENT_INFORMATON");?></td>
                     </tr>
                     <tr>
-                      <td width="64%" height="22" align="right" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                      <td width="64%" height="22" align="right" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student_id);?></td>
                       <td width="36%" align="left" valign="middle" class="pedtext">: <?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?></td>
                     </tr>
                     <?php if($student["student_id"] > 0) { ?>

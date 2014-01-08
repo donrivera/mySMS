@@ -12,9 +12,26 @@ if($_REQUEST['action']=='transfer'){
 	$comm = mysql_real_escape_string($_REQUEST["comment"]);
 	$reg_dt = date('Y-m-d');
 	
-	$string="dated='$_REQUEST[dated]',centre_from='$_REQUEST[centre_from]',from_id='$_REQUEST[from_id]',centre_to='$_REQUEST[centre_to]',to_id='$_REQUEST[to_id]',centre_id='$_SESSION[centre_id]',created_by='$_SESSION[id]',created_date='$reg_dt',status='Pending',comment='$comm'";
+	$string="	dated='$_REQUEST[dated]',
+				centre_from='$_REQUEST[centre_from]',
+				from_id='$_REQUEST[from_id]',
+				centre_to='$_REQUEST[centre_to]',
+				to_id='$_REQUEST[to_id]',
+				from_course_id='$_REQUEST[from_course_id]',
+				from_status='$_REQUEST[from_status]',
+				to_status='$_REQUEST[status_to_id]',
+				to_course_id='$_REQUEST[course_sec_id]',
+				from_student='$_REQUEST[student_id]',
+				to_student='$_REQUEST[tostudent_id]',
+				centre_id='$_SESSION[centre_id]',
+				created_by='$_SESSION[id]',
+				created_date='$reg_dt',
+				status='Pending',
+				comment='$comm'";
 	$parent_id = $dbf->insertSet("transfer_different_centre",$string);
-	
+	$dtl_string="parent_id='$parent_id',student_id='$_REQUEST[student_id]'";
+	$dbf->insertSet("transfer_different_centre_dtls",$dtl_string);
+	/*
 	$count = $_POST[count];
 	for($i = 1; $i <= $count; $i++){
 			
@@ -26,6 +43,7 @@ if($_REQUEST['action']=='transfer'){
 			$dbf->insertSet("transfer_different_centre_dtls",$string);
 		}
 	}
+	*/
 	
 	//Mail
 	//Get teacher email id
@@ -127,6 +145,7 @@ if($_REQUEST['action']=='transfer'){
 	
 	header("Location:s-to-s-different-center-manage.php");
 	exit;
+
 }
 if($_REQUEST['action']=='delete'){
 	

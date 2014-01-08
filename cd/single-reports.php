@@ -176,7 +176,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
                   <tr>
                     <td width="35%" height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?> : &nbsp;</td>
-                    <td width="65%" align="left" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                    <td width="65%" align="left" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student_id);?></td>
                   </tr>
                   <tr>
                     <td height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_VIEW_COMMENTS_MANAGE_STUDENT_ID");?> : &nbsp;</td>
@@ -260,7 +260,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr>
                     <td height="22" align="center" valign="middle" class="mytext"><?php echo $k;?></td>
                     <td align="left" valign="middle" class="shop2"><?php echo $arf[dated];?></td>
-                    <td align="left" valign="middle" class="shop2"><?php echo $res_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></td>
+                    <td align="left" valign="middle" class="shop2"><?php echo $dbf->printStudentName($student_id);?></td>
                     <td align="left" valign="middle" class="shop2"><?php echo $arf[action_owner];?></td>
                     <td align="left" valign="middle" class="shop2"><?php echo $arf[report_by];?></td>
                     <td align="center" valign="middle" class="mytext"><?php echo $arf[report_to];?></td>
@@ -540,7 +540,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <td height="25" colspan="2" align="center" valign="middle" bgcolor="#DDDDFF" class="pedtext"><?php echo constant("STUDENT_INFORMATON");?></td>
                     </tr>
                     <tr>
-                      <td width="64%" height="22" align="right" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                      <td width="64%" height="22" align="right" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student_id);?></td>
                       <td width="36%" align="left" valign="middle" class="pedtext">: <?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?></td>
                     </tr>
                     <?php if($student["student_id"] > 0) { ?>
@@ -615,7 +615,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td width="5%" align="center" valign="middle" class="mytext"><a href="arf_print.php?id=<?php echo $arf[id];?>" target="_blank">
                     <img src="../images/print.png" width="16" height="16" border="0" title="Print"/></a></td>
                     <td align="right" valign="middle" class="shop2"><?php echo $arf[dated];?></td>
-                    <td align="right" valign="middle" class="shop2"><?php echo $res_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></td>
+                    <td align="right" valign="middle" class="shop2"><?php echo $dbf->printStudentName($student_id);?></td>
                     <td align="right" valign="middle" class="shop2"><?php echo $arf[action_owner];?></td>
                     <td align="right" valign="middle" class="shop2"><?php echo $arf[report_by];?></td>
                     <td align="center" valign="middle" class="mytext"><?php echo $arf[report_to];?></td>

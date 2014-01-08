@@ -6,9 +6,8 @@ include("../includes/saudismsNET-API.php");
 
 //Object initialization
 $dbf = new User();
-
-if($_REQUEST['action']=='update'){
-
+if($_REQUEST['action']=='update')
+{
 	$comm = mysql_real_escape_string($_REQUEST["comment"]);
 	$reg_dt = date('Y-m-d');
 	
@@ -21,19 +20,20 @@ if($_REQUEST['action']=='update'){
 	//Insert in Student Comments Table (student_comment)
 	$dt = date('Y-m-d h:i:s');
 	
-	if($comm != ''){
-		
+	if($comm != '')
+	{
 		$ids = $dbf->strRecordID("transfer_student_to_student", "*", "id='$tran_id'");
 		
 		$string_move="student_id='$ids[student_id]',user_id='$_SESSION[id]',comments='$comm',date_time='$dt',status_id='1'";
-		$dbf->insertSet("student_comment",$string_move);
+		//$dbf->insertSet("student_comment",$string_move);
 
 		$string_move="student_id='$ids[to_student_id]',user_id='$_SESSION[id]',comments='$comm',date_time='$dt',status_id='1'";
-		$dbf->insertSet("student_comment",$string_move);		
+		//$dbf->insertSet("student_comment",$string_move);		
 	}
 	//==========================================================
 	
-	if($_REQUEST["status"] == 'Approved'){
+	if($_REQUEST["status"] == 'Approved')
+	{
 		
 		# Source Group
 		$source_group = $dtls["from_id"];
@@ -55,131 +55,76 @@ if($_REQUEST['action']=='update'){
 		
 		$enroll_dtls = $dbf->strRecordID("student_enroll","*","course_id='$from_course_id' And student_id='$source_student_id'");
 		
-		$string="discount=discount+'$enroll_dtls[discount]',other_amt=other_amt+'$enroll_dtls[other_amt]'";			
-		$dbf->updateTable("student_enroll",$string,"course_id='$to_course_id' And student_id='$destination_student_id'");
+		//$string="discount=discount+'$enroll_dtls[discount]',other_amt=other_amt+'$enroll_dtls[other_amt]'";			
+		//$dbf->updateTable("student_enroll",$string,"course_id='$to_course_id' And student_id='$destination_student_id'");
 		
-		$string="discount='0',other_amt='0'";			
-		$dbf->updateTable("student_enroll",$string,"course_id='$from_course_id' And student_id='$source_student_id'");
+		$string="discount='0',other_amt='0'";
+		$from_status=$dtls["from_status_id"];
+		$to_status=$dtls["to_status_id"];
 		
-		# If Waiting to Waitng
-		if(($dtls["from_status_id"] == '3' || $dtls["from_status_id"] == '7') && ($dtls["to_status_id"] == '3' || $dtls["to_status_id"] == '7')){
-						
-			$dbf->updateTable("student_fees", "student_id='$destination_student_id'", "course_id='$from_course_id' And student_id='$source_student_id'");
-			
-		# If Waiting to Enrolled or Active
-		}else if(($dtls["from_status_id"] == '3' || $dtls["from_status_id"] == '7') && ($dtls["to_status_id"] == '4' || $dtls["to_status_id"] == '5')){
+		switch($from_status)
+		{
+			case '3':	{
+							switch($to_status)
+							{
+								case '3':
+								case '4':	{
+												$dbf->studentTransferFee($dtls["student_id"],$from_status,$dtls["from_course_id"],$dtls["to_course_id"],$dtls["to_student_id"],$comm,$_SESSION["id"],$_SESSION["centre_id"]);
+											}break;
+							}
+						}break;
+			case '4':	{
+							switch($to_status)
+							{
+								case '3':
+								case '4':	{	
+												$dbf->studentTransferClass($dtls["student_id"],$dtls["from_course_id"]);
+												$dbf->studentTransferFee($dtls["student_id"],$from_status,$dtls["from_course_id"],$dtls["to_course_id"],$dtls["to_student_id"],$comm,$_SESSION["id"],$_SESSION["centre_id"]);
+											}break;
+							}
+						}break;
+			case '5':	{
+							switch($to_status)
+							{
+								case '3':
+								case '4':
+								case '5':	{
+												$dbf->studentTransferClass($dtls["student_id"],$dtls["from_course_id"]);
+												$dbf->studentTransferFee($dtls["student_id"],$from_status,$dtls["from_course_id"],$dtls["to_course_id"],$dtls["to_student_id"],$comm,$_SESSION["id"],$_SESSION["centre_id"]);
+											}break;
+							}
+						}
+			case '6':
+			case '7':	{
+							switch($to_status)
+							{
 								
-			$dbf->updateTable("student_fees", "student_id='$destination_student_id'", "course_id='$from_course_id' And student_id='$source_student_id'");
-		
-		# If Enrolled to Enrolled
-		}else if($dtls["from_status_id"] == '4'  && ($dtls["to_status_id"] == '4' || $dtls["to_status_id"] == '5')){
-			
-			$dbf->updateTable("student_fees", "student_id='$destination_student_id'", "course_id='$from_course_id' And student_id='$source_student_id'");
-						
-			# Removing from Fees / Enrollment Table
-			$dbf->deleteFromTable("student_enroll","course_id='$from_course_id' And student_id='$source_student_id'");
-			$dbf->deleteFromTable("student_group_dtls","course_id='$from_course_id' And student_id='$source_student_id'");
-			$dbf->deleteFromTable("student_fees","course_id='$from_course_id' And student_id='$source_student_id'");
-						
-			# Get number of student recently added
-			$prev_num_student = $dbf->countRows('student_group_dtls',"parent_id='$source_group'");
-			
-			# Get the range from (group_size) Table
-			$sizegroup = $dbf->strRecordID("group_size","*","(size_to>='$prev_num_student' And size_from<='$prev_num_student')");		
-			$my_group_id = $sizegroup["group_id"];
-			
-			if($prev_num_student == 0){	$my_group_id = 0;}
-			
-			# update the Group ID to Student_group Table means we can get the student according to group_id
-			$string_g="group_id='$my_group_id'";
-			$dbf->updateTable("student_group",$string_g,"id='$source_group'");
-			
-			# update in group details table
-			$string_g1="group_id='$my_group_id'";
-			$dbf->updateTable("student_group_dtls",$string_g1,"parent_id='$source_group'");
-			
-			#d Destination Student Status (Potential Status)
-			$date_time = date('Y-m-d H:i:s A');
-			
-			$string2="status_id='3',group_id='0'";
-			$dbf->updateTable("student_moving",$string2,"course_id='$from_course_id' And student_id='$source_student_id'");	
-			
-			$string2="student_id='$source_student_id',date_time='$date_time',user_id='$_SESSION[id]',status_id='3'";
-			$dbf->insertSet("student_moving_history",$string2);
-		
-		# If Enrolled to Waitng
-		}else if(($dtls["from_status_id"] == '4' || $dtls["from_status_id"] == '5' || $dtls["from_status_id"] == '6') && $dtls["to_status_id"] == '3'){
-			
-			$dbf->updateTable("student_fees", "student_id='$destination_student_id'", "course_id='$from_course_id' And student_id='$source_student_id'");
-			
-			# Removing from Fees / Enrollment Table
-			$dbf->deleteFromTable("student_enroll","course_id='$from_course_id' And student_id='$source_student_id'");
-			$dbf->deleteFromTable("student_group_dtls","course_id='$from_course_id' And student_id='$source_student_id'");
-			$dbf->deleteFromTable("student_fees","course_id='$from_course_id' And student_id='$source_student_id'");
-						
-			# Get number of student recently added
-			$prev_num_student = $dbf->countRows('student_group_dtls',"parent_id='$source_group'");
-			
-			# Get the range from (group_size) Table
-			$sizegroup = $dbf->strRecordID("group_size","*","(size_to>='$prev_num_student' And size_from<='$prev_num_student')");		
-			$my_group_id = $sizegroup["group_id"];
-			
-			if($prev_num_student == 0){	$my_group_id = 0;}
-			
-			# update the Group ID to Student_group Table means we can get the student according to group_id
-			$string_g="group_id='$my_group_id'";
-			$dbf->updateTable("student_group",$string_g,"id='$source_group'");
-			
-			# update in group details table
-			$string_g1="group_id='$my_group_id'";
-			$dbf->updateTable("student_group_dtls",$string_g1,"parent_id='$source_group'");
-			
-			#d Destination Student Status (Potential Status)
-			$date_time = date('Y-m-d H:i:s A');
-			
-			$string2="status_id='3',group_id='0'";
-			$dbf->updateTable("student_moving",$string2,"course_id='$from_course_id' And student_id='$source_student_id'");	
-			
-			$string2="student_id='$source_student_id',date_time='$date_time',user_id='$_SESSION[id]',status_id='3'";
-			$dbf->insertSet("student_moving_history",$string2);				
-			
-		# If Active / Hold to Active / Enrolled
-		}else if(($dtls["from_status_id"] == '5' || $dtls["from_status_id"] == '6') && ($dtls["to_status_id"] == '4' || $dtls["to_status_id"] == '5' || $dtls["to_status_id"] == '6')){
-		
-			$dbf->updateTable("student_fees", "student_id='$destination_student_id'", "course_id='$from_course_id' And student_id='$source_student_id'");
-						
-			# Removing from Fees / Enrollment Table
-			$dbf->deleteFromTable("student_enroll","course_id='$from_course_id' And student_id='$source_student_id'");
-			$dbf->deleteFromTable("student_group_dtls","course_id='$from_course_id' And student_id='$source_student_id'");
-			$dbf->deleteFromTable("student_fees","course_id='$from_course_id' And student_id='$source_student_id'");
-						
-			# Get number of student recently added
-			$prev_num_student = $dbf->countRows('student_group_dtls',"parent_id='$source_group'");
-			
-			# Get the range from (group_size) Table
-			$sizegroup = $dbf->strRecordID("group_size","*","(size_to>='$prev_num_student' And size_from<='$prev_num_student')");		
-			$my_group_id = $sizegroup["group_id"];
-			
-			if($prev_num_student == 0){	$my_group_id = 0;}
-			
-			# update the Group ID to Student_group Table means we can get the student according to group_id
-			$string_g="group_id='$my_group_id'";
-			$dbf->updateTable("student_group",$string_g,"id='$source_group'");
-			
-			# update in group details table
-			$string_g1="group_id='$my_group_id'";
-			$dbf->updateTable("student_group_dtls",$string_g1,"parent_id='$source_group'");
-			
-			#d Destination Student Status (Potential Status)
-			$date_time = date('Y-m-d H:i:s A');
-			
-			$string2="status_id='3',group_id='0'";
-			$dbf->updateTable("student_moving",$string2,"course_id='$from_course_id' And student_id='$source_student_id'");	
-			
-			$string2="student_id='$source_student_id',date_time='$date_time',user_id='$_SESSION[id]',status_id='3'";
-			$dbf->insertSet("student_moving_history",$string2);			
+								case '4':	{
+												$dbf->studentTransferFee($dtls["student_id"],$from_status,$dtls["from_course_id"],$dtls["to_course_id"],$dtls["to_student_id"],$comm,$_SESSION["id"],$_SESSION["centre_id"]);
+											}break;
+							}
+						}break;
+			default:	{
+							echo '
+									<script type="text/javascript">
+										alert("Select Status for Student 1!");
+										self.parent.location.href="student_to_student_manage.php";
+										self.parent.tb_remove();
+									</script>
+								';
+						}break;
 		}
+			
 	}
+	else
+	{
+		//$dbf->deleteFromTable("transfer_student_to_student","id='$_REQUEST[del_id]'");
+		//$dbf->deleteFromTable("transfer_student_to_student_dtls","parent_id='$_REQUEST[del_id]'");
+	
+		//header("Location:student_to_student_manage.php");
+		//exit;
+	}
+	
 	
 	//Start SMS
 	if($dbf->countRows("sms_gateway","status='Enable'") > 0){
@@ -231,8 +176,10 @@ if($_REQUEST['action']=='update'){
 		}
 	}
 	//End SMS
+
 }
 ?>
+
 <script type="text/javascript">
 	self.parent.location.href='student_to_student_manage.php';
 	self.parent.tb_remove();

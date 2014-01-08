@@ -254,7 +254,7 @@ $user_pwd = $dbf->strRecordID('user',"*","user_type='Student' And uid='$student_
                   </tr>
                   <tr>
                     <td width="25%" height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?> :</td>
-                    <td width="75%" align="left" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                    <td width="75%" align="left" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student_id);?></td>
                   </tr>
                   <?php if($student["student_id"] > 0){?>
                   <tr>
@@ -499,7 +499,7 @@ $user_pwd = $dbf->strRecordID('user',"*","user_type='Student' And uid='$student_
                       <td height="25" colspan="2" align="center" valign="middle" bgcolor="#DDDDFF" class="pedtext"><?php echo constant("STUDENT_INFORMATON");?></td>
                     </tr>
                     <tr>
-                      <td width="63%" height="22" align="right" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                      <td width="63%" height="22" align="right" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student_id);?></td>
                       <td width="37%" align="left" valign="middle" class="pedtext">: <?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?></td>
                     </tr>
                     <?php if($student["student_id"] > 0) { ?>

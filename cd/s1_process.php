@@ -794,7 +794,7 @@ if($_REQUEST['action']=='search'){
 		//Get Invoice Number
 		# -------------------------------------------------------
 		$inv_no = $dbf->GenerateInvoiceNo($centre_id);
-		$inv_sl = substr($inv_no,5);
+		$inv_sl = $dbf->GetBillNo($student_id, $course_id);//substr($inv_no,5);
 		//=======================================================
 		
 		# if not available then save
@@ -883,23 +883,31 @@ if($_REQUEST['action']=='search'){
 
 if($_REQUEST['action']=='advance'){
 	
+	
 	$student_id = $_REQUEST["student_id"];
 	$course_id = $_REQUEST["course_id"];
 	$centre_id = $_SESSION["centre_id"];
-	$ad_comment = mysql_real_escape_string($_REQUEST[ad_comment]);
+	$ad_comment = mysql_real_escape_string($_REQUEST["comment"]);
 	$date_time = date('Y-m-d H:i:s A');
 	
 	//Get Invoice Number
 	# -------------------------------------------------------
 	$inv_no = $dbf->GenerateInvoiceNo($centre_id);
-	$inv_sl = substr($inv_no,5);
+	$inv_sl = $dbf->GetBillNo($student_id, $course_id);//substr($inv_no,5);
 	//=======================================================
 	
 	//insert into student_fee table
 	$string2="student_id='$student_id',course_id='$course_id',paid_amt='$_REQUEST[amts]',fee_amt='$_REQUEST[amts]',comments='$ad_comment',fee_date='$_REQUEST[dated]',paid_date='$_REQUEST[dated]',payment_type='$_REQUEST[payment_type]',centre_id='$centre_id',created_date=NOW(),created_by='$_SESSION[id]',type='advance',invoice_sl='$inv_sl',invoice_no='$inv_no',status='1'";	
 	$dbf->insertSet("student_fees",$string2);
+	$dbf->deleteFromTable("student_moving", "student_id='$student_id' And status_id <='2'");
+					
+	$string_st="student_id='$student_id',status_id='3',course_id='$course_id',date_time='$date_time',user_id='$_SESSION[id]'"; //Waiting Status		
+	$dbf->insertSet("student_moving",$string_st);
 	
+	$string2="student_id='$student_id',course_id='$course_id',date_time='$date_time',user_id='$_SESSION[id]',status_id='3'";
+	$dbf->insertSet("student_moving_history",$string2);	
 	# UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
+	/*
 	$is_multi_advance = $dbf->countRows("student_fees", "student_id='$student_id' And course_id='$course_id' And type='advance'");
 	if($is_multi_advance == 0){
 		
@@ -914,7 +922,7 @@ if($_REQUEST['action']=='advance'){
 		$string2="student_id='$student_id',course_id='$course_id',date_time='$date_time',user_id='$_SESSION[id]',status_id='3'";
 		$dbf->insertSet("student_moving_history",$string2);	
 		
-	}
+	}*/
 	# UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
 		
 	$is_enable = $dbf->countRows("sms_gateway","status='Enable'");
@@ -995,7 +1003,7 @@ if($_REQUEST['action']=='invoice'){
 	//Get Invoice Number
 	# -------------------------------------------------------
 	$inv_no = $dbf->GenerateInvoiceNo($centre_id);
-	$inv_sl = substr($inv_no,5);
+	$inv_sl = $dbf->GetBillNo($student_id, $course_id);//substr($inv_no,5);
 	//=======================================================
 	
 	$dt = date('Y-m-d h:m:s');

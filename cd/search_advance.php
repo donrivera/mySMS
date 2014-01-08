@@ -174,7 +174,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <td width="15" align="left" valign="top"><img src="../images/left_top_bg.png" width="15" height="31" alt="left_top" /></td>
-                    <td width="100%" class="amt_head" style="background:url(../images/left_mid_bg.png) repeat-x;"><?php echo constant("CD_SEARCH_INVOICE_PAYMENTRECEIVE");?> <?php echo $val_student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($val_student["id"]));?></td>
+                    <td width="100%" class="amt_head" style="background:url(../images/left_mid_bg.png) repeat-x;"><?php echo constant("CD_SEARCH_INVOICE_PAYMENTRECEIVE");?> <?php echo $dbf->printStudentName($val_student["id"]);?></td>
                     <td width="15" align="right" valign="top"><img src="../images/top_right_bg.png" width="15" height="31" /></td>
                   </tr>
                 </table></td>
@@ -392,7 +392,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                           <td width="15" align="left" valign="top"><img src="../images/left_top_bg.png" width="15" height="31" alt="left_top" /></td>
-                          <td width="100%" align="right" class="amt_head" style="background:url(../images/left_mid_bg.png) repeat-x;"><?php echo constant("CD_SEARCH_INVOICE_PAYMENTRECEIVE");?> <?php echo $val_student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($val_student["id"]));?></td>
+                          <td width="100%" align="right" class="amt_head" style="background:url(../images/left_mid_bg.png) repeat-x;"><?php echo constant("CD_SEARCH_INVOICE_PAYMENTRECEIVE");?> <?php echo $dbf->printStudentName($val_student["id"]);?></td>
                           <td width="15" align="right" valign="top"><img src="../images/top_right_bg.png" width="15" height="31" /></td>
                           </tr>
                         </table></td>

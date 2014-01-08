@@ -122,6 +122,14 @@ text-transform:uppercase;
 			  if($couse_name != ''){
 			  	echo ADMIN_S6_INTRESTINCOURSE." (".$couse_name.") by ".$student_name;
 			  }
+			  $query=$dbf->genericQuery(
+												"SELECT sg.group_name,c.name,sg.id
+													FROM student_group  sg
+													INNER JOIN student_course sc ON sg.course_id=sc.course_id
+													INNER JOIN course c ON c.id=sc.course_id
+													WHERE sc.student_id='$student_id' 
+													AND sg.centre_id='$_SESSION[centre_id]' 
+													AND status!='Completed'");
 			  ?>
               </td>
               </tr>
@@ -132,16 +140,21 @@ text-transform:uppercase;
               <td width="66%" align="left" valign="middle">
               <select name="group" class="combo" id="group" style="width:180px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;">
                 <option value=""> Select Group </option>
-                <?php
+                 <?php
+				/*
 				foreach($dbf->fetchOrder('student_course',"student_id='$student_id' And course_id > 0","") as $rescourse) {
-					$res_g = $dbf->strRecordID("student_group","*","course_id='$rescourse[course_id]' And centre_id='$_SESSION[centre_id]' And status<>'Completed'");
+					$res_g = $dbf->strRecordID("student_group","*","course_id='$rescourse[course_id]' And centre_id='$_SESSION[centre_id]' And status!='Completed'");
 					$course = $dbf->strRecordID("course","name","id='$rescourse[course_id]'");
 					//$already_taught = $dbf->countRows("student_group_dtls","student_id='$student_id' And course_id='$res_g[course_id]'");
 					//if($already_taught == 0){
 					if($res_g['group_name'] != ""){
-				  ?>
-                <option value="<?php echo $res_g['id']?>"><?php echo $res_g['group_name'].' ['.$course["name"].']';?></option>
-                <?php }} ?>
+				*/
+				?>
+                <!--<option value="<?php //echo $res_g['id']?>"><?php //echo $res_g['group_name'].' ['.$course["name"].']';?></option>-->
+                <?php //}} ?>
+				<?php foreach($query as $q):?>
+					<option value="<?php echo $q[id];?>"><?php echo $q['group_name'].' ['.$q["name"].']';?></option>
+				<?php endforeach;?>
               </select></td>
               </tr>
             <tr>

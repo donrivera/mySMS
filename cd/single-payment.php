@@ -311,7 +311,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
                   <tr>
                     <td width="35%" height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?> : &nbsp;</td>
-                    <td width="65%" align="left" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                    <td width="65%" align="left" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student_id);?></td>
                   </tr>
                   <tr>
                     <td height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_VIEW_COMMENTS_MANAGE_STUDENT_ID");?> : &nbsp;</td>
@@ -444,14 +444,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								 $fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1'");
 								 $feeamt = $fee["SUM(paid_amt)"];
 								  
-								 $bal_amt = $camt - $feeamt;
+								 $bal_amt = $course_fees - $feeamt;
 							
 								//Use currency
 								$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 								?>
                               <tr>
                                 <td width="62%" height="25" align="left" valign="middle" bgcolor="#A9CFFE" class="pedtext"><?php echo constant("ADMIN_COURSE_MANAGE_COURSEFEES");?> :</td>
-                                <td width="38%" align="left" valign="middle" bgcolor="#F1E8FF" class="mycon">&nbsp;<?php echo $camt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
+                                <td width="38%" align="left" valign="middle" bgcolor="#F1E8FF" class="mycon">&nbsp;<?php echo $course_fees;?>&nbsp;<?php echo $res_currency[symbol];?></td>
                                 </tr>
                               <tr>
                                 <td height="25" align="left" valign="middle" bgcolor="#A9CFFE" class="pedtext"><?php echo constant("CD_SEARCH_INVOICE_PAIDAMOUNT");?> :</td>
@@ -840,7 +840,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <td height="25" colspan="2" align="center" valign="middle" bgcolor="#DDDDFF" class="pedtext"><?php echo constant("STUDENT_INFORMATON");?></td>
                     </tr>
                     <tr>
-                      <td width="64%" height="22" align="right" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                      <td width="64%" height="22" align="right" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student_id);?></td>
                       <td width="36%" align="left" valign="middle" class="pedtext">: <?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?></td>
                     </tr>
                     <?php if($student["student_id"] > 0) { ?>
@@ -960,13 +960,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								 $fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1'");
 								 $feeamt = $fee["SUM(paid_amt)"]+$res_enroll["ob_amt"];
 								  
-								 $bal_amt = $camt - $feeamt;
+								$bal_amt = $course_fees - $feeamt;
 							
 								//Use currency
 								$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 								?>
                               <tr>
-                                <td width="38%" height="25" align="right" valign="middle" bgcolor="#F1E8FF" class="mycon">&nbsp;<?php echo $camt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
+                                <td width="38%" height="25" align="right" valign="middle" bgcolor="#F1E8FF" class="mycon">&nbsp;<?php echo $course_fees;?>&nbsp;<?php echo $res_currency[symbol];?></td>
                                 <td width="56%" align="left" valign="middle" bgcolor="#A9CFFE" class="pedtext">&nbsp; : <?php echo constant("ADMIN_COURSE_MANAGE_COURSEFEES");?></td>
                               </tr>
                               <tr>
