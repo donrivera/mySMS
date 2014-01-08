@@ -1630,12 +1630,6 @@ class User extends Dbfunctions{
 		$this->deleteFromTable("student_group_dtls","course_id='$cou_id' And student_id='$f_sdt'");
 	}
 	
-	/*	type="radio"
-		SELECT s.*,sf.total
-		FROM student s
-		LEFT JOIN(SELECT student_id,course_id,SUM(paid_amt)AS total FROM student_fees GROUP BY student_id) sf ON sf.student_id=s.id 
-		INNER JOIN student_moving sm ON sm.student_id=s.id
-		WHERE s.centre_id='1' AND sm.status_id='3' AND sf.course_id='1'
-	*/
+	
 }
 ?>
