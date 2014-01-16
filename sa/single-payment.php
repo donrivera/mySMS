@@ -446,12 +446,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td width="53%" rowspan="4" align="left" valign="top">
                             <table width="80%" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#000000" style="border-collapse:collapse;">
                               <?php			 
-								 $camt = $res_enroll["course_fee"]-$res_enroll["discount"]+$res_enroll["other_amt"];
+								 $camt = $course_fees-$res_enroll["discount"]+$res_enroll["other_amt"];
 								 
 								 $fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1'");
 								 $feeamt = $fee["SUM(paid_amt)"];
 								  
-								 $bal_amt = $course_fee - $feeamt;
+								 $bal_amt = $camt- $feeamt;
 							
 								//Use currency
 								$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");

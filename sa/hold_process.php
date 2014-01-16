@@ -65,7 +65,7 @@ if($_REQUEST['action']=='insert'){
 	</style>
     <?php
 	$headers .= 'MIME-Version: 1.0' . "\n";
-	$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+	$headers .= 'Content-type: text/html; charset=iso-8859-6' . "\r\n";
 	$headers .= "From:".$from."\n";
 	
 	$email_cont = $dbf->strRecordID("email_templetes","*","id='10'");

@@ -12,11 +12,12 @@ $res_logo = $dbf->strRecordID("conditions","*","type='Logo path'");
 $sms_gateway = $dbf->strRecordID("sms_gateway","*","");
 $mobile_no = '';
 $student_id = $_REQUEST['student_id'];
+$course_id= $_REQUEST['course_id'];
 //============
 // SMS
 //============
 $mobile_no = $dbf->getDataFromTable("student","student_mobile","sms_status='1' And id='$student_id'");
-
+$amt=$dbf->getDataFromTable("student_fees","paid_amt","course_id='$course_id' AND id='$student_id' AND type='opening'");
 if($mobile_no != ''){
 	
 	// Your username
@@ -38,14 +39,36 @@ if($mobile_no != ''){
 	//$msg = "You have paid ".$amt." for initial payment";
 	$sms = $_REQUEST['sms'];
 	if($sms == "1" || $sms == "3"){
-		if($sms == "1"){
-			$sms_cont = $dbf->getDataFromTable("sms_templete","contents","id='31'");
-		}else if($sms == "3"){
+		if($sms == "1")
+		{
+			$balance=$dbf->BalanceAmount($student_id, $course_id);
+			if($balance==0)
+			{$template_id=44;}
+			else
+			{$template_id=34;}
+			$sms_cont = $dbf->getDataFromTable("sms_templete","contents","id='$template_id'");
+		}
+		else if($sms == "3")
+		{
 			$sms_cont = $_REQUEST['contents'];
 		}
-		$sms_cont = str_replace('%first_name%',$student_mobile["first_name"],$sms_cont);
-		$msg = str_replace('%ad_amt%',$_REQUEST["ad_amt"],$sms_cont);
-		
+		switch($template_id)
+		{
+			case '44':	{
+							$student_grp=$dbf->genericQuery("	SELECT g.group_name
+																FROM student_group g
+																INNER JOIN student_group_dtls sgd ON sgd.parent_id = g.id
+																WHERE sgd.student_id ='$student_id' AND sgd.course_id ='$course_id'");
+							foreach($student_grp as $sdt_grp):echo$sdt_grp_nme=$sdt_grp['group_name'];endforeach;
+							$msg = str_replace('%course_name%',$sdt_grp_nme,$sms_cont);
+						}break;
+			default:	{
+							//$sms_cont = str_replace('%first_name%',$student_mobile["first_name"],$sms_cont);
+							$msg = str_replace('%amount%',$_REQUEST["amt"],$sms_cont);
+						}break;
+		}
+		//$sms_cont = str_replace('%first_name%',$student_mobile["first_name"],$sms_cont);
+		//$msg = str_replace('%amount%',$amt,$sms_cont);
 		$Message=$msg;
 	
 		// Storing Sending result in a Variable.

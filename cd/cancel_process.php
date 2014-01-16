@@ -58,7 +58,7 @@ if($_REQUEST['action']=='update'){
 	$to = $dbf->getDataFromTable("user","email","id='1'"); // 1 for Admin	
 	$to_name = $dbf->getDataFromTable("user","user_name","id='1'");
 	
-	$to2 = $dbf->getDataFromTable("user","email","user_type='Accountant' And center_id='$centre_id'");
+	$to2 = $dbf->getDataFromTable("user","email","user_type='Accountant'");# And center_id='$centre_id'
 	
 	//Concate both Administrator and Accountant
 	if($to2 != ''){ $to = $to.','.$to2;	}
@@ -82,7 +82,7 @@ if($_REQUEST['action']=='update'){
 	</style>
     <?php
 	$headers .= 'MIME-Version: 1.0' . "\n";
-	$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+	$headers .= 'Content-type: text/html; charset=iso-8859-6' . "\r\n";
 	$headers .= "From:".$from."\n";
 	
 	$email_cont = $dbf->strRecordID("email_templetes","*","id='5'");
@@ -102,7 +102,7 @@ if($_REQUEST['action']=='update'){
         <table width="250" border="1" cellspacing="0" cellpadding="0" bordercolor="#9999FF" style="border-collapse:collapse;">
           <tr>
             <td width="54%" height="20" align="right" valign="middle" class="mycon">Student Name : &nbsp;</td>
-            <td width="46%" align="left" valign="middle" class="shop2">&nbsp;'.$stu["first_name"].'</td>
+            <td width="46%" align="left" valign="middle" class="shop2">&nbsp;'.$dbf->printStudentName($student_id).'</td>
           </tr>
           <tr>
             <td width="54%" height="20" align="right" valign="middle" class="mycon">Course : &nbsp;</td>

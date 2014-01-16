@@ -16,7 +16,8 @@ function get_percent($input){
 	}					
 }
 
-if($_REQUEST['action']=='insert'){
+if($_REQUEST['action']=='insert')
+{
 	
 	$narration = mysql_real_escape_string($_REQUEST[narration]);
 	
@@ -24,7 +25,8 @@ if($_REQUEST['action']=='insert'){
 	
 	//Check duplicate
 	$num=$dbf->countRows('teacher_progress',"teacher_id='$uid' and group_id='$_POST[group_id]'");
-	if($num==0){
+	if($num==0)
+	{echo "1";
 		
 		//Query string
 		$string="teacher_id='$uid',group_id='$_POST[group_id]',course_id='$res_group[course_id]',grade_submit='$_POST[grade_submit]',report_print='$_POST[report_print]',report_print_by='$_POST[report_print_by]',certificate_print='$_POST[certificate_print]',certificate_print_by='$_POST[certificate_print_by]', progress_report_date='$_POST[progress_report_date]', certificate='$_POST[certificate]',narration='$narration'";
@@ -39,7 +41,8 @@ if($_REQUEST['action']=='insert'){
 		$res_size = $dbf->strRecordID("group_size","*","group_id='$res_group[group_id]'");
 		
 		$student_count = $_POST[student_count1];		
-		for($m=1; $m<=$student_count; $m++){
+		for($m=1; $m<=$student_count; $m++)
+		{
 			
 			$total_units=$_POST[hidAttend];
 			
@@ -71,11 +74,10 @@ if($_REQUEST['action']=='insert'){
 			$attend = $attendance;
 			$totalunits = $res_size[units];
 			
-			if($totalunits!=0){
-				$attend_calc=round((($attend/$totalunits)*100)/10);
-			}
+			if($totalunits!=0){$attend_calc=round((($attend/$totalunits)*100)/10);}
 			
-			if($end_of_level > 0){
+			if($end_of_level > 0)
+			{
 				$grade_sheet = $dbf->strRecordID("grade_sheet","*","'$end_of_level' BETWEEN frm and tto");					
 				$nos = $grade_sheet[nos];
 				$benifit = 18 - (3 * $nos);
@@ -88,9 +90,7 @@ if($_REQUEST['action']=='insert'){
 			$final_grade = $final_grade + get_percent($listening);
 			$final_grade = $final_grade + $attend_calc;
 			
-			if($end_of_level > 0){
-				$final_grade = $final_grade + $benifit;
-			}
+			if($end_of_level > 0){$final_grade = $final_grade + $benifit;}
 			
 			$res_grade = $dbf->strRecordID("grade","*","'$final_grade' BETWEEN frm and tto");
 			$grade_id = $res_grade["id"];
@@ -98,25 +98,27 @@ if($_REQUEST['action']=='insert'){
 			
 			//Check duplicate
 			$num=$dbf->countRows('teacher_progress_certificate',"teacher_id='$uid' AND group_id='$_POST[group_id]' AND course_id='$res_group[course_id]' AND student_id='$student_id'");
-			if($num==0){
+			if($num==0)
+			{
 				//Insert in progress certificate table
 				$string="teacher_id='$uid',group_id='$_POST[group_id]',course_id='$res_group[course_id]',student_id='$student_id',fluency='$fluency',fluency_perc='$fluency_perc', pronunciation='$pronunciation',pronunciation_perc='$pronunciation_perc',grammer='$grammer',grammer_perc='$grammer_perc',vocabulary='$vocabulary',vocabulary_perc='$vocabulary_perc', listening='$listening',listening_perc='$listening_perc',end_of_level='$end_of_level',end_of_level_perc='$end_of_level_perc', attendance='$attendance', attendance_perc='$attend_calc',parent_id='$ids',final_percent='$final_grade',grade_id='$grade_id'";
 				
 				$dbf->insertSet("teacher_progress_certificate",$string);
-			}else{
+			}
+			else
+			{
 				//update progress certificate table
 				$string="fluency='$fluency',fluency_perc='$fluency_perc',pronunciation='$pronunciation',pronunciation_perc='$pronunciation_perc', grammer='$grammer',grammer_perc='$grammer_perc',vocabulary='$vocabulary',vocabulary_perc='$vocabulary_perc',listening='$listening',listening_perc='$listening_perc',  end_of_level='$end_of_level',end_of_level_perc='$end_of_level_perc',attendance='$attendance', attendance_perc='$attend_calc',parent_id='$ids',final_percent='$final_grade',grade_id='$grade_id'";
 				
-			$dbf->updateTable("teacher_progress_certificate",$string,"teacher_id='$uid' AND group_id='$_POST[group_id]' AND course_id='$res_group[course_id]' AND student_id='$student_id'");
-			
+				$dbf->updateTable("teacher_progress_certificate",$string,"teacher_id='$uid' AND group_id='$_POST[group_id]' AND course_id='$res_group[course_id]' AND student_id='$student_id'");
 			}
-			
 			//SMS start
 			$student_id = $student_id;
 			$res_student = $dbf->strRecordID("student","*","id='$student_id' And sms_status='1'");
 			$student_mobile_no = $res_student["student_mobile"];
 			
-			if($student_mobile_no != ''){
+			if($student_mobile_no != '')
+			{
 				
 				$sms_gateway = $dbf->strRecordID("sms_gateway","*","");
 				
@@ -134,8 +136,8 @@ if($_REQUEST['action']=='insert'){
 				$Originator=UrlEncoding($sms_gateway[your_name]);
 																
 				$res_sms = $dbf->strRecordID("sms_gateway","*","status='Disable'");
-				if($res_sms[status] == '') {
-					
+				if($res_sms[status] == '') 
+				{
 					//Get centre ID from select Group
 					$res_group = $dbf->strRecordID("student_group","*","id='$_REQUEST[group_id]'");
 					$centre_id = $res_group["centre_id"];
@@ -146,30 +148,30 @@ if($_REQUEST['action']=='insert'){
 					//Check (Once SMS has been sent to a particular student in a particular date with his same teacher and belongs to that centre)
 					$num_sms = $dbf->countRows('sms_history',"user_id='$_SESSION[id]' and mobile='$student_mobile_no' And centre_id='$centre_id' And msg_from='Progress Reports'");
 					
-					if($num_sms == 0) {
-										
+					if($num_sms == 0) 
+					{
 						// Storing Sending result in a Variable.
-						if($sms_gateway["status"]=='Enable'){
-							
-							$sms = $_REQUEST['sms'];
-							if($sms == "1" || $sms == "3"){
-								if($sms == "1"){
+						if($sms_gateway["status"]=='Enable')
+						{
+							$sms =1;#$_REQUEST['sms'];
+							if($sms == "1" || $sms == "3")
+							{
+								if($sms == "1")
+								{
 									$sms_cont = $dbf->getDataFromTable("sms_templete","contents","id='36'");
-								}else if($sms == "3"){
+								}
+								else if($sms == "3")
+								{
 									$sms_cont = $_REQUEST['contents'];
 								}
 								$sms_cont = str_replace('%grade_name%',$grade_name,$sms_cont);
 								$msg = str_replace('%final_grade%',$final_grade,$sms_cont);
-								
 								$Message = $msg;
-							
 								SendSms($UserName,$UserPassword,$Numbers,$Originator,$Message);
-													
 								//SMS save in the Table (sms_history)
 								//====================================
 								$string="dated='$cr_date',user_id='$_SESSION[id]',msg='$Message',send_to='student',mobile='$student_mobile_no',centre_id='$centre_id',send_date='$dt',msg_from='Progress Reports',automatic='Yes',page_full_path='$_SERVER[REQUEST_URI]'";
 								$sms_id = $dbf->insertSet("sms_history",$string);	
-			
 								$string1="parent_id='$sms_id',student_id='$student_id'";
 								$dbf->insertSet("sms_history_dtls",$string1);	
 							}
@@ -236,7 +238,7 @@ if($_REQUEST['action']=='insert'){
 				//update Progress course table	
 				$string="course_partication='$course_partication',course_partication_perc='$course_partication_perc',course_homework='$course_homework', course_homework_perc='$course_homework_perc',course_fluency='$course_fluency', course_fluency_perc='$course_fluency_perc', course_pro='$course_pro', course_pro_perc='$course_pro_perc',course_grammer='$course_grammer', course_grammer_perc='$course_grammer_perc', course_voca='$course_voca', course_voca_perc='$course_voca_perc', course_listen='$course_listen',course_listen_perc='$course_listen_perc',course_attendance='$course_attendance',course_attendance_perc='$course_attendance_perc',parent_id='$ids'";
 				
-			$dbf->updateTable("teacher_progress_course",$string,"teacher_id='$uid' AND group_id='$_POST[group_id]' AND course_id='$res_group[course_id]' AND student_id='$student_id'");
+				$dbf->updateTable("teacher_progress_course",$string,"teacher_id='$uid' AND group_id='$_POST[group_id]' AND course_id='$res_group[course_id]' AND student_id='$student_id'");
 			
 			}
 			
@@ -247,7 +249,7 @@ if($_REQUEST['action']=='insert'){
 		header("Location:report_teacher_progress.php?msg=added&group_id=$_POST[group_id]");
 	}	
 	else
-	{
+	{echo "2";
 		
 		//Query string
  		$string="report_print='$_POST[report_print]',report_print_by='$_POST[report_print_by]',certificate_print='$_POST[certificate_print]',certificate_print_by='$_POST[certificate_print_by]', progress_report_date='$_POST[progress_report_date]', certificate='$_POST[certificate]',grade_submit='$_POST[grade_submit]',narration='$narration'";
@@ -334,9 +336,9 @@ if($_REQUEST['action']=='insert'){
 			else
 			{
 				//update progress certificate table
-				echo $string="fluency='$fluency',fluency_perc='$fluency_perc', pronunciation='$pronunciation', pronunciation_perc='$pronunciation_perc', grammer='$grammer',grammer_perc='$grammer_perc',vocabulary='$vocabulary',vocabulary_perc='$vocabulary_perc', listening='$listening', listening_perc='$listening_perc', end_of_level='$end_of_level',end_of_level_perc='$end_of_level_perc', attendance='$attendance', attendance_perc='$attend_calc', parent_id='$ids',final_percent='$final_grade',grade_id='$grade_id'";
+				$string="fluency='$fluency',fluency_perc='$fluency_perc', pronunciation='$pronunciation', pronunciation_perc='$pronunciation_perc', grammer='$grammer',grammer_perc='$grammer_perc',vocabulary='$vocabulary',vocabulary_perc='$vocabulary_perc', listening='$listening', listening_perc='$listening_perc', end_of_level='$end_of_level',end_of_level_perc='$end_of_level_perc', attendance='$attendance', attendance_perc='$attend_calc', parent_id='$ids',final_percent='$final_grade',grade_id='$grade_id'";
 				
-			$dbf->updateTable("teacher_progress_certificate",$string,"teacher_id='$uid' AND group_id='$_POST[group_id]' AND course_id='$res_group[course_id]' AND student_id='$student_id'");
+				$dbf->updateTable("teacher_progress_certificate",$string,"teacher_id='$uid' AND group_id='$_POST[group_id]' AND course_id='$res_group[course_id]' AND student_id='$student_id'");
 			
 			}
 			

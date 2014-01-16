@@ -8,7 +8,8 @@ include("../includes/saudismsNET-API.php");
 $dbf = new User();
 
 if($_REQUEST['action']=='update')
-{
+{echo var_dump($_REQUEST);
+
 	$comm = mysql_real_escape_string($_REQUEST["comment"]);
 	$reg_dt = date('Y-m-d');
 	
@@ -26,7 +27,7 @@ if($_REQUEST['action']=='update')
 	$f_sdt=$dtls[student_id];
 	//$t_sdt=$dtls[to_student_id];
 	$center_id=$dtls[centre_id];
-		
+	$created_by=$dtls[created_by];	
 	$string="status='$_REQUEST[status]',cd_comment='$comm'";
 	$dbf->updateTable("transfer_centre_to_centre",$string,"id='$tran_id'");
 	
@@ -90,34 +91,34 @@ if($_REQUEST['action']=='update')
 	//Start SMS
 	if($dbf->countRows("sms_gateway","status='Enable'") > 0)
 	{
-		$userto = $dbf->strRecordID("user","*","id='$dtls[created_by]'");
+		$userto = $dbf->strRecordID("user","*","id='$created_by'");
 		$mobile_no = $userto["mobile"];
 		
 		if($mobile_no != '')
 		{
-			$sms = $_REQUEST['sms'];
+			$sms =$_REQUEST['sms'];
 			if($sms == "1")
 			{
 				$sms_gateway = $dbf->strRecordID("sms_gateway","*","status='Enable'");
 				// Your username
-				$UserName=UrlEncoding($sms_gateway[user]);
+				$UserName=UrlEncoding($sms_gateway['user']);
 				
 				// Your password
-				$UserPassword=UrlEncoding($sms_gateway[password]);
+				$UserPassword=UrlEncoding($sms_gateway['password']);
 				
 				// Destnation Numbers seprated by comma if more than one and no more than 120 numbers Per time.
 				//$Numbers=UrlEncoding("966000000000,966111111111");
 				$Numbers=UrlEncoding($mobile_no);
 				
 				// Originator Or Sender name. In English no more than 11 Numbers or Characters or Both
-				$Originator=UrlEncoding($sms_gateway[your_name]);
+				$Originator=UrlEncoding($sms_gateway['your_name']);
 				
 				// Your Message in English or arabic or both.
 				// Each 70 Arabic Characters will be charged 1 Credit, Each 160 English Characters will be charged 1 Credit.
 				//$sms_cont = $dbf->getDataFromTable("sms_templete","contents","id='37'");
 				//$msg = str_replace('%teacher%',$teacher,$sms_cont);
 				
-				$msg = "Centre Director has been ".$_REQUEST["status"]." your request for transfer";
+				$msg = "Centre Director has been ".$_REQUEST['status']." your request for transfer";
 				$Message=$msg;
 				
 				// Storing Sending result in a Variable.

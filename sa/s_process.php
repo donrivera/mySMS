@@ -20,32 +20,27 @@ $Arabic = new I18N_Arabic('Transliteration');
 <?php
 $res = $dbf->strRecordID("student","*","id='$_REQUEST[student_id]'");
 
-if($_REQUEST['action']=='classic'){ 
+if($_REQUEST['action']=='classic')
+{ 
 
-	if($_REQUEST[mytxt_src] == ''){
-		$first_name=$_REQUEST[txt_src];
-	}else{
-		$first_name=$_REQUEST[mytxt_src];
-	}
+	/*
+	if($_REQUEST[mytxt_src] == '')
+	{$first_name=$_REQUEST[txt_src];}
+	else{$first_name=$_REQUEST[mytxt_src];}
 	
 	$ar_first_name = $_REQUEST[ar_mytxt_src];
 	
-	if($_REQUEST[mytxt_src1] == ''){
-		$father_name=$_REQUEST[txt_src1];
-	}else{
-		$father_name=$_REQUEST[mytxt_src1];
-	}
-	if($_REQUEST[mytxt_src2] == ''){
-		$grandfather_name=$_REQUEST[txt_src2];
-	}else{
-		$grandfather_name=$_REQUEST[mytxt_src2];
-	}
-	if($_REQUEST[mytxt_src3] == ''){
-		$family_name=$_REQUEST[txt_src3];
-	}else{
-		$family_name=$_REQUEST[mytxt_src3];
-	}
-		
+	if($_REQUEST[mytxt_src1] == '')
+	{$father_name=$_REQUEST[txt_src1];}
+	else{$father_name=$_REQUEST[mytxt_src1];}
+	if($_REQUEST[mytxt_src2] == '')
+	{$grandfather_name=$_REQUEST[txt_src2];}
+	else{$grandfather_name=$_REQUEST[mytxt_src2];}
+	if($_REQUEST[mytxt_src3] == '')
+	{$family_name=$_REQUEST[txt_src3];}
+	else{$family_name=$_REQUEST[mytxt_src3];}
+	*/
+
 	$student_name = $first_name.' '.$family_name;
 	$last_name_arabic = $Arabic->en2ar($family_name);
 	$ar_familyname=$_REQUEST[ar_mytxt_src3];//aaaa
@@ -126,14 +121,14 @@ if($_REQUEST['action']=='classic'){
 		move_uploaded_file($_FILES[signature][tmp_name],"photo/".$filename1);
 	}
 		
-	 $string="	first_name='$first_name',
-				first_name1='$ar_firstname',
-				father_name='$father_name',
-				father_name1='$ar_fathername',
-				grandfather_name='$grandfather_name',
-				grandfather_name1='$ar_gfathrname',
-				family_name='$family_name',
-				family_name1='$ar_familyname',
+	 $string="	first_name='$_REQUEST[mytxt_src]',
+				first_name1='$_REQUEST[ar_mytxt_src]',
+				father_name='$_REQUEST[mytxt_src1]',
+				father_name1='$_REQUEST[ar_mytxt_src1]',
+				grandfather_name='$_REQUEST[mytxt_src2]',
+				grandfather_name1='$_REQUEST[ar_mytxt_src2]',
+				family_name='$_REQUEST[mytxt_src3]',
+				family_name1='$_REQUEST[ar_mytxt_src3]',
 				guardian_name='$_REQUEST[gname]',
 				age='$_REQUEST[age]',
 				guardian_contact='$_REQUEST[pcontact]',
@@ -414,19 +409,29 @@ if($_REQUEST['action']=='classic'){
 										
 					if($no_student_remove == 1){
 						$sms_cont = $dbf->getDataFromTable("sms_templete","contents","id='26'");
+						/*
 						$sms_cont = str_replace('%unit%',$unit,$sms_cont);
 						$sms_cont = str_replace('%std%',$student,$sms_cont);
 						$sms_cont = str_replace('%grp%',$g_name,$sms_cont);
 						$msg = str_replace('%unt_fnd%',$no_unit_finined,$sms_cont);
+						*/
+						$search = array('%unit%','%std%','%grp%','%unt_fnd%');
+						$replace = array($unit,$student,$g_name,$no_unit_finined);
+						$msg=str_replace($search, $replace, $sms_cont); 
 					
 					}else{
 						$sms_cont = $dbf->getDataFromTable("sms_templete","contents","id='27'");
+						/*
 						$sms_cont = str_replace('%unit%',$unit,$sms_cont);
 						$sms_cont = str_replace('%nos%',$no_student_remove,$sms_cont);					
 						$sms_cont = str_replace('%grp%',$g_name,$sms_cont);					
 						$sms_cont = str_replace('%std%',$student,$sms_cont);
 						$sms_cont = str_replace('%ufin%',$no_unit_finined,$sms_cont);
-						$msg = str_replace('%nos%',$no_student_remove,$sms_cont);						
+						$msg = str_replace('%nos%',$no_student_remove,$sms_cont);	
+						*/
+						$search = array('%unit%','%nos%','%grp%','%std%','%ufin%');
+						$replace = array($unit,$no_student_remove,$g_name,$no_unit_finined,$no_student_remove);
+						$msg=str_replace($search, $replace, $sms_cont); 
 					}
 					
 					$Message=$msg;
@@ -444,60 +449,52 @@ if($_REQUEST['action']=='classic'){
 				//======================
 				// Start Mail to Teacher
 				//======================
-				
-				//Teacher Email address
-				$to_user = $res_teacher["email"];
-				$admin_mail = $dbf->getDataFromTable("user","email","user_type='Administrator");
-		
+				$grp_email_dtl=$dbf->genericQuery("
+													SELECT sg.units, sg.group_name, sg.end_date, sgd.total
+													FROM student_group sg
+													LEFT JOIN (	SELECT COUNT( student_id ) AS total, parent_id
+																FROM student_group_dtls
+																WHERE parent_id='$group'
+																)sgd ON sgd.parent_id = sg.id
+													WHERE sg.id =  '$group'
+												");
+				foreach($grp_email_dtl as $ged):
+					$send_units=$ged['units'];
+					$send_gname=$ged['group_name'];
+					$send_enddate=$ged['end_date'];
+					$send_total=$ged['total'];
+				endforeach;
+				$to_user = $res_teacher[email];
+				$from = $dbf->getDataFromTable("user","email","user_type='Administrator");
 				if($to_user != '' || $admin_mail != ''){
 					
 					$headers .= 'MIME-Version: 1.0' . "\n";
-					$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+					$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";		
 					$headers .= "From:".$from."\n";
-					
 					$email_cont = $dbf->strRecordID("email_templetes","*","id='6'");
 					$email_msg = $email_cont["content"];
-					
 					$email_msg = str_replace('%teacher%',$res_teacher["name"],$email_msg);
-					$email_msg = str_replace('%pending_units%',$pending_units,$email_msg);
-					$email_msg = str_replace('%groupname%',$g_name,$email_msg);
-					$email_msg = str_replace('%dec_right_value_is%',$dec_right_value_is,$email_msg);
-					$email_msg = str_replace('%g3_name%',$g3_name,$email_msg);
-					$email_msg = str_replace('%unit%',$unit,$email_msg);
-					
-					$email_msg = str_replace('%no_student_remove%',$no_student_remove,$email_msg);
-					$email_msg = str_replace('%student%',$student,$email_msg);
-					$email_msg = str_replace('%no_unit_finined%',$no_unit_finined,$email_msg);
-					
+					$search = array('%teacher%', '%unit%', '%group_name%','%students%','%end_date%');
+					$replace = array($res_teacher["name"],$send_units,$send_gname,$send_total,$send_enddate);
+					$email_msg=str_replace($search, $replace, $email_msg); 
 					$body1='<table width="500" border="0" align="center" cellpadding="0" cellspacing="0" style="border:solid 2px; border-color:#FFCC00;">
-		  <tr>
-			<td height="39" align="left" valign="middle" bgcolor="#FF9900" style="padding-left:5px;"><img src="'.$res_logo[name].'" width="105" height="30" /></td>
-		  </tr>
-		  <tr>
-			<td align="left" valign="middle">&nbsp;</td>
-		  </tr>
-		  <tr>
-			<td height="50" align="left" valign="middle" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:normal; color:#999999; padding-left:5px;">'.$email_msg.'</td>
-		  </tr>		  
-		  <tr>
-			<td align="center" valign="top">&nbsp;</td>
-		  </tr>
-		</table>';	
-			
+						<tr>
+							<td height="39" align="left" valign="middle" bgcolor="#FF9900" style="padding-left:5px;"><img src="'.$res_logo[name].'" width="105" height="30" /></td>
+						</tr>
+						<tr>
+							<td align="left" valign="middle">&nbsp;</td>
+						</tr>
+						<tr>
+							<td height="50" align="left" valign="middle" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:normal; color:#999999; padding-left:5px;">'.$email_msg.'</td>
+						</tr>		  
+						<tr>
+							<td align="center" valign="top">&nbsp;</td>
+						</tr>
+						</table>';	
+	
 					$subject = $email_cont["title"];				
 					//$subject ="Group size has been changed Notification !!!";
-					
 					mail($to_user,$subject,$body1,$headers);
-					mail($admin_mail,$subject,$body1,$headers);							
-					
-					//Start Save Mail	
-					$dt = date('Y-m-d');
-					$dttm = date('Y-m-d h:i:s');
-					
-					$string="dated='$dttm',user_id='$_SESSION[id]',msg='$subject',send_to='Student Advisor and Center Director',email='$to',centre_id='$_SESSION[centre_id]',send_date='$dt',msg_from='Admin for Approved or Rejected of the Cancellation',automatic='Yes',page_full_path='$_SERVER[REQUEST_URI]'";
-					$dbf->insertSet("email_history",$string);
-					// End Save Mail
-						
 				}
 				
 								
@@ -907,6 +904,7 @@ if($_REQUEST['action'] == 'edit_from_student_profile'){
 				guardian_name='$_REQUEST[gname]',
 				guardian_contact='$_REQUEST[pcontact]',
 				guardian_comment='$_REQUEST[information]',
+				student_mobile='$_REQUEST[mobile]',
 				id_type='$_REQUEST[id_type]'";
 	
 	$dbf->updateTable("student",$string,"id='$student_id'");

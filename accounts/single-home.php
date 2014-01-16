@@ -136,7 +136,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
                   <tr>
                     <td width="35%" height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?> : &nbsp;</td>
-                    <td width="65%" align="left" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                    <td width="65%" align="left" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student["id"]);?></td>
                   </tr>
                   <?php if($student["student_id"] > 0) { ?>
                   <tr>
@@ -245,7 +245,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				  ?>
                   <tr>
                     <td height="22" align="center" valign="middle" class="pedtext"><?php echo $k;?></td>
-                    <td align="left" valign="middle" class="mytext"><?php echo $group["group_name"];?> <?php echo $group["group_time"];?>-<?php echo $dbf->GetGroupTime($group["id"]);?></td>
+                    <td align="left" valign="middle" class="mytext"><?php echo $group["group_name"];?></td>
                     <td align="left" valign="middle" class="mytext"><?php echo $dbf->getDataFromTable("course","name","id='$group[course_id]'");?></td>
                     <td align="left" valign="middle" class="mytext"><?php echo 'From '.$group["start_date"].' To '.$group["end_date"];?></td>
                     <td align="center" valign="middle" class="mytext"><?php echo $group["status"];?></td>
@@ -353,7 +353,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <td height="25" colspan="2" align="center" valign="middle" bgcolor="#DDDDFF" class="pedtext"><?php echo constant("STUDENT_INFORMATON");?></td>
                     </tr>
                     <tr>
-                      <td width="64%" height="22" align="right" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                      <td width="64%" height="22" align="right" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student["id"]);?></td>
                       <td width="36%" align="left" valign="middle" class="pedtext">: <?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?></td>
                     </tr>
                     <?php if($student["student_id"] > 0) { ?>
@@ -428,7 +428,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                           <td align="center" valign="middle" class="mytext"><?php echo $group["status"];?></td>
                           <td align="right" valign="middle" class="mytext"><?php echo $dbf->getDataFromTable("course","name","id='$group[course_id]'");?></td>
                           <td align="right" valign="middle" class="mytext"><?php echo 'From '.$group["start_date"].' To '.$group["end_date"];?></td>
-                          <td align="right" valign="middle" class="mytext"><?php echo $group["group_name"];?> <?php echo $group["group_time"];?>-<?php echo $dbf->GetGroupTime($group["id"]);?></td>
+                          <td align="right" valign="middle" class="mytext"><?php echo $group["group_name"];?></td>
                           <td height="22" align="center" valign="middle" class="pedtext"><?php echo $k;?></td>
                         </tr>
                         <?php $k++; } ?>

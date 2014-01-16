@@ -4,16 +4,6 @@ session_start();
 include_once '../includes/class.Main.php';
 require '../I18N/Arabic.php';
 
-//echo "S_POST:";var_dump($_POST);
-//echo "\n";
-//echo "S_SESSION:";var_dump($_SESSION);
-//echo $_SESSION[classic_name1];
-//echo "\n";
-//echo "S_REQUEST:";var_dump($_REQUEST);
-//echo "\n";
-//echo $_REQUEST[txt_src1];
-//echo $_REQUEST[ar_mytxt_src1];
-
 
 //Object initialization
 $dbf = new User();

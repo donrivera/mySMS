@@ -6,22 +6,22 @@ include("../includes/saudismsNET-API.php");
 
 //Object initialization
 $dbf = new User();
-
+$sms_gateway = $dbf->strRecordID("sms_gateway","*","");
 $hidsick=0;
 $teacher_id = $_SESSION[uid];
 
-if($_REQUEST['action']=='save'){
-	
+if($_REQUEST['action']=='save')
+{
 	$is_enable = $dbf->countRows("sms_gateway","status='Enable'");
-	$res_sms = $dbf->strRecordID("sms_gateway","*","status='Enable'");
-	
+	//$res_sms = $dbf->strRecordID("sms_gateway","*","status='Enable'");
 	$hidsick=$_REQUEST[hidsick];
-	
-	if($hidsick==0){
+	if($hidsick==0)
+	{
 		
 		//Check duplicate
 		$num=$dbf->countRows('sick_leave',"teacher_id='$teacher_id' and from_date='$_POST[from_date]'");
-		if($num==0){
+		if($num==0)
+		{
 			$filename=$_FILES['sick_attach']['name'];
 			
 			if($_FILES['sick_attach']['name']<>''){
@@ -42,6 +42,34 @@ if($_REQUEST['action']=='save'){
 			$from = $res_teacher["email"];
 			$teacher = $res_teacher["name"];
 			
+			/*
+			$start = $_POST[from_date];
+			$end = $_POST[to_date];
+			$days = $dbf->dateDiff($start,$end)+1;
+			//Current date and Time
+			$cr_date = date('Y-m-d H:i:s A');
+			//Get Minimum date of the Group / Course
+			$res_s = $dbf->strRecordID("student_group","MIN(start_date)","teacher_id='$teacher_id'");
+			$frm = $res_s["MIN(start_date)"];
+			//Get Maximum date of the Group / Course
+			$res_e = $dbf->strRecordID("student_group","MAX(end_date)","teacher_id='$teacher_id'");
+			$tto = $res_e["MAX(end_date)"];
+			$duplicate=$dbf->genericQuery("	SELECT * 
+											FROM teacher_vacation 
+											WHERE teacher_id='$teacher_id'
+											AND (('$start' BETWEEN frm AND tto) OR ('$end' BETWEEN frm AND tto))");
+			if($duplicate <= 0 || empty($duplicate))
+			{	
+				$getDates=$dbf->schedLeaves("Teacher",$teacher_id,$start,$end,$_REQUEST[type]);
+				$leave_string="teacher_id='$teacher_id',frm='$start',tto='$end',type='Sick leave',no_days='$days',created_datetime='$cr_date',created_by='$_SESSION[id]'";
+				$id = $dbf->insertSet("teacher_vacation",$leave_string);
+			}
+			else
+			{
+				echo '<script type="text/javascript">alert("Duplicate Transaction!");window.history.back();</script>';
+			}
+			*/
+			
 			$headers .= 'MIME-Version: 1.0' . "\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 			$headers .= "From:".$from."\n";
@@ -51,7 +79,8 @@ if($_REQUEST['action']=='save'){
 			$prev_centre = '';
 			foreach($dbf->fetchOrder('student_group',"teacher_id='$teacher_id' And (start_date<='$_REQUEST[to_date]' And end_date >='$_REQUEST[from_date]')","centre_id") as $leave_group){
 				
-				if($prev_centre != $leave_group["centre_id"]){
+				if($prev_centre != $leave_group["centre_id"])
+				{
 					
 					$cd_id = $leave_group["centre_id"];
 																
@@ -83,8 +112,8 @@ if($_REQUEST['action']=='save'){
 						  </tr>
 						</table>';
 					
-					$subj = $email_msg["title"];
-					$subject = str_replace('%teacher%',$teacher,$email_msg);
+					$subj = $email_cont["title"];
+					$subject = str_replace('%teacher%',$teacher,$subj);
 					
 					//$subject ="Sick leave from ".$teacher;
 					mail($to,$subject,$body1,$headers);
@@ -97,25 +126,29 @@ if($_REQUEST['action']=='save'){
 						if($mobile_no != ''){
 					
 							// Your username
-							$UserName=UrlEncoding($sms_gateway[user]);
+							$UserName=UrlEncoding($sms_gateway['user']);
 							
 							// Your password
-							$UserPassword=UrlEncoding($sms_gateway[password]);
+							$UserPassword=UrlEncoding($sms_gateway['password']);
 							
 							// Destnation Numbers seprated by comma if more than one and no more than 120 numbers Per time.
 							//$Numbers=UrlEncoding("966000000000,966111111111");
 							$Numbers=UrlEncoding($mobile_no);
 							
 							// Originator Or Sender name. In English no more than 11 Numbers or Characters or Both
-							$Originator=UrlEncoding($sms_gateway[your_name]);
+							$Originator=UrlEncoding($sms_gateway['your_name']);
 							
 							// Your Message in English or arabic or both.
 							// Each 70 Arabic Characters will be charged 1 Credit, Each 160 English Characters will be charged 1 Credit.
-							$msg = $subject;
+							$sms_cont = $dbf->getDataFromTable("sms_templete","contents","id='24'");
+							$search = array('%startdate%', '%enddate%', '%teacher%');
+							$replace = array($start,$end,$teacher);
+							$msg=str_replace($search, $replace, $sms_cont);  
 							$Message=$msg;
 							
 							// Storing Sending result in a Variable.
-							$SendingResult = SendSms($UserName,$UserPassword,$Numbers,$Originator,$Message);
+							//$SendingResult = SendSms($UserName,$UserPassword,$Numbers,$Originator,$Message);
+							SendSms($UserName,$UserPassword,$Numbers,$Originator,$Message);
 							////////////////////////////////////////////////////////////////////////////
 							
 							//================================
@@ -149,8 +182,11 @@ if($_REQUEST['action']=='save'){
 		}else{
 			//Header location
 			header("Location:sick_leave.php?msg=exist");
-		}	
-	}else{
+		}
+		
+	}
+	else
+	{
 		
 		//Check duplicate
 		$num=$dbf->countRows('sick_leave',"teacher_id='$teacher_id' and from_date='$_POST[from_date]' and id!='$_REQUEST[hidsick]'");
@@ -243,17 +279,17 @@ if($_REQUEST['action']=='save'){
 							if($mobile_no != ''){
 					
 								// Your username
-								$UserName=UrlEncoding($sms_gateway[user]);
+								$UserName=UrlEncoding($sms_gateway['user']);
 								
 								// Your password
-								$UserPassword=UrlEncoding($sms_gateway[password]);
+								$UserPassword=UrlEncoding($sms_gateway['password']);
 								
 								// Destnation Numbers seprated by comma if more than one and no more than 120 numbers Per time.
 								//$Numbers=UrlEncoding("966000000000,966111111111");
 								$Numbers=UrlEncoding($mobile_no);
 								
 								// Originator Or Sender name. In English no more than 11 Numbers or Characters or Both
-								$Originator=UrlEncoding($sms_gateway[your_name]);
+								$Originator=UrlEncoding($sms_gateway['your_name']);
 								
 								// Your Message in English or arabic or both.
 								// Each 70 Arabic Characters will be charged 1 Credit, Each 160 English Characters will be charged 1 Credit.
@@ -366,17 +402,17 @@ if($_REQUEST['action']=='save'){
 							if($mobile_no != ''){
 					
 								// Your username
-								$UserName=UrlEncoding($sms_gateway[user]);
+								$UserName=UrlEncoding($sms_gateway['user']);
 								
 								// Your password
-								$UserPassword=UrlEncoding($sms_gateway[password]);
+								$UserPassword=UrlEncoding($sms_gateway['password']);
 								
 								// Destnation Numbers seprated by comma if more than one and no more than 120 numbers Per time.
 								//$Numbers=UrlEncoding("966000000000,966111111111");
 								$Numbers=UrlEncoding($mobile_no);
 								
 								// Originator Or Sender name. In English no more than 11 Numbers or Characters or Both
-								$Originator=UrlEncoding($sms_gateway[your_name]);
+								$Originator=UrlEncoding($sms_gateway['your_name']);
 								
 								// Your Message in English or arabic or both.
 								// Each 70 Arabic Characters will be charged 1 Credit, Each 160 English Characters will be charged 1 Credit.
@@ -407,7 +443,9 @@ if($_REQUEST['action']=='save'){
 		}else{
 			//Header location
 			header("Location:sick_leave.php?msg=exist");
-		}	
+		}
+		
 	}	
 }
+
 ?>

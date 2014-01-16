@@ -341,7 +341,8 @@ if($_REQUEST['action']=='quick_add_group'){
 	$numv = $dbf->countRows('exam_vacation',"centre_id='$centre_id'");
 	
 	//If vacation is exist
-	if($numv > 0){
+	if($numv > 0)
+	{
 		$num_is=$dbf->countRows('exam_vacation',"(frm>='$_SESSION[gr_course_strdt]' And tto<='$_SESSION[gr_course_endt]') And centre_id='$centre_id'");
 		
 		//Example

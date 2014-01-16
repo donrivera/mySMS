@@ -47,11 +47,12 @@ if($_SESSION[font]=='big'){
 <script language="javascript" type="text/javascript">	
 function validate(){	
 	var x = document.getElementById('student_2').value;
+	
+	
 	if(x == ""){
 		return false;
 	}
 }	
-
 function show_studentlist(){
 	var ajaxRequest;  // The variable that makes Ajax possible!	
 	try{
@@ -221,7 +222,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					foreach($dbf->fetchOrder('student',"centre_id='$_SESSION[centre_id]' And student_mobile<>'' And first_name <> ''","first_name","","") as $move){
 					?>
 					<option value="<?php echo $move['id'];?>">
-						<?php echo $move[first_name]."&nbsp;".$move[father_name]."&nbsp;".$move[family_name]."&nbsp;(".$move[first_name1]."&nbsp;".$move[father_name1]."&nbsp;".$move[grandfather_name1]."&nbsp;".$move[family_name1].")";?>
+						<?php echo $dbf->printStudentName($move['id']);?>
 					</option>
 					<?php } ?>
                   </select>
@@ -260,7 +261,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 </tr>
               <tr>
                 <td align="left" valign="middle" bgcolor="#FFFFFF" class="menutext">&nbsp;</td>
-                <td height="35" colspan="2" bgcolor="#FFFFFF"><input type="submit" name="submit" id="submit" value="<?php echo constant("btn_send_btn");?>" class="btn1"/></td>
+                <td height="35" colspan="2" bgcolor="#FFFFFF"><input type="submit" name="submit" id="submit" value="<?php echo constant("btn_send_btn");?>" class="btn1" /></td>
                 <td align="left" valign="middle" bgcolor="#FFFFFF">&nbsp;</td>
                 </tr>
             </table>
@@ -355,7 +356,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							foreach($dbf->fetchOrder('student',"centre_id='$_SESSION[centre_id]' And student_mobile<>'' And first_name <> ''","first_name","","") as $move){
 							?>
 							<option value="<?php echo $move['id'];?>">
-								<?php echo $move[first_name]."&nbsp;".$move[father_name]."&nbsp;".$move[family_name]."&nbsp;(".$move[first_name1]."&nbsp;".$move[father_name1]."&nbsp;".$move[grandfather_name1]."&nbsp;".$move[family_name1].")";?>
+								<?php echo $dbf->printStudentName($move['id']);?>
 							</option>
 							<?php } ?>
                           </select>
@@ -428,7 +429,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       </tr>
                     <tr>
                       <td align="left" valign="middle" bgcolor="#FFFFFF" class="menutext">&nbsp;</td>
-                      <td height="35" colspan="2" align="right" bgcolor="#FFFFFF"><input type="submit" name="submit" id="submit" value="<?php echo constant("btn_send_btn");?>" class="btn2"/></td>
+                      <td height="35" colspan="2" align="right" bgcolor="#FFFFFF"><input type="submit" name="submit" id="submit" value="<?php echo constant("btn_send_btn");?>" class="btn2" /></td>
                       <td align="left" valign="middle" bgcolor="#FFFFFF">&nbsp;</td>
                       </tr>
                     </table>

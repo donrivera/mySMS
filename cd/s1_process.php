@@ -493,46 +493,51 @@ if($_REQUEST['action']=='insert'){
 				//======================
 				// Start Mail to Teacher
 				//======================
-				
+				$grp_email_dtl=$dbf->genericQuery("
+													SELECT sg.units, sg.group_name, sg.end_date, sgd.total
+													FROM student_group sg
+													LEFT JOIN (	SELECT COUNT( student_id ) AS total, parent_id
+																FROM student_group_dtls
+																WHERE parent_id='$group'
+																)sgd ON sgd.parent_id = sg.id
+													WHERE sg.id =  '$group'
+												");
+				foreach($grp_email_dtl as $ged):
+					$send_units=$ged['units'];
+					$send_gname=$ged['group_name'];
+					$send_enddate=$ged['end_date'];
+					$send_total=$ged['total'];
+				endforeach;
 				//Teacher Email address
 				$to_user = $res_teacher["email"];
 				$admin_mail = $dbf->getDataFromTable("user","email","user_type='Administrator");
-		
+				$from = $dbf->getDataFromTable("user","email","user_type='Administrator");
 				if($to_user != '' || $admin_mail != ''){
 					
 					$headers .= 'MIME-Version: 1.0' . "\n";
-					$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+					$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";		
 					$headers .= "From:".$from."\n";
-							
 					$email_cont = $dbf->strRecordID("email_templetes","*","id='6'");
 					$email_msg = $email_cont["content"];
-					
 					$email_msg = str_replace('%teacher%',$res_teacher["name"],$email_msg);
-					$email_msg = str_replace('%pending_units%',$pending_units,$email_msg);
-					$email_msg = str_replace('%groupname%',$g_name,$email_msg);
-					$email_msg = str_replace('%dec_right_value_is%',$dec_right_value_is,$email_msg);
-					$email_msg = str_replace('%g3_name%',$g3_name,$email_msg);
-					$email_msg = str_replace('%unit%',$unit,$email_msg);
-					
-					$email_msg = str_replace('%no_student_remove%',$no_student_remove,$email_msg);
-					$email_msg = str_replace('%student%',$student,$email_msg);
-					$email_msg = str_replace('%no_unit_finined%',$no_unit_finined,$email_msg);
-					
+					$search = array('%teacher%', '%unit%', '%group_name%','%students%','%end_date%');
+					$replace = array($res_teacher["name"],$send_units,$send_gname,$send_total,$send_enddate);
+					$email_msg=str_replace($search, $replace, $email_msg); 
 					$body1='<table width="500" border="0" align="center" cellpadding="0" cellspacing="0" style="border:solid 2px; border-color:#FFCC00;">
-		  <tr>
-			<td height="39" align="left" valign="middle" bgcolor="#FF9900" style="padding-left:5px;"><img src="'.$res_logo[name].'" width="105" height="30" /></td>
-		  </tr>
-		  <tr>
-			<td align="left" valign="middle">&nbsp;</td>
-		  </tr>
-		  <tr>
-			<td height="50" align="left" valign="middle" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:normal; color:#999999; padding-left:5px;">'.$email_msg.'</td>
-		  </tr>		  
-		  <tr>
-			<td align="center" valign="top">&nbsp;</td>
-		  </tr>
-		</table>';	
-			
+						<tr>
+							<td height="39" align="left" valign="middle" bgcolor="#FF9900" style="padding-left:5px;"><img src="'.$res_logo[name].'" width="105" height="30" /></td>
+						</tr>
+						<tr>
+							<td align="left" valign="middle">&nbsp;</td>
+						</tr>
+						<tr>
+							<td height="50" align="left" valign="middle" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:normal; color:#999999; padding-left:5px;">'.$email_msg.'</td>
+						</tr>		  
+						<tr>
+							<td align="center" valign="top">&nbsp;</td>
+						</tr>
+						</table>';	
+	
 					$subject = $email_cont["title"];				
 					//$subject ="Group size has been changed Notification !!!";
 					
@@ -805,8 +810,8 @@ if($_REQUEST['action']=='search'){
 	}else{
 		
 		# if available then edit the opening balance
-		$string="payment_type='$_POST[ptype]',paid_amt='$_POST[payment]',status='1',comments='$invoice_note',fee_amt='$_POST[payment]',created_date=NOW(),created_by='$_SESSION[id]'";
-		$dbf->updateTable("student_fees",$string,"course_id='$course_id' And student_id='$student_id' And type='opening'");
+		//$string="payment_type='$_POST[ptype]',paid_amt='$_POST[payment]',status='1',comments='$invoice_note',fee_amt='$_POST[payment]',created_date=NOW(),created_by='$_SESSION[id]'";
+		//$dbf->updateTable("student_fees",$string,"course_id='$course_id' And student_id='$student_id' And type='opening'");
 	
 	}
 	

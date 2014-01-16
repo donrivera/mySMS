@@ -1052,7 +1052,7 @@ class User extends Dbfunctions{
 		$new_enrolee=$dbf->countRows('student',"id='$student_id'");
 		$total_students=$prev_num + $new_enrolee;
 		$student_group=$dbf->strRecordID("student_group","start_date","id='$group'");
-		$current_total_unit=$dbf->strRecordID("student_group","units,teacher_id,start_date","id='$group'");
+		$current_total_unit=$dbf->strRecordID("student_group","units,teacher_id,start_date,unit_per_day","id='$group'");
 		$teacher_id=$current_total_unit['teacher_id'];
 		$start_date=$current_total_unit['start_date'];
 		$query=$dbf->genericQuery("SELECT units FROM centre_group_size WHERE('$total_students' BETWEEN size_from AND size_to)");
@@ -1071,14 +1071,14 @@ class User extends Dbfunctions{
 		if(empty($checknextclass) || $checknextclass==NULL)
 		{//echo"1";
 			$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
+			$total_ped_units=$max_ped['max'] *  $current_total_unit['unit_per_day'];
 			if(empty($max_ped) || $max_ped==NULL)
-			{echo"2";
-				
+			{	#echo"2";
 				$dbf->updateTable("student_group","units='$new_unit',end_date='$end_date'","id='$group'");
 			}
 			else
-			{	echo"3";
-				$adj=$dbf->computeAdjustments($total_students,$current_total_unit['units'],$max_ped['max'],$new_unit);
+			{	#echo"3";
+				$adj=$dbf->computeAdjustments($total_students,$current_total_unit['units'],$total_ped_units,$new_unit);
 				$new_computed_units=$adj[units];
 				$dbf->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
 			}
@@ -1109,14 +1109,14 @@ class User extends Dbfunctions{
 			if(empty($thirdchecknextclass) || $thirdchecknextclass==NULL)
 			{	
 				$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
-				
+				$total_ped_units=$max_ped['max'] *  $current_total_unit['unit_per_day'];
 				if(empty($max_ped) || $max_ped==NULL)
 				{	
 					$dbf->updateTable("student_group","units='$new_unit',end_date='$end_date'","id='$group'");
 				}
 				else
 				{	
-					$adj=$dbf->computeAdjustments($total_students,$current_total_unit['units'],$max_ped['max'],$new_unit);
+					$adj=$dbf->computeAdjustments($total_students,$current_total_unit['units'],$total_ped_units,$new_unit);
 					$new_computed_units=$adj[units];
 					$dbf->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
 				}
@@ -1140,6 +1140,7 @@ class User extends Dbfunctions{
 				//echo "adjust current group end date".$end_date."<BR/>";
 				//echo "adjust second group end_date".$nc_end_date=$next_class[end_date]."<BR/>";
 				$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
+				$total_ped_units=$max_ped['max'] *  $current_total_unit['unit_per_day'];
 				//echo var_dump($max_ped);
 				if(empty($max_ped) || $max_ped==NULL)
 				{	
@@ -1147,7 +1148,7 @@ class User extends Dbfunctions{
 				}
 				else
 				{	
-					$adj=$dbf->computeAdjustments($total_students,$current_total_unit['units'],$max_ped['max'],$new_unit);
+					$adj=$dbf->computeAdjustments($total_students,$current_total_unit['units'],$total_ped_units,$new_unit);
 					$new_computed_units=$adj[units];
 					$dbf->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
 				}
@@ -1168,24 +1169,25 @@ class User extends Dbfunctions{
 	function computeAdjustments($total_students,$current_total_unit,$max_ped,$new_unit)
 	{
 		$dbf = new User();
-		//echo "TOTAL UPDATED STUDENTS:".$total_students."<BR/>";
-		//echo "CURRENT UNITS:".$current_total_unit."<BR/>";
-		//echo "GET CURRENT UNITS USED PED CARD:".$max_ped."<BR/>";
-		//echo "COURSE COMPLETED:";
-		$current_course_completed=$max_ped / $current_total_unit;
-		//echo "PERCENTAGE WITH UPDATED UNIT/S:";
-		$percentage_with_new_unit=$current_course_completed * $new_unit;
-		//echo "<BR/>";
-		//echo "UPDATED UNIT:";
-		$updated_unit=$new_unit - $percentage_with_new_unit;
+		echo "TOTAL UPDATED STUDENTS:".$total_students."<BR/>";
+		echo "CURRENT UNITS:".$current_total_unit."<BR/>";
+		echo "GET CURRENT UNITS USED PED CARD:".$max_ped."<BR/>";
+		echo "COURSE COMPLETED:";
+		echo $current_course_completed=($max_ped) / $current_total_unit;
+		echo "<BR/>PERCENTAGE WITH UPDATED UNIT/S:";
+		echo $percentage_with_new_unit=$current_course_completed * $new_unit;
+		echo "<BR/>UPDATED UNIT:";
+		echo $updated_unit=$new_unit - $percentage_with_new_unit;
 			if($updated_unit % 2==0):
 				$new_computed_units=intval($updated_unit);//floor($updated_unit);(integer) trim('.', $one);
 			else:
 				$new_computed_units=ceil($updated_unit);
 			endif;
+		echo "-".$new_computed_units;
 		$result=array("units"=>$new_computed_units);
 		return $result;
 	}
+	
 	function getschedLeaves($range,$start,$end,$group_id,$s_days)
 	{		
 		if(in_array($start,$range))
@@ -1503,9 +1505,9 @@ class User extends Dbfunctions{
 		$prev_num = $this->countRows('student_group_dtls',"parent_id='$group'")-1;
 		$new_group = $this->strRecordID("group_size","units","(size_to>='$prev_num' And size_from<='$prev_num')");
 		$current_group=$this->strRecordID("student_group","*","id='$group'");
-		$teacher_id=$current_group[teacher_id];
-		if($new_group[units] < $current_group[units])
-		{
+		$teacher_id=$current_group['teacher_id'];
+		if($new_group['units'] < $current_group['units'])
+		{echo "<BR/>Condition<BR/>";
 			
 			$weeks=$new_group[units]/10;
 			$compute_date = strtotime($current_group['start_date'] .'+ '.$weeks.' week');
@@ -1516,9 +1518,20 @@ class User extends Dbfunctions{
 												WHERE teacher_id='$teacher_id' 
 												AND (id != '$current_group[id]') 
 												AND ('$group1_end_date' BETWEEN start_date AND end_date)");
+			$max_ped=$this->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
+			$total_ped_units=$max_ped['max'] *  $current_group['unit_per_day'];
 			if(empty($second_group) || $second_group==NULL)
-			{	//echo "Group 1:".$group."-".$new_group[units]."-".$end_date."<BR/>";
-				$this->updateTable("student_group","units='$new_group[units]',end_date='$end_date'","id='$group'");
+			{	
+				if(empty($max_ped) || $max_ped==NULL)
+				{
+					$this->updateTable("student_group","units='$new_group[units]',end_date='$end_date'","id='$group'");
+				}
+				else
+				{
+					$adj=$this->computeAdjustments($prev_num,$current_group[units],$total_ped_units,$new_group[units]);
+					$new_computed_units=$adj[units];
+					$this->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
+				}
 			}
 			else
 			{
@@ -1532,9 +1545,21 @@ class User extends Dbfunctions{
 													WHERE teacher_id='$teacher_id' 
 													AND (id != '$group' AND id !='$second_group[id]')
 													AND ('$group2_end_date' BETWEEN start_date AND end_date)");
+				
 				if(empty($third_group) || $third_group==NULL)
 				{
-					$this->updateTable("student_group","units='$new_group[units]',end_date='$end_date'","id='$group'");
+					if(empty($max_ped) || $max_ped==NULL)
+					{	
+						$this->updateTable("student_group","units='$new_group[units]',end_date='$end_date'","id='$group'");
+						#echo "<BR/>Group 1:".$group."-".$new_group[units]."-".$end_date."<BR/>";
+					}
+					else
+					{	
+						$adj=$this->computeAdjustments($prev_num,$current_group[units],$total_ped_units,$new_group[units]);
+						$new_computed_units=$adj[units];
+						$this->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
+						#echo "<BR/>Group 1:".$group."-units:".$new_computed_units."-".$end_date."<BR/>";
+					}
 					$second_start_date=date('Y-m-d',strtotime($end_date.' +1 day')); 
 					$second_compute_date = strtotime($second_start_date .'+ '.$second_count_weeks.' week');
 					$second_end_date=date('Y-m-d',$second_compute_date);
@@ -1543,12 +1568,23 @@ class User extends Dbfunctions{
 					//echo "Group 2".$second_group_id.$second_start_date.$second_end_date."<BR/>";
 				}
 				else
-				{
+				{echo "4";
 					foreach($third_group as $tg):
 						$third_group_id=$tg[id];
 						$third_count_weeks=$tg[units]/10;
 					endforeach;
-					$this->updateTable("student_group","units='$new_group[units]',end_date='$end_date'","id='$group'");
+					if(empty($max_ped) || $max_ped==NULL)
+					{	
+						$this->updateTable("student_group","units='$new_group[units]',end_date='$end_date'","id='$group'");
+						//echo "<BR/>Group 1:".$group."-".$new_group[units]."-".$end_date."<BR/>";
+					}
+					else
+					{	
+						$adj=$this->computeAdjustments($prev_num,$current_group[units],$total_ped_units,$new_group[units]);
+						$new_computed_units=$adj[units];
+						$this->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
+						#echo "<BR/>Group 1:".$group."-units:".$new_computed_units."-".$end_date."<BR/>";
+					}
 					$second_start_date=date('Y-m-d',strtotime($end_date.' +1 day')); 
 					$second_compute_date = strtotime($second_start_date .'+ '.$second_count_weeks.' week');
 					$second_end_date=date('Y-m-d',$second_compute_date);
@@ -1556,9 +1592,8 @@ class User extends Dbfunctions{
 					$third_start_date=date('Y-m-d',strtotime($second_end_date.'+1 day')); 
 					$third_compute_date = strtotime($third_start_date .'+ '.$third_count_weeks.' week');
 					$third_end_date=date('Y-m-d',$third_compute_date);
-					//echo "Group 1:".$group."-".$new_group[units]."-".$end_date."<BR/>";
-					//echo "Group 2:".$second_group_id."-".$second_start_date.$second_end_date."<BR/>";
-					//echo "Group 3:".$third_group_id."-".$third_start_date.$third_end_date."<BR/>";
+					#echo "<BR/>Group 2:".$second_group_id."-".$second_start_date."-".$second_end_date."<BR/>";
+					#echo "<BR/>Group 3:".$third_group_id."-".$third_start_date."-".$third_end_date."<BR/>";
 					$this->updateTable("student_group","start_date='$third_start_date',end_date='$third_end_date'","id='$third_group_id'");
 				}
 			}
@@ -1620,7 +1655,6 @@ class User extends Dbfunctions{
 	}
 	function studentTransferClass($f_sdt,$cou_id)
 	{
-		
 		$grp=$this->strRecordID("student_group_dtls","parent_id","course_id='$cou_id' AND student_id='$f_sdt'");
 		
 		#Check Pull Schedule
@@ -1629,7 +1663,43 @@ class User extends Dbfunctions{
 		$this->deleteFromTable("student_enroll","course_id='$cou_id' And student_id='$f_sdt'");
 		$this->deleteFromTable("student_group_dtls","course_id='$cou_id' And student_id='$f_sdt'");
 	}
-	
+	function processEmail($from,$to,$message,$subject)
+	{		
+		$res_logo = $this->strRecordID("conditions","*","type='Logo path'");
+		$headers  = "MIME-Version: 1.0\n";
+		$headers .= "Content-type: text/html; charset=iso-8859-1\n";
+		$headers .= "From:".$from."\n";
+		$body='<table border="0" cellpadding="5" cellspacing="0" style="border: 1px solid rgb(109, 146, 201);" width="662">
+				<tbody>
+					<tr>
+						<td bgcolor="#FF9900" colspan="2" height="80">
+							<img alt="" src="'.$res_logo[name].'" style="width: 105px; height: 30px;" />
+						</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>'.$message.'</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<span style="font-family: comic sans ms,cursive;"><span style="font-size: 12px;">Thank you,
+							<br />
+							B</span></span><span style="font-family: comic sans ms,cursive;"><span style="font-size: 12px;">erlitz AlAhsa,a Dar Al-Khibra Human Resources Development Company</span></span>
+						</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+				</tbody>
+				</table>';
+		mail($to,$subject,$body,$headers);
+	}
 	
 }
 ?>

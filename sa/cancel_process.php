@@ -69,7 +69,7 @@ if($_REQUEST['action']=='insert'){
 	</style>
     <?php
 	$headers .= 'MIME-Version: 1.0' . "\n";
-	$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+	$headers .= 'Content-type: text/html; charset=iso-8859-6' . "\r\n";
 	$headers .= "From:".$from."\n";
 	
 	$email_cont = $dbf->strRecordID("email_templetes","*","id='5'");
@@ -79,7 +79,7 @@ if($_REQUEST['action']=='insert'){
 	
 	$body1='<table width="450" border="0" align="center" cellpadding="0" cellspacing="0" style="border:solid 2px; border-color:#FFCC00;">
 	  <tr>
-		<td height="39" align="left" valign="middle" bgcolor="#FF9900" style="padding-left:5px;"><img src="'.$res_logo[name].'" width="105" height="30" /></td>
+		<td height="39" align="left" valign="middle" bgcolor="#FF9900" style="padding-left:5px;"><img src='.$res_logo["name"].' width="105" height="30" /></td>
 	  </tr>
 	  <tr>
 		<td height="30" align="left" valign="middle" style="font-family:Arial, Helvetica, sans-serif;font-size:10px;color:#6a81b1;font-weight:bold;padding-left:45px;">'.$email_msg.'</td>
@@ -89,7 +89,7 @@ if($_REQUEST['action']=='insert'){
         <table width="250" border="1" cellspacing="0" cellpadding="0" bordercolor="#9999FF" style="border-collapse:collapse;">
           <tr>
             <td width="54%" height="20" align="right" valign="middle" class="mycon">Student Name : &nbsp;</td>
-            <td width="46%" align="left" valign="middle" class="shop2">&nbsp;'.$stu["first_name"].'</td>
+            <td width="46%" align="left" valign="middle" class="shop2">&nbsp;'.$dbf->printStudentName($student_id).'</td>
           </tr>
           <tr>
             <td width="54%" height="20" align="right" valign="middle" class="mycon">Course : &nbsp;</td>

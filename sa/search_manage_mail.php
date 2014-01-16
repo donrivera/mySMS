@@ -114,7 +114,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <tr>
                         <td align="center" valign="top" bgcolor="#EBEBEB">
                         
-                          <form action="search_manage_mail_process.php?student_id=<?=$student_id;?>" name="frm" method="post" id="frm" >
+                          <form action="search_manage_mail_process.php?student_id=<?=$student_id;?>&course_id=<?php echo $course_id;?>" name="frm" method="post" id="frm" >
                             <table width="90%" border="0" cellspacing="0" cellpadding="0">
                               <tr>
                                 <td width="14%">&nbsp;</td>
@@ -123,7 +123,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#FF6600;">
                                   <tr>
                                     <td height="30" bgcolor="#FF9900">&nbsp;</td>
-                                    <td bgcolor="#FF9900" class="lable1">&nbsp;&nbsp;<?php echo constant("CD_SEARCH_MANAGE_MAIL_ALERTSMSTO");?> <?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?></td>
+                                    <td bgcolor="#FF9900" class="lable1">&nbsp;&nbsp;<?php echo constant("CD_SEARCH_MANAGE_MAIL_ALERTSMSTO");?> <?php echo $dbf->printStudentName($val[id]);?></td>
                                     <td bgcolor="#FF9900">&nbsp;</td>
                                   </tr>
                                   <tr>
@@ -289,7 +289,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#FF6600;">
                                           <tr>
                                             <td height="30" bgcolor="#FF9900">&nbsp;</td>
-                                            <td bgcolor="#FF9900" class="lable1">&nbsp;&nbsp;<?php echo constant("CD_SEARCH_MANAGE_MAIL_ALERTSMSTO");?> <?php echo $val["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></td>
+                                            <td bgcolor="#FF9900" class="lable1">&nbsp;&nbsp;<?php echo constant("CD_SEARCH_MANAGE_MAIL_ALERTSMSTO");?> <?php echo $dbf->printStudentName($val[id]);?></td>
                                             <td bgcolor="#FF9900">&nbsp;</td>
                                             </tr>
                                           <tr>

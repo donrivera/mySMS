@@ -6,7 +6,8 @@ include_once '../includes/class.Main.php';
 //Object initialization
 $dbf = new User();
 
-if($_REQUEST['action']=='update'){
+if($_REQUEST['action']=='update')
+{
 		
 	$res_logo = $dbf->strRecordID("conditions","*","type='Logo path'");
 	$dt = date('Y-m-d');
@@ -83,11 +84,11 @@ if($_REQUEST['action']=='update'){
 		//update the Group ID to Student_group Table means we can get the student according to group_id
 		
 		$string_g="group_id='$my_group_id'";
-		$dbf->updateTable("student_group",$string_g,"id='$group'");
+			//$dbf->updateTable("student_group",$string_g,"id='$group'");
 		
 		//update the Group ID to student_group_dtls Table means we can get the student according to parent_id
 		$string_g1="group_id='$my_group_id'";
-		$dbf->updateTable("student_group_dtls",$string_g1,"parent_id='$group'");
+			//$dbf->updateTable("student_group_dtls",$string_g1,"parent_id='$group'");
 			
 		//Calculate And Previous group update here
 		//========================================		
@@ -117,7 +118,7 @@ if($_REQUEST['action']=='update'){
 		//Update the previous Group here
 		//========================================
 		$string_g="effect_units='$dec_right_value_is'";
-		$dbf->updateTable("centre_group_size",$string_g,"centre_id='$centre_id' And group_id='$prev_group_id'");			
+			//$dbf->updateTable("centre_group_size",$string_g,"centre_id='$centre_id' And group_id='$prev_group_id'");			
 		
 		//Get the effected group_size Table
 		$sms_group_size = $dbf->strRecordID("group_size","*","group_id='$prev_group_id'");
@@ -171,19 +172,19 @@ if($_REQUEST['action']=='update'){
 			$email_msg = str_replace('%no_unit_finined%',$no_unit_finined,$email_msg);
 			
 			$body1='<table width="500" border="0" align="center" cellpadding="0" cellspacing="0" style="border:solid 2px; border-color:#FFCC00;">
-  <tr>
-	<td height="39" align="left" valign="middle" bgcolor="#FF9900" style="padding-left:5px;"><img src="'.$res_logo[name].'" width="105" height="30" /></td>
-  </tr>
-  <tr>
-	<td align="left" valign="middle">&nbsp;</td>
-  </tr>
-  <tr>
-	<td height="50" align="left" valign="middle" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:normal; color:#999999; padding-left:5px;">'.$email_msg.'</td>
-  </tr>		  
-  <tr>
-	<td align="center" valign="top">&nbsp;</td>
-  </tr>
-</table>';	
+						<tr>
+							<td height="39" align="left" valign="middle" bgcolor="#FF9900" style="padding-left:5px;"><img src="'.$res_logo[name].'" width="105" height="30" /></td>
+						</tr>
+						<tr>
+							<td align="left" valign="middle">&nbsp;</td>
+						</tr>
+						<tr>
+							<td height="50" align="left" valign="middle" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:normal; color:#999999; padding-left:5px;">'.$email_msg.'</td>
+						</tr>		  
+						<tr>
+							<td align="center" valign="top">&nbsp;</td>
+						</tr>
+					</table>';	
 			
 			$subject = $email_cont["title"];				
 			//$subject ="Group size has been changed Notification !!!";
@@ -249,6 +250,7 @@ if($_REQUEST['action']=='update'){
 	$from_name = $dbf->getDataFromTable("user","user_name","id='$_SESSION[id]'");
 	
 	$to = $dbf->getDataFromTable("user","email","id='$stu_cancel[created_by]'"); //who has sending the request
+	
 	$to_name = $dbf->getDataFromTable("user","user_name","id='$stu_cancel[created_by]'");	
 		
 	?>
@@ -280,7 +282,7 @@ if($_REQUEST['action']=='update'){
 	
 	$body1='<table width="450" border="0" align="center" cellpadding="0" cellspacing="0" style="border:solid 2px; border-color:#FFCC00;">
 	  <tr>
-		<td height="39" align="left" valign="middle" bgcolor="#FF9900" style="padding-left:5px;"><img src="'.$res_logo[name].'" width="105" height="30" /></td>
+		<td height="39" align="left" valign="middle" bgcolor="#FF9900" style="padding-left:5px;"><img src="'.$res_logo['name'].'" width="105" height="30" /></td>
 	  </tr>
 	  <tr>
 		<td height="30" align="left" valign="middle" style="font-family:Arial, Helvetica, sans-serif;font-size:10px;color:#6a81b1;font-weight:bold;padding-left:45px;">'.$email_msg.'</td>
@@ -290,7 +292,7 @@ if($_REQUEST['action']=='update'){
         <table width="250" border="1" cellspacing="0" cellpadding="0" bordercolor="#9999FF" style="border-collapse:collapse;">
           <tr>
             <td width="54%" height="20" align="right" valign="middle" class="mycon">Student Name : &nbsp;</td>
-            <td width="46%" align="left" valign="middle" class="shop2">&nbsp;'.$stu["first_name"].'</td>
+            <td width="46%" align="left" valign="middle" class="shop2">&nbsp;'.$dbf->printStudentName($student_id).'</td>
           </tr>
           <tr>
             <td width="54%" height="20" align="right" valign="middle" class="mycon">Course : &nbsp;</td>
@@ -337,7 +339,7 @@ if($_REQUEST['action']=='update'){
 		<td align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:bold; color:#000000;padding-right:50px;">Thanks</td>
 	  </tr>
 	  <tr>
-		<td height="30" align="right" valign="middle" class="nametext" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:bold; color:#000000;padding-right:28px;">'.$teacher.'</td>
+		<td height="30" align="right" valign="middle" class="nametext" style="font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:bold; color:#000000;padding-right:28px;">'.$to_name.'</td>
 	  </tr>
 	  <tr>
 		<td align="center" valign="top">&nbsp;</td>
@@ -346,9 +348,11 @@ if($_REQUEST['action']=='update'){
 	
 	//$subject ="On Hold request has been ".$_REQUEST["status"]." By ".$from_name;
 	$subj = $email_cont["title"];	
-	$subject = str_replace('%status%',$_REQUEST["status"],$subj);
-	$subject = str_replace('%username%',$from_name,$subj);
-	
+	//$subject = str_replace('%status%',$_REQUEST["status"],$subj);
+	//$subject = str_replace('%username%',$from_name,$subj);
+	$subj_search = array('%status%','%from_name%');
+	$subj_replace = array($_REQUEST["status"],$from_name);
+	$subject=str_replace($subj_search,$subj_replace,$subj); 
 	mail($to,$subject,$body1,$headers);
 	// End Mail
 	

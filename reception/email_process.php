@@ -6,8 +6,8 @@ include_once '../includes/class.Main.php';
 //Object initialization
 $dbf = new User();
 
-$res_logo = $dbf->strRecordID("conditions","*","type='Logo path'");
-$logo_url = $res_logo["name"];
+//$res_logo = $dbf->strRecordID("conditions","*","type='Logo path'");
+//$logo_url = $res_logo["name"];
 
 //Get the Sender Email address
 $from = $dbf->getDataFromTable("user", "email", "id='$_SESSION[id]'");
@@ -70,7 +70,48 @@ $headers .= 'MIME-Version: 1.0' . "\n";
 $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
 $headers .= "From:".$from."\n";
 
-$body = $_POST[content];
+//$body = $_POST[content];
+$content=explode("<td>",$_POST['content']);
+$res_logo = $dbf->getDataFromTable("conditions","name","type='Logo path'");
+$body='<html>
+		<head></head>
+		<body>
+			<table border="0" cellpadding="5" cellspacing="0" style="border: 1px solid rgb(109, 146, 201);" width="662">
+				<tbody>
+					<tr>
+						<td bgcolor="#FF9900" colspan="2" height="80">
+							<img alt="" src="'.$res_logo.'" width="105" height="30" />
+						</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td><span style="font-family: comic sans ms,cursive;">'.$content[2].'</span></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>'.$content[4].'</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>
+							<p>
+								<span style="font-family: comic sans ms,cursive;">
+									<span style="font-size: 12px;">
+										'.$content[6].'
+									</span>
+								</span>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+				</tbody>
+			</table>
+			<p>&nbsp;</p>
+		</body>
+		</html>';
 $subject = $_POST[subject];	
 mail($to,$subject,$body,$headers);
 

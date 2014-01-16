@@ -95,7 +95,7 @@ if($_REQUEST['action']=='insert')
 	$subj = $email_cont["title"];
 	$subj = str_replace('%username%',$teacher,$subj);
 	
-	//$subject ="New ARF from ".$teacher."!!!";
+	$subject ="New ARF from ".$teacher."!!!";
 	mail($to,$subject,$body1,$headers);
 	
 	//Start Save Mail	

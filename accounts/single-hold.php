@@ -140,7 +140,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
                   <tr>
                     <td width="25%" height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?> :</td>
-                    <td width="75%" align="left" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                    <td width="75%" align="left" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student["id"]);?></td>
                   </tr>
                   <?php if($student["student_id"] > 0){?>
                   <tr>
@@ -230,7 +230,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                     <td align="center" height="22" valign="middle" class="mycon"><?php echo $i;?></td>
                     <td align="left" valign="middle" class="mycon" >&nbsp;<?php echo $valcancel[dated];?></td>
-                    <td align="left" valign="middle" class="mycon" >&nbsp;<?php echo $res_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></td>
+                    <td align="left" valign="middle" class="mycon" >&nbsp;<?php echo $dbf->printStudentName($res_student["id"]);?></td>
                     <td align="left" valign="middle" class="mycon" >&nbsp;<?php echo $res_student[student_mobile];?></td>
                     <td align="left" valign="middle" class="mycon" >&nbsp;<?php echo $valcancel[comment];?></td>
                     <?php
@@ -368,7 +368,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <td height="25" colspan="2" align="center" valign="middle" bgcolor="#DDDDFF" class="pedtext"><?php echo constant("STUDENT_INFORMATON");?></td>
                     </tr>
                     <tr>
-                      <td width="63%" height="22" align="right" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                      <td width="63%" height="22" align="right" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student["id"]);?></td>
                       <td width="37%" align="left" valign="middle" class="pedtext">: <?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?></td>
                     </tr>
                     <?php if($student["student_id"] > 0) { ?>
@@ -464,7 +464,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td align="right" valign="middle" class="mycon" ><?php echo $comment;?>&nbsp;</td>
                     <td align="right" valign="middle" class="mycon" ><?php echo $valcancel[comment];?>&nbsp;</td>
                     <td align="right" valign="middle" class="mycon" ><?php echo $res_student[student_mobile];?>&nbsp;</td>
-                    <td align="right" valign="middle" class="mycon" ><?php echo $res_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?>&nbsp;</td>
+                    <td align="right" valign="middle" class="mycon" ><?php echo $dbf->printStudentName($res_student["id"]);?>&nbsp;</td>
                     <td align="right" valign="middle" class="mycon" ><?php echo $valcancel[dated];?>&nbsp;</td>
                     <td align="center" height="22" valign="middle" class="mycon"><?php echo $i;?></td>
                     <?php

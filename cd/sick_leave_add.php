@@ -101,6 +101,7 @@ padding-left:2px;
               	<td width="3%">&nbsp;</td>
               	<td width="66%" align="left" valign="middle">
 				  <select name="status" id="status" style="width:150px; border:solid 1px; border-color:#FF9900;" onchange="showOption(this.value)">
+				  
 				  <option value="1">Approved</option>
 				  <option value="2">Rejected</option>
 				  </select>
@@ -114,6 +115,7 @@ padding-left:2px;
               	<td width="3%">&nbsp;</td>
               	<td  width="66%" align="left" valign="middle">
 					<select name="option" id="option" style="width:150px; border:solid 1px; border-color:#FF9900;">
+					  <option value=''>Select</option>
 					  <option value="1">Substitute Teacher</option>
 					  <option value="2">Class Cancelled</option>
 					</select>

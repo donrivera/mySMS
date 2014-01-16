@@ -295,7 +295,7 @@ if($_REQUEST['action']=='usersetpassword')
 	<tbody>
 		<tr>
 			<td bgcolor="#FF9900" colspan="2" height="80">
-				<img alt="" src="'.$res_logo[name].'" style="width: 105px; height: 30px;" /></td>
+				<img alt="" src="'.$res_logo[name].'" width="105" height="30" /></td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>

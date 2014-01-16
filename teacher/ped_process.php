@@ -6,38 +6,25 @@ include("../includes/saudismsNET-API.php");
 
 //Object initialization
 $dbf = new User();
-
 $uid = $_SESSION['uid'];
-
 //Check list string
-if($_POST[checklist]!=''){
-	$chklist = implode(",",$_POST[checklist]);
-}
-if($_POST[ini_feedback]!=''){
-	$ini_feedback = implode(",",$_POST[ini_feedback]);
-}
-if($_POST[counselling]!=''){
-	$counselling = implode(",",$_POST[counselling]);
-}
-if($_POST[mate]!=''){
-	$mate = implode(",",$_POST[mate]);
-}
-
+if($_POST[checklist]!=''){		$chklist = implode(",",$_POST[checklist]);}
+if($_POST[ini_feedback]!=''){	$ini_feedback = implode(",",$_POST[ini_feedback]);}
+if($_POST[counselling]!=''){	$counselling = implode(",",$_POST[counselling]);}
+if($_POST[mate]!=''){			$mate = implode(",",$_POST[mate]);}
 $res_group = $dbf->strRecordID("student_group","*","id='$_REQUEST[cmbgroup]'");
 $course_id = $res_group[course_id];
-
 //Check duplicate
 $num=$dbf->countRows('ped',"teacher_id='$uid' and group_id='$_REQUEST[cmbgroup]' and course_id='$course_id'");
-if($num == 0){
-	
+if($num == 0)
+{
 	$string="teacher_id='$uid',group_id='$_POST[cmbgroup]',course_id='$course_id',estart_date='$_POST[estart_date]',material='$mate',bl='$_POST[bl]',arf_submit='$_POST[arf]',level='$_POST[level]',comments='$_POST[comments]',location='$_POST[location]',checklist='$chklist',point_cover1='$_POST[point_cover1]',point_date1='$_POST[point_date1]', point_cover2='$_POST[point_cover2]', point_date2='$_POST[point_date2]', ini_feedback='$ini_feedback', inst1='$_POST[inst1]', date1='$_POST[date1]',arf1='$_POST[arf1]', dby1='$_POST[dby1]', dby1_date1='$_POST[dby1_date1]', cby1='$_POST[cby1]', cby1_date1='$_POST[cby1_date1]', inst2='$_POST[inst2]', inst2_date2='$_POST[inst2_date2]', counselling='$counselling', inst3='$_POST[inst3]', inst3_date3='$_POST[inst3_date3]', inst4='$_POST[inst4]', inst4_date4='$_POST[inst4_date4]', not_apply='$_POST[not_apply]',distrbute_by='$_POST[distrbute_by]',distrbute_date='$_POST[distrbute_date]',collect_by='$_POST[collect_by]',collect_date='$_POST[collect_date]',pro_report='$_POST[pro_report]'";
-	
 	//Excute the query And Get the recent Insert ID
 	$id = $dbf->insertSet("ped",$string);
-		
 	//Insert in PED Units table
 	$ucount = $_POST[ucount];
-	for($i=1; $i<=$ucount; $i++){
+	for($i=1; $i<=$ucount; $i++)
+	{
 		$dt = "u_dated".$i;
 		$dt = $_REQUEST[$dt];
 		
@@ -47,37 +34,37 @@ if($num == 0){
 		$homework = "homework".$i;
 		$homework = $_REQUEST[$homework];
 		
-		if($dt != ''){
+		if($dt != '')
+		{
 			//Check duplicate
 			$num=$dbf->countRows('ped_units',"units='$i' AND teacher_id='$uid' and group_id='$_POST[cmbgroup]' and course_id='$course_id'");
-			if($num==0){
+			if($num==0)
+			{
 				$string="ped_id='$id',teacher_id='$uid', group_id='$_POST[cmbgroup]',course_id='$course_id', units='$i',dated='$dt', material_overed='$material_overed', homework='$homework'";
 				$dbf->insertSet("ped_units",$string);
-			}else{
+			}else
+			{
 				$string="dated='$dt',material_overed='$material_overed',homework='$homework'";
 				$dbf->updateTable("ped_units",$string,"teacher_id='$uid' AND units='$i' and group_id='$_POST[cmbgroup]' and course_id='$course_id'");
 			}
 		}
 	}
 	// -- End
-	
 	$count = $_POST[no_unit];
-	
 	$c_count = $_POST['count_course'];
-			
 	//No of Course belongs
 	//Start => Loop 1st (Course)
-	for($i=1; $i<=$c_count; $i++){
-		
+	for($i=1; $i<=$c_count; $i++)
+	{
 		$s_count = 's_count'.$i;
 		$s_count = $_REQUEST[$s_count];
-			
 		//Start => Loop 2nd (No of Student)
-		for($j=1; $j<=$s_count; $j++){
-			
+		for($j=1; $j<=$s_count; $j++)
+		{
 			//No of columns
 			//Start => Loop 3rd
-			for($k=1; $k<=$count; $k++){
+			for($k=1; $k<=$count; $k++)
+			{
 				
 				$attend_date = "attend_date".$k;
 				$attend_date = $_REQUEST[$attend_date];
@@ -172,7 +159,9 @@ if($num == 0){
 	//=======================================================
 	//UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
 	
-}else{
+}
+else
+{
 	
 	//Query string
 	$string="level='$_POST[level]',estart_date='$_POST[estart_date]',material='$mate',bl='$_POST[bl]',arf_submit='$_POST[arf]',comments='$_POST[comments]',location='$_POST[location]',checklist='$chklist',point_cover1='$_POST[point_cover1]',point_date1='$_POST[point_date1]',point_cover2='$_POST[point_cover2]', point_date2='$_POST[point_date2]', ini_feedback='$ini_feedback', inst1='$_POST[inst1]', date1='$_POST[date1]', arf1='$_POST[arf1]',dby1='$_POST[dby1]',dby1_date1='$_POST[dby1_date1]', cby1='$_POST[cby1]', cby1_date1='$_POST[cby1_date1]', inst2='$_POST[inst2]', inst2_date2='$_POST[inst2_date2]',counselling='$counselling',inst3='$_POST[inst3]', inst3_date3='$_POST[inst3_date3]', inst4='$_POST[inst4]',inst4_date4='$_POST[inst4_date4]', not_apply='$_POST[not_apply]',distrbute_by='$_POST[distrbute_by]',distrbute_date='$_POST[distrbute_date]',collect_by='$_POST[collect_by]',collect_date='$_POST[collect_date]',pro_report='$_POST[pro_report]'";
@@ -366,7 +355,9 @@ if($num == 0){
 		$dbf->insertSet("email_history",$string);
 		// End Save Mail
 			
-	}else{
+	}
+	else
+	{
 		
 		// Moving to Life Cycle
 		foreach($dbf->fetchOrder('student_group_dtls',"parent_id='$_POST[cmbgroup]'") as $ingroup){
@@ -393,22 +384,23 @@ if($num == 0){
 	//Sent email from teacher to student who has 3 units of absent in e-PEDCARD
 	//=========================================================================
 	$from = $res_teacher[email];
-
-	foreach($dbf->fetchOrder('ped_attendance',"ped_id='$_POST[cmbgroup]'","","student_id","student_id") as $val_at){
+	
+	foreach($dbf->fetchOrder('ped_attendance',"group_id='$_POST[cmbgroup]'","","student_id","student_id") as $val_at)
+	{
 		$at_count = 0;
 		
 		//Get per units
-		foreach($dbf->fetchOrder('ped_attendance',"ped_id='$_POST[cmbgroup]' And student_id='$val_at[student_id]'","","","") as $val_ab){
-			
+		foreach($dbf->fetchOrder('ped_attendance',"group_id='$_POST[cmbgroup]' And student_id='$val_at[student_id]'","","","") as $val_ab){
 			//Get per units
-			$nnn = $dbf->countRows('ped_attendance',"ped_id='$_POST[cmbgroup]' And student_id='$val_at[student_id]' And unit='$val_ab[unit]' And (shift1='A' Or shift2='A' Or shift3='A' Or shift4='A' Or shift5='A' Or shift6='A' Or shift7='A' Or shift8='A' Or shift9='A')");
-			
+			$nnn = $dbf->countRows('ped_attendance',"group_id='$_POST[cmbgroup]' And student_id='$val_at[student_id]' And unit='$val_ab[unit]' And (shift1='A' Or shift2='A' Or shift3='A' Or shift4='A' Or shift5='A' Or shift6='A' Or shift7='A' Or shift8='A' Or shift9='A')");
+			echo $nnn;
 			if($nnn > 0){
 				$at_count = $at_count + 1;
 			}			
 		}
-				
-		if($at_count == 3 || $at_count == 6 || $at_count == 9 || $at_count == 12 || $at_count == 15 || $at_count == 18 || $at_count == 21 || $at_count == 24 || $at_count == 27 || $at_count == 30 || $at_count == 33 || $at_count == 36 || $at_count == 39 || $at_count == 42 || $at_count == 45 || $at_count == 48 || $at_count == 51 || $at_count == 54 || $at_count == 57 || $at_count == 60|| $at_count == 63 || $at_count == 66 || $at_count == 69|| $at_count == 72 || $at_count == 75 || $at_count == 78 || $at_count == 81){
+		//if($at_count == 3 || $at_count == 6 || $at_count == 9 || $at_count == 12 || $at_count == 15 || $at_count == 18 || $at_count == 21 || $at_count == 24 || $at_count == 27 || $at_count == 30 || $at_count == 33 || $at_count == 36 || $at_count == 39 || $at_count == 42 || $at_count == 45 || $at_count == 48 || $at_count == 51 || $at_count == 54 || $at_count == 57 || $at_count == 60|| $at_count == 63 || $at_count == 66 || $at_count == 69|| $at_count == 72 || $at_count == 75 || $at_count == 78 || $at_count == 81)
+		if($at_count ==1 || $at_count==3 || $at_count==5)
+		{
 			
 			//Student details
 			$res_student=$dbf->fetchSingle("student","id='$val_at[student_id]' And sms_status='1'");
@@ -477,22 +469,22 @@ if($num == 0){
 				$sms_gateway = $dbf->strRecordID("sms_gateway","*","");
 				
 				// Your username
-				$UserName=UrlEncoding($sms_gateway[user]);
+				$UserName=UrlEncoding($sms_gateway['user']);
 				
 				// Your password
-				$UserPassword=UrlEncoding($sms_gateway[password]);
+				$UserPassword=UrlEncoding($sms_gateway['password']);
 				
 				// Destnation Numbers seprated by comma if more than one and no more than 120 numbers Per time.
 				//$Numbers=UrlEncoding("966000000000,966111111111");
 				$Numbers=UrlEncoding($student_mobile_no);
 				
 				// Originator Or Sender name. In English no more than 11 Numbers or Characters or Both
-				$Originator=UrlEncoding($sms_gateway[your_name]);
+				$Originator=UrlEncoding($sms_gateway['your_name']);
 				
 				// Your Message in English or arabic or both.
 				// Each 70 Arabic Characters will be charged 1 Credit, Each 160 English Characters will be charged 1 Credit.
 				//$msg = "You are absent from last ".$at_count." days. Please get back to us with appropriate reasons.";
-				$sms = $_REQUEST['sms'];
+				$sms =1; #$_REQUEST['sms'];
 				if($sms == "1" || $sms == "3"){
 					if($sms == "1"){
 						$sms_cont = $dbf->getDataFromTable("sms_templete","contents","id='35'");
@@ -502,15 +494,20 @@ if($num == 0){
 					$msg = str_replace('%at_count%',$at_count,$sms_cont);
 					$Message = $msg;
 					
+					
+					
 					$res_sms = $dbf->strRecordID("sms_gateway","*","status='Disable'");
-					if($res_sms[status] == '') {
+					
+					if(empty($res_sms['status']) || $res_sms['status']===null) 
+					{
 						
 						$cr_date = date('Y-m-d H:i:s A');
 						$dt = date('Y-m-d');
 						
 						//Check (Once SMS has been sent to a particular student in a particular date with his same teacher and belongs to that centre)
 						$num_sms = $dbf->countRows('sms_history',"user_id='$_SESSION[id]' and mobile='$student_mobile_no' And centre_id='$centre_id' And send_date='$dt'");					
-						if($num_sms == 0) {
+						
+						if(empty($num_sms) || $num_sms===null) {
 								
 							// Storing Sending result in a Variable.
 							if($sms_gateway["status"]=='Enable'){
@@ -526,6 +523,7 @@ if($num == 0){
 							}						
 						}					
 					}
+					
 				}				
 			}			
 		}

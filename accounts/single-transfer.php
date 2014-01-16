@@ -153,7 +153,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
                   <tr>
                     <td width="25%" height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?> :</td>
-                    <td width="75%" align="left" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                    <td width="75%" align="left" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student["id"]);?></td>
                   </tr>
                   <?php if($student["student_id"] > 0){?>
                   <tr>
@@ -259,8 +259,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr bgcolor="<?php echo $color;?>"  onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                     <td height="25" align="center" valign="middle" class="mycon" ><?php echo $i;?></td>
                     <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[dated];?></td>
-                    <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $from_id;?> <?php echo $group_from["group_time"];?>-<?php echo $dbf->GetGroupTime($group_from["id"]);?></td>
-                    <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $to_id;?> <?php echo $group_to["group_time"];?>-<?php echo $dbf->GetGroupTime($group_to["id"]);?></td>
+                    <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($from_id ==''?'N/A':$from_id);?></td>
+                    <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($to_id ==''?'N/A':$to_id);?></td>
                     <td align="center" valign="middle" class="mycon"><?php echo $noofstudent;?></td>
                     <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $student;?></td>
                     <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[comment];?></td>
@@ -348,9 +348,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td height="25" align="center" valign="middle" class="mycon" ><?php echo $i;?></td>
                     <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[dated];?></td>
                     <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $centre_from;?></td>
-                    <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $from_id;?> <?php echo $group_from["group_time"];?>-<?php echo $dbf->GetGroupTime($group_from["id"]);?></td>
+                    <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($from_id ==''?'N/A':$from_id);?></td>
                     <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $centre_to;?></td>
-                    <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $to_id;?> <?php echo $group_to["group_time"];?>-<?php echo $dbf->GetGroupTime($group_to["id"]);?></td>
+                    <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($to_id ==''?'N/A':$to_id);?></td>
                     <td align="center" valign="middle" class="mycon"><?php echo $noofstudent;?></td>
                     <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $student;?></td>
                     <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[comment];?></td>
@@ -425,9 +425,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td height="25" align="center" valign="middle" class="mycon" ><?php echo $i;?></td>
                     <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[dated];?></td>
                     <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $centre_from;?></td>
-                    <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $from_id;?> <?php echo $group_from["group_time"];?>-<?php echo $dbf->GetGroupTime($group_from["id"]);?></td>
+                    <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($from_id ==''?'N/A':$from_id);?></td>
                     <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $centre_to;?></td>
-                    <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $to_id;?> <?php echo $group_to["group_time"];?>-<?php echo $dbf->GetGroupTime($group_to["id"]);?></td>
+                    <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($to_id ==''?'N/A':$to_id);?></td>
                     <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[comment];?></td>
                     <td align="center" valign="middle" class="mycon" ><?php echo $transfer[status];?></td>
                     <td align="center" valign="middle" >
@@ -538,7 +538,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <td height="25" colspan="2" align="center" valign="middle" bgcolor="#DDDDFF" class="pedtext"><?php echo constant("STUDENT_INFORMATON");?></td>
                     </tr>
                     <tr>
-                      <td width="63%" height="22" align="right" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                      <td width="63%" height="22" align="right" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student["id"]);?></td>
                       <td width="37%" align="left" valign="middle" class="pedtext">: <?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?></td>
                     </tr>
                     <?php if($student["student_id"] > 0) { ?>
@@ -643,8 +643,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[comment];?></td>
                     <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $student;?></td>
                     <td align="center" valign="middle" class="mycon"><?php echo $noofstudent;?></td>
-                    <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $to_id;?> <?php echo $group_to["group_time"];?>-<?php echo $dbf->GetGroupTime($group_to["id"]);?></td>
-                    <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $from_id;?> <?php echo $group_from["group_time"];?>-<?php echo $dbf->GetGroupTime($group_from["id"]);?></td>
+                    <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($to_id ==''?'N/A':$to_id);?></td>
+                    <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($from_id ==''?'N/A':$from_id);?></td>
                     <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[dated];?></td>
                     <td height="25" align="center" valign="middle" class="mycon" ><?php echo $i;?></td>
                     <?php
@@ -727,9 +727,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[comment];?></td>
                     <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $student;?></td>
                     <td align="center" valign="middle" class="mycon"><?php echo $noofstudent;?></td>
-                    <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $to_id;?> <?php echo $group_to["group_time"];?>-<?php echo $dbf->GetGroupTime($group_to["id"]);?></td>
+                    <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($to_id ==''?'N/A':$to_id);?></td>
                     <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $centre_to;?></td>
-                    <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $from_id;?> <?php echo $group_from["group_time"];?>-<?php echo $dbf->GetGroupTime($group_from["id"]);?></td>
+                    <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($from_id ==''?'N/A':$from_id);?></td>
                     <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $centre_from;?></td>
                     <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[dated];?></td>
                     <td height="25" align="center" valign="middle" class="mycon" ><?php echo $i;?></td>
@@ -805,9 +805,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     </td>
                     <td align="center" valign="middle" class="mycon" ><?php echo $transfer[status];?></td>
                     <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[comment];?></td>
-                    <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $to_id;?> <?php echo $group_to["group_time"];?>-<?php echo $dbf->GetGroupTime($group_to["id"]);?></td>
+                    <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($to_id ==''?'N/A':$to_id);?></td>
                     <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $centre_to;?></td>
-                    <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $from_id;?> <?php echo $group_from["group_time"];?>-<?php echo $dbf->GetGroupTime($group_from["id"]);?></td>
+                    <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo ($from_id ==''?'N/A':$from_id);?></td>
                     <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $centre_from;?></td>
                     <td align="right" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[dated];?></td>                    
                     <td height="25" align="center" valign="middle" class="mycon" ><?php echo $i;?></td>
