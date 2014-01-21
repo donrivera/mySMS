@@ -293,7 +293,7 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 					$enroll = $valenroll["enrolled_status"];
 										
 					//Get Group Name
-					$group = $dbf->strRecordID("student_group","*","id='$valenroll[course_id]'");
+					$group = $dbf->strRecordID("student_group","*","id='$valenroll[group_id]'");
 					$course_fees = $dbf->getDataFromTable("course_fee", "fees", "id='$valenroll[fee_id]'");
 					
 					//Enrollment Amount
@@ -305,11 +305,11 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 					$bal_amt = $en_amt - $re_amt - $valenroll["discount"];
 					?>                    
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
-                  <td align="left" valign="middle" class="mycon">&nbsp;<?php echo date('d-M-Y',strtotime($valenroll[payment_date]));?></td>
-                  <td align="left" valign="middle" class="mycon">&nbsp;<a href="single-home.php?student_id=<?php echo $student[id];?>"><?php echo $student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></a></td>
+                  <td align="left" valign="middle" class="mycon">&nbsp;<?php echo date('d-M-Y',strtotime($valenroll[enroll_date]));?></td>
+                  <td align="left" valign="middle" class="mycon">&nbsp;<a href="single-home.php?student_id=<?php echo $student[id];?>"><?php echo $dbf->printStudentName($student["id"]);?></a></td>
                   <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $course[name];?></td>
                   <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $enroll;?></td>
-                  <td align="left" valign="middle" class="mycon"><?php echo $dbf->FullGroupInfo($group["id"]);?></td>
+                  <td align="left" valign="middle" class="mycon"><?php echo $group["group_name"];?></td>
                   <td align="right" valign="middle" class="mycon"><?php echo number_format($valenroll[discount],0);?>&nbsp;<?php echo $res_currency[symbol];?></td>
                   <td align="right" valign="middle" class="mycon"><?php echo number_format($dbf->getDiscountPercent($course_fees, $valenroll["discount"]),0);?>%</td>
                   <td align="right" valign="middle" class="mycon"><?php echo $en_amt;?>&nbsp;<?php echo $res_currency[symbol];?></td>

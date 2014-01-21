@@ -307,7 +307,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td width="11%" align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo date('d-M-Y',strtotime($val[end_date]));?></td>
                 <td width="12%" align="center" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $val[group_start_time];?>-<?php echo $val[group_end_time];?></td>
                 <td width="12%" height="25" align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $no;?></td>
-                <td width="4%" align="center" valign="middle" style="background-color:<?php echo $color;?>" ><a href="group_course_process.php?action=delete&amp;id=<?php echo $val[id];?>"  class="linktext" onclick="return confirm('Are you sure you want to delete this record ?')">
+                 <td width="4%" align="center" valign="middle" style="background-color:<?php echo $color;?>" >
+					<a href="group_manage_edit.php?id=<?php echo $val[id];?>"><img src="../images/edit.gif" width="16" height="16" border="0" title="Edit" /></a>
+					<a href="group_course_process.php?action=delete&amp;id=<?php echo $val[id];?>"  class="linktext" onclick="return confirm('Are you sure you want to delete this record ?')">
                   <?php if($num_dtls <=0 ) { ?>
                   <img src="../images/delete.png"width="16" height="16" border="0" title="Delete" />
                   <?php } ?>

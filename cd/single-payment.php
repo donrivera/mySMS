@@ -1,4 +1,5 @@
 <?php
+
 ob_start();
 session_start();
 if(($_COOKIE['cook_username'])=='')
@@ -374,7 +375,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               <tr>
                 <td>&nbsp;</td>
                 <td colspan="4" align="left" valign="top">
-                
+             
 				<form id="frm" name="frm" method="post" action="single-payment.php?action=search&student_id=<?=$student_id;?>&course_id=<?=$course_id;?>">
                 <table width="98%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
@@ -386,7 +387,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <select name="course" id="course" style="width:150px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onChange="show_payment();">
                           <option value="">---Select---</option>
                           <?php
-							foreach($dbf->fetchOrder('student_enroll',"student_id='$student_id'","") as $rescourse) {
+							foreach($dbf->fetchOrder('student_course',"student_id='$student_id'","") as $rescourse) {
 								$course = $dbf->strRecordID("course","*","id='$rescourse[course_id]'");
 						  ?>
                           <option value="<?php echo $course['id'];?>" <?php if($course_id==$course["id"]) { ?> selected="selected" <?php } ?>><?php echo $course['name'];?></option>
@@ -404,7 +405,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <?php					
 					$val_student = $dbf->strRecordID("student","*","id='$student_id'");
 					$res_enroll = $dbf->strRecordID("student_enroll","*","course_id='$course_id' And student_id='$student_id'");
-					$course_fees = $dbf->getDataFromTable("course_fee","fees","id='$res_enroll[fee_id]'");
+					$course_fees = $dbf->getDataFromTable("course_fee","fees","id='$course_id'");
 				  ?>
                   <tr>
                     <td colspan="5" align="left" valign="top" style="padding-top:3px;">
@@ -420,7 +421,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         </tr>
                       <?php
 						$res_course = $dbf->strRecordID("course","*","id='$course_id'");
-						$course_fee = $res_course["fees"];
+						$course_fee = $course_fees;
 						?>
                       <tr>
                         <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
@@ -471,7 +472,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							$opening_amt = $dbf->getDataFromTable('student_fees',"paid_amt","course_id='$course_id' And student_id='$student_id' And type='opening'");
 							?>
                           <tr>
-                            <td height="28" align="left" valign="middle" class="mytext"><input name="payment" type="text" class="new_textbox100" id="payment" value="<?php echo $opening_amt;?>"  maxlength="20" onKeyPress="return isNumberKey(event);"/></td>
+                            <td height="28" align="left" valign="middle" class="mytext"><input name="payment" type="text" class="new_textbox100" id="payment" value="<?php echo $opening_amt;?>"  maxlength="20" onKeyPress="return isNumberKey(event);" readonly="readonly"/></td>
                             <td align="center" valign="middle">
                               <?php
 							  $valno = $dbf->strRecordID("student_fees","MAX(id)","id <> (SELECT MAX(id) FROM student_fees WHERE student_id='$student_id') AND student_id='$student_id'");

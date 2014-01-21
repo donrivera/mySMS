@@ -13,6 +13,11 @@ include_once '../includes/validateSAID.class.php';
 $std = new validateSAID();
 
 if($_REQUEST['action'] == 'edit_from_student_profile'){
+
+	$ar_familyname=$_REQUEST[ar_mytxt_src3];//aaaa
+	$ar_gfathrname=$_REQUEST[ar_mytxt_src2];//bbbb
+	$ar_fathername=$_REQUEST[ar_mytxt_src1];//cccc
+	$ar_firstname=$_REQUEST[ar_mytxt_src];//dddd
 	
 	$student_id = $_REQUEST['student_id'];
 	$res_photo = $dbf->strRecordID("student","*","id='$student_id'");
@@ -36,7 +41,17 @@ if($_REQUEST['action'] == 'edit_from_student_profile'){
 		
 	$student_name = $_REQUEST[txt_src].' '.$_REQUEST[txt_src3];
 	
-	$string="first_name='$student_name',first_name1='$_POST[txt_src]',father_name='$_POST[txt_src1]',grandfather_name='$_POST[txt_src2]',family_name='$_POST[txt_src3]',gender='$_POST[gender]',country_id='$_POST[country]',alt_contact='$_POST[altmobile]'";
+	$string="	first_name='$_REQUEST[mytxt_src]',
+				first_name1='$ar_firstname',
+				father_name='$_REQUEST[mytxt_src1]',
+				father_name1='$ar_fathername',
+				grandfather_name='$_REQUEST[mytxt_src2]',
+				grandfather_name1='$ar_gfathrname',
+				family_name='$_REQUEST[mytxt_src3]',
+				family_name1='$ar_familyname',
+				gender='$_POST[gender]',
+				country_id='$_POST[country]',
+				alt_contact='$_POST[altmobile]'";
 	
 	$dbf->updateTable("student",$string,"id='$student_id'");
 	
@@ -107,5 +122,6 @@ if($_REQUEST['action'] == 'edit_from_student_profile'){
 		
 	header("Location:single-myprofile.php?student_id=$student_id&token=0_k_0");
 	exit;
+
 }
 ?>

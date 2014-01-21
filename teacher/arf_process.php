@@ -20,7 +20,7 @@ if($_REQUEST['action']=='insert')
 				group_id='$_REQUEST[group_id]',
 				dated='$_REQUEST[dated]',
 				nr='$_REQUEST[nr]',
-				action_owner='$_REQUEST[report_by]',
+				action_owner='$_SESSION[user_name]',
 				report_by='$_REQUEST[report_by]',
 				report_to='$_REQUEST[report_to]',
 				arf_function='$function',

@@ -174,8 +174,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <script type="text/javascript">
                     $(function () {
                         $("#ganttChart").ganttView({ 
+							
                             data: ganttData,
-                            slideWidth: 1000,
+							slideWidth: 1000,
                             behavior: {
                                 onClick: function (data) { 
                                     var msg = "You clicked on an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
@@ -258,12 +259,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$psm = date('m',strtotime($res_min["MIN(dated)"]))-1;
 						$psd = date('d',strtotime($res_min["MIN(dated)"]));
 						
-						$res_min = $dbf->strRecordID("ped_units","MAX(dated)","group_id='$val[id]'");						
+						$res_min1 = $dbf->strRecordID("ped_units","MAX(dated)","group_id='$val[id]'");						
 						
 						//Ending date of the group
-						$pey = date('Y',strtotime($res_min["MAX(dated)"]));
-						$pem = date('m',strtotime($res_min["MAX(dated)"]))-1;
-						$ped = date('d',strtotime($res_min["MAX(dated)"]));
+						$pey = date('Y',strtotime($res_min1["MAX(dated)"]));echo "<BR/>";
+						$pem = date('m',strtotime($res_min1["MAX(dated)"]))-1;echo "<BR/>";
+						$ped = date('d',strtotime($res_min1["MAX(dated)"]));echo "<BR/>";
 					}
 					
 					$smonth = $sm + 1;
@@ -273,16 +274,33 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					}else{
 						$count_student = $count_student. ' student';
 					}
+					/*
 					$a =$a.','. '
 					{id: 1, name: "'.$val[group_name].' ('.$res_course[name].')<br>['.$count_student.']<br>Teacher : '.$res_teacher[name].'", series: [{ name: "Start : '.date('d/M/Y',strtotime($val[start_date])).'<br>'.$val[group_time].'", start: new Date('.$sy.','.$sm.','.$sd.'), end: new Date('.$ey.','.$em.','.$ed.') },
-																   { name: "End : '.date('d/M/Y',strtotime($val[end_date])).'<br>'.$dbf->GetGroupTime($val[id]).'", start: new Date('.$psy.','.$psm.','.$psd.'), end: new Date('.$pey.','.$pem.','.$ped.'), color: "#FFF000" }]
+																   { name: "End : '.date('d/M/Y',strtotime($val[end_date])).'<br>'.$val[group_time_end].'", start: new Date('.$psy.','.$psm.','.$psd.'), end: new Date('.$pey.','.$pem.','.$ped.'), color: "#FFF000" }]
+					}
+					';
+					*/
+					$a =$a.','. '
+					{	id: 1, 
+						name: "'.$val[group_name].'",
+						series: [
+									{	name: "'.date('d/M/Y',strtotime($val[start_date])).'<br>'.$val[group_start_time].'",
+										start: new Date('.$sy.','.$sm.','.$sd.'), 
+										end: new Date('.$ey.','.$em.','.$ed.'),
+										 
+									},
+									{name: "End : '.date('d/M/Y',strtotime($val[end_date])).'<br>'.$val[group_end_time].'", start: new Date('.$psy.','.$psm.','.$psd.'), end: new Date('.$pey.','.$pem.','.$ped.'), color: "#FFF000" }
+									
+								]
 					}
 					';
 				}
 				$a='['.substr($a,1).']';
 				?>
                 <script language="JavaScript" type="text/javascript">
-                var ganttData = <?php echo $a;?>;
+                var ganttData =<?php echo $a;?>;
+								/*$("#ganttChart").gantt({source: data, navigate: 'scroll', scale: 'days', maxScale: 'weeks', minScale: 'hours'});*/
                 </script></td>
                 </tr>
               </table></td>

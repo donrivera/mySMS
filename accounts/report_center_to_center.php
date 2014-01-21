@@ -291,7 +291,7 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
                     
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                   <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $transfer["dated"];?></td>
-                  <td align="left" valign="middle" class="mycon">&nbsp;<a href="single-home.php?student_id=<?php echo $student[id];?>"><?php echo $student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></a></td>
+                  <td align="left" valign="middle" class="mycon">&nbsp;<a href="single-home.php?student_id=<?php echo $student[id];?>"><?php echo $dbf->printStudentName($student["id"]);?></a></td>
                   <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $enroll;?></td>
                   <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $course["name"];?></td>
                   <td align="right" valign="middle" class="mycon"><?php echo $course_fee;?>&nbsp;<?php echo $res_currency[symbol];?></td>
@@ -300,8 +300,8 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
                   <td align="right" valign="middle" class="mycon"><?php echo $en_amt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
                   <td align="right" valign="middle" class="mycon"><?php echo $paid_amt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
                   <td align="right" valign="middle" class="mycon"><?php echo $bal_amt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
-                  <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $from_id;?> <?php echo $from_group["group_time"];?>-<?php echo $dbf->GetGroupTime($from_group["id"]);?></td>
-                  <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $to_id;?> <?php echo $to_group["group_time"];?>-<?php echo $dbf->GetGroupTime($to_group["id"]);?></td>
+                  <td align="left" valign="middle" class="mycon">&nbsp;<?php echo ($from_id ==''?'N/A':$from_id);?></td>
+                  <td align="left" valign="middle" class="mycon">&nbsp;<?php echo ($to_id ==''?'N/A':$to_id);?></td>
                   <?php
 					  $i = $i + 1;
 					  if($color=="#ECECFF"){

@@ -13,7 +13,7 @@ $dbf = new User();
   if($_REQUEST["status"] != ""){ $cond = " And status='$_REQUEST[status]'";}else{ $cond = ""; }
   foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' ".$cond,"","") as $res_group) {
   ?>
-  <option value="<?php echo $res_group['id'];?>" <?php if($_REQUEST[cmbgroup]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>, <?php echo $res_group["group_time"];?>-<?php echo $dbf->GetGroupTime($res_group["id"]);?></option>
+  <option value="<?php echo $res_group['id'];?>" <?php if($_REQUEST[cmbgroup]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>, <?php echo $dbf->printClassTImeFormat($res_group["group_start_time"],$res_group["group_end_time"]);?></option>
   <?php
   }
   ?>

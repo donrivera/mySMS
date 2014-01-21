@@ -411,7 +411,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <?php					
 					$val_student = $dbf->strRecordID("student","*","id='$student_id'");
 					$res_enroll = $dbf->strRecordID("student_enroll","*","course_id='$course_id' And student_id='$student_id'");
-					$course_fees = $dbf->getDataFromTable("course_fee","fees","id='$res_enroll[fee_id]'");
+					$course_fees = $dbf->getDataFromTable("course_fee","fees","id='$course_id'");
 				  ?>
                   <tr>
                     <td colspan="5" align="left" valign="top" style="padding-top:3px;">
@@ -458,7 +458,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								?>
                               <tr>
                                 <td width="62%" height="25" align="left" valign="middle" bgcolor="#A9CFFE" class="pedtext"><?php echo constant("ADMIN_COURSE_MANAGE_COURSEFEES");?> :</td>
-                                <td width="38%" align="left" valign="middle" bgcolor="#F1E8FF" class="mycon">&nbsp;<?php echo $course_fees;?>&nbsp;<?php echo $res_currency[symbol];?></td>
+                                <td width="38%" align="left" valign="middle" bgcolor="#F1E8FF" class="mycon">&nbsp;<?php echo $course_fee;?>&nbsp;<?php echo $res_currency[symbol];?></td>
                                 </tr>
                               <tr>
                                 <td height="25" align="left" valign="middle" bgcolor="#A9CFFE" class="pedtext"><?php echo constant("CD_SEARCH_INVOICE_PAIDAMOUNT");?> :</td>
@@ -478,7 +478,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						  $opening_amt = $dbf->getDataFromTable('student_fees',"paid_amt","course_id='$course_id' And student_id='$student_id' And type='opening'");
 						  ?>
                           <tr>
-                            <td height="28" align="left" valign="middle" class="mytext"><input name="payment" type="text" class="new_textbox100" id="payment" value="<?php echo $opening_amt;?>"  maxlength="20" onKeyPress="return isNumberKey(event);"/></td>
+                            <td height="28" align="left" valign="middle" class="mytext"><input name="payment" type="text" class="new_textbox100" id="payment" value="<?php echo $opening_amt;?>"  maxlength="20" onKeyPress="return isNumberKey(event);" readonly="readonly"/></td>
                             <td align="center" valign="middle">
                               <?php
 							  $valno = $dbf->strRecordID("student_fees","MAX(id)","id <> (SELECT MAX(id) FROM student_fees WHERE student_id='$student_id') AND student_id='$student_id'");

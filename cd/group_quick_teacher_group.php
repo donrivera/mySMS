@@ -41,7 +41,7 @@ $teacher_id = $_REQUEST["teacher_id"];
 	}
     ?>
     <tr>
-      <td align="left" valign="middle">&nbsp;<?php echo $valstudent[group_name];?> <?php echo $valstudent["group_time"];?>-<?php echo $dbf->GetGroupTime($valstudent["id"]);?></td>
+      <td align="left" valign="middle">&nbsp;<?php echo $valstudent[group_name];?> <?php echo $dbf->printClassTimeFormat($valstudent["group_start_time"],$valstudent["group_end_time"]); ?></td>
       <td align="left" valign="middle">&nbsp;<?php echo $course[name];?></td>
       <td align="left" valign="middle">&nbsp;<?php echo date('d-M-Y',strtotime($valstudent[start_date]));?>&nbsp;/<?php echo date('d-M-Y',strtotime($valstudent[end_date]));?></td>
       <td align="left" valign="middle">&nbsp;<?php echo $completed;?>&nbsp;%</td>
@@ -84,7 +84,7 @@ $teacher_id = $_REQUEST["teacher_id"];
       <td align="right" valign="middle">%&nbsp;<?php echo $completed;?>&nbsp;</td>
       <td align="right" valign="middle">&nbsp;<?php echo date('d-M-Y',strtotime($valstudent[start_date]));?>&nbsp;/<?php echo date('d-M-Y',strtotime($valstudent[end_date]));?></td>
       <td align="right" valign="middle">&nbsp;<?php echo $course[name];?></td>
-      <td align="right" valign="middle">&nbsp;<?php echo $valstudent[group_name];?> <?php echo $valstudent["group_time"];?>-<?php echo $dbf->GetGroupTime($valstudent["id"]);?></td>
+      <td align="right" valign="middle">&nbsp;<?php echo $valstudent[group_name];?> <?php echo $dbf->printClassTimeFormat($valstudent["group_start_time"],$valstudent["group_end_time"]);?></td>
     </tr>
     <?php	
     }

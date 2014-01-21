@@ -47,7 +47,7 @@ include_once '../includes/language.php';
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'">
                   <td width="7%" height="25" align="center" valign="middle"  class="contenttext" >
                   <input type="checkbox" name="id<?php echo $i;?>" id="id<?php echo $i;?>" value="<?php echo $vals[id];?>" onchange="display_save2();"/></td>
-                  <td width="32%" height="25" align="left" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $vals[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($vals["id"]));?></td>
+                  <td width="32%" height="25" align="left" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $dbf->printStudentName($vals["id"]);?></td>
                   <td width="19%" align="left" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $vals[student_id];?></td>
                   <td width="20%" align="left" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $vals[student_mobile];?></td>
                   <td width="22%" align="left" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $vals[email];?></td>
@@ -100,7 +100,7 @@ include_once '../includes/language.php';
                   <td width="22%" align="right" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $vals[email];?></td>
                   <td width="20%" align="right" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $vals[student_mobile];?></td>
                   <td width="19%" align="right" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $vals[student_id];?></td>
-                  <td width="32%" height="25" align="right" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $vals[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($vals["id"]));?></td>
+                  <td width="32%" height="25" align="right" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $dbf->printStudentName($vals["id"]);?></td>
                   <td width="7%" height="25" align="center" valign="middle"  class="contenttext" >
                   <input type="checkbox" name="id<?php echo $i;?>" id="id<?php echo $i;?>" value="<?php echo $vals[id];?>" onchange="display_save2();"/></td>
                   <?php

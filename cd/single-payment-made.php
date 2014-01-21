@@ -30,11 +30,12 @@ $course_id =  $_REQUEST['course_id'];
 $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 
 if($_REQUEST['action']=='invoice'){
-	
+	$inv_no = $dbf->GenerateInvoiceNo($centre_id);
+	$inv_sl = $dbf->GetBillNo($_REQUEST[ids], $course_id);
 	$dt = date('Y-m-d h:m:s');
 	$comments = mysql_real_escape_string($_POST[comment]);
 	
-	$string="paid_date='$_POST[dated]',	payment_type='$_POST[payment_type]',paid_amt='$_REQUEST[amt]',status='1',comments='$comments',fee_amt='$_REQUEST[amt]',created_date=NOW(),created_by='$_SESSION[id]'";
+	$string="paid_date='$_POST[dated]',	payment_type='$_POST[payment_type]',paid_amt='$_REQUEST[amt]',status='1',comments='$comments',fee_amt='$_REQUEST[amt]',created_date=NOW(),created_by='$_SESSION[id]',invoice_sl='$inv_sl',invoice_no='$inv_no'";
 	
 	$dbf->updateTable("student_fees",$string,"id='$_REQUEST[schid]'");
 	
@@ -94,8 +95,8 @@ if($_REQUEST['action']=='invoice'){
 			}
 		}		
 	}
-	
-	header("Location:single-payment.php?student_id=$student_id&course_id=$course_id");
+	#echo var_dump($_REQUEST);
+	header("Location:single-payment.php?student_id=$_REQUEST[ids]&course_id=$course_id");
 	exit;
 }
 ?>
@@ -209,7 +210,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
                   <tr>
                     <td width="35%" height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?> : &nbsp;</td>
-                    <td width="65%" align="left" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                    <td width="65%" align="left" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student["id"]);?></td>
                   </tr>
                   <tr>
                     <td height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_VIEW_COMMENTS_MANAGE_STUDENT_ID");?> : &nbsp;</td>
@@ -294,7 +295,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								
 				$res_enroll = $dbf->strRecordID("student_enroll","*","student_id='$student_id' And course_id='$course_id'");
 				$res_course = $dbf->strRecordID("course","*","id='$course_id'");
-				$course_fees = $dbf->getDataFromTable("course_fee","fees","id='$res_enroll[fee_id]'");
+				$course_fees = $dbf->getDataFromTable("course_fee","fees","id='$course_id'");
 				?>
               <tr>
                 <td>&nbsp;</td>

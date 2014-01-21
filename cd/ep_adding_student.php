@@ -540,7 +540,7 @@ $count = $res_logout[name]+1; // Set timeout period in seconds
                                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'">
                                   <td height="25" align="center" valign="middle"  class="mycon" >
                                   <input type="checkbox" name="id<?php echo $i;?>" id="id<?php echo $i;?>" value="<?php echo $vals[id];?>"></td>
-                                  <td height="25" align="left" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $val[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></td>
+                                  <td height="25" align="left" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $dbf->printStudentName($val["id"]);?></td>
                                   <td align="left" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $val[student_id];?></td>
                                   <td align="left" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
                                   <td align="left" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
@@ -798,7 +798,7 @@ $count = $res_logout[name]+1; // Set timeout period in seconds
                                     <td align="right" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $val[student_id];?></td>
                                     <td align="right" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
                                     <td align="right" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
-                                    <td height="25" align="right" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $val[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></td>
+                                    <td height="25" align="right" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $dbf->printStudentName($val["id"]);?></td>
                                     <td height="25" align="center" valign="middle"  class="mycon" >
                                       <input type="checkbox" name="id<?php echo $i;?>" id="id<?php echo $i;?>" value="<?php echo $vals[id];?>"></td>
                                     <?php

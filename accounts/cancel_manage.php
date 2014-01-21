@@ -202,7 +202,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                     <td align="center" valign="middle" class="mycon"><?php echo $i;?></td>
                     <td align="left" valign="middle" class="mycon" >&nbsp;<?php echo $valcancel[dated];?></td>
-                    <td align="left" valign="middle" class="mycon" >&nbsp;<a href="single-home.php?student_id=<?php echo $res_student[id];?>"><?php echo $res_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></a></td>
+                    <td align="left" valign="middle" class="mycon" >&nbsp;<a href="single-home.php?student_id=<?php echo $res_student[id];?>"><?php echo $dbf->printStudentName($res_student["id"]);?></a></td>
                     <td align="left" valign="middle" class="mycon" >&nbsp;<?php echo $res_student[student_mobile];?></td>
                     <td align="left" valign="middle" class="mycon" >&nbsp;<?php echo $valcancel[comment];?></td>
                     <?php

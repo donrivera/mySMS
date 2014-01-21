@@ -370,7 +370,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         }
                                         foreach($dbf->fetchOrder('student_group',"teacher_id='$teacher_id'".$status,"","") as $res_group) {
                                         ?>
-                                        <option value="<?php echo $res_group['id'];?>" <?php if($res_arf[group_id]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'];?></option>
+                                        <option value="<?php echo $res_group['id'];?>" <?php if($res_arf[group_id]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name']."&nbsp;".date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>,  <?php echo $dbf->printClassTimeFormat($res_group["group_start_time"],$res_group["group_end_time"]);?></option>
                                         <?php
                                         }
                                         ?>
@@ -395,7 +395,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         foreach($dbf->fetchOrder('student s',"s.centre_id='$res_arf[centre_id]'","s.first_name","s.*") as $ress2) {
                                       ?>
                                         <option value="<?php echo $ress2['id']?>" <?php if($ress2[id]==$res_arf[student_id]) { ?> selected="selected" <?php } ?>>
-											<?php echo $ress2[first_name]."&nbsp;".$ress2[father_name]."&nbsp;".$ress2[family_name]."&nbsp;(".$ress2[first_name1]."&nbsp;".$ress2[father_name1]."&nbsp;".$ress2[grandfather_name1]."&nbsp;".$ress2[family_name1].")";?>
+											<?php echo $dbf->printStudentName($ress2['id']);?>
 										</option>
                                         <?php }?>
                                       </select>
@@ -759,7 +759,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         foreach($dbf->fetchOrder('student',"certificate_collect='0'","first_name") as $ress2) {
                                         ?>
                                         <option value="<?php echo $ress2['id']?>" <?php if($ress2[id]==$res_arf[student_id]) { ?> selected="selected" <?php } ?>>
-											<?php echo $ress2[first_name]."&nbsp;".$ress2[father_name]."&nbsp;".$ress2[family_name]."&nbsp;(".$ress2[first_name1]."&nbsp;".$ress2[father_name1]."&nbsp;".$ress2[grandfather_name1]."&nbsp;".$ress2[family_name1].")";?>
+											<?php $dbf->printStudentName($ress2['id']);?>
 										</option>
                                         <?php }?>
                                       </select>

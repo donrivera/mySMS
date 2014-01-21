@@ -15,7 +15,7 @@ $Arabic = new I18N_Arabic('Transliteration');
 <table width="450" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse; border-color:#0000CC;">
 <?php
 $name="$_REQUEST[search_group1]";
-if($name == "") { exit; }
+#if($name == "") { exit; }
 
 foreach($dbf->fetchOrder("student","(family_name LIKE '$name%' OR family_name1 LIKE '$name%' OR first_name LIKE '$name%' OR student_first_name LIKE '$name%' OR first_name1 LIKE '$name%') And centre_id='$_SESSION[centre_id]' And email <> ''") as $val){
 	

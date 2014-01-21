@@ -282,7 +282,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <?php
 							if($_SESSION["gr_course_total_units"] == '')
 							{
-								$i_set = 60;
+								$i_set = 40;
 							}
 							else
 							{
@@ -515,7 +515,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         <?php
 										if($_SESSION["gr_course_total_units"] == '')
 										{
-											$i_set = 60;
+											$i_set = 40;
 										}
 										else
 										{

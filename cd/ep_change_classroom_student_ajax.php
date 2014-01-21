@@ -43,7 +43,7 @@ include_once '../includes/language.php';
           <td height="25" align="center" valign="middle"  class="contenttext"><?php echo $i;?>
           <input type="hidden" name="student_id<?php echo $i;?>" id="student_id<?php echo $i;?>" value="<?php echo $valg[student_id];?>" />
           </td>
-          <td height="25" align="left" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $vals[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($vals["id"]));?></td>
+          <td height="25" align="left" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $dbf->printStudentName($vals["id"]);?></td>
           <td align="left" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $vals[student_id];?></td>
           <td align="left" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $vals[student_mobile];?></td>
           <td align="left" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $vals[email];?></td>

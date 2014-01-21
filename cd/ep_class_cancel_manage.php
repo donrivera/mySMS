@@ -179,7 +179,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
               <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'">
                 <td height="25" align="center" valign="middle" class="contenttext"><?php echo $i;?></td>
-				<td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $res_e[group_name];?> <?php echo $res_e["group_time"];?>-<?php echo $dbf->GetGroupTime($res_e["id"]);?></td>
+				<td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $res_e[group_name];?> <?php echo $dbf->printClassTimeFormat($res_e["group_start_time"],$res_e["group_end_time"]);?></td>
                 <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[cancel_date];?></td>
                 <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[comments];?></td>
                 <td width="5%" align="center" valign="middle"><a href="ep_class_cancel_edit.php?id=<?php echo $val[id];?>"><img src="../images/edit.gif" width="16" height="16" border="0" title="Edit" /></a></td>
@@ -304,7 +304,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <td align="right" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[cancel_date];?></td>
                         <td align="right" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[comments];?></td>
                         
-                        <td align="right" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $res_e[group_name];?> <?php echo $res_e["group_time"];?>-<?php echo $dbf->GetGroupTime($res_e["id"]);?></td>
+                        <td align="right" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $res_e[group_name];?> <?php echo $dbf->printClassTimeFormat($res_e["group_start_time"],$res_e["group_end_time"]);?></td>
                         <td height="25" align="center" valign="middle" class="contenttext"><?php echo $i;?></td>
                         <?php
 					  $i = $i + 1;

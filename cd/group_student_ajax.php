@@ -39,7 +39,7 @@ include_once '../includes/language.php';
           <td height="25" align="center" valign="middle"  class="contenttext" style="border-top:solid 1px;">
 		  <input type="checkbox" name="id<?php echo $i;?>" id="id<?php echo $i;?>" value="<?php echo $vals[id];?>" onchange="display_save2();"/>
           </td>
-          <td height="25" align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $vals[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($vals["id"]));?></td>
+          <td height="25" align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $dbf->printStudentName($vals["id"]);?></td>
           <td align="left" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $vals[student_id];?></td>
           <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $vals[student_mobile];?></td>
           <td align="left" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $vals[email];?></td>

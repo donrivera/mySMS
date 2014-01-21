@@ -214,8 +214,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td width="5%" height="25" align="center" valign="middle" class="mycon"><?php echo $i; ?></td>
 				<td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val_group[group_name]." [".$num_std."]";?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val_course[name];?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo date("d/m/Y",strtotime($val[schedule_date]));?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo date("d/m/Y",strtotime($val[dated]));?></td>
+                <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo date("Y/m/d",strtotime($val[schedule_date]));?></td>
+                <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo date("Y/m/d",strtotime($val[dated]));?></td>
                 <td width="20%" align="center" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $room;?></td>
                 <td width="13%" align="center" valign="middle"><a href="ep_scheduling_process.php?action=delete&amp;id=<?php echo $val[id];?>"  class="linktext" onclick="return confirm('Are you sure you want to delete this record ?')"><img src="../images/delete.png"width="16" height="16" border="0" title="Delete" /></a></td>
                
@@ -245,7 +245,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							?>
                           <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'">
                             <td align="center" valign="middle"><?php echo $k; ?></td>
-                          <td height="25" align="left" valign="middle"><?php echo $val_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val_student["id"]));?></td>
+                          <td height="25" align="left" valign="middle"><?php echo $dbf->printStudentName($val_student["id"]);?></td>
                           <td align="left" valign="middle"><?php echo $val_student[student_id];?></td>
                           <td align="left" valign="middle"><?php echo $val_student[student_mobile];?></td>
                           <td align="left" valign="middle"><?php echo $val_student[email];?>&nbsp;&nbsp;</td>
@@ -405,8 +405,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <td width="11%" align="center" valign="middle"><a href="ep_scheduling_process.php?action=delete&amp;id=<?php echo $val[id];?>"  class="linktext" onclick="return confirm('Are you sure you want to delete this record ?')"><img src="../images/delete.png"width="16" height="16" border="0" title="Delete" /></a></td>
                         <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val_group[group_name]." [".$num_std."]";?></td>
                         <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val_course[name];?></td>
-                        <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo date("d/m/Y",strtotime($val[schedule_date]));?></td>
-                        <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo date("d/m/Y",strtotime($val[dated]));?></td>
+                        <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo date("Y/m/d",strtotime($val[schedule_date]));?></td>
+                        <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo date("Y/m/d",strtotime($val[dated]));?></td>
                         <td width="22%" align="center" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $room;?></td>
                         
                         <td width="4%" height="25" align="center" valign="middle" class="mycon"><?php echo $i; ?></td>
@@ -442,7 +442,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <td align="right" valign="middle"><?php echo $val_student[email];?>&nbsp;&nbsp;</td>
                               <td align="right" valign="middle"><?php echo $val_student[student_id];?></td>
                               <td align="right" valign="middle"><?php echo $val_student[student_mobile];?></td>
-                              <td height="25" align="right" valign="middle"><?php echo $val_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val_student["id"]));?></td>
+                              <td height="25" align="right" valign="middle"><?php echo $dbf->printStudentName($val_student["id"]);?></td>
                               <td align="center" valign="middle"><?php echo $k; ?></td>
                               </tr>
                             <?php

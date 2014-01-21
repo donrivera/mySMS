@@ -345,7 +345,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <td width="30" align="left" valign="top">&nbsp;</td>
                   <td width="554" align="left" valign="top">
                   
-                  <form action="ep_removing_student_process.php?action=delete" name="frm" method="post" id="frm">
+                  <form action="ep_removing_student_process.php?action=delete" name="frm" method="post" id="frm" onSubmit="return confirm('Are you sure you want to remove student  ?');">
                     <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:solid 2px; border-color:#FF6600;">
                       <tr>
                         <td height="25" colspan="3" align="right" valign="top" bgcolor="#F2F2F2" class="lable1" style="padding-left:5px;padding-bottom:5px;padding-top:5px;">
@@ -445,7 +445,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                   <td height="25" align="center" valign="middle"  class="mycon" >
                                   <input type="checkbox" name="id<?php echo $i;?>" id="id<?php echo $i;?>" value="<?php echo $vals[id];?>">
                                   </td>
-                                  <td height="25" align="left" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $val[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></td>
+                                  <td height="25" align="left" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $dbf->printStudentName($val["id"]);?></td>
                                   <td align="left" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $val[student_id];?></td>
                                   <td align="left" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
                                   <td align="left" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
@@ -710,7 +710,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                     <td align="right" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $val[student_id];?></td>
                                     <td align="right" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
                                     <td align="right" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
-                                    <td height="25" align="right" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $val[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></td>
+                                    <td height="25" align="right" valign="middle"  class="mycon" style="padding-left:5px;"><?php echo $dbf->printStudentName($val["id"]);?></td>
                                     <td height="25" align="center" valign="middle"  class="mycon" >
                                       <input type="checkbox" name="id<?php echo $i;?>" id="id<?php echo $i;?>" value="<?php echo $vals[id];?>">
                                       </td>

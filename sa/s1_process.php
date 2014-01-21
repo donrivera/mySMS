@@ -875,11 +875,12 @@ if($_REQUEST['action']=='search')
 	$is_opeing = $dbf->countRows("student_fees", "course_id='$course_id' And student_id='$student_id' And type='opening'");
 	if($is_opeing == 0)
 	{
-		# if not available then save
-		$string2="student_id='$student_id',course_id='$course_id',paid_amt='$_REQUEST[payment]',fee_amt='$_REQUEST[payment]',comments='$invoice_note',fee_date='$c_dt',paid_date='$c_dt',payment_type='$_REQUEST[ptype]',centre_id='$centre_id',created_date=NOW(),created_by='$_SESSION[id]',type='opening',invoice_sl='$inv_sl',invoice_no='$inv_no',status='1'";
-	
-		$dbf->insertSet("student_fees",$string2);		
-		
+		if($_REQUEST['payment'] !='')
+		{
+			# if not available then save
+			$string2="student_id='$student_id',course_id='$course_id',paid_amt='$_REQUEST[payment]',fee_amt='$_REQUEST[payment]',comments='$invoice_note',fee_date='$c_dt',paid_date='$c_dt',payment_type='$_REQUEST[ptype]',centre_id='$centre_id',created_date=NOW(),created_by='$_SESSION[id]',type='opening',invoice_sl='$inv_sl',invoice_no='$inv_no',status='1'";
+			$dbf->insertSet("student_fees",$string2);		
+		}
 	}
 	else
 	{

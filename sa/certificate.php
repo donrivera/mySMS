@@ -155,12 +155,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr>
                     
                     <td width="239"  height="30" align="left" valign="middle" style="padding-left:12px;">
+						
                       <select id="student" name="student" style="border:solid 1px; border-color:#FFCC33; height:20px; width:210px;" onChange="setsubmit();">
                         <option value="">--Select Student--</option>
                         <?php
 						foreach($dbf->fetchOrder('student s,student_group m,student_group_dtls d',"m.centre_id='$_SESSION[centre_id]' And m.id=d.parent_id And s.id=d.student_id And m.status='Completed'","s.first_name","s.id,s.first_name","s.id") as $val) {
 						?>
-                        <option value="<?php echo $val[id]; ?>"<?php if($_REQUEST[student]==$val["id"]){?> selected="selected"<?php } ?>><?php echo $val[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></option>
+                        <option value="<?php echo $val[id]; ?>"<?php if($_REQUEST[student]==$val["id"]){?> selected="selected"<?php } ?>><?php echo $dbf->printStudentName($val["id"]);?></option>
                         <?php 
 						  }
 						  ?>
@@ -282,7 +283,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 									  }
 									  ?>
                                     <tr>
-                                      <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head"><?php echo $gender;?>&nbsp;</span><span class="cer_my_head_bold"><?php echo $res[first_name];?></span></th>
+                                      <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head"><?php echo $gender;?>&nbsp;</span><span class="cer_my_head_bold"><?php echo $dbf->printStudentName($res["id"]);?></span></th>
                                       </tr>
                                     <tr>
                                       <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">Nationality:</span>&nbsp;<span class="cer_my_head_bold"><?php echo $resc[value];?></span></th>

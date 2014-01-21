@@ -248,14 +248,14 @@ $(document).ready(function() {
         </div>
         
         <div id="e_proc" class="dropmenudiv_d">
-        	<a href="ep_removing_student.php"><?php echo constant("CD_MENU_REMOVE");?></a>
-            <?php //if(date("D") == "Thu") {?>
+        	<!--<a href="ep_removing_student.php"><?php echo constant("CD_MENU_REMOVE");?></a>-->
             <a href="ep_scheduling_manage.php"><?php echo constant("CD_MENU_SCHEDULING");?></a>
-            <?php //} ?>
             <a href="ep_change_classroom.php"><?php echo constant("CD_MENU_CHANGE");?></a>
+			<!--
             <a href="ep_adding_student.php"><?php echo constant("CD_MENU_ADDITION");?></a>
             <a href="ep_class_cancel_manage.php"><?php echo constant("CD_MENU_CANCEL");?></a>
-        </div>
+			-->
+		</div>
         
       	<div id="mnu_rel" class="dropmenudiv_d">
 		<?php

@@ -135,7 +135,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				if($_REQUEST["mystatus"] != ""){ $cond = " And status='$_REQUEST[mystatus]'";}else{ $cond = ""; }
 			  	foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]'".$cond,"","") as $res_group) {
 				?>
-                <option value="<?php echo $res_group['id'];?>" <?php if($_REQUEST[cmbgroup]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>, <?php echo $res_group["group_time"];?>-<?php echo $dbf->GetGroupTime($res_group["id"]);?>
+                <option value="<?php echo $res_group['id'];?>" <?php if($_REQUEST[cmbgroup]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>, <?php echo $dbf->printClassTImeFormat($res_group["group_start_time"],$res_group["group_end_time"]);?>
 </option>
                 <?php
 			  }
@@ -192,7 +192,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
             <td height="20" align="left" valign="middle" class="leftmenu">&nbsp;<?php echo constant("CD_GROUP_PROGRESS_COMPANYGROUP");?> : </td>
             <td align="left" valign="middle" class="pedtext_normal">
 			<?php if($_REQUEST["cmbgroup"] != ""){?>
-			<?php echo $res_g[group_name];?> <?php echo $res_g["group_time"];?>-<?php echo $dbf->GetGroupTime($res_g["id"]);?>
+			<?php echo $res_g[group_name];?> <?php echo $dbf->printClassTImeFormat($res_g["group_start_time"],$res_g["group_end_time"]);?>
             <?php } ?>
             </td>
             <td>&nbsp;</td>
@@ -330,7 +330,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$comp = $res_progress["course_listen"];								
 				?>
               <tr>
-                <td height="25" align="left" valign="middle" class="pedtext_normal">&nbsp;<?php echo $r[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($r["id"]));?></td>
+                <td height="25" align="left" valign="middle" class="pedtext_normal">&nbsp;<?php echo $dbf->printStudentName($r["id"]);?></td>
                 <td align="center" valign="middle" class="pedtext_normal" style="border-left:solid 1px; border-color:#F5F5F5;"><?php if($parti>0) { echo $parti; }?></td>
                 <td align="center" valign="middle" class="pedtext_normal" style="border-left:solid 1px; border-color:#F5F5F5;"><?php if($home) { echo $home; }?></td>
                 <td align="center" valign="middle" class="pedtext_normal" style="border-left:solid 1px; border-color:#F5F5F5;"><?php if($flu>0) { echo $flu; }?></td>
@@ -479,7 +479,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 			  if($_REQUEST["mystatus"] != ""){ $cond = " And status='$_REQUEST[mystatus]'";}else{ $cond = ""; }
 			  foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]'".$cond,"","") as $res_group) {
 			  ?>
-              <option value="<?php echo $res_group['id'];?>" <?php if($_REQUEST[group_id]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>, <?php echo $res_group["group_time"];?>-<?php echo $dbf->GetGroupTime($res_group["id"]);?>
+              <option value="<?php echo $res_group['id'];?>" <?php if($_REQUEST[group_id]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>, <?php echo $dbf->printClassTImeFormat($res_group["group_start_time"],$res_group["group_end_time"]);?>
 </option>
               <?php } ?>
             </select></td>
@@ -534,7 +534,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
           <tr>
             <td height="20" align="right" valign="middle" class="shop2">
 			<?php if($_REQUEST["cmbgroup"] != ""){?>
-			<?php echo $res_g[group_name];?> <?php echo $res_g["group_time"];?>-<?php echo $dbf->GetGroupTime($res_g["id"]);?>&nbsp;
+			<?php echo $res_g[group_name];?> <?php echo $dbf->printClassTImeFormat($res_g["group_start_time"],$res_g["group_end_time"]);?>&nbsp;
             <?php } ?>
             </td>
             <td align="left" valign="middle" class="leftmenu">: <?php echo constant("CD_GROUP_PROGRESS_COMPANYGROUP");?></td>
@@ -689,7 +689,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td align="center" valign="middle" class="pedtext_normal" style="border-left:solid 1px; border-color:#F5F5F5;"><?php if($avg) { echo $avg; } ?></td>
                 
                 
-                <td height="25" align="right" valign="middle" class="pedtext_normal"><?php echo $r[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($r["id"]));?>&nbsp;</td>
+                <td height="25" align="right" valign="middle" class="pedtext_normal"><?php echo $dbf->printStudentName($r["id"]);?>&nbsp;</td>
               </tr>
               <tr>
                 <td height="1" colspan="10" align="left" valign="middle" bgcolor="#F5F5F5"></td>

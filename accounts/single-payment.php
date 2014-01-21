@@ -510,7 +510,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         </tr>
                       <tr>
                         <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                        <td height="22" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_SEARCH_MANAGE_INITIPAY");?> : </td>
+                        <td height="22" align="left" valign="middle" class="pedtext" ><?php echo constant("STUDENT_ADVISOR_SEARCH_MANAGE_INITIPAY");?> :</td>
                         <td>&nbsp;</td>
                         </tr>
                       <tr>

@@ -41,7 +41,7 @@ sleep(1);
 	}
     ?>
     <tr>
-      <td align="left" valign="middle">&nbsp;<?php echo $valstudent[group_name];?> <?php echo $valstudent["group_start_time"];?>-<?php echo $valstudent["group_end_time"];?></td>
+      <td align="left" valign="middle">&nbsp;<?php echo $valstudent[group_name];?> <?php echo $dbf->printClassTimeFormat($valstudent["group_start_time"],$valstudent["group_end_time"]);?></td>
       <td align="left" valign="middle">&nbsp;<?php echo $course[name];?></td>
       <td align="center" valign="middle">&nbsp;<?php echo date('d-M-Y',strtotime($valstudent[start_date]));?>&nbsp;<br />        <?php echo date('d-M-Y',strtotime($valstudent[end_date]));?></td>
       <td align="left" valign="middle">&nbsp;<?php echo $completed;?>&nbsp;%</td>
@@ -88,7 +88,7 @@ sleep(1);
      <td align="right" valign="middle">%&nbsp;<?php echo $completed;?></td>
       <td align="center" valign="middle"><?php echo date('d-M-Y',strtotime($valstudent[start_date]));?>&nbsp;<br />        <?php echo date('d-M-Y',strtotime($valstudent[end_date]));?></td>
      <td align="right" valign="middle">&nbsp;<?php echo $course[name];?></td>
-      <td align="right" valign="middle">&nbsp;<?php echo $valstudent[group_name];?> <?php echo $valstudent["group_time"];?>-<?php echo $dbf->GetGroupTime($valstudent["id"]);?></td>
+      <td align="right" valign="middle">&nbsp;<?php echo $valstudent[group_name];?> <?php echo $dbf->printClassTimeFormat($valstudent["group_start_time"],$valstudent["group_end_time"]);?></td>
       
       
      

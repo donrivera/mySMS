@@ -7,8 +7,9 @@ include("../includes/saudismsNET-API.php");
 //Object initialization
 $dbf = new User();
 
-if($_REQUEST['action']=='insert'){
-	
+if($_REQUEST['action']=='insert')
+{
+/*	
 	$sms_gateway = $dbf->strRecordID("sms_gateway","*","");
 	
 	//Current date
@@ -928,7 +929,7 @@ if($_REQUEST['action']=='insert'){
 	//=============================================================
 	// End
 	//=============================================================
-	
+*/	
 	header("Location:ep_adding_student.php");   
 }
 ?>

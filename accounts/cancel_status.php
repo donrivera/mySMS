@@ -206,11 +206,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       <tr>
                                         <td width="17">&nbsp;</td>
                                         <td width="118" height="30" align="right" class="pedtext"><?php echo constant("TEACHER_ARF_MANAGE_STUDENTNAME");?> : </td>
-                                        <td width="283" align="left" valign="middle" class="red_smalltext">&nbsp;<?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                                        <td width="283" align="left" valign="middle" class="red_smalltext">&nbsp;<?php echo $dbf->printStudentName($student["id"]);?></td>
                                         <td width="330" rowspan="8" align="center" valign="top">
                                         <?php
                                         $enroll = $dbf->strRecordID("student_enroll",'*',"student_id='$student_id' And course_id='$course_id'");
-										$course = $dbf->strRecordID("course_fee",'*',"id='$enroll[fee_id]'");
+										$course = $dbf->strRecordID("course_fee",'*',"id='$course_id'");
+										$course_name=$dbf->getDataFromTable("course","name","id='$course_id'");
 										$course_fee = $course["fees"];
 										$discount = $enroll["discount"];
 										$other_amt = $enroll["other_amt"];
@@ -225,7 +226,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         <table width="250" border="1" cellspacing="0" cellpadding="0" bordercolor="#9999FF" style="border-collapse:collapse;">
                                           <tr>
                                             <td width="54%" height="20" align="right" valign="middle" class="mycon">Course : &nbsp;</td>
-                                            <td width="46%" align="left" valign="middle" class="shop2">&nbsp;<?php echo $course["name"];?></td>
+                                            <td width="46%" align="left" valign="middle" class="shop2">&nbsp;<?php echo $course_name;?></td>
                                           </tr>
                                           <tr class="mycon">
                                             <td colspan="2" align="center" valign="middle"><u class="mymenutext">Payment Details</u> &nbsp;</td>
@@ -263,7 +264,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       <tr>
                                         <td>&nbsp;</td>
                                         <td height="30" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_GROUP_MANAGE_COURSE");?> : </td>
-                                        <td align="left" valign="middle" class="red_smalltext">&nbsp;<?php echo $course["name"];?></td>
+                                        <td align="left" valign="middle" class="red_smalltext">&nbsp;<?php echo $course_name;?></td>
                                         </tr>
                                       <tr>
                                         <td>&nbsp;</td>

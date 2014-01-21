@@ -7,7 +7,71 @@ include("../includes/saudismsNET-API.php");
 //Object initialization
 $dbf = new User();
 
-if($_REQUEST['action']=='delete'){echo var_dump($_REQUEST);
+if($_REQUEST['action']=='delete')
+{
+	$dt = date('Y-m-d');
+	$comm = mysql_real_escape_string($_REQUEST['comment']);
+	$count = $_REQUEST[count];
+	$no_student_remove = 0;
+	$group = $dbf->strRecordID("student_group","*","id='$_POST[group]'");
+	$sms_gateway = $dbf->strRecordID("sms_gateway","*","");
+	$res_teacher = $dbf->strRecordID("teacher","*","id='$res_group[teacher_id]'");
+	$teacher_mobile_no = $res_teacher['mobile'];
+	for($i = 1; $i<=$count; $i++)
+	{
+		$id1 = "id".$i;
+		$id1 = $_REQUEST[$id1];
+		if($id1 != '')
+		{
+			
+			$student_id=$id1;
+			$string="	dated='$dt',
+						student_id='$student_id',
+						course_id='$group[course_id]',
+						centre_id='$_SESSION[centre_id]',
+						cd_comment='$comm',
+						cd_status='Approved',
+						cd_dated='$dt',
+						admin_status='Pending',
+						created_date='$dt',
+						created_by='$_SESSION[id]'";
+			$dbf->insertSet("student_cancel",$string);
+			//Delete from grouping details table
+			#$dbf->deleteFromTable("student_group_dtls","parent_id='$_REQUEST[group]' AND student_id='$id1'");				
+			#$dbf->deleteFromTable("student_enroll","group_id='$_REQUEST[group]' AND student_id='$id1' And centre_id='$_SESSION[centre_id]'");				
+			#$dbf->deleteFromTable("student_fees","course_id='$course_id' And student_id='$id1' And centre_id='$_SESSION[centre_id]'");
+			#$no_student_remove = $no_student_remove+1;
+			
+		}
+		if($teacher_mobile_no != '')
+		{
+			// Your username
+			$UserName=UrlEncoding($sms_gateway[user]);
+			// Your password
+			$UserPassword=UrlEncoding($sms_gateway[password]);
+			// Destnation Numbers seprated by comma if more than one and no more than 120 numbers Per time.
+			$Numbers=UrlEncoding($teacher_mobile_no);
+			// Originator Or Sender name. In English no more than 11 Numbers or Characters or Both
+			$Originator=UrlEncoding($sms_gateway[your_name]);
+			$sms_cont = $dbf->getDataFromTable("sms_templete","contents","id='43'");
+			$msg = str_replace('%status%','Approved',$sms_cont);
+			$Message=$msg;
+			// Storing Sending result in a Variable.
+			$sms = $_REQUEST['sms'];
+			if($sms == "1" || $sms == "3")
+			{
+				if($sms_gateway["status"]=='Enable')
+				{
+					SendSms($UserName,$UserPassword,$Numbers,$Originator,$Message);
+					$cr_date = date('Y-m-d H:i:s A');
+					$string="dated='$cr_date',user_id='$_SESSION[id]',msg='$Message',send_to='Teacher',type='0',centre_id='$_SESSION[centre_id]',automatic='Yes',msg_from='Remove student from Centre Director (Exception Processing)',mobile='$teacher_mobile_no',page_full_path='$_SERVER[REQUEST_URI]'";
+					$dbf->insertSet("sms_history",$string);
+				}
+			}			
+		}
+	}
+	header("Location:ep_removing_student.php");
+	exit;
 /*
 	//Get the logo path
 	$res_logo = $dbf->strRecordID("conditions","*","type='Logo path'");

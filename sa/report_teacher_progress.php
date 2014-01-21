@@ -139,7 +139,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 			  	if($_REQUEST["mystatus"] != ""){ $cond = " And status='$_REQUEST[mystatus]'";}else{ $cond = ""; }
 				foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]'".$cond,"","") as $res_group) {
 				  ?>
-                <option value="<?php echo $res_group['id'];?>" <?php if($_REQUEST[cmbgroup]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>,  <?php echo $res_group["group_start_time"];?>-<?php echo $res_group["group_end_time"];?></option>
+                <option value="<?php echo $res_group['id'];?>" <?php if($_REQUEST[cmbgroup]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>,  <?php echo $dbf->printClassTimeFormat($res_group["group_start_time"],$res_group["group_end_time"]);?></option>
                 <?php
 			  }
 			  ?>
@@ -154,7 +154,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               <?php
 			  foreach($dbf->fetchOrder('student s,student_group_dtls d',"s.id=d.student_id And d.parent_id='$_REQUEST[cmbgroup]'","","s.*","") as $res_teacher) {
 				  ?>
-              <option value="<?php echo $res_teacher['id'];?>" <?php if($_REQUEST["teacher_id"]==$res_teacher["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_teacher['first_name'];?>
+              <option value="<?php echo $res_teacher['id'];?>" <?php if($_REQUEST["teacher_id"]==$res_teacher["id"]) { ?> selected="selected" <?php } ?>><?php echo $dbf->printStudentName($res_teacher["id"]);?>
                 <?php } ?>
               </select></td>
           </tr>
@@ -206,12 +206,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 		  ?>
           <tr>
             <td height="20" align="left" valign="middle" class="leftmenu">&nbsp;<?php echo constant("STUDENT_ADVISOR_S2_NAME");?> : </td>
-            <td align="left" valign="middle" class="pedtext_normal"><?php echo $res_student[first_name]."&nbsp;".$res_student[father_name]."&nbsp;".$res_student[family_name]."&nbsp;(".$res_student[first_name1]."&nbsp;".$res_student[father_name1]."&nbsp;".$res_student[grandfather_name1]."&nbsp;".$res_student[family_name1].")";?></td>
+            <td align="left" valign="middle" class="pedtext_normal"><?php echo $dbf->printStudentName($res_student['id']);?></td>
             <td>&nbsp;</td>
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="41%" height="20" align="left" valign="middle" class="leftmenu"><?php echo constant("CD_GROUP_PROGRESS_COMPANYGROUP");?> : </td>
-                <td width="59%" align="left" valign="middle" class="mycon" ><?php if($res_g[group_name] != ''){ ?><?php echo $res_g[group_name];?> <?php echo $res_g["group_start_time"];?>-<?php echo $res_g["group_end_time"];?><?php }?></td>
+                <td width="59%" align="left" valign="middle" class="mycon" ><?php if($res_g[group_name] != ''){ ?><?php echo $res_g[group_name];?> <?php echo $dbf->printClassTimeFormat($res_g["group_start_time"],$res_g["group_end_time"]);?><?php }?></td>
               </tr>
             </table></td>
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -561,7 +561,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 			  if($_REQUEST["mystatus"] != ""){ $cond = " And status='$_REQUEST[mystatus]'";}else{ $cond = ""; }
 			  foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]'".$cond,"","") as $res_group) {
 			  ?>
-              <option value="<?php echo $res_group['id'];?>" <?php if($_REQUEST[cmbgroup]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>,  <?php echo $res_group["group_start_time"];?>-<?php echo $res_group["group_end_time"];?></option>
+              <option value="<?php echo $res_group['id'];?>" <?php if($_REQUEST[cmbgroup]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>,  <?php echo $dbf->printClassTimeFormat($res_group["group_start_time"],$res_group["group_end_time"]);?></option>
               <?php } ?>
             </select></td>
             <td width="28%" height="25" align="left" bgcolor="#FFCB7D" class="pedtext">: <?php echo constant("ADMIN_REPORT_ABSENT_REPORT_GROUP");?></td>
@@ -575,7 +575,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               <?php
 			  foreach($dbf->fetchOrder('student s,student_group_dtls d',"s.id=d.student_id And d.parent_id='$_REQUEST[cmbgroup]'","","s.*","") as $res_teacher) {
 				  ?>
-              <option value="<?php echo $res_teacher['id'];?>" <?php if($_REQUEST[teacher_id]==$res_teacher["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_teacher['first_name'];?>
+              <option value="<?php echo $res_teacher['id'];?>" <?php if($_REQUEST[teacher_id]==$res_teacher["id"]) { ?> selected="selected" <?php } ?>><?php echo $dbf->printStudentName($res_teacher["id"]);?>
                 <?php }?>
               </select></td>
             <td width="28%" height="25" align="left" bgcolor="#FFCB7D" class="pedtext">: <?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_STUDENT");?></td>
@@ -642,7 +642,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               <td rowspan="5" align="left" valign="top" bgcolor="#FFFFFF"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td width="68%" height="20" align="right" valign="middle" bgcolor="#FFFFFF" class="pedtext_normal">
-					<?php echo $res_student[first_name]."&nbsp;".$res_student[father_name]."&nbsp;".$res_student[family_name]."&nbsp;(".$res_student[first_name1]."&nbsp;".$res_student[father_name1]."&nbsp;".$res_student[grandfather_name1]."&nbsp;".$res_student[family_name1].")";?>
+					<?php echo $dbf->printStudentName($res_student['id']);?>
 				  </td>
               <td width="32%" align="left" valign="middle" bgcolor="#FFFFFF" class="leftmenu">&nbsp; : <?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?>&nbsp;</td>
                 </tr>

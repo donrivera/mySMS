@@ -28,7 +28,8 @@ class User extends Dbfunctions{
 	}
 	
 	function getDiscountPercent($course_fee, $discount_amount){
-		return ($discount_amount / $course_fee) * 100;
+		$discount=($discount_amount / $course_fee) * 100;
+		return round($discount,2);
 	}
 	
 	//FETCH SINGLE ROW or specific Column FROM A TABLE (Kishor - 17-09-2011)
@@ -718,8 +719,8 @@ class User extends Dbfunctions{
 		$dbf = new User();
 		$invoice_from = $dbf->getDataFromTable("centre","invoice_from","id='$centre_id'");
 		$invoice_sl = $dbf->getDataFromTable("student_fees","MAX(id)","centre_id='$centre_id'");
-		$inv_no = $invoice_sl + 1;
-		return $inv_no = date("y").date("m").$invoice_from.str_pad($inv_no, 5, "0", STR_PAD_LEFT);
+		$invoice_sl +=1;
+		return $inv_no = date("y").date("m").$invoice_from.str_pad($invoice_sl, 8, "0", STR_PAD_LEFT);
 	}
 	
     function int_to_words($amount){
@@ -1040,7 +1041,7 @@ class User extends Dbfunctions{
 		
 		//Invoice No
 		// Return values like Enrollment Serial No + Course Code + Student Serial No
-		return $inv_no = str_pad($enroll_dtls["id"], 2, "0", STR_PAD_LEFT).$course_dtls["code"].str_pad($student_id, 5, "0", STR_PAD_LEFT);
+		return $inv_no = str_pad($enroll_dtls["id"], 8, "0", STR_PAD_LEFT).$course_dtls["code"].str_pad($student_id, 8, "0", STR_PAD_LEFT);
 	}
 	# CORE SCHEDULING 
 	# Created On: 9-22-2013
@@ -1169,21 +1170,21 @@ class User extends Dbfunctions{
 	function computeAdjustments($total_students,$current_total_unit,$max_ped,$new_unit)
 	{
 		$dbf = new User();
-		echo "TOTAL UPDATED STUDENTS:".$total_students."<BR/>";
-		echo "CURRENT UNITS:".$current_total_unit."<BR/>";
-		echo "GET CURRENT UNITS USED PED CARD:".$max_ped."<BR/>";
-		echo "COURSE COMPLETED:";
-		echo $current_course_completed=($max_ped) / $current_total_unit;
-		echo "<BR/>PERCENTAGE WITH UPDATED UNIT/S:";
-		echo $percentage_with_new_unit=$current_course_completed * $new_unit;
-		echo "<BR/>UPDATED UNIT:";
-		echo $updated_unit=$new_unit - $percentage_with_new_unit;
+		#echo "TOTAL UPDATED STUDENTS:".$total_students."<BR/>";
+		#echo "CURRENT UNITS:".$current_total_unit."<BR/>";
+		#echo "GET CURRENT UNITS USED PED CARD:".$max_ped."<BR/>";
+		#echo "COURSE COMPLETED:";
+		$current_course_completed=($max_ped) / $current_total_unit;
+		#echo "<BR/>PERCENTAGE WITH UPDATED UNIT/S:";
+		$percentage_with_new_unit=$current_course_completed * $new_unit;
+		#echo "<BR/>UPDATED UNIT:";
+		$updated_unit=$new_unit - $percentage_with_new_unit;
 			if($updated_unit % 2==0):
 				$new_computed_units=intval($updated_unit);//floor($updated_unit);(integer) trim('.', $one);
 			else:
 				$new_computed_units=ceil($updated_unit);
 			endif;
-		echo "-".$new_computed_units;
+		#echo "-".$new_computed_units;
 		$result=array("units"=>$new_computed_units);
 		return $result;
 	}
@@ -1507,7 +1508,7 @@ class User extends Dbfunctions{
 		$current_group=$this->strRecordID("student_group","*","id='$group'");
 		$teacher_id=$current_group['teacher_id'];
 		if($new_group['units'] < $current_group['units'])
-		{echo "<BR/>Condition<BR/>";
+		{#echo "<BR/>Condition<BR/>";
 			
 			$weeks=$new_group[units]/10;
 			$compute_date = strtotime($current_group['start_date'] .'+ '.$weeks.' week');
@@ -1528,7 +1529,7 @@ class User extends Dbfunctions{
 				}
 				else
 				{
-					$adj=$this->computeAdjustments($prev_num,$current_group[units],$total_ped_units,$new_group[units]);
+					$adj=$this->computeAdjustments($prev_num,$current_group['units'],$total_ped_units,$new_group['units']);
 					$new_computed_units=$adj[units];
 					$this->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
 				}
@@ -1555,7 +1556,7 @@ class User extends Dbfunctions{
 					}
 					else
 					{	
-						$adj=$this->computeAdjustments($prev_num,$current_group[units],$total_ped_units,$new_group[units]);
+						$adj=$this->computeAdjustments($prev_num,$current_group['units'],$total_ped_units,$new_group['units']);
 						$new_computed_units=$adj[units];
 						$this->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
 						#echo "<BR/>Group 1:".$group."-units:".$new_computed_units."-".$end_date."<BR/>";
@@ -1568,7 +1569,7 @@ class User extends Dbfunctions{
 					//echo "Group 2".$second_group_id.$second_start_date.$second_end_date."<BR/>";
 				}
 				else
-				{echo "4";
+				{
 					foreach($third_group as $tg):
 						$third_group_id=$tg[id];
 						$third_count_weeks=$tg[units]/10;
@@ -1580,7 +1581,7 @@ class User extends Dbfunctions{
 					}
 					else
 					{	
-						$adj=$this->computeAdjustments($prev_num,$current_group[units],$total_ped_units,$new_group[units]);
+						$adj=$this->computeAdjustments($prev_num,$current_group['units'],$total_ped_units,$new_group['units']);
 						$new_computed_units=$adj[units];
 						$this->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
 						#echo "<BR/>Group 1:".$group."-units:".$new_computed_units."-".$end_date."<BR/>";
@@ -1609,7 +1610,6 @@ class User extends Dbfunctions{
 	{
 		//$res_enroll = $this->strRecordID("student_enroll","*","course_id='$course_id' And student_id='$student_id'");
 		$course = $this->getDataFromTable("course_fee","fees","course_id='$course_id'");
-		
 		//$camt = ($course - $res_enroll["discount"]) + $res_enroll["other_amt"];
 		$fee = $this->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1'");
 		$feeamt = $fee["SUM(paid_amt)"];
@@ -1700,6 +1700,10 @@ class User extends Dbfunctions{
 				</table>';
 		mail($to,$subject,$body,$headers);
 	}
-	
+	function printClassTimeFormat($start,$end)
+	{
+		$s=substr($start,0,5);
+		return $s."-".$end; 
+	}
 }
 ?>

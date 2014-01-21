@@ -498,7 +498,7 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                       $no = $dbf->strRecordID("student_group_dtls","COUNT(id)","parent_id='$valgroup[id]'");					  
                       ?>
                     <tr class="mycon">
-                      <td height="20" align="center" valign="middle" bgcolor="#FFFFFF"><a href="group_manage.php?group_id=<?php echo $valgroup["id"];?>" style="text-decoration:none;"><?php echo $valgroup["group_name"];?> <?php echo $valgroup["group_time"];?>-<?php echo $dbf->GetGroupTime($valgroup["id"]);?></a></td>
+                      <td height="20" align="center" valign="middle" bgcolor="#FFFFFF"><a href="group_manage.php?group_id=<?php echo $valgroup["id"];?>" style="text-decoration:none;"><?php echo $valgroup["group_name"];?> <?php echo $dbf->printClassTimeFormat($valgroup["group_start_time"],$valgroup["group_end_time"]);?></a></td>
                       <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $valgroup["start_date"].'<br>'.$valgroup["end_date"];?></td>
                       <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $teacher["name"];?></td>
                       <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $course["name"];?></td>
@@ -1317,7 +1317,7 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                       $no = $dbf->strRecordID("student_group_dtls","COUNT(id)","parent_id='$valgroup[id]'");					  
                       ?>
                       <tr class="mycon">
-                        <td height="20" align="center" valign="middle" bgcolor="#FFFFFF"><a href="group_manage.php?group_id=<?php echo $valgroup["id"];?>" style="text-decoration:none;"><?php echo $valgroup[group_name];?> <?php echo $valgroup["group_time"];?>-<?php echo $dbf->GetGroupTime($valgroup["id"]);?></a></td>
+                        <td height="20" align="center" valign="middle" bgcolor="#FFFFFF"><a href="group_manage.php?group_id=<?php echo $valgroup["id"];?>" style="text-decoration:none;"><?php echo $valgroup[group_name];?> <?php echo $dbf->printClassTimeFormat($valgroup["group_start_time"],$valgroup["group_end_time"]);?></a></td>
                         <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $valgroup["start_date"].'<br>'.$valgroup["end_date"];?></td>
                         <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $teacher[name];?></td>
                         <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $course[name];?></td>
