@@ -522,7 +522,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <tr>
                                 <td height="25" align="right" valign="middle"><input type="hidden" name="prev_unit" id="prev_unit" value="<?php echo $no_unit;?>"><?php echo constant("STUDENT_ADVISOR_GROUP_GRPENDDT");?> :<span class="nametext1">*</span></td>
                                 <?php
-								$no_unit = 60;								
+								$no_unit = 40;								
 								$no_unit = ($no_unit/10) * 7;
 								$dt = date('Y-m-d');							
 								$dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($dt)) . "+$no_unit day"));

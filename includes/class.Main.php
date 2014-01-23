@@ -580,23 +580,48 @@ class User extends Dbfunctions{
 								AND ('$start_date' BETWEEN start_date AND end_date)
 								AND ('$user_start_time' BETWEEN group_time And group_time_end)
 								","");
+		#echo $teacher_id."<BR/>";
+		#echo $start_date."<BR/>";
+		#echo $start_time."<BR/>";
 		if(count($q)==1)
 		{$result=true;}
 		else{$result=false;}
 		return $result;
 	}
 	//Get time available or not
-	function teacherSlotAvailable($teacher_id,$start_date,$end_date,$start_time, $end_time)
+	function teacherSlotAvailable($teacher_id,$start_date,$end_date,$start_time,$end_time,$course_id)
 	{
 		
 		$dbf = new User();
 		$start = $start_time+1;
 		$end = $end_time-1;
+		/*
 		$q=$dbf->fetchOrder(	'student_group',
-								"teacher_id='$teacher_id' 
+								"teacher_id='$teacher_id'
+								 AND course_id='$course_id'
 								 AND ('$end_date' BETWEEN start_date And end_date) 
 								 AND (('$start' BETWEEN group_time AND group_time_end) AND ('$end' BETWEEN group_time AND group_time_end))
 								","");
+		*/
+		/*
+		echo $start."<BR/>";
+		echo $end."<BR/>";
+		echo $course_id."<BR/>";
+		echo $teacher_id."<BR/>";
+		echo $end_date."<BR/>";
+		*/
+		$q=$dbf->genericQuery("
+								SELECT group_name
+								FROM student_group
+								WHERE teacher_id='$teacher_id'
+								AND course_id='$course_id'
+								AND ('$end_date' BETWEEN start_date AND end_date)
+								AND (
+										('$start' <= group_time_end) AND ('$start' >=group_time)
+									 OR ('$end' <= group_time_end) AND  ('$end' >=group_time)
+									)
+							");
+		echo var_dump($q);
 		if($q <= 0 || empty($q)):
 		$result=false;
 		elseif($q>0):

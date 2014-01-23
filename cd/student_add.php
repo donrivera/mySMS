@@ -120,7 +120,7 @@ $(function() {
 function show_js(){
 	
 	var textlang = document.getElementById('src').value;
-	document.location.href='s_classic.php?textlang='+textlang;	
+	document.location.href='student_add.php?textlang='+textlang;	
 }
 
 function get_arabic(){
@@ -239,18 +239,17 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td align="left" valign="top">
                     <div id="free-translator" style="background-color:#EBEBEB;">
                         <link rel="stylesheet" href="arabic_files/free-translator.css">
-                        <script src="arabic_files/Translate_002.js"></script>
+						<script src="arabic_files/Translate_002.js"></script>
 						<script src="arabic_files/Translate.js"></script>
-                        <script type="text/javascript" src="arabic_files/jsapi"></script>
-                        <script src="arabic_files/ga.js" async="" type="text/javascript"></script>
-                        
-                        <?php if($_REQUEST[textlang]=="en" || $_REQUEST[textlang]=="") { ?>
-                        <script type="text/javascript" src="arabic_files/free-translator-quick.js"></script>
-                        <?php } else { ?>
-                        <script type="text/javascript" src="arabic_files/free-translator_ar-quick.js"></script>
-                        <?php } ?>
-                        <script src="arabic_files/a" type="text/javascript"></script>
-                        <script src="arabic_files/defaulten_GB.js" type="text/javascript"></script>
+						<script type="text/javascript" src="arabic_files/jsapi"></script>
+						<script src="arabic_files/ga.js" async="" type="text/javascript"></script>
+						<?php if($_REQUEST[textlang]=="en" || $_REQUEST[textlang]=="") { ?>
+						<script type="text/javascript" src="arabic_files/free-translator-quick.js"></script>
+						<?php } else { ?>
+						<script type="text/javascript" src="arabic_files/free-translator_ar-quick.js"></script>
+						<?php } ?>
+						<script src="arabic_files/a" type="text/javascript"></script>
+						<script src="arabic_files/defaulten_GB.js" type="text/javascript"></script>
                         
                         <form action="https://www.translation-services-usa.com/customers/short.php" enctype="multipart/form-data" method="post" name="translator_template">
                     	<input id="lang_name" value="Arabic" type="hidden">
@@ -346,13 +345,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <tr>
                                 <td align="left" valign="middle">&nbsp;</td>
                                 <td height="28" align="left" valign="middle">
-                                  <input name="t1" type="text" class="new_textbox140_ar" id="t1" value="<?php echo $_SESSION[classic_name1];?>" /></td>
+                                  <input name="t1" type="text" class="new_textbox140_ar" id="t1" value="<?php echo $_SESSION[classic_name1];?>a" /></td>
                                 <td align="left" valign="middle">
-                                  <input name="t2" type="text" class="new_textbox140_ar" id="t2" value="<?php echo $_SESSION[classic_fathername1];?>"/></td>
+                                  <input name="t2" type="text" class="new_textbox140_ar" id="t2" value="<?php echo $_SESSION[classic_fathername1];?>b"/></td>
                                 <td align="left" valign="middle">
-                                  <input name="t3" type="text" class="new_textbox140_ar" id="t3" value="<?php echo $_SESSION[classic_gfathername1];?>"/></td>
+                                  <input name="t3" type="text" class="new_textbox140_ar" id="t3" value="<?php echo $_SESSION[classic_gfathername1];?>c"/></td>
                                 <td align="left" valign="middle">
-                                  <input name="t4" type="text" class="new_textbox140_ar" id="t4" value="<?php echo $_SESSION[name1];?>" /></td>
+                                  <input name="t4" type="text" class="new_textbox140_ar" id="t4" value="<?php echo $_SESSION[name1];?>d" /></td>
                                 </tr>
                               <tr class="shop2">
                                 <td align="left" valign="top">&nbsp;</td>
@@ -773,6 +772,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <input name="mytxt_src2" type="hidden" id="mytxt_src2"/>
                                 <input name="mytxt_src3" type="hidden" id="mytxt_src3"/>
                                 <input name="ar_mytxt_src" type="hidden" id="ar_mytxt_src"/>
+								<input name="ar_mytxt_src1" type="hidden" id="ar_mytxt_src1"/>
+								<input name="ar_mytxt_src2" type="hidden" id="ar_mytxt_src2"/>
+								<input name="ar_mytxt_src3" type="hidden" id="ar_mytxt_src3"/>
                                 </td>
                               <td width="1%">&nbsp;</td>
                               <td width="38%">&nbsp;</td>

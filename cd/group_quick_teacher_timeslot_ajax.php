@@ -123,7 +123,6 @@ $centre_id = $_SESSION['centre_id'];
 $center = $dbf->strRecordID("centre", "*", "id='$centre_id'");
 $start_time = $center["class_start_time"];
 $end_time = $center["class_end_time"];
-
 $tot = $dbf->TimeDiff($start_time,$end_time);
 $time = explode(":",$tot);
 

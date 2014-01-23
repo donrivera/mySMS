@@ -28,8 +28,6 @@ if($_REQUEST['action']=='unit'){
 }
 if($_REQUEST['action']=='teacher'){
 	
-	
-	
 	# Check time validate
 	$teacher_id = $_REQUEST["teacher"];
 	$choosen_date = $_REQUEST["dt"];
@@ -51,10 +49,10 @@ if($_REQUEST['action']=='teacher'){
 	$start=date('Hi',strtotime($_REQUEST['tm']));
 	$end=date('Hi',strtotime("+$event_length minutes", $timestamp));
 	
-	$num = $dbf->teacherSlotAvailable($teacher_id,$_REQUEST[dt],$_REQUEST[gr_course_endt],$start,$end);
-	//echo var_dump($_REQUEST);
-	//echo "<BR/>";
-	//echo var_dump($num);
+	$num = $dbf->teacherSlotAvailable($teacher_id,$_REQUEST[dt],$_REQUEST[gr_course_endt],$start,$end,$_SESSION[gr_course_id]);
+	#echo var_dump($_REQUEST);
+	#echo "<BR/>";
+	#echo var_dump($num);
 		
 	$_SESSION["tm"] = $_REQUEST["tm"];
 	$_SESSION["end_tm"] = $group_end_time;
@@ -76,8 +74,6 @@ if($_REQUEST['action']=='teacher'){
 		header("Location:group_classroom.php");
 		exit;
 	}
-	
-	
 }
 if($_REQUEST['action']=='class'){
 	$_SESSION[gr_class_room] = $_REQUEST[class_room];
@@ -257,8 +253,8 @@ if($_REQUEST['action']=='setstatus'){
 }
 
 if($_REQUEST['action']=='quick_add_group'){
-	//echo var_dump($_REQUEST);
-	//echo "<BR/>";
+	#echo var_dump($_REQUEST);
+	#echo "<BR/>";
 	//echo var_dump($_SESSION);
 	//echo "<BR/>";
 	//echo var_dump($_POST);
@@ -306,9 +302,7 @@ if($_REQUEST['action']=='quick_add_group'){
 	//echo $group_s_time."-".$group_end_time;
 	$start=date('Hi',strtotime($_REQUEST['tm']));
 	$end=date('Hi',strtotime("+$event_length minutes", $timestamp));
-	$num = $dbf->teacherSlotAvailable($teacher_id,$choosen_date,$end_date,$start,$end);
-
-	//echo var_dump($num);	
+	$num = $dbf->teacherSlotAvailable($teacher_id,$choosen_date,$end_date,$start,$end,$course_id);
 
 	$_SESSION["tm"] = $_REQUEST["tm"];
 	$_SESSION["end_tm"] = $group_end_time;
@@ -335,7 +329,7 @@ if($_REQUEST['action']=='quick_add_group'){
 				end_date='$end_date',
 				sa_id='$_SESSION[id]'";
 	
-	$my_group_id = $dbf->insertset("student_group",$string);
+		$my_group_id = $dbf->insertset("student_group",$string);
 	
 	//Check the Exam vacation for a particular Centre
 	$numv = $dbf->countRows('exam_vacation',"centre_id='$centre_id'");
@@ -612,7 +606,6 @@ if($_REQUEST['action']=='quick_add_group'){
 	session_unregister('tm');
 	unset($_SESSION['end_tm']);
 	session_unregister('end_tm');
-	
 	header("Location:group_manage.php");
 	exit;
 	

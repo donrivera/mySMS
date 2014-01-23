@@ -214,7 +214,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				//echo "d".$cond;
 				$i = 1;
 				$a="";
-				foreach($dbf->fetchOrder('student_group',$cond,"") as $val){
+				#$year=date('Y');
+				foreach($dbf->fetchOrder('student_group',$cond." AND year(start_date) = ".date('Y')." ORDER BY id DESC","") as $val){
 					
 					//Get Unit
 					$val_unit = $dbf->strRecordID("common","*","id='$val[units]'");

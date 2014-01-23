@@ -114,7 +114,7 @@ function countdown_trigger(){
 	}
 }
 </script>
-<?php
+<?php 
 //Get from the table
 $res_logout = $dbf->strRecordID("conditions","*","type='Logout Time'");
 $count = $res_logout["name"]; // Set timeout period in seconds
@@ -198,12 +198,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						<td height="22" align="center" valign="middle">
 							<table width="100%" border="0" cellspacing="0" cellpadding="0">
 								<tr>
+									
 									<td width="56%" align="right" valign="middle">Display only future appointment</td>
 									<td width="27%" align="left" valign="middle">
 									<?php 
 											if($_REQUEST["future"] == "1"){$is_future = "0";}else{$is_future = "1";}
 									?>
-										<input type="checkbox" name="future" id="future" value="<?php echo $is_future;?>" 
+										<input type="checkbox" name="future" id="future" value="<?php echo $is_future;?>"
 										<?php if($_REQUEST["future"]=="1"){?> checked="checked" <?php }?> />
 									</td>
 									<td width="17%" align="right" valign="middle">Note :</td>
@@ -253,25 +254,83 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					if($_REQUEST["fname"]!="")
 					{
 						$condition="s.first_name LIKE '$_REQUEST[fname]%' AND s.centre_id='$centre_id'";
-						
+						if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Red")
+						{$condition .= " And sa.dated > '$dated' And sa.status='0'";}
+						else if($_REQUEST["future"] == "" && $_REQUEST["status"] == "Red")
+						{$condition .= " And sa.status='0'";}
+						else if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Blue")
+						{$condition .= " And sa.dated > '$dated' And sa.status='1'";}
+						else if($_REQUEST["future"] == "" && $_REQUEST["status"] == "Blue")
+						{$condition .= " And sa.status='1'";}
+						else if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Both")
+						{$condition .= " And sa.dated > '$dated'";}
+						else{$condition .= "";}
 					}
 					elseif($_REQUEST["mobile"]!="")
 					{
 						$condition="s.student_mobile ='$_REQUEST[mobile]' AND s.centre_id='$centre_id'";
+						if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Red")
+						{$condition .= " And sa.dated > '$dated' And sa.status='0'";}
+						else if($_REQUEST["future"] == "" && $_REQUEST["status"] == "Red")
+						{$condition .= " And sa.status='0'";}
+						else if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Blue")
+						{$condition .= " And sa.dated > '$dated' And sa.status='1'";}
+						else if($_REQUEST["future"] == "" && $_REQUEST["status"] == "Blue")
+						{$condition .= " And sa.status='1'";}
+						else if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Both")
+						{$condition .= " And sa.dated > '$dated'";}
+						else{$condition .= "";}
 					}
 					elseif($_REQUEST["email"]!="")
 					{
 						$condition="s.email = '$_REQUEST[email]' AND s.centre_id='$centre_id'";
+						if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Red")
+						{$condition .= " And sa.dated > '$dated' And sa.status='0'";}
+						else if($_REQUEST["future"] == "" && $_REQUEST["status"] == "Red")
+						{$condition .= " And sa.status='0'";}
+						else if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Blue")
+						{$condition .= " And sa.dated > '$dated' And sa.status='1'";}
+						else if($_REQUEST["future"] == "" && $_REQUEST["status"] == "Blue")
+						{$condition .= " And sa.status='1'";}
+						else if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Both")
+						{$condition .= " And sa.dated > '$dated'";}
+						else{$condition .= "";}
 					}
 					elseif($_REQUEST["stid"]!="")
 					{
 						$condition="s.student_id ='$_REQUEST[stid]' AND s.centre_id='$centre_id'";
+						if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Red")
+						{$condition .= " And sa.dated > '$dated' And sa.status='0'";}
+						else if($_REQUEST["future"] == "" && $_REQUEST["status"] == "Red")
+						{$condition .= " And sa.status='0'";}
+						else if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Blue")
+						{$condition .= " And sa.dated > '$dated' And sa.status='1'";}
+						else if($_REQUEST["future"] == "" && $_REQUEST["status"] == "Blue")
+						{$condition .= " And sa.status='1'";}
+						else if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Both")
+						{$condition .= " And sa.dated > '$dated'";}
+						else{$condition .= "";}
 					}
-					else{$condition="";}
-					$query=$dbf->genericQuery("	SELECT sa.student_id,sa.dated,sa.comments,sa.id 
+					else
+					{
+						if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Red")
+						{$condition = "sa.dated > '$dated' And sa.status='0'";}
+						else if($_REQUEST["future"] == "" && $_REQUEST["status"] == "Red")
+						{$condition = "sa.status='0'";}
+						else if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Blue")
+						{$condition = "sa.dated > '$dated' And sa.status='1'";}
+						else if($_REQUEST["future"] == "" && $_REQUEST["status"] == "Blue")
+						{$condition = "sa.status='1'";}
+						else if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Both")
+						{$condition = "sa.dated > '$dated'";}
+						else if($_REQUEST["future"] == "0" && $_REQUEST["status"] == "Both")
+						{$condition = "sa.dated < '$dated'";}
+						else{$condition = "sa.centre_id='$_SESSION[centre_id]'";}
+					}
+					$query=$dbf->genericQuery("	SELECT sa.student_id,sa.dated,sa.comments,sa.id,sa.status 
 												FROM student s
 												INNER JOIN student_appointment sa ON sa.student_id=s.id
-												WHERE $condition");
+												WHERE $condition ORDER BY dated DESC");
 					if($query>0)
 					{$num=count($query);}
 					else{$num=0;}
@@ -281,7 +340,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					
 				}
 				else
-				{
+				{	
 					if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Red")
 					{$cond = " And dated > '$dated' And action_status='0'";}
 					else if($_REQUEST["future"] == "" && $_REQUEST["status"] == "Red")
@@ -303,11 +362,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" >
                 <td align="center" valign="middle" class="mycon"><?php echo $i;?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[dated];?></td>
-				  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $res[id];?>" style="cursor:pointer;"><?php echo $res[first_name]."&nbsp;".$res[father_name]."&nbsp;".$res[family_name]."&nbsp;(".$res[first_name1]."&nbsp;".$res[father_name1]."&nbsp;".$res[grandfather_name1]."&nbsp;".$res[family_name1].")";?></a></td>
+				  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $res[id];?>" style="cursor:pointer;"><?php echo $dbf->printStudentName($res['id']);?></a></td>
 				    <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[comments];?></td>
 				    <td width="4%" align="center" valign="middle">
                     <?php
-					if($val["action_status"] == 0){
+					if($val["status"] == 0){
 						$bg = '#FF0000';
 						$title = 'Appointment Pending';
 					}else{

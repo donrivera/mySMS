@@ -207,7 +207,12 @@ function countdown_init(count) {
     countdown_number = count;
     countdown_trigger();
 }
-
+function isNumberKey(evt){
+ var charCode = (evt.which) ? evt.which : event.keyCode
+	 if (charCode > 31 && (charCode < 48 || charCode > 57))
+	return false;
+	return true;
+}
 function ageinfo()
 {
 	var age=$("#age").val();
@@ -239,7 +244,13 @@ function countdown_trigger(){
 		window.location.href='../logout.php';
 	}
 }
+function show_js(){	
 
+	var textlang = document.getElementById('src').value;
+
+	document.location.href='s_classic.php?textlang='+textlang;	
+
+}
 function get_arabic(){
 	document.getElementById('ar_mytxt_src').value = document.getElementById('t4').value;
 	document.getElementById('ar_mytxt_src1').value = document.getElementById('t3').value;
@@ -377,19 +388,31 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td align="left" valign="top">
                     <div id="free-translator" style="background-color:#EBEBEB;">
                         <link rel="stylesheet" href="arabic_files/free-translator.css">
+
                         <script src="arabic_files/Translate_002.js"></script>
+
 						<script src="arabic_files/Translate.js"></script>
+
                         <script type="text/javascript" src="arabic_files/jsapi"></script>
+
                         <script src="arabic_files/ga.js" async="" type="text/javascript"></script>
+
                         
+
                         <?php if($_REQUEST[textlang]=="en" || $_REQUEST[textlang]=="") { ?>
+
                         <script type="text/javascript" src="arabic_files/free-translator-quick.js"></script>
+
                         <?php } else { ?>
+
                         <script type="text/javascript" src="arabic_files/free-translator_ar-quick.js"></script>
+
                         <?php } ?>
+
                         <script src="arabic_files/a" type="text/javascript"></script>
+
                         <script src="arabic_files/defaulten_GB.js" type="text/javascript"></script>
-                        
+
                         <form action="https://www.translation-services-usa.com/customers/short.php" enctype="multipart/form-data" method="post" name="translator_template">
                     	<input id="lang_name" value="Arabic" type="hidden">
                     

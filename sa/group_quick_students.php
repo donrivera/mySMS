@@ -58,7 +58,7 @@ $centre_id = $_SESSION["centre_id"];
 		
 		<tr>
 			<td align="center" valign="middle"><?php //echo $m;?><input type="checkbox" checked="checked" name="student_id[]" id="student_id[]" value="<?php echo $student["id"];?>"></td>
-			<td align="left" valign="middle" class="mycon">&nbsp;<?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";?></td>
+			<td align="left" valign="middle" class="mycon">&nbsp;<?php echo $dbf->printStudentName($student['id']);?></td>
 			<td align="left" valign="middle" class="mycon">&nbsp;<?php echo $student[email];?></td>
 			<td align="left" valign="middle" class="mycon">&nbsp;<?php echo $student[student_mobile];?></td>
 		</tr>
