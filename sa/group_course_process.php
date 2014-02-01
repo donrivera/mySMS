@@ -27,7 +27,7 @@ if($_REQUEST['action']=='unit'){
 	header("Location:group_teacher.php");
 }
 if($_REQUEST['action']=='teacher'){
-	
+	echo var_dump($_REQUEST);
 	# Check time validate
 	$teacher_id = $_REQUEST["teacher"];
 	$choosen_date = $_REQUEST["dt"];
@@ -49,7 +49,7 @@ if($_REQUEST['action']=='teacher'){
 	$start=date('Hi',strtotime($_REQUEST['tm']));
 	$end=date('Hi',strtotime("+$event_length minutes", $timestamp));
 	
-	$num = $dbf->teacherSlotAvailable($teacher_id,$_REQUEST[dt],$_REQUEST[gr_course_endt],$start,$end,$_SESSION[gr_course_id]);
+	$num = $dbf->teacherSlotAvailable($teacher_id,$_REQUEST[dt],$_REQUEST[gr_course_endt],$start,$end);
 	#echo var_dump($_REQUEST);
 	#echo "<BR/>";
 	#echo var_dump($num);
@@ -65,7 +65,7 @@ if($_REQUEST['action']=='teacher'){
 		
 		$_SESSION["gr_course_teacher"] = $_REQUEST["teacher"];
 		$_SESSION["gr_course_strdt"] = $_REQUEST["date_value"];
-		$_SESSION["gr_course_endt"] = $_REQUEST["gr_course_endt"];
+		$_SESSION["gr_course_endt"] =$_REQUEST["gr_course_endt"];
 		$_SESSION["time_slot"] = $_REQUEST["time_slot"];
 		
 		$_SESSION["dt"] = $_REQUEST["dt"];
@@ -94,12 +94,13 @@ if($_REQUEST['action']=='finish'){
 									
 	$event_time = $group_s_time;
 	$event_length = $unit;
-	 
+	$end_date=$_SESSION['gr_course_endt']; 
 	$timestamp = strtotime("$event_time");
 	$etime = strtotime("+$event_length minutes", $timestamp);
 	$group_end_time = date('h:i A', $etime);	
 	$start=date('Hi',strtotime($_SESSION['tm']));
-	$end=date('Hi',strtotime($_SESSION['end_tm']));	
+	$end=date('Hi',strtotime($_SESSION['end_tm']));
+	$current_date = date('Y-m-d H:i:s A');
 	$string="
 				group_name='$_SESSION[group_name]',
 				centre_id='$_SESSION[centre_id]',
@@ -114,8 +115,9 @@ if($_REQUEST['action']=='finish'){
 				group_time_end='$end',
 				group_start_time='$group_s_time',
 				group_end_time='$group_end_time',
-				end_date='$_SESSION[gr_course_endt]',
-				sa_id='$_SESSION[id]'";
+				end_date='$end_date',
+				sa_id='$_SESSION[id]',
+				created_datetime='$current_date'";
 	
 	$dbf->insertset("student_group",$string);
 	
@@ -258,8 +260,9 @@ if($_REQUEST['action']=='quick_add_group'){
 	//echo var_dump($_SESSION);
 	//echo "<BR/>";
 	//echo var_dump($_POST);
-	$end_date=$_REQUEST[gr_course_endt];
+
 	
+	$end_date=$_REQUEST['gr_course_endt'];
 	$students=$_REQUEST[student_id];
 	if(empty($students) || $students==NULL):
 	$end_date=$_REQUEST[gr_course_endt];
@@ -285,7 +288,7 @@ if($_REQUEST['action']=='quick_add_group'){
 	$teacher_id = $_REQUEST["teacher"];
 	$choosen_date = $_REQUEST["dt"];
 	$group_start_time = $_REQUEST['tm'];
-	$perday = $dbf->getDataFromTable("common", "name", "id='$_REQUEST[unit]'");		
+	$perday = $_REQUEST['unit'];		
 	
 	
 	//Time calculation
@@ -302,8 +305,8 @@ if($_REQUEST['action']=='quick_add_group'){
 	//echo $group_s_time."-".$group_end_time;
 	$start=date('Hi',strtotime($_REQUEST['tm']));
 	$end=date('Hi',strtotime("+$event_length minutes", $timestamp));
-	$num = $dbf->teacherSlotAvailable($teacher_id,$choosen_date,$end_date,$start,$end,$course_id);
-
+	$num = $dbf->teacherSlotAvailable($teacher_id,$choosen_date,$end_date,$start,$end);
+	$current_date = date('Y-m-d H:i:s A');
 	$_SESSION["tm"] = $_REQUEST["tm"];
 	$_SESSION["end_tm"] = $group_end_time;
 
@@ -327,7 +330,8 @@ if($_REQUEST['action']=='quick_add_group'){
 				group_start_time='$group_s_time',
 				group_end_time='$group_end_time',
 				end_date='$end_date',
-				sa_id='$_SESSION[id]'";
+				sa_id='$_SESSION[id]',
+				created_datetime='$current_date'";
 	
 		$my_group_id = $dbf->insertset("student_group",$string);
 	
@@ -612,7 +616,7 @@ if($_REQUEST['action']=='quick_add_group'){
 }
 if($_REQUEST['action']=='update_group')
 {
-	echo var_dump($_POST);
+	#echo var_dump($_POST);
 	
 	$end_date=$_REQUEST[gr_course_endt];
 	$students=$_REQUEST[student_id];
@@ -641,7 +645,7 @@ if($_REQUEST['action']=='update_group')
 	$teacher_id = $_REQUEST["teacher"];
 	$choosen_date = $_REQUEST["dt"];
 	$group_start_time = $_REQUEST['tm'];
-	$perday = $dbf->getDataFromTable("common", "name", "id='$_REQUEST[unit]'");		
+	$perday = $_REQUEST['unit'];		
 	
 	
 	//Time calculation

@@ -77,8 +77,12 @@ $(function() {
 	$( ".datepick" ).datepicker({
 		changeMonth: true,
 		changeYear: true,
-		dateFormat: 'yy-mm-dd'
+		dateFormat: 'yy-mm-dd',
+		beforeShowDay:function (dt){return [dt.getDay() == 5 || dt.getDay() == 6 ? false : true];},
+		onSelect:showtime,
+		onClose:date_change
 	});
+	
 });
 
 
@@ -170,26 +174,33 @@ function dateAdd(datepart,number,objDate){
    objNewDate = new Date(newY,newM,newD,hr,mn,sc);  
    return objNewDate;
 }
-
 function date_change()
 {
 	dateParts = document.getElementById('date_value').value;
 	newDays = document.getElementById('prev_unit').value;
-
-   	var myDate=new Date(dateParts);
+	var myDate=new Date(dateParts);
 	var x = myDate.setDate(myDate.getDate()+parseInt(newDays));
-	x = new Date(x);
-
-	var d  = x.getDate();
+	var end_day= myDate.getDay();
+	var end_date=new Date(x);
+	switch(end_day)
+	{
+		case 0:{var z = end_date.setDate(myDate.getDate() - parseInt(3));}break;
+		case 1:{var z = end_date.setDate(myDate.getDate() - parseInt(1));}break;
+		case 2:{var z = end_date.setDate(myDate.getDate() - parseInt(1));}break;
+		case 3:{var z = end_date.setDate(myDate.getDate() - parseInt(1));}break;
+		case 4:{var z = end_date.setDate(myDate.getDate() - parseInt(1));}break;
+		case 5:{var z = end_date.setDate(myDate.getDate() + parseInt(2));}break;
+		case 6:{var z = end_date.setDate(myDate.getDate() + parseInt(1));}break;
+		default:{var z = end_date.setDate(myDate.getDate());}break;
+	}
+	var d  = end_date.getDate();
 	var day = (d < 10) ? '0' + d : d;
-	var m = x.getMonth()+1;
+	var m = end_date.getMonth()+1;
 	var month = (m < 10) ? '0' + m : m;	
-	var yy = x.getFullYear();
+	var yy = end_date.getFullYear();
 	var year = (yy < 1000) ? yy + 1900 : yy;
-
-   	x = year + "-" + month + "-" + day;
-   
-    document.getElementById('gr_course_endt').value = x;
+	new_end_date = year + "-" + month + "-" + day;
+	document.getElementById('gr_course_endt').value = new_end_date;
 }
 
 function check_date(){
@@ -497,15 +508,28 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <td>&nbsp;</td>
                               <td align="left" valign="middle">&nbsp;</td>
                             </tr>                            
-                            <?php
+							<?php
+							
+							#echo "<BR/>";
 							$no_unit = $_SESSION["gr_course_total_units"];
-							
-							$no_unit = ($no_unit/10) * 7;							
-							
-							$dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($dt)) . "+$no_unit day"));
+							#echo "<BR/>";
+							$perday = $dbf->getDataFromTable("common", "name", "id='$_SESSION[gr_course_units]'");
+							#echo "<BR/>";
+							$unit_per_week= 5 * $perday;
+							#echo "<BR/>";
+							$no_unit = ($no_unit/$unit_per_week) * 7;							
+							#echo "<BR/>";
+							$perday = $dbf->getDataFromTable("common", "name", "id='$_SESSION[gr_course_units]'");
+							#echo "<BR/>";
+							$total_unit=$_SESSION["gr_course_total_units"];
+							#echo "<BR/>";
+							#echo  date('Y-m-d',strtotime(date("Y-m-d", strtotime($dt)) . "+$total_days day"));
+							$new_computed_units=($no_unit %2==0?intval($no_unit):ceil($no_unit));
+							$dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($dt)) . "+$new_computed_units day"));
+							$new_dt1=$dbf->printClassChangedEndDate($dt1);
 							?>
                             <tr>
-                              <td align="left" valign="middle" class="leftmenu"><input type="hidden" name="prev_unit" id="prev_unit" value="<?php echo $no_unit;?>"></td>
+                              <td align="left" valign="middle" class="leftmenu"><input type="hidden" name="prev_unit" id="prev_unit" value="<?php echo $new_computed_units?>"></td>
                               <td height="28" align="left" valign="top" class="lable1" >
                               <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
@@ -518,7 +542,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                   <td height="25" align="left" valign="middle" class="lable1"><?php echo constant("STUDENT_ADVISOR_GROUP_GRPENDDT");?></td>
                                 </tr>
                                 <tr>
-                                  <td height="25" align="left" valign="middle"><input type="text" name="gr_course_endt" class="new_textbox80"  id="gr_course_endt" value="<?php echo $dt1;?>" readonly="" /></td>
+                                  <td height="25" align="left" valign="middle"><input type="text" name="gr_course_endt" class="new_textbox80"  id="gr_course_endt" value="<?php echo $new_dt1;?>" readonly="" /></td>
                                 </tr>
                                 <tr>
                                   <td height="25" align="left" valign="middle">

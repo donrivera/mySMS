@@ -13,7 +13,7 @@ if($_REQUEST['action']=='update')
 	$comm = mysql_real_escape_string($_REQUEST['comment']);
 	
 	$string="admin_dated='$_REQUEST[dated]',admin_comment='$comm',admin_status='$_REQUEST[status]'";
-	#$dbf->updateTable("student_cancel",$string,"id='$_REQUEST[cancel_id]'");
+	$dbf->updateTable("student_cancel",$string,"id='$_REQUEST[cancel_id]'");
 	//==========================================================
 	//Insert in Student Comments Table (student_comment)
 	$dt = date('Y-m-d h:i:s');
@@ -22,7 +22,7 @@ if($_REQUEST['action']=='update')
 		$ids = $dbf->getDataFromTable("student_cancel", "student_id", "id='$_REQUEST[cancel_id]'");
 		
 		$string_move="student_id='$ids',user_id='$_SESSION[id]',comments='$comm',date_time='$dt',status_id='1'";
-		#$dbf->insertSet("student_comment",$string_move);
+		$dbf->insertSet("student_comment",$string_move);
 	}
 	//==========================================================
 	$stu_cancel = $dbf->strRecordID("student_cancel",'*',"id='$_REQUEST[cancel_id]'");
@@ -61,7 +61,7 @@ if($_REQUEST['action']=='update')
 	if($to_user != '' || $admin_mail != '')
 	{
 		$headers .= 'MIME-Version: 1.0' . "\n";
-		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=iso-8859-6' . "\r\n";
 		$headers .= "From:".$from."\n";
 		$headers .= "Cc:".$cc."\r\n";						
 		$email_cont = $dbf->strRecordID("email_templetes","*","id='6'");

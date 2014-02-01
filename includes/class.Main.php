@@ -589,39 +589,90 @@ class User extends Dbfunctions{
 		return $result;
 	}
 	//Get time available or not
-	function teacherSlotAvailable($teacher_id,$start_date,$end_date,$start_time,$end_time,$course_id)
+	function teacherSlotAvailable($teacher_id,$start_date,$end_date,$start_time,$end_time)
 	{
 		
 		$dbf = new User();
-		$start = $start_time+1;
+		$start = $start_time + 1;
 		$end = $end_time-1;
+		$s_time=(strlen($start)===3?"0".$start:$start);
+		$e_time=(strlen($end)===3?"0".$end:$end);
 		/*
 		$q=$dbf->fetchOrder(	'student_group',
 								"teacher_id='$teacher_id'
 								 AND course_id='$course_id'
 								 AND ('$end_date' BETWEEN start_date And end_date) 
-								 AND (('$start' BETWEEN group_time AND group_time_end) AND ('$end' BETWEEN group_time AND group_time_end))
+								 AND (('$start' BETWEEN group_time AND group_time_end) OR ('$end' BETWEEN group_time AND group_time_end))
 								","");
+		
 		*/
+		#echo $start_date."<BR/>";
+		#echo $s_time."<BR/>";
+		#echo $e_time."<BR/>";
+		#echo $teacher_id."<BR/>";
+		#echo $end_date."<BR/>";
 		/*
-		echo $start."<BR/>";
-		echo $end."<BR/>";
-		echo $course_id."<BR/>";
-		echo $teacher_id."<BR/>";
-		echo $end_date."<BR/>";
-		*/
 		$q=$dbf->genericQuery("
 								SELECT group_name
 								FROM student_group
 								WHERE teacher_id='$teacher_id'
-								AND course_id='$course_id'
 								AND ('$end_date' BETWEEN start_date AND end_date)
 								AND (
 										('$start' <= group_time_end) AND ('$start' >=group_time)
 									 OR ('$end' <= group_time_end) AND  ('$end' >=group_time)
 									)
 							");
-		echo var_dump($q);
+		//echo var_dump($q);
+		*/
+		/*
+		$q=$dbf->genericQuery("
+								SELECT group_name
+								FROM student_group
+								WHERE teacher_id='$teacher_id'
+								AND (
+										('$start_date' <=end_date) OR ('$start_date' >=start_date)
+										OR
+										('$end_date' <=end_date) OR ('$end_date' >=start_date)
+									)
+								AND (
+										('$start' <= group_time_end) OR ('$start' >=group_time)
+										OR 
+										('$end' <= group_time_end) OR  ('$end' >=group_time)
+									)
+							 ");
+		*/
+		/*
+			JAN 26 2014
+			$q=$dbf->genericQuery("
+								SELECT group_name
+								FROM student_group
+								WHERE teacher_id='$teacher_id'
+								AND (
+										('$start_date'<=start_date) AND ('$start_date'>=end_date)
+										OR
+										('$end_date'<=start_date) AND ('$end_date'>=end_date)
+									)
+                                AND (
+										('$s_time' BETWEEN group_time AND group_time_end)
+										OR 
+										('$e_time' BETWEEN group_time AND group_time_end)
+									)
+							  ");
+		(start_date BETWEEN '$start_date' AND '$end_date' OR end_date BETWEEN '$start_date' AND '$end_date')
+		*/
+		$q=$dbf->genericQuery("
+								SELECT group_name
+								FROM student_group
+								WHERE teacher_id='$teacher_id'
+								AND (
+										(start_date BETWEEN '$start_date' AND '$end_date' OR end_date BETWEEN '$start_date' AND '$end_date')
+									)
+                                AND (
+										('$s_time' BETWEEN group_time AND group_time_end)
+										OR 
+										('$e_time' BETWEEN group_time AND group_time_end)
+									)
+							  ");
 		if($q <= 0 || empty($q)):
 		$result=false;
 		elseif($q>0):
@@ -630,6 +681,43 @@ class User extends Dbfunctions{
 		$result=false;
 		endif;
 		return $result;
+		
+		#check dates
+		/*
+		$check_dates=$dbf->genericQuery("
+											SELECT group_name
+											FROM student_group
+											WHERE teacher_id='$teacher_id'
+											AND ('$start_date' BETWEEN start_date And end_date) 
+												  OR
+												('$end_date' BETWEEN start_date And end_date) 
+												");
+		if(empty($check_dates) || $check_dates==null)
+		{
+			echo "Add New Group...";
+		}
+		else
+		{
+			$check_time=$dbf->genericQuery("
+											SELECT group_name
+											FROM student_group
+											WHERE teacher_id='$teacher_id'
+											 AND (
+										('$s_time' BETWEEN group_time AND group_time_end)
+										OR 
+										('$e_time' BETWEEN group_time AND group_time_end)
+									)");
+			if(empty($check_time) || $check_time==null)
+			{
+				echo "Add New Group...";
+			}
+			else
+			{
+				echo "Redirect...";
+			}
+		}
+		echo var_dump($check_dates);
+		*/
 	}
 	//Get Group Timing
 	function GetGroupTime($group_id){
@@ -1081,9 +1169,9 @@ class User extends Dbfunctions{
 		$current_total_unit=$dbf->strRecordID("student_group","units,teacher_id,start_date,unit_per_day","id='$group'");
 		$teacher_id=$current_total_unit['teacher_id'];
 		$start_date=$current_total_unit['start_date'];
-		$query=$dbf->genericQuery("SELECT units FROM centre_group_size WHERE('$total_students' BETWEEN size_from AND size_to)");
+		$query=$dbf->genericQuery("SELECT units,unit_per_day FROM centre_group_size WHERE('$total_students' BETWEEN size_from AND size_to)");
 		foreach($query as $q):
-			$week_total=round($q['units']/10,0);
+			$week_total=round($q['units']/($q['unit_per_day'] * 5),0);
 			$new_unit=$q['units'];
 		endforeach;
 		$compute_date = strtotime($student_group['start_date'] .'+ '.$week_total.' week');
@@ -1115,7 +1203,7 @@ class User extends Dbfunctions{
 				$nc_group_id=$next_class[id];
 				$nc_start_date=$next_class[start_date];
 				$nc_end_date=$next_class[end_date];
-				$nc_units=$next_class[units] / 10;
+				$nc_units=$next_class[units] / ($next_class['unit_per_day'] * 5);
 				$nc_set_unit=$next_class[units];
 			endforeach;
 			//$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
@@ -1160,7 +1248,7 @@ class User extends Dbfunctions{
 					$thirdc_group_id=$third_class[id];
 					$thirdc_start_date=$third_class[start_date];
 					$thirdc_end_date=$third_class[end_date];
-					$thirdc_units=$third_class[units] / 10;
+					$thirdc_units=$third_class[units] / ($third_class['unit_per_day'] * 5);
 					$thirdc_set_units=$third_class[units];
 				endforeach;
 				//echo "adjust current group end date".$end_date."<BR/>";
@@ -1535,7 +1623,7 @@ class User extends Dbfunctions{
 		if($new_group['units'] < $current_group['units'])
 		{#echo "<BR/>Condition<BR/>";
 			
-			$weeks=$new_group[units]/10;
+			$weeks=$new_group['units']/($current_group['unit_per_day'] * 5);
 			$compute_date = strtotime($current_group['start_date'] .'+ '.$weeks.' week');
 			$end_date=date('Y-m-d',$compute_date);
 			$current_group_end_date=strtotime($current_group['end_date'] .'+ 1 week');
@@ -1563,7 +1651,7 @@ class User extends Dbfunctions{
 			{
 				foreach($second_group as $sg):
 					$second_group_id=$sg[id];
-					$second_count_weeks=$sg[units]/10;
+					$second_count_weeks=$sg[units]/($sg['unit_per_day'] * 5);
 					$second_group_end_date=strtotime($sg['end_date'] .'+ 1 week');
 				endforeach;
 				$group2_end_date=date('Y-m-d',$second_group_end_date);
@@ -1597,7 +1685,7 @@ class User extends Dbfunctions{
 				{
 					foreach($third_group as $tg):
 						$third_group_id=$tg[id];
-						$third_count_weeks=$tg[units]/10;
+						$third_count_weeks=$tg[units]/($tg['unit_per_day'] * 5);
 					endforeach;
 					if(empty($max_ped) || $max_ped==NULL)
 					{	
@@ -1692,7 +1780,7 @@ class User extends Dbfunctions{
 	{		
 		$res_logo = $this->strRecordID("conditions","*","type='Logo path'");
 		$headers  = "MIME-Version: 1.0\n";
-		$headers .= "Content-type: text/html; charset=iso-8859-1\n";
+		$headers .= "Content-type: text/html; charset=iso-8859-6\n";
 		$headers .= "From:".$from."\n";
 		$body='<table border="0" cellpadding="5" cellspacing="0" style="border: 1px solid rgb(109, 146, 201);" width="662">
 				<tbody>
@@ -1729,6 +1817,33 @@ class User extends Dbfunctions{
 	{
 		$s=substr($start,0,5);
 		return $s."-".$end; 
+	}
+	function printClassEndDate($end_date)
+	{
+		$day= date('D',strtotime(date("Y-m-d", strtotime($end_date))));
+		switch($day)
+		{	
+			case 'Fri':	{$new_end_date=date('Y-m-d',strtotime(date("Y-m-d", strtotime($end_date)) . "+2 day"));}break;
+			case 'Sat':	{$new_end_date=date('Y-m-d',strtotime(date("Y-m-d", strtotime($end_date)) . "+1 day"));}break;
+			default:	{$new_end_date=$end_date;}break;
+		}
+		return $new_end_date;
+	}
+	function printClassChangedEndDate($end_date)
+	{
+		$day= date('D',strtotime(date("Y-m-d", strtotime($end_date))));
+		switch($day)
+		{	
+			case 'Sun':	{$new_end_date=date('Y-m-d',strtotime(date("Y-m-d", strtotime($end_date)) . "-3 day"));}break;
+			case 'Mon':	{$new_end_date=date('Y-m-d',strtotime(date("Y-m-d", strtotime($end_date)) . "-1 day"));}break;
+			case 'Tue':	{$new_end_date=date('Y-m-d',strtotime(date("Y-m-d", strtotime($end_date)) . "-1 day"));}break;
+			case 'Wed':	{$new_end_date=date('Y-m-d',strtotime(date("Y-m-d", strtotime($end_date)) . "-1 day"));}break;
+			case 'Thu':	{$new_end_date=date('Y-m-d',strtotime(date("Y-m-d", strtotime($end_date)) . "-1 day"));}break;
+			case 'Fri':	{$new_end_date=date('Y-m-d',strtotime(date("Y-m-d", strtotime($end_date)) . "+2 day"));}break;
+			case 'Sat':	{$new_end_date=date('Y-m-d',strtotime(date("Y-m-d", strtotime($end_date)) . "+1 day"));}break;
+			default:	{$new_end_date=$end_date;}break;
+		}
+		return $new_end_date;
 	}
 }
 ?>

@@ -19,7 +19,7 @@ include 'application_top.php';
 $dbf = new User();
 
 include_once '../includes/language.php';
-echo $_SESSION["centre_id"];
+
 ?>	
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <?php

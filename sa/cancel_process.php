@@ -47,6 +47,7 @@ if($_REQUEST['action']=='insert'){
 	// Start Mail to Centre Director
 	//Get teacher email id
 	$from = $dbf->getDataFromTable("user","email","id='$_SESSION[id]'");
+	$from_name = $dbf->getDataFromTable("user","user_name","id='$_SESSION[id]'");
 	$to = $dbf->getDataFromTable("user","email","user_type='Center Director' And center_id='$_SESSION[centre_id]'");
 	$cd = $dbf->getDataFromTable("user","user_name","user_type='Center Director' And center_id='$_SESSION[centre_id]'");
 	$teacher = $dbf->getDataFromTable("user","user_name","id='$_SESSION[id]'");
@@ -172,9 +173,9 @@ if($_REQUEST['action']=='insert'){
 		foreach($dbf->fetchOrder('user',"(user_type='Center Director' OR user_type='Student Advisor') And center_id='$_SESSION[centre_id]'","") as $cd_sa){
 			if($cd_sa["mobile"]){
 				if($mobile_no == ''){
-					$mobile_no = $cd["mobile"];
+					$mobile_no = $cd_sa["mobile"];
 				}else{
-					$mobile_no = $mobile_no.','.$cd["mobile"];
+					$mobile_no = $mobile_no.','.$cd_sa["mobile"];
 				}
 			}
 		}				

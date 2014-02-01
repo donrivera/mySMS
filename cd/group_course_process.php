@@ -48,7 +48,7 @@ if($_REQUEST['action']=='teacher'){
 	$group_end_time = date('h:i A',strtotime("+$event_length minutes", $timestamp));
 	$start=date('Hi',strtotime($_REQUEST['tm']));
 	$end=date('Hi',strtotime("+$event_length minutes", $timestamp));
-	$num = $dbf->teacherSlotAvailable($teacher_id,$_REQUEST[dt],$_REQUEST[gr_course_endt],$start,$end,$_SESSION[gr_course_id]);
+	$num = $dbf->teacherSlotAvailable($teacher_id,$_REQUEST[dt],$_REQUEST[gr_course_endt],$start,$end);
 		
 	$_SESSION["tm"] = $_REQUEST["tm"];
 	$_SESSION["end_tm"] = $group_end_time;
@@ -79,21 +79,35 @@ if($_REQUEST['action']=='class'){
 
 if($_REQUEST['action']=='finish'){
 			
-	$group_s_time = date('H:i:s',strtotime($_SESSION['tm']));
-	
+	$group_s_time = date('h:i A',strtotime($_SESSION['tm']));
 	$perday = $dbf->getDataFromTable("common", "name", "id='$_SESSION[gr_course_units]'");
-	
 	//Time calculation
 	$unit = $perday * 45;
-									
 	$event_time = $group_s_time;
 	$event_length = $unit;
-	 
+	$end_date=$_SESSION['gr_course_endt'];
 	$timestamp = strtotime("$event_time");
 	$etime = strtotime("+$event_length minutes", $timestamp);
+	$group_end_time = date('h:i A', $etime);	
+	$start=date('Hi',strtotime($_SESSION['tm']));
+	$end=date('Hi',strtotime($_SESSION['end_tm']));
 	$current_date = date('Y-m-d H:i:s A');
-	
-	$string="group_name='$_SESSION[group_name]',centre_id='$_SESSION[centre_id]',course_id='$_SESSION[gr_course_id]', teacher_id='$_SESSION[gr_course_teacher]', units='$_SESSION[gr_course_units]',unit_per_day='$perday',status='Not Started',room_id='$_SESSION[gr_class_room]',start_date='$_SESSION[gr_course_strdt]',group_time='$_SESSION[tm]',group_time_end='$_SESSION[end_tm]',end_date='$_SESSION[gr_course_endt]',sa_id='$_SESSION[id]',created_datetime='$current_date'";
+	$string="	group_name='$_SESSION[group_name]',
+				centre_id='$_SESSION[centre_id]',
+				course_id='$_SESSION[gr_course_id]', 
+				teacher_id='$_SESSION[gr_course_teacher]', 
+				units='$_SESSION[gr_course_total_units]',
+				unit_per_day='$perday',
+				status='Not Started',
+				room_id='$_SESSION[gr_class_room]',
+				start_date='$_SESSION[gr_course_strdt]',
+				group_time='$start',
+				group_time_end='$end',
+				group_start_time='$group_s_time',
+				group_end_time='$group_end_time',
+				end_date='$end_date',
+				sa_id='$_SESSION[id]',
+				created_datetime='$current_date'";
 	
 	$dbf->insertset("student_group",$string);
 	
@@ -231,8 +245,7 @@ if($_REQUEST['action']=='setstatus'){
 if($_REQUEST['action']=='quick_add_group')
 {
 
-	$end_date=$_REQUEST[gr_course_endt];
-	
+	$end_date=$_REQUEST['gr_course_endt'];
 	$students=$_REQUEST[student_id];
 	if(empty($students) || $students==NULL):
 	$end_date=$_REQUEST[gr_course_endt];
@@ -257,12 +270,12 @@ if($_REQUEST['action']=='quick_add_group')
 	$choosen_date = $_REQUEST["dt"];
 	$group_start_time = $_REQUEST['tm'];
 			
-	$perday = $dbf->getDataFromTable("common", "name", "id='$_REQUEST[unit]'");
+	$perday = $_REQUEST['unit'];
 	
 	//Time calculation
 	$unit = $perday * 45;
 	
-	$group_s_time = date('H:i:s',strtotime($_REQUEST['tm']));
+	$group_s_time = date('h:i A',strtotime($_REQUEST['tm']));
 	
 	$event_time = $group_s_time;
 	$event_length = $unit;
@@ -272,8 +285,8 @@ if($_REQUEST['action']=='quick_add_group')
 	$group_end_time = date('h:i A',strtotime("+$event_length minutes", $timestamp));
 	$start=date('Hi',strtotime($_REQUEST['tm']));
 	$end=date('Hi',strtotime("+$event_length minutes", $timestamp));
-	$num = $dbf->teacherSlotAvailable($teacher_id,$choosen_date,$end_date,$start,$end,$course_id);
-		
+	$num = $dbf->teacherSlotAvailable($teacher_id,$choosen_date,$end_date,$start,$end);
+	$current_date = date('Y-m-d H:i:s A');	
 	$_SESSION["tm"] = $_REQUEST["tm"];
 	$_SESSION["end_tm"] = $group_end_time;
 	
@@ -298,7 +311,8 @@ if($_REQUEST['action']=='quick_add_group')
 				group_start_time='$group_s_time',
 				group_end_time='$group_end_time',
 				end_date='$_REQUEST[gr_course_endt]',
-				sa_id='$_SESSION[id]'";
+				sa_id='$_SESSION[id]',
+				created_datetime='$current_date'";
 	
 	$my_group_id = $dbf->insertset("student_group",$string);
 	
@@ -560,7 +574,7 @@ if($_REQUEST['action']=='quick_add_group')
 
 if($_REQUEST['action']=='update_group')
 {
-	echo var_dump($_POST);
+	#echo var_dump($_POST);
 	
 	$end_date=$_REQUEST[gr_course_endt];
 	$students=$_REQUEST[student_id];
@@ -574,7 +588,7 @@ if($_REQUEST['action']=='update_group')
 								FROM centre_group_size
 								WHERE ('$c_students' BETWEEN size_from AND size_to)
 								");
-	foreach($query as $q):$week_total=round($q['units']/10,0);endforeach;
+	foreach($query as $q):$week_total=round($q['units']/($_REQUEST['unit'] * 5),0);endforeach;
 	$compute_units=$week_total * 10;
 	$compute_date=strtotime($_REQUEST['date_value'] .'+ '.$week_total.' week');
 	$end_date=date('Y-m-d',$compute_date);
@@ -589,7 +603,7 @@ if($_REQUEST['action']=='update_group')
 	$teacher_id = $_REQUEST["teacher"];
 	$choosen_date = $_REQUEST["dt"];
 	$group_start_time = $_REQUEST['tm'];
-	$perday = $dbf->getDataFromTable("common", "name", "id='$_REQUEST[unit]'");		
+	$perday = $_REQUEST['unit'];		
 	
 	
 	//Time calculation

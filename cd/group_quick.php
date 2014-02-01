@@ -78,7 +78,10 @@ $(function() {
 	$( ".datepick" ).datepicker({
 		changeMonth: true,
 		changeYear: true,
-		dateFormat: 'yy-mm-dd'
+		dateFormat: 'yy-mm-dd',
+		beforeShowDay:function (dt){return [dt.getDay() == 5 || dt.getDay() == 6 ? false : true];},
+		onSelect: showtime,
+		onClose:date_change
 	});
 });
 <!--UI JQUERY DATE PICKER-->
@@ -170,26 +173,38 @@ function dateAdd(datepart,number,objDate){
 function date_change(){
 	dateParts = document.getElementById('date_value').value;	
 	totalunit = document.getElementById('totalunit').value;
+	unit=document.getElementById('unit').value;
+	unit_per_week= 5 * unit;
 	if(totalunit == ''){
 		alert("Select the Units");
 		document.getElementById('totalunit').focus();
 		document.getElementById('gr_course_endt').value = '';
 	}else{
-		totalunit = (parseInt(totalunit)/10) * 7;		
+		totalunit = (parseInt(totalunit)/unit_per_week) * 7;
 		newDays = totalunit;	
 		var myDate=new Date(dateParts);
 		var x = myDate.setDate(myDate.getDate()+parseInt(newDays));
-		x = new Date(x);	
-		var d  = x.getDate();
+		var end_day= myDate.getDay();
+		var end_date=new Date(x);
+		switch(end_day)
+		{
+			case 0:{var z = end_date.setDate(myDate.getDate() - parseInt(3));}break;
+			case 1:{var z = end_date.setDate(myDate.getDate() - parseInt(1));}break;
+			case 2:{var z = end_date.setDate(myDate.getDate() - parseInt(1));}break;
+			case 3:{var z = end_date.setDate(myDate.getDate() - parseInt(1));}break;
+			case 4:{var z = end_date.setDate(myDate.getDate() - parseInt(1));}break;
+			case 5:{var z = end_date.setDate(myDate.getDate() + parseInt(2));}break;
+			case 6:{var z = end_date.setDate(myDate.getDate() + parseInt(1));}break;
+			default:{var z = end_date.setDate(myDate.getDate());}break;
+		}
+		var d  = end_date.getDate();
 		var day = (d < 10) ? '0' + d : d;
-		var m = x.getMonth()+1;
+		var m = end_date.getMonth()+1;
 		var month = (m < 10) ? '0' + m : m;	
-		var yy = x.getFullYear();
+		var yy = end_date.getFullYear();
 		var year = (yy < 1000) ? yy + 1900 : yy;
-	
-		x = year + "-" + month + "-" + day;
-	   
-		document.getElementById('gr_course_endt').value = x;
+		new_end_date = year + "-" + month + "-" + day;
+		document.getElementById('gr_course_endt').value = new_end_date;
 	}
 }
 
@@ -462,7 +477,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                     <?php
 									foreach($dbf->fetchOrder('common',"type='Unit No'","") as $res_unit) {
 									?>
-                                    <option value="<?php echo $res_unit['id']?>" <?php if($res_unit['name'] == "2"){?> selected="" <?php } ?>><?php echo $res_unit['name'];?>&nbsp;units/day</option>
+                                    <option value="<?php echo $res_unit['name']?>" <?php if($res_unit['name'] == "2"){?> selected="" <?php } ?>><?php echo $res_unit['name'];?>&nbsp;units/day</option>
                                     <?php } ?>
                                     </select></td>
                                 </tr>
@@ -523,9 +538,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								$no_unit = ($no_unit/10) * 7;
 								$dt = date('Y-m-d');							
 								$dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($dt)) . "+$no_unit day"));
+								$new_dt1=$dbf->printClassChangedEndDate($dt1);
 								?>
                                 <td align="left" valign="middle">
-                                <input type="text" name="gr_course_endt" class="validate[required] new_textbox80"  id="gr_course_endt" value="<?php echo $dt1;?>" readonly="" />&nbsp;<input type="text" name="dt" class="new_textbox80" id="dt" readonly="" value="">&nbsp;<input type="text" name="tm" class="new_textbox70" id="tm" readonly="" value=""></td>
+                                <input type="text" name="gr_course_endt" class="validate[required] new_textbox80"  id="gr_course_endt" value="<?php echo $new_dt1;?>" readonly="" />&nbsp;<input type="text" name="dt" class="new_textbox80" id="dt" readonly="" value="">&nbsp;<input type="text" name="tm" class="new_textbox70" id="tm" readonly="" value=""></td>
                                 </tr>
                               </table>
                             </td>
