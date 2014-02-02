@@ -531,7 +531,7 @@ class User extends Dbfunctions{
 		
 		$group = $dbf->strRecordID("student_group","*","id='$group_id'");
 		//$string = $string.' ('.$group["group_name"].', '.date('d/m/Y', strtotime($group["start_date"])).' - '.date('d/m/Y', strtotime($group["end_date"])).', '.$group["group_time"].'-'.$dbf->GetGroupTime($grroup["id"]).')';
-		$string = $string.' ('.$group["group_name"].', '.date('d/m/Y', strtotime($group["start_date"])).' - '.date('d/m/Y', strtotime($group["end_date"])).', '.$group["group_start_time"].'-'.$group["group_end_time"].')';
+		$string = $string.' ('.$group["group_name"].', '.date('d/m/Y', strtotime($group["start_date"])).' - '.date('d/m/Y', strtotime($group["end_date"])).', '.$dbf->printClassTimeFormat($group["group_start_time"],$group["group_end_time"]).')';
 		return $string;
 
 	}

@@ -299,9 +299,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					  if($_REQUEST[cmbgroup] != '')
 					  {
 						//$dt = date("Y-m-d",strtotime($res_teacher_group[start_date]));
-						$dt = date("Y-m-d",strtotime($res_teacher_group[start_date])).' TO '.date("Y-m-d",strtotime($res_teacher_group[end_date]));
+						$dt = date("Y-m-d",strtotime($res_teacher_group[start_date])).'&nbsp;TO&nbsp;'.date("Y-m-d",strtotime($res_teacher_group[end_date]));
 						
-						echo $dt = $dt." TIME- ".$res_teacher_group[group_start_time]."-".$res_teacher_group[group_end_time];
+						echo $dt = $dt."&nbsp;".$dbf->printClassTimeFormat($res_teacher_group[group_start_time],$res_teacher_group[group_end_time]);
 					  }
 					?>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

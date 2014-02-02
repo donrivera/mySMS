@@ -23,7 +23,7 @@ foreach($dbf->fetchOrder("student","(first_name LIKE '$name%' OR student_first_n
 	if($is_complete > 0){
 ?>
   <tr>
-    <td width="126" align="left" valign="top" style="padding-left:2px; font-size:12px; font-family:Arial, Helvetica, sans-serif; color:#000;"><a href="search_group_f.php?student=<?php echo $val["id"];?>" style="text-decoration:none;"><?php echo $val["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></a></td>
+    <td width="126" align="left" valign="top" style="padding-left:2px; font-size:12px; font-family:Arial, Helvetica, sans-serif; color:#000;"><a href="search_group_f.php?student=<?php echo $val["id"];?>" style="text-decoration:none;"><?php echo $dbf->printStudentName($val["id"]);?></a></td>
     <td width="111" align="left" valign="top" style="padding-left:2px; font-size:12px; font-family:Arial, Helvetica, sans-serif; color:#000;"><a href="search_group_f.php?student=<?php echo $val["id"];?>" style="text-decoration:none;"><?php echo $val["student_mobile"];?></a></td>
     <td width="105" align="left" valign="top" style="padding-left:2px; font-size:12px; font-family:Arial, Helvetica, sans-serif; color:#000;"><a href="search_group_f.php?student=<?php echo $val["id"];?>" style="text-decoration:none;"><?php echo $val["email"];?></a></td>
   </tr>
@@ -45,7 +45,7 @@ foreach($dbf->fetchOrder("student","(first_name LIKE '$name%' OR student_first_n
   <tr>
     <td width="103" align="right" valign="top" style="padding-right:2px; font-size:12px; font-family:Arial, Helvetica, sans-serif; color:#000;"><a href="search_group_f.php?student=<?php echo $val["id"];?>" style="text-decoration:none;"><?php echo $val["email"];?></a></td>
     <td width="112" align="right" valign="top" style="padding-right:2px; font-size:12px; font-family:Arial, Helvetica, sans-serif; color:#000;"><a href="search_group_f.php?student=<?php echo $val["id"];?>" style="text-decoration:none;"><?php echo $val["student_mobile"];?></a></td>
-    <td width="127" align="right" valign="top" style="padding-right:2px; font-size:12px; font-family:Arial, Helvetica, sans-serif; color:#000;"><a href="search_group_f.php?student=<?php echo $val["id"];?>" style="text-decoration:none;" ><?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?><?php echo $val["first_name"];?></a></td>
+    <td width="127" align="right" valign="top" style="padding-right:2px; font-size:12px; font-family:Arial, Helvetica, sans-serif; color:#000;"><a href="search_group_f.php?student=<?php echo $val["id"];?>" style="text-decoration:none;" ><?php echo $dbf->printStudentName($val["id"]);?></a></td>
   </tr>
   <?php
 		}

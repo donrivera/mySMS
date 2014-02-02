@@ -249,7 +249,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				?> 
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                   <td height="25" align="center" valign="middle" class="mycon"><?php echo $i;?></td>
-                  <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $faq["first_name"];?> <?php echo $Arabic->en2ar($dbf->StudentName($faq["id"]));?></td>
+                  <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dbf->printStudentName($faq["id"]);?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $faq["email"];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $faq["student_mobile"];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $course;?></td>
@@ -454,7 +454,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $faq[email];?></td>
                         <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $faq[student_mobile];?></td>
                         <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $course;?></td>
-                        <td height="25" align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $faq[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($faq["id"]));?></td>
+                        <td height="25" align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dbf->printStudentName($faq["id"]);?></td>
                         <td height="25" align="center" valign="middle" class="mycon"><?php echo $i;?></td>
                         <?php
                           $i = $i + 1;

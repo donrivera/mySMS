@@ -302,7 +302,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         
                         <tr bgcolor="<?php echo $color1;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color1;?>'">
                          <td height="25" align="center" valign="middle" class="mycon">&nbsp;<?php echo $valinv[student_id];?></td>
-                          <td height="25" align="left" valign="middle" class="mycon">&nbsp;<?php echo $val_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val_student["id"]));?></td>
+                          <td height="25" align="left" valign="middle" class="mycon">&nbsp;<?php echo $dbf->printStudentName($val_student["id"]);?></td>
                           <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $val_student[student_id];?></td>
                           <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $val_student[student_mobile];?></td>
                           <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $val_student[email];?>&nbsp;&nbsp;</td>
@@ -524,7 +524,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						?>
                         
                         <tr bgcolor="<?php echo $color1;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color1;?>'">                         
-                          <td height="25" align="right" valign="middle" class="mycon">&nbsp;<?php echo $val_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val_student["id"]));?></td>
+                          <td height="25" align="right" valign="middle" class="mycon">&nbsp;<?php echo $dbf->printStudentName($val_student["id"]);?></td>
                           <td align="right" valign="middle" class="mycon">&nbsp;<?php echo $val_student[student_id];?></td>
                           <td align="right" valign="middle" class="mycon">&nbsp;<?php echo $val_student[student_mobile];?></td>
                           <td align="right" valign="middle" class="mycon">&nbsp;<?php echo $val_student[email];?>&nbsp;&nbsp;</td>

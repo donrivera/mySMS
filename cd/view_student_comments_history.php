@@ -266,7 +266,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 			  ?>
               <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" onClick="javascript:window.location.href='s_edit.php?id=<?php echo $val[id];?>'" style="cursor:pointer;">
                 <td align="center" valign="middle" class="mycon" ><?php echo $i;?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val[id];?>" style="cursor:pointer;"><?php echo $val[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></a></td>
+                <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val[id];?>" style="cursor:pointer;"><?php echo $dbf->printStudentName($val["id"]);?></a></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:5px;">
 				<?php if($val[student_id] > 0) { echo $val[student_id]; } ?>
                 </td>
@@ -473,7 +473,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <td align="right" valign="middle" class="mycon" style="padding-right:5px;"><?php if($val[student_id] > 0) { echo $val[student_id]; } ?></td>
                   <td align="right" valign="middle" class="mycon" style="padding-right:5px;"><?php echo $val[student_mobile];?></td>
                   
-                  <td align="right" valign="middle" class="mycon" style="padding-right:5px;"><?php echo $val[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></td>
+                  <td align="right" valign="middle" class="mycon" style="padding-right:5px;"><?php echo $dbf->printStudentName($val["id"]);?></td>
                   <td align="center" valign="middle" class="mycon" ><?php echo $i;?></td>
                   
                   <?php

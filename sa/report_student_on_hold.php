@@ -257,7 +257,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>                    
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                   <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val[id];?>" style="cursor:pointer;">
-					<?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?>
+					<?php echo $dbf->printStudentName($val[id]);?>
 				  </a></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
@@ -483,7 +483,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                        <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dt;?></td>
                       <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
                        <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
-                      <td height="25" align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?></td>
+                      <td height="25" align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dbf->printStudentName($val[id]);?></td>
                       <?php
 						  $i = $i + 1;
 						  if($color=="#ECECFF"){

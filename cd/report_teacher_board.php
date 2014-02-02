@@ -209,7 +209,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     </a></td>
                   <td height="25" align="center" valign="middle" class="mycon"><?php echo $k; ?></td>
                   <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res[name]." [".$num1."]";?></td>
-                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[group_name];?> <?php echo $val["group_time"];?>-<?php echo $dbf->GetGroupTime($val["id"]);?></td>
+                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[group_name];?> <?php echo $dbf->printClassTimeFormat($val[group_start_time],$val[group_end_time]);?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[start_date];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[end_date];?></td>
 				  
@@ -243,7 +243,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							?>
                           <tr bgcolor="<?php echo $color1;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color1;?>'" style="cursor:pointer;">
                             <td align="center" valign="middle"><?php echo $j; ?></td>
-                          <td height="25" align="left" valign="middle"><?php echo $val_student[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($val_student["id"]));?></td>
+                          <td height="25" align="left" valign="middle"><?php echo $dbf->printStudentName($val_student["id"]);?></td>
                           <td align="left" valign="middle"><?php echo $val_student[student_id];?></td>
                           <td align="left" valign="middle"><?php echo $val_student[student_mobile];?></td>
                           <td align="left" valign="middle"><?php echo $val_student[email];?>&nbsp;&nbsp;</td>
@@ -414,7 +414,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
                       
                       <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
-                         <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[group_name];?> <?php echo $val["group_time"];?>-<?php echo $dbf->GetGroupTime($val["id"]);?></td>
+                         <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[group_name];?> <?php echo $dbf->printClassTimeFormat($val[group_start_time],$val[group_end_time]);?></td>
                         <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[start_date];?></td>
                         <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[end_date];?></td>
                         
@@ -459,7 +459,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <td align="right" valign="middle"><?php echo $val_student[student_id];?></td>
                               <td align="right" valign="middle"><?php echo $val_student[student_mobile];?></td>
                               <td align="right" valign="middle"><?php echo $val_student[email];?>&nbsp;&nbsp;</td>
-                              <td height="25" align="right" valign="middle"><?php echo $val_student[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($val_student["id"]));?></td>
+                              <td height="25" align="right" valign="middle"><?php echo $dbf->printStudentName($val_student["id"]);?></td>
                               <td align="center" valign="middle"><?php echo $j; ?></td>
                               </tr>
                             <?php

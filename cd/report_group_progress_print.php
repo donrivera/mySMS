@@ -224,7 +224,7 @@ $teacher_id = $_REQUEST["teacher_id"];
 					$comp = $res_progress["course_listen"];								
 				?>
           <tr>
-            <td height="25" align="left" valign="middle" class="pedtext_normal"><?php echo $r[first_name];?></td>
+            <td height="25" align="left" valign="middle" class="pedtext_normal"><?php echo $dbf->printStudentName($r[id]);?></td>
             <td align="center" valign="middle" class="pedtext_normal" style="border-left:solid 1px; border-color:#F5F5F5;"><?php if($parti>0) { echo $parti; }?></td>
             <td align="center" valign="middle" class="pedtext_normal" style="border-left:solid 1px; border-color:#F5F5F5;"><?php if($home) { echo $home; }?></td>
             <td align="center" valign="middle" class="pedtext_normal" style="border-left:solid 1px; border-color:#F5F5F5;"><?php if($flu>0) { echo $flu; }?></td>

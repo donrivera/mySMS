@@ -79,8 +79,8 @@ else
                   <img src="../images/rightarrow.png" width="16" height="16"><?php echo constant("ADMIN_MENU_REPORTS_GROUP_GRADE");?></td>
                   <td width="19%" class="headingtext">&nbsp;</td>
                   <td width="31%" align="left"><?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_STUDENT");?> : <?php $student=$dbf->strRecordID("student", "*", "id='$_REQUEST[student_id]'");?> 
-					<?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";?>
-					: <?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_STUDENT");?>
+					<?php echo $dbf->printStudentName($student[id]);?>
+					
                   </td>
                   <td width="8%" align="left"></td>
                   <td width="8%" align="left">&nbsp;</td>
@@ -126,7 +126,7 @@ else
                     <td>&nbsp;</td>
                     <td align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_REPORT_CERTIFICATE_REPORT_STUDENTNAME");?> :</td>
                     <td align="left" valign="middle"><span class="lable1">
-						<?php echo $res[first_name]."&nbsp;".$res[father_name]."&nbsp;".$res[family_name]."&nbsp;(".$res[first_name1]."&nbsp;".$res[father_name1]."&nbsp;".$res[grandfather_name1]."&nbsp;".$res[family_name1].")";?></span></td>
+						<?php echo $dbf->printStudentName($res[id]);?></span></td>
                   </tr>
                   <tr>
                     <td>&nbsp;</td>
@@ -307,7 +307,7 @@ else
                       <td width="19%" class="headingtext">&nbsp;</td>
                       <td width="31%" align="left">
                         <?php $student= $dbf->strRecordID("student", "first_name", "id='$_REQUEST[student_id]'");?> 
-						<?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";?> : <?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_STUDENT");?></td>
+						<?php echo $dbf->printStudentName($student[id]);?> : <?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_STUDENT");?></td>
                       <td width="8%" align="left">&nbsp; </td>
                       <td width="8%" align="left">&nbsp;</td>
                       <td width="34%" height="30" align="right" class="logintext">

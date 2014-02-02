@@ -589,7 +589,7 @@ if($_REQUEST['action']=='update_group')
 								WHERE ('$c_students' BETWEEN size_from AND size_to)
 								");
 	foreach($query as $q):$week_total=round($q['units']/($_REQUEST['unit'] * 5),0);endforeach;
-	$compute_units=$week_total * 10;
+	$compute_units=$week_total * ($_REQUEST['unit'] * 5);
 	$compute_date=strtotime($_REQUEST['date_value'] .'+ '.$week_total.' week');
 	$end_date=date('Y-m-d',$compute_date);
 	endif;

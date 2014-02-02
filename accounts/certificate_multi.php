@@ -262,13 +262,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                     <tr>
                                       <th height="21" align="left" valign="middle" scope="col" class="cer_my_head">This is to certify that</th>
                                       </tr>
-									 <?php
-									  if($res[gender]=='female'){
-										  $gender = 'Ms.';
-									  }else{
-										  $gender = 'Mr.';
-									  }
-									  ?>
+									<?php $gender=($res["gender"]=='female'?'Ms.':'Mr.');?>
                                     <tr>
                                       <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head"><?php echo $gender;?>&nbsp;</span><span class="cer_my_head_bold"><?php echo $dbf->printStudentName($res["id"]);?></span></span></th>
                                       </tr>

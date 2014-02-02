@@ -136,7 +136,7 @@ function setsubmit()
 						  
 						  foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]'".$cond,"","") as $res_group) {
 							  ?>
-                          <option value="<?php echo $res_group['id'];?>" <?php if($_REQUEST["cmbgroup"]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>, <?php echo $res_group["group_time"];?>-<?php echo $dbf->GetGroupTime($res_group["id"]);?>
+                          <option value="<?php echo $res_group['id'];?>" <?php if($_REQUEST["cmbgroup"]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>, <?php echo $dbf->printClassTimeFormat($res_group[group_start_time],$res_group[group_end_time]);?>
 </option>
                           <?php
 						  }
@@ -463,7 +463,7 @@ function setsubmit()
 					
 				?>
                 <tr>
-                  <td height="25" align="left" valign="middle" class="smalltext"><?php echo $r[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($r["id"]));?></td>
+                  <td height="25" align="left" valign="middle" class="smalltext"><?php echo $dbf->printStudentName($r["id"]);?></td>
                   <td align="left" valign="middle"><?php echo $res_country[value];?></td>
                   <td align="left" valign="middle" class="smalltext"><?php echo $r[student_id];?></td>
 				  <input type="hidden" name="st<?php echo $student_count;?>" id="st<?php echo $student_count;?>" value="<?php echo $r[id];?>">
@@ -992,7 +992,7 @@ function setsubmit()
                   
                   <td align="right" valign="middle" class="smalltext"><?php if($r[student_id] > 0) { echo $r[student_id]; }?>&nbsp;</td>
                   <td align="left" valign="middle"><?php echo $res_country[value];?></td>
-                  <td height="25" align="right" valign="middle" class="smalltext"><?php echo $r[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($r["id"]));?>&nbsp;</td>
+                  <td height="25" align="right" valign="middle" class="smalltext"><?php echo $dbf->printStudentName($r["id"]);?>&nbsp;</td>
                 </tr>
 				 <?php
 				 $student_count++; 

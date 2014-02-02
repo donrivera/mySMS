@@ -182,7 +182,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <select name="teacher" id="teacher" style="border:solid 1px; border-color:#FFCC33; height:20px; width:150px;" onChange="javascript:document.frm.action='report_teacher_leave_report.php',document.frm.submit();" >
                   <option value="">--Select Teacher--</option>
                   <?php
-						foreach($dbf->fetchOrder('teacher t,teacher_centre c',"t.id=c.teacher_id And c.centre_id='$_SESSION[centre_id]'","t.name","t*") as $val) {
+						$query=$dbf->genericQuery("
+												SELECT t.name 
+												FROM teacher t
+												INNER JOIN teacher_centre tc ON t.id=tc.teacher_id
+												WHERE tc.centre_id='$_SESSION[centre_id]'
+												");
+						//$query=$dbf->fetchOrder('teacher t,teacher_centre c',"t.id=c.teacher_id And c.centre_id='$_SESSION[centre_id]'","t.name","t*");
+						foreach($query as $val) {
 					  ?>
                   <option value="<?php echo $val[id];?>" <?php if($_REQUEST[teacher]==$val[id]){?> selected="selected"<?php }?>><?php echo $val[name];?></option>
                   <?php

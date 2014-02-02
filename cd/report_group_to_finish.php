@@ -209,7 +209,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				}
 				$num=$dbf->countRows('student_group',$cond);
 				
-				foreach($dbf->fetchOrder('student_group',$cond,"id DESC") as $val) {
+				foreach($dbf->fetchOrder('student_group',$cond,"start_date DESC") as $val) {
 					
 				$res = $dbf->strRecordID("teacher","*","id='$val[teacher_id]'");
 				$grp = $dbf->strRecordID("common","*","id='$val[group_id]'");
@@ -364,7 +364,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							}
 							$num=$dbf->countRows('student_group',$cond);
 							
-							foreach($dbf->fetchOrder('student_group',$cond,"id DESC") as $val) {
+							foreach($dbf->fetchOrder('student_group',$cond,"start_date DESC") as $val) {
 								
 							$res = $dbf->strRecordID("teacher","*","id='$val[teacher_id]'");
 							$grp = $dbf->strRecordID("common","*","id='$val[group_id]'");
@@ -376,7 +376,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[start_date];?></td>
                             <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[end_date];?></td>
                             <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $course[name];?></td>
-                            <td height="25" align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[group_name];?> <?php echo $val["group_time"];?>-<?php echo $dbf->GetGroupTime($val["id"]);?></td>
+                            <td height="25" align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[group_name];?> <?php echo $dbf->printClassTimeFormat($val[group_start_time],$val[group_end_time]);?></td>
                             <td height="25" align="center" valign="middle" class="mycon"><?php echo $i;?></td>
                             <?php
 							  $i = $i + 1;
