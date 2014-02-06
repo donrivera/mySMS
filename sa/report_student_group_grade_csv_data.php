@@ -23,7 +23,7 @@ include_once '../includes/language.php';
      $res = $dbf->strRecordID("student","*","id='$_REQUEST[student_id]'");			
      ?>
       <tr>
-        <td align="left" valign="middle" class="lable1"><?php echo constant("STUDENT_ADVISOR_S2_NAME");?> :<?php echo $res[first_name]; ?> </td>
+        <td align="left" valign="middle" class="lable1"><?php echo constant("STUDENT_ADVISOR_S2_NAME");?> :<?php echo $dbf->printStudentName($res[id]); ?> </td>
       </tr>
       <tr>
         <td align="left" valign="middle" class="lable1"><?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_IDNO");?> : <?php echo $res[student_id]; ?> </td>
@@ -52,7 +52,7 @@ include_once '../includes/language.php';
             ?>
           <tr>
             <td height="25" align="center" valign="middle" bgcolor="#F8F9FB" class="contenttext">&nbsp;</td>
-            <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="padding-left:5px;"><?php echo $res_course[name];?></td>
+            <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="padding-left:5px;"><?php echo $dbf->printStudentName($res_course[id]);?></td>
             <td align="center" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="padding-left:5px;">&nbsp;</td>
             <?php
               $i = $i + 1;

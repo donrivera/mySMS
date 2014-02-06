@@ -597,8 +597,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                               <td height="28" align="right" valign="middle" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_HOME_S_CLASSIC_EMAILADDRESS");?> : <span class="nametext1">*</span></td>
                               <td>&nbsp;</td>
-                              <td align="left" valign="middle"><input name="email" type="text" class="validate[required,custom[email]] new_textbox190" id="email" value="<?php echo $res_edit_student["email"];?>" onfocus="get_arabic();"/></td>
-                              <td>&nbsp;</td>
+                              <td align="left" valign="middle"><input name="email" type="text" class="new_textbox190" id="email" value="<?php echo $res_edit_student["email"];?>" onfocus="get_arabic();"/></td>
+                              <!--class="validate[required,custom[email]] new_textbox190"-->
+							  <td>&nbsp;</td>
                               </tr>
                             
                             <tr>
@@ -1176,8 +1177,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       </tr>
                                     <tr>
                                       <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
-                                      <td height="28" align="right" valign="middle" class="leftmenu"><input name="email" type="text" class="validate[required,custom[email]] new_textbox190_ar" id="email" size="45" minlength="4" value="<?php echo $res_edit_student["email"];?>"/></td>
-                                      <td>&nbsp;</td>
+                                      <td height="28" align="right" valign="middle" class="leftmenu"><input name="email" type="text" class="new_textbox190_ar" id="email" size="45" minlength="4" value="<?php echo $res_edit_student["email"];?>"/></td>
+                                      <!--class="validate[required,custom[email]] new_textbox190"-->
+									  <td>&nbsp;</td>
                                       <td align="left" valign="middle" class="leftmenu">
                                       <span class="nametext1">*</span> : <?php echo constant("STUDENT_ADVISOR_HOME_S_CLASSIC_EMAILADDRESS");?>
                                       </td>

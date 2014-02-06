@@ -221,9 +221,12 @@ function gotfocus(){
   <tr>
     <td align="center" valign="top">&nbsp;</td>
   </tr>
+  <!--
   <tr>
     <td align="center" valign="middle" class="footer"><span class="footertext1">Copyright &copy; <?php echo date("Y");?> Berlitz AlAhsa, a Dar  Al-Khibra Human Resources Development Company. All Rights Reserved.</span></td>
   </tr>
+  -->
+   <?php include 'footer.php';?>
 </table>
 <?php } else { ?>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" >

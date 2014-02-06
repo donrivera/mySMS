@@ -66,8 +66,6 @@ $(function() {
 		dateFormat: 'yy-mm-dd'
 	});
 });
-
-
 $(function() {
 	$( ".datepickPast" ).datepicker({
 		changeMonth: true,
@@ -96,6 +94,9 @@ function validate()
 		document.getElementById('comment').focus();
 		return false;
 	}
+	//var balance=document.getElementById('balance').value;
+	//var amount=document.getElementById('amts').value;
+	
 }
 
 function isNumberKey(evt)
@@ -105,6 +106,7 @@ function isNumberKey(evt)
 	return false;
 	return true;
 }
+
 </script>
 <script language="Javascript" type="text/javascript">
 var countdown;
@@ -185,7 +187,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-left:solid 1px #C2C2C2; border-right:solid 1px #C2C2C2;  ">
                   <tr>
                     <td width="58%" align="center" valign="top" bgcolor="#EBEBEB">
-                    <form action="s1_process.php?action=invoice&student_id=<?=$student_id;?>&course_id=<?=$course_id;?>&amp;schid=<?=$_REQUEST[schid];?>" name="frm" method="post" id="frm" onSubmit="return validate();">
+                    <form action="s1_process.php?action=invoice&student_id=<?=$student_id;?>&course_id=<?=$course_id;?>&amp;schid=<?=$_REQUEST[schid];?>" name="frm" method="post" id="frm" onSubmit="return validate();computeBalance();">
                       <?php $val = $dbf->strRecordID("student_fees","*","id='$_REQUEST[schid]'"); ?>
                       <table width="100%" border="0" align="left" cellpadding="0" cellspacing="0" >
                         <tr>
@@ -235,6 +237,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <tr>
                                   <td height="25" align="right" valign="middle" bgcolor="#A9CFFE" class="pedtext"><?php echo constant("CD_SEARCH_INVOICE_BALANCEAMOUNT");?> :</td>
                                   <td align="left" valign="middle" bgcolor="#F1E8FF" class="mycon">&nbsp;<?php echo $bal_amt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
+								  <input type="hidden" name="balance" id="balance" value="<?php echo $bal_amt;?>"/>
                                 </tr>
                               </table></td>
                               <td colspan="2" rowspan="2" align="left" valign="top" id="lblname">&nbsp;</td>

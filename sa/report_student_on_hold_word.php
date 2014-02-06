@@ -120,7 +120,7 @@ header("Content-Disposition: attachment; Filename=report_student_on_hold.doc");
             $course = $dbf->strRecordID("course","*","id='$grp[course_id]'");
         ?>                    
     <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
-      <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[first_name];?></td>
+      <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dbf->printStudentName($val[id]);?></td>
       <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
       <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
       <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dt;?></td>

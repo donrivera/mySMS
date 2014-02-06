@@ -259,7 +259,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td height="28" align="right" valign="middle" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_S4_EMAILADDRESS");?><span class="nametext1">*</span> : </td>
                             <td>&nbsp;</td>
                             <td align="left" valign="middle"><span class="leftmenu">
-                              <input name="email" type="text" class="validate[required,custom[email]] new_textbox190" id="email" value="<?php echo $_SESSION[email] ;?>" onBlur="checkTab('email');"/>
+                              <input name="email" type="text" class="new_textbox190" id="email" value="<?php echo $_SESSION[email] ;?>" onBlur="checkTab('email');"/>
+							  <!--class="validate[required,custom[email]] new_textbox190" -->
                             </span></td>
                             </tr>
                           <tr>

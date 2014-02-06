@@ -3,7 +3,7 @@ ob_start();
 session_start();
 if(($_COOKIE['cook_username'])=='')
 {
-	if($_SESSION['id']=="" || $_SESSION['user_type']!="Center Director")
+	if($_SESSION['id']=="" || $_SESSION['user_type']!="Student Advisor")
 	{
 		header("Location:../index.php");
 		exit;
@@ -62,12 +62,12 @@ header("Content-Disposition: attachment; Filename=report_teacher_schedule.doc");
 					?>
                 <tr>
                   <td align="left" valign="middle" bgcolor="#F8F9FB" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $i;?></td>
-                  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val[group_name];?> <?php echo $val["group_time"];?>-<?php echo $dbf->GetGroupTime($val["id"]);?></td>
+                  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val[group_name];?> <?php echo $dbf->printClassTimeFormat($val["group_start_time"],$val["group_end_time"]);?></td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB"  style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val[start_date];?></td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB"  style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val[end_date];?></td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB"  style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $std["COUNT(student_id)"];?></td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB"  style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $room["name"];?></td>
-                  <? 
+                  <?php
 				  $i = $i + 1;
 					 } 
 					  

@@ -169,9 +169,15 @@ $count = $res_logout["name"]; // Set timeout period in seconds
             </table></td>
           </tr>
           <?php
-          	$status = $dbf->getDataFromTable("student_moving","status_id","student_id='$student_id' And course_id='$course_id'");
-		  	
-			//Get Balance of a particular student
+          	if(isset($_REQUEST['course_id']))
+			{
+				$status = $dbf->getDataFromTable("student_moving_history","status_id","student_id='$student_id' And course_id='$course_id'");
+			}
+			else
+			{
+				$status = $dbf->getDataFromTable("student_moving","status_id","student_id='$student_id' ");
+			}
+		  	//Get Balance of a particular student
 			$enroll = $dbf->strRecordID("student_enroll","*","student_id='$student_id' And course_id='$course_id'");
 			$course = $dbf->strRecordID("course","*","id='$course_id'");
 			$course_fees = $dbf->getDataFromTable("course_fee","fees","id='$enroll[fee_id]'");

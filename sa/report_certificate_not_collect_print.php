@@ -13,12 +13,12 @@ include_once '../includes/language.php';
 <thead>
   <tr class="logintext">
     
-    <th width="5%" height="25" align="center" valign="middle" bgcolor="#CCCCCC" class="pedtext" ><?php echo constant("STUDENT_ADVISOR_SEARCH_MANAGE_SL");?></th>
+    <!--<th width="5%" height="25" align="center" valign="middle" bgcolor="#CCCCCC" class="pedtext" ><?php echo constant("STUDENT_ADVISOR_SEARCH_MANAGE_SL");?></th>-->
     <th width="18%" align="left" valign="middle" bgcolor="#CCCCCC" class="pedtext" ><?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?></th>
     <th width="18%" align="left" valign="middle" bgcolor="#CCCCCC" class="pedtext" ><?php echo constant("ADMIN_TEACHER1_MANAGE_MOBILE");?></th>
     <th width="28%" align="left" valign="middle" bgcolor="#CCCCCC" class="pedtext" ><?php echo constant("ADMIN_TEACHER1_MANAGE_EMAIL");?></th>
     <th width="7%" align="center" valign="middle" bgcolor="#CCCCCC" class="pedtext" ><?php echo constant("CD_AUTO_SEARCH_AGE");?></th>
-    <th width="21%"colspan="2" align="center" valign="middle" bgcolor="#CCCCCC" class="pedtext" ><?php echo constant("STUDENT_ADVISOR_HOME_S_CLASSIC_STDPHOTO");?></th>
+    <!--<th width="21%"colspan="2" align="center" valign="middle" bgcolor="#CCCCCC" class="pedtext" ><?php echo constant("STUDENT_ADVISOR_HOME_S_CLASSIC_STDPHOTO");?></th>-->
 </tr>
   </thead>
   <?php
@@ -45,12 +45,12 @@ include_once '../includes/language.php';
     ?>
   <tr bgcolor="<?php echo $color;?>">
     
-    <td width="5%" height="25" align="center" valign="middle" class="mycon"><?php echo $k; ?></td>
-    <td width="18%" align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[first_name]." [".$num_dtls."]";?></td>
+    <!--<td width="5%" height="25" align="center" valign="middle" class="mycon"><?php echo $k; ?></td>-->
+    <td width="34%" align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dbf->printStudentName($val[id]);?><!--."[".$num_dtls."]"--></td>
     <td width="18%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
-    <td width="28%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
+    <td width="38%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
     <td width="7%" align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[age];?></td>
-    <td width="21%" align="center" valign="middle" style="background-color:<?php echo $color;?>" >&nbsp;</td>
+    <!--<td width="21%" align="center" valign="middle" style="background-color:<?php echo $color;?>" >&nbsp;</td>-->
   </tr>
   <?php  
     }

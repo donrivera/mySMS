@@ -193,7 +193,17 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td width="70%" align="left" valign="middle">&nbsp;<select name="course_id" id="course_id" style="width:202px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onChange="getAdvance();">
                               <option value="">Select Course</option>
                                 <?php
-									foreach($dbf->fetchOrder('student_course',"student_id='$student_id' And course_id > 0","") as $rescourse) {
+									$query=$dbf->genericQuery("
+																SELECT DISTINCT sc.course_id 
+																FROM student_course sc 
+																WHERE sc.student_id='$student_id' 
+																AND sc.course_id 
+																NOT IN (SELECT se.course_id 
+																		FROM student_enroll se
+																		WHERE se.student_id='$student_id')
+																");
+									//$query=$dbf->fetchOrder('student_course',"student_id='$student_id' And course_id > 0","");
+									foreach($query as $rescourse) {
 										$crs = $dbf->strRecordID("course", "*", "id='$rescourse[course_id]'");
 								?>
                                 <option value="<?php echo $crs['id'];?>" <?php if($crs["id"] == $_REQUEST["course_id"]) {?> selected="" <?php } ?>><?php echo $crs['name'] ?></option>
@@ -408,7 +418,17 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td width="70%" align="right" valign="middle">&nbsp;<select name="course_id" id="course_id" style="width:202px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onChange="getAdvance();">
                               <option value="">Select Course</option>
                                 <?php
-									foreach($dbf->fetchOrder('student_course',"student_id='$student_id' And course_id > 0","") as $rescourse) {
+									$query=$dbf->genericQuery("
+																SELECT DISTINCT sc.course_id 
+																FROM student_course sc 
+																WHERE sc.student_id='$student_id' 
+																AND sc.course_id 
+																NOT IN (SELECT se.course_id 
+																		FROM student_enroll se
+																		WHERE se.student_id='$student_id')
+																");
+									//$query=$dbf->fetchOrder('student_course',"student_id='$student_id' And course_id > 0","");
+									foreach($query as $rescourse) {
 										$crs = $dbf->strRecordID("course", "*", "id='$rescourse[course_id]'");
 								?>
                                 <option value="<?php echo $crs['id'];?>" <?php if($crs["id"] == $_REQUEST["course_id"]) {?> selected="" <?php } ?>><?php echo $crs['name'] ?></option>

@@ -93,7 +93,7 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 		if($is_multi > 1){
 		$html.='<tr>
 		<td height="25" align="center" valign="middle" class="mycon">'.$i.'</td>
-		<td height="25" align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$faq["first_name"].' '.$Arabic->en2ar($dbf->StudentName($faq["id"])).'</span></td>
+		<td height="25" align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($faq["id"]).'</span></td>
 		<td align="left" valign="middle">'.$faq["email"].'</td>
 		<td align="left" valign="middle">'.$faq["student_mobile"].'</td>
 		<td align="left" valign="middle">'.$course.'</td>';

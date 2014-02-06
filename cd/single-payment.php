@@ -469,10 +469,15 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td align="left" valign="middle"><?php echo $res_enroll["othertext"];?></td>
                           </tr>
                           <?php
-							$opening_amt = $dbf->getDataFromTable('student_fees',"paid_amt","course_id='$course_id' And student_id='$student_id' And type='opening'");
+								$opening_amt = $dbf->getDataFromTable('student_fees',"SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' And (type='advance')");
+								$opening_payment_comment=$dbf->getDataFromTable('student_fees',"comments","course_id='$course_id' And student_id='$student_id' And (type='advance')");
+								if($opening_amt > 0){$readonly='readonly=""';}
+								elseif($feeamt >0){$readonly='readonly=""';}
+								else{$readonly='';}
+								$opening_payment_type=$dbf->getDataFromTable('student_fees',"payment_type","course_id='$course_id' And student_id='$student_id' And (type='advance')");
 							?>
                           <tr>
-                            <td height="28" align="left" valign="middle" class="mytext"><input name="payment" type="text" class="new_textbox100" id="payment" value="<?php echo $opening_amt;?>"  maxlength="20" onKeyPress="return isNumberKey(event);" readonly="readonly"/></td>
+                            <td height="28" align="left" valign="middle" class="mytext"><input name="payment" type="text" class="new_textbox100" id="payment" value="<?php echo $opening_amt;?>"  maxlength="20" onKeyPress="return isNumberKey(event);" <?php echo $readonly;?>/></td>
                             <td align="center" valign="middle">
                               <?php
 							  $valno = $dbf->strRecordID("student_fees","MAX(id)","id <> (SELECT MAX(id) FROM student_fees WHERE student_id='$student_id') AND student_id='$student_id'");
@@ -493,7 +498,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <?php
 									foreach($dbf->fetchOrder('common',"type='payment type'","") as $resp) {
 								  ?>
-                                <option value="<?php echo $resp['id'];?>" <?php if($resp["id"]==$res_enroll["payment_type"]) { ?> selected="selected" <?php } ?>>
+                                <option value="<?php echo $resp['id'];?>" <?php if($resp["id"]==$opening_payment_type) { ?> selected="selected" <?php } ?>>
 								<?php echo $resp['name'];?></option>
                                 <?php } ?>
                             </select></td>
@@ -674,8 +679,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td align="left" valign="top"><input name="certificate2" id="certificate2" type="checkbox" value="" disabled="disabled" <?php if($num_ps > 0) {?> checked="checked" <?php } ?>/></td>
                             </tr>
                           <tr>
+							 <?php $invoice_note=($opening_amt > 0?$opening_payment_comment:'');?>
                             <td height="22" align="left" valign="top" class="leftmenu">&nbsp;<?php echo constant("STUDENT_ADVISOR_SEARCH_MANAGE_COMMENTS");?> :</td>
-                            <td align="left" valign="top" style="padding-left:3px;"><textarea name="textarea" id="textarea" rows="2" cols="25" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF;"></textarea></td>
+                            <td align="left" valign="top" style="padding-left:3px;"><textarea name="textarea" id="textarea" rows="2" cols="25" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF;"><?php echo $invoice_note;?></textarea></td>
                           </tr>
                           </table></td>
                         <td align="left" valign="top">

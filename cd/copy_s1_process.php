@@ -6,17 +6,12 @@ include("../includes/saudismsNET-API.php");
 
 //Object initialization
 $dbf = new User();
-?>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<?php
+
 //Object initialization of class validatesaid
 include_once '../includes/validateSAID.class.php';
 $std = new validateSAID();
 
-$centre_id = $_SESSION['centre_id'];
-
-if($_REQUEST['action']=='age')
-{
+if($_REQUEST['action']=='age'){
 	$_SESSION[age] = $_REQUEST[age];
     $_SESSION[gname] = $_REQUEST[gname];
 	$_SESSION[pcontact] = $_REQUEST[pcontact];
@@ -27,8 +22,8 @@ if($_REQUEST['action']=='age')
 	header("Location:s1.php");
 }
 
-if($_REQUEST['action']=='stname')
-{
+if($_REQUEST['action']=='stname'){
+	
 	$_SESSION[name] = $_REQUEST[ename];
 	$_SESSION[name1] = $_REQUEST[name1];
 	
@@ -42,81 +37,61 @@ if($_REQUEST['action']=='stname')
 	$_SESSION[family_name1] = $_REQUEST[family_name1];		
 	
 	header("Location:s2.php");
-	exit;
+	exit;	
 }
 
-if($_REQUEST['action']=='country')
-{
-	if($_REQUEST[studentid] != '')
-	{
+if($_REQUEST['action']=='country'){
+	if($_REQUEST[studentid] != ''){
 		//Duplicate checking student id
 		$num=$dbf->countRows('student',"student_id='$_REQUEST[studentid]'");
-		if($num>0)
-		{
+		if($num>0){
 			//Error message sent to header
 			header("Location:s2.php?msg=idexist");
 			exit;
 		}
 	}
+	
 	$sid=$_REQUEST[studentid];
 	$cid=$_REQUEST[country];
 	
 	$_SESSION[country] = $_REQUEST[country];
 	$_SESSION[student_id] = $_REQUEST[studentid];
 	$_SESSION[id_type] = $_REQUEST[id_type];
-	
+
 	//if($cid=='189'){
 		/* most basic usage */
-		//$var = 1;		
+		//$var = 1;
 		//echo $var_is_greater_than_two = ($var > 2 ? true : false);exit; // returns true
-		if($_REQUEST[id_type] == "National ID")
-		{	
-			if($sid != '')
-			{
+		if($_REQUEST[id_type] == "National ID"){
+			if($sid != ''){
 				$stu_id = $std->check($sid);
-				if($stu_id > 0)
-				{
+				if($stu_id > 0){
 					$_SESSION[country] = $_REQUEST[country];
 					$_SESSION[student_id] = $_REQUEST[studentid];
 					header("Location:s3.php");
-				}
-				else
-				{			
+				}else{			
 					header("Location:s2.php?msg=invalid");
 				}
-			}
-			else
-			{
+			}else{
 				header("Location:s3.php");
 				exit;
 			}
-		}
-		else
-		{
+		}else{
 			header("Location:s3.php");
 			exit;
 		}
 	/*}else{
 		header("Location:s3.php");
-		exit;
 	}*/	
 }
 
-if($_REQUEST['action']=='contact')
-{
+if($_REQUEST['action']=='contact'){
 	//Duplicate checking on Mobile Number
-	if($_REQUEST[mobile_no]!='')
-	{
-		if($_REQUEST[mobile_no] !='009665')
-		{
-			$num=$dbf->countRows('student'," student_mobile='$_REQUEST[mobile_no]'");
-			if($num>0)
-			{
-				//Error message sent to header
-				header("Location:s3.php?msg=mexist");
-				exit;
-			}
-		}
+	$num=$dbf->countRows('student'," student_mobile='$_REQUEST[mobile_no]'");
+	if($num>0){
+		//Error message sent to header
+		header("Location:s3.php?msg=mexist");
+		exit;
 	}
 	
 	$_SESSION[mobile_no] = $_REQUEST[mobile_no];
@@ -125,8 +100,7 @@ if($_REQUEST['action']=='contact')
 	exit;	
 }
 
-if($_REQUEST['action']=='email')
-{
+if($_REQUEST['action']=='email'){
 	//Duplicate checking on Mobile Number
 	$num=$dbf->countRows('student',"email='$_REQUEST[email]'");
 	if(empty($_REQUEST['email']) || $_REQUEST['email']==null)
@@ -143,10 +117,10 @@ if($_REQUEST['action']=='email')
 			//Error message sent to header
 			header("Location:s4.php?msg=exist");
 			exit;
-		}else
+		}
+		else
 		{
 			$_SESSION[email] = $_REQUEST[email];
-			//header("Location:s_group.php");
 			header("Location:s6.php");
 			exit;
 		}
@@ -215,44 +189,43 @@ if($_REQUEST['action']=='aboutus'){
 			}
 		}
 	}
-	$_SESSION['typeid'] = $typeid;	
+	$_SESSION['typeid'] = $typeid;
+		
 	header("Location:s10.php");
 }
  
 if($_REQUEST['action']=='insert')
 {
+	
 	//Current date
 	$current_date = date('Y-m-d');
-	
+	$dt1 = date('Y-m-d H:i:s A');
+		
 	//Get logo path
 	$res_logo = $dbf->strRecordID("conditions","*","type='Logo path'");
-			
-	$dt1 = date('Y-m-d H:i:s A');
-	
+		
 	//Get Gender from Session
-	if($res[age]>16)
-	{
+	if($_SESSION[gender]==''){
 		$gender = $_SESSION[gender1];
-	}
-	else
-	{
+	}else{
 		$gender = $_SESSION[gender];
 	}
+	
 	$student_name = $_SESSION["name"].' '.$_SESSION["family_name"];
 	
-	//insert into student table
+	//Insert into student table
 	$string="	first_name='$_SESSION[name]',
 				first_name1='$_SESSION[name1]',
 				father_name='$_SESSION[father_name]',
-				grandfather_name='$_SESSION[grandfather_name]',
-				family_name='$_SESSION[family_name]',
-				family_name1='$_SESSION[family_name1]',
-				grandfather_name1='$_SESSION[grandfather_name1]',
 				father_name1='$_SESSION[father_name1]',
-				guardian_name='$_SESSION[gname]',
+				grandfather_name='$_SESSION[grandfather_name]',
+				grandfather_name1='$_SESSION[grandfather_name1]',
+				family_name='$_SESSION[family_name]',
+				father_name1='$_SESSION[father_name1]',
 				age='$_SESSION[age]',
+				guardian_name='$_SESSION[gname]',
 				guardian_contact='$_SESSION[pcontact]',
-				guardian_comment='$_SESSION[information]',
+				guardian_comment ='$_SESSION[information]',
 				gender='$gender',
 				country_id='$_SESSION[country]',
 				id_type='$_SESSION[id_type]',
@@ -260,7 +233,7 @@ if($_REQUEST['action']=='insert')
 				student_mobile='$_SESSION[mobile_no]',
 				alt_contact='$_SESSION[alt_no]',
 				email='$_SESSION[email]',
-				centre_id='$centre_id',
+				centre_id='$_SESSION[centre_id]',
 				created_datetime='$dt1',
 				created_by='$_SESSION[id]',
 				sms_status='1'";
@@ -268,17 +241,16 @@ if($_REQUEST['action']=='insert')
 	$ids = $dbf->insertSet("student",$string);
 	
 	//Insert in Student Comments Table
-	if($_SESSION[student_comment]!='')
-	{
+	if($_SESSION[student_comment]!=''){
 		$string_comments="student_id='$ids',user_id='$_SESSION[id]',comments='$_SESSION[student_comment]',date_time='$dt1'";
 		$dbf->insertSet("student_comment",$string_comments);
 	}
 	
 	//Get select group
-	$group = $_SESSION["group"];
+	$group = $_SESSION[group];
 	
-	if($group > 0)
-	{
+	if($group > 0){
+		
 		//Get the Group details with Centre wise
 		$res_group = $dbf->strRecordID("student_group","*","id='$_SESSION[group]'");
 		
@@ -304,29 +276,25 @@ if($_REQUEST['action']=='insert')
 		
 		//This is the Previous (Count Number of Students)
 		//===============================================
-		if($num_student == 0)
-		{
+		if($num_student == 0){
 			//insert into student_group_dtls table
 			//====================================
 			$str_d="parent_id='$_SESSION[group]',student_id='$ids',course_id='$res_group[course_id]',centre_id='$centre_id',room_id='$room_id'";
 			$dbf->insertSet("student_group_dtls",$str_d);
-			
+									
 			# Get active course fee
 			$course_fee_id = $dbf->getDataFromTable("course_fee", "id", "course_id='$course_id' And status='1'");
-			
+				
 			//Insert in ENROLLED Table
 			$string="student_id='$ids',centre_id='$centre_id',group_id='$_SESSION[group]',course_id='$course_id',fee_id='$course_fee_id',status_id='4',created_by='$_SESSION[id]',enroll_date='$current_date',page_full_path='$_SERVER[REQUEST_URI]'";	
 			$dbf->insertSet("student_enroll",$string);			
-			//=====================================
+			//========================================================
 			
 			# update enrollment status
 			$is_enrollment = $dbf->countRows('student_enroll',"student_id='$ids'");
-			if($is_enrollment == 1)
-			{
+			if($is_enrollment == 1){
 				$string_status = "enrolled_status='New Enrollment'";
-			}
-			else
-			{
+			}else{
 				$string_status = "enrolled_status='Re-Enrollment'";
 			}
 			$dbf->updateTable("student_enroll", $string_status, "student_id='$ids' And course_id='$course_id'");
@@ -336,18 +304,17 @@ if($_REQUEST['action']=='insert')
 			$prev_num_student = $dbf->countRows('student_group_dtls',"parent_id='$_SESSION[group]'");
 			
 			//Get the range from (group_size) Table
-			$group = $dbf->strRecordID("group_size","*","(size_to>='$prev_num_student' And size_from<='$prev_num_student')");
+			$sizegroup = $dbf->strRecordID("group_size","*","(size_to>='$prev_num_student' And size_from<='$prev_num_student')");
 					
 			//update the Group ID to Student_group Table means we can get the student according to group_id
-			$string_g="group_id='$group[group_id]'";
+			$string_g="group_id='$sizegroup[group_id]'";
 			$dbf->updateTable("student_group",$string_g,"id='$_SESSION[group]'");
 			
 			//update in group details table
-			$string_g1="group_id='$group[group_id]'";
+			$string_g1="group_id='$sizegroup[group_id]'";
 			$dbf->updateTable("student_group_dtls",$string_g1,"parent_id='$_SESSION[group]'");
-		}
-		else
-		{
+			
+		}else{
 			//Get Previous Group after re-arranged
 			//====================================
 			
@@ -362,9 +329,8 @@ if($_REQUEST['action']=='insert')
 			
 			//Check whether selected group has been start or not
 			$no_unit_finined = $dbf->countRows('ped_units',"group_id='$_SESSION[group]'");
-			$dbf->scheduleCall($prev_num,$ids,$_SESSION[group],$res_group[teacher_id]);//adjust schedules
-			if($no_unit_finined > 0)
-			{
+			
+			if($no_unit_finined > 0){
 				//Example : 70 units in admin panel
 				//Get the Original Units which is entry By Administrator
 				$original_unit = $prev_group[units];
@@ -383,18 +349,18 @@ if($_REQUEST['action']=='insert')
 				//insert into student_group_dtls table
 				//====================================		
 				$room_id = $res_group["room_id"];
+				$centre_id = $_SESSION[centre_id];
 				
 				//Insert IN details table
 				$str_d="parent_id='$_SESSION[group]',student_id='$ids',course_id='$res_group[course_id]',centre_id='$centre_id',room_id='$room_id'";
-				$dbf->insertSet("student_group_dtls",$str_d);				
-								
+				$dbf->insertSet("student_group_dtls",$str_d);			
+												
 				# Get active course fee
 				$course_fee_id = $dbf->getDataFromTable("course_fee", "id", "course_id='$course_id' And status='1'");
 				
 				//Insert in ENROLLED Table
-				$string="student_id='$ids',centre_id='$centre_id',group_id='$_SESSION[group]',course_id='$course_id',fee_id='$course_fee_id',status_id='5',created_by='$_SESSION[id]',enroll_date='$current_date',page_full_path='$_SERVER[REQUEST_URI]'";
-				$dbf->insertSet("student_enroll",$string);			
-				//=====================================
+				$string="student_id='$ids',centre_id='$centre_id',group_id='$_SESSION[group]',course_id='$course_id',fee_id='$course_fee_id',status_id='5',created_by='$_SESSION[id]',enroll_date='$current_date',page_full_path='$_SERVER[REQUEST_URI]'";	
+				$dbf->insertSet("student_enroll",$string);
 				
 				# update enrollment status
 				$is_enrollment = $dbf->countRows('student_enroll',"student_id='$ids'");
@@ -405,6 +371,8 @@ if($_REQUEST['action']=='insert')
 				}
 				$dbf->updateTable("student_enroll", $string_status, "student_id='$ids' And course_id='$course_id'");
 				# End
+				
+				//=====================================
 				
 				//Get number of student recently added
 				$prev_num_student = $dbf->countRows('student_group_dtls',"parent_id='$_SESSION[group]'");
@@ -435,13 +403,10 @@ if($_REQUEST['action']=='insert')
 				$dec_right_value = substr($curr_pending_unit,0,2);
 				
 				//Check Odd or Even Number
-				if ($dec_right_value % 2 == 0)
-				{
+				if ($dec_right_value % 2 == 0){
 					//echo "number is even";
 					$dec_right_value_is = substr($curr_pending_unit,0,2); // 18.66 => 18
-				}
-				else 
-				{
+				}else{
 					//echo "number is odd";
 					$dec_right_value_is = ceil($curr_pending_unit); // 63.44 => 64
 				}
@@ -464,16 +429,11 @@ if($_REQUEST['action']=='insert')
 				//Group Name
 				$g_name = $sms_group["name"];
 				
-				if($sms_group_size["size_from"] != '0' && $sms_group_size["size_to"] == '0')
-				{
+				if($sms_group_size["size_from"] != '0' && $sms_group_size["size_to"] == '0'){
 					$student = $sms_group_size["total_size"]."-student"; //12-student
-				}
-				else if($sms_group_size["size_from"] != '0' && $sms_group_size["size_to"] != '0')
-				{
+				}else if($sms_group_size["size_from"] != '0' && $sms_group_size["size_to"] != '0'){
 					$student = $sms_group_size["size_to"]."-student"; //9-student
-				}
-				else if($sms_group_size["size_from"] == '0' && $sms_group_size["size_to"] == '0')
-				{
+				}else if($sms_group_size["size_from"] == '0' && $sms_group_size["size_to"] == '0'){
 					$student = ""; //Flex
 				}
 				
@@ -486,12 +446,13 @@ if($_REQUEST['action']=='insert')
 				$from=$res_cd[email];
 				
 				//Get admin details
-				$res_admin = $dbf->strRecordID("user","*","id='1'");
+				$res_admin = $dbf->strRecordID("user","*","id='$_SESSION[id]'");
 				$admin_mail = $res_admin[email];
-								
+				
+				$sms_gateway = $dbf->strRecordID("sms_gateway","*","");
+					
 				//This is for SMS
-				if($student_mobile_no != '')
-				{
+				if($student_mobile_no != ''){
 					// Your username
 					$UserName=UrlEncoding($sms_gateway[user]);
 					
@@ -506,14 +467,7 @@ if($_REQUEST['action']=='insert')
 					
 					// Your Message in English or arabic or both.
 					// Each 70 Arabic Characters will be charged 1 Credit, Each 160 English Characters will be charged 1 Credit.
-					/*if($no_student_remove == 1){
-						$msg = "Add ".$unit." units to this group due to adding a student to a ".$student." ".$g_name." group that has completed ".$no_unit_finined." units at the time of adding this student.";
-					}else{
-						$msg = "Add ".$unit." units to this group due to adding ".$no_student_remove." student to a ".$student." ".$g_name." group that has completed ".$no_unit_finined." units at the time of adding these ".$no_student_remove." students.";
-					}*/
-					
-					if($no_student_remove == 1)
-					{
+					if($no_student_remove == 1){
 						$sms_cont = $dbf->getDataFromTable("sms_templete","contents","id='26'");
 						$sms_cont = str_replace('%unit%',$unit,$sms_cont);
 						$sms_cont = str_replace('%std%',$student,$sms_cont);
@@ -521,9 +475,7 @@ if($_REQUEST['action']=='insert')
 						$msg = str_replace('%unt_fnd%',$no_unit_finined,$sms_cont);
 					
 						//$msg = "Add ".$unit." units to this group due to adding a student to a ".$student." ".$g_name." group that has completed ".$no_unit_finined." units at the time of adding this student.";
-					}
-					else
-					{
+					}else{
 						$sms_cont = $dbf->getDataFromTable("sms_templete","contents","id='27'");
 						$sms_cont = str_replace('%unit%',$unit,$sms_cont);
 						$sms_cont = str_replace('%nos%',$no_student_remove,$sms_cont);					
@@ -534,16 +486,20 @@ if($_REQUEST['action']=='insert')
 						
 						//$msg = "Add ".$unit." units to this group due to adding ".$no_student_remove." student to a ".$student." ".$g_name." group that has completed ".$no_unit_finined." units at the time of adding these ".$no_student_remove." students.";
 					}
+					/*if($no_student_remove == 1){
+						$msg = "Add ".$unit." units to this group due to adding a student to a ".$student." ".$g_name." group that has completed ".$no_unit_finined." units at the time of adding this student.";
+					}else{
+						$msg = "Add ".$unit." units to this group due to adding ".$no_student_remove." student to a ".$student." ".$g_name." group that has completed ".$no_unit_finined." units at the time of adding these ".$no_student_remove." students.";
+					}*/
 					
 					$Message=$msg;
 					
 					// Storing Sending result in a Variable.
-					if($sms_gateway["status"]=='Enable')
-					{
+					if($sms_gateway["status"]=='Enable'){
 						SendSms($UserName,$UserPassword,$Numbers,$Originator,$Message);
 						
 						$cr_date = date('Y-m-d H:i:s A');
-						$string="dated='$cr_date',user_id='$_SESSION[id]',msg='$Message',send_to='Teacher',type='0',centre_id='$_SESSION[centre_id]',automatic='Yes',msg_from='New student adding Centre Director (Step by Step)',mobile='$student_mobile_no',page_full_path='$_SERVER[REQUEST_URI]'";
+						$string="dated='$cr_date',user_id='$_SESSION[id]',msg='$Message',send_to='Teacher',type='0',centre_id='$_SESSION[centre_id]',automatic='Yes',msg_from='New student adding Student Advisor (Step by Step)',mobile='$student_mobile_no',page_full_path='$_SERVER[REQUEST_URI]'";
 						$dbf->insertSet("sms_history",$string);
 					}
 				}
@@ -570,8 +526,7 @@ if($_REQUEST['action']=='insert')
 				$to_user = $res_teacher["email"];
 				$admin_mail = $dbf->getDataFromTable("user","email","user_type='Administrator");
 				$from = $dbf->getDataFromTable("user","email","user_type='Administrator");
-				if($to_user != '' || $admin_mail != '')
-				{
+				if($to_user != '' || $admin_mail != ''){
 					
 					$headers .= 'MIME-Version: 1.0' . "\n";
 					$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";		
@@ -599,20 +554,23 @@ if($_REQUEST['action']=='insert')
 	
 					$subject = $email_cont["title"];				
 					//$subject ="Group size has been changed Notification !!!";
+					
 					mail($to_user,$subject,$body1,$headers);
-					mail($admin_mail,$subject,$body1,$headers);							
+					mail($admin_mail,$subject,$body1,$headers);
 					
 					//Start Save Mail	
 					$dt = date('Y-m-d');
 					$dttm = date('Y-m-d h:i:s');
 					
-					$string="dated='$dttm',user_id='$_SESSION[id]',msg='$subject',send_to='Student Advisor and Center Director',email='$to',centre_id='$_SESSION[centre_id]',send_date='$dt',msg_from='Admin for Approved or Rejected of the Cancellation',automatic='Yes',page_full_path='$_SERVER[REQUEST_URI]'";
+					$string="dated='$dttm',user_id='$_SESSION[id]',msg='$subject',send_to='Student Advisor and Center Director',email='$to_user',centre_id='$_SESSION[centre_id]',send_date='$dt',msg_from='Admin for Approved or Rejected of the Cancellation',automatic='Yes',page_full_path='$_SERVER[REQUEST_URI]'";
 					$dbf->insertSet("email_history",$string);
 					// End Save Mail
-						
+	
+					
 				}
 				
-								
+				
+				
 				//===============
 				// End Mail
 				//===============
@@ -624,20 +582,17 @@ if($_REQUEST['action']=='insert')
 				$string="dated='$dttm',user_id='$_SESSION[id]',msg='$subject',send_to='Student Advisor and Center Director',email='$to',centre_id='$_SESSION[centre_id]',send_date='$dt',msg_from='Admin for Approved or Rejected of the Cancellation',automatic='Yes',page_full_path='$_SERVER[REQUEST_URI]'";
 				$dbf->insertSet("email_history",$string);
 				// End Save Mail
-			}
-			else
-			{
-				
+			}else{
 				//Insert IN details table		
 				//Insert query here	
 				$str_d="parent_id='$_SESSION[group]',student_id='$ids',course_id='$res_group[course_id]',centre_id='$centre_id',room_id='$room_id'";
 				$dbf->insertSet("student_group_dtls",$str_d);				
-								
+												
 				# Get active course fee
 				$course_fee_id = $dbf->getDataFromTable("course_fee", "id", "course_id='$course_id' And status='1'");
 				
 				//Insert in ENROLLED Table
-				$string="student_id='$ids',centre_id='$centre_id',group_id='$_SESSION[group]',course_id='$course_id',fee_id='$course_fee_id',status_id='4',created_by='$_SESSION[id]',enroll_date='$current_date',page_full_path='$_SERVER[REQUEST_URI]'";
+				$string="student_id='$ids',centre_id='$centre_id',group_id='$_SESSION[group]',course_id='$course_id',fee_id='$course_fee_id',status_id='4',created_by='$_SESSION[id]',enroll_date='$current_date',page_full_path='$_SERVER[REQUEST_URI]'";	
 				$dbf->insertSet("student_enroll",$string);				
 				//=====================================
 				
@@ -655,14 +610,14 @@ if($_REQUEST['action']=='insert')
 				$prev_num_student = $dbf->countRows('student_group_dtls',"parent_id='$_SESSION[group]'");
 				
 				//Get the range from (group_size) Table
-				$group_latest = $dbf->strRecordID("group_size","*","(size_to>='$prev_num_student' And size_from<='$prev_num_student')");
+				$sizegroup = $dbf->strRecordID("group_size","*","(size_to>='$prev_num_student' And size_from<='$prev_num_student')");
 						
 				//update the Group ID to Student_group Table means we can get the student according to group_id
-				$string_g="group_id='$group_latest[group_id]'";
+				$string_g="group_id='$sizegroup[group_id]'";
 				$dbf->updateTable("student_group",$string_g,"id='$_SESSION[group]'");
 				
 				//update in group details
-				$string_g1="group_id='$group_latest[group_id]'";
+				$string_g1="group_id='$sizegroup[group_id]'";
 				$dbf->updateTable("student_group_dtls",$string_g1,"parent_id='$_SESSION[group]'");
 			}
 		}
@@ -671,15 +626,13 @@ if($_REQUEST['action']=='insert')
 	
 	//UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
 	//=======================================================
-	$date_time = date('Y-m-d h:i:s');
+	$date_time = date('Y-m-d H:i:s A');
 	$res_group = $dbf->strRecordID("student_group","*","id='$_SESSION[group]'");	
-	if($_SESSION["group"] > 0)
-	{
+	if($_SESSION["group"] > 0){
 		
 		//Check the Group has been start or not
 		$no_unit_finined = $dbf->countRows('ped_units',"group_id='$_SESSION[group]'");	
-		if($no_unit_finined > 0)
-		{
+		if($no_unit_finined > 0){
 			
 			//Active Status
 			$string2="student_id='$ids',course_id='$res_group[course_id]',group_id='$_SESSION[group]',status_id='5',date_time='$date_time',user_id='$_SESSION[id]'";
@@ -688,13 +641,7 @@ if($_REQUEST['action']=='insert')
 			$string2="student_id='$ids',course_id='$res_group[course_id]',group_id='$_SESSION[group]',date_time='$date_time',user_id='$_SESSION[id]',status_id='5'";
 			$dbf->insertSet("student_moving_history",$string2);	
 			
-			//update in enroll table
-			$string_g1="status_id='5'";
-			$dbf->updateTable("student_enroll",$string_g1,"student_id='$ids' And course_id='$res_group[course_id]'");
-			
-		}
-		else
-		{
+		}else{
 			
 			//Enrolled Status
 			$string2="student_id='$ids',course_id='$res_group[course_id]',group_id='$_SESSION[group]',status_id='4',date_time='$date_time',user_id='$_SESSION[id]'";
@@ -702,15 +649,9 @@ if($_REQUEST['action']=='insert')
 			
 			$string2="student_id='$ids',course_id='$res_group[course_id]',group_id='$_SESSION[group]',date_time='$date_time',user_id='$_SESSION[id]',status_id='4'";
 			$dbf->insertSet("student_moving_history",$string2);
-			
-			//update in enroll table
-			$string_g1="status_id='4'";
-			$dbf->updateTable("student_enroll",$string_g1,"student_id='$ids' And course_id='$res_group[course_id]'");
 		
 		}
-	}
-	else
-	{
+	}else{
 			
 		//Potencial Status
 		$string2="student_id='$ids',course_id='$res_group[course_id]',group_id='$_SESSION[group]',status_id='2',date_time='$date_time',user_id='$_SESSION[id]'";
@@ -718,14 +659,11 @@ if($_REQUEST['action']=='insert')
 		
 		$string2="student_id='$ids',course_id='$res_group[course_id]',group_id='$_SESSION[group]',date_time='$date_time',user_id='$_SESSION[id]',status_id='2'";
 		$dbf->insertSet("student_moving_history",$string2);
-		
-		//update in enroll table
-		$string_g1="status_id='2'";
-		$dbf->updateTable("student_enroll",$string_g1,"student_id='$ids' And course_id='$res_group[course_id]'");
 	}
 	//=======================================================
 	//UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
-		
+	
+	
 	//Set in Session (New Student ID)
 	$_SESSION['studentid'] = $ids;
 	
@@ -734,10 +672,8 @@ if($_REQUEST['action']=='insert')
 	
 	//insert into student course table
 	$courseid=explode(',',$_SESSION[courseid]);
-	foreach($courseid as $val)
-	{
-		if($val > 0)
-		{
+	foreach($courseid as $val){
+		if($val > 0){			
 			$string="student_id='$_SESSION[studentid]',course_id='$val'";
 			$dbf->insertSet("student_course",$string);
 		}
@@ -747,27 +683,23 @@ if($_REQUEST['action']=='insert')
 	
 	//insert into student lead table
 	$leadid=explode(',',$_SESSION[leadid]);
-	foreach($leadid as $val2)
-	{
-		if($val2 > 0)
-		{
+	foreach($leadid as $val2){
+		if($val2 > 0){
 			$string="student_id='$_SESSION[studentid]',lead_id='$val2'";
 			$dbf->insertSet("student_lead",$string);
 		}
-	}
+	}	
 	
 	//insert into student lead table
 	$typeid=explode(',',$_SESSION[typeid]);
-	foreach($typeid as $valt)
-	{
-		if($valt > 0)
-		{
+	foreach($typeid as $valt){
+		if($valt > 0){
 			$string="student_id='$_SESSION[studentid]',type_id='$valt'";
 			$dbf->insertSet("student_type",$string);
 		}
 	}
-		
-	$sid = $_SESSION['studentid'];
+	
+	$sid = $_SESSION['studentid'];		
 	
 	$group_id = $_SESSION[group];
 	
@@ -850,22 +782,21 @@ if($_REQUEST['action']=='insert')
 	unset($_SESSION['studentid']);
 	session_unregister('studentid');
 	
-	if($group_id > 0)
-	{
+	if($group_id > 0){
 		header("Location:search_manage.php?student_id=$sid");
-	}
-	else
-	{
+	}else{
 		header("Location:search.php");
 	}
+
 }
 
-if($_REQUEST['action']=='search')
-{
-//Current date and time
-	$dt = date('Y-m-d h:m:s');
+if($_REQUEST['action']=='search'){
+	
+	//Current date and time
+	$dt = date('Y-m-d h:m:s');	
 	$c_dt = date('Y-m-d');
 	
+
 	$student_id = $_REQUEST['student_id'];
 	$course_id = $_REQUEST['course_id'];
 	$centre_id = $_SESSION['centre_id'];
@@ -876,103 +807,219 @@ if($_REQUEST['action']=='search')
 	$inv_sl = $dbf->GetBillNo($student_id, $course_id);//substr($inv_no,5);
 	//=======================================================
 	//Get data from student_enroll for checking the whether initial fee has been changed or not
-	$res_en = $dbf->strRecordID("student_enroll","*","course_id='$course_id' And student_id='$student_id'");	
+	$res_en = $dbf->strRecordID("student_enroll","*","course_id='$_REQUEST[course_id]' And student_id='$student_id'");
 	
 	$string="level_complete='$_POST[level]',other_amt='$_POST[otheramt]',othertext='$_POST[othertext]',payment_type='$_POST[ptype]',web='$_POST[web]',discount='$_POST[discount]',invoice_note='$invoice_note'";
-	#$dbf->updateTable("student_enroll",$string,"course_id='$course_id' And student_id='$student_id'");
+	$dbf->updateTable("student_enroll",$string,"course_id='$course_id' And student_id='$student_id'");
 	
 	# Check Opening balance
-	$is_opeing = $dbf->countRows("student_fees", "course_id='$course_id' And student_id='$student_id' And type='advance'");
-	if($is_opeing == 0)
-	{
+	$is_opeing = $dbf->countRows("student_fees", "course_id='$course_id' And student_id='$student_id' And type='opening'");
+	if($is_opeing == 0){
+		
+		
 		if($_REQUEST['payment'] !='')
 		{
 			# if not available then save
 			$string2="student_id='$student_id',course_id='$course_id',paid_amt='$_REQUEST[payment]',fee_amt='$_REQUEST[payment]',comments='$invoice_note',fee_date='$c_dt',paid_date='$c_dt',payment_type='$_REQUEST[ptype]',centre_id='$centre_id',created_date=NOW(),created_by='$_SESSION[id]',type='opening',invoice_sl='$inv_sl',invoice_no='$inv_no',status='1'";
-			$dbf->insertSet("student_fees",$string2);		
+			$dbf->insertSet("student_fees",$string2);
 		}
+		
+	}else{
+		
+		# if available then edit the opening balance
+		//$string="payment_type='$_POST[ptype]',paid_amt='$_POST[payment]',status='1',comments='$invoice_note',fee_amt='$_POST[payment]',created_date=NOW(),created_by='$_SESSION[id]'";
+		//$dbf->updateTable("student_fees",$string,"course_id='$course_id' And student_id='$student_id' And type='opening'");
+	
 	}
-	else
-	{	
-		# if available then edit the opening balance 00000000BE100000024
-		$string="payment_type='$_POST[ptype]',paid_amt='$_POST[payment]',status='1',comments='$invoice_note',fee_amt='$_POST[payment]',created_date=NOW(),created_by='$_SESSION[id]',type='opening',invoice_sl='$inv_sl'";
-		$dbf->updateTable("student_fees",$string,"course_id='$course_id' And student_id='$student_id' And type='advance'");
-	}
+	
 	//For record the previous data with current data if any changes with the any field
-	if($res_en[other_amt] != $_POST[otheramt])
-	{
+	if($res_en[other_amt] != $_POST[otheramt]){
+		
 		$string2="fld_name='Other Amount',chg_from='$res_en[other_amt]',chg_to='$_POST[otheramt]',by_user='$_SESSION[id]',date_time='$dt',student_id='$student_id',centre_id='$_SESSION[centre_id]',create_date='$c_date'";
+		
 		$dbf->insertSet("student_fee_edit_history",$string2);
 	}
-	if($res_en[payment_type] != $_POST[ptype])
-	{
+	if($res_en[payment_type] != $_POST[ptype]){
+		
 		$res_com_from = $dbf->strRecordID("common","*","id='$res_en[payment_type]'");
 		$res_com_to = $dbf->strRecordID("common","*","id='$_REQUEST[payment_type]'");
+		
 		$string2="fld_name='Payment Type',chg_from='$res_com_from[name]',chg_to='$res_com_to[name]',by_user='$_SESSION[id]',date_time='$dt',student_id='$student_id',centre_id='$_SESSION[centre_id]',create_date='$c_date'";
-		$dbf->insertSet("student_fee_edit_history",$string2);		
+		
+		$dbf->insertSet("student_fee_edit_history",$string2);
+		
 	}
-	if($res_en[discount] != $_POST[discount])
-	{
+	if($res_en[discount] != $_POST[discount]){
+		
 		$string2="fld_name='Discount  Amount',chg_from='$res_en[discount]',chg_to='$_POST[discount]',by_user='$_SESSION[id]',date_time='$dt',student_id='$student_id',centre_id='$_SESSION[centre_id]',create_date='$c_date'";
-		$dbf->insertSet("student_fee_edit_history",$string2);		
+		
+		$dbf->insertSet("student_fee_edit_history",$string2);
+		
 	}
 	//=================================================================================
 	
 	//insert into student_comment table	
-	$newcomment=mysql_real_escape_string($_POST[textarea]);
-	if($newcomment!='')
-	{
+	$newcomment=mysql_real_escape_string($_POST[newcomment]);
+	if($newcomment!=''){
 		$string2="student_id='$student_id',user_id='$_SESSION[id]',comments='$newcomment',date_time='$dt'";
 		$dbf->insertSet("student_comment",$string2);
 	}
+	
 	//Delete from student material table
-	$dbf->deleteFromTable("student_material","course_id='$_REQUEST[course_id]' And student_id='$student_id'");
+	$dbf->deleteFromTable("student_material","course_id='$_REQUEST[course]' And student_id='$student_id'");
+	
 	//Insert in student material table
 	//---------------------------------------------------
 	$totrow_cont = $_REQUEST['mcount'];
 
-	for($i=1; $i<=$totrow_cont;$i++)
-	{
+	for($i=1; $i<=$totrow_cont;$i++){
 		$name = "material".$i;
 		$name = $_REQUEST[$name];
 		
-		if($name != "")
-		{
+		if($name != ""){
 			$string="student_id='$student_id',course_id='$_REQUEST[course]',mate_id='$name'";
 			$dbf->insertSet("student_material",$string);
 		}
 	}
 	//----------------------------------------------------
-	//Insert in student course_fees table
+	
+	//Insert in student fees table
 	$tot = $_REQUEST['count'];
 
-	for($k=1; $k<=$tot;$k++)
-	{
+	for($k=1; $k<=$tot;$k++){
 		$name = "pdate".$k;
 		$name = $_REQUEST[$name];
 		
 		$amt = "amt".$k;
 		$amt = $_REQUEST[$amt];
 		
-		if($name != "" && $amt != "")
-		{
+		if($name != "" && $amt != ""){
 			$string="student_id='$student_id',course_id='$_REQUEST[course]',fee_date='$name',fee_amt='$amt',created_date='$dt',created_by='$_SESSION[id]',centre_id='$_SESSION[centre_id]'";
 			$dbf->insertSet("student_fees",$string);
 		}
 	}
-	//----------------------------------------------------
+	//----------------------------------------------------	
 	header("Location:search_manage_mail.php?student_id=$student_id&course_id=$_REQUEST[course_id]");
-	//header("Location:search.php");	
-	
+	exit;
 }
 
-if($_REQUEST['action']=='invoice')
-{
+if($_REQUEST['action']=='advance'){
+	
+	
+	$student_id = $_REQUEST["student_id"];
+	$course_id = $_REQUEST["course_id"];
+	$centre_id = $_SESSION["centre_id"];
+	$ad_comment = mysql_real_escape_string($_REQUEST["comment"]);
+	$date_time = date('Y-m-d H:i:s A');
+	
+	//Get Invoice Number
+	# -------------------------------------------------------
+	$inv_no = $dbf->GenerateInvoiceNo($centre_id);
+	$inv_sl = $dbf->GetBillNo($student_id, $course_id);//substr($inv_no,5);
+	//=======================================================
+	
+	//insert into student_fee table
+	$string2="student_id='$student_id',course_id='$course_id',paid_amt='$_REQUEST[amts]',fee_amt='$_REQUEST[amts]',comments='$ad_comment',fee_date='$_REQUEST[dated]',paid_date='$_REQUEST[dated]',payment_type='$_REQUEST[payment_type]',centre_id='$centre_id',created_date=NOW(),created_by='$_SESSION[id]',type='advance',invoice_sl='$inv_sl',invoice_no='$inv_no',status='1'";	
+	$dbf->insertSet("student_fees",$string2);
+	$dbf->deleteFromTable("student_moving", "student_id='$student_id' And status_id <='2'");
+					
+	$string_st="student_id='$student_id',status_id='3',course_id='$course_id',date_time='$date_time',user_id='$_SESSION[id]'"; //Waiting Status		
+	$dbf->insertSet("student_moving",$string_st);
+	
+	$string2="student_id='$student_id',course_id='$course_id',date_time='$date_time',user_id='$_SESSION[id]',status_id='3'";
+	$dbf->insertSet("student_moving_history",$string2);	
+	# UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
+	/*
+	$is_multi_advance = $dbf->countRows("student_fees", "student_id='$student_id' And course_id='$course_id' And type='advance'");
+	if($is_multi_advance == 0){
+		
+		# Delete previous data of a particular student which is less then 2 means Enquiry or Potential
+		$dbf->deleteFromTable("student_moving", "student_id='$student_id' And status_id <='2'");
+		
+		$date_time = date('Y-m-d H:i:s A');
+		
+		$string_st="student_id='$student_id',status_id='3',course_id='$course_id',date_time='$date_time',user_id='$_SESSION[id]'"; //Waiting Status		
+		$dbf->insertSet("student_moving",$string_st);
+		
+		$string2="student_id='$student_id',course_id='$course_id',date_time='$date_time',user_id='$_SESSION[id]',status_id='3'";
+		$dbf->insertSet("student_moving_history",$string2);	
+		
+	}*/
+	# UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
+		
+	$is_enable = $dbf->countRows("sms_gateway","status='Enable'");
+	if($is_enable > 0){
+	
+		$res_sms = $dbf->strRecordID("sms_gateway","*","status<>''");
+		$student_mobile = $dbf->strRecordID("student","*","id='$student_id' And sms_status='1'");
+		$mobile_no = $student_mobile["student_mobile"];
+	
+		if($mobile_no != ''){
+			// Your username
+			$UserName=UrlEncoding($sms_gateway[user]);
+			
+			// Your password
+			$UserPassword=UrlEncoding($sms_gateway[password]);
+			
+			// Destnation Numbers seprated by comma if more than one and no more than 120 numbers Per time.
+			//$Numbers=UrlEncoding("966000000000,966111111111");
+			$Numbers=UrlEncoding($mobile_no);
+			
+			// Originator Or Sender name. In English no more than 11 Numbers or Characters or Both
+			$Originator=UrlEncoding($sms_gateway[your_name]);
+			
+			// Your Message in English or arabic or both.
+			// Each 70 Arabic Characters will be charged 1 Credit, Each 160 English Characters will be charged 1 Credit.
+			//$msg = "Dear ".$student_mobile["0"].", your initial payment of ".$_REQUEST["ad_amt"]." has been received by Berlitz.";
+			
+			$sms = $_REQUEST['sms'];
+			if($sms == "1" || $sms == "3"){
+				if($sms == "1"){
+					$sms_cont = $dbf->getDataFromTable("sms_templete","contents","id='31'");
+				}else if($sms == "3"){
+					$sms_cont = $_REQUEST['contents'];
+				}
+				$sms_cont = str_replace('%first_name%',$student_mobile["first_name"],$sms_cont);
+				$msg = str_replace('%ad_amt%',$_REQUEST["ad_amt"],$sms_cont);
+				
+				$Message=$msg;
+			
+				// Storing Sending result in a Variable.
+				SendSms($UserName,$UserPassword,$Numbers,$Originator,$Message);
+				
+				//================================
+				//SAVED SMS
+				//================================
+				$cr_date = date('Y-m-d H:i:s A');
+				
+				$string="dated='$cr_date',user_id='$_SESSION[id]',msg='$msg',send_to='student',mobile='$mobile_no',centre_id='$centre_id',msg_from='Initial Payment as Advance',automatic='Yes',page_full_path='$_SERVER[REQUEST_URI]'";
+				$sms_id = $dbf->insertSet("sms_history",$string);
+				
+				$string1="parent_id='$sms_id',student_id='$student_id'";
+				$dbf->insertSet("sms_history_dtls",$string1);
+				//================================
+				//SAVED SMS
+				//================================
+			}
+		}
+	}
+		
+	//insert into student_comment table
+	if($ad_comment!=''){
+		$string2="student_id='$student_id',user_id='$_SESSION[id]',comments='$ad_comment',date_time='$date_time'";
+		$dbf->insertSet("student_comment",$string2);
+	}
+	
+	header("Location:search_advance.php?student_id=$student_id&course_id=$course_id");
+	exit;
+}
+
+if($_REQUEST['action']=='invoice'){
 	
 	$student_id = $_REQUEST['student_id'];
 	$course_id = $_REQUEST['course_id'];
 	$centre_id = $_SESSION['centre_id'];
-	
+		
     $comments = mysql_real_escape_string($_POST[comment]);
 	
 	//Get Invoice Number
@@ -1001,8 +1048,7 @@ if($_REQUEST['action']=='invoice')
 	//============
 	$mobile_no = $dbf->getDataFromTable("student","student_mobile","sms_status='1' And id='$student_id'");
 	
-	if($mobile_no != '')
-	{
+	if($mobile_no != ''){
 		
 		// Your username
 		$UserName=UrlEncoding($sms_gateway[user]);
@@ -1023,33 +1069,13 @@ if($_REQUEST['action']=='invoice')
 		//$msg = "You have paid ".$amt." for initial payment";
 		$sms = $_REQUEST['sms'];
 		if($sms == "1" || $sms == "3"){
-			if($sms == "1")
-			{	$balance=$dbf->BalanceAmount($student_id, $course_id);
-				if($balance==0)
-				{$template_id=44;}
-				else
-				{$template_id=34;}
-				$sms_cont = $dbf->getDataFromTable("sms_templete","contents","id='$template_id'");
+			if($sms == "1"){
+				$sms_cont = $dbf->getDataFromTable("sms_templete","contents","id='31'");
 			}else if($sms == "3"){
 				$sms_cont = $_REQUEST['contents'];
 			}
-			switch($template_id)
-			{
-				case '44':	{
-								$student_grp=$dbf->genericQuery("	SELECT g.group_name
-																	FROM student_group g
-																	INNER JOIN student_group_dtls sgd ON sgd.parent_id = g.id
-																	WHERE sgd.student_id ='$student_id' AND sgd.course_id ='$course_id'");
-								foreach($student_grp as $sdt_grp):echo$sdt_grp_nme=$sdt_grp['group_name'];endforeach;
-								$msg = str_replace('%course_name%',$sdt_grp_nme,$sms_cont);
-							}break;
-				default:	{
-								//$sms_cont = str_replace('%first_name%',$student_mobile["first_name"],$sms_cont);
-								$msg = str_replace('%amount%',$_REQUEST["amt"],$sms_cont);
-							}break;
-			}
-			
-			
+			$sms_cont = str_replace('%first_name%',$student_mobile["first_name"],$sms_cont);
+			$msg = str_replace('%ad_amt%',$_REQUEST["amt"],$sms_cont);
 			
 			$Message=$msg;
 		
@@ -1066,14 +1092,13 @@ if($_REQUEST['action']=='invoice')
 			}
 		}
 	}
+	
 	header("Location:search_manage.php?student_id=$student_id&course_id=$course_id");
 	exit;
+
 }
 
-if($_REQUEST['action']=='edit_payment')
-{
-	
-	$student_id = $_REQUEST['student_id'];
+if($_REQUEST['action']=='edit_payment'){
 	
 	//Current date and time
 	$dt = date('Y-m-d h:m:s');
@@ -1087,7 +1112,7 @@ if($_REQUEST['action']=='edit_payment')
 	//For record the previous data with current data if any changes with the any field
 	if($prev_pay[comments] != $comments){
 		
-		$string2="fld_name='Comments',chg_from='$prev_pay[comments]',chg_to='$comments',by_user='$_SESSION[id]',date_time='$dt',student_id='$student_id',centre_id='$_SESSION[centre_id]',create_date='$c_date'";
+		$string2="fld_name='Comments',chg_from='$prev_pay[comments]',chg_to='$comments',by_user='$_SESSION[id]',date_time='$dt',student_id='$_REQUEST[id]',centre_id='$_SESSION[centre_id]',create_date='$c_date'";
 		
 		$dbf->insertSet("student_fee_edit_history",$string2);
 	}
@@ -1097,114 +1122,27 @@ if($_REQUEST['action']=='edit_payment')
 		$res_com_from = $dbf->strRecordID("common","*","id='$prev_pay[payment_type]'");
 		$res_com_to = $dbf->strRecordID("common","*","id='$_REQUEST[payment_type]'");
 		
-		$string2="fld_name='Payment Type',chg_from='$res_com_from[name]',chg_to='$res_com_to[name]',by_user='$_SESSION[id]',date_time='$dt',student_id='$student_id',centre_id='$_SESSION[centre_id]',create_date='$c_date'";		
+		$string2="fld_name='Payment Type',chg_from='$res_com_from[name]',chg_to='$res_com_to[name]',by_user='$_SESSION[id]',date_time='$dt',student_id='$_REQUEST[id]',centre_id='$_SESSION[centre_id]',create_date='$c_date'";
+		
 		$dbf->insertSet("student_fee_edit_history",$string2);
 		
 	}
 	if($prev_pay[paid_amt] != $_POST[amt]){
 		
-		$string2="fld_name='Paid   Amount',chg_from='$prev_pay[paid_amt]',chg_to='$_POST[amt]',by_user='$_SESSION[id]',date_time='$dt',student_id='$student_id',centre_id='$_SESSION[centre_id]',create_date='$c_date'";		
+		$string2="fld_name='Paid   Amount',chg_from='$prev_pay[paid_amt]',chg_to='$_POST[amt]',by_user='$_SESSION[id]',date_time='$dt',student_id='$_REQUEST[id]',centre_id='$_SESSION[centre_id]',create_date='$c_date'";
+		
 		$dbf->insertSet("student_fee_edit_history",$string2);
 		
 	}
 	//=================================================================================
 		
-	header("Location:search_manage.php?student_id=$student_id&course_id=$_REQUEST[course_id]");
+	header("Location:search_manage.php?id=$_REQUEST[ids]&course_id=$_REQUEST[course_id]");
 }
 
-if($_REQUEST['action']=='sch_del')
-{
+if($_REQUEST['action']=='sch_del'){
 	$dbf->deleteFromTable("student_fees","id='$_REQUEST[schid]'");	
 	header("Location:search_manage.php?student_id=$_REQUEST[ids]&course_id=$_REQUEST[course_id]");
 }
 
-if($_REQUEST['action']=='advance')
-{
-	
-	$student_id = $_REQUEST["student_id"];
-	$course_id = $_REQUEST["course_id"];
-	$centre_id = $_SESSION["centre_id"];
-	$ad_comment = mysql_real_escape_string($_REQUEST["comment"]);
-	$date_time = date('Y-m-d h:i:s');
-	
-	//Get Invoice Number
-	# -------------------------------------------------------
-	$inv_no = $dbf->GenerateInvoiceNo($centre_id);
-	$inv_sl = $dbf->GetBillNo($student_id, $course_id);//substr($inv_no,5);
-	//=======================================================
 
-	//insert into student_fee table
-	$string2="student_id='$student_id',course_id='$course_id',paid_amt='$_REQUEST[amts]',fee_amt='$_REQUEST[amts]',comments='$ad_comment',fee_date='$_REQUEST[dated]',paid_date='$_REQUEST[dated]',payment_type='$_REQUEST[payment_type]',centre_id='$centre_id',created_date=NOW(),created_by='$_SESSION[id]',type='advance',invoice_sl='$inv_sl',invoice_no='$inv_no',status='1'";
-	
-	$dbf->insertSet("student_fees",$string2);
-	
-	# UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
-	# Delete previous data of a particular student which is less then 2 means Enquiry or Potential
-	//$dbf->deleteFromTable("student_moving", "student_id='$student_id' And status_id <='2'");
-					
-	//$string_st="student_id='$student_id',status_id='3',course_id='$course_id',date_time='$date_time',user_id='$_SESSION[id]'"; //Waiting Status		
-	//$dbf->insertSet("student_moving",$string_st);
-	
-	$string_st="status_id='3'"; //Enrolled Status		
-	$dbf->updateTable("student_moving",$string_st,"student_id='$student_id' And course_id='$course_id'");
-	
-	$string2="student_id='$student_id',course_id='$course_id',date_time='$date_time',user_id='$_SESSION[id]',status_id='3'";
-	$dbf->insertSet("student_moving_history",$string2);	
-	
-	/*$is_multi_advance = $dbf->countRows("student_fees", "student_id='$student_id' And status_id <='2'");//And course_id='$course_id'
-	if($is_multi_advance > 0){
-		
-		# Delete previous data of a particular student which is less then 2 means Enquiry or Potential
-		$dbf->deleteFromTable("student_moving", "student_id='$student_id' And status_id <='2'");
-						
-		$string_st="student_id='$student_id',status_id='3',course_id='$course_id',date_time='$date_time',user_id='$_SESSION[id]'"; //Waiting Status		
-		$dbf->insertSet("student_moving",$string_st);
-		
-		$string2="student_id='$student_id',course_id='$course_id',date_time='$date_time',user_id='$_SESSION[id]',status_id='3'";
-		$dbf->insertSet("student_moving_history",$string2);	
-		
-	}*/
-	# UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE	
-	
-	$is_enable = $dbf->countRows("sms_gateway","status='Enable'");
-	if($is_enable > 0)
-	{
-		$sms_gateway = $dbf->strRecordID("sms_gateway","*","status<>''");
-		$student_mobile = $dbf->strRecordID("student","*","id='$student_id' And sms_status='1'");
-		$mobile_no = $student_mobile["student_mobile"];
-		if($mobile_no != '')
-		{
-			$UserName=UrlEncoding($sms_gateway[user]);
-			$UserPassword=UrlEncoding($sms_gateway[password]);
-			$Numbers=UrlEncoding($mobile_no);
-			$Originator=UrlEncoding($sms_gateway[your_name]);
-			$sms = $_REQUEST['sms'];
-			if($sms == "1" || $sms == "3")
-			{
-				if($sms == "1")
-				{$sms_cont = $dbf->getDataFromTable("sms_templete","contents","id='31'");}
-				else if($sms == "3")
-				{$sms_cont = $_REQUEST['contents'];}
-				$sms_cont = str_replace('%first_name%',$student_mobile["first_name"],$sms_cont);
-				$msg = str_replace('%ad_amt%',$_REQUEST["amts"],$sms_cont);
-				$Message=$msg;
-				SendSms($UserName,$UserPassword,$Numbers,$Originator,$Message);
-				$cr_date = date('Y-m-d H:i:s A');
-				$string="dated='$cr_date',user_id='$_SESSION[id]',msg='$msg',send_to='student',mobile='$mobile_no',centre_id='$centre_id',msg_from='Initial Payment as Advance',automatic='Yes',page_full_path='$_SERVER[REQUEST_URI]'";
-				$sms_id = $dbf->insertSet("sms_history",$string);
-				$string1="parent_id='$sms_id',student_id='$student_id'";
-				$dbf->insertSet("sms_history_dtls",$string1);
-			}
-		}
-	}
-	
-	//insert into student_comment table
-	if($ad_comment!='')
-	{
-		$string2="student_id='$student_id',user_id='$_SESSION[id]',comments='$ad_comment',date_time='$date_time'";
-		$dbf->insertSet("student_comment",$string2);
-	}
-	header("Location:search_advance.php?student_id=$student_id&course_id=$course_id");
-	exit;
-}
 ?>

@@ -44,7 +44,7 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 				$num1=$dbf->countRows('student_group_dtls',"parent_id='$val[id]'");
 			$html.='<tr>
 			  <td align="left" valign="middle" bgcolor="#F8F9FB">'.$i.'</td>
-			  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB">'.$val[group_name].' '.$val["group_time"].'-'.$dbf->GetGroupTime($val["id"]).'</td>
+			  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB">'.$val[group_name].' '.$dbf->printClassTimeFormat($val["group_start_time"],$val["group_end_time"]).'</td>
 			  <td align="left" valign="middle" bgcolor="#F8F9FB">'.$val[start_date].'</td>
 			  <td align="left" valign="middle" bgcolor="#F8F9FB">'.$val[end_date].'</td>
 			  <td align="left" valign="middle" bgcolor="#F8F9FB">'.$std["COUNT(student_id)"].'</td>

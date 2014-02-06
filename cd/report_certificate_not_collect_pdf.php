@@ -41,7 +41,7 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0" borderco
 				$val = $dbf->strRecordID("student","*","id='$val1[student_id]'");
 			$html.='<tr>
 				<td width="5%" height="25" align="center" valign="middle">'.$k.'</td>
-				<td width="18%" align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$val[first_name].' '.$Arabic->en2ar($dbf->StudentName($val["id"])).'</span></td>
+				<td width="18%" align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($val["id"]).'</span></td>
 				<td width="18%" align="left" valign="middle" >'.$val[student_mobile].'</td>
 				<td width="28%" align="left" valign="middle" >'.$val[email].'</td>
 				<td width="7%" align="center" valign="middle">'.$val[age].'</td>

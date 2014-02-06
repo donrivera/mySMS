@@ -110,7 +110,7 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 			if($countid>0) {
 			$html.='<tr>
 			  <td height="25" align="center" valign="middle" class="mycon">&nbsp;</td>
-			  <td height="25" align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$res[first_name].' '.$Arabic->en2ar($dbf->StudentName($res["id"])).'</span></td>
+			  <td height="25" align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($res["id"]).'</span></td>
 			  <td align="left" valign="middle" >'.$course[name].'</td>
 			  <td height="30" align="left" valign="middle">'.$res2[name].'</td>
 			  <td align="left" valign="middle">'.$res3[name].'</td>

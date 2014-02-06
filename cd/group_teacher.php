@@ -151,6 +151,8 @@ function showweek(type, dt, tm){
 		document.getElementById('lblweek').innerHTML = dt +' / '+ tm;
 		
 		document.getElementById('dt').value = dt;
+		document.getElementById('date_value').value=dt;
+		date_change();
 		document.getElementById('tm').value = tm;
 	}else{
 		document.getElementById('lblweek').innerHTML = type;

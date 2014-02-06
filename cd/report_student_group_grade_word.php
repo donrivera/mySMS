@@ -30,7 +30,7 @@ header("Content-Disposition: attachment; Filename=report_student_group_grade.doc
      $res = $dbf->strRecordID("student","*","id='$_REQUEST[student_id]'");			
      ?>
       <tr>
-        <td align="left" valign="middle" class="lable1"><?php echo constant("STUDENT_ADVISOR_S2_NAME");?> :<?php echo $res[first_name]; ?> </td>
+        <td align="left" valign="middle" class="lable1"><?php echo constant("STUDENT_ADVISOR_S2_NAME");?> :<?php echo $dbf->printStudentName($res["id"]); ?> </td>
       </tr>
       <tr>
         <td align="left" valign="middle" class="lable1"><?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_IDNO");?> : <?php echo $res[student_id]; ?> </td>

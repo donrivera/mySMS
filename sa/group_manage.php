@@ -60,7 +60,7 @@ if($_SESSION[font]=='big'){
 <!--table sorter ***************************************************** -->
 <script type="text/javascript">
 	$(function() {
-		$("#sort_table")
+		$("#sort_table1")
 			.tablesorter({ 
         // pass the headers argument and assing a object 
         headers: { 

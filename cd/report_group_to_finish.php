@@ -218,7 +218,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                   <td height="25" align="center" valign="middle" class="mycon"><?php echo $i;?></td>
-                  <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[group_name];?> <?php echo $val["group_time"];?>-<?php echo $dbf->GetGroupTime($val["id"]);?></td>
+                  <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[group_name];?> <?php echo $dbf->printClassTimeFormat($val["group_start_time"],$val["group_end_time"]);?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res[name];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[start_date];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[end_date];?></td>

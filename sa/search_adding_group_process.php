@@ -43,7 +43,7 @@ if($num_student == 0)
 	$duplicate_course=$dbf->countRows('student_group_dtls',"course_id='$course_id' && student_id='$student_id'");
 	if($duplicate_course==1)
 	{
-		echo '<script type="text/javascript">alert("Duplicate Course!");self.parent.location.href="search.php";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Duplicate Course!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
 	}
 	else
 	{	$studentSendSMS=1;
@@ -122,19 +122,19 @@ else
 	$duplicate_course=$dbf->countRows('student_group_dtls',"course_id='$course_id' && student_id='$student_id'");
 	if($group_status=='Completed')
 	{
-		echo '<script type="text/javascript">alert("Group Status: Completed");self.parent.location.href="search.php";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Group Status: Completed");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
 	}
 	elseif($total_students >12)
 	{
-		echo '<script type="text/javascript">alert("Group has 12 students!!");self.parent.location.href="search.php";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Group has 12 students!!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
 	}
 	elseif($duplicate_course > 0)
 	{
-		echo '<script type="text/javascript">alert("Duplicate Course!");self.parent.location.href="search.php";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Duplicate Course!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
 	}
 	elseif($validate > 0)
 	{
-		echo '<script type="text/javascript">alert("Duplicate Entry!");self.parent.location.href="search.php";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Duplicate Entry!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
 	}
 	else
 	{	$studentSendSMS=1;

@@ -124,7 +124,7 @@ header("Content-Disposition: attachment; Filename=report_absent_report.doc");
         ?>
     <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
       <td height="25" align="center" valign="middle" class="mycon">&nbsp;</td>
-      <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val["first_name"];?></td>
+      <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dbf->printStudentName($val["id"]);?></td>
       <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $course[name];?></td>
       <td height="30" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res2[name];?></td>
       <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res3[name];?></td>

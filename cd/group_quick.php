@@ -140,6 +140,8 @@ function showweek(type, dt, tm){
 		document.getElementById('lblweek').innerHTML = dt +' / '+ tm;
 		
 		document.getElementById('dt').value = dt;
+		document.getElementById('date_value').value=dt;
+		date_change();
 		document.getElementById('tm').value = tm;
 	}else{
 		document.getElementById('lblweek').innerHTML = type;
@@ -677,15 +679,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             </tr>
                           <tr>
                             <td height="28" colspan="5" align="center" valign="middle" id="lbltime" >
-                            <?php
+                             <?php
                             //date calculation start here
-							function week_number($date)
-							{	 
+							function week_number($date){	 
 								return date("W", strtotime("$date + 1 day"));
 							}
 							
-							function datefromweeknr($aYear, $aWeek, $aDay)
-							{
+							function datefromweeknr($aYear, $aWeek, $aDay){
 								if($Days != ''){
 									$DayOfWeek=array_search($aDay,$Days); //get day of week (1=Monday)
 								}
@@ -697,8 +697,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 									return $ResultDate;
 							};
 							
-							function week_start_date($wk_num, $yr, $first = 1, $format = 'F d, Y')
-							{
+							function week_start_date($wk_num, $yr, $first = 1, $format = 'F d, Y'){
 								$wk_ts  = strtotime('+' . $wk_num . ' weeks', strtotime($yr . '0101'));
 								$mon_ts = strtotime('-' . date('w', $wk_ts) + $first . ' days', $wk_ts);
 								return date($format, $mon_ts);
@@ -710,22 +709,16 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							
 							$teacher_id = $_SESSION["gr_course_teacher"];
 																					
-							if($_SESSION[gr_course_strdt]=="")
-							{
+							if($_SESSION[gr_course_strdt]==""){
 								unset($dd);
 								unset($chdate);
-							}
-							else
-							{
+							}else{
 								$dd=strtotime($_SESSION[gr_course_strdt]);
 								$chdate=date("Y-m-d",$dd);
 							}
-							if(isset($chdate))
-							{
+							if(isset($chdate)){
 								$date=$chdate;
-							}
-							else
-							{
+							}else{
 								$date=date("Y-m-d");
 							}
 							
@@ -752,13 +745,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							$fri= date('m/j', strtotime('+6 days', strtotime($sStartDate)));
 							$sat= date('m/j', strtotime('0 days', strtotime($sStartDate))); 
 							
-							$sun1=date('Y-m-d', strtotime('-1 days', strtotime($sStartDate))); 
-							$mon1= date('Y-m-d', strtotime('+0 days', strtotime($sStartDate))); 
-							$tue1= date('Y-m-d', strtotime('+1 days', strtotime($sStartDate)));
-							$wed1= date('Y-m-d', strtotime('+2 days', strtotime($sStartDate))); 
-							$thu1= date('Y-m-d', strtotime('+3 days', strtotime($sStartDate))); 
-							$fri1= date('Y-m-d', strtotime('+4 days', strtotime($sStartDate)));
-							$sat1= date('Y-m-d', strtotime('+5 days', strtotime($sStartDate)));
+							$sun1=date('Y-m-d', strtotime('-0 days', strtotime($sStartDate))); 
+							$mon1= date('Y-m-d', strtotime('+1 days', strtotime($sStartDate))); 
+							$tue1= date('Y-m-d', strtotime('+2 days', strtotime($sStartDate)));
+							$wed1= date('Y-m-d', strtotime('+3 days', strtotime($sStartDate))); 
+							$thu1= date('Y-m-d', strtotime('+4 days', strtotime($sStartDate))); 
+							$fri1= date('Y-m-d', strtotime('+5 days', strtotime($sStartDate)));
+							$sat1= date('Y-m-d', strtotime('+6 days', strtotime($sStartDate)));
 							
 							$sum_month= date('m', strtotime('+0 days', strtotime($sStartDate))); 
 							$mon_month= date('m', strtotime('+1 days', strtotime($sStartDate))); 
@@ -792,7 +785,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							margin:5px 0px;
 							}
 							</style>
-                            <?php
+							<?php
                             $centre_id = $_SESSION['centre_id'];
                             $center = $dbf->strRecordID("centre", "*", "id='$centre_id'");
                             $start_time = $center["class_start_time"];
@@ -810,7 +803,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <td width="12%" height="30" align="center" valign="middle" bordercolor="#FF9933" bgcolor="#FFF8E6"><span class="pedtext"><?php echo constant("CD_GROUP_TEACHER_TIME");?></span></td>
                                 <td width="88%" bordercolor="#FF9933" bgcolor="#FFF8E6"><table width="98%" border="0" cellspacing="0" cellpadding="0">
                                   <tr class="pedtext">
-                                    <td width="98" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><?php echo $sum_day.'<br>'.$sat?></td>
+                                    <td width="98" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><?php echo  $sum_day.'<br>'.$sat?></td>
                                     <td width="110" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><?php echo $mon_day.'<br>'.$sun?></td>
                                     <td width="110" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><?php echo $tue_day.'<br>'.$mon?></td>
                                     <td width="101" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><?php echo $wed_day.'<br>'.$tue?></td>
@@ -836,7 +829,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 									  if($k == 1){
 										  $centre_time = date('h:i A', strtotime($start_time));
 									  }									  
-									  $starttime = date('H:i:s',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));									  
+									  $starttime = date('H:i:s',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+									  $stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
                                       ?>
                                         <tr>
                                             <td width="12%" height="25" align="center" valign="middle" bgcolor="#CCCCCC" class="pedtext"><?php echo $centre_time;?></td>
@@ -844,9 +838,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                             <table width="95%" border="0" cellspacing="0" cellpadding="0" >
                                             <tr onMouseOver="this.style.backgroundColor='#EBDDE2'" onMouseOut="this.style.backgroundColor=''">
                                             <td width="3" align="left" valign="middle"></td>
-                                            <?php                                            
-                                            $num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$sun1' BETWEEN start_date And end_date)");
-                                            if($num==0){
+                                            <?php											
+                                            //$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$sun1' BETWEEN start_date And end_date)");
+											//echo $user_start_time = strtotime($centre_time);
+											//echo $start_time=strtotime(date('h:i A', strtotime($starttime)));
+											$num = $dbf->timeSlotAvailable($teacher_id, $sun1, $stime); 
+											if($num == false){
                                                 $class = 'teachertext';
                                                 $text = 'Available';
                                                 $img = "../images/tick.png";
@@ -854,6 +851,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                                 $class = 'teachertext1';
                                                 $text = 'Not Available';
                                                 $img = "../images/block.png";
+												
                                             }
 											
 											$each_day = date('l', strtotime($sStartDate));
@@ -875,8 +873,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                             <tr onMouseOver="this.style.backgroundColor='#EBDDE2'" onMouseOut="this.style.backgroundColor=''">
                                             <td width="3" align="left" valign="middle"></td>
                                             <?php
-											$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$mon1' BETWEEN start_date And end_date)");
-											if($num==0){
+											//$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$mon1' BETWEEN start_date And end_date)");
+											$stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+											$num = $dbf->timeSlotAvailable($teacher_id, $mon1, $stime); 
+											if($num == false){
 												$class = 'teachertext';
 												$text = 'Available';
 												$img = "../images/tick.png";
@@ -905,8 +905,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         <tr onMouseOver="this.style.backgroundColor='#EBDDE2'" onMouseOut="this.style.backgroundColor=''">
                                         <td width="3" align="left" valign="middle"></td>
                                         <?php
-										$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$tue1' BETWEEN start_date And end_date)");
-										if($num==0){
+										//$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$tue1' BETWEEN start_date And end_date)");
+										$stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+										$num = $dbf->timeSlotAvailable($teacher_id, $tue1, $stime);
+										if($num == false){
 											$class = 'teachertext';
 											$text = 'Available';
 											$img = "../images/tick.png";
@@ -936,8 +938,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         <tr onMouseOver="this.style.backgroundColor='#EBDDE2'" onMouseOut="this.style.backgroundColor=''">
                                         <td width="3" align="left" valign="middle"></td>
                                         <?php
-										$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$wed1' BETWEEN start_date And end_date)");
-										if($num==0){
+										//$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$wed1' BETWEEN start_date And end_date)");
+										$stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+										$num = $dbf->timeSlotAvailable($teacher_id, $wed1, $stime);
+										if($num == false){
 											$class = 'teachertext';
 											$text = 'Available';
 											$img = "../images/tick.png";
@@ -949,7 +953,6 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 										
 										$each_day = date('l', strtotime($each_day));
 										$each_date = date('Y-m-d', strtotime($each_day));
-										
 										$weekend = $dbf->countRows('working_day',"dyname='$each_day' And status='1'");
 										$each_day = date('Y-m-d',strtotime(date("Y-m-d", strtotime($each_date)) . " +1 day"));
 										
@@ -968,8 +971,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         <tr onMouseOver="this.style.backgroundColor='#EBDDE2'" onMouseOut="this.style.backgroundColor=''">
                                         <td width="3" align="left" valign="middle"></td>
                                         <?php
-										$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$thu1' BETWEEN start_date And end_date)");
-										if($num==0){
+										//$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$thu1' BETWEEN start_date And end_date)");
+										$stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+										$num = $dbf->timeSlotAvailable($teacher_id, $thu1, $stime);
+										if($num == false){
 											$class = 'teachertext';
 											$text = 'Available';
 											$img = "../images/tick.png";
@@ -998,8 +1003,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         <tr onMouseOver="this.style.backgroundColor='#EBDDE2'" onMouseOut="this.style.backgroundColor=''">
                                         <td width="3" align="left" valign="middle"></td>
                                         <?php
-										$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$fri1' BETWEEN start_date And end_date)");
-										if($num==0){
+										//$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$fri1' BETWEEN start_date And end_date)");
+										$stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+										$num = $dbf->timeSlotAvailable($teacher_id, $fri1, $stime); 
+										if($num == false){
 											$class = 'teachertext';
 											$text = 'Available';
 											$img = "../images/tick.png";
@@ -1028,8 +1035,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         <tr onMouseOver="this.style.backgroundColor='#EBDDE2'" onMouseOut="this.style.backgroundColor=''">
                                         <td width="3" align="left" valign="middle"></td>
                                         <?php
-										$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$sat1' BETWEEN start_date And end_date)");
-										if($num==0){
+										//$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$sat1' BETWEEN start_date And end_date)");
+										$stime=date('Hi',strtotime(date("H:i:s", strtotime($centre_time)) . " +1 minutes"));
+										$num = $dbf->timeSlotAvailable($teacher_id, $sat1, $stime); 
+										if($num == false){
 											$class = 'teachertext';
 											$text = 'Available';
 											$img = "../images/tick.png";
@@ -1063,15 +1072,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         </table>
                             
                                       </div>
-                                      
                                       </td>
                                       </tr>
                                     </table>
                                   
                                   </td>
                               </tr>
-                            </table>
-                            
+                            </table>                           
                             
                             
                             </td>
@@ -1222,7 +1229,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                           </tr>
                                         <tr>
                                           <td height="28" colspan="2" align="right" valign="top" class="leftmenu">
-                                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                               <tr>
                                                 
                                                 <td width="71%" align="right" valign="middle">
@@ -1237,8 +1244,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                                   </td>
                                                   <td width="29%" height="25" align="left" valign="baseline"><span class="nametext1">*</span>: <?php echo constant("ADMIN_GROUP_MANAGE_COURSE");?></td>
                                                 </tr>
-                                              <tr>
-                                                
+                                              <tr>                                                
                                                 <td align="right" valign="middle">
                                                   <input name="group" type="text" class="validate[required] new_textbox140_ar" id="group" value="" autocomplete="off" onKeyUp="showgroup();"/>
                                                   </td>
@@ -1248,7 +1254,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                                 
                                                 <td align="right" valign="middle">
                                                   <select name="unit" id="unit" class="validate[required]" style="width:150px; border:solid 1px; border-color:#999999;">
-                                                    <option value="">--<?php echo constant("STUDENT_ADVISOR_GROUP_UNIT");?>--</option>
+                                                    <option value="">--<?php echo constant("ADMIN_UNIT_MANAGE_UNIT");?>--</option>
                                                     <?php
 													foreach($dbf->fetchOrder('common',"type='Unit No'","") as $res_unit) {
 													?>
@@ -1270,13 +1276,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                                     <?php
 													for($i = 1; $i <= $max; $i++) {
 													?>
-                                                    <option value="<?php echo $i;?>" <?php if($i == 40){?> selected="selected" <?php }?>> <?php echo $i;?></option>
+                                                    <option value="<?php echo $i;?>" <?php if($i == 60){?> selected="selected" <?php }?>> <?php echo $i;?></option>
                                                     <?php } ?>
                                                     </select>
                                                   </td>
-                                                  <td height="25" align="left" valign="baseline"><span class="nametext1">*</span>: <?php echo constant("QUICK_TOTAL_UNITS");?></td>
+                                                  <td height="25" align="left" valign="baseline"><span class=" nametext1">*</span>: <?php echo constant("QUICK_TOTAL_UNITS");?></td>
                                                 </tr>
-                                                <tr>
+                                              <tr>
+                                                
                                                 <td align="right" valign="middle">
                                                   <select name="teacher" id="teacher" class="validate[required]" style="width:150px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onChange="show_teacher_group();">
                                                     <option value="">--<?php echo constant("ADMIN_REPORT_TEACHER_SCHEDULE_SELECTTEACHER");?>--</option>
@@ -1287,21 +1294,23 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                                     <?php }?>
                                                     </select>
                                                   </td>
-                                                 <td height="25" align="left" valign="baseline"><span class="nametext1">*</span>: <?php echo constant("ADMIN_REPORT_TEACHER_BOARD_TEACHERNAME");?></td>
+                                                  <td height="25" align="left" valign="baseline"><span class="nametext1">*</span>: <?php echo constant("ADMIN_REPORT_TEACHER_BOARD_TEACHERNAME");?></td>
                                                 </tr>
                                                 <!--,check_date()-->
                                               <tr>
+                                                
                                                 <td align="right" valign="middle">
-                                                  <input type="text" name="date_value" class="validate[required] datepick new_textbox80_ar" id="date_value" value="" onChange="date_change();" />&nbsp;<img src="../images/change_status.png" width="16" height="16" title="Refresh Time slot" onClick="showtime();" style="cursor:pointer;"></td>
-                                                  <td height="25" align="left" valign="baseline"><span class="nametext1">*</span>: <?php echo constant("STUDENT_ADVISOR_GROUP_GRPSTARTDT");?></td>
+                                                  <input type="text" name="date_value" class="validate[required] datepick new_textbox80" id="date_value" value="" onChange="date_change();" />&nbsp;<img src="../images/change_status.png" width="16" height="16" title="Refresh Time slot" onClick="showtime();" style="cursor:pointer;"></td>
+                                                  <td height="25" align="left" valign="baseline"><span class="nametext1">*</span> : <?php echo constant("STUDENT_ADVISOR_GROUP_GRPSTARTDT");?></td>
                                                 </tr>
-                                                <tr>
+                                              <tr>
+                                                
                                                 <td align="right" valign="middle">
                                                   <select name="class_room" id="class_room" style="width:150px; border:solid 1px; border-color:#999999;">
                                                     <option value="">--<?php echo constant("SELECT_CLASSROOM");?>--</option>
                                                     <?php
 													foreach($dbf->fetchOrder('centre_room',"centre_id='$_SESSION[centre_id]'","") as $resu) {
-												    ?>
+												  ?>
                                                     <option value="<?php echo $resu['id']?>"><?php echo $resu['name'];?></option>
                                                     <?php }?>
                                                     </select>
@@ -1314,296 +1323,290 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 												$dt = date('Y-m-d');							
 												$dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($dt)) . "+$no_unit day"));
 												?>
-                                                <tr>
-                                                <td align="right" valign="middle">
-                                                <input type="text" name="gr_course_endt" class="validate[required] new_textbox80_ar"  id="gr_course_endt" value="<?php echo $dt1;?>" readonly="" />&nbsp;<input type="text" name="dt" class="new_textbox80_ar" id="dt" readonly="" value="">&nbsp;<input type="text" name="tm" class="new_textbox70_ar" id="tm" readonly="" value=""></td>
+                                              <tr>                                                
+                                                <td align="right" valign="middle"><input type="text" name="gr_course_endt" class="validate[required] new_textbox80"  id="gr_course_endt" value="<?php echo $dt1;?>" readonly="" />&nbsp;<input type="text" name="dt" class="new_textbox80" id="dt" readonly="" value="">&nbsp;<input type="text" name="tm" class="new_textbox70" id="tm" readonly="" value=""></td>
                                                 <td height="25" align="left" valign="baseline"><input type="hidden" name="prev_unit" id="prev_unit" value="<?php echo $no_unit;?>"><span class="nametext1">*</span>: <?php echo constant("STUDENT_ADVISOR_GROUP_GRPENDDT");?></td>
                                                 </tr>
                                               </table>
                                           </td>
-                                          <td>&nbsp;</td>
-                                          <td colspan="2" align="left" valign="top" style="padding-bottom:5px;">
-                                           <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                            <tr>
-                                              <td align="left" valign="top" id="id_show_student">
-                                                <table width="98%" border="1" cellspacing="0" cellpadding="0" bordercolor="#CCCCCC" style="border-collapse:collapse;">
-                                                  <tr class="logintext">
-                                                    <td height="20" align="left" valign="middle">&nbsp;</td>
-                                                    <td colspan="2" align="left" valign="middle" class="pedtext"><?php echo constant("CD_GROUP_QUICK_WAITING_FOR_GROUP");?></td>
-                                                    <td align="center" valign="middle">&nbsp;</td>
-                                                  </tr>
-                                                  <tr class="logintext">
-                                                    <td width="6%" height="20" align="left" valign="middle" bgcolor="#000066">&nbsp;</td>
-                                                    <td width="27%" align="right" valign="middle" bgcolor="#000066"><?php echo constant("ADMIN_VIEW_COMMENTS_MANAGE_STUDENT");?></td>
-                                                    <td width="44%" align="right" valign="middle" bgcolor="#000066"><?php echo constant("ADMIN_S_MANAGE_EMAILADDRESS");?></td>
-                                                    <td width="23%" align="center" valign="middle" bgcolor="#000066"><?php echo constant("STUDENT_ADVISOR_S4_MOBILE");?></td>
-                                                    </tr>
-                                                  <?php
-												  foreach($dbf->fetchOrder('student',"centre_id='$_SESSION[centre_id]' LIMIT 0,5","","") as $valstudent){
-												  ?>
-                                                  <tr>
-                                                    <td align="center" valign="middle">&nbsp;</td>
-                                                    <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valstudent[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($valstudent["id"]));?></td>
-                                                    <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valstudent[email];?></td>
-                                                    <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valstudent[student_mobile];?></td>
-                                                    </tr>
-                                                  <?php
-												  }
-												  ?>
-                                                  </table></td>
-                                              </tr>
-                                              <tr>
-                                                <td height="5"></td>
-                                              </tr>
-                                            <tr>
-                                              <td align="left" valign="top" id="id_show_group">
-                                                <table width="98%" border="1" cellspacing="0" cellpadding="0" bordercolor="#cccccc" style="border-collapse:collapse;">
-                                                  <tr class="logintext">
-                                                    <td width="19%" height="20" align="right" valign="middle" bgcolor="#000066"><?php echo constant("STUDENT_ADVISOR_SEARCH_GROUPNM");?></td>
-                                                    <td width="22%" align="right" valign="middle" bgcolor="#000066"><?php echo constant("STUDENT_ADVISOR_GROUP_COURSE");?></td>
-                                                   <td width="30%" align="right" valign="middle" bgcolor="#000066"><?php echo constant("CD_GROUP_QUICK_START_END_DATE");?></td>
-                                                    <td width="12%" align="center" valign="middle" bgcolor="#000066"><?php echo constant("CD_GROUP_TEACHER_TIME");?></td>
-                                                    <td width="17%" align="right" valign="middle" bgcolor="#000066"> % <?php echo constant("STUDENT_ADVISOR_AUDITING_COMPLETED");?></td>
-                                                  </tr>
-                                                  <tr>
-                                                    <td align="left" valign="middle">&nbsp;</td>
-                                                    <td align="left" valign="middle">&nbsp;</td>
-                                                    <td align="left" valign="middle">&nbsp;</td>
-                                                    <td align="center" valign="middle">&nbsp;</td>
-                                                    <td align="center" valign="middle">&nbsp;</td>
-                                                  </tr>
-                                                  <tr>
-                                                    <td align="left" valign="middle">&nbsp;</td>
-                                                    <td align="left" valign="middle">&nbsp;</td>
-                                                    <td align="left" valign="middle">&nbsp;</td>
-                                                    <td align="center" valign="middle">&nbsp;</td>
-                                                    <td align="center" valign="middle">&nbsp;</td>
-                                                  </tr>
-                                                  <tr>
-                                                    <td align="left" valign="middle">&nbsp;</td>
-                                                    <td align="left" valign="middle">&nbsp;</td>
-                                                    <td align="left" valign="middle">&nbsp;</td>
-                                                    <td align="center" valign="middle">&nbsp;</td>
-                                                    <td align="center" valign="middle">&nbsp;</td>
-                                                  </tr>
-                                                  </table>
-                                                </td>
-                                              </tr>
-                                            </table></td>
+                                      <td>&nbsp;</td>
+                                     <td colspan="2" align="left" valign="top" style="padding-bottom:5px;">
+                                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                      <tr>
+                                        <td align="left" valign="top" id="id_show_student">
+                                          <table width="98%" border="1" cellspacing="0" cellpadding="0" bordercolor="#CCCCCC" style="border-collapse:collapse;">
+                                           <tr class="logintext">
+                                             <td height="20" align="left" valign="middle">&nbsp;</td>
+                                             <td colspan="2" align="right" valign="middle" class="pedtext"><?php echo constant("CD_GROUP_QUICK_WAITING_FOR_GROUP");?></td>
+                                             <td align="center" valign="middle">&nbsp;</td>
+                                           </tr>
+                                           <tr class="logintext">
+                                             <td width="6%" height="20" align="left" valign="middle" bgcolor="#000066">&nbsp;</td>
+                                             <td width="44%" align="right" valign="middle" bgcolor="#000066"><?php echo constant("ADMIN_S_MANAGE_EMAILADDRESS");?></td>
+                                             <td width="23%" align="center" valign="middle" bgcolor="#000066"><?php echo constant("STUDENT_ADVISOR_S4_MOBILE");?></td>
+                                             <td width="27%" align="right" valign="middle" bgcolor="#000066"><?php echo constant("ADMIN_VIEW_COMMENTS_MANAGE_STUDENT");?></td>
                                           </tr>
-                                        <tr>
-                                          <?php
-											if($_SESSION[gr_course_strdt]=='')
-											{
-												$dt =date('Y-m-d');
-											}
-											else
-											{
-												$dt = $_SESSION["gr_course_strdt"];
-											}
-											
-											$no_unit = $_SESSION["gr_course_total_units"];
-											
-											$no_unit = ($no_unit/10) * 7;							
-											
-											$dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($dt)) . "+$no_unit day"));
-											
-											?>
-                                          <td align="right" valign="middle" class="leftmenu">&nbsp;</td>                            
-                                          <td height="28" align="left" valign="middle" id="lblweek">&nbsp;</td>
-                                          <?php
-											$sdt = $_SESSION[gr_course_strdt];
-											$is_exist = '';
-											$teacher_id = $_SESSION[gr_course_teacher];					
-											foreach($dbf->fetchOrder('student_group',"teacher_id='$teacher_id'","id") as $val_group)
-											{								
-												$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$_REQUEST[sdt]' BETWEEN start_date And end_date)");
-												if($num>0)
-												{
-													$is_exist = 'true';
-													break;
-												}		
-											}
-											?>
-                                          <td>&nbsp;</td>
-                                          <td colspan="2" align="left" valign="bottom" style="padding-bottom:5px;" id="lblcheckdt">
-                                            <?php
-											if($is_exist == 'true')
-											{
-											?>
-                                            <table width="90%" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#FF99FF;">
-                                              <tr>
-                                                <td align="center" valign="middle" bgcolor="#FFECFF" class="red_smalltext"><?php echo constant("CD_SLOT_MANAGE_BOOKEDSLOT");?></td>
-                                                </tr>
-                                              </table>
-                                            <?php
-											}
-											?>
-                                            </td>
-                                          </tr>
-                                          <?php if($_REQUEST["msg"] == "o0k9b4"){?>
-                                            <tr>
-                                                <td align="right" valign="middle" class="leftmenu">&nbsp;</td>                            
-                                                <td height="28" align="left" valign="middle">&nbsp;</td>
-                                                <td>&nbsp;</td>
-                                                <td colspan="2" align="left" valign="middle">
-                                                <?php echo $Arabic->en2ar("Teacher not available for ".$_SESSION[tm]." to ".$_SESSION[end_tm]);?></td>
+										  <?php
+                                          foreach($dbf->fetchOrder('student',"centre_id='$_SESSION[centre_id]' LIMIT 0,5","","") as $valstudent){
+                                          ?>
+                                          <tr>
+                                            <td align="center" valign="middle">&nbsp;</td>
+                                            
+                                            <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valstudent[email];?></td>
+                                            <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valstudent[student_mobile];?></td>
+                                            <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valstudent[first_name];?>&nbsp;(<?php echo $Arabic->en2ar($valstudent[first_name]);?>)</td>
                                             </tr>
-                                            <?php } ?>
-                                        <tr>
-                                          <td height="10" colspan="5" align="left" valign="middle" class="leftmenu"></td>
-                                          </tr>
-                                        <tr>
-                                          <td height="28" colspan="5" align="center" valign="middle" id="lbltime" >
-                                            <?php
-											//date calculation start here
-											function week_number($date)
-											{	 
-												return date("W", strtotime("$date + 1 day"));
-											}
-											
-											function datefromweeknr($aYear, $aWeek, $aDay)
-											{
-												if($Days != ''){
-													$DayOfWeek=array_search($aDay,$Days); //get day of week (1=Monday)
-												}
-												$DayOfWeekRef = date("w", mktime (0,0,0,1,4,$aYear)); //get day of week of January 4 (always week 1)
-												if ($DayOfWeekRef==0)
-													$DayOfWeekRef=7;
-													$ResultDate=mktime(0,0,0,1,4,$aYear)+((($aWeek-1)*7+($DayOfWeek-$DayOfWeekRef))*86400);
-											
-													return $ResultDate;
-											};
-											
-											function week_start_date($wk_num, $yr, $first = 1, $format = 'F d, Y')
-											{
-												$wk_ts  = strtotime('+' . $wk_num . ' weeks', strtotime($yr . '0101'));
-												$mon_ts = strtotime('-' . date('w', $wk_ts) + $first . ' days', $wk_ts);
-												return date($format, $mon_ts);
-											}
-													
-											//------------------------------------------
-											//accepting dynamic date value
-											//------------------------------------------
-											
-											$teacher_id = $_SESSION["gr_course_teacher"];
-																									
-											if($_SESSION[gr_course_strdt]=="")
-											{
-												unset($dd);
-												unset($chdate);
-											}
-											else
-											{
-												$dd=strtotime($_SESSION[gr_course_strdt]);
-												$chdate=date("Y-m-d",$dd);
-											}
-											if(isset($chdate))
-											{
-												$date=$chdate;
-											}
-											else
-											{
-												$date=date("Y-m-d");
-											}
-											
-											$yar=date('Y',strtotime($date));
-											$d=date('d',strtotime($date));
-											$wk_num= week_number($date); 
-											
-											//echo $sStartDate = week_start_date($wk_num, $yr);
-											$rr=datefromweeknr($yar, $wk_num, $d);;
-											$sStartDate= date('Y-m-d',$rr);
-											
-											// $sStartDate = week_start_date($wk_num, $yr);
-											$startdate= date('Y-m-d', strtotime('+0 days', strtotime($sStartDate))); 
-											$enddate   = date('Y-m-d', strtotime('+6 days', strtotime($sStartDate))); 
-											
-											//exit;
-											//$sund=date('Y-m-d', strtotime('+0 days', strtotime($sStartDate))); 
-											$sun=date('m/j', strtotime('+0 days', strtotime($sStartDate))); 
-											$mon= date('m/j', strtotime('+1 days', strtotime($sStartDate))); 
-											$tue= date('m/j', strtotime('+2 days', strtotime($sStartDate)));
-											$wed= date('m/j', strtotime('+3 days', strtotime($sStartDate))); 
-											$thu= date('m/j', strtotime('+4 days', strtotime($sStartDate))); 
-											$fri= date('m/j', strtotime('+5 days', strtotime($sStartDate)));
-											$sat= date('m/j', strtotime('+6 days', strtotime($sStartDate))); 
-											
-											$sun1=date('Y-m-d', strtotime('+0 days', strtotime($sStartDate))); 
-											$mon1= date('Y-m-d', strtotime('+1 days', strtotime($sStartDate))); 
-											$tue1= date('Y-m-d', strtotime('+2 days', strtotime($sStartDate)));
-											$wed1= date('Y-m-d', strtotime('+3 days', strtotime($sStartDate))); 
-											$thu1= date('Y-m-d', strtotime('+4 days', strtotime($sStartDate))); 
-											$fri1= date('Y-m-d', strtotime('+5 days', strtotime($sStartDate)));
-											$sat1= date('Y-m-d', strtotime('+6 days', strtotime($sStartDate)));
-											
-											$sum_month= date('m', strtotime('+0 days', strtotime($sStartDate))); 
-											$mon_month= date('m', strtotime('+1 days', strtotime($sStartDate))); 
-											$tue_month= date('m', strtotime('+2 days', strtotime($sStartDate)));
-											$wed_month= date('m', strtotime('+3 days', strtotime($sStartDate))); 
-											$thu_month= date('m', strtotime('+4 days', strtotime($sStartDate))); 
-											$fri_month= date('m', strtotime('+5 days', strtotime($sStartDate)));
-											$sat_month= date('m', strtotime('+6 days', strtotime($sStartDate))); 
-											
-											$sum_day= date('j', strtotime('+0 days', strtotime($sStartDate))); 
-											$mon_day= date('j', strtotime('+1 days', strtotime($sStartDate))); 
-											$tue_day= date('j', strtotime('+2 days', strtotime($sStartDate)));
-											$wed_day= date('j', strtotime('+3 days', strtotime($sStartDate))); 
-											$thu_day= date('j', strtotime('+4 days', strtotime($sStartDate))); 
-											$fri_day= date('j', strtotime('+5 days', strtotime($sStartDate)));
-											$sat_day= date('j', strtotime('+6 days', strtotime($sStartDate))); 
-											
-											$year=date('Y',strtotime($date));
-											//date calculation end here
-											?>
-                                            <style>
-											.scroll-div{
-											overflow-x:hidden;
-											overflow-y:scroll;
-											font-size:11px;
-											font-weight:bold;
-											color:#245F9A;
-											float:left;
-											width:99%;
-											height:300px;
-											margin:5px 0px;
-											}
-											</style>
-											<?php
-											$centre_id = $_SESSION['centre_id'];
-											$center = $dbf->strRecordID("centre", "*", "id='$centre_id'");
-											$start_time = $center["class_start_time"];
-											$end_time = $center["class_end_time"];
-											
-											$tot = $dbf->TimeDiff($start_time,$end_time);
-											$time = explode(":",$tot);
-											
-											$minutes = intval($time[0])*60 + intval($time[1]);
-											$minutes = $minutes / 15;
-											?>                                            
-                            <table width="99%" border="1" cellspacing="0" cellpadding="0" bordercolor="#EBE5CD" style="border-collapse:collapse;">
-                              <tr>
-                                <td width="12%" height="30" align="center" valign="middle" bordercolor="#FF9933" bgcolor="#FFF8E6"><span class="pedtext"><?php echo constant("CD_GROUP_TEACHER_TIME");?></span></td>
-                                <td width="88%" bordercolor="#FF9933" bgcolor="#FFF8E6"><table width="98%" border="0" cellspacing="0" cellpadding="0">
-                                  <tr class="pedtext">
-                                    <td width="64" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><span class="style25"><?php echo "Sat".'<br>'.$sat?></span></td>
-                                    <td width="75" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><span class="style25"><?php echo "Sun".'<br>'.$sun?></span></td>
-                                    <td width="73" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><span class="style25"><?php echo "Mon".'<br>'.$mon?></span></td>
-                                    <td width="73" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><span class="style25"><?php echo "Tue".'<br>'.$tue?></span></td>
-                                    <td width="83" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><span class="style25"><?php echo "Wed".'<br>'.$wed?></span></td>
-                                    <td width="80" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><span class="style25"><?php echo "Thu".'<br>'.$thu?></span></td>
-                                    <td width="102" align="center" valign="middle"><span class="style25"><?php echo "Fri".'<br>'.$fri?></span></td>
-                                  </tr>
+                                          <?php
+                                          }
+                                          ?>
+                                    </table></td>
+                                   </tr>
+                                  <tr>
+                              <td height="5"></td>
+                              </tr>
+                            <tr>
+                              <td align="left" valign="top" id="id_show_group">
+                                <table width="98%" border="1" cellspacing="0" cellpadding="0" bordercolor="#cccccc" style="border-collapse:collapse;">
+                                  <tr class="logintext">
+                                    <td width="19%" height="20" align="right" valign="middle" bgcolor="#000066"><?php echo constant("STUDENT_ADVISOR_SEARCH_GROUPNM");?></td>
+                                    <td width="22%" align="right" valign="middle" bgcolor="#000066"><?php echo constant("STUDENT_ADVISOR_GROUP_COURSE");?></td>
+                                    <td width="30%" align="right" valign="middle" bgcolor="#000066"><?php echo constant("CD_GROUP_QUICK_START_END_DATE");?></td>
+                                    <td width="12%" align="center" valign="middle" bgcolor="#000066"><?php echo constant("CD_GROUP_TEACHER_TIME");?></td>
+                                    <td width="17%" align="right" valign="middle" bgcolor="#000066"> % <?php echo constant("STUDENT_ADVISOR_AUDITING_COMPLETED");?></td>
+                                    </tr>
+                                  <tr>
+                                    <td align="left" valign="middle">&nbsp;</td>
+                                    <td align="left" valign="middle">&nbsp;</td>
+                                    <td align="left" valign="middle">&nbsp;</td>
+                                    <td align="center" valign="middle">&nbsp;</td>
+                                    <td align="center" valign="middle">&nbsp;</td>
+                                    </tr>
+                                  <tr>
+                                    <td align="left" valign="middle">&nbsp;</td>
+                                    <td align="left" valign="middle">&nbsp;</td>
+                                    <td align="left" valign="middle">&nbsp;</td>
+                                    <td align="center" valign="middle">&nbsp;</td>
+                                    <td align="center" valign="middle">&nbsp;</td>
+                                    </tr>
+                                  <tr>
+                                    <td align="left" valign="middle">&nbsp;</td>
+                                    <td align="left" valign="middle">&nbsp;</td>
+                                    <td align="left" valign="middle">&nbsp;</td>
+                                    <td align="center" valign="middle">&nbsp;</td>
+                                    <td align="center" valign="middle">&nbsp;</td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
                                 </table></td>
                               </tr>
+                            <tr>
+                            <?php
+							if($_SESSION[gr_course_strdt]==''){
+								$dt =date('Y-m-d');
+							}else{
+								$dt = $_SESSION["gr_course_strdt"];
+							}
+							
+							$no_unit = $_SESSION["gr_course_total_units"];							
+							$no_unit = ($no_unit/10) * 7;
+							$dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($dt)) . "+$no_unit day"));							
+							?>
+                          <td align="right" valign="middle" class="leftmenu">&nbsp;</td>                            
+                          <td height="28" align="left" valign="middle" id="lblweek">&nbsp;</td>
+                          <?php
+							$sdt = $_SESSION[gr_course_strdt];
+							$is_exist = '';
+							$teacher_id = $_SESSION[gr_course_teacher];					
+							foreach($dbf->fetchOrder('student_group',"teacher_id='$teacher_id'","id") as $val_group)
+							{								
+								$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$_REQUEST[sdt]' BETWEEN start_date And end_date)");
+								if($num>0)
+								{
+									$is_exist = 'true';
+									break;
+								}		
+							}
+							?>
+                          <td>&nbsp;</td>
+                          <td colspan="2" align="left" valign="bottom" style="padding-bottom:5px;" id="lblcheckdt">
+                            <?php
+							if($is_exist == 'true')
+							{
+							?>
+                            <table width="90%" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#FF99FF;">
+                              <tr>
+                                <td align="center" valign="middle" bgcolor="#FFECFF" class="red_smalltext"><?php echo constant("CD_SLOT_MANAGE_BOOKEDSLOT");?></td>
+                                </tr>
+                              </table>
+                            <?php
+							}
+							?>
+                            </td>
+                          </tr>
+                          	<?php if($_REQUEST["msg"] == "o0k9b4"){?>
+                            <tr>
+                                <td align="right" valign="middle" class="leftmenu">&nbsp;</td>                            
+                                <td height="28" align="left" valign="middle">&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td colspan="2" align="left" valign="middle">
+								<?php echo $Arabic->en2ar("Teacher not available for ".$_SESSION[tm]." to ".$_SESSION[end_tm]);?></td>
+                          	</tr>
+                          	<?php } ?>
+                        <tr>
+                          <td height="10" colspan="5" align="left" valign="middle" class="leftmenu"></td>
+                          </tr>
+                        <tr>
+                          <td height="28" colspan="5" align="center" valign="middle" id="lbltime" >
+                            <?php
+                            //date calculation start here
+							function week_number($date)
+							{	 
+								return date("W", strtotime("$date + 1 day"));
+							}
+							
+							function datefromweeknr($aYear, $aWeek, $aDay)
+							{
+								if($Days != ''){
+									$DayOfWeek=array_search($aDay,$Days); //get day of week (1=Monday)
+								}
+								$DayOfWeekRef = date("w", mktime (0,0,0,1,4,$aYear)); //get day of week of January 4 (always week 1)
+								if ($DayOfWeekRef==0)
+									$DayOfWeekRef=7;
+									$ResultDate=mktime(0,0,0,1,4,$aYear)+((($aWeek-1)*7+($DayOfWeek-$DayOfWeekRef))*86400);
+							
+									return $ResultDate;
+							};
+							
+							function week_start_date($wk_num, $yr, $first = 1, $format = 'F d, Y')
+							{
+								$wk_ts  = strtotime('+' . $wk_num . ' weeks', strtotime($yr . '0101'));
+								$mon_ts = strtotime('-' . date('w', $wk_ts) + $first . ' days', $wk_ts);
+								return date($format, $mon_ts);
+							}
+									
+							//------------------------------------------
+							//accepting dynamic date value
+							//------------------------------------------
+							
+							$teacher_id = $_SESSION["gr_course_teacher"];
+																					
+							if($_SESSION[gr_course_strdt]=="")
+							{
+								unset($dd);
+								unset($chdate);
+							}
+							else
+							{
+								$dd=strtotime($_SESSION[gr_course_strdt]);
+								$chdate=date("Y-m-d",$dd);
+							}
+							if(isset($chdate))
+							{
+								$date=$chdate;
+							}
+							else
+							{
+								$date=date("Y-m-d");
+							}
+							
+							$yar=date('Y',strtotime($date));
+							$d=date('d',strtotime($date));
+							$wk_num= week_number($date); 
+							
+							//echo $sStartDate = week_start_date($wk_num, $yr);
+							$rr=datefromweeknr($yar, $wk_num, $d);;
+							$sStartDate= date('Y-m-d',$rr);
+							
+							// $sStartDate = week_start_date($wk_num, $yr);
+							$startdate= date('Y-m-d', strtotime('+0 days', strtotime($sStartDate))); 
+							$enddate   = date('Y-m-d', strtotime('+6 days', strtotime($sStartDate))); 
+							
+							//exit;
+							//$sund=date('Y-m-d', strtotime('+0 days', strtotime($sStartDate))); 
+							$sun=date('m/j', strtotime('+0 days', strtotime($sStartDate))); 
+							$mon= date('m/j', strtotime('+1 days', strtotime($sStartDate))); 
+							$tue= date('m/j', strtotime('+2 days', strtotime($sStartDate)));
+							$wed= date('m/j', strtotime('+3 days', strtotime($sStartDate))); 
+							$thu= date('m/j', strtotime('+4 days', strtotime($sStartDate))); 
+							$fri= date('m/j', strtotime('+5 days', strtotime($sStartDate)));
+							$sat= date('m/j', strtotime('+6 days', strtotime($sStartDate))); 
+							
+							$sun1=date('Y-m-d', strtotime('+0 days', strtotime($sStartDate))); 
+							$mon1= date('Y-m-d', strtotime('+1 days', strtotime($sStartDate))); 
+							$tue1= date('Y-m-d', strtotime('+2 days', strtotime($sStartDate)));
+							$wed1= date('Y-m-d', strtotime('+3 days', strtotime($sStartDate))); 
+							$thu1= date('Y-m-d', strtotime('+4 days', strtotime($sStartDate))); 
+							$fri1= date('Y-m-d', strtotime('+5 days', strtotime($sStartDate)));
+							$sat1= date('Y-m-d', strtotime('+6 days', strtotime($sStartDate)));
+							
+							$sum_month= date('m', strtotime('+0 days', strtotime($sStartDate))); 
+							$mon_month= date('m', strtotime('+1 days', strtotime($sStartDate))); 
+							$tue_month= date('m', strtotime('+2 days', strtotime($sStartDate)));
+							$wed_month= date('m', strtotime('+3 days', strtotime($sStartDate))); 
+							$thu_month= date('m', strtotime('+4 days', strtotime($sStartDate))); 
+							$fri_month= date('m', strtotime('+5 days', strtotime($sStartDate)));
+							$sat_month= date('m', strtotime('+6 days', strtotime($sStartDate))); 
+							
+							$sum_day= date('j', strtotime('+0 days', strtotime($sStartDate))); 
+							$mon_day= date('j', strtotime('+1 days', strtotime($sStartDate))); 
+							$tue_day= date('j', strtotime('+2 days', strtotime($sStartDate)));
+							$wed_day= date('j', strtotime('+3 days', strtotime($sStartDate))); 
+							$thu_day= date('j', strtotime('+4 days', strtotime($sStartDate))); 
+							$fri_day= date('j', strtotime('+5 days', strtotime($sStartDate)));
+							$sat_day= date('j', strtotime('+6 days', strtotime($sStartDate))); 
+							
+							$year=date('Y',strtotime($date));
+							//date calculation end here
+                            ?>
+                                            <style>
+							.scroll-div{
+							overflow-x:hidden;
+							overflow-y:scroll;
+							font-size:11px;
+							font-weight:bold;
+							color:#245F9A;
+							float:left;
+							width:99%;
+							height:300px;
+							margin:5px 0px;
+							}
+							</style>
+                            <?php
+                            $centre_id = $_SESSION['centre_id'];
+                            $center = $dbf->strRecordID("centre", "*", "id='$centre_id'");
+                            $start_time = $center["class_start_time"];
+                            $end_time = $center["class_end_time"];
+                            
+                            $tot = $dbf->TimeDiff($start_time,$end_time);
+                            $time = explode(":",$tot);
+                            
+                            $minutes = intval($time[0])*60 + intval($time[1]);
+                            $minutes = $minutes / 15;
+                            ?>   
+							<table width="99%" border="1" cellspacing="0" cellpadding="0" bordercolor="#EBE5CD" style="border-collapse:collapse;">
+                              <tr>
+                                <td width="12%" height="30" align="center" valign="middle" bordercolor="#FF9933" bgcolor="#FFF8E6"><span class="pedtext"><?php echo constant("CD_GROUP_TEACHER_TIME");?></span></td>
+                                <td width="88%" bordercolor="#FF9933" bgcolor="#FFF8E6"><table width="98%" border="0" cellspacing="0" cellpadding="0" >
+                                  <tr class="pedtext">
+                                    <td width="64" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><span class="style25"><?php echo "Sun".'<br>'.$sun?></span></td>
+                                    <td width="75" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><span class="style25"><?php echo "Mon".'<br>'.$mon?></span></td>
+                                    <td width="73" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><span class="style25"><?php echo "Tue".'<br>'.$tue?></span></td>
+                                    <td width="73" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><span class="style25"><?php echo "Wed".'<br>'.$wed?></span></td>
+                                    <td width="83" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><span class="style25"><?php echo "Thu".'<br>'.$thu?></span></td>
+                                    <td width="80" align="center" valign="middle" style="border-right:solid 1px; border-color:#EBE5CD;"><span class="style25"><?php echo "Fri".'<br>'.$fri?></span></td>
+                                    <td width="102" align="center" valign="middle"><span class="style25"><?php echo "Sat".'<br>'.$sat?></span></td>
+                                    </tr>
+                                  </table></td>
+                                </tr>
                               <tr>
                                 <td height="25" colspan="2" align="center" valign="middle">
                                   
                                   <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                       <td align="left" valign="middle">
-                                      
-                                      	<div class="scroll-div">
+                                        
+                                        <div class="scroll-div">
                                       
                                       <table width="99%" border="1" cellspacing="0" cellpadding="0" bordercolor="#EBE5CD" style="border-collapse:collapse;">
                                       <?php
@@ -1622,7 +1625,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                             <td width="3" align="left" valign="middle"></td>
                                             <?php                                            
                                             $num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$sun1' BETWEEN start_date And end_date)");
-                                            if($num==0){
+                                            
+											if($num==0){
                                                 $class = 'teachertext';
                                                 $text = 'Available';
                                                 $img = "../images/tick.png";
@@ -1838,13 +1842,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         </table>
                             
                                       </div>
-                                          </td>
-                                          </tr>
-                                        </table>
-                                      
+                                        
                                       </td>
-                                  </tr>
-                                </table>
+                                      </tr>
+                                    </table>
+                                  
+                                  </td>
+                                </tr>
+                              </table>
                                             </td>
                                           </tr>
                                         <tr>

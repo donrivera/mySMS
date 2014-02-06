@@ -323,7 +323,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
                   <tr bgcolor="<?php echo $color1;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color1;?>'">
                     <td align="center" valign="middle"><?php echo $j;?></td>
-                    <td align="left" valign="middle"><?php echo $val_group[group_name];?> <?php echo $val_group["group_time"];?>-<?php echo $dbf->GetGroupTime($val_group["id"]);?></td>
+                    <td align="left" valign="middle"><?php echo $val_group[group_name];?> <?php echo $dbf->printClassTimeFormat($val_group["group_start_time"],$val_group["group_end_time"]);?></td>
                     <td align="left" valign="middle"><?php echo $res_course[name];?></td>
                     <td align="left" valign="middle"><?php echo $res_teacher[name];?></td>
                     <td align="center" valign="middle"><?php echo $dbf->GetBillNo($valinv["student_id"], $valinv["course_id"]);?></td>

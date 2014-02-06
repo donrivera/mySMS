@@ -40,7 +40,7 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 				$course = $dbf->getDataFromTable("course", "name", "id='$_REQUEST[status]'");
 			$html.='<tr>
 			  <td height="25" align="center" valign="middle" bgcolor="#F8F9FB" >'.$i.'</td>
-			  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" ><span id="result_box" lang="ar" xml:lang="ar">'.$val[first_name].' '.$Arabic->en2ar($dbf->StudentName($val["id"])).'</span></td>
+			  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" ><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($val["id"]).'</span></td>
 			  <td align="left" valign="middle" bgcolor="#F8F9FB"  >'.$val[student_mobile].'</td>
 			  <td align="left" valign="middle" bgcolor="#F8F9FB" >'.$val[email].'</td>
 			  <td align="left" valign="middle" bgcolor="#F8F9FB"  >'.$course.'</td>

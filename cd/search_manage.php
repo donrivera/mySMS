@@ -77,6 +77,17 @@ if($LANGUAGE=='AR'){
 $(document).ready(function() {	
 	$("#frm").validationEngine()
 	$("#frm1").validationEngine()
+	$("#frm").submit(function()
+	{
+		var init_pay=$("#payment").val();//document.getElementById('payment').value;
+		//var post_pay=$("#td_paid_amt").val();//document.getElementById('td_paid_amt').value;
+		if(init_pay=='')
+		{
+			alert("Please Enter Initial Payment!");
+			//document.getElementById('othertext').focus();
+			return false;
+		}
+	});
 });
 </script>	
 <!--JQUERY VALIDATION ENDS-->
@@ -477,10 +488,15 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                   <td align="left" valign="middle"><input name="othertext" type="text" class="new_textbox190" id="othertext" value="<?php echo $res_enroll["othertext"];?>" /></td>
                                 </tr>
                                 <?php
-								$opening_amt = $dbf->getDataFromTable('student_fees',"paid_amt","course_id='$course_id' And student_id='$student_id' And type='opening'");
+								$opening_amt = $dbf->getDataFromTable('student_fees',"paid_amt","course_id='$course_id' And student_id='$student_id' And type='advance'");
+								$opening_payment_comment=$dbf->getDataFromTable('student_fees',"comments","course_id='$course_id' And student_id='$student_id' And (type='advance')");
+								if($opening_amt > 0){$readonly='readonly=""';}
+								elseif($feeamt >0){$readonly='readonly=""';}
+								else{$readonly='';}
+								$opening_payment_type=$dbf->getDataFromTable('student_fees',"payment_type","course_id='$course_id' And student_id='$student_id' And (type='advance')");
 								?>
                                 <tr>
-                                  <td height="28" align="left" valign="middle"><input name="payment" type="text" <?php if($opening_amt > 0){?> readonly="" <?php } ?> class="new_textbox100" id="payment" value="<?php echo $opening_amt;?>"  onKeyPress="return isNumberKey(event);"/></td>
+                                  <td height="28" align="left" valign="middle"><input name="payment" type="text" <?php echo $readonly;?> class="new_textbox100" id="payment" value="<?php echo $opening_amt;?>"  onKeyPress="return isNumberKey(event);"/></td>
                                   <td align="left" valign="middle" class="mycon"><?php echo $res_currency[symbol];?></td>
                                   <td align="left" valign="middle"><?php
 								  $valno = $dbf->strRecordID("student_fees","MAX(id)","id <> (SELECT MAX(id) FROM student_fees WHERE student_id='$student_id') AND student_id='$student_id'");
@@ -506,7 +522,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                     <?php
 										foreach($dbf->fetchOrder('common',"type='payment type'","") as $resp) {
 									  ?>
-                                    <option value="<?php echo $resp['id'];?>" <?php if($resp["id"]==$res_enroll["payment_type"]) { ?> selected="selected" <?php } ?>><?php echo $resp['name'];?></option>
+                                    <option value="<?php echo $resp['id'];?>" <?php if($resp["id"]==$opening_payment_type) { ?> selected="selected" <?php } ?>><?php echo $resp['name'];?></option>
                                     <?php } ?>
                                   </select></td>
                                   <td align="left" valign="middle">&nbsp;</td>
@@ -595,7 +611,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 									//Get Course has been finished or not (If 0 = Not completed else Completed)
 									$num_complete = $dbf->countRows('student_group g,student_group_dtls d',"g.id=d.parent_id And g.status='Completed' And g.course_id='$course_id' And d.student_id='$student_id'");
 									
-                                    foreach($dbf->fetchOrder('student_fees',"course_id='$course_id' And student_id='$student_id'","") as $vali) {
+                                    foreach($dbf->fetchOrder('student_fees',"course_id='$course_id' And student_id='$student_id' AND type !='advance'","") as $vali) {
                                         
                                     $dt="";                                    
                                     $ptype = $dbf->strRecordID("common","*","id='$vali[payment_type]'");                                    
@@ -607,7 +623,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                   <td class="text_structure" align="center"><?php echo $ptype[name]; ?></td>
                                   <?php if($vali["paid_date"]!="0000-00-00") { $dt = $vali["paid_date"]; } ?>
                                   <td align="center" class="text_structure"><?php echo $dt;?>&nbsp;&nbsp;</td>
-                                  <td align="right" class="text_structure"><?php if($vali["paid_amt"]!="0") { echo $vali["paid_amt"].'&nbsp;&nbsp;'.$res_currency[symbol]; }?>
+                                  <td align="right" class="text_structure" id="td_paid_amt"><?php if($vali["paid_amt"]!="0") { echo $vali["paid_amt"].'&nbsp;&nbsp;'.$res_currency[symbol]; }?>
                                     &nbsp;&nbsp;</td>
                                   <td align="center" ><?php if($vali["paid_amt"]<=0) { ?>
                                     <img src="../images/block.png" width="16" height="16" title="Not Paid"/>
@@ -823,7 +839,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <td height="28" align="right" valign="top" class="leftmenu"><label class="description" for="element_7"><?php echo constant("STUDENT_ADVISOR_SEARCH_MANAGE_COMMENTS");?></label>
                                 :</td>
                               <td align="left" valign="middle">&nbsp;</td>
-                              <td align="left" valign="middle"><textarea name="textarea" id="textarea" rows="5" cols="40" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF;"></textarea></td>
+							  <?php $invoice_note=($opening_amt > 0?$opening_payment_comment:'');?>
+                              <td align="left" valign="middle"><textarea name="textarea" id="textarea" rows="5" cols="40" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF;"><?php echo $opening_payment_comment;?></textarea></td>
                               <td align="left" valign="middle">&nbsp;</td>
                             </tr>
                             <tr style="display:none;">

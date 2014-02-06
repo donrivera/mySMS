@@ -65,7 +65,10 @@ if($_REQUEST['action']=='transfer'){
 	$email_cont = $dbf->strRecordID("email_templetes","*","id='9'");
 	$email_msg = $email_cont["content"];
 	
-	$email_msg = str_replace('%cd%',$cd,$email_msg);
+	#$email_msg = str_replace('%cd%',$cd,$email_msg);
+	$search = array('%cd%','%teacher%');
+	$replace = array($cd,$teacher);
+	$msg=str_replace($search, $replace, $email_msg); 
 	
 	$body1='<table width="450" border="0" align="center" cellpadding="0" cellspacing="0" style="border:solid 2px; border-color:#FFCC00;">
 	  <tr>
@@ -89,7 +92,7 @@ if($_REQUEST['action']=='transfer'){
 	</table>';	
 	
 	$subj = $email_cont["title"];
-	$subject = str_replace('%teacher%',$teacher,$subj);
+	$subject = str_replace('%username%',$teacher,$subj);
 	//$subject ="Request for transfer from (SA) ".$teacher;
 	mail($to,$subject,$body1,$headers);
 	

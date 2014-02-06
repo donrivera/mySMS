@@ -90,7 +90,7 @@ header("Content-Disposition: attachment; Filename=report_student_not_enrolled.do
 					?>	
       <tr>
         <td height='25' align='center' valign='middle' bgcolor='#F8F9FB' style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $i;?></td>
-        <td height='25' align='left' valign='middle' bgcolor='#F8F9FB' style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val_student[first_name];?></td>
+        <td height='25' align='left' valign='middle' bgcolor='#F8F9FB' style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $dbf->printStudentName($val_student[id]);?></td>
         <td align='left' valign='middle' bgcolor='#F8F9FB' style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val_student[student_mobile];?></td>
         <td align='left' valign='middle' bgcolor='#F8F9FB' style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val_student[email];?></td>
         <td align='left' valign='middle' bgcolor='#F8F9FB' style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $dt;?></td>

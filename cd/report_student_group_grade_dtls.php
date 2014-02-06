@@ -73,7 +73,7 @@ if($_SESSION[font]=='big'){
                   <td width="34%" height="30" align="left" class="logintext">
                   <img src="../images/rightarrow.png" width="16" height="16"> <?php echo constant("ADMIN_MENU_REPORTS_GROUP_GRADE");?></td>
                   <td width="19%" class="logintext">&nbsp;</td>
-                  <td width="31%" align="left"><?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_STUDENT");?> : <?php echo $dbf->getDataFromTable("student", "first_name", "id='$_REQUEST[student_id]'");?> <?php echo $Arabic->en2ar($dbf->StudentName($_REQUEST["student_id"]));?>
+                  <td width="31%" align="left"><?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_STUDENT");?> : <?php echo $dbf->getDataFromTable("student", "first_name", "id='$_REQUEST[student_id]'");?> <?php echo $dbf->printStudentName($_REQUEST["student_id"]);?>
                     </td>
                   <td width="8%" align="left"></td>
                   <td width="8%" align="left">&nbsp;</td>
@@ -118,7 +118,7 @@ if($_SESSION[font]=='big'){
                   <tr>
                     <td>&nbsp;</td>
                     <td align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_REPORT_CERTIFICATE_REPORT_STUDENTNAME");?> :</td>
-                    <td align="left" valign="middle"><span class="lable1"><?php echo $res[first_name]; ?> <?php echo $Arabic->en2ar($dbf->StudentName($r["id"]));?></span></td>
+                    <td align="left" valign="middle"><span class="lable1"><?php echo $dbf->printStudentName($res["id"]);?></span></td>
                   </tr>
                   <tr>
                     <td>&nbsp;</td>
@@ -298,7 +298,7 @@ if($_SESSION[font]=='big'){
                       
                       <td width="19%" class="headingtext">&nbsp;</td>
                       <td width="31%" align="left">
-                        <?php echo $dbf->getDataFromTable("student", "first_name", "id='$_REQUEST[student_id]'");?> <?php echo $Arabic->en2ar($dbf->StudentName($_REQUEST["student_id"]));?> : <?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_STUDENT");?></td>
+                        <?php echo $dbf->getDataFromTable("student", "first_name", "id='$_REQUEST[student_id]'");?> <?php echo $dbf->printStudentName($_REQUEST["student_id"]);?> : <?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_STUDENT");?></td>
                       <td width="8%" align="left">&nbsp; </td>
                       <td width="8%" align="left">&nbsp;</td>
                       <td width="34%" height="30" align="right" class="headingtext"><img src="../images/arrow_small_right4.png" width="16" height="16"><?php echo constant("ADMIN_REPORT_TEACHER_BOARD_PROGRESSREPORTS");?> <img src="../images/arrow_small_right2.png" width="16" height="16"><?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_STUDENTGG");?></td>
@@ -402,7 +402,7 @@ if($_SESSION[font]=='big'){
                               <td width="6%">&nbsp;</td>
                               </tr>
                             <tr>
-                              <td align="right" valign="middle"><span class="lable1"><?php echo $res[first_name]; ?> <?php echo $Arabic->en2ar($dbf->StudentName($res["id"]));?></span></td>
+                              <td align="right" valign="middle"><span class="lable1"><?php echo $dbf->printStudentName($res["id"]);?></span></td>
                               <td align="left" valign="middle" class="pedtext"> : <?php echo constant("ADMIN_REPORT_CERTIFICATE_REPORT_STUDENTNAME");?></td>
                               <td>&nbsp;</td>
                               </tr>

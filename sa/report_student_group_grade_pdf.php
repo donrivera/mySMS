@@ -25,7 +25,7 @@ $html = '<table width="500" border="0" align="center" cellpadding="0" cellspacin
 		  </tr>';
 		 $res = $dbf->strRecordID("student","*","id='$_REQUEST[student_id]'");
 		  $html.='<tr>
-			<td align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.STUDENT_ADVISOR_S2_NAME.' : '.$res["first_name"].' '.$Arabic->en2ar($dbf->StudentName($res["id"])).'</span></td>
+			<td align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.STUDENT_ADVISOR_S2_NAME.' : '.$dbf->printStudentName($res["id"]).'</span></td>
 		  </tr>
 		  <tr>
 			<td align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.ADMIN_REPORT_STUDENT_GROUP_GRADE_IDNO.' : '.$res["student_id"].'</span></td>
@@ -59,7 +59,7 @@ $html = '<table width="500" border="0" align="center" cellpadding="0" cellspacin
             $grade_name = $grade[name];
           $html.='<tr>
             <td height="25" align="center" valign="middle" bgcolor="#F8F9FB">&nbsp;</td>
-            <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" >'.$res_course["name"].'</td>
+            <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" >'.$dbf->printStudentName($res_course["id"]).'</td>
             <td align="center" valign="middle" bgcolor="#F8F9FB" >'.$mark.'%</td>
             <td align="center" valign="middle" bgcolor="#F8F9FB" >'.$grade_name.'</td>';
             }

@@ -145,6 +145,8 @@ function showweek(type, dt, tm){
 		document.getElementById('lblweek').innerHTML = dt +' / '+ tm;
 		
 		document.getElementById('dt').value = dt;
+		document.getElementById('date_value').value=dt;
+		date_change();
 		document.getElementById('tm').value = tm;
 	}else{
 		document.getElementById('lblweek').innerHTML = type;
@@ -188,7 +190,6 @@ function date_change(){
 		totalunit = (parseInt(totalunit)/unit_per_week) * 7;
 		newDays = totalunit;	
 		new_computed_units = (newDays  % 2 == 0 ? Math.floor(newDays) : Math.ceil(newDays));
-		alert(newDays+'to'+new_computed_units);
 		var myDate=new Date(dateParts);
 		var x = myDate.setDate(myDate.getDate()+parseInt(new_computed_units));
 		var end_day= myDate.getDay();

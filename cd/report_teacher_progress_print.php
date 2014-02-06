@@ -123,12 +123,12 @@ font-weight:bold;
 		  ?>
           <tr>
             <td height="20" align="left" valign="middle" class="leftmenu">&nbsp;<?php echo constant("STUDENT_ADVISOR_S2_NAME");?> : </td>
-            <td align="left" valign="middle" class="content"><?php echo $res_student[first_name];?></td>
+            <td align="left" valign="middle" class="content"><?php echo $dbf->printStudentName($res_student["id"]);?></td>
             <td>&nbsp;</td>
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="41%" height="20" align="left" valign="middle" class="leftmenu"><?php echo constant("CD_GROUP_PROGRESS_COMPANYGROUP");?> : </td>
-                <td width="59%" align="left" valign="middle" class="content" ><?php echo $res_g[group_name];?> <?php echo $res_g["group_time"];?>-<?php echo $dbf->GetGroupTime($res_g["id"]);?></td>
+                <td width="59%" align="left" valign="middle" class="content" ><?php echo $res_g[group_name];?> <?php echo $dbf->printClassTimeFormat($res_g["group_start_time"],$res_g["group_end_time"]);?></td>
               </tr>
             </table></td>
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">

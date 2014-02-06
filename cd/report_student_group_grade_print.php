@@ -6,17 +6,9 @@ include_once '../includes/class.Main.php';
 
 //Object initialization
 $dbf = new User();
-include '../includes/FusionCharts.php';
 include_once '../includes/language.php';
-//Important below 2 lines
-header("Content-type: application/vnd.ms-word");
-header("Content-Disposition: attachment; Filename=report_student_group_grade.doc");
-?>
-
-<!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
-	
-<table width="500" border="0" cellspacing="0" cellpadding="0">
+?>	
+<table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#999999" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
       <tr>
         <td>&nbsp;</td>
       </tr>
@@ -83,5 +75,7 @@ header("Content-Disposition: attachment; Filename=report_student_group_grade.doc
         <td align="center" valign="middle">&nbsp;</td>
 </tr>
     </table>
-            
+<script type="text/javascript">
+window.print();
+</script>
            

@@ -1411,8 +1411,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 
                               <td>&nbsp;</td>
 
-                              <td align="left" valign="middle"><input name="email" type="text" class="validate[required,custom[email]] new_textbox190" id="email" value="<?php echo $_SESSION[classic_email];?>" onfocus="get_arabic();"/></td>
-
+                              <td align="left" valign="middle"><input name="email" type="text" class="new_textbox190" id="email" value="<?php echo $_SESSION[classic_email];?>" onfocus="get_arabic();"/></td>
+								<!--class="validate[required,custom[email]] new_textbox190"-->
                               <td>&nbsp;</td>
 
                               </tr>

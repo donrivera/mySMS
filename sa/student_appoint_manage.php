@@ -253,7 +253,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					*/
 					if($_REQUEST["fname"]!="")
 					{
-						$condition="s.first_name LIKE '$_REQUEST[fname]%' AND s.centre_id='$centre_id'";
+						$condition="(s.first_name LIKE '$_REQUEST[fname]%' OR first_name1 LIKE '$_REQUEST[fname]%') AND s.centre_id='$centre_id'";
 						if($_REQUEST["future"] == "1" && $_REQUEST["status"] == "Red")
 						{$condition .= " And sa.dated > '$dated' And sa.status='0'";}
 						else if($_REQUEST["future"] == "" && $_REQUEST["status"] == "Red")

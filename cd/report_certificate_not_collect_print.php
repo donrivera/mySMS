@@ -46,7 +46,7 @@ include_once '../includes/language.php';
   <tr bgcolor="<?php echo $color;?>">
     
     <td width="5%" height="25" align="center" valign="middle" class="mycon"><?php echo $k; ?></td>
-    <td width="18%" align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[first_name]." [".$num_dtls."]";?></td>
+    <td width="18%" align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dbf->printStudentName($val[id]);?></td>
     <td width="18%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
     <td width="28%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
     <td width="7%" align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[age];?></td>

@@ -38,6 +38,7 @@ if($_REQUEST['action']=='update')
 	$string_fees="type='cancelled student'";
 	$dbf->updateTable("student_fees",$string_fees,"student_id='$student_id' And course_id='$course_id'");
 	$date_time = date('Y-m-d H:i:s A');
+	$dbf->updateTable("student_moving","status_id='7'","student_id='$student_id'");
 	$string2="course_id='$course_id',date_time='$date_time',user_id='$_SESSION[id]',status_id='7'";
 	$dbf->updateTable("student_moving_history",$string2,"group_id='$my_prev_group_id' AND student_id='$student_id'");
 	$grp_email_dtl=$dbf->genericQuery("

@@ -7,7 +7,7 @@ $dbf = new User();
 $Arabic = new I18N_Arabic('Transliteration');
 
 $write_text = trim($_GET["q"]);
-$ctr_id = $_REQUEST['centre_id'];
+$ctr_id = (empty($_REQUEST['centre_id'])?$_SESSION['centre_id']:$_REQUEST['centre_id']);
 
 if (!$write_text) return;
 

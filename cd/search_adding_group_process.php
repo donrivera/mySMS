@@ -49,7 +49,7 @@ if($num_student == 0)
 	$duplicate_course=$dbf->countRows('student_group_dtls',"course_id='$course_id' && student_id='$student_id'");
 	if($duplicate_course==1)
 	{
-		echo '<script type="text/javascript">alert("Duplicate Course!");self.parent.location.href="search.php";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Duplicate Course!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
 	}
 	else
 	{	$studentSendSMS=1;
@@ -128,19 +128,19 @@ else
 	$duplicate_course=$dbf->countRows('student_group_dtls',"course_id='$course_id' && student_id='$student_id'");
 	if($group_status=='Completed')
 	{
-		echo '<script type="text/javascript">alert("Group Status: Completed");self.parent.location.href="search.php";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Group Status: Completed");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
 	}
 	elseif($total_students >12)
 	{
-		echo '<script type="text/javascript">alert("Group has 12 students!!");self.parent.location.href="search.php";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Group has 12 students!!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
 	}
 	elseif($duplicate_course > 0)
 	{
-		echo '<script type="text/javascript">alert("Duplicate Course!");self.parent.location.href="search.php";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Duplicate Course!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
 	}
 	elseif($validate > 0)
 	{
-		echo '<script type="text/javascript">alert("Duplicate Entry!");self.parent.location.href="search.php";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Duplicate Entry!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
 	}
 	else
 	{	$studentSendSMS=1;
@@ -199,10 +199,10 @@ else
 		$sizegroup = $dbf->strRecordID("group_size","*","(size_to>='$prev_num_student' And size_from<='$prev_num_student')");
 		//update the Group ID to Student_group Table means we can get the student according to group_id
 		$string_g="group_id='$sizegroup[group_id]'";
-		$dbf->updateTable("student_group",$string_g,"id='$group'");
+			#$dbf->updateTable("student_group",$string_g,"id='$group'");
 		//update in group details
 		$string_g1="group_id='$sizegroup[group_id]'";
-		$dbf->updateTable("student_group_dtls",$string_g1,"parent_id='$group'");
+			#$dbf->updateTable("student_group_dtls",$string_g1,"parent_id='$group'");
 		#SEND EMAIL
 		$grp_email_dtl=$dbf->genericQuery("
 											SELECT sg.units, sg.group_name, sg.end_date, sgd.total
@@ -290,6 +290,7 @@ if($studentSendSMS==1)
 	}
 }
 ?>
+
 <script type="text/javascript">
 	self.parent.location.href='search_manage.php?student_id=<?php echo $student_id;?>';
 	self.parent.tb_remove();

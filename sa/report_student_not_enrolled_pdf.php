@@ -78,7 +78,7 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0" style="b
 		
 	$html.='<tr bgcolor="'.$color.'">
 	  <td height="25" align="center" valign="middle" class="contenttext">'.$i.'</td>
-	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val_student["first_name"].'&nbsp;'.$Arabic->en2ar($dbf->StudentName($val_student["id"])).'</span></td>
+	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($val_student["id"]).'</span></td>
 	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val_student["student_mobile"].'</td>
 	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val_student["email"].'</td>
 	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$dt.'</td>
@@ -92,6 +92,6 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0" style="b
 
 	$mpdf = new mPDF('utf-8', 'A4-L');
 	$mpdf->WriteHTML($html);
-	$mpdf->Output("report_student_statuses.pdf", 'D');
+	$mpdf->Output("report_student_not_enrolled.pdf", 'D');
 	exit;
 ?>

@@ -75,6 +75,7 @@ include_once '../includes/language.php';
 <!--*******************************************************************-->
 
 </head>
+<script type="text/javascript"  src="../js/jquery-1.3.2.min.js"></script>
 <script language="Javascript" type="text/javascript">
 var countdown;
 var countdown_number;

@@ -1025,7 +1025,7 @@ class User extends Dbfunctions{
 		//1.
 		
 		if($fname!='' && $stid=='' && $mobile=='' && $email==''){
-			$condition = "(".$alias."family_name LIKE '$fname%' OR ".$alias."family_name1 LIKE '$fname%' OR ".$alias."first_name LIKE '$fname%' OR ".$alias."student_first_name LIKE '$fname%')";
+			$condition = "(".$alias."family_name LIKE '$fname%' OR ".$alias."family_name1 LIKE '$fname%' OR ".$alias."first_name LIKE '$fname%' OR ".$alias."first_name1 LIKE '$fname%')";
 		}else if($fname=='' && $stid!='' && $mobile=='' && $email==''){
 			$condition = $alias."student_id LIKE '$stid%'";
 		}else if($fname=='' && $stid=='' && $mobile!='' && $email==''){
@@ -1037,11 +1037,11 @@ class User extends Dbfunctions{
 		
 		//2.
 		else if($fname!='' && $stid!='' && $mobile=='' && $email==''){
-			$condition = "(".$alias."family_name LIKE '$fname%' OR ".$alias."family_name1 LIKE '$fname%' OR ".$alias."first_name LIKE '$fname%' OR ".$alias."student_first_name LIKE '$fname%') AND ".$alias."student_id LIKE '$stid%'";
+			$condition = "(".$alias."family_name LIKE '$fname%' OR ".$alias."family_name1 LIKE '$fname%' OR ".$alias."first_name LIKE '$fname%' OR ".$alias."first_name1 LIKE '$fname%') AND ".$alias."student_id LIKE '$stid%'";
 		}else if($fname!='' && $stid=='' && $mobile!='' && $email==''){
-			$condition = "(".$alias."family_name LIKE '$fname%' OR ".$alias."family_name1 LIKE '$fname%' OR ".$alias."first_name LIKE '$fname%' OR ".$alias."student_first_name LIKE '$fname%') AND ".$alias."student_mobile LIKE '$mobile%'";
+			$condition = "(".$alias."family_name LIKE '$fname%' OR ".$alias."family_name1 LIKE '$fname%' OR ".$alias."first_name LIKE '$fname%' OR ".$alias."first_name1 LIKE '$fname%') AND ".$alias."student_mobile LIKE '$mobile%'";
 		}else if($fname!='' && $stid=='' && $mobile=='' && $email!=''){
-			$condition = "(".$alias."family_name LIKE '$fname%' OR ".$alias."family_name1 LIKE '$fname%' OR ".$alias."first_name LIKE '$fname%' OR ".$alias."student_first_name LIKE '$fname%') AND ".$alias."email LIKE '$email%'";
+			$condition = "(".$alias."family_name LIKE '$fname%' OR ".$alias."family_name1 LIKE '$fname%' OR ".$alias."first_name LIKE '$fname%' OR ".$alias."first_name1 LIKE '$fname%') AND ".$alias."email LIKE '$email%'";
 		}else if($fname=='' && $stid!='' && $mobile!='' && $email==''){
 			$condition = "".$alias."student_mobile LIKE '$mobile%' AND ".$alias."student_id LIKE '$stid%'";
 		}else if($fname=='' && $stid=='' && $mobile!='' && $email!=''){
@@ -1053,11 +1053,11 @@ class User extends Dbfunctions{
 		
 		//3.
 		else if($fname!='' && $stid!='' && $mobile!='' && $email==''){
-			$condition = "(".$alias."family_name LIKE '$fname%' OR ".$alias."family_name1 LIKE '$fname%' OR ".$alias."first_name LIKE '$fname%' OR ".$alias."student_first_name LIKE '$fname%') AND ".$alias."student_id LIKE '$stid%' AND ".$alias."student_mobile LIKE '$mobile%'";
+			$condition = "(".$alias."family_name LIKE '$fname%' OR ".$alias."family_name1 LIKE '$fname%' OR ".$alias."first_name LIKE '$fname%' OR ".$alias."first_name1 LIKE '$fname%') AND ".$alias."student_id LIKE '$stid%' AND ".$alias."student_mobile LIKE '$mobile%'";
 		}else if($fname!='' && $stid!='' && $mobile=='' && $email!=''){
-			$condition = "(".$alias."family_name LIKE '$fname%' OR ".$alias."family_name1 LIKE '$fname%' OR ".$alias."first_name LIKE '$fname%' OR ".$alias."student_first_name LIKE '$fname%') AND ".$alias."student_id LIKE '$stid%' AND ".$alias."email LIKE '$email%'";
+			$condition = "(".$alias."family_name LIKE '$fname%' OR ".$alias."family_name1 LIKE '$fname%' OR ".$alias."first_name LIKE '$fname%' OR ".$alias."first_name1 LIKE '$fname%') AND ".$alias."student_id LIKE '$stid%' AND ".$alias."email LIKE '$email%'";
 		}else if($fname!='' && $stid=='' && $mobile!='' && $email!=''){
-			$condition = "(".$alias."family_name LIKE '$fname%' OR ".$alias."family_name1 LIKE '$fname%' OR ".$alias."first_name LIKE '$fname%' OR ".$alias."student_first_name LIKE '$fname%') AND ".$alias."student_mobile LIKE '$mobile%' AND ".$alias."email LIKE '$email%'";
+			$condition = "(".$alias."family_name LIKE '$fname%' OR ".$alias."family_name1 LIKE '$fname%' OR ".$alias."first_name LIKE '$fname%' OR ".$alias."first_name1 LIKE '$fname%') AND ".$alias."student_mobile LIKE '$mobile%' AND ".$alias."email LIKE '$email%'";
 		}else if($fname=='' && $stid!='' && $mobile!='' && $email!=''){
 			$condition = "".$alias."student_id LIKE '$stid%' AND ".$alias."student_mobile LIKE '$mobile%' AND ".$alias."email LIKE '$email%'";
 		}
@@ -1065,7 +1065,7 @@ class User extends Dbfunctions{
 		
 		//4.
 		else if($fname!='' && $stid!='' && $mobile!='' && $email!=''){
-			$condition = "(".$alias."family_name LIKE '$fname%' OR ".$alias."family_name1 LIKE '$fname%' OR ".$alias."first_name LIKE '$fname%' OR ".$alias."student_first_name LIKE '$fname%') AND ".$alias."student_id LIKE  '$stid%' AND ".$alias."student_mobile LIKE '$mobile%' AND ".$alias."email LIKE '$email%'";
+			$condition = "(".$alias."family_name LIKE '$fname%' OR ".$alias."family_name1 LIKE '$fname%' OR ".$alias."first_name LIKE '$fname%' OR ".$alias."first_name1 LIKE '$fname%') AND ".$alias."student_id LIKE  '$stid%' AND ".$alias."student_mobile LIKE '$mobile%' AND ".$alias."email LIKE '$email%'";
 		}else if($fname=='' && $stid=='' && $mobile=='' && $email==''){
 			$condition = $alias."id > '0'";
 		}
@@ -1154,7 +1154,8 @@ class User extends Dbfunctions{
 		
 		//Invoice No
 		// Return values like Enrollment Serial No + Course Code + Student Serial No
-		return $inv_no = str_pad($enroll_dtls["id"], 8, "0", STR_PAD_LEFT).$course_dtls["code"].str_pad($student_id, 8, "0", STR_PAD_LEFT);
+		#str_pad($enroll_dtls["id"], 8, "0", STR_PAD_LEFT).$course_dtls["code"].str_pad($student_id, 8, "0", STR_PAD_LEFT);
+		return $inv_no = "00".$enroll_dtls["id"].$course_dtls["code"].str_pad($student_id, 8, "0", STR_PAD_LEFT);
 	}
 	# CORE SCHEDULING 
 	# Created On: 9-22-2013
@@ -1163,19 +1164,19 @@ class User extends Dbfunctions{
 	function scheduleCall($prev_num,$student_id,$group,$teacher_id)
 	{	
 		$dbf = new User();
+		#$centre_id=$_SESSION['centre_id'];
 		$new_enrolee=$dbf->countRows('student',"id='$student_id'");
 		$total_students=$prev_num + $new_enrolee;
 		$student_group=$dbf->strRecordID("student_group","start_date","id='$group'");
 		$current_total_unit=$dbf->strRecordID("student_group","units,teacher_id,start_date,unit_per_day","id='$group'");
 		$teacher_id=$current_total_unit['teacher_id'];
 		$start_date=$current_total_unit['start_date'];
-		$query=$dbf->genericQuery("SELECT units,unit_per_day FROM centre_group_size WHERE('$total_students' BETWEEN size_from AND size_to)");
-		foreach($query as $q):
-			$week_total=round($q['units']/($q['unit_per_day'] * 5),0);
-			$new_unit=$q['units'];
-		endforeach;
-		$compute_date = strtotime($student_group['start_date'] .'+ '.$week_total.' week');
-		$end_date=date('Y-m-d',$compute_date);
+		$query=$dbf->genericQuery("SELECT units FROM group_size WHERE('$total_students' BETWEEN size_from AND size_to)");
+		foreach($query as $q):$new_unit=$q['units'];endforeach;
+		$no_unit = ($new_unit/($current_total_unit['unit_per_day'] * 5)) * 7;	
+		$new_no_units=($no_unit %2==0?intval($no_unit):ceil($no_unit));
+		$dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($student_group['start_date'])) . "+$new_no_units day"));
+		$end_date=$dbf->printClassChangedEndDate($dt1);
 		$checknextclass= $dbf->genericQuery(" 	SELECT *
 												FROM student_group
 												WHERE teacher_id='$teacher_id' 
@@ -1188,96 +1189,82 @@ class User extends Dbfunctions{
 			$total_ped_units=$max_ped['max'] *  $current_total_unit['unit_per_day'];
 			if(empty($max_ped) || $max_ped==NULL)
 			{	#echo"2";
-				$dbf->updateTable("student_group","units='$new_unit',end_date='$end_date'","id='$group'");
+				$dbf->updateTable("student_group","units='$new_no_units',end_date='$end_date'","id='$group'");
 			}
 			else
 			{	#echo"3";
 				$adj=$dbf->computeAdjustments($total_students,$current_total_unit['units'],$total_ped_units,$new_unit);
-				$new_computed_units=$adj[units];
+				$new_computed_units=$adj['units'];
 				$dbf->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
 			}
 		}
 		else
 		{ //echo "query";
 			foreach($checknextclass as $next_class):
-				$nc_group_id=$next_class[id];
-				$nc_start_date=$next_class[start_date];
-				$nc_end_date=$next_class[end_date];
-				$nc_units=$next_class[units] / ($next_class['unit_per_day'] * 5);
-				$nc_set_unit=$next_class[units];
+				$nc_group_id=$next_class['id'];
+				$nc_start_date=$next_class['start_date'];
+				$nc_end_date=$next_class['end_date'];
+				$nc_units=($next_class['units'] / ($next_class['unit_per_day'] * 5)) * 7;
+				$nc_set_unit=$next_class['units'];
+				$nc_set_days=($nc_units %2==0?intval($nc_units):ceil($nc_units));
+				$nc_compute_date = date('Y-m-d',strtotime($end_date .'+ 1 day'));
+				$new_nc_compute_date=$dbf->printClassChangedEndDate($nc_compute_date);
+				$nc_dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($new_nc_compute_date)) . "+$nc_set_days day"));
+				$nc_compute_end_date=$dbf->printClassChangedEndDate($nc_dt1);
+				$thirdchecknextclass= $dbf->genericQuery(" 	SELECT *
+															FROM student_group
+															WHERE teacher_id='$teacher_id' 
+															AND (id != '$group' AND id !='$nc_group_id')
+															AND ('$nc_compute_end_date' BETWEEN start_date AND end_date)
+														");
+				if(empty($thirdchecknextclass) || $thirdchecknextclass==NULL)
+				{	
+					$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
+					$total_ped_units=$max_ped['max'] *  $current_total_unit['unit_per_day'];
+					if(empty($max_ped) || $max_ped==NULL)
+					{	
+						$dbf->updateTable("student_group","units='$new_no_units',end_date='$end_date'","id='$group'");
+					}
+					else
+					{	
+						$adj=$dbf->computeAdjustments($total_students,$current_total_unit['units'],$total_ped_units,$new_unit);
+						$new_computed_units=$adj[units];
+						$dbf->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
+					}
+					$dbf->updateTable("student_group","units='$nc_set_unit',start_date='$new_nc_compute_date',end_date='$nc_compute_end_date'","id='$nc_group_id'");
+				}
+				else
+				{	
+					foreach($thirdchecknextclass as $third_class):
+						$thirdc_group_id=$third_class['id'];
+						$thirdc_start_date=$third_class['start_date'];
+						$thirdc_end_date=$third_class['end_date'];
+						$thirdc_units=($third_class['units'] / ($third_class['unit_per_day'] * 5)) * 7;
+						$thirdc_set_unit=$third_class['units'];
+					endforeach;
+					$thirdc_set_days=($thirdc_units %2==0?intval($thirdc_units):ceil($thirdc_units));
+					$thirdc_compute_date = date('Y-m-d',strtotime($nc_compute_end_date .'+ 1 day'));
+					$new_thirdc_compute_date=$dbf->printClassChangedEndDate($thirdc_compute_date);
+					$thirdc_dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($new_thirdc_compute_date)) . "+$thirdc_set_days day"));
+					$thirdc_compute_end_date=$dbf->printClassChangedEndDate($thirdc_dt1);
+				
+					$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
+					$total_ped_units=$max_ped['max'] *  $current_total_unit['unit_per_day'];
+					//echo var_dump($max_ped);
+					if(empty($max_ped) || $max_ped==NULL)
+					{	
+						$dbf->updateTable("student_group","units='$new_no_units',end_date='$end_date'","id='$group'");
+					}
+					else
+					{	
+						$adj=$dbf->computeAdjustments($total_students,$current_total_unit['units'],$total_ped_units,$new_unit);
+						$new_computed_units=$adj[units];
+						$dbf->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
+					}
+					$dbf->updateTable("student_group","units='$nc_set_unit',start_date='$new_nc_compute_date',end_date='$nc_compute_end_date'","id='$nc_group_id'");
+					$dbf->updateTable("student_group","units='$thirdc_set_unit',start_date='$new_thirdc_compute_date',end_date='$thirdc_compute_end_date'","id='$thirdc_group_id'");
+				}
 			endforeach;
-			//$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
-			//$days = (strtotime($end_date) - strtotime($nc_start_date)) / (60 * 60 * 24);
-			//echo "<BR/>".$difference_weeks=($days <0 ? $days * -1 /7 : $days/7);
-			//$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
-			$nc_compute_date = date('Y-m-d',strtotime($end_date .'+ 1 day'));
-			if(date("D",$nc_compute_date)==Fri)
-			{$nc_compute_date = date('Y-m-d',strtotime($end_date .'+ 2 day'));}
-			$nc_compute_end_date=date('Y-m-d',strtotime($nc_compute_date.'+'.$nc_units.'week'));
-			$thirdchecknextclass= $dbf->genericQuery(" 	SELECT *
-														FROM student_group
-														WHERE teacher_id='$teacher_id' 
-														AND (id != '$group' AND id !='$nc_group_id')
-														AND ('$nc_compute_end_date' BETWEEN start_date AND end_date)
-													");
-			if(empty($thirdchecknextclass) || $thirdchecknextclass==NULL)
-			{	
-				$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
-				$total_ped_units=$max_ped['max'] *  $current_total_unit['unit_per_day'];
-				if(empty($max_ped) || $max_ped==NULL)
-				{	
-					$dbf->updateTable("student_group","units='$new_unit',end_date='$end_date'","id='$group'");
-				}
-				else
-				{	
-					$adj=$dbf->computeAdjustments($total_students,$current_total_unit['units'],$total_ped_units,$new_unit);
-					$new_computed_units=$adj[units];
-					$dbf->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
-				}
-				
-				$nc_compute_date = date('Y-m-d',strtotime($end_date .'+ 1 day'));
-				if(date("D",$nc_compute_date)==Fri)
-				{$nc_compute_date = date('Y-m-d',strtotime($end_date .'+ 2 day'));}
-				$nc_compute_end_date=date('Y-m-d',strtotime($nc_compute_date.'+'.$nc_units.'week'));
-				$dbf->updateTable("student_group","units='$nc_set_unit',start_date='$nc_compute_date',end_date='$nc_compute_end_date'","id='$nc_group_id'");
-				
-			}
-			else
-			{	
-				foreach($thirdchecknextclass as $third_class):
-					$thirdc_group_id=$third_class[id];
-					$thirdc_start_date=$third_class[start_date];
-					$thirdc_end_date=$third_class[end_date];
-					$thirdc_units=$third_class[units] / ($third_class['unit_per_day'] * 5);
-					$thirdc_set_units=$third_class[units];
-				endforeach;
-				//echo "adjust current group end date".$end_date."<BR/>";
-				//echo "adjust second group end_date".$nc_end_date=$next_class[end_date]."<BR/>";
-				$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
-				$total_ped_units=$max_ped['max'] *  $current_total_unit['unit_per_day'];
-				//echo var_dump($max_ped);
-				if(empty($max_ped) || $max_ped==NULL)
-				{	
-					$dbf->updateTable("student_group","units='$new_unit',end_date='$end_date'","id='$group'");
-				}
-				else
-				{	
-					$adj=$dbf->computeAdjustments($total_students,$current_total_unit['units'],$total_ped_units,$new_unit);
-					$new_computed_units=$adj[units];
-					$dbf->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
-				}
-				$nc_compute_date = date('Y-m-d',strtotime($end_date .'+ 1 day'));
-				if(date("D",$nc_compute_date)==Fri)
-				{$nc_compute_date = date('Y-m-d',strtotime($end_date .'+ 2 day'));}
-				$nc_compute_end_date=date('Y-m-d',strtotime($nc_compute_date.'+'.$nc_units.'week'));
-				$dbf->updateTable("student_group","units='$nc_set_unit',start_date='$nc_compute_date',end_date='$nc_compute_end_date'","id='$nc_group_id'");
-				//ADJUSTMENT FRO 3rd Schedule
-				$thirdc_compute_date = date('Y-m-d',strtotime($nc_compute_end_date .'+ 1 day'));
-				if(date("D",$thirdc_compute_date)==Fri)
-				{$thirdc_compute_date = date('Y-m-d',strtotime($nc_compute_end_date .'+ 2 day'));}
-				$thirdc_compute_end_date=date('Y-m-d',strtotime($thirdc_compute_date.'+'.$thirdc_units.'week'));
-				$dbf->updateTable("student_group","units='$thirdc_set_units',start_date='$thirdc_compute_date',end_date='$thirdc_compute_end_date'","id='$thirdc_group_id'");
-			}
 		}
 	}
 	function computeAdjustments($total_students,$current_total_unit,$max_ped,$new_unit)
@@ -1622,10 +1609,17 @@ class User extends Dbfunctions{
 		$teacher_id=$current_group['teacher_id'];
 		if($new_group['units'] < $current_group['units'])
 		{#echo "<BR/>Condition<BR/>";
-			
-			$weeks=$new_group['units']/($current_group['unit_per_day'] * 5);
+			/*
+			$weeks=($new_group['units']/($current_group['unit_per_day'] * 5)* 7);
 			$compute_date = strtotime($current_group['start_date'] .'+ '.$weeks.' week');
 			$end_date=date('Y-m-d',$compute_date);
+			*/
+			
+			$no_unit = ($new_group['units']/($current_group['unit_per_day'] * 5)) * 7;	
+			$days=($no_unit %2==0?intval($no_unit):ceil($no_unit));
+			$dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($current_group['start_date'])) . "+$days day"));
+			$end_date=$this->printClassChangedEndDate($dt1);
+			
 			$current_group_end_date=strtotime($current_group['end_date'] .'+ 1 week');
 			$group1_end_date=date('Y-m-d',$current_group_end_date);
 			$second_group=$this->genericQuery(" SELECT * FROM student_group 
@@ -1651,65 +1645,62 @@ class User extends Dbfunctions{
 			{
 				foreach($second_group as $sg):
 					$second_group_id=$sg[id];
-					$second_count_weeks=$sg[units]/($sg['unit_per_day'] * 5);
+					$second_count_days=($sg[units]/($sg['unit_per_day'] * 5))* 7;
 					$second_group_end_date=strtotime($sg['end_date'] .'+ 1 week');
-				endforeach;
-				$group2_end_date=date('Y-m-d',$second_group_end_date);
-				$third_group= $this->genericQuery(" SELECT * FROM student_group 
-													WHERE teacher_id='$teacher_id' 
-													AND (id != '$group' AND id !='$second_group[id]')
-													AND ('$group2_end_date' BETWEEN start_date AND end_date)");
+					$second_start_date=date('Y-m-d',strtotime($end_date.' +1 day')); 
+					$new_second_end_date=$this->printClassChangedEndDate($second_start_date);
+					$count_second_days=($second_count_days %2==0?intval($second_count_days):ceil($second_count_days));
+					$second_dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($second_start_date)) . "+$count_second_days day"));
+					$second_end_date=$this->printClassChangedEndDate($second_dt1);
+					$group2_end_date=date('Y-m-d',$second_group_end_date);
+					$third_group= $this->genericQuery(" SELECT * FROM student_group 
+														WHERE teacher_id='$teacher_id' 
+														AND (id != '$group' AND id !='$second_group[id]')
+														AND ('$group2_end_date' BETWEEN start_date AND end_date)");
 				
-				if(empty($third_group) || $third_group==NULL)
-				{
-					if(empty($max_ped) || $max_ped==NULL)
-					{	
-						$this->updateTable("student_group","units='$new_group[units]',end_date='$end_date'","id='$group'");
-						#echo "<BR/>Group 1:".$group."-".$new_group[units]."-".$end_date."<BR/>";
+					if(empty($third_group) || $third_group==NULL)
+					{
+						if(empty($max_ped) || $max_ped==NULL)
+						{	
+							$this->updateTable("student_group","units='$new_group[units]',end_date='$end_date'","id='$group'");
+							#echo "<BR/>Group 1:".$group."-".$new_group[units]."-".$end_date."<BR/>";
+						}
+						else
+						{	
+							$adj=$this->computeAdjustments($prev_num,$current_group['units'],$total_ped_units,$new_group['units']);
+							$new_computed_units=$adj[units];
+							$this->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
+							#echo "<BR/>Group 1:".$group."-units:".$new_computed_units."-".$end_date."<BR/>";
+						}
+						$this->updateTable("student_group","start_date='$new_second_end_date',end_date='$second_end_date'","id='$second_group_id'");
 					}
 					else
-					{	
-						$adj=$this->computeAdjustments($prev_num,$current_group['units'],$total_ped_units,$new_group['units']);
-						$new_computed_units=$adj[units];
-						$this->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
-						#echo "<BR/>Group 1:".$group."-units:".$new_computed_units."-".$end_date."<BR/>";
+					{
+						foreach($third_group as $tg):
+							$third_group_id=$tg[id];
+							$third_count_days=($tg[units]/($tg['unit_per_day'] * 5)) * 7;
+						endforeach;
+						if(empty($max_ped) || $max_ped==NULL)
+						{	
+							$this->updateTable("student_group","units='$new_group[units]',end_date='$end_date'","id='$group'");
+							//echo "<BR/>Group 1:".$group."-".$new_group[units]."-".$end_date."<BR/>";
+						}
+						else
+						{	
+							$adj=$this->computeAdjustments($prev_num,$current_group['units'],$total_ped_units,$new_group['units']);
+							$new_computed_units=$adj[units];
+							$this->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
+							#echo "<BR/>Group 1:".$group."-units:".$new_computed_units."-".$end_date."<BR/>";
+						}
+						$this->updateTable("student_group","start_date='$new_second_end_date',end_date='$second_end_date'","id='$second_group_id'");
+						$third_start_date=date('Y-m-d',strtotime($second_end_date.'+1 day')); 
+						$new_third_start_date=$this->printClassChangedEndDate($third_start_date);
+						$count_third_days=($third_count_days %2==0?intval($third_count_days):ceil($third_count_days));
+						$third_dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($third_start_date)) . "+$count_third_days day"));
+						$third_end_date=$this->printClassChangedEndDate($third_dt1);
+						$this->updateTable("student_group","start_date='$third_start_date',end_date='$third_end_date'","id='$third_group_id'");
 					}
-					$second_start_date=date('Y-m-d',strtotime($end_date.' +1 day')); 
-					$second_compute_date = strtotime($second_start_date .'+ '.$second_count_weeks.' week');
-					$second_end_date=date('Y-m-d',$second_compute_date);
-					$this->updateTable("student_group","start_date='$second_start_date',end_date='$second_end_date'","id='$second_group_id'");
-					//echo "Group 1".$group.$new_group[units].$end_date."<BR/>";
-					//echo "Group 2".$second_group_id.$second_start_date.$second_end_date."<BR/>";
-				}
-				else
-				{
-					foreach($third_group as $tg):
-						$third_group_id=$tg[id];
-						$third_count_weeks=$tg[units]/($tg['unit_per_day'] * 5);
-					endforeach;
-					if(empty($max_ped) || $max_ped==NULL)
-					{	
-						$this->updateTable("student_group","units='$new_group[units]',end_date='$end_date'","id='$group'");
-						//echo "<BR/>Group 1:".$group."-".$new_group[units]."-".$end_date."<BR/>";
-					}
-					else
-					{	
-						$adj=$this->computeAdjustments($prev_num,$current_group['units'],$total_ped_units,$new_group['units']);
-						$new_computed_units=$adj[units];
-						$this->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
-						#echo "<BR/>Group 1:".$group."-units:".$new_computed_units."-".$end_date."<BR/>";
-					}
-					$second_start_date=date('Y-m-d',strtotime($end_date.' +1 day')); 
-					$second_compute_date = strtotime($second_start_date .'+ '.$second_count_weeks.' week');
-					$second_end_date=date('Y-m-d',$second_compute_date);
-					$this->updateTable("student_group","start_date='$second_start_date',end_date='$second_end_date'","id='$second_group_id'");
-					$third_start_date=date('Y-m-d',strtotime($second_end_date.'+1 day')); 
-					$third_compute_date = strtotime($third_start_date .'+ '.$third_count_weeks.' week');
-					$third_end_date=date('Y-m-d',$third_compute_date);
-					#echo "<BR/>Group 2:".$second_group_id."-".$second_start_date."-".$second_end_date."<BR/>";
-					#echo "<BR/>Group 3:".$third_group_id."-".$third_start_date."-".$third_end_date."<BR/>";
-					$this->updateTable("student_group","start_date='$third_start_date',end_date='$third_end_date'","id='$third_group_id'");
-				}
+				endforeach;
 			}
 		}
 	}

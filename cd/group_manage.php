@@ -61,7 +61,7 @@ if($_SESSION[font]=='big'){
 <?php if($_SESSION[lang]=="EN"){?>
 <script type="text/javascript">
 	$(function() {
-		$("#sort_table")
+		$("#sort_table1")
 			.tablesorter({ 
         // pass the headers argument and assing a object 
         headers: { 
@@ -77,7 +77,7 @@ if($_SESSION[font]=='big'){
 <?php }else{?>
 <script type="text/javascript">
 	$(function() {
-		$("#sort_table")
+		$("#sort_table1")
 			.tablesorter({ 
         // pass the headers argument and assing a object 
         headers: { 

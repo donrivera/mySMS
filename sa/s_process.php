@@ -77,14 +77,23 @@ if($_REQUEST['action']=='classic')
 	$dt = date('Y-m-d h:m:s');
 		
 	//Checking for duplcate Email Address
-	$num_email=$dbf->countRows('student',"email='$_POST[email]'");
-	if($num_email!=0){
-		header("Location:s_classic.php?msg=emailexist");
-		exit;
-	}else{
-		$dbf->updateTable("student","email='$_POST[email]'","id='$student_id'"); 
+	if(empty($_POST['email']) || $_POST['email']==null)
+	{
+		$dbf->updateTable("student","email='$_POST[email]'","id='$student_id'");
 	}
-	
+	else
+	{
+		$num_email=$dbf->countRows('student',"email='$_POST[email]'");
+		if($num_email>0)
+		{
+			header("Location:s_classic.php?msg=emailexist");
+			exit;
+		}
+		else
+		{
+			$dbf->updateTable("student","email='$_POST[email]'","id='$student_id'"); 
+		}
+	}
 	if($_REQUEST[mobile] != '009665'){
 		$num=$dbf->countRows('student',"student_mobile='$_POST[mobile]'");
 		if($num>0){
