@@ -247,7 +247,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							?>
                           <tr bgcolor="<?php echo $color1;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color1;?>'" style="cursor:pointer;">
                             <td align="center" valign="middle"><?php echo $j; ?></td>
-                          <td align="left" valign="middle"><?php echo $dbf->printStudentName($val_student[id]);?></td>
+                          <td align="left" valign="middle"><a href="single-home.php?student_id=<?php echo $val_student[id];?>" style="cursor:pointer;"><?php echo $dbf->printStudentName($val_student[id]);?></a></td>
                           <td align="left" valign="middle"><?php echo $val_student[student_id];?></td>
                           <td align="left" valign="middle"><?php echo $val_student[student_mobile];?></td>
                           <td align="left" valign="middle"><?php echo $val_student[email];?>&nbsp;&nbsp;</td>

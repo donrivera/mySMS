@@ -24,24 +24,24 @@ header("Content-Disposition: attachment; Filename=ped.doc");
 
 ?>
 <style>
-.pedtext{font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:7px;font-weight:bold;}
+.pedtext{font-family:Arial, Helvetica, sans-serif;font-size:8px;color:#000000;padding-left:3px;font-weight:bold;}
 .pedtext_normal{
 font-family:Arial, Helvetica, sans-serif;
-font-size:12px;
+font-size:8px;
 color:#000000;
-padding-left:7px;
+padding-left:3px;
 font-weight:normal;
 }
 .logouttext{
 font-family:Arial, Helvetica, sans-serif;
-font-size:12px;
+font-size:8px;
 font-weight:bold;
 color:#ffffff;
 text-decoration:none;
 }
 .heading{
  font-family:Arial, Helvetica, sans-serif;
- font-size:14px;
+ font-size:10px;
  font-weight:bold;
  color:#000000;
  text-decoration:none;
@@ -50,7 +50,7 @@ text-decoration:none;
 <!--Important-->
 <meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
 
-<table width="1000" border="0" align="center" cellpadding="0" cellspacing="0" style="border:solid 2px; border-color:#CC9900;">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="border:solid 2px; border-color:#CC9900;">
     <tr>
       <td width="16%" align="left" valign="top" class="loginheading1"><?php echo constant("STUDENT_ADVISOR_PED_TNAME");?></td>
       <td width="57%" align="left" valign="middle" class="heading"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -65,7 +65,7 @@ text-decoration:none;
     <tr>
       <td colspan="2" align="left" valign="top" style="padding-left:5px;">
       
-      <table width="250" border="0" cellspacing="0" cellpadding="0" style="border:solid 2px; border-color:#993030;">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:solid 2px; border-color:#993030;">
             <tr>
               <td height="5" colspan="2" align="left" bgcolor="#FFCB7D" class="pedtext"></td>
             </tr>
@@ -111,7 +111,7 @@ text-decoration:none;
     ?>
     <tr>
       <td colspan="3" align="left" valign="top">
-        <table width="1000" border="1" align="center" cellpadding="0" cellspacing="0" style="border-collapse:collapse;" bgcolor="#FFFFFF">
+        <table width="100%" border="1" align="center" cellpadding="0" cellspacing="0" style="border-collapse:collapse;" bgcolor="#FFFFFF">
           <?php
           //===================================================
           // Get Number of Students in a Group
@@ -164,7 +164,7 @@ text-decoration:none;
             $level = $res_ped["level"];					
             ?>
             <td height="25" align="left" valign="middle">
-            <table width="400" border="0" cellspacing="0" cellpadding="0">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="97" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_MATERIALS");?> :</td>
                 <td width="303" align="left" valign="middle">
@@ -206,7 +206,7 @@ text-decoration:none;
               if($_REQUEST[cmbgroup] != '')
               {
                 $dt = date("Y-m-d",strtotime($res_teacher_group[start_date]));
-                echo $dt = $dt." - ".$res_teacher_group[group_time];
+                echo $dt = $dt."&nbsp;".$dbf->printClassTimeFormat($res_teacher_group[group_start_time],$res_teacher_group[group_end_time])
               }
             ?>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -487,7 +487,8 @@ text-decoration:none;
                   <tr>
                     <td align="center" valign="middle">&nbsp;</td>
                     <?php
-                        $arf = $res_ped["arf_submit"];							
+                        $arf_document=$dbf->countRows('arf',"teacher_id='$teacher_id' AND group_id='$_REQUEST[cmbgroup]'","");	
+						$arf=($arf_document==1?"Yes":"No");						
                     ?>
                     <td height="23" align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                       <tr>
@@ -850,14 +851,15 @@ text-decoration:none;
                         
                         </div></td>
                       <?php
-                    $no_cols = $unit / 2;
+                    $unit_per_day=$val_course['unit_per_day'];
+					$no_cols = $unit / $unit_per_day;
                     $num = cal_days_in_month(CAL_GREGORIAN, $month, $year); 
                     $j=1;
                     for($i=0;$i<$no_cols;$i++)
                     {
                     $dayNum = date('d/m', strtotime($hs_date));
                     ?>
-                      <td height="28" colspan="3" align="center" bgcolor="#4D7373" class="logouttext"><strong><?php echo $j;?></strong></td>
+                      <td height="28" colspan="1" align="center" bgcolor="#4D7373" class="pedtext"><strong><?php echo $j;?></strong></td>
                       <?php
                      $j++;
                     }
@@ -871,23 +873,23 @@ text-decoration:none;
                 foreach($dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*") as $r) {
                 ?>
                     <tr>
-                      <td width="10%" align="left" bgcolor="#E9EFEF" class="pedtext"><?php echo $r[first_name]."&nbsp;".$r[father_name]."&nbsp;".$r[family_name]."&nbsp;(".$r[family_name1]."&nbsp;".$r[grandfather_name1]."&nbsp;".$r[father_name1]."&nbsp;".$r[first_name1].")";?>
+                      <td width="10%" align="left" bgcolor="#E9EFEF" class="pedtext"><?php echo $dbf->printStudentName($r[id]);?>
                         </td>
                       <?php
-                    $no_cols = $unit / 2;
+                    $no_cols = $unit / $unit_per_day;
                     $num = cal_days_in_month(CAL_GREGORIAN, $month, $year); 
                     $j=1;
                     $st = 1;
                     $shift_count = 1;
-                    //$no_shift = $val_course[units];
+                    $no_shift = $val_course[units];
                     
                     //Get the number of shift in a Days
-                    $no_shift = $dbf->getDataFromTable("common","name","id='$val_course[units]'");
+                    //$no_shift = $dbf->getDataFromTable("common","name","id='$val_course[units]'");
                     
                     for($i=0;$i<$no_cols;$i++)
                     {
                     ?>
-                  <td colspan="3" align="center" bgcolor="#E9EFEF">
+                  <td colspan="1" align="center" bgcolor="#E9EFEF">
                   <?php
                 
                 //Get status of the student in a particular Unit

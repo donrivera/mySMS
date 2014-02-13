@@ -92,8 +92,8 @@ if($_REQUEST['action']=='insert')
 	  </tr>
 	</table>';	
 	
-	$subj = $email_cont["title"];
-	$subj = str_replace('%username%',$teacher,$subj);
+	#$subj = "ARF Request From&nbsp;".$teacher;
+	#$subj = str_replace('%username%',$teacher,$subj);
 	
 	$subject ="New ARF from ".$teacher."!!!";
 	mail($to,$subject,$body1,$headers);

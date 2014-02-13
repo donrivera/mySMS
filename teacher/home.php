@@ -171,23 +171,30 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                     <td height="72" align="center" valign="middle"><a href="report_center_director.php"><img src="../home_icon/cert.png" width="64" height="64" border="0" /></a></td>
                     <td align="center" valign="middle"><a href="calc_converter.php"><img src="../home_icon/calendar-icon.jpg" width="57" height="60" border="0" /></a></td>
                     <td align="center" valign="middle"><a href="translate.php"><img src="../home_icon/converter_icon.jpg" width="60" height="60" border="0" /></a></td>
-                    <td align="center" valign="middle"><a href="alert_page.php?choice=alert_respose&page=alert_page.php&amp;TB_iframe=true&amp;height=240&amp;width=465&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox "><img src="../home_icon/alert-icon.png" width="60" height="60" border="0" /></a></td>
+                    <td align="center" valign="middle">
+						<!--<a href="alert_page.php?choice=alert_respose&amp;page=alert_page.php&amp;TB_iframe=true&amp;height=240&amp;width=465&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox "><img src="../home_icon/alert-icon.png" width="60" height="60" border="0" /></a>-->
+						<a href="alert.php"><img src="../home_icon/alert-icon.png" width="60" height="60" border="0" /></a>
+					</td>
                   </tr>
                   <tr class="mymenutext">
                     <td height="30" align="center" valign="top"><a href="report_center_director.php" title="Certificates Grade"><span><?php echo constant("TE_MENU_CR");?></span></a></td>
                     <td align="center" valign="top"><a href="calc_converter.php" title="Date Convertor"><span><?php echo constant("STUDENT_MENU_DATE_CONVERTER");?></span></a></td>
                     <td align="center" valign="top"><a href="translate.php" title="Language Convertor"><span><?php echo constant("ADMIN_MENU_LANGUAGE_CONVERTER");?></span></a></td>
-                    <td align="center" valign="top"><a href="alert_page.php?page=alert_page.php&amp;TB_iframe=true&amp;height=240&amp;width=465&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox "><?php echo constant("ADMIN_MENU_ALERTS");?></a></td>
-                  </tr>
+                    <td align="center" valign="top">
+						<!--<a href="alert_page.php?choice=alert_respose&amp;page=alert_page.php&amp;TB_iframe=true&amp;height=240&amp;width=465&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox "><?php echo constant("ADMIN_MENU_ALERTS");?></a>-->
+						<a href="alert.php"><?php echo constant("ADMIN_MENU_ALERTS");?></a>
+					</td>
+					<!--alert_page.php?page=alert_page.php&amp;TB_iframe=true&amp;height=240&amp;width=465&amp;inlineId=hiddenModalContent&amp;modal=true-->
+				  </tr>
                   <tr>
                     <td height="70" align="center" valign="middle"><a href="ped.php"><img src="../home_icon/time_attendance.png" width="60" height="60" border="0" /></a></td>
-                    <td align="center" valign="middle"><a href="leave_manage.php"><img src="../home_icon/abs.png" width="60" height="60" border="0" /></a></td>
+                    <td align="center" valign="middle"><a href="manage_sick_leave.php"><img src="../home_icon/abs.png" width="60" height="60" border="0" /></a></td>
                     <td align="center" valign="middle"><a href="password.php"><img src="../home_icon/chg_pass.png" width="48" height="48" border="0" /></a></td>
                     <td align="center" valign="middle"><a href="quicklink_manage.php"><img src="../home_icon/quick-link.png" width="60" height="60" border="0" /></a></td>
                   </tr>
                   <tr class="mymenutext">
                     <td height="30" align="center" valign="top"><a href="ped.php"><?php echo constant("TE_MENU_EPEDCARD");?></a></td>
-                    <td align="center" valign="top"><a href="leave_manage.php" title="Leave"><span><?php echo constant("STUDENT_MENU_LEAVE");?></span></a></td>
+                    <td align="center" valign="top"><a href="manage_sick_leave.php" title="Leave"><span><?php echo constant("STUDENT_MENU_LEAVE");?></span></a></td>
                     <td align="center" valign="top"><a href="password.php"><?php echo constant("ADMIN_MENU_CHANGE_PASSWORD");?></a></td>
                     <td align="center" valign="top"><a href="quicklink_manage.php"><?php echo constant("ADMIN_MENU_QUICK_LINKS");?></a></td>
                   </tr>
@@ -211,7 +218,7 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                     <div id="DisplayInfo">
                   <?php
                 $i = 1;
-                foreach($dbf->fetchOrder('news',"(stu_ad='1' AND status='0') OR audience='1'","id DESC LIMIT 0,5") as $val) {
+                foreach($dbf->fetchOrder('news',"teacher='1'","id DESC LIMIT 0,5") as $val) {
                 ?>
                   <table width="450" border="0" cellspacing="0" cellpadding="0">
                     <tr>
@@ -356,13 +363,13 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                           </tr>
                         <tr>
                           <td height="70" align="center" valign="middle"><a href="ped.php"><img src="../home_icon/time_attendance.png" width="60" height="60" border="0" /></a></td>
-                          <td align="center" valign="middle"><a href="leave_manage.php"><img src="../home_icon/abs.png" width="60" height="60" border="0" /></a></td>
+                          <td align="center" valign="middle"><a href="manage_sick_leave.php"><img src="../home_icon/abs.png" width="60" height="60" border="0" /></a></td>
                           <td align="center" valign="middle"><a href="password.php"><img src="../home_icon/chg_pass.png" width="48" height="48" border="0" /></a></td>
                           <td align="center" valign="middle"><a href="quicklink_manage.php"><img src="../home_icon/quick-link.png" width="60" height="60" border="0" /></a></td>
                           </tr>
                         <tr class="mymenutext">
                           <td height="30" align="center" valign="top"><a href="ped.php"><?php echo constant("TE_MENU_EPEDCARD");?></a></td>
-                          <td align="center" valign="top"><a href="leave_manage.php" title="Leave"><span><?php echo constant("STUDENT_MENU_LEAVE");?></span></a></td>
+                          <td align="center" valign="top"><a href="manage_sick_leave.php" title="Leave"><span><?php echo constant("STUDENT_MENU_LEAVE");?></span></a></td>
                           <td align="center" valign="top"><a href="password.php"><?php echo constant("ADMIN_MENU_CHANGE_PASSWORD");?></a></td>
                           <td align="center" valign="top"><a href="quicklink_manage.php"><?php echo constant("ADMIN_MENU_QUICK_LINKS");?></a></td>
                           </tr>

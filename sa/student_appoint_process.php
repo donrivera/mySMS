@@ -15,6 +15,8 @@ if($_REQUEST['action']=='insert')
 		
 	$string="dated='$_POST[date]',student_id='$_POST[student]',comments='$_POST[comment]',user_id='$_SESSION[id]',entry_date='$cr_date',centre_id='$_SESSION[centre_id]'";
 	$dbf->insertSet("student_appointment",$string);
+	$string2="student_id='$_POST[student]',user_id='$_SESSION[id]',comments='$_POST[comment]',date_time='$cr_date'";
+	$dbf->insertSet("student_comment",$string2);
 	#SMS
 	$mobile_no = $dbf->getDataFromTable("student","student_mobile","sms_status='1' And id='$_POST[student]'");
 	$student_mobile=$dbf->strRecordID("student","first_name","id='$student_id'");

@@ -224,6 +224,7 @@ behavior: {
                     var series = data[i].series[j];
                     var size = DateUtils.daysBetween(series.start, series.end) + 1;
 					var offset = DateUtils.daysBetween(start, series.start);
+					var title=series.title;
 					var block = jQuery("<div>", {
                         "class": "ganttview-block",
                         "title": series.name + ", " + size + " days",
@@ -236,7 +237,7 @@ behavior: {
                     if (data[i].series[j].color) {
                         block.css("background-color", data[i].series[j].color);
                     }
-                    block.append(jQuery("<div>", { "class": "ganttview-block-text" }).text(size));
+                    block.append(jQuery("<div>", { "class": "ganttview-block-text" }).text(title));
                     jQuery(rows[rowIdx]).append(block);
                     rowIdx = rowIdx + 1;
                 }
@@ -323,7 +324,7 @@ behavior: {
         	var width = block.outerWidth();
 			var numberOfDays = Math.round(width / cellWidth) - 1;
 			block.data("block-data").end = newStart.clone().addDays(numberOfDays);
-			jQuery("div.ganttview-block-text", block).text(numberOfDays + 1);
+			//jQuery("div.ganttview-block-text", block).text(numberOfDays + 1);
 			
 			// Remove top and left properties to avoid incorrect block positioning,
         	// set position to relative to keep blocks relative to scrollbar when scrolling

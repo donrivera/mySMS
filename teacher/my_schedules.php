@@ -199,7 +199,7 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
 					$val_unit = $dbf->strRecordID("common","*","id='$val[units]'");
 					?>
                       
-                      <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
+                      <tr bgcolor="<?php echo $color;?>"><!-- onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;"-->
                         <td height="25" align="center" valign="middle" class="contenttext"><?php echo $i;?></td>
                         <td align="left" valign="middle" class="contenttext"><?php echo $dbf->FullGroupInfo($val["id"]);?></td>
                         <td align="left" valign="middle" class="contenttext"><?php echo $val_course[name];?></td>

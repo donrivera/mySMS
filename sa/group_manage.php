@@ -59,30 +59,29 @@ if($_SESSION[font]=='big'){
 
 <!--table sorter ***************************************************** -->
 <script type="text/javascript">
-	$(function() {
-		$("#sort_table1")
-			.tablesorter({ 
-        // pass the headers argument and assing a object 
-        headers: { 
-            // assign the secound column (we start counting zero) 
-           0: { 
-                // disable it by setting the property sorter to false 
-                sorter: false 
-            }, 
-			1: { 
-                // disable it by setting the property sorter to false 
-                sorter: false 
-            }, 
-			9: { 
-                // disable it by setting the property sorter to false 
-                sorter: false 
-            }, 
-           
-        } 
-    })			
-		.tablesorterPager({container: $("#pager"), size: 25});
-	});
-	</script>
+$(function() 
+{
+	$("#sort_table1")
+		.tablesorter({ 
+						// pass the headers argument and assing a object 
+						headers: 
+						{ 
+							0:{sorter: false}, 
+							1:{sorter: false},
+							2:{sorter: "text"},
+							3:{sorter: false},
+							4:{sorter: false}, 
+							5:{sorter: false}, 
+							6:{sorter: false},
+							7:{sorter: false}, 
+							8:{sorter: false},
+							9:{sorter: false}, 
+							10:{sorter: false}, 
+						} 
+					})			
+		.tablesorterPager({container: $("#pager"),size: $(".pagesize option:selected").val()});
+});
+</script>
 <!--*******************************************************************-->
 
 <script type="text/javascript">
@@ -209,12 +208,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr>
                     <td width="30%" align="right" valign="middle" class="logintext">Status : &nbsp;</td>
                     <td width="70%" align="left" valign="middle">
+					  
                       <select name="group_status" id="group_status" style="width:150px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onChange="javascript:document.frm.action='group_manage.php',document.frm.submit();">
                         <option value="All">-- All --</option>
                         <option value="Not Started" <?php if($_REQUEST["group_status"] == "Not Started") { ?> selected="selected" <?php } ?>>Not Started</option>
                         <option value="Continue" <?php if($_REQUEST["group_status"] == "Continue" || $_REQUEST["group_status"] == "") { ?> selected="selected" <?php } ?>>Active - In Progress</option>
                         <option value="Completed" <?php if($_REQUEST["group_status"] == "Completed") { ?> selected="selected" <?php } ?>>Completed</option>
                       </select>
+					  
                      </td>
                   </tr>
                 </table></td>
@@ -297,7 +298,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				?>
                 <td width="11%" align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo date('d-M-Y',strtotime($val[start_date]));?></td>
                 <td width="11%" align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo date('d-M-Y',strtotime($val[end_date]));?></td>
-                <td width="12%" align="center" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $val[group_start_time];?>-<?php echo $val[group_end_time];?></td>
+                <td width="12%" align="center" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $dbf->printClassTimeFormat($val[group_start_time],$val[group_end_time]);?></td>
                 <td width="12%" height="25" align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $no;?></td>
                 <td width="4%" align="center" valign="middle" style="background-color:<?php echo $color;?>" >
 					<table>
@@ -389,7 +390,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
                     <tr bgcolor="<?php echo $color1;?>" onmouseover="this.bgColor='#FDE6D0'" onmouseout="this.bgColor='<?php echo $color1;?>'" style="cursor:pointer;">
                       <td align="center" valign="middle"><?php echo $j;?></td>
-                      <td height="25" align="left" valign="middle"><a href="single-home.php?student_id=<?php echo $val_student[id];?>" style="cursor:pointer;"><?php echo $val_student[first_name]."&nbsp;".$val_student[father_name]."&nbsp;".$val_student[family_name]."&nbsp;(".$val_student[first_name1]."&nbsp;".$val_student[father_name1]."&nbsp;".$val_student[grandfather_name1]."&nbsp;".$val_student[family_name1].")";?></a></td>
+                      <td height="25" align="left" valign="middle"><a href="single-home.php?student_id=<?php echo $val_student[id];?>" style="cursor:pointer;"><?php echo $dbf->printStudentName($val_student[id]);?></a></td>
                       <td align="left" valign="middle"><?php if($val_student[student_id]>0) { echo $val_student[student_id]; } ?></td>
                       <td align="left" valign="middle"><?php echo $val_student[student_mobile];?></td>
                       <td align="left" valign="middle"><?php echo $val_student[email];?></td>
@@ -435,17 +436,17 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 			{
 			?>             
           <tr>
-              <td height="300" align="left" valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="display:none;">
+              <td height="300" align="left" valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
                 <tr>
                   <td width="76%" align="center">&nbsp;</td>
                   <td width="24%" align="left" ><div id="pager" class="pager" style="text-align:left; padding-top:10px;"> <img src="../table_sorter/icons/first.png" alt="first" width="16" height="16" class="first"/> <img src="../table_sorter/icons/prev.png" alt="prev" width="16" height="16" class="prev"/>
                     <input name="text" type="text" class="pagedisplay trans" size="5" readonly="readonly" style="border:solid 1px; border-color:#FFCC00;"/>
                     <img src="../table_sorter/icons/next.png" width="16" height="16" class="next"/> <img src="../table_sorter/icons/last.png" width="16" height="16" class="last"/>
                     <select name="select" class="pagesize">
-                      <option selected="selected"  value="10">10</option>
-                      <option value="25">25</option>
-                      <option  value="50">50</option>
-                    </select>
+                      <option  value="20" selected="selected">10</option>
+                      <option  value="40">20</option>
+					  <option  value="60">30</option>
+					</select>
                   </div></td>
                 </tr>
                 <?php

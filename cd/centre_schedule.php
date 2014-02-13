@@ -214,8 +214,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				//echo "d".$cond;
 				$i = 1;
 				$a="";
-				#$year=date('Y');
-				foreach($dbf->fetchOrder('student_group',$cond." AND year(start_date) = ".date('Y')." ORDER BY id DESC","") as $val){
+				$year_now=date('Y');
+				foreach($dbf->fetchOrder('student_group',$cond."AND YEAR(start_date) = '$year_now'","group_name ASC") as $val){
 					
 					//Get Unit
 					$val_unit = $dbf->strRecordID("common","*","id='$val[units]'");
@@ -233,12 +233,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$sy = date('Y',strtotime($val[start_date]));
 					$sm = date('m',strtotime($val[start_date]))-1;
 					$sd = date('d',strtotime($val[start_date]));
-					
+					$ssm=(strlen($sm)==1?'0'.$sm:$sm);
+					$ssd=(strlen($sd)==1?'0'.$sd:$sd);
 					//Ending date of the group
 					$ey = date('Y',strtotime($val[end_date]));
 					$em = date('m',strtotime($val[end_date]))-1;
 					$ed = date('d',strtotime($val[end_date]));
-					
+					$eem=(strlen($em)==1?'0'.$em:$em);
+					$eed=(strlen($ed)==1?'0'.$ed:$ed);
 					////Starting date of the group from Units Table (Min date)
 					$num=$dbf->countRows('ped_units',"group_id='$val[id]'");
 					if($num==0){
@@ -275,6 +277,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					}else{
 						$count_student = $count_student. ' student';
 					}
+					$title=strtoupper($val['group_name']);
+					$timeSlot=$dbf->printClassTimeFormat($val['group_start_time'],$val['group_end_time']);
 					/*
 					$a =$a.','. '
 					{id: 1, name: "'.$val[group_name].' ('.$res_course[name].')<br>['.$count_student.']<br>Teacher : '.$res_teacher[name].'", series: [{ name: "Start : '.date('d/M/Y',strtotime($val[start_date])).'<br>'.$val[group_time].'", start: new Date('.$sy.','.$sm.','.$sd.'), end: new Date('.$ey.','.$em.','.$ed.') },
@@ -283,19 +287,19 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					';
 					*/
 					$a =$a.','. '
-					{	id: 1, 
-						name: "'.$val[group_name].'",
-						series: [
-									{	name: "'.date('d/M/Y',strtotime($val[start_date])).'<br>'.$val[group_start_time].'",
-										start: new Date('.$sy.','.$sm.','.$sd.'), 
-										end: new Date('.$ey.','.$em.','.$ed.'),
-										 
-									},
-									{name: "End : '.date('d/M/Y',strtotime($val[end_date])).'<br>'.$val[group_end_time].'", start: new Date('.$psy.','.$psm.','.$psd.'), end: new Date('.$pey.','.$pem.','.$ped.'), color: "#FFF000" }
-									
-								]
-					}
-					';
+								{
+									id: 1, name: "'.$val[group_name].' Start:'.date('d/M/Y',strtotime($val[start_date])).'",
+									series: [
+												{	name:"End : '.date('d/M/Y',strtotime($val[end_date])).'<br>'.$timeSlot.'", 
+													title: "'.$title.'",
+													start: new Date('.$sy.','.$ssm.','.$ssd.'),
+													end: new Date('.$ey.','.$eem.','.$eed.'),
+													color: "#f7c89a"
+												},
+												
+											]	
+								}';
+					
 				}
 				$a='['.substr($a,1).']';
 				?>

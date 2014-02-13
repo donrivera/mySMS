@@ -115,7 +115,7 @@ header("Content-Disposition: attachment; Filename=report_absent_report.doc");
         
         //Get Name Of Groups
         $res = $dbf->strRecordID("student","*","id='$resp[student_id]'");
-        $res2 = $dbf->strRecordID("common","*","id='$resp[group_id]'");
+        $res2 = $dbf->getDataFromTable("student_group","group_name","id='$resp[group_id]'");
         
         //Get Name Of Teacher
         $res3 = $dbf->strRecordID("teacher","*","id='$resp[teacher_id]'");
@@ -125,8 +125,8 @@ header("Content-Disposition: attachment; Filename=report_absent_report.doc");
     <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
       <td height="25" align="center" valign="middle" class="mycon">&nbsp;</td>
       <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dbf->printStudentName($val[id]);?></td>
-      <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $course[name];?></td>
-      <td height="30" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res2[name];?></td>
+      <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo (empty($course[name])?'N/A':$course[name]);?></td>
+      <td height="30" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo (empty($res2)?'N/A':$res2);?></td>
       <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res3[name];?></td>
       <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res[student_mobile];?></td>
       <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res[email];?></td>

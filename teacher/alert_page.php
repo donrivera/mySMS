@@ -13,7 +13,7 @@ include_once '../includes/language.php';
 			ob_clean();
 			$VALUE=$_POST['val']; 
 				$_POST['pagenumber']=0; 				
-				$totalcount=$dbf->countRows("alerts","teacher='1' AND status='0' And imp='1' And imp='1' And id not in (select alert_id from alerts_read where user_id='$_SESSION[id]')");
+				$totalcount=$dbf->countRows("alerts","teacher='1' AND status='0' And imp='1' And id not in (select alert_id from alerts_read where user_id='$_SESSION[id]')");
 				$perpage=1;
 				$limitstart=$_POST['pagenumber'] * $perpage;
 				$limitend=$perpage;
@@ -99,7 +99,7 @@ include_once '../includes/language.php';
 			  <td width="3" align="left" valign="top">&nbsp;</td>
 			  <td align="center" valign="top">
 			   <?php				
-				foreach($dbf->fetchOrder('alerts',"stu_ad='1' AND status='0' And imp='1' And id not in (select alert_id from alerts_read where user_id='$_SESSION[id]')","dt DESC LIMIT $limitstart,$limitend") as $valalert) {
+				foreach($dbf->fetchOrder('alerts',"teacher='1' AND status='0' And imp='1' And id not in (select alert_id from alerts_read where user_id='$_SESSION[id]')","dt DESC LIMIT $limitstart,$limitend") as $valalert) {
 					
 					//Update in alerts_read table
 					if($dbf->countRows("alerts_read", "alert_id='$valalert[id]' And user_id='$_SESSION[id]'") == 0){

@@ -315,7 +315,8 @@ $(document).ready(function() {
             <a href="report_freq_customer_report.php"><?php echo constant("ADMIN_MENU_REPORTS_CUSTOMER");?></a> 
             <a href="report_student_group_grade.php"><?php echo constant("ADMIN_MENU_REPORTS_GROUP_GRADE");?></a> 
             <a href="report_student_not_enrolled.php"><?php echo constant("ADMIN_MENU_REPORTS_NOT_ENROLLED");?></a> 
-            <a href="report_student_on_hold.php"><?php echo constant("ADMIN_MENU_REPORTS_ON_HOLD");?></a> 
+            <a href="report_student_cancelled.php"><?php echo constant("ADMIN_MENU_REPORTS_CANCELLED");?></a> 
+			<a href="report_student_on_hold.php"><?php echo constant("ADMIN_MENU_REPORTS_ON_HOLD");?></a> 
             <a href="report_statistic.php"><?php echo constant("ADMIN_MENU_REPORTS_STATISTIC");?></a>
             <a href="report_student_cycle.php"><?php echo constant("REPORT_STUDENT_LIFE_CYCLE");?></a>
             <a href="report_management.php"><?php echo constant("MANAGEMENT_REPORT");?></a>

@@ -1144,12 +1144,19 @@ if($_REQUEST['action']=='advance')
 					
 	//$string_st="student_id='$student_id',status_id='3',course_id='$course_id',date_time='$date_time',user_id='$_SESSION[id]'"; //Waiting Status		
 	//$dbf->insertSet("student_moving",$string_st);
-	
-	$string_st="status_id='3'"; //Enrolled Status		
-	$dbf->updateTable("student_moving",$string_st,"student_id='$student_id' And course_id='$course_id'");
-	
+	$string_st="status_id='3'"; //Enrolled Status
 	$string2="student_id='$student_id',course_id='$course_id',date_time='$date_time',user_id='$_SESSION[id]',status_id='3'";
-	$dbf->insertSet("student_moving_history",$string2);	
+	$status=$dbf->getDataFromTable("student_moving","status_id","student_id='$student_id'");
+	switch($status)
+	{
+		case 4:	{}break;
+		default:{
+					$dbf->updateTable("student_moving",$string_st,"student_id='$student_id'");# And course_id='$course_id'
+					$dbf->insertSet("student_moving_history",$string2);
+				}break;
+	}
+			
+		
 	
 	/*$is_multi_advance = $dbf->countRows("student_fees", "student_id='$student_id' And status_id <='2'");//And course_id='$course_id'
 	if($is_multi_advance > 0){

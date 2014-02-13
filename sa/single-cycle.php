@@ -52,7 +52,12 @@ if($_SESSION[font]=='big'){
 function setsubmit(){
 	var student_id = <?php echo $student_id; ?>;	
 	var course_id = document.getElementById('course_id').value;
-	document.location.href='single-cycle.php?student_id='+student_id+'&course_id='+course_id;
+	if(course_id==0)
+	{
+		document.location.href='single-cycle.php?student_id='+student_id;
+	}
+	else{document.location.href='single-cycle.php?student_id='+student_id+'&course_id='+course_id;}
+	
 }
 function blinkId(id) {	
 	var i = document.getElementById(id);
@@ -159,7 +164,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr>
                     <td width="25%" height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?> :</td>
                     <td width="75%" align="left" valign="middle" class="mytext">
-						<?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";?>
+						<?php echo $dbf->printStudentName($student_id);?>
 					</td>
                   </tr>
                   <?php if($student["student_id"] > 0){?>
@@ -219,7 +224,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td>&nbsp;</td>
                 <td align="left" valign="middle">
                 <select id="course_id" name="course_id" style="border:solid 1px; border-color:#FFCC33; height:20px; width:210px;" onChange="setsubmit();">
-                    <option value="">--Select Course--</option>
+                    <option value="0">--Select Course--</option>
                     <?php
 						foreach($dbf->fetchOrder('student_enroll',"student_id='$student_id'","","") as $valc) {
 							$course = $dbf->strRecordID("course", "*", "id='$valc[course_id]'");
@@ -495,7 +500,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                           </tr>
                         </table>
                         <br />
-                        <?php if($status == 3){ ?>
+                        <?php if($status == 3){ ?> <script type="text/javascript">blinkId('3');</script>
                         <table width="90%" border="1" bordercolor="#CCCCCC" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
                           <tr>
                             <td width="83%" height="20" align="center" valign="middle" bgcolor="#9999CC" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_AUDITING_WAITING");?> <?php echo $pay_status;?></td>

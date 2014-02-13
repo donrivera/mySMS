@@ -280,7 +280,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					
 					//Get Name Of Groups
 					$res = $dbf->strRecordID("student","*","id='$resp[student_id]'");
-					$res2 = $dbf->strRecordID("common","*","id='$resp[group_id]'");
+					$res2 = $dbf->getDataFromTable("student_group","group_name","id='$resp[group_id]'");
 					
 					//Get Name Of Teacher
 					$res3 = $dbf->strRecordID("teacher","*","id='$resp[teacher_id]'");
@@ -289,10 +289,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                   <td height="30" align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val[id];?>" style="cursor:pointer;">
-					<?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?>
+					<?php echo $dbf->printStudentName($val[id]);?>
 				  </a></td>
-                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $course[name];?></td>
-                  <td height="30" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res2[name];?></td>
+                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo (empty($course[name])?'N/A':$course[name]);?></td>
+                  <td height="30" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo (empty($res2)?'N/A':$res2);?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res3[name];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res[student_mobile];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res[email];?></td>
@@ -303,8 +303,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				  		$last = "Unit(".$reslast["unit"].") ,". date('d/m/Y',strtotime($reslast[dated]));
 				  }
 				  ?>
-                  <td align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="padding-left:5px;"><?php echo $last;?></td>
-                  <td width="9%" align="center" valign="middle" bgcolor="#F8F9FB"><?php echo $countid;?></td>
+                  <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $last;?></td>
+                  <td width="9%" align="center" valign="middle"><?php echo $countid;?></td>
                   <?php
 					  $i = $i + 1;
 					   if($color=="#ECECFF")

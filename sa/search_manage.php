@@ -78,8 +78,8 @@ $(document).ready(function() {
 	$("#frm").submit(function()
 	{
 		var init_pay=$("#payment").val();//document.getElementById('payment').value;
-		//var post_pay=$("#td_paid_amt").val();//document.getElementById('td_paid_amt').value;
-		if(init_pay=='')
+		var post_pay=$("#td_paid_amt").html();//document.getElementById('td_paid_amt').value;
+		if(init_pay=='' && post_pay === null)
 		{
 			alert("Please Enter Initial Payment!");
 			//document.getElementById('othertext').focus();

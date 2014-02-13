@@ -39,7 +39,7 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0"  borderc
 					$course = $dbf->strRecordID("course","*","id='$val[course_id]'");
                 $html.='<tr>
                   <td height="25" align="center" valign="middle" bgcolor="#F8F9FB">'.$i.'</td>
-                  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB">'.$val[group_name].' '.$val["group_time"].'-'.$dbf->GetGroupTime($val["id"]).'</td>
+                  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB">'.$val[group_name].' '.$dbf->printClassTimeFormat($val["group_start_time"],$val["group_end_time"]).'</td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB" >'.$res[name].'</td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB">'.$val[start_date].'</td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB">'.$val[end_date].'</td>
@@ -49,7 +49,7 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0"  borderc
                 $html.='</tr>
             </table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_group_to_finish.pdf", 'D');
 	exit;

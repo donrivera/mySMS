@@ -80,7 +80,7 @@ $(function() {
 		changeYear: true,
 		//numberOfMonths: 2,
 		minDate: new Date(),
-		
+		beforeShowDay:function (dt){return [dt.getDay() == 5 || dt.getDay() == 6 ? false : true];},
 		//maxDate: new Date(2011, 10, 25, 17, 30),
 
 		dateFormat: 'yy-mm-dd'

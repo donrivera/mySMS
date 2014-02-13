@@ -131,7 +131,7 @@ text-transform:uppercase;
 													INNER JOIN course c ON c.id=sc.course_id
 													WHERE sc.student_id='$student_id' 
 													AND sg.centre_id='$_SESSION[centre_id]' 
-													AND sg.status!='Completed' AND YEAR(sg.start_date) = '$year_now'");
+													AND sg.status!='Completed' AND YEAR(sg.start_date) = '$year_now' ORDER BY sg.group_name ASC");
 					
 				  ?>
               </td>

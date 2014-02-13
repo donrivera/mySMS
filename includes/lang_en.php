@@ -1293,8 +1293,9 @@ define("TEACHER_HOME_MSGTYPE","Message type");
 // teacher my_groups
 define("TEACHER_MY_GROUPS_MYGROUPS","My groups");
 define("TEACHER_MY_GROUPS_NOTE","Note");
-define("TEACHER_MY_GROUPS_RED","Red = Not started");
-define("TEACHER_MY_GROUPS_GREEN","Green = Continue");
+define("TEACHER_MY_GROUPS_RED","Red = Not Started");
+define("TEACHER_MY_GROUPS_ORANGE","Orange = In Progress");
+define("TEACHER_MY_GROUPS_GREEN","Green = Completed");
 define("TEACHER_MY_GROUPS_COMPLETED","Completed");
 define("TEACHER_MY_GROUPS_GROUPNM","Group name");
 define("TEACHER_MY_GROUPS_TEXT","Name of the course");
@@ -1594,6 +1595,7 @@ define("ADMIN_MENU_REPORTS_CUSTOMER","VIP students");
 define("ADMIN_MENU_REPORTS_GROUP_GRADE","Detailed students results");
 define("ADMIN_MENU_REPORTS_NOT_ENROLLED","Students statuses");
 define("ADMIN_MENU_REPORTS_ON_HOLD","Student on hold");
+define("ADMIN_MENU_REPORTS_CANCELLED","Student cancelled");
 define("ADMIN_MENU_REPORTS_STATISTIC","Statistic report");
 
 define("ADMIN_MENU_CERTIFICATE","Certificate");

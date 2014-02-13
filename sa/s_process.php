@@ -730,7 +730,12 @@ $student_id = $_REQUEST['student_id'];
 	$grade_speak = mysql_real_escape_string($_REQUEST[grade_speak]);
 	
 	$string_st="status_id='2',grade_online='$grade_online',grade_speak='$grade_speak'"; //Potential Status		
-	$dbf->updateTable("student_moving",$string_st,"student_id='$student_id'");
+	$status=$dbf->getDataFromTable("student_moving","status_id","student_id='$student_id'");
+	switch($status)
+	{
+		case 4:	{}break;
+		default:{$dbf->updateTable("student_moving",$string_st,"student_id='$student_id'");}break;
+	}
 	
 	//UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
 	//=======================================================
@@ -922,8 +927,12 @@ if($_REQUEST['action'] == 'edit_from_student_profile'){
 	$grade_speak = mysql_real_escape_string($_REQUEST[grade_speak]);
 	
 	$string_st="status_id='2',grade_online='$grade_online',grade_speak='$grade_speak'"; //Potential Status		
-	$dbf->updateTable("student_moving",$string_st,"student_id='$student_id'");
-	
+	$status=$dbf->getDataFromTable("student_moving","status_id","student_id='$student_id'");
+	switch($status)
+	{
+		case 4:	{}break;
+		default:{$dbf->updateTable("student_moving",$string_st,"student_id='$student_id'");}break;
+	}
 	//UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
 	//=======================================================
 	$date_time = date('Y-m-d H:i:s A');	

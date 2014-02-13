@@ -58,39 +58,30 @@ if($_SESSION[font]=='big'){
 <!--TABLE SORTER-->
 
 <!--table sorter ***************************************************** -->
-<?php if($_SESSION[lang]=="EN"){?>
 <script type="text/javascript">
-	$(function() {
-		$("#sort_table1")
-			.tablesorter({ 
-        // pass the headers argument and assing a object 
-        headers: { 
-            // assign the secound column (we start counting zero) 
-           0: { sorter: false }, 
-			1: { sorter: false }, 
-			10: { sorter: false },            
-        } 
-    })			
-		.tablesorterPager({container: $("#pager"), size: 25});
+$(function() 
+{
+	$("#sort_table1")
+		.tablesorter({ 
+						// pass the headers argument and assing a object 
+						headers: 
+						{ 
+							0:{sorter: false}, 
+							1:{sorter: false},
+							2:{sorter: "text"},
+							3:{sorter: false},
+							4:{sorter: false}, 
+							5:{sorter: false}, 
+							6:{sorter: false},
+							7:{sorter: false}, 
+							8:{sorter: false},
+							9:{sorter: false}, 
+							10:{sorter: false}, 
+						} 
+					})			
+		.tablesorterPager({container: $("#pager"),size: $(".pagesize option:selected").val()});
 });
 </script>
-<?php }else{?>
-<script type="text/javascript">
-	$(function() {
-		$("#sort_table1")
-			.tablesorter({ 
-        // pass the headers argument and assing a object 
-        headers: { 
-            // assign the secound column (we start counting zero) 
-           0: { sorter: false }, 
-			9: { sorter: false },   
-	        10: { sorter: false },   
-        } 
-    })			
-	.tablesorterPager({container: $("#pager"), size: 25});
-});
-</script>
-<?php } ?>
 <!--*******************************************************************-->
 
 <script type="text/javascript">
@@ -305,7 +296,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				?>
                 <td width="11%" align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo date('d-M-Y',strtotime($val[start_date]));?></td>
                 <td width="11%" align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo date('d-M-Y',strtotime($val[end_date]));?></td>
-                <td width="12%" align="center" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $val[group_start_time];?>-<?php echo $val[group_end_time];?></td>
+                <td width="12%" align="center" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $dbf->printClassTimeFormat($val[group_start_time],$val[group_end_time]);?></td>
                 <td width="12%" height="25" align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $no;?></td>
                  <td width="4%" align="center" valign="middle" style="background-color:<?php echo $color;?>" >
 					<a href="group_manage_edit.php?id=<?php echo $val[id];?>"><img src="../images/edit.gif" width="16" height="16" border="0" title="Edit" /></a>
@@ -424,16 +415,16 @@ $count = $res_logout["name"]; // Set timeout period in seconds
           </tr>
 		  <?php if($num > 0) { ?>
           <tr>
-              <td height="300" align="left" valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="display:none;">
+              <td height="300" align="left" valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
                 <tr>
                   <td width="76%" align="center">&nbsp;</td>
                   <td width="24%" align="left" ><div id="pager" class="pager" style="text-align:left; padding-top:10px;"> <img src="../table_sorter/icons/first.png" alt="first" width="16" height="16" class="first"/> <img src="../table_sorter/icons/prev.png" alt="prev" width="16" height="16" class="prev"/>
                     <input name="text" type="text" class="pagedisplay trans" size="5" readonly="readonly" style="border:solid 1px; border-color:#FFCC00;"/>
                     <img src="../table_sorter/icons/next.png" width="16" height="16" class="next"/> <img src="../table_sorter/icons/last.png" width="16" height="16" class="last"/>
                     <select name="select" class="pagesize">
-                      <option selected="selected"  value="10">10</option>
-                      <option value="25">25</option>
-                      <option  value="50">50</option>
+                      <option  value="20" selected="selected">10</option>
+                      <option  value="40">20</option>
+					  <option  value="60">30</option>
                     </select>
                   </div></td>
                 </tr>

@@ -175,13 +175,19 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                     <td height="72" align="center" valign="middle"><a href="password.php"><img src="../home_icon/chg_pass.png" width="60" height="60" border="0" /></a></td>
                     <td align="center" valign="middle"><a href="calc_converter.php"><img src="../home_icon/calendar-icon.jpg" width="57" height="60" border="0" /></a></td>
                     <td align="center" valign="middle"><a href="translate.php"><img src="../home_icon/converter_icon.jpg" width="60" height="60" border="0" /></a></td>
-                    <td align="center" valign="middle"><a href="alert_page.php?choice=alert_respose&page=alert_page.php&page_from=dashboard&amp;TB_iframe=true&amp;height=150&amp;width=550&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox "><img src="../home_icon/alert-icon.png" width="60" height="60" border="0" /></a></td>
+                    <td align="center" valign="middle">
+						<a href="alert.php"><img src="../home_icon/alert-icon.png" width="60" height="60" border="0" /></a>
+						<!--<a href="alert_page.php?choice=alert_respose&page=alert_page.php&page_from=dashboard&amp;TB_iframe=true&amp;height=150&amp;width=550&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox "><img src="../home_icon/alert-icon.png" width="60" height="60" border="0" /></a>-->
+					</td>
                   </tr>
                   <tr class="leftmenu">
                     <td height="30" align="center" valign="top"><a href="password.php" title="Certificates Grade"><span><?php echo constant("ADMIN_TEACHER1_MANAGE_PASSWORD");?></span></a></td>
                     <td align="center" valign="top"><a href="calc_converter.php" title="Date Convertor"><span><?php echo constant("STUDENT_MENU_DATE_CONVERTER");?></span></a></td>
                     <td align="center" valign="top"><a href="translate.php" title="Language Convertor"><span><?php echo constant("ADMIN_MENU_LANGUAGE_CONVERTER");?></span></a></td>
-                    <td align="center" valign="top"><a href="alert_page.php?page=alert_page.php&amp;TB_iframe=true&amp;height=240&amp;width=465&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox "><?php echo constant("ADMIN_MENU_ALERTS");?></a></td>
+                    <td align="center" valign="top">
+						<a href="alert.php"><?php echo constant("ADMIN_MENU_ALERTS");?></a>
+						<!--<a href="alert_page.php?page=alert_page.php&amp;TB_iframe=true&amp;height=240&amp;width=465&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox "><?php echo constant("ADMIN_MENU_ALERTS");?></a>-->
+					</td>
                   </tr>
                   <tr>
                     <td height="70" align="center" valign="middle"><a href="ped.php"><img src="../home_icon/time_attendance.png" width="60" height="60" border="0" /></a></td>
@@ -504,7 +510,7 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                             <td width="66" align="center" valign="middle" bgcolor="#CCCCCC" class="leftmenu"><?php echo constant("ADMIN_REPORT_GROUP_TO_FINISH_ENDDT");?></td>
                           </tr>
                           <?php
-						  foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And (start_date<='$dt' And end_date>='$dt')","dated") as $val_d)
+						  foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And (start_date<='$dt' And end_date>='$dt')","start_date DESC LIMIT 0,10") as $val_d)
 							{
 							
 								//Get the Course Name
@@ -516,7 +522,7 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                           <tr>
                             <td align="center" valign="middle" class="mycon"><?php echo $val_d[group_name];?>/<?php echo $val_course[name];?></td>
                             <td align="left" valign="middle" class="mycon"><?php echo $val_teacher[name];?></td>
-                            <td align="center" valign="middle" class="mycon"><?php echo $val_d[group_time];?></td>
+                            <td align="center" valign="middle" class="mycon"><?php echo $val_d[group_start_time];?></td>
                             <td align="center" valign="middle" class="mycon"><?php echo $val_d[start_date];?></td>
                             <td align="center" valign="middle" class="mycon"><?php echo $val_d[end_date];?></td>
                           </tr>
@@ -614,13 +620,19 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                             <td height="72" align="center" valign="middle"><a href="password.php"><img src="../home_icon/chg_pass.png" width="60" height="60" border="0" /></a></td>
                             <td align="center" valign="middle"><a href="calc_converter.php"><img src="../home_icon/calendar-icon.jpg" width="57" height="60" border="0" /></a></td>
                             <td align="center" valign="middle"><a href="translate.php"><img src="../home_icon/converter_icon.jpg" width="60" height="60" border="0" /></a></td>
-                            <td align="center" valign="middle"><a href="alert_page.php?choice=alert_respose&page_from=dashboard&page=alert_page.php&amp;TB_iframe=true&amp;height=150&amp;width=550&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox "><img src="../home_icon/alert-icon.png" width="60" height="60" border="0" /></a></td>
+                            <td align="center" valign="middle">
+								<a href="alert_page.php"><img src="../home_icon/alert-icon.png" width="60" height="60" border="0" /></a>
+								<!--<a href="alert_page.php?choice=alert_respose&page_from=dashboard&page=alert_page.php&amp;TB_iframe=true&amp;height=150&amp;width=550&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox "><img src="../home_icon/alert-icon.png" width="60" height="60" border="0" /></a>-->
+							</td>
                             </tr>
                           <tr class="leftmenu">
                             <td height="30" align="center" valign="top"><a href="password.php" title="Certificates Grade"><span><?php echo constant("ADMIN_TEACHER1_MANAGE_PASSWORD");?></span></a></td>
                             <td align="center" valign="top"><a href="calc_converter.php" title="Date Convertor"><span><?php echo constant("STUDENT_MENU_DATE_CONVERTER");?></span></a></td>
                             <td align="center" valign="top"><a href="translate.php" title="Language Convertor"><span><?php echo constant("ADMIN_MENU_LANGUAGE_CONVERTER");?></span></a></td>
-                            <td align="center" valign="top"><a href="alert_page.php?page=alert_page.php&amp;TB_iframe=true&amp;height=240&amp;width=465&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox "><?php echo constant("ADMIN_MENU_ALERTS");?></a></td>
+                            <td align="center" valign="top">
+								<a href="alert_page.php"><?php echo constant("ADMIN_MENU_ALERTS");?></a>
+								<!--<a href="alert_page.php?page=alert_page.php&amp;TB_iframe=true&amp;height=240&amp;width=465&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox "><?php echo constant("ADMIN_MENU_ALERTS");?></a>-->
+							</td>
                             </tr>
                           <tr>
                             <td height="70" align="center" valign="middle"><a href="ped.php"><img src="../home_icon/time_attendance.png" width="60" height="60" border="0" /></a></td>

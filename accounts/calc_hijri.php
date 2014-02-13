@@ -5,12 +5,12 @@ include_once '../includes/language.php';
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
+	
 	<link type="text/css" href="../cssh/ui.core.css" rel="stylesheet" />
 	<link type="text/css" href="../cssh/ui.theme.css" rel="stylesheet" />
 	<link type="text/css" href="../cssh/ui.datepicker.css" rel="stylesheet" />
 	<link href="../css/stylesheet.css" rel="stylesheet" type="text/css" />
-
+	<link rel="stylesheet" href="../datepicker/jquery.ui.all.css">
 	<script type="text/javascript" src="../js_hijri/jquery-1.3.2.min.js"></script>
 	<script type="text/javascript" src="../js_hijri/ui.core.min.js"></script>
 	<script type="text/javascript" src="../js_hijri/ui.datepicker-cc.min.js"></script>
@@ -151,6 +151,7 @@ function showdate()
 </script>
 
 <style>
+div.ui-datepicker{font-size:10px;width: 20em;}
 .btn2{
 background:url(../images/btn22.png) no-repeat;
 width:165px;

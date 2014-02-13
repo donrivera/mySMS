@@ -968,13 +968,21 @@ if($_REQUEST['action']=='advance'){
 	//insert into student_fee table
 	$string2="student_id='$student_id',course_id='$course_id',paid_amt='$_REQUEST[amts]',fee_amt='$_REQUEST[amts]',comments='$ad_comment',fee_date='$_REQUEST[dated]',paid_date='$_REQUEST[dated]',payment_type='$_REQUEST[payment_type]',centre_id='$centre_id',created_date=NOW(),created_by='$_SESSION[id]',type='advance',invoice_sl='$inv_sl',invoice_no='$inv_no',status='1'";	
 	$dbf->insertSet("student_fees",$string2);
-	$dbf->deleteFromTable("student_moving", "student_id='$student_id' And status_id <='2'");
-					
-	$string_st="student_id='$student_id',status_id='3',course_id='$course_id',date_time='$date_time',user_id='$_SESSION[id]'"; //Waiting Status		
-	$dbf->insertSet("student_moving",$string_st);
 	
+	#$dbf->deleteFromTable("student_moving", "student_id='$student_id' And status_id <='2'");
+	#$string_st="student_id='$student_id',status_id='3',course_id='$course_id',date_time='$date_time',user_id='$_SESSION[id]'"; //Waiting Status		
+	#$dbf->insertSet("student_moving",$string_st);
+	$string_st="status_id='3'"; //Enrolled Status
 	$string2="student_id='$student_id',course_id='$course_id',date_time='$date_time',user_id='$_SESSION[id]',status_id='3'";
-	$dbf->insertSet("student_moving_history",$string2);	
+	$status=$dbf->getDataFromTable("student_moving","status_id","student_id='$student_id'");
+	switch($status)
+	{
+		case 4:	{}break;
+		default:{
+					$dbf->updateTable("student_moving",$string_st,"student_id='$student_id'");# And course_id='$course_id'
+					$dbf->insertSet("student_moving_history",$string2);
+				}break;
+	}
 	# UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
 	/*
 	$is_multi_advance = $dbf->countRows("student_fees", "student_id='$student_id' And course_id='$course_id' And type='advance'");

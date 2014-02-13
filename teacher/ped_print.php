@@ -207,7 +207,7 @@ text-decoration:none;
               if($_REQUEST[cmbgroup] != '')
               {
                 $dt = date("Y-m-d",strtotime($res_teacher_group[start_date]));
-                echo $dt = $dt." - ".$res_teacher_group[group_time];
+                echo $dt = $dt."&nbsp;".$dbf->printClassTimeFormat($res_teacher_group[group_start_time],$res_teacher_group[group_end_time])
               }
             ?>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -256,7 +256,7 @@ text-decoration:none;
               <tr>
                 <td width="21%" height="75" align="left" valign="middle" style="border-right:solid 1px;" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_COMMENTS");?> :</td>
                 <td width="79%" align="left" valign="middle">&nbsp;&nbsp;
-                  <?php echo $res_ped["comments"];?></td>
+                  <?php /*echo $res_ped["comments"];*/?></td>
                 </tr>
               <?php
               $center_name = '';
@@ -495,7 +495,8 @@ text-decoration:none;
                   <tr>
                     <td align="center" valign="middle">&nbsp;</td>
                     <?php
-                        $arf = $res_ped["arf_submit"];							
+                        $arf_document=$dbf->countRows('arf',"teacher_id='$teacher_id' AND group_id='$_REQUEST[cmbgroup]'","");	
+						$arf=($arf_document==1?"Yes":"No");						
                     ?>
                     <td height="23" align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                       <tr>
@@ -858,12 +859,15 @@ text-decoration:none;
                         
                         </div></td>
                       <?php
-                    $no_cols = $unit / 2;
+						 $unit_per_day=$val_course['unit_per_day'];
+                    $no_cols = $unit / $unit_per_day;
                     $num = cal_days_in_month(CAL_GREGORIAN, $month, $year); 
                     $j=1;
                     for($i=0;$i<$no_cols;$i++)
                     {
                     $dayNum = date('d/m', strtotime($hs_date));
+					$attend_date=$dbf->strRecordID('ped_attendance','*',"unit='$j' And ped_id='$res_ped[id]'");
+					if($attend_date["attend_date"] == '0000-00-00'){ $attend_dt = '';}else{ $attend_dt = $attend_date["attend_date"]; }
                     ?>
                       <td height="28" colspan="3" align="center" bgcolor="#4D7373" class="logouttext"><strong><?php echo $j;?></strong></td>
                       <?php
@@ -880,10 +884,10 @@ text-decoration:none;
                 ?>
                     <tr>
                       <td width="10%" align="left" bgcolor="#E9EFEF" class="pedtext">
-						<?php echo $r[first_name]."&nbsp;".$r[father_name]."&nbsp;".$r[family_name]."&nbsp;(".$r[first_name1]."&nbsp;".$r[father_name1]."&nbsp;".$r[grandfather_name1]."&nbsp;".$r[family_name1].")";?></a>
+						<?php echo $dbf->printStudentName($r[id]);?></a>
                       </td>
                       <?php
-                    $no_cols = $unit / 2;
+                    $no_cols = $unit / $unit_per_day;
                     $num = cal_days_in_month(CAL_GREGORIAN, $month, $year); 
                     $j=1;
                     $st = 1;

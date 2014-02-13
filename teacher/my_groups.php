@@ -166,15 +166,15 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                   <td height="25" align="center" valign="middle" >&nbsp;</td>
                   <td height="25" align="left" valign="middle">
                     
-                    <table width="450" border="1" cellpadding="0" cellspacing="0" style="border-collapse:collapse;" bordercolor="#FF6600" >
+                    <table width="600" border="1" cellpadding="0" cellspacing="0" style="border-collapse:collapse;" bordercolor="#FF6600" >
                       <tr>
                         <td width="12%" align="center" valign="middle" bgcolor="#F8F9FB" class="leftmenu"><?php echo constant("TEACHER_MY_GROUPS_NOTE");?> :</td>
-                        <td width="30" align="center" valign="middle" class="contenttext" style="background-color:#FF0000;">&nbsp;</td>
-                        <td width="26%" align="left" valign="middle" class="leftmenu" style="padding-left:5px;background-color:#F8F9FB;"><?php echo constant("TEACHER_MY_GROUPS_RED");?></td>
-                        <td width="30" align="center" valign="middle" class="contenttext" style="padding-left:5px;background-color:orange;">&nbsp;</td>
-                        <td width="25%" align="left" valign="middle" bgcolor="#F8F9FB" class="leftmenu" style="padding-left:5px;"><?php echo constant("TEACHER_MY_GROUPS_GREEN");?></td>
-                        <td width="30" align="left" valign="middle" class="contenttext" style="padding-left:5px;background-color:#009900;">&nbsp;</td>
-                        <td width="19%" align="left" valign="middle" bgcolor="#F8F9FB" class="leftmenu" style="padding-left:5px;"><?php echo constant("TEACHER_MY_GROUPS_COMPLETED");?></td>
+                        <td width="25" align="center" valign="middle" class="contenttext" style="background-color:#FF0000;">&nbsp;</td>
+                        <td width="20%" align="left" valign="middle" class="leftmenu" style="padding-left:5px;background-color:#F8F9FB;"><?php echo constant("TEACHER_MY_GROUPS_RED");?></td>
+                        <td width="25" align="center" valign="middle" class="contenttext" style="padding-left:5px;background-color:orange;">&nbsp;</td>
+                        <td width="25%" align="left" valign="middle" bgcolor="#F8F9FB" class="leftmenu" style="padding-left:5px;"><?php echo constant("TEACHER_MY_GROUPS_ORANGE");?></td>
+                        <td width="25" align="left" valign="middle" class="contenttext" style="padding-left:5px;background-color:#009900;">&nbsp;</td>
+                        <td width="23%" align="left" valign="middle" bgcolor="#F8F9FB" class="leftmenu" style="padding-left:5px;"><?php echo constant("TEACHER_MY_GROUPS_GREEN");?></td>
                         </tr>
                       </table></td>
                   <td align="center" valign="middle" style="padding-left:5px;">&nbsp;</td>
@@ -219,12 +219,12 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
 					$val_room = $dbf->strRecordID("centre_room","*","id='$val[room_id]'");
 					
 					?>
-                      <tr  bgcolor="<?php echo $color1;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color1;?>'" style="cursor:pointer;">
+                      <tr  bgcolor="<?php echo $color1;?>" ><!--onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color1;?>'" style="cursor:pointer;"-->
                         <td align="center" valign="middle"  class="contenttext"><?php echo $i;?></td>
                         <td height="22" align="left" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $dbf->FullGroupInfo($val["id"]);?></td>
                         <td align="left" valign="middle"  class="contenttext" style="padding-left:5px;"><?php echo $val_course[name];?></td>
                         <td align="center" valign="middle"  class="contenttext" style="padding-left:5px;">
-                          <?php echo $val_unit[name];?>&nbsp;<?php echo constant("TEACHER_MY_SCHEDULES_PERDAY");?></td>
+                          <?php echo $val['unit_per_day'];?>&nbsp;<?php echo constant("TEACHER_MY_SCHEDULES_PERDAY");?></td>
                         <?php					
 						$dt = "Starting from ".date("l",strtotime($val[start_date]))." - ".date("d-M-Y",strtotime($val[start_date]));
 						$dt = $dt." - ".date("d-M-Y",strtotime($val[end_date]));//." - ".$val[group_time];

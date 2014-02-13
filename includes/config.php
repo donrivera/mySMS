@@ -18,7 +18,7 @@ class DB_Class
 		mb_internal_encoding('UTF-8');
 		mysql_select_db(DB_DATABASE, $connection);
 		mysql_query("set names 'utf8'",$connection);
-		
+		mysql_set_charset($connection, 'utf8' );
 		# Set Timezone
 		ini_set('date.timezone', 'Asia/Riyadh');
 		

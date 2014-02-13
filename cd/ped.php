@@ -588,7 +588,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                           <tr>
                             <td align="center" valign="middle">&nbsp;</td>
                             <?php
-								$arf = $res_ped["arf_submit"];							
+								$arf_document=$dbf->countRows('arf',"teacher_id='$teacher_id' AND group_id='$_REQUEST[cmbgroup]'","");	
+								$arf=($arf_document==1?"Yes":"No");						
 							?>
                             <td height="23" align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                               <tr>
@@ -897,7 +898,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						
 						//Get the Number of Present in a particular Units
 						$present = $dbf->strRecordID("ped_attendance","COUNT(id)","unit='$res_unit[units]' And teacher_id='$teacher_id' And group_id='$_REQUEST[cmbgroup]' And (shift1='X' OR shift2='X' OR shift3='X' OR shift4='X' OR shift5='X' OR shift6='X' OR shift7='X' OR shift8='X' OR shift9='X')");
-						
+						#$present = $dbf->strRecordID("ped_attendance","COUNT(id) as total","attend_date='$res_unit[dated]' And teacher_id='$_SESSION[uid]' And group_id='$_REQUEST[cmbgroup]' And (shift1='X' OR shift2='X' OR shift3='X' OR shift4='X' OR shift5='X' OR shift6='X' OR shift7='X' OR shift8='X' OR shift9='X')");
 						$res_teacher = $dbf->strRecordID("teacher","*","id='$teacher_id'");
 						?>
                           <tr>
@@ -1642,7 +1643,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                           <tr>
                             <td align="center" valign="middle">&nbsp;</td>
                             <?php
-								$arf = $res_ped["arf_submit"];							
+								$arf_document=$dbf->countRows('arf',"teacher_id='$teacher_id' AND group_id='$_REQUEST[cmbgroup]'","");	
+								$arf=($arf_document==1?"Yes":"No");						
 							?>
                             <td height="23" align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                               <tr>

@@ -13,7 +13,7 @@ $Arabic = new I18N_Arabic('Transliteration');
 
 ini_set('memory_limit', '-1');
 
-$html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#999999" style="border-collapse:collapse;">
+$html ='<table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#999999" style="border-collapse:collapse;">
 		<tr>
 		  <th width="2%" height="25" align="center" valign="middle" bgcolor="#CCCCCC">&nbsp;</th>
 		  <th width="12%" align="left" valign="middle" bgcolor="#CCCCCC"><span id="result_box" lang="ar" xml:lang="ar">'.ADMIN_REPORT_TEACHER_BOARD_STUDENTNAME.'</span></th>
@@ -102,7 +102,7 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 			
 			//Get Name Of Groups
 			$res = $dbf->strRecordID("student","*","id='$resp[student_id]'");
-			$res2 = $dbf->strRecordID("common","*","id='$resp[group_id]'");
+			$res2 = $dbf->getDataFromTable("student_group","group_name","id='$resp[group_id]'");
 			
 			//Get Name Of Teacher
 			$res3 = $dbf->strRecordID("teacher","*","id='$resp[teacher_id]'");
@@ -111,8 +111,8 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 			$html.='<tr>
 			  <td height="25" align="center" valign="middle" class="mycon">&nbsp;</td>
 			  <td height="25" align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($res["id"]).'</span></td>
-			  <td align="left" valign="middle" >'.$course[name].'</td>
-			  <td height="30" align="left" valign="middle">'.$res2[name].'</td>
+			  <td align="left" valign="middle" >'.(empty($course[name])?'N/A':$course[name]).'</td>
+			  <td height="30" align="left" valign="middle">'.(empty($res2)?'N/A':$res2).'</td>
 			  <td align="left" valign="middle">'.$res3[name].'</td>
 			  <td align="left" valign="middle">'.$res[student_mobile].'</td>
 			  <td align="left" valign="middle">'.$res[email].'</td>';
@@ -128,7 +128,7 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 		$html.='</tr>
 	</table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_absent_report.pdf", 'D');
 	exit;

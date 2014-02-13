@@ -1208,7 +1208,7 @@ class User extends Dbfunctions{
 				$nc_set_unit=$next_class['units'];
 				$nc_set_days=($nc_units %2==0?intval($nc_units):ceil($nc_units));
 				$nc_compute_date = date('Y-m-d',strtotime($end_date .'+ 1 day'));
-				$new_nc_compute_date=$dbf->printClassChangedEndDate($nc_compute_date);
+				$new_nc_compute_date=$dbf->printClassEndDate($nc_compute_date);
 				$nc_dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($new_nc_compute_date)) . "+$nc_set_days day"));
 				$nc_compute_end_date=$dbf->printClassChangedEndDate($nc_dt1);
 				$thirdchecknextclass= $dbf->genericQuery(" 	SELECT *
@@ -1244,7 +1244,7 @@ class User extends Dbfunctions{
 					endforeach;
 					$thirdc_set_days=($thirdc_units %2==0?intval($thirdc_units):ceil($thirdc_units));
 					$thirdc_compute_date = date('Y-m-d',strtotime($nc_compute_end_date .'+ 1 day'));
-					$new_thirdc_compute_date=$dbf->printClassChangedEndDate($thirdc_compute_date);
+					$new_thirdc_compute_date=$dbf->printClassEndDate($thirdc_compute_date);
 					$thirdc_dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($new_thirdc_compute_date)) . "+$thirdc_set_days day"));
 					$thirdc_compute_end_date=$dbf->printClassChangedEndDate($thirdc_dt1);
 				
@@ -1637,20 +1637,20 @@ class User extends Dbfunctions{
 				else
 				{
 					$adj=$this->computeAdjustments($prev_num,$current_group['units'],$total_ped_units,$new_group['units']);
-					$new_computed_units=$adj[units];
+					$new_computed_units=$adj['units'];
 					$this->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
 				}
 			}
 			else
 			{
 				foreach($second_group as $sg):
-					$second_group_id=$sg[id];
-					$second_count_days=($sg[units]/($sg['unit_per_day'] * 5))* 7;
+					$second_group_id=$sg['id'];
+					$second_count_days=($sg['units']/($sg['unit_per_day'] * 5))* 7;
 					$second_group_end_date=strtotime($sg['end_date'] .'+ 1 week');
 					$second_start_date=date('Y-m-d',strtotime($end_date.' +1 day')); 
-					$new_second_end_date=$this->printClassChangedEndDate($second_start_date);
+					$new_second_start_date=$this->printClassEndDate($second_start_date);
 					$count_second_days=($second_count_days %2==0?intval($second_count_days):ceil($second_count_days));
-					$second_dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($second_start_date)) . "+$count_second_days day"));
+					$second_dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($new_second_start_date)) . "+$count_second_days day"));
 					$second_end_date=$this->printClassChangedEndDate($second_dt1);
 					$group2_end_date=date('Y-m-d',$second_group_end_date);
 					$third_group= $this->genericQuery(" SELECT * FROM student_group 
@@ -1668,17 +1668,17 @@ class User extends Dbfunctions{
 						else
 						{	
 							$adj=$this->computeAdjustments($prev_num,$current_group['units'],$total_ped_units,$new_group['units']);
-							$new_computed_units=$adj[units];
+							$new_computed_units=$adj['units'];
 							$this->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
 							#echo "<BR/>Group 1:".$group."-units:".$new_computed_units."-".$end_date."<BR/>";
 						}
-						$this->updateTable("student_group","start_date='$new_second_end_date',end_date='$second_end_date'","id='$second_group_id'");
+						$this->updateTable("student_group","start_date='$new_second_start_date',end_date='$second_end_date'","id='$second_group_id'");
 					}
 					else
 					{
 						foreach($third_group as $tg):
-							$third_group_id=$tg[id];
-							$third_count_days=($tg[units]/($tg['unit_per_day'] * 5)) * 7;
+							$third_group_id=$tg['id'];
+							$third_count_days=($tg['units']/($tg['unit_per_day'] * 5)) * 7;
 						endforeach;
 						if(empty($max_ped) || $max_ped==NULL)
 						{	
@@ -1688,17 +1688,17 @@ class User extends Dbfunctions{
 						else
 						{	
 							$adj=$this->computeAdjustments($prev_num,$current_group['units'],$total_ped_units,$new_group['units']);
-							$new_computed_units=$adj[units];
+							$new_computed_units=$adj['units'];
 							$this->updateTable("student_group","units='$new_computed_units',end_date='$end_date'","id='$group'");
 							#echo "<BR/>Group 1:".$group."-units:".$new_computed_units."-".$end_date."<BR/>";
 						}
-						$this->updateTable("student_group","start_date='$new_second_end_date',end_date='$second_end_date'","id='$second_group_id'");
+						$this->updateTable("student_group","start_date='$new_second_start_date',end_date='$second_end_date'","id='$second_group_id'");
 						$third_start_date=date('Y-m-d',strtotime($second_end_date.'+1 day')); 
-						$new_third_start_date=$this->printClassChangedEndDate($third_start_date);
+						$new_third_start_date=$this->printClassEndDate($third_start_date);
 						$count_third_days=($third_count_days %2==0?intval($third_count_days):ceil($third_count_days));
-						$third_dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($third_start_date)) . "+$count_third_days day"));
+						$third_dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($new_third_start_date)) . "+$count_third_days day"));
 						$third_end_date=$this->printClassChangedEndDate($third_dt1);
-						$this->updateTable("student_group","start_date='$third_start_date',end_date='$third_end_date'","id='$third_group_id'");
+						$this->updateTable("student_group","start_date='$new_third_start_date',end_date='$third_end_date'","id='$third_group_id'");
 					}
 				endforeach;
 			}

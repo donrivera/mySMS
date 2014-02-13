@@ -98,11 +98,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
         $(function() {
             $("#sort_table")
                 .tablesorter({ 
-            headers: { 
-             6: { 
-                    sorter: false 
-                },           
-            } 
+            headers: 
+			{ 
+				0:{sorter:false},
+				6:{sorter:false},
+				7:{sorter:false},
+			} 
         })			
         .tablesorterPager({container: $("#pager"), size: 15});
         });
@@ -179,6 +180,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <th width="18%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("TEACHER_ARF_MANAGE_ACTIONOWENER");?></th>
                       <th width="15%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("TEACHER_ARF_MANAGE_REPORTBY");?></th>
                       <th width="15%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("TEACHER_ARF_MANAGE_REPORTTO");?></th>
+					  <th width="15%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo "Status";?></th>
                       <th colspan="4" align="center" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("COMMON_ACTION");?></th>
                     </tr>
                   </thead>
@@ -201,6 +203,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[action_owner];?></td>
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[report_by];?></td>
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[report_to];?></td>
+					<td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo "Submitted";?></td>
                     <td width="4%" align="center" valign="middle"><a href="arf_print.php?id=<?php echo $val[id];?>" target="_blank">
                     <img src="../images/print.png" width="16" height="16" title="<?php echo STUDENT_ADVISOR_SEARCH_MANAGE_PRINT ?>"/></a></td>
                     <td width="5%" align="center" valign="middle"><a href="arf_edit.php?id=<?php echo $val[id];?>"> <img src="../images/edit.gif" border="0" title="Edit" /></a></td>
