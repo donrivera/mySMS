@@ -167,6 +167,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
           </tr>
           <?php
           $res = $dbf->strRecordID("email_templete","*","");
+		  
 		  ?>
           <tr>
             <td align="center" valign="middle" class="title headingtext">
@@ -184,40 +185,38 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td width="107" align="left" bgcolor="#FFFFFF">
                 <select name="opval" id="opval" style="border:solid 1px; border-color:#999999; width:100px;" onChange="show_studentlist();">
                   <option value="">Select</option>
-                  <option value="student">Student</option>
-                  <option value="group">Group - Not Started</option>
-                  <option value="groupcontinue">Group - In Progress</option>
-                  <option value="groupfinish">Group - Completed</option>
-                  <option value="teacher">Teacher</option>
-                  <option value="staff">Staff</option>
                   
-                  <option value="Enquiry">Enquiry</option>
-                  <option value="Potential">Potential</option>
-                  
-                  <option value="Waiting - Payment Pending">Waiting - Payment Pending</option>
-                  <option value="Waiting - Full Payment">Waiting - Full Payment</option>
-                  
-                  <option value="Enrolled - Payment Pending">Enrolled - Payment Pending</option>
-                  <option value="Enrolled - Full Payment">Enrolled - Full Payment</option>
-                  
-                  <option value="Active - Payment Pending">Active - Payment Pending</option>
-                  <option value="Active - Full Payment">Active - Full Payment</option>
-                  
-                  <option value="On Hold - Payment Pending">On Hold - Payment Pending</option>
-                  <option value="On Hold - Full Payment">On Hold - Full Payment</option>
-                   
-                  <option value="Cancelled - Payment Pending">Cancelled - Payment Pending</option>
-                  <option value="Cancelled - Full Payment">Cancelled - Full Payment</option>
-                  <option value="Cancelled - Refunded">Cancelled - Refunded</option>
-                  
-                  <option value="Completed - Payment Pending">Completed - Payment Pending</option>
-                  <option value="Completed - Full Payment">Completed - Full Payment</option>
-                  
-                  <option value="Legally Critical">Legally Critical</option>
+					<option value="Active - Payment Pending">Active - Payment Pending</option>
+                    <option value="Active - Full Payment">Active - Full Payment</option>
+					<option value="Cancelled - Full Payment">Cancelled - Full Payment</option>
+                    <option value="Cancelled - Payment Pending">Cancelled - Payment Pending</option>
+                    <option value="Cancelled - Refunded">Cancelled - Refunded</option>
+					<option value="Completed - Full Payment">Completed - Full Payment</option>
+                    <option value="Completed - Payment Pending">Completed - Payment Pending</option>
+                    <option value="Enquiry">Enquiry</option>
+					<option value="Enrolled - Full Payment">Enrolled - Full Payment</option>
+                    <option value="Enrolled - Payment Pending">Enrolled - Payment Pending</option>
+                    <option value="groupfinish">Group - Completed</option>
+                    <option value="groupcontinue">Group - In Progress</option>
+					<option value="group">Group - Not Started</option>
+					<option value="Legally Critical">Legally Critical</option>
+					<option value="On Hold - Full Payment">On Hold - Full Payment</option>
+                    <option value="On Hold - Payment Pending">On Hold - Payment Pending</option>
+					<option value="Potential">Potential</option>
+                    <option value="staff">Staff</option>
+					<option value="student">Student</option>
+					<option value="teacher">Teacher</option>
+                    <option value="Waiting - Full Payment">Waiting - Full Payment</option>
+					<option value="Waiting - Payment Pending">Waiting - Payment Pending</option>
                 </select></td>
                 <td width="320" align="left" valign="middle" id="lbl_student_list" bgcolor="#FFFFFF">
-                  <select name="student_2" id="student_2" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; width:192px;">
-                    <option value="">-- All Student --</option>
+					<?php
+						$email_stdnt_id=$_SESSION['email_student_id'];
+						$display=(empty($email_stdnt_id)?'-- All Student --':$dbf->printStudentName($email_stdnt_id));
+						$email_value=(empty($email_stdnt_id)?'':$email_stdnt_id);
+					?>
+                  <select name="student_2" id="student_2" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; width:300px;">
+                    <option value="<?php echo $email_value;?>"><?php echo $display;?></option>
                     <?php
 					foreach($dbf->fetchOrder('student',"centre_id='$_SESSION[centre_id]' And student_mobile<>'' And first_name <> ''","first_name","","") as $move){
 					?>

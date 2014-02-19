@@ -79,7 +79,7 @@ $html = '<table width="600" border="0" cellspacing="0" cellpadding="0" style="bo
 		  </tr>
 		</table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_statistic.pdf", 'D');
 	exit;

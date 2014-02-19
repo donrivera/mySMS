@@ -35,7 +35,7 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 			$num=$dbf->countRows('student_group',$cond);
 
 			if($num > 0){
-			 foreach($dbf->fetchOrder('student_group',$cond,"id DESC") as $val) {
+			 foreach($dbf->fetchOrder('student_group',$cond,"group_name") as $val) {
 				
 				$res = $dbf->strRecordID("teacher","*","id='$val[teacher_id]'");
 				$grp = $dbf->strRecordID("common","*","id='$val[group_id]'");
@@ -44,7 +44,7 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 				$num1=$dbf->countRows('student_group_dtls',"parent_id='$val[id]'");
 			$html.='<tr>
 			  <td align="left" valign="middle" bgcolor="#F8F9FB">'.$i.'</td>
-			  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB">'.$val[group_name].' '.$val["group_time"].'-'.$dbf->GetGroupTime($val["id"]).'</td>
+			  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB">'.$dbf->FullGroupInfo($val['id']).'</td>
 			  <td align="left" valign="middle" bgcolor="#F8F9FB">'.$val[start_date].'</td>
 			  <td align="left" valign="middle" bgcolor="#F8F9FB">'.$val[end_date].'</td>
 			  <td align="left" valign="middle" bgcolor="#F8F9FB">'.$std["COUNT(student_id)"].'</td>
@@ -55,7 +55,7 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 			$html.='</tr>			
 		</table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_teacher_schedule.pdf", 'D');
 	exit;

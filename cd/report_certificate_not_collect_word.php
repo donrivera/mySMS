@@ -13,7 +13,7 @@ header("Content-type: application/vnd.ms-word");
 header("Content-Disposition: attachment; Filename=report_certificate_not_collect.doc");
 ?>	
 <!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
 <thead>
 <tr class="logintext">                
@@ -28,19 +28,19 @@ header("Content-Disposition: attachment; Filename=report_certificate_not_collect
 $k = 1;
 
 if($_REQUEST[start_date]!='' && $_REQUEST[end_date]!=''){
-	$cond="certificate_collect='0' And (enroll_date BETWEEN '$_REQUEST[start_date]' And '$_REQUEST[end_date]') And centre_id='$_SESSION[centre_id]'";
+	$cond="e.group_id=s.id AND e.certificate_collect='0' And (e.enroll_date BETWEEN '$_REQUEST[start_date]' And '$_REQUEST[end_date]') And e.centre_id='$_SESSION[centre_id]'";
 }else{
-	$cond="certificate_collect='0' And centre_id='$_SESSION[centre_id]'";
+	$cond="e.group_id=s.id AND e.certificate_collect='0' And e.centre_id='$_SESSION[centre_id]'";
 }
 
-//Get number of rows
-$num=$dbf->countRows('student_enroll', $cond);
-
-//Get currency
-$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
-
-//Loop start
-foreach($dbf->fetchOrder('student_enroll', $cond ,"","") as $val1){
+	//Get number of rows
+	$num=$dbf->countRows('student_enroll e,student_group s',$cond." AND s.status='Completed'");
+				
+	//Get currency
+	$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
+				
+		//Loop start
+foreach($dbf->fetchOrder('student_enroll e,student_group s',$cond." AND s.status='Completed'","","") as $val1){
 	$val = $dbf->strRecordID("student","*","id='$val1[student_id]'");
 ?>
     <tr bgcolor="<?php echo $color;?>">                

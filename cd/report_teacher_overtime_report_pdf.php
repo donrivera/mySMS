@@ -52,7 +52,7 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 		}
 		$html.='<tr>
 		  <td height="25" align="center" valign="middle" bgcolor="#F8F9FB">'.$i.'</td>
-		  <td align="left" valign="middle" bgcolor="#F8F9FB">'.$val["group_name"].' '.$val["group_time"].'-'.$dbf->GetGroupTime($val["id"]).'</td>
+		  <td align="left" valign="middle" bgcolor="#F8F9FB">'.$val["group_name"].' '.$dbf->printClassTimeFormat($val["group_start_time"],$val["group_end_time"]).'</td>
 		  <td align="left" valign="middle" bgcolor="#F8F9FB">'.date("d-M-Y",strtotime($val[start_date]))." To ".date('d-M-Y',strtotime($val[end_date])).'</td>
 		  <td align="left" valign="middle" bgcolor="#F8F9FB">'.$unit["COUNT(id)"].'</td>
 		  <td align="left" valign="middle" bgcolor="#F8F9FB">'.$unit1["units"].'</td>

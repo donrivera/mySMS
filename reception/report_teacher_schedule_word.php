@@ -23,7 +23,7 @@ header("Content-Disposition: attachment; Filename=report_teacher_schedule.doc");
 ?>	
 
 <!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
          
@@ -54,7 +54,7 @@ header("Content-Disposition: attachment; Filename=report_teacher_schedule.doc");
 					//echo $num1;exit;
 					if($num1!=0)
 					{
-					foreach($dbf->fetchOrder('student_group',$cond,"id DESC") as $val) {
+					foreach($dbf->fetchOrder('student_group',$cond,"group_name") as $val) {
 					$res = $dbf->strRecordID("teacher","*","id='$val[teacher_id]'");
 					$grp = $dbf->strRecordID("common","*","id='$val[group_id]'");
 					$std = $dbf->strRecordID("student_group_dtls","COUNT(student_id)","parent_id='$val[id]'");
@@ -62,7 +62,7 @@ header("Content-Disposition: attachment; Filename=report_teacher_schedule.doc");
 					?>
                 <tr>
                   <td align="left" valign="middle" bgcolor="#F8F9FB" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $i;?></td>
-                  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val[group_name];?> <?php echo $val["group_time"];?>-<?php echo $dbf->GetGroupTime($val["id"]);?></td>
+                  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $dbf->FullGroupInfo($val['id']);?></td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB"  style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val[start_date];?></td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB"  style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val[end_date];?></td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB"  style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $std["COUNT(student_id)"];?></td>

@@ -16,61 +16,125 @@ include_once '../includes/class.Main.php';
 //Object initialization
 $dbf = new User();
 include_once '../includes/language.php';
+
 //Important below 2 lines
 header("Content-type: application/vnd.ms-word");
 header("Content-Disposition: attachment; Filename=report_student_on_hold.doc");
 ?>
 
-
-
 <!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
-
-<table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#AAAAAA" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
-			       <thead>
-                <tr class="logintext">
-                  <th width="11%" height="29" align="left" valign="middle" bgcolor="#CDCDCD" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#6a6868;font-weight:bold;"  ><?php echo constant("RECEPTION_S_MANAGE_STUDENTNAME");?></th>
-                  <th width="10%" align="left" valign="middle" bgcolor="#CDCDCD" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#6a6868;font-weight:bold;"><?php echo constant("STUDENT_ADVISOR_S10_MOBNO");?> </th>
-                  <th width="12%" align="left" valign="middle" bgcolor="#CDCDCD" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#6a6868;font-weight:bold;"><?php echo constant("STUDENT_ADVISOR_SEARCH_EMAIL");?> </th>
-                  <th width="9%" align="center" valign="middle" bgcolor="#CDCDCD" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#6a6868;font-weight:bold;"><?php echo constant("CD_REPORT_STUDENT_NOT_ENROLLED_CSV_DATA_EQUITYDATE");?>  </th>
-                  <th width="15%" align="left" valign="middle" bgcolor="#CDCDCD" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#6a6868;font-weight:bold;"><?php echo constant("ADMIN_REPORT_STUDENT_NOT_ENROLLED_LASTCOMT");?> </th>
-                  <th width="13%" align="left" valign="middle" bgcolor="#CDCDCD" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#6a6868;font-weight:bold;"><?php echo constant("CD_REPORT_STUDENT_ON_HOLD_CSV_DATA_COURSEPAUSED");?></th>
-                 <th align="center" valign="middle" bgcolor="#CDCDCD" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#6a6868;font-weight:bold;"><?php echo constant("CD_REPORT_STUDENT_ON_HOLD_CSV_DATA_DATEPAUSED");?> </th>
-				   <th width="18%" align="left" valign="middle" bgcolor="#CDCDCD" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#6a6868;font-weight:bold;"><?php echo constant("ADMIN_REPORT_STUDENT_ON_HOLD_LASTCHAPTED");?></th>
-                </tr>
-				</thead>
-                 <?php
-					$i = 1;
-					$num=$dbf->countRows('student',"studentstatus_id='10'");
-					foreach($dbf->fetchOrder('student',"studentstatus_id='10'","id DESC") as $val) {
-						
-						if($val[register_date] == '0000-00-00')
-						{
-							$dt = '';
-						}
-						else
-						{
-							$dt = date('d-M-Y',strtotime($val[register_date]));
-						}
-						
-						//get current course of the student
-						$grp = $dbf->strRecordID("student_group g,student_group_dtls d","g.*","g.id=d.parent_id And g.status<>'Completed' And d.student_id='$val[id]'");
-						
-						//get course name
-						$course = $dbf->strRecordID("course","*","id='$grp[course_id]'");
-					?>
-                <tr>
-                  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val[first_name];?></td>
-                  <td align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val[student_mobile];?></td>
-                  <td align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val[email];?></td>
-                  <td align="center" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;">&nbsp;</td>
-                  <td align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val[student_comment];?></td>
-                  <td align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val[tto];?></td>
-                  <td width="12%" align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;">&nbsp;</td>
-				    <td align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;">&nbsp;</td>
-                  <? 
-					  $i = $i + 1;
-					  }
-					  ?>
-                </tr>
-            </table>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
+<table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#999999" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
+  <thead>
+    <tr class="logintext">
+      <th width="11%" height="29" align="left" valign="middle" bgcolor="#CCCCCC" class="pedtext">
+      <?php echo constant("ADMIN_REPORT_CERTIFICATE_REPORT_STUDENTNAME");?></th>
+      <th width="10%" align="left" valign="middle" bgcolor="#CCCCCC" class="pedtext">
+      <?php echo constant("ADMIN_REPORT_STUDENT_NOT_ENROLLED_MOBILENUMBER");?></th>
+      <th width="12%" align="left" valign="middle" bgcolor="#CCCCCC" class="pedtext">
+      <?php echo constant("ADMIN_REPORT_STUDENT_ON_HOLD_EMAIL");?></th>
+      <th width="7%" align="center" valign="middle" bgcolor="#CCCCCC" class="pedtext">
+      <?php echo constant("ADMIN_REPORT_STUDENT_ON_HOLD_ENQDATE");?></th>
+      <th width="13%" align="left" valign="middle" bgcolor="#CCCCCC" class="pedtext">
+      <?php echo constant("ADMIN_REPORT_STUDENT_ON_HOLD_LASTCOMMENT");?></th>
+      <th width="16%" align="left" valign="middle" bgcolor="#CCCCCC" class="pedtext">
+      <?php echo constant("ADMIN_REPORT_STUDENT_ON_HOLD_COURSEWASP");?></th>
+      <th align="center" valign="middle" bgcolor="#CCCCCC" class="pedtext">
+      <?php echo constant("ADMIN_REPORT_STUDENT_ON_HOLD_DATEOF");?></th>
+       <th width="20%" align="left" valign="middle" bgcolor="#CCCCCC" class="pedtext">
+       <?php echo constant("ADMIN_REPORT_STUDENT_ON_HOLD_LASTCHAPTED");?></th>
+    </tr>
+    </thead>
+    <?php
+        $i = 1;
+        $color="#ECECFF";
+        
+        $centre_id = $_SESSION["centre_id"];
+        $condition = '';
+        //Concate the Condition
+        //1.
+        if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[email]==''){
+            $condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') And s.centre_id='$centre_id'";
+        }else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[email]==''){
+            $condition = "s.student_id LIKE '$_REQUEST[stid]%'  And s.centre_id='$centre_id'";
+        }else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[email]==''){
+            $condition = "s.student_mobile LIKE '$_REQUEST[mobile]%'  And s.centre_id='$centre_id'";
+        }else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[email]!=''){
+            $condition = "s.email LIKE '$_REQUEST[email]%'  And s.centre_id='$centre_id'";
+        }
+        //End 1.
+        
+        //2.
+        else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[email]==''){
+            $condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.student_id LIKE '$_REQUEST[stid]%'  And s.centre_id='$centre_id'";
+        }else if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[email]==''){
+            $condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.student_mobile LIKE '$_REQUEST[mobile]%'  And s.centre_id='$centre_id'";
+        }else if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[email]!=''){
+            $condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.email LIKE '$_REQUEST[email]%' And s.centre_id='$centre_id'";
+        }else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[email]==''){
+            $condition = "s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.student_id LIKE '$_REQUEST[stid]%' And s.centre_id='$centre_id'";
+        }else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[email]!=''){
+            $condition = "s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.email LIKE '$_REQUEST[email]%' And s.centre_id='$centre_id'";
+        }else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[email]!=''){
+            $condition = "s.student_id LIKE  '$_REQUEST[stid]%' AND s.email LIKE '%$_REQUEST[email]%' And s.centre_id='$centre_id'";
+        }
+        //End 2.
+        
+        //3.
+        else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[email]==''){
+            $condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.student_id LIKE '$_REQUEST[stid]%' AND s.student_mobile LIKE '$_REQUEST[mobile]%' And s.centre_id='$centre_id'";
+        }else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[email]!=''){
+            $condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.student_id LIKE '$_REQUEST[stid]%' AND s.email LIKE '$_REQUEST[email]%' And s.centre_id='$centre_id'";
+        }else if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[email]!=''){
+            $condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.email LIKE '$_REQUEST[email]%' And s.centre_id='$centre_id'";
+        }else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[email]!=''){
+            $condition = "s.student_id LIKE '$_REQUEST[stid]%' AND s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.email LIKE '$_REQUEST[email]%' And s.centre_id='$centre_id'";
+        }
+        //End 3.
+        
+        //4.
+        else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[email]!=''){
+            $condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.student_id LIKE  '$_REQUEST[stid]%' AND s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.email LIKE '$_REQUEST[email]%' And s.centre_id='$centre_id'";
+        }else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[email]==''){
+            $condition = "s.id>'0' And s.centre_id='$centre_id'";
+        }
+        //End 4.
+        
+        $condition = $condition." And s.id = m.student_id And m.status_id='6'";
+        
+        $num=$dbf->countRows('student s,student_moving m', $condition);
+        foreach($dbf->fetchOrder('student s,student_moving m', $condition , "", "m.*") as $val1) {
+            
+            $val = $dbf->strRecordID("student","*","id='$val1[student_id]'");
+            if($val[register_date] == '0000-00-00'){
+                $dt = '';
+            }else{
+                $dt = date('d-M-Y',strtotime($val[register_date]));
+            }
+            
+            //get current course of the student
+            $grp = $dbf->strRecordID("student_group g,student_group_dtls d","g.*","g.id=d.parent_id And g.status<>'Completed' And d.student_id='$val1[student_id]'");
+            
+            //get course name
+            $course = $dbf->strRecordID("course","*","id='$grp[course_id]'");
+        ?>                    
+    <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
+      <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dbf->printStudentName($val["id"]);?></td>
+      <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
+      <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
+      <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dt;?></td>
+      <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_comment];?></td>
+      <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $course[name];?></td>
+      <td width="11%" align="left" valign="middle" class="mycon" style="padding-left:5px;">&nbsp;</td>
+      <td align="left" valign="middle" class="mycon" style="padding-left:5px;">&nbsp;</td>
+      <?php
+          $i = $i + 1;
+          if($color=="#ECECFF"){
+              $color = "#FBFAFA";
+          }else{
+              $color="#ECECFF";
+          }					  
+      }
+      ?>
+    </tr>
+</table>

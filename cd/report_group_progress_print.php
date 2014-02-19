@@ -21,6 +21,7 @@ $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[group_id]'"
 
 $teacher_id = $_REQUEST["teacher_id"];
 ?>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="../css/print.css" rel="stylesheet" type="text/css" />
 <body>
 <table width="1000" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -89,7 +90,7 @@ $teacher_id = $_REQUEST["teacher_id"];
 		  ?>
       <tr>
         <td height="20" align="left" valign="middle" class="leftmenu">&nbsp;<?php echo constant("CD_GROUP_PROGRESS_COMPANYGROUP");?> : </td>
-        <td align="left" valign="middle" class="pedtext_normal"><?php echo $res_g[group_name];?> <?php echo $res_g["group_time"];?>-<?php echo $dbf->GetGroupTime($res_g["id"]);?></td>
+        <td align="left" valign="middle" class="pedtext_normal"><?php echo $res_g[group_name];?> <?php echo $dbf->printClassTImeFormat($res_g["group_start_time"],$res_g["group_end_time"]);?></td>
         <td>&nbsp;</td>
         <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
@@ -201,9 +202,10 @@ $teacher_id = $_REQUEST["teacher_id"];
             <td height="1" colspan="10" align="left" valign="middle" bgcolor="#000000"></td>
           </tr>
           <?php 
+				
 				 $attend_calc=0;
 				 $student_count = 1;
-				 foreach($dbf->fetchOrder('student s,student_group_dtls c',"s.id=c.student_id AND c.parent_id='$_REQUEST[group_id]'","s.first_name","s.*,c.id") as $r) 
+				 foreach($dbf->fetchOrder('student s,student_group_dtls c',"s.id=c.student_id AND c.parent_id='$_REQUEST[group_id]'","s.first_name","s.*,c.course_id") as $r) 
 				 { 
 				 	$res_progress = $dbf->strRecordID("teacher_progress_course","*","group_id='$_REQUEST[group_id]' And student_id='$r[id]'");
 					
@@ -263,8 +265,13 @@ $teacher_id = $_REQUEST["teacher_id"];
         <td>&nbsp;</td>
       </tr>
       <tr>
-        <td height="40" align="left" valign="middle" class="leftmenu">&nbsp;</td>
-        <td class="pedtext">&nbsp;</td>
+       <td height="40" colspan="2" align="left" valign="top" class="leftmenu">
+			<p>
+				<?php 
+					echo $dbf->getDataFromTable("teacher_progress","narration","group_id='$_REQUEST[cmbgroup]'");
+				?>
+			</p>
+		</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td align="left" valign="top"><table width="99%" border="0" cellspacing="0" cellpadding="0">
@@ -327,3 +334,6 @@ $teacher_id = $_REQUEST["teacher_id"];
 </table>
 </body>
 </html>
+<script type="text/javascript">
+window.print();
+</script>

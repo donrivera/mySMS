@@ -188,7 +188,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" onClick="javascript:window.location.href='arf_view.php?id=<?php echo $val[id];?>'" style="cursor:pointer;">                  
                     <td align="center" valign="middle" class="contenttext"><?php echo $i;?></td>
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[dated];?></td>
-                    <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $res_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></td>
+                    <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $dbf->printStudentName($res_student["id"]);?></td>
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[action_owner];?></td>
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[report_by];?></td>
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[report_to];?></td>

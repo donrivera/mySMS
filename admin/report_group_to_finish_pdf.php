@@ -23,21 +23,24 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0"  borderc
 		  </tr>
 		  </thead>';
     $i = 1;
-    if($_REQUEST["start_date"]!='' && $_REQUEST["end_date"]!=''){
-		$cond="status<>'Completed' And (start_date <= '$_REQUEST[end_date]' And end_date >= '$_REQUEST[start_date]')";
-    }else{
-    	$cond = "status<>'Completed'";
-    }
-    $num=$dbf->countRows('student_group',$cond);
-    
-    foreach($dbf->fetchOrder('student_group',$cond,"id DESC") as $val) {
-        
-    $res = $dbf->strRecordID("teacher","*","id='$val[teacher_id]'");
-    $grp = $dbf->strRecordID("common","*","id='$val[group_id]'");
-    $course = $dbf->strRecordID("course","*","id='$val[course_id]'");
+    if($_REQUEST[start_date]!='' && $_REQUEST[end_date]!='')
+		{
+			$cond="status<>'Completed' And (end_date BETWEEN '$_REQUEST[start_date]' AND '$_REQUEST[end_date]')";
+			//(start_date BETWEEN '$start_date' AND '$end_date' OR end_date BETWEEN '$start_date' AND '$end_date')
+			#(start_date <= '$_REQUEST[end_date]' And end_date >= '$_REQUEST[start_date]')
+		}else{
+				$cond="status<>'Completed' And centre_id='$_SESSION[centre_id]'";
+		}
+		$num=$dbf->countRows('student_group',$cond);
+				
+		foreach($dbf->fetchOrder('student_group',$cond,"id DESC") as $val) {
+					
+		$res = $dbf->strRecordID("teacher","*","id='$val[teacher_id]'");
+		$grp = $dbf->strRecordID("common","*","id='$val[group_id]'");
+		$course = $dbf->strRecordID("course","*","id='$val[course_id]'");
 	$html.='<tr>
 	  <td height="25" align="center" valign="middle" bgcolor="#F8F9FB">'.$i.'</td>
-	  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" ><span id="result_box" lang="ar" xml:lang="ar">'.$val["group_name"].'&nbsp;'.$val["group_time"].'-'.$dbf->GetGroupTime($val["id"]).'</span></td>
+	  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" ><span id="result_box" lang="ar" xml:lang="ar">'.$val[group_name]."&nbsp;".$dbf->printClassTimeFormat($val[group_start_time],$val[group_end_time]).'</span></td>
 	  <td align="left" valign="middle" bgcolor="#F8F9FB"><span id="result_box" lang="ar" xml:lang="ar">'.$res["name"].'</span></td>
 	  <td align="left" valign="middle" bgcolor="#F8F9FB">'.$val["start_date"].'</td>
 	  <td align="left" valign="middle" bgcolor="#F8F9FB">'.$val["end_date"].'</td>
@@ -47,7 +50,7 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0"  borderc
 	$html.='</tr>
 	</table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_group_to_finish.pdf", 'D');
 	exit;

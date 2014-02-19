@@ -150,6 +150,23 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 	.tablesorterPager({container: $("#pager"), size: 10});
 	});
 </script>
+	<!--
+	<tr>
+        <td align="left" height="25" valign="top">
+        <?php //if($_REQUEST[centre_id] != '' && $_REQUEST[start_date] !='' && $_REQUEST[end_date]) { ?>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td>&nbsp;</td>
+              <td width="36" align="center" valign="top"><a href="report_beddebt_report_word.php?centre_id=<?php echo $_REQUEST[centre_id];?>&start_date=<?php echo $_REQUEST[start_date];?>&end_date=<?php echo $_REQUEST[end_date];?>"><img src="../images/word2007.png" width="20" height="20" border="0" title="Export to Word"></a></td>
+              <td width="36" align="center" valign="top"><a href="report_beddebt_report_csv.php?centre_id=<?php echo $_REQUEST[centre_id];?>&start_date=<?php echo $_REQUEST[start_date];?>&end_date=<?php echo $_REQUEST[end_date];?>"><img src="../images/excel2007.PNG" width="20" height="20" border="0" title="Export to Excel"></a></td>
+              <td width="36" align="center" valign="top"><a href="report_beddebt_report_pdf.php?centre_id=<?php echo $_REQUEST[centre_id];?>&start_date=<?php echo $_REQUEST[start_date];?>&end_date=<?php echo $_REQUEST[end_date];?>"><img src="../images/pdf.png" width="20" height="20" border="0" title="Export to PDF"></a></td>
+              <td width="36" align="center" valign="middle"><a href="report_beddebt_report_print.php?centre_id=<?php echo $_REQUEST[centre_id];?>&start_date=<?php echo $_REQUEST[start_date];?>&end_date=<?php echo $_REQUEST[end_date];?>" target="_blank"><img src="../images/print.png" alt="" width="16" height="16" border="0" title="Print"></a></td>
+            </tr>
+        </table>
+        <?php //} ?>
+        </td>
+    </tr>
+	-->
   <tr>
     <td align="left" valign="top">
     
@@ -259,7 +276,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
                     <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                       <td align="left" valign="middle" class="mycon">&nbsp;<a href="single-home.php?student_id=<?php echo $student[id];?>"><?php echo $student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></a></td>
-                      <td align="left" valign="middle" class="mycon" >&nbsp;<?php echo $group["group_name"];?> <?php echo $group["group_time"];?>-<?php echo $dbf->GetGroupTime($group["id"]);?></td>
+                      <td align="left" valign="middle" class="mycon" >&nbsp;<?php echo $dbf->FullGroupInfo($group['id']);?></td>
                       <td align="left" valign="middle" class="mycon" >&nbsp;<?php echo $course["name"];?></td>
                       <td align="right" valign="middle" class="mycon" ><?php echo $valfee["discount"];?>&nbsp;<?php echo $res_currency[symbol];?></td>
                       <td align="right" valign="middle" class="mycon" ><?php echo $dbf->getDiscountPercent($course_fees, $valfee["discount"]);?>&nbsp;<?php echo $res_currency[symbol];?></td>

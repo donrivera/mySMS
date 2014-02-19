@@ -74,7 +74,7 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 				$enroll = $valenroll["enrolled_status"];
 									
 				//Get Group Name
-				$group = $dbf->strRecordID("student_group","*","id='$valenroll[course_id]'");
+				$group = $dbf->strRecordID("student_group","*","id='$valenroll[group_id]'");
 				$course_fees = $dbf->getDataFromTable("course_fee", "fees", "id='$valenroll[fee_id]'");
 				
 				//Enrollment Amount
@@ -92,8 +92,8 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 					$discount_percent = 0;
 				}
 			$html.='<tr>
-			  <td align="left" valign="middle">&nbsp;'.date("d-M-Y",strtotime($valenroll["payment_date"])).'</td>
-			  <td align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$student["first_name"].' '.$Arabic->en2ar($dbf->StudentName($student["id"])).'</span></td>
+			  <td align="left" valign="middle">&nbsp;'.date("d-M-Y",strtotime($valenroll["enroll_date"])).'</td>
+			  <td align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($student["id"]).'</span></td>
 			  <td align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">&nbsp;'.$course["name"].'</span></td>
 			  <td align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">&nbsp;'.$enroll.'</span></td>
 			  <td align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->FullGroupInfo($group["id"]).'</span></td>
@@ -108,7 +108,7 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 			$html.='</tr>		   
 		</table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_discount_report.pdf", 'D');
 	exit;

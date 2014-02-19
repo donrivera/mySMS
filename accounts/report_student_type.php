@@ -256,7 +256,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				?>                    
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                   <td height="25" align="center" valign="middle" class="mycon"><?php echo $i;?></td>
-                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val_student[id];?>" style="cursor:pointer;"><?php echo $val_student[first_name]."&nbsp;".$val_student[father_name]."&nbsp;".$val_student[family_name]."&nbsp;(".$val_student[first_name1]."&nbsp;".$val_student[father_name1]."&nbsp;".$val_student[grandfather_name1]."&nbsp;".$val_student[family_name1].")";?></a></td>
+                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val_student[id];?>" style="cursor:pointer;"><?php echo $dbf->printStudentName($val_student["id"]);?></a></td>
                   <td align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                       <td width="50%" align="center" valign="middle"><a href="sms_single.php?student_id=<?php echo $val["id"];?>&TB_iframe=true&amp;height=340&amp;width=475&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox "><img src="../images/mobile.png" width="32" height="32" border="0"></a></td>

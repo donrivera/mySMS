@@ -144,7 +144,7 @@ if($_SESSION[font]=='big'){
 					<categories>";
 					
 					//All courses of the particular student
-					foreach($dbf->fetchOrder('student_group_dtls',"student_id='$_REQUEST[student_id]'","id") as $val) {
+					foreach($dbf->fetchOrder('student_group_dtls',"student_id='$_REQUEST[student_id]'","course_id") as $val) {
 					
 					$course = $dbf->strRecordID("course","*","id='$val[course_id]'");
 					
@@ -160,7 +160,7 @@ if($_SESSION[font]=='big'){
 					$strXML1.="<dataset seriesName='' color='FFCC00' showValues='1'>";
 					
 					//Get Percentage of the particular student					
-					foreach($dbf->fetchOrder('student_group_dtls',"student_id='$_REQUEST[student_id]'","id") as $val1){
+					foreach($dbf->fetchOrder('student_group_dtls',"student_id='$_REQUEST[student_id]'","course_id") as $val1){
 					
 						$per = $dbf->strRecordID("teacher_progress_certificate","*","student_id='$_REQUEST[student_id]' And course_id='$val1[course_id]'");						
 						$percent = $per["final_percent"];
@@ -181,7 +181,7 @@ if($_SESSION[font]=='big'){
 					$strXML1.="<dataset seriesName='' color='33CC00' showValues='0' parentYAxis='S'>";
 					
 					//Get Percentage of the particular student					
-					foreach($dbf->fetchOrder('student_group_dtls',"student_id='$_REQUEST[student_id]'","id") as $val1){
+					foreach($dbf->fetchOrder('student_group_dtls',"student_id='$_REQUEST[student_id]'","course_id") as $val1){
 					
 						$per = $dbf->strRecordID("teacher_progress_certificate","*","student_id='$_REQUEST[student_id]' And course_id='$val1[course_id]'");						
 						$percent = $per["final_percent"];
@@ -215,7 +215,7 @@ if($_SESSION[font]=='big'){
 					$i = 1;
 					
 					$num=$dbf->countRows('grade');
-					foreach($dbf->fetchOrder('student_course',"student_id='$res[id]'","id DESC") as $val) {
+					foreach($dbf->fetchOrder('student_course',"student_id='$res[id]'","course_id") as $val) {
 					
 					$res_course = $dbf->strRecordID("course","*","id='$val[course_id]'");
 					
@@ -338,7 +338,7 @@ if($_SESSION[font]=='big'){
 					<categories>";
 					
 					//All courses of the particular student
-					foreach($dbf->fetchOrder('student_group_dtls',"student_id='$_REQUEST[student_id]'","id") as $val) {
+					foreach($dbf->fetchOrder('student_group_dtls',"student_id='$_REQUEST[student_id]'","course_id") as $val) {
 					
 					$course = $dbf->strRecordID("course","*","id='$val[course_id]'");
 					
@@ -354,7 +354,7 @@ if($_SESSION[font]=='big'){
 					$strXML1.="<dataset seriesName='' color='FFCC00' showValues='1'>";
 					
 					//Get Percentage of the particular student					
-					foreach($dbf->fetchOrder('student_group_dtls',"student_id='$_REQUEST[student]'","id") as $val1){
+					foreach($dbf->fetchOrder('student_group_dtls',"student_id='$_REQUEST[student]'","course_id") as $val1){
 					
 						$per = $dbf->strRecordID("teacher_progress_certificate","*","student_id='$_REQUEST[student_id]' And course_id='$val1[course_id]'");						
 
@@ -374,7 +374,7 @@ if($_SESSION[font]=='big'){
 					$strXML1.="<dataset seriesName='' color='33CC00' showValues='0' parentYAxis='S'>";
 					
 					//Get Percentage of the particular student					
-					foreach($dbf->fetchOrder('student_group_dtls',"student_id='$_REQUEST[student_id]'","id") as $val1){
+					foreach($dbf->fetchOrder('student_group_dtls',"student_id='$_REQUEST[student_id]'","course_id") as $val1){
 					
 						$per = $dbf->strRecordID("teacher_progress_certificate","*","student_id='$_REQUEST[student_id]' And course_id='$val1[course_id]'");						
 						$percent = $per["final_percent"];
@@ -443,7 +443,7 @@ if($_SESSION[font]=='big'){
 							$i = 1;
 							
 							$num=$dbf->countRows('grade');
-							foreach($dbf->fetchOrder('student_course',"student_id='$res[id]'","id DESC") as $val) {
+							foreach($dbf->fetchOrder('student_course',"student_id='$res[id]'","course_id") as $val) {
 							
 							$res_course = $dbf->strRecordID("course","*","id='$val[course_id]'");
 							

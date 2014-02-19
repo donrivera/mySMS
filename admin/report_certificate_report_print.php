@@ -16,6 +16,7 @@ include_once '../includes/class.Main.php';
 $dbf = new User();
 include_once '../includes/language.php';
 ?>	
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
 <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#909999" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
 			<thead>
                 <tr class="logintext">
@@ -56,9 +57,9 @@ include_once '../includes/language.php';
                     
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                   <td height="25" align="center" valign="middle" class="mycon"><?php echo $i;?></td>
-                  <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[first_name];?></td>
+                  <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dbf->printStudentName($val[id]);?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_id];?></td>
-                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res_group[group_name];?> <?php echo $res_group["group_time"];?>-<?php echo $dbf->GetGroupTime($res_group["id"]);?></td>
+                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res_group[group_name];?> <?php echo $dbf->printClassTimeFormat($res_group[group_start_time],$res_group[group_end_time]);?></td>
                   <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $percentage;?>%</td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;">
 				  <?php echo $res_group[start_date] ." And ". $res_group[end_date];?></td>

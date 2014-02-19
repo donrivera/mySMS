@@ -50,9 +50,9 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0"  borderc
 							$percentage = $res_per["final_percent"];
                 $html.='<tr>
                   <td height="25" align="center" valign="middle" >'.$i.'</td>
-                  <td height="25" align="left" valign="middle" style="padding-left:1px;"><span id="result_box" lang="ar" xml:lang="ar">'.$val["first_name"].'&nbsp;'.$Arabic->en2ar($dbf->StudentName($val["id"])).'</span></td>
+                  <td height="25" align="left" valign="middle" style="padding-left:1px;"><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($val[id]).'</span></td>
                   <td align="left" valign="middle" style="padding-left:1px;">'.$val["student_id"].'</td>
-                  <td align="left" valign="middle" style="padding-left:1px;">'.$res_group["group_name"].' '.$res_group["group_time"].'-'.$dbf->GetGroupTime($res_group["id"]).'</td>
+                  <td align="left" valign="middle" style="padding-left:1px;">'.$res_group["group_name"].' '.$dbf->printClassTimeFormat($res_group[group_start_time],$res_group[group_end_time]).'</td>
                   <td align="center" valign="middle" style="padding-left:1px;">'.$percentage.'%</td>
                   <td align="left" valign="middle" style="padding-left:1px;">'.$res_group["start_date"] .' And '. $res_group["end_date"].'</td>';
 						  $i = $i + 1;
@@ -61,7 +61,7 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0"  borderc
                 $html.='</tr>
             </table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_student_results.pdf", 'D');
 	exit;

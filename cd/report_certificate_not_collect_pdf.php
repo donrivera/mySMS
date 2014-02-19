@@ -25,19 +25,19 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0" borderco
 			$color = "#ECECFF";
 			
 			if($_REQUEST[start_date]!='' && $_REQUEST[end_date]!=''){
-				$cond="certificate_collect='0' And (enroll_date BETWEEN '$_REQUEST[start_date]' And '$_REQUEST[end_date]') And centre_id='$_SESSION[centre_id]'";
+				$cond="e.group_id=s.id AND e.certificate_collect='0' And (e.enroll_date BETWEEN '$_REQUEST[start_date]' And '$_REQUEST[end_date]') And e.centre_id='$_SESSION[centre_id]'";
 			}else{
-				$cond="certificate_collect='0' And centre_id='$_SESSION[centre_id]'";
+				$cond="e.group_id=s.id AND e.certificate_collect='0' And e.centre_id='$_SESSION[centre_id]'";
 			}
-		
+
 			//Get number of rows
-			$num=$dbf->countRows('student_enroll', $cond);
-			
+			$num=$dbf->countRows('student_enroll e,student_group s',$cond." AND s.status='Completed'");
+				
 			//Get currency
 			$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
-			
+				
 			//Loop start
-			foreach($dbf->fetchOrder('student_enroll', $cond ,"","") as $val1){
+			foreach($dbf->fetchOrder('student_enroll e,student_group s',$cond." AND s.status='Completed'","","") as $val1){
 				$val = $dbf->strRecordID("student","*","id='$val1[student_id]'");
 			$html.='<tr>
 				<td width="5%" height="25" align="center" valign="middle">'.$k.'</td>
@@ -50,7 +50,7 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0" borderco
 			}
 		$html.='</table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_certificate_not_collect.pdf", 'D');
 	exit;

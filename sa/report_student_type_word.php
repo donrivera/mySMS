@@ -21,8 +21,7 @@ header("Content-Disposition: attachment; Filename=report_student_not_enrolled.do
 ?>
 
 <!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <body>
 <table width='100%' border='1' cellpadding='0' cellspacing='0' style='border-collapse:collapse;' bordercolor='#AAAAAA'>
      <tr>
@@ -34,12 +33,20 @@ header("Content-Disposition: attachment; Filename=report_student_not_enrolled.do
       </tr>
 	 <?php
 	  
-			$query=$dbf->genericQuery("	SELECT s.id,sg.group_name
+			$query=$dbf->genericQuery("	SELECT s.id,sg.group_name,sg.start_date,sg.end_date,sg.group_start_time,sg.group_end_time
 												FROM student s
 												INNER JOIN student_type stype ON stype.student_id = s.id
 												INNER JOIN common c ON c.id = stype.type_id
 												INNER JOIN student_group_dtls sgdtls ON sgdtls.student_id=s.id
-												INNER JOIN student_group sg ON sg.id=sgdtls.parent_id
+												INNER JOIN (SELECT 
+																	DISTINCT(group_name),
+																	group_start_time,
+																	group_end_time,
+																	start_date,
+																	end_date,
+																	centre_id,
+																	id 
+															FROM student_group LIMIT 1) sg ON sg.id=sgdtls.parent_id
 												WHERE sg.centre_id='$_SESSION[centre_id]' AND c.id ='$_REQUEST[teacher]'
 											");
 					/*
@@ -106,10 +113,10 @@ header("Content-Disposition: attachment; Filename=report_student_not_enrolled.do
 	  ?>		
       <tr>
         <td height='25' align='center' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $i;?></td>
-        <td height='25' align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $val_student[first_name]."&nbsp;".$val_student[father_name]."&nbsp;".$val_student[family_name]."&nbsp;(".$val_student[first_name1]."&nbsp;".$val_student[father_name1]."&nbsp;".$val_student[grandfather_name1]."&nbsp;".$val_student[family_name1].")";?></td>
+        <td height='25' align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $dbf->printStudentName($val_student['id']);?></td>
         <td align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $val_student[student_mobile];?></td>
         <td align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $val_student[email];?></td>
-        <td align='center' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $val[group_name];?></td>
+        <td align='center' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $val['group_name']."&nbsp;,&nbsp;".date('d/m/Y',strtotime($val['start_date']))."&nbsp;-&nbsp;".date('d/m/Y',strtotime($val['end_date']))."&nbsp;,&nbsp;".$dbf->printClassTimeFormat($val[group_start_time],$val[group_end_time]);?></td>
         <?php
 	  $i = $i + 1;
 	  }

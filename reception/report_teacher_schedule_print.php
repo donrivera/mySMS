@@ -16,6 +16,7 @@ include_once '../includes/class.Main.php';
 $dbf = new User();
 include_once '../includes/language.php';
 ?>	
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">         
           <tr>
@@ -44,7 +45,7 @@ include_once '../includes/language.php';
 					$num1=$dbf->countRows('student_group',$cond);
 					if($num1!=0)
 					{
-					foreach($dbf->fetchOrder('student_group',$cond,"id") as $val) {
+					foreach($dbf->fetchOrder('student_group',$cond,"group_name") as $val) {
 						
 					$res = $dbf->strRecordID("teacher","*","id='$val[teacher_id]'");
 					$grp = $dbf->strRecordID("common","*","id='$val[group_id]'");
@@ -53,7 +54,7 @@ include_once '../includes/language.php';
 					?>
                 <tr>
                   <td align="left" valign="middle" bgcolor="#F8F9FB" style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $i;?></td>
-                  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val[group_name];?> <?php echo $val["group_time"];?>-<?php echo $dbf->GetGroupTime($val["id"]);?></td>
+                  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $dbf->FullGroupInfo($val['id']);?></td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB"  style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $val[start_date];?></td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB"  style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $val[end_date];?></td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB"  style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $std["COUNT(student_id)"];?></td>

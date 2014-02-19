@@ -12,8 +12,7 @@ if($_REQUEST['action']=='update')
 	$dt = date('Y-m-d');
 	$comm = mysql_real_escape_string($_REQUEST['comment']);
 	
-	$string="admin_dated='$_REQUEST[dated]',admin_comment='$comm',admin_status='$_REQUEST[status]'";
-	$dbf->updateTable("student_cancel",$string,"id='$_REQUEST[cancel_id]'");
+	
 	//==========================================================
 	//Insert in Student Comments Table (student_comment)
 	$dt = date('Y-m-d h:i:s');
@@ -32,6 +31,10 @@ if($_REQUEST['action']=='update')
 	$my_prev_group_id = $dbf->getDataFromTable("student_group_dtls","parent_id","student_id='$student_id' And course_id='$course_id'");
 	$res_group = $dbf->strRecordID("student_group","*","id='$my_prev_group_id'");
 	$res_teacher = $dbf->strRecordID("teacher","*","id='$res_group[teacher_id]'");
+	#update student cancel details
+	$string="admin_dated='$_REQUEST[dated]',admin_comment='$comm',admin_status='$_REQUEST[status]',group_id=$my_prev_group_id";
+	$dbf->updateTable("student_cancel",$string,"id='$_REQUEST[cancel_id]'");
+	#pull algorithm
 	$dbf->pullSchedule($my_prev_group_id);
 	$dbf->deleteFromTable("student_group_dtls","parent_id='$my_prev_group_id' AND student_id='$student_id'");
 	$dbf->deleteFromTable("student_enroll","course_id='$course_id' And student_id='$student_id'");

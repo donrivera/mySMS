@@ -31,7 +31,7 @@ $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[group_id]'"
 <link href="../css/stylesheet2.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="dropdowntabs.js"></script>
 <link rel="stylesheet" type="text/css" href="glowtabs.css" />
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <body>
 <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0" >
           <tr>
@@ -69,7 +69,7 @@ $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[group_id]'"
                     <tr>
                       <td width="28%" height="25" align="left" bgcolor="#FFE2D5" class="pedtext"><?php echo constant("TEACHER_REPORT_TEACHER_GROUP");?>:</td>
                       <td width="72%" align="left" valign="middle" bgcolor="#FFE2D5" class="heading">
-                        <?php echo $res_g[group_name];?> <?php echo $res_g["group_time"];?>-<?php echo $dbf->GetGroupTime($res_g["id"]);?>
+                        <?php echo $res_g[group_name];?> <?php echo $dbf->printClassTimeFormat($res_g["group_start_time"],$res_g["group_end_time"]);?>
                       </td>
                     </tr>
                     <tr>
@@ -306,7 +306,7 @@ $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[group_id]'"
 									
 					?>
                   <tr>
-                    <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[first_name];?></td>
+                    <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $dbf->printStudentName($r['id']);?></td>
                     <td align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $res_country[value];?></td>
                     <td align="center" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[student_id];?></td>
                     <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $course_mark['fluency'];?></td>

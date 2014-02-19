@@ -157,7 +157,7 @@ text-transform:uppercase;
             <tr>
               <td width="38%" align="right" valign="middle" class="leftmenu" style="font-family:Arial, Helvetica, sans-serif; color:#003333; font-weight:normal; font-size:12px;">Student Name :</td>
               <td width="1%">&nbsp;</td>
-              <td width="61%" align="left" valign="middle" style="font-family:Arial, Helvetica, sans-serif; color:#003333; font-weight:bold; font-size:12px;"><?php echo $student["first_name"];?> <?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+              <td width="61%" align="left" valign="middle" style="font-family:Arial, Helvetica, sans-serif; color:#003333; font-weight:bold; font-size:12px;"><?php echo $dbf->printStudentName($student[id]);?></td>
               </tr>
             <tr>
               <td align="right" valign="middle" class="leftmenu" style="font-family:Arial, Helvetica, sans-serif; color:#003333; font-weight:normal; font-size:12px;">Mobile No :</td>

@@ -160,7 +160,7 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
   <tr>
     <td align="left" valign="top">
     
-    <form name="frm" id="frm" >
+    <form name="frm" id="frm" method="post">
     <table width="99%" border="0" cellpadding="0" cellspacing="0">
       <tr>
         <td width="19%" align="left" valign="top"><?php include 'left_menu.php';?></td>
@@ -309,7 +309,7 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
                   <td align="left" valign="middle" class="mycon">&nbsp;<a href="single-home.php?student_id=<?php echo $student[id];?>"><?php echo $dbf->printStudentName($student["id"]);?></a></td>
                   <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $course[name];?></td>
                   <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $enroll;?></td>
-                  <td align="left" valign="middle" class="mycon"><?php echo $group["group_name"];?></td>
+                  <td align="left" valign="middle" class="mycon"><?php echo $dbf->FullGroupInfo($group["id"]);?></td>
                   <td align="right" valign="middle" class="mycon"><?php echo number_format($valenroll[discount],0);?>&nbsp;<?php echo $res_currency[symbol];?></td>
                   <td align="right" valign="middle" class="mycon"><?php echo number_format($dbf->getDiscountPercent($course_fees, $valenroll["discount"]),0);?>%</td>
                   <td align="right" valign="middle" class="mycon"><?php echo $en_amt;?>&nbsp;<?php echo $res_currency[symbol];?></td>

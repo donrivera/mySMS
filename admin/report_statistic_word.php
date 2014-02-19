@@ -21,9 +21,8 @@ $dbf = new User();
 header("Content-type: application/vnd.ms-word");
 header("Content-Disposition: attachment; Filename=report_statistic.doc");
 ?>
-
 <!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
 <table width="600" border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#AAAAAA" style="border:solid 1px; border-color:#AAAAAA;">
   <tr>
     <td width="52" height="30"></td>

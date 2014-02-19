@@ -24,6 +24,7 @@ $Arabic = new I18N_Arabic('Transliteration');
 include_once '../includes/language.php';
 
 $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[cmbgroup]'");
+
 ?>	
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <?php
@@ -133,7 +134,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <option value="">Select Group</option>
                 <?php
 				if($_REQUEST["mystatus"] != ""){ $cond = " And status='$_REQUEST[mystatus]'";}else{ $cond = ""; }
-			  	foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]'".$cond,"","") as $res_group) {
+			  	foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]'".$cond,"group_name","") as $res_group) {
 				?>
                 <option value="<?php echo $res_group['id'];?>" <?php if($_REQUEST[cmbgroup]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>, <?php echo $dbf->printClassTImeFormat($res_group["group_start_time"],$res_group["group_end_time"]);?>
 </option>
@@ -367,7 +368,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
             <td>&nbsp;</td>
           </tr>
           <tr>
-            <td height="40" colspan="2" align="left" valign="top" class="leftmenu">&nbsp;&nbsp;<?php echo $pro["narration"];?></td>
+            <td height="40" colspan="2" align="left" valign="top" class="leftmenu">
+				<p>
+				<?php 
+					echo $dbf->getDataFromTable("teacher_progress","narration","group_id='$_REQUEST[cmbgroup]'");
+				?>
+				</p>
+			</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td align="left" valign="top"><table width="99%" border="0" cellspacing="0" cellpadding="0">

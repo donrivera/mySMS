@@ -25,8 +25,7 @@ header("Content-Disposition: attachment; Filename=report_enrolled_report.doc");
 
 ?>	
 <!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
 <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#999999" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
 			    <thead>
                 <tr class="logintext">
@@ -67,13 +66,13 @@ header("Content-Disposition: attachment; Filename=report_enrolled_report.doc");
 					$receipt_amount = ($re_amt["SUM(paid_amt)"]) - $valenroll["discount"];					
 					?>                    
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
-                  <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $student[first_name];?></td>
+                  <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $dbf->printStudentName($student["id"]);?></td>
                   <td align="center" valign="middle" class="mycon"><?php echo $enroll;?></td>
-                  <td align="left" valign="middle" class="mycon"><?php echo $group[group_name];?> <?php echo $group["group_time"];?>-<?php echo $dbf->GetGroupTime($group["id"]);?></td>
+                  <td align="left" valign="middle" class="mycon"><?php echo $dbf->FullGroupInfo($group['id']);?></td>
                   <td align="left" valign="middle" class="mycon"><?php echo $course[name];?></td>
                   <td align="right" valign="middle" class="mycon"><?php echo $course_fees;?>&nbsp;<?php echo $res_currency[symbol];?></td>
                   <td align="right" valign="middle" class="mycon"><?php echo $valenroll[discount];?>&nbsp;<?php echo $res_currency[symbol];?></td>
-                  <td align="right" valign="middle" class="mycon"><?php echo $dbf->getDiscountPercent($course_fees, $valenroll["discount"]);?>&nbsp;<?php echo $res_currency[symbol];?></td>
+                  <td align="right" valign="middle" class="mycon"><?php echo $dbf->getDiscountPercent($course_fees, $valenroll["discount"]);?>%</td>
                   <td align="right" valign="middle" class="mycon"><?php echo $en_amt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
                   <td align="right" valign="middle" class="mycon"><?php echo $receipt_amount;?>&nbsp;<?php echo $res_currency[symbol];?></td>
                   <?php

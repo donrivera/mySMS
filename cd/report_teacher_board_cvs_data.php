@@ -29,7 +29,7 @@ include_once '../includes/language.php';
 		$grp = $dbf->strRecordID("common","*","id='$val[group_id]'");
 		$std = $dbf->strRecordID("student_group_dtls","COUNT(student_id)","parent_id='$val[id]'");
 		$room = $dbf->strRecordID("centre_room","*","id='$val[room_id]'");
-		$num1=$dbf->countRows('student_group_dtls',"parent_id='$val[id]'");
+		$num1=$dbf->countRows('student_group_dtls',"parent_id='$val[id]'"); 
 	?>
 <tr>
   <td height="25" align="center" valign="middle" bgcolor="#F8F9FB" style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $i;?></td>

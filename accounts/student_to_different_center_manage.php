@@ -120,6 +120,15 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 	</script>
   <tr>
     <td align="left" valign="top">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td>&nbsp;</td>
+              <td width="36" align="center" valign="top"><a href="student_to_different_center_manage_word.php?centre_id=<?php echo $_REQUEST[centre_id];?>"><img src="../images/word2007.png" width="20" height="20" border="0" title="Export to Word"></a></td>
+              <td width="36" align="center" valign="top"><a href="student_to_different_center_manage_csv.php?centre_id=<?php echo $_REQUEST[centre_id];?>"><img src="../images/excel2007.PNG" width="20" height="20" border="0" title="Export to Excel"></a></td>
+              <td width="36" align="center" valign="top"><a href="student_to_different_center_manage_pdf.php?centre_id=<?php echo $_REQUEST[centre_id];?>"><img src="../images/pdf.png" width="20" height="20" border="0" title="Export to PDF"></a></td>
+              <td width="36" align="center" valign="middle"><a href="student_to_different_center_manage_print.php?centre_id=<?php echo $_REQUEST[centre_id];?>" target="_blank"><img src="../images/print.png" alt="" width="16" height="16" border="0" title="Print"></a></td>
+            </tr>
+        </table>
     <form id="frm" name="frm" method="post">
     <table width="98%" border="0" cellpadding="0" cellspacing="0">
       <tr>
@@ -173,7 +182,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <th width="9%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_CENTER_FROMGROUP");?></th>
                 <th width="10%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_CENTER_TO");?></th>
                 <th width="9%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_CENTER_TOGROUP");?></th>
-                <th width="6%" align="center" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_STUDENT_TRANSFER_NO");?></th>
+                <th width="6%" align="center" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo "Status";?></th>
                 <th width="14%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext">Students</th>
                 <th width="14%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("ADMIN_VIEW_COMMENTS_MANAGE_COMMENTS");?></th>
                 <th width="7%" align="center" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("ADMIN_WEEK_MANAGE_STATUS");?></th>
@@ -186,9 +195,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     $num=$dbf->countRows('transfer_different_centre',"centre_id='$_REQUEST[centre_id]'","");
 					
 					foreach($dbf->fetchOrder('transfer_different_centre',"centre_id='$_REQUEST[centre_id]'","id DESC ","*") as $transfer){
-					
+					/*
 					//No. of students has been transfer
-					$noofstudent = $dbf->countRows("transfer_different_centre_dtls","parent_id='$transfer[id]'");
+					//$noofstudent = $dbf->countRows("transfer_different_centre_dtls","parent_id='$transfer[id]'");
 					
 					//Name of the students
 					$student = '';
@@ -208,16 +217,22 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					
 					$to_id = $dbf->getDataFromTable("student_group","group_name","id='$transfer[to_id]'");
 					$group_to = $dbf->getDataFromTable("student_group","*","id='$transfer[to_id]'");
+					*/
+					$status = $dbf->getDataFromTable("student_status","name","id='$transfer[from_status]'");
+					$centre_from= $dbf->getDataFromTable("centre","name","id='$transfer[centre_from]'");
+					$centre_to = $dbf->getDataFromTable("centre","name","id='$transfer[centre_to]'");
+					$group_fr=$dbf->getDataFromTable("student_group","name","id='$transfer[from_id]'");
+					$group_to=$dbf->getDataFromTable("student_group","name","id='$transfer[to_id]'");
 					?>
               <tr bgcolor="<?php echo $color;?>"  onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                 <td height="25" align="center" valign="middle" class="mycon" ><?php echo $i;?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[dated];?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $centre_from;?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $from_id;?> <?php echo $group_from["group_time"];?>-<?php echo $dbf->GetGroupTime($group_from["id"]);?></td>
+                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo (empty($group_fr)?"Group Removed":$group_fr);?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $centre_to;?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $to_id;?> <?php echo $group_to["group_time"];?>-<?php echo $dbf->GetGroupTime($group_to["id"]);?></td>
-                <td align="center" valign="middle" class="mycon"><?php echo $noofstudent;?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $student;?></td>
+                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo (empty($group_to)?"Group Removed":$group_to);?></td>
+                <td align="center" valign="middle" class="mycon"><?php echo $status;?></td>
+                <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $dbf->printStudentName($transfer[from_student]);?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:2px;"><?php echo $transfer[comment];?></td>
                 <td align="center" valign="middle" class="mycon" ><?php echo $transfer[status];?></td>
                 <td align="center" valign="middle" >

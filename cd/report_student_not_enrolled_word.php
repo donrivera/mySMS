@@ -21,8 +21,7 @@ header("Content-Disposition: attachment; Filename=report_student_not_enrolled.do
 ?>
 
 <!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <body>
 <table width='100%' border='1' cellpadding='0' cellspacing='0' style='border-collapse:collapse;' bordercolor='#AAAAAA'>
       <tr>

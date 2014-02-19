@@ -502,9 +502,9 @@ define("ADMIN_REPORT_STUDENT_ON_HOLD_STUDENTONHOLD","Students on hold");
 define("ADMIN_REPORT_STUDENT_ON_HOLD_EMAIL","Email");
 define("ADMIN_REPORT_STUDENT_ON_HOLD_ENQDATE","Enquiry date");
 define("ADMIN_REPORT_STUDENT_ON_HOLD_LASTCOMMENT","Last comment");
-define("ADMIN_REPORT_STUDENT_ON_HOLD_COURSEWASP","Course that was pause");
+define("ADMIN_REPORT_STUDENT_ON_HOLD_COURSEWASP","Course that was paused");
 define("ADMIN_REPORT_STUDENT_ON_HOLD_DATEOF","Date of paused");
-define("ADMIN_REPORT_STUDENT_ON_HOLD_LASTCHAPTED","Last chapter that was attened");
+define("ADMIN_REPORT_STUDENT_ON_HOLD_LASTCHAPTED","Last chapter that was attended");
 
 // admin admin report_statistic
 define("ADMIN_REPORT_STATISTIC_STATISTICREPORT","Statistic report");

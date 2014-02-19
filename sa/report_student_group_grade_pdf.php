@@ -45,7 +45,7 @@ $html = '<table width="500" border="0" align="center" cellpadding="0" cellspacin
             $i = 1;
             
             $num=$dbf->countRows('grade');
-            foreach($dbf->fetchOrder('student_group_dtls',"student_id='$res[id]'","id DESC") as $val) {
+            foreach($dbf->fetchOrder('student_group_dtls',"student_id='$res[id]'","course_id") as $val) {
             
             $res_course = $dbf->strRecordID("course","*","id='$val[course_id]'");					
             if($res_course[name] !='') {
@@ -59,7 +59,7 @@ $html = '<table width="500" border="0" align="center" cellpadding="0" cellspacin
             $grade_name = $grade[name];
           $html.='<tr>
             <td height="25" align="center" valign="middle" bgcolor="#F8F9FB">&nbsp;</td>
-            <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" >'.$dbf->printStudentName($res_course["id"]).'</td>
+            <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" >'.$res_course[name].'</td>
             <td align="center" valign="middle" bgcolor="#F8F9FB" >'.$mark.'%</td>
             <td align="center" valign="middle" bgcolor="#F8F9FB" >'.$grade_name.'</td>';
             }
@@ -68,7 +68,7 @@ $html = '<table width="500" border="0" align="center" cellpadding="0" cellspacin
           $html.='</tr>
         </table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("details_students_results.pdf", 'D');
 	exit;

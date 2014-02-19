@@ -7,6 +7,7 @@ include_once '../includes/class.Main.php';
 $dbf = new User();
 include_once '../includes/language.php';
 ?>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <table width='100%' border='1' cellpadding='0' cellspacing='0' style='border-collapse:collapse;' bordercolor='#AAAAAA'>
       <tr>
         <td width='3%' height='29' align='center' valign='middle' bgcolor='#CDCDCD' >&nbsp;</td>

@@ -8,6 +8,7 @@ include_once '../includes/class.Main.php';
 $dbf = new User();
 include_once '../includes/language.php';
 ?>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">         
           <tr>
             <td align="left" valign="top" bgcolor="#FFFFFF">
@@ -45,7 +46,7 @@ include_once '../includes/language.php';
 					?>
                 <tr>
                   <td align="left" valign="middle" bgcolor="#F8F9FB" style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $i;?></td>
-                  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $val[group_name];?> <?php echo $val["group_time"];?>-<?php echo $dbf->GetGroupTime($val["id"]);?></td>
+                  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $val[group_name]."&nbsp;".$dbf->printClassTimeFormat($val[group_start_time],$val[group_end_time]);?></td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB"  style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $val[start_date];?></td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB"  style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $val[end_date];?></td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB"  style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $std["COUNT(student_id)"];?></td>

@@ -15,7 +15,8 @@ include_once '../includes/class.Main.php';
 //Object initialization
 $dbf = new User();
 include_once '../includes/language.php';
-?>	
+?>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
 <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#AAAAAA" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
 <thead>
 <tr class="logintext">
@@ -66,7 +67,7 @@ include_once '../includes/language.php';
   <td align="center" valign="middle" class="mycon"><?php echo $i;?></td>
   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $valfee[paid_date];?></td>
   <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $enroll;?></td>
-  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $student[first_name];?></td>
+  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dbf->printStudentName($student[id]);?></td>
   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $course[name];?></td>
   <td align="right" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $valfee[paid_amt];?> <?php echo $res_currency[symbol];?></td>
   <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $ptype[name];?></td>

@@ -3,7 +3,7 @@ ob_start();
 session_start();
 if(($_COOKIE['cook_username'])=='')
 {
-	if($_SESSION['id']=="" || $_SESSION['user_type']!="Student Advisor")
+	if($_SESSION['id']=="" || $_SESSION['user_type']!="Center Director")
 	{
 		header("Location:../index.php");
 		exit;
@@ -20,7 +20,7 @@ include_once '../includes/language.php';
 
 //Important below 2 lines
 header("Content-type: application/vnd.ms-word");
-header("Content-Disposition: attachment; Filename=report_teacher_board.doc");
+header("Content-Disposition: attachment; Filename=report_teacher_board.doc"); 
 
 ?>	
 <!--Important-->

@@ -167,19 +167,20 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$i = 1;
 					$color="#ECECFF";
 					$centre_id = $_SESSION["centre_id"];
-					$num=$dbf->countRows('user u',"u.user_type='Teacher'");
-					foreach($dbf->fetchOrder('user u',"u.user_type='Teacher'","","u.*") as $val) {
+					$num=$dbf->countRows('user u,teacher c',"u.uid = c.id  And u.user_type='Teacher'");
+					foreach($dbf->fetchOrder('user u,teacher c',"u.uid = c.id And u.user_type='Teacher'","","u.*") as $val) {
 						
 						# Get Teacher details
 						$res_teacher = $dbf->strRecordID("teacher", "*", "id='$val[uid]'");
 						
 						//Get the total units from the E-PED unit table of a particular teacher
-						$res_unit = $dbf->strRecordID("ped_attendance","COUNT(unit)","teacher_id='$val[uid]' And (shift1<>'' OR shift2<>'' OR shift3<>'' OR shift4<>'' OR shift5<>'' OR shift6<>'' OR shift7<>'' OR shift8<>'' OR shift9<>'')");
+						//$res_unit = $dbf->strRecordID("ped_attendance","COUNT(unit)","teacher_id='$val[uid]' And (shift1<>'' OR shift2<>'' OR shift3<>'' OR shift4<>'' OR shift5<>'' OR shift6<>'' OR shift7<>'' OR shift8<>'' OR shift9<>'')");
+						$res_unit=$dbf->getDataFromTable("student_group", "SUM(unit_per_day)", "teacher_id='$res_teacher[id]' AND status='Continue'");
 					?>                    
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                   <td align="center" valign="middle" class="mycon"><?php echo $i;?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res_teacher["name"];?></td>
-                  <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res_unit["COUNT(unit)"];?></td>
+                  <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo (empty($res_unit)?'0':$res_unit);?></td>
                   <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res_teacher["unit"];?></td>
                   <?php
 				  $i = $i + 1;

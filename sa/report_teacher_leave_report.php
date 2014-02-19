@@ -185,7 +185,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <?php
 				  
 					$query=$dbf->genericQuery("
-												SELECT t.name 
+												SELECT t.id,t.name 
 												FROM teacher t
 												INNER JOIN teacher_centre tc ON t.id=tc.teacher_id
 												WHERE tc.centre_id='$_SESSION[centre_id]'
@@ -232,10 +232,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					 $cond="(frm <= '$_REQUEST[end_date]' And tto >= '$_REQUEST[start_date]')";
 					}else if($_REQUEST[teacher]!='' && $_REQUEST[start_date]=='' && $_REQUEST[end_date]==''){
 					 $cond="teacher_id='$_REQUEST[teacher]'";
-					}else{
-					 $cond="";
 					}
-					
+					else{$cond="";}
 					$i = 1;
 					$color="#ECECFF";
 					

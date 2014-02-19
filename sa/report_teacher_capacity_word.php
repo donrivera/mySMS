@@ -21,7 +21,7 @@ header("Content-type: application/vnd.ms-word");
 header("Content-Disposition: attachment; Filename=report_teacher_capacity.doc");
 ?>	
 <!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#999999" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
 <thead>
     <tr class="logintext">
@@ -45,12 +45,13 @@ header("Content-Disposition: attachment; Filename=report_teacher_capacity.doc");
             $res_teacher = $dbf->strRecordID("teacher", "*", "id='$val[uid]'");
             
             //Get the total units from the E-PED unit table of a particular teacher
-            $res_unit = $dbf->strRecordID("ped_attendance","COUNT(unit)","teacher_id='$val[uid]' And (shift1<>'' OR shift2<>'' OR shift3<>'' OR shift4<>'' OR shift5<>'' OR shift6<>'' OR shift7<>'' OR shift8<>'' OR shift9<>'')");
-        ?>                    
+            //$res_unit = $dbf->strRecordID("ped_attendance","COUNT(unit)","teacher_id='$val[uid]' And (shift1<>'' OR shift2<>'' OR shift3<>'' OR shift4<>'' OR shift5<>'' OR shift6<>'' OR shift7<>'' OR shift8<>'' OR shift9<>'')");
+			$res_unit=$dbf->getDataFromTable("student_group", "SUM(unit_per_day)", "teacher_id='$res_teacher[id]' AND status='Continue'");
+		?>                    
     <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
       <td height="25" align="center" valign="middle" class="mycon"><?php echo $i;?></td>
       <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res_teacher["name"];?></td>
-      <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res_unit["COUNT(unit)"];?></td>
+      <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo (empty($res_unit)?'0':$res_unit);?></td>
       <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $res_teacher["unit"];?></td>
       <?php
       $i = $i + 1;

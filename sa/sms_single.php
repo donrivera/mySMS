@@ -159,7 +159,7 @@ text-transform:uppercase;
             <tr>
               <td width="25%" align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; color:#003333; font-weight:normal; font-size:12px;"><?php echo ADMIN_VIEW_COMMENTS_MANAGE_STUDENT?> :</td>
               <td width="2%">&nbsp;</td>
-              <td width="73%" align="left" valign="middle" style="font-family:Arial, Helvetica, sans-serif; color:#003333; font-weight:bold; font-size:12px;"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+              <td width="73%" align="left" valign="middle" style="font-family:Arial, Helvetica, sans-serif; color:#003333; font-weight:bold; font-size:12px;"><?php echo $dbf->printStudentName($student["id"]);?></td>
               </tr>
             <tr>
               <td align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; color:#003333; font-weight:normal; font-size:12px;"><?php echo ADMIN_TEACHER1_MANAGE_MOBILENUMBER?> :</td>
@@ -255,7 +255,7 @@ text-transform:uppercase;
           <tr>
             <td height="30" colspan="2" align="right" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <td width="71%" align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; color:#003333; font-weight:bold; font-size:12px;"><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?> <?php echo $student["first_name"];?>&nbsp;</td>
+                <td width="71%" align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; color:#003333; font-weight:bold; font-size:12px;"><?php echo $dbf->printStudentName($student["id"]);?>&nbsp;</td>
                 <td width="1%">&nbsp;</td>
                 <td width="28%" align="left" valign="middle" style="font-family:Arial, Helvetica, sans-serif; color:#003333; font-weight:normal; font-size:12px;">: <?php echo ADMIN_VIEW_COMMENTS_MANAGE_STUDENT?></td>
               </tr>

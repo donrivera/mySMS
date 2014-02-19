@@ -21,7 +21,7 @@ header("Content-type: application/vnd.ms-word");
 header("Content-Disposition: attachment; Filename=details_students_results.doc");
 ?>
 <!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">	
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
 <table width="500" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
         <td>&nbsp;</td>
@@ -57,7 +57,7 @@ header("Content-Disposition: attachment; Filename=details_students_results.doc")
             $i = 1;
             
             $num=$dbf->countRows('grade');
-            foreach($dbf->fetchOrder('student_group_dtls',"student_id='$res[id]'","id DESC") as $val) {
+            foreach($dbf->fetchOrder('student_group_dtls',"student_id='$res[id]'","course_id") as $val) {
             
             $res_course = $dbf->strRecordID("course","*","id='$val[course_id]'");					
             if($res_course[name] !='') {

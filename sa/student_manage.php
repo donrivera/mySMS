@@ -260,7 +260,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
               <tr bgcolor="<?php echo $color;?>"  onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" onclick="javascript:window.location.href='student_edit.php?id=<?php echo $val[id];?>'" style="cursor:pointer;">
                 <td align="center" valign="middle" class="mycon" ><?php echo $i;?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val[id];?>" style="cursor:pointer;"><?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?></a></td>
+                <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val[id];?>" style="cursor:pointer;"><?php echo $dbf->printStudentName($val['id']);?></a></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $comm[comments];?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $lead;?></td>

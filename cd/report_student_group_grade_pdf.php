@@ -44,7 +44,7 @@ $html = '<table width="500" border="0" align="center" cellpadding="0" cellspacin
           </tr>';
             $i = 1;
             
-            foreach($dbf->fetchOrder('student_group_dtls',"student_id='$res[id]'","id DESC") as $val) {
+            foreach($dbf->fetchOrder('student_group_dtls',"student_id='$res[id]'","course_id") as $val) {
             
             $res_course = $dbf->strRecordID("course","*","id='$val[course_id]'");					
             if($res_course[name] !='') {
@@ -67,7 +67,7 @@ $html = '<table width="500" border="0" align="center" cellpadding="0" cellspacin
           $html.='</tr>
         </table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("details_students_results.pdf", 'D');
 	exit;

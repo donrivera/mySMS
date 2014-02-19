@@ -23,8 +23,7 @@ header("Content-Disposition: attachment; Filename=report_student_on_hold.doc");
 ?>
 
 <!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
 <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#999999" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
   <thead>
     <tr class="logintext">

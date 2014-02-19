@@ -19,6 +19,7 @@ include_once '../includes/language.php';
 
 $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 ?>	
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#999999" class="tablesorter" id="sort_table1" style="border-collapse:collapse;">
     <thead>
     <tr class="logintext">
@@ -33,59 +34,37 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
     <?php
         $i = 1;
         $color="#ECECFF";
-        if($_REQUEST[group_id] == ''){
-            $cond = "id > 0";
-        }else{
-            $group = "id = '$_REQUEST[group_id]'";
-        }
-        $num=$dbf->countRows('student_group', $group);
-        //loop start
-        foreach($dbf->fetchOrder('student_group', $group) as $valgroup) {
-        
+		$start_date = $_REQUEST[start_date];
+		$end_date = $_REQUEST[end_date];
+		$group_status=$_REQUEST[group_status];
+		if($_REQUEST[group_id] != '' && $group_status!=''){$group = "id='$_REQUEST[group_id]' AND status='$group_status'";}
+		elseif($_REQUEST[group_id] == '' && $group_status!=''){$group="status='$group_status'";}
+		elseif($_REQUEST[group_id] != '' && $group_status==''){$group="id='$_REQUEST[group_id]'";}
+		elseif($group_status ==''){$group = "id > 0";}
+		elseif($_REQUEST[group_id] == ''){$group = "id > 0";}
+		else{$group = "id = '$_REQUEST[group_id]'";}
+		$num=$dbf->countRows('student_group', $group."AND start_date BETWEEN '$start_date' AND '$end_date'");
+					
+		//loop start
+		foreach($dbf->fetchOrder('student_group', $group."AND start_date BETWEEN '$start_date' AND '$end_date'","group_name") as $valgroup) {
         //Count the number o students in student_group_dtls table
-        $numofstudent = $dbf->countRows('student_group_dtls', "parent_id='$valgroup[id]'");
-        
-        //Get Enrollment Amount for a particular group
-        $course_fee = 0;
-        foreach($dbf->fetchOrder('student_enroll', "group_id='$valgroup[id]'") as $enroll) {
-            if($course_fee == 0){
-                $course_fee = $dbf->getDataFromTable("course_fee", "fees", "id='$enroll[fee_id]'");
-            }else{
-                $course_fee = $course_fee + $dbf->getDataFromTable("course_fee", "fees", "id='$enroll[fee_id]'");
-            }
-        }
-        
-        //Get Discount Amount for a particular group
-        $en_amt = $dbf->getDataFromTable("student_enroll", "sum(discount)", "group_id='$valgroup[id]'");
-        $other_amt = $dbf->getDataFromTable("student_enroll", "sum(other_amt)", "group_id='$valgroup[id]'");
-        
-        // Get Fees from student fees structure
-        $paid_amt = 0;
-        if($start_date != '' && $end_date != ''){
-              $date_condition = " And (paid_date BETWEEN '$start_date' And '$end_date' )";
-        }
-        foreach($dbf->fetchOrder('student_group_dtls', "parent_id='$valgroup[id]'") as $dtls) {
-            
-            foreach($dbf->fetchOrder('student_fees', "student_id='$dtls[student_id]' And course_id='$dtls[course_id]' And status='1'".$date_condition) as $enroll) {
-                if($paid_amt == 0){
-                    $paid_amt = $enroll["paid_amt"];
-                }else{
-                    $paid_amt = $paid_amt + $enroll["paid_amt"];
-                }
-            }
-        }
-        
-        $bal_amt = ($course_fee + $other_amt) - ($en_amt + $paid_amt);
+        $numofstudent=$dbf->countRows('student_group_dtls', "parent_id='$valgroup[id]'");
+       
+		$course_fee=$dbf->getDataFromTable("course_fee", "fees", "id='$valgroup[course_id]'");
+		$en_amt=$course_fee * $numofstudent;
+		$payments=$dbf->getDataFromTable("student_enroll se INNER JOIN student_fees sf ON sf.student_id=se.student_id AND sf.course_id=se.course_id", "SUM(sf.paid_amt) as total", "se.group_id='$valgroup[id]'");
+        $bal_amt=$en_amt-$payments;
         ?>
         
     <tr bgcolor="<?php echo $color;?>" >
       <td align="center" valign="middle" class="mycon">&nbsp;</td>
-      <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valgroup["group_name"];?> <?php echo $valgroup["group_time"];?>-<?php echo $dbf->GetGroupTime($valgroup["id"]);?></td>
+      <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valgroup["group_name"];?> <?php $dbf->printClassTimeFormat($valgroup["group_start_time"],$valgroup["group_end_time"]);?></td>
       <td align="left" valign="middle" class="mycon">&nbsp;<?php echo date('d-M-Y',strtotime($valgroup["start_date"]));?>&nbsp;/&nbsp;<?php echo date('d-M-Y',strtotime($valgroup["end_date"]));?></td>
       <td align="center" valign="middle" class="mycon">&nbsp;<?php echo $numofstudent;?></td>
       <td align="center" valign="middle" class="mycon">&nbsp;<?php echo $course_fee;?>&nbsp;<?php echo $res_currency[symbol];?></td>
       <td align="center" valign="middle" class="mycon">&nbsp;<?php echo $bal_amt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
     </tr>
+	<!--
     <tr>
       <td align="center" valign="middle" class="mycon">&nbsp;</td>
       <td colspan="5" align="left" valign="middle" bgcolor="#FFFFFF" class="mycon">
@@ -161,7 +140,7 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
           }
           ?>
         </table></td>
-      </tr>  
+      </tr> -->
     <?php
             $i = $i + 1;
             if($color=="#ECECFF"){

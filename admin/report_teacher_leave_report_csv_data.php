@@ -10,7 +10,7 @@ include_once '../includes/class.Main.php';
 $dbf = new User();
 include_once '../includes/language.php';
 ?>	
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
 <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#AAAAAA"class="tablesorter" id="sort_table" style="border-collapse:collapse;">
 			      <thead>
                 <tr class="logintext">
@@ -21,32 +21,20 @@ include_once '../includes/language.php';
                   </tr>
 				  </thead>
                 <?php
-					
-					if($_REQUEST[teacher]!='' && $_REQUEST[start_date]!='' && $_REQUEST[end_date]!='')
-					{
+					if($_REQUEST[teacher]!='' && $_REQUEST[start_date]!='' && $_REQUEST[end_date]!=''){
 					 $cond="teacher_id='$_REQUEST[teacher]' And (frm <= '$_REQUEST[end_date]' And tto >= '$_REQUEST[start_date]')";
-					}
-					else if($_REQUEST[teacher]=='' && $_REQUEST[start_date]!='' && $_REQUEST[end_date]!='')
-					{
+					}else if($_REQUEST[teacher]=='' && $_REQUEST[start_date]!='' && $_REQUEST[end_date]!=''){
 					 $cond="(frm <= '$_REQUEST[end_date]' And tto >= '$_REQUEST[start_date]')";
-					}
-					else if($_REQUEST[teacher]!='' && $_REQUEST[start_date]=='' && $_REQUEST[end_date]=='')
-					{
+					}else if($_REQUEST[teacher]!='' && $_REQUEST[start_date]=='' && $_REQUEST[end_date]==''){
 					 $cond="teacher_id='$_REQUEST[teacher]'";
 					}
-					else
-					{
-					 $cond="";
-					}
-
+					else{$cond="";}
 					$i = 1;
+					$color="#ECECFF";
 					$num=$dbf->countRows('teacher_vacation',$cond);
-					
 					foreach($dbf->fetchOrder('teacher_vacation',$cond,"id DESC") as $val) {
-					
 					$res = $dbf->strRecordID("teacher","*","id='$val[teacher_id]'");
-		
-					?>
+				?>
                 <tr>
                   <td height="25" align="center" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $i;?></td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $val[frm];?></td>

@@ -41,7 +41,7 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0" borderco
 			if($total_course_fees < 0){
 		  $html.='<tr>
 			<td width="5%" height="25" align="center" valign="middle">'.$k.'</td>
-			<td width="34%" align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$valstudent["first_name"].' '.$Arabic->en2ar($dbf->StudentName($valstudent["id"])).'</span></td>
+			<td width="34%" align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($valstudent["id"]).'</span></td>
 			<td width="31%" align="left" valign="middle">'.$valstudent["email"].'</td>
 			<td width="23%" align="left" valign="middle">'.$valstudent["student_mobile"].'</td>
 			<td width="7%" align="left" valign="middle" >'.$moving["name"].'</td>';
@@ -53,7 +53,7 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0" borderco
 		}
 		$html.='</table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_credit_balance_report.pdf", 'D');
 	exit;

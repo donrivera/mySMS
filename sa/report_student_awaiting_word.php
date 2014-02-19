@@ -15,11 +15,16 @@ include_once '../includes/class.Main.php';
 $dbf = new User();
 include_once '../includes/language.php';
 //Important below 2 lines
-header("Content-type: application/vnd.ms-word");
+#header("Content-type: application/vnd.ms-word;charset=utf-8");
+header('Content-Encoding: UTF-8');
+header("Content-type: application/msword; charset=UTF-16");
+#echo iconv('WINDOWS-1256', 'UTF-8', 'testÍÊ');
+//mb_convert_encoding('report_student_awaiting.doc', "ISO-8859-6"); 
 header("Content-Disposition: attachment; Filename=report_student_awaiting.doc");
+
 ?>	
 <!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <body>
 <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#AAAAAA" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
 <thead>
@@ -33,26 +38,43 @@ header("Content-Disposition: attachment; Filename=report_student_awaiting.doc");
   </tr>
 </thead>
 <?php
-    if($_REQUEST[status]!=''){
-		$cond="s.id = c.student_id And c.course_id = '$_REQUEST[status]' And c.student_id > '0' And c.status_id='3' And s.centre_id='$_SESSION[centre_id]'";
-	}else{
-		$cond = "s.id = c.student_id And c.student_id > '0' And c.status_id = '3' And s.centre_id='$_SESSION[centre_id]'";
-	}
-	$i = 1;
-	$color="#ECECFF";
-	
-	//Get Number of Rows
-	if($cond != ''){
-		$num=$dbf->countRows('student s,student_moving c',$cond);
-	}
-	
-	//Loop start
-	foreach($dbf->fetchOrder('student s,student_moving c',$cond,"s.first_name","s.*,c.date_time") as $val){
-		$course = $dbf->getDataFromTable("course", "name", "id='$_REQUEST[status]'");
+		if($_REQUEST[status]!='')
+		{
+			//$cond = "s.id = c.student_id And sf.student_id=c.student_id And sf.type='advance' And sf.course_id = '$_REQUEST[status]' And c.student_id > '0' And c.status_id='3' And s.centre_id='$_SESSION[centre_id]'";
+			$query=$dbf->genericQuery("	SELECT s.id,s.student_mobile,s.email,c.date_time,sf.course_id
+										FROM student_moving c
+										INNER JOIN student s ON s.id=c.student_id
+										INNER JOIN (SELECT DISTINCT(course_id),type,student_id FROM student_fees) sf ON c.student_id=sf.student_id
+										WHERE 
+											c.status_id = '3' 
+											AND s.centre_id='1' 
+											AND sf.course_id = '$_REQUEST[status]'
+											AND s.centre_id='$_SESSION[centre_id]'
+											AND sf.type='advance' ORDER BY s.first_name");
+		}
+		else
+		{
+			//$cond = "s.id = c.student_id And c.student_id > '0' And c.status_id = '3' And s.centre_id='$_SESSION[centre_id]' And sf.student_id=c.student_id And sf.type='advance'";
+			$query=$dbf->genericQuery("	SELECT s.id,s.student_mobile,s.email,c.date_time,sf.course_id
+										FROM student_moving c
+							            INNER JOIN student s ON s.id=c.student_id
+							            INNER JOIN (SELECT DISTINCT(course_id),type,student_id FROM student_fees) sf ON c.student_id=sf.student_id
+							            WHERE 
+											c.status_id = '3' 
+											AND s.centre_id='$_SESSION[centre_id]'
+											AND sf.type='advance' ORDER BY s.first_name");
+		}
+		$i = 1;
+		$color="#ECECFF";
+		$num=count($query);#$dbf->countRows('student s,student_moving c',$cond);
+		#$query=$dbf->fetchOrder('student s,student_moving c,student_fees sf',$cond,"s.first_name","s.*,c.date_time,sf.course_id")
+		//Loop start
+		foreach($query as $val){
+			$course = $dbf->getDataFromTable("course", "name", "id='$val[course_id]'");
     ?>
 <tr>
   <td height="25" align="center" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $i;?></td>
-  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val[first_name];?></td>
+  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $dbf->printStudentName($val["id"]);?></td>
   <td align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val[student_mobile];?></td>
   <td align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $val[email];?></td>
   <td align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:14px;color:#000000;padding-left:3px;"><?php echo $course;?></td>

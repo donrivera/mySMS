@@ -277,7 +277,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$enroll = $student_enroll["enrolled_status"];
 					$to_id = $dbf->getDataFromTable("student","first_name","id='$transfer[to_student_id]'");
 					$course_fees = $dbf->getDataFromTable("course_fee","fees","id='$student_enroll[fee_id]'");
-					
+					$percentage=$dbf->getDiscountPercent($course_fees, $discount);
 					$course_fee = $course_fees;
 					$discount = $student_enroll["discount"];
 					$en_amt = $course_fee - $discount;
@@ -286,16 +286,16 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>                    
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                   <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $transfer["dated"];?></td>
-                  <td align="left" valign="middle" class="mycon">&nbsp;<a href="single-home.php?student_id=<?php echo $student[id];?>"><?php echo $student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></a></td>
+                  <td align="left" valign="middle" class="mycon">&nbsp;<a href="single-home.php?student_id=<?php echo $student[id];?>"><?php echo $dbf->printStudentName($student["id"]);?></a></td>
                   <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $enroll;?></td>
                   <td align="center" valign="middle" class="mycon">&nbsp;<?php echo $dbf->getDataFromTable("student_status", "name", "id='$transfer[from_status_id]'");?></td>
-                  <td align="right" valign="middle" class="mycon"><?php echo $course_fee;?>&nbsp;<?php echo $res_currency[symbol];?></td>
-                  <td align="right" valign="middle" class="mycon"><?php echo $discount;?>&nbsp;<?php echo $res_currency[symbol];?></td>
-                  <td align="right" valign="middle" class="mycon"><?php echo $dbf->getDiscountPercent($course_fees, $discount);?>&nbsp;<?php echo $res_currency[symbol];?></td>
-                  <td align="right" valign="middle" class="mycon"><?php echo $en_amt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
-                  <td align="right" valign="middle" class="mycon"><?php echo $paid_amt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
-                  <td align="right" valign="middle" class="mycon"><?php echo $bal_amt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
-                  <td align="left" valign="middle" class="mycon">&nbsp;<a href="single-home.php?student_id=<?php echo $transfer["to_student_id"];?>"><?php echo $to_id;?><?php echo $Arabic->en2ar($to_id);?></a></td>
+                  <td align="right" valign="middle" class="mycon"><?php echo (empty($course_fee)?"0":$course_fee."&nbsp;".$res_currency[symbol]);?></td>
+                  <td align="right" valign="middle" class="mycon"><?php echo (empty($discount)?"0":$discount."&nbsp;".$res_currency[symbol]);?></td>
+                  <td align="right" valign="middle" class="mycon"><?php echo (empty($discount)?"0":$percentage."&nbsp;".$res_currency[symbol]);?></td>
+                  <td align="right" valign="middle" class="mycon"><?php echo (empty($en_amt)?"0":$en_amt."&nbsp;".$res_currency[symbol]);?></td>
+                  <td align="right" valign="middle" class="mycon"><?php echo (empty($paid_amt)?"0":$paid_amt."&nbsp;".$res_currency[symbol]);?></td>
+                  <td align="right" valign="middle" class="mycon"><?php echo (empty($bal_amt)?"0":$bal_amt."&nbsp;".$res_currency[symbol]);?></td>
+                  <td align="left" valign="middle" class="mycon">&nbsp;<a href="single-home.php?student_id=<?php echo $transfer["to_student_id"];?>"><?php echo $dbf->printStudentName($transfer["to_student_id"]);?></a></td>
                   <?php
 					  $i = $i + 1;
 					  if($color=="#ECECFF"){

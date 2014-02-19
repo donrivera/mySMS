@@ -21,7 +21,7 @@ header("Content-type: application/vnd.ms-word");
 header("Content-Disposition: attachment; Filename=report_group_to_finish.doc");
 ?>	
 <!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#AAAAAA" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
 <thead>
     <tr class="logintext">
@@ -38,7 +38,7 @@ header("Content-Disposition: attachment; Filename=report_group_to_finish.doc");
 	$color="#ECECFF";
 	
 	if($_REQUEST[start_date]!='' && $_REQUEST[end_date]!=''){
-		$cond="status<>'Completed' And (start_date <= '$_REQUEST[end_date]' And end_date >= '$_REQUEST[start_date]') And centre_id='$_SESSION[centre_id]'";
+		$cond="status<>'Completed' And (end_date BETWEEN '$_REQUEST[start_date]' AND '$_REQUEST[end_date]') And centre_id='$_SESSION[centre_id]'";
 	}else{
 		$cond="status<>'Completed' And centre_id='$_SESSION[centre_id]'";
 	}

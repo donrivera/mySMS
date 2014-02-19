@@ -92,7 +92,7 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0" style="b
 		
 	$html.='<tr bgcolor="'.$color.'">
 	  <td height="25" align="center" valign="middle" class="contenttext">'.$i.'</td>
-	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val_student[first_name].'&nbsp;'.$val_student[father_name].'&nbsp;'.$val_student[family_name].'&nbsp;('.$val_student[first_name1].'&nbsp;'.$val_student[father_name1].'&nbsp;'.$val_student[grandfather_name1].'&nbsp;'.$val_student[family_name1].')</span></td>
+	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($val_student["id"]).'</span></td>
 	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val_student["student_mobile"].'</td>
 	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val_student["email"].'</td>
 	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val[group_name].'</span></td>
@@ -103,7 +103,7 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0" style="b
 	  }
 	$html.='</table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_student_statuses.pdf", 'D');
 	exit;

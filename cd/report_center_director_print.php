@@ -29,6 +29,7 @@ $print_date = date('Y-m-d');
 $string="print_status='1',print_date='$print_date'";
 $dbf->updateTable("teacher_progress_certificate",$string,"group_id='$_REQUEST[group_id]'");
 ?>	
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="../css/print.css" rel="stylesheet" type="text/css" />
 <body>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -71,7 +72,7 @@ $dbf->updateTable("teacher_progress_certificate",$string,"group_id='$_REQUEST[gr
 					  $res_g = $dbf->strRecordID("student_group","*","id='$_REQUEST[group_id]'");
 					  $res_course = $dbf->strRecordID("course","*","id='$res_g[course_id]'");
 					  ?>
-                      <td width="72%" align="left" valign="middle" bgcolor="#FFE2D5" class="pedtext"><?php echo $res_g['group_name'];?> <?php echo $res_g["group_time"];?>-<?php echo $dbf->GetGroupTime($res_g["id"]);?></td>
+                      <td width="72%" align="left" valign="middle" bgcolor="#FFE2D5" class="pedtext"><?php echo $res_g['group_name'];?> <?php echo $dbf->printClassTimeFormat($res_g["group_start_time"],$res_g["group_end_time"]);?></td>
                     </tr>
                     
                     <tr>

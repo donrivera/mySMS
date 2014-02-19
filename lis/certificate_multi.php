@@ -261,7 +261,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       <th height="21" align="left" valign="middle" scope="col" class="cer_my_head">This is to certify that</th>
                                       </tr>
                                     <tr>
-                                      <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">Mr/Ms.&nbsp;</span><span class="cer_my_head_bold"><?php echo $res["first_name"];?></span></th>
+                                      <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head"><?php echo($res[gender]=='female'?"Ms.":"Mr."); ?>&nbsp;</span><span class="cer_my_head_bold"><?php echo $dbf->printStudentName($res["id"]);?></span></th>
                                       </tr>
                                     <tr>
                                       <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">Nationality:</span>&nbsp;<span class="cer_my_head_bold"><?php echo $resc["value"];?></span></th>
@@ -317,7 +317,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       <th height="21" align="right" valign="middle" class="cer9_arial" scope="col"><span class="cer_my_head_bold" dir="rtl">يشهد معهد دار الخبرة لتعليم اللغة  الانجليزية بالاحساء</span></th>
                                       </tr>
                                     <tr>
-                                      <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">بأن المتدرب: <?php echo $Arabic->en2ar($res["first_name"]);?></span></th>
+                                      <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">بأن المتدرب: <?php echo $dbf->printStudentName($res["id"]);?></span></th>
                                       </tr>
                                     <tr>
                                       <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold"><?php echo $Arabic->en2ar($resc["value"]);?></span><span class="cer_my_head_bold">&nbsp;:<span dir="rtl">الجنسية  </span> </span></th>

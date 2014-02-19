@@ -190,9 +190,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						  }else{
 							  $status = $_REQUEST['mystatus'];
 						  }
-						  foreach($dbf->fetchOrder('student_group',"status='$status' And teacher_id='$teacher_id'","","") as $res_group) {
+						  foreach($dbf->fetchOrder('student_group',"status='$status' And teacher_id='$teacher_id'","group_name","") as $res_group) {
 							  ?>
-                          <option value="<?php echo $res_group['id'];?>" <?php if($_REQUEST[group_id]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>, <?php echo $res_group["group_time"];?>-<?php echo $dbf->GetGroupTime($res_group["id"]);?></option>
+                          <option value="<?php echo $res_group['id'];?>" <?php if($_REQUEST[group_id]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>, <?php echo $dbf->printClassTImeFormat($res_group['group_start_time'],$res_group['group_end_time']);?></option>
                           <?php
 						  }
 						  ?>
@@ -460,7 +460,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$course_mark = $dbf->strRecordID("teacher_progress_course","*","student_id='$r[id]' AND teacher_id='$teacher_id' AND group_id='$_REQUEST[group_id]'");					
 					?>
                       <tr>                  
-                        <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[first_name]."&nbsp;".$r[father_name]."&nbsp;".$r[family_name]."&nbsp;(".$r[first_name1]."&nbsp;".$r[father_name1]."&nbsp;".$r[grandfather_name1]."&nbsp;".$r[family_name1].")";?></td>
+                        <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $dbf->printStudentName($r[id]);?></td>
                         <td align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $res_country[value];?></td>
                         <td align="center" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[student_id];?>
                         <input type="hidden" name="student_id<?php echo "_".$student_count;?>" id="student_id<?php echo "_".$student_count;?>" value="<?php echo $r[id];?>"></td>
@@ -1480,7 +1480,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 									
 					?>
                     <tr>
-                      <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($r["id"]));?></td>
+                      <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $dbf->printStudentName($r["id"]);?></td>
                       <td align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $res_country[value];?></td>
                       <td align="center" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[student_id];?>
                       <input type="hidden" name="student_id1<?php echo "_".$student_count;?>" id="student_id1<?php echo "_".$student_count;?>" value="<?php echo $r[id];?>">

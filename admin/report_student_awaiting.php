@@ -170,27 +170,43 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
 				</thead>
                 <?php
+					if($_REQUEST[status]!=''){
+					 	//$cond = "s.id = c.student_id And sf.student_id=c.student_id And sf.type='advance' And sf.course_id = '$_REQUEST[status]' And c.student_id > '0' And c.status_id='3' And s.centre_id='$_SESSION[centre_id]'";
+						
+						
+						$query=$dbf->genericQuery("SELECT s.id,s.student_mobile,s.email,c.date_time,sf.course_id
+													FROM student_moving c
+													INNER JOIN student s ON s.id=c.student_id
+													INNER JOIN (SELECT DISTINCT(course_id),type,student_id FROM student_fees) sf ON c.student_id=sf.student_id
+													WHERE 
+															c.status_id = '3' 
+															AND s.centre_id='1' 
+															AND sf.course_id = '$_REQUEST[status]'
+															AND sf.type='advance' ORDER BY s.first_name");
+						
+					}else
+					{
+						//$cond = "s.id = c.student_id And c.student_id > '0' And c.status_id = '3' And s.centre_id='$_SESSION[centre_id]' And sf.student_id=c.student_id And sf.type='advance'";
+						
+						$query=$dbf->genericQuery("SELECT s.id,s.student_mobile,s.email,c.date_time,sf.course_id
+												   FROM student_moving c
+							                       INNER JOIN student s ON s.id=c.student_id
+							                       INNER JOIN (SELECT DISTINCT(course_id),type,student_id FROM student_fees) sf ON c.student_id=sf.student_id
+							                       WHERE 
+															c.status_id = '3' 
+															AND sf.type='advance' ORDER BY s.first_name");
+					}
 					$i = 1;
 					$color="#ECECFF";
-					
-					if($_REQUEST[status]!=''){
-					 	$cond="s.id = c.student_id And c.course_id = '$_REQUEST[status]' And c.student_id > '0' And c.status_id='3'";
-					}else{
-						$cond = "s.id = c.student_id And c.student_id > '0' And c.status_id = '3'";
-					}
-										
-					//Get Number of Rows
-					if($cond != ''){
-						$num=$dbf->countRows('student s,student_moving c',$cond);
-					}
-					
+					$num=count($query);#$dbf->countRows('student s,student_moving c',$cond);
+					#$query=$dbf->fetchOrder('student s,student_moving c,student_fees sf',$cond,"s.first_name","s.*,c.date_time,sf.course_id")
 					//Loop start
-					foreach($dbf->fetchOrder('student s,student_moving c',$cond,"s.first_name","s.*,c.date_time") as $val){
-						$course = $dbf->getDataFromTable("course", "name", "id='$_REQUEST[status]'");
-					?>                    
+					foreach($query as $val){
+						$course = $dbf->getDataFromTable("course", "name", "id='$val[course_id]'");
+					?>                  
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                   <td height="25" align="center" valign="middle" class="mycon"><?php echo $i;?></td>
-                  <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val[id];?>" style="cursor:pointer;"><?php echo $val[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></a></td>
+                  <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val[id];?>" style="cursor:pointer;"><?php echo $dbf->printStudentName($val["id"]);?></a></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $course;?></td>

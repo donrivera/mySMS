@@ -238,30 +238,29 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				$i = 1;
 				$color = "#ECECFF";
 				
-				if($_REQUEST[start_date]!='' && $_REQUEST[end_date]!='')
-				{
-					$cond="certificate_collect='0' And (enroll_date BETWEEN '$_REQUEST[start_date]' And '$_REQUEST[end_date]') And centre_id='$_SESSION[centre_id]'";
+				if($_REQUEST[start_date]!='' && $_REQUEST[end_date]!=''){
+					$cond="e.group_id=s.id AND e.certificate_collect='0' And (e.enroll_date BETWEEN '$_REQUEST[start_date]' And '$_REQUEST[end_date]') And e.centre_id='$_SESSION[centre_id]'";
 				}else{
-					$cond="certificate_collect='0' And centre_id='$_SESSION[centre_id]'";
+					$cond="e.group_id=s.id AND e.certificate_collect='0' And e.centre_id='$_SESSION[centre_id]'";
 				}
 
 				//Get number of rows
-				$num=$dbf->countRows('student_enroll', $cond);
+				$num=$dbf->countRows('student_enroll e,student_group s',$cond." AND s.status='Completed'");
 				
 				//Get currency
 				$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 				
 				//Loop start
-				foreach($dbf->fetchOrder('student_enroll', $cond ,"","") as $val1){
-					$val = $dbf->strRecordID("student","*","id='$val1[student_id]'");
-					$num_dtls=$dbf->countRows('student_enroll',"certificate_collect='0' And student_id='$val[id]'");					
+				foreach($dbf->fetchOrder('student_enroll e,student_group s',$cond." AND s.status='Completed'","","") as $val1){
+					$val = $dbf->strRecordID("student","*","id='$val1[student_id]'");	
+					$num_dtls=$dbf->countRows('student_enroll',"certificate_collect='0' And student_id='$val[id]'");				
 				?>
               <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                 <td width="6%" height="25" align="center" valign="middle" class="contenttext"><a href="javascript:void(0);" onClick="show_details('<?php echo $val[id];?>');">
                 <span id="plusArrow<?php echo $val[id];?>"><img src="../images/plus.gif" border="0" ></span>
                 </a></td>
                 <td width="8%" height="25" align="center" valign="middle" class="mycon"><?php echo $k; ?></td>
-				<td width="26%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?> <?php echo " [".$num_dtls."]";?></td>
+				<td width="26%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dbf->printStudentName($val["id"]);?> <?php echo " [".$num_dtls."]";?></td>
                 <td width="20%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
                 <td width="29%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
                 <td width="11%" align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[age];?></td>
@@ -327,7 +326,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
                   <tr bgcolor="<?php echo $color1;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color1;?>'">
                     <td align="center" valign="middle"><?php echo $j;?></td>
-                    <td height="25" align="left" valign="middle"><?php echo $val_group[group_name];?> <?php echo $val_group["group_time"];?>-<?php echo $dbf->GetGroupTime($val_group["id"]);?></td>
+                    <td height="25" align="left" valign="middle"><?php echo $val_group[group_name];?> <?php echo $dbf->printClassTimeFormat($val_group[group_start_time],$val_group[group_end_time]);?></td>
                     <td align="left" valign="middle"><?php echo $res_course[name];?></td>
                     <td align="left" valign="middle"><?php echo $res_teacher[name];?></td>
                     <td align="left" valign="middle"><?php echo $dbf->GetBillNo($valinv["student_id"], $valinv["course_id"]);?></td>

@@ -218,10 +218,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </select>
 				  </td>
                   <td width="31%" align="left" valign="middle" id="statusresult">
-                  <select name="cmbgroup" id="cmbgroup" style="border:solid 1px; border-color:#FFCC33; height:20px; width:150px;"  onChange="setsubmit();">
+                  <select name="cmbgroup" id="cmbgroup" style="border:solid 1px; border-color:#FFCC33; height:20px; width:250px;"  onChange="setsubmit();">
                     <option value="">--<?php echo constant("SELECT_GROUP");?>--</option>
                     <?php
-						foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]'","") as $val) {	
+						foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]'","group_name") as $val) {	
 					  ?>
                     <option value="<?php echo $val[id];?>" <?php if($_REQUEST[cmbgroup]==$val[id]){?> selected="selected"<?php }?>><?php echo $val['group_name'] ?>, <?php echo date('d/m/Y',strtotime($val['start_date']));?> - <?php echo date('d/m/Y',strtotime($val['end_date'])) ?>,<?php echo  $dbf->printClassTimeFormat($val[group_start_time],$val[group_end_time]);?></option>
                     <?php

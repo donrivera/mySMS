@@ -149,10 +149,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
               <td>&nbsp;</td>
-              <td width="36" align="center" valign="top"><a href="report_group_ledger_report_word.php?group_id=<?php echo $_REQUEST[group_id];?>&start_date=<?php echo $_REQUEST[start_date];?>&end_date=<?php echo $_REQUEST[end_date];?>"><img src="../images/word2007.png" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_WORD ?>"></a></td>
-              <td width="36" align="center" valign="top"><a href="report_group_ledger_report_csv.php?group_id=<?php echo $_REQUEST[group_id];?>&start_date=<?php echo $_REQUEST[start_date];?>&end_date=<?php echo $_REQUEST[end_date];?>"><img src="../images/excel2007.PNG" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_XLS ?>"></a></td>
-              <td width="36" align="center" valign="top"><a href="report_group_ledger_report_pdf.php?group_id=<?php echo $_REQUEST[group_id];?>&start_date=<?php echo $_REQUEST[start_date];?>&end_date=<?php echo $_REQUEST[end_date];?>"><img src="../images/pdf.png" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_PDF ?>"></a></td>
-              <td width="36" align="center" valign="middle"><a href="report_group_ledger_report_print.php?group_id=<?php echo $_REQUEST[group_id];?>&start_date=<?php echo $_REQUEST[start_date];?>&end_date=<?php echo $_REQUEST[end_date];?>" target="_blank"><img src="../images/print.png" alt="" width="16" height="16" border="0" title="<?php echo STUDENT_ADVISOR_SEARCH_MANAGE_PRINT ?>"></a></td>
+              <td width="36" align="center" valign="top"><a href="report_group_ledger_report_word.php?group_id=<?php echo $_REQUEST[group_id];?>&start_date=<?php echo $_REQUEST[start_date];?>&end_date=<?php echo $_REQUEST[end_date];?>&group_status=<?php echo $_REQUEST[group_status];?>"><img src="../images/word2007.png" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_WORD ?>"></a></td>
+              <td width="36" align="center" valign="top"><a href="report_group_ledger_report_csv.php?group_id=<?php echo $_REQUEST[group_id];?>&start_date=<?php echo $_REQUEST[start_date];?>&end_date=<?php echo $_REQUEST[end_date];?>&group_status=<?php echo $_REQUEST[group_status];?>"><img src="../images/excel2007.PNG" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_XLS ?>"></a></td>
+              <td width="36" align="center" valign="top"><a href="report_group_ledger_report_pdf.php?group_id=<?php echo $_REQUEST[group_id];?>&start_date=<?php echo $_REQUEST[start_date];?>&end_date=<?php echo $_REQUEST[end_date];?>&group_status=<?php echo $_REQUEST[group_status];?>"><img src="../images/pdf.png" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_PDF ?>"></a></td>
+              <td width="36" align="center" valign="middle"><a href="report_group_ledger_report_print.php?group_id=<?php echo $_REQUEST[group_id];?>&start_date=<?php echo $_REQUEST[start_date];?>&end_date=<?php echo $_REQUEST[end_date];?>&group_status=<?php echo $_REQUEST[group_status];?>" target="_blank"><img src="../images/print.png" alt="" width="16" height="16" border="0" title="<?php echo STUDENT_ADVISOR_SEARCH_MANAGE_PRINT ?>"></a></td>
             </tr>
         </table>
         
@@ -162,7 +162,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
   </tr>
   <tr>
     <td align="left" valign="top">    
-    <form name="frm" id="frm" >
+    <form name="frm" id="frm" method="post">
     <table width="99%" border="0" cellpadding="0" cellspacing="0">
       <tr>
         <td width="19%" align="left" valign="top"><?php include 'left_menu.php';?></td>
@@ -200,7 +200,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <select name="group_id" id="group_id" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:180px;">
                   <option value=""> All Groups </option>
                   <?php
-					foreach($dbf->fetchOrder('student_group',"","") as $val_group_dtls) {
+					foreach($dbf->fetchOrder('student_group',"","group_name") as $val_group_dtls) {
 				  ?>
                   <option value="<?php echo $val_group_dtls[id];?>"<?php if($_REQUEST[group_id]==$val_group_dtls["id"]){?> selected="selected"<?php } ?>><?php echo $val_group_dtls['group_name'] ?>, <?php echo date('d/m/Y',strtotime($val_group_dtls['start_date']));?> - <?php echo date('d/m/Y',strtotime($val_group_dtls['end_date'])) ?>, <?php echo $val_group_dtls["group_start_time"];?>-<?php echo $val_group_dtls["group_end_time"];?></option>
                   <?php
@@ -227,9 +227,19 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td width="9%" align="left" valign="middle">
                 
                 <input name="end_date" readonly="" type="text" class="datepick validate[required] new_textbox80" id="end_date" value="<?php echo $end_date;?>"/></td>
-                <td width="19%" align="right" valign="middle" class="hometest_name"><?php //echo constant("ACCOUNTANT_BAL_AMOUNT_GREATER");?> <!--:--></td>
-                <td width="3%" align="center" valign="middle"><!--<input type="checkbox" name="balance" id="balance" value="balance" <?php if($_REQUEST[balance]=='balance'){?> checked="checked" <?php } ?>>--></td>
-                <td width="27%" align="left" valign="middle"><input type="image" src="../images/searchButton.png" width="50" height="22"></td>
+                <td width="19%" align="left" valign="middle" class="hometest_name">
+					Status:
+					<select name="group_status" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:100px;" onChange="javascript:document.frm.action='report_group_ledger.php',document.frm.submit();">
+						<option value="">Select</option>
+						<option value="Not Started"<?php if($_REQUEST["group_status"] == "Not Started") { ?> selected="selected" <?php } ?>>Not Started</option>
+                        <option value="Continue"<?php if($_REQUEST["group_status"] == "Continue") { ?> selected="selected" <?php } ?>>Active - In Progress</option>
+                        <option value="Completed"<?php if($_REQUEST["group_status"] == "Completed") { ?> selected="selected" <?php } ?>>Completed</option>
+					</select>
+				</td>
+                <td width="27%" align="left" valign="middle">
+					<!--<input type="image" src="../images/searchButton.png" width="50" height="22">-->
+					<a href="report_group_ledger.php"><input type="image" src="../images/searchButton.png" width="50" height="22"></a>
+				</td>
               </tr>
               <tr>
                 <td height="5" colspan="9" align="left" valign="middle">&nbsp;</td>
@@ -247,16 +257,20 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
 				</thead>
                 <?php
+					$group_status=$_REQUEST[group_status];
+					
 					$i = 1;
 					$color="#ECECFF";
-					if($_REQUEST[group_id] == ''){
-						$cond = "id > 0";
-					}else{
-						$group = "id = '$_REQUEST[group_id]'";
-					}
-					$num=$dbf->countRows('student_group', $group);
+					if($_REQUEST[group_id] != '' && $group_status!=''){$group = "id='$_REQUEST[group_id]' AND status='$group_status'";}
+					elseif($_REQUEST[group_id] == '' && $group_status!=''){$group="status='$group_status'";}
+					elseif($_REQUEST[group_id] != '' && $group_status==''){$group="id='$_REQUEST[group_id]'";}
+					elseif($group_status ==''){$group = "id > 0";}
+					elseif($_REQUEST[group_id] == ''){$group = "id > 0";}
+					else{$group = "id = '$_REQUEST[group_id]'";}
+					$num=$dbf->countRows('student_group', $group."AND start_date BETWEEN '$start_date' AND '$end_date'");
+					
 					//loop start
-					foreach($dbf->fetchOrder('student_group', $group) as $valgroup) {
+					foreach($dbf->fetchOrder('student_group', $group."AND start_date BETWEEN '$start_date' AND '$end_date'","group_name") as $valgroup) {
 					
 					//Count the number o students in student_group_dtls table
 					$numofstudent = $dbf->countRows('student_group_dtls', "parent_id='$valgroup[id]'");
@@ -298,7 +312,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <td align="center" valign="middle" class="mycon">
                   <a href="javascript:void(0);" onClick="show_details('<?php echo "kk".$valgroup["id"];?>');"> <span id="plusArrow<?php echo "kk".$valgroup["id"];?>"><img src="../images/plus.gif" border="0" /></span></a>
                   </td>
-                  <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valgroup["group_name"];?> <?php echo $valgroup["group_start_time"];?>-<?php echo $valgroup["group_end_time"];?></td>
+                  <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valgroup["group_name"];?> <?php echo $dbf->printClassTimeFormat($valgroup["group_start_time"],$valgroup["group_end_time"]);?></td>
                   <td align="left" valign="middle" class="mycon">&nbsp;<?php echo date('d-M-Y',strtotime($valgroup["start_date"]));?>&nbsp;/&nbsp;<?php echo date('d-M-Y',strtotime($valgroup["end_date"]));?></td>
                   <td align="center" valign="middle" class="mycon">&nbsp;<?php echo $numofstudent;?></td>
                   <td align="center" valign="middle" class="mycon">&nbsp;<?php echo $course_fee;?>&nbsp;<?php echo $res_currency[symbol];?></td>

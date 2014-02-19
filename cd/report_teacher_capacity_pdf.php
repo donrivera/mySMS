@@ -30,18 +30,19 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 					$res_teacher = $dbf->strRecordID("teacher", "*", "id='$val[uid]'");
 					
 					//Get the total units from the E-PED unit table of a particular teacher
-					$res_unit = $dbf->strRecordID("ped_attendance","COUNT(unit)","teacher_id='$val[uid]' And (shift1<>'' OR shift2<>'' OR shift3<>'' OR shift4<>'' OR shift5<>'' OR shift6<>'' OR shift7<>'' OR shift8<>'' OR shift9<>'')");
+					//$res_unit = $dbf->strRecordID("ped_attendance","COUNT(unit)","teacher_id='$val[uid]' And (shift1<>'' OR shift2<>'' OR shift3<>'' OR shift4<>'' OR shift5<>'' OR shift6<>'' OR shift7<>'' OR shift8<>'' OR shift9<>'')");
+					$res_unit=$dbf->getDataFromTable("student_group", "SUM(unit_per_day)", "teacher_id='$res_teacher[id]' AND status='Continue'");
 			$html.='<tr>
 			  <td height="25" align="center" valign="middle" class="mycon">'.$i.'</td>
 			  <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;">'.$res_teacher["name"].'</td>
-			  <td align="center" valign="middle" class="mycon" style="padding-left:5px;">'.$res_unit["COUNT(unit)"].'</td>
+			  <td align="center" valign="middle" class="mycon" style="padding-left:5px;">'.(empty($res_unit)?'0':$res_unit).'</td>
 			  <td align="center" valign="middle" class="mycon" style="padding-left:5px;">'.$res_teacher["unit"].'</td>';
 			  $i = $i + 1;   
 			  }
 			$html.='</tr>
 		</table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_teacher_capacity.pdf", 'D');
 	exit;

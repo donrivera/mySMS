@@ -8,6 +8,7 @@ include_once '../includes/class.Main.php';
 $dbf = new User();
 include_once '../includes/language.php';
 ?>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#999999" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
   <thead>
     <tr class="logintext">
@@ -22,6 +23,7 @@ include_once '../includes/language.php';
     <?php
         $i = 1;
         $color="#ECECFF";
+		/*
         if($_REQUEST[group_id] == ''){
             $cond = "id > 0 And ()";
         }else{
@@ -39,35 +41,32 @@ include_once '../includes/language.php';
         }
         $num=$dbf->countRows('student_fees', $group);
         //loop start
-        foreach($dbf->fetchOrder('student_group', $group) as $valgroup) {
-        
+        foreach($dbf->fetchOrder('student_group', $group,"group_name") as $valgroup) {
+        */
+		$start_date = $_REQUEST[start_date];
+		$end_date = $_REQUEST[end_date];
+		$group_status=$_REQUEST[group_status];
+		if($_REQUEST[group_id] != '' && $group_status!=''){$group = "id='$_REQUEST[group_id]' AND status='$group_status'";}
+		elseif($_REQUEST[group_id] == '' && $group_status!=''){$group="status='$group_status'";}
+		elseif($_REQUEST[group_id] != '' && $group_status==''){$group="id='$_REQUEST[group_id]'";}
+		elseif($group_status ==''){$group = "id > 0";}
+		elseif($_REQUEST[group_id] == ''){$group = "id > 0";}
+		else{$group = "id = '$_REQUEST[group_id]'";}
+		$num=$dbf->countRows('student_group', $group."AND start_date BETWEEN '$start_date' AND '$end_date'");
+					
+		//loop start
+		foreach($dbf->fetchOrder('student_group', $group."AND start_date BETWEEN '$start_date' AND '$end_date'","group_name") as $valgroup) {
         //Count the number o students in student_group_dtls table
         $numofstudent=$dbf->countRows('student_group_dtls', "parent_id='$valgroup[id]'");
-        
-        //Get Enrollment Amount for a particular group
-        $course_fee = 0;
-        foreach($dbf->fetchOrder('student_enroll', "group_id='$valgroup[id]'") as $enroll) {
-            if($course_fee == 0){
-                $course_fee = $enroll["course_fee"];
-            }else{
-                $course_fee = $course_fee + $enroll["course_fee"];
-            }
-        }
-        
-        //Get Enrollment Amount for a particular group
-        $en_amt = 0;
-        foreach($dbf->fetchOrder('student_enroll', "group_id='$valgroup[id]'") as $enroll) {
-            if($en_amt == 0){
-                $en_amt = $enroll["course_fee"] - $enroll["discount"];
-            }else{
-                $en_amt = $en_amt + ($enroll["course_fee"] - $enroll["discount"]);
-            }
-        }					
-        $bal_amt = $course_fee - $en_amt;					
-        ?>        
+       
+		$course_fee=$dbf->getDataFromTable("course_fee", "fees", "id='$valgroup[course_id]'");
+		$en_amt=$course_fee * $numofstudent;
+		$payments=$dbf->getDataFromTable("student_enroll se INNER JOIN student_fees sf ON sf.student_id=se.student_id AND sf.course_id=se.course_id", "SUM(sf.paid_amt) as total", "se.group_id='$valgroup[id]'");
+        $bal_amt=$en_amt-$payments;
+		?>        
     <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
       <td align="center" valign="middle" class="mycon">&nbsp;</td>
-      <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valgroup["group_name"];?> <?php echo $valgroup["group_time"];?>-<?php echo $dbf->GetGroupTime($valgroup["id"]);?></td>
+      <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valgroup["group_name"];?> <?php echo $valgroup["group_time"];?> <?php echo $dbf->printClassTimeFormat($valgroup["group_start_time"],$valgroup["group_end_time"]);?></td>
       <td align="left" valign="middle" class="mycon">&nbsp;<?php echo date('d-M-Y',strtotime($valgroup["start_date"]));?>&nbsp;/&nbsp;<?php echo date('d-M-Y',strtotime($valgroup["end_date"]));?></td>
       <td align="center" valign="middle" class="mycon">&nbsp;<?php echo $numofstudent;?></td>
       <td align="center" valign="middle" class="mycon">&nbsp;<?php echo $en_amt;?></td>

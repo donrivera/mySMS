@@ -207,7 +207,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 		  ?>
           <tr>
             <td height="20" align="left" valign="middle" class="leftmenu">&nbsp;<?php echo constant("STUDENT_ADVISOR_S2_NAME");?> : </td>
-            <td align="left" valign="middle" class="pedtext_normal"><?php echo $res_student[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></td>
+            <td align="left" valign="middle" class="pedtext_normal"><?php echo $dbf->printStudentName($res_student["id"]);?></td>
             <td>&nbsp;</td>
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
@@ -647,7 +647,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 </table></td>
               <td rowspan="5" align="left" valign="top" bgcolor="#FFFFFF"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                  <td width="68%" height="20" align="right" valign="middle" bgcolor="#FFFFFF" class="pedtext_normal"><?php echo $res_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></td>
+                  <td width="68%" height="20" align="right" valign="middle" bgcolor="#FFFFFF" class="pedtext_normal"><?php echo $dbf->printStudentName($res_student["id"]);?></td>
               <td width="32%" align="left" valign="middle" bgcolor="#FFFFFF" class="leftmenu">&nbsp; : <?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?>&nbsp;</td>
                 </tr>
                 <tr>

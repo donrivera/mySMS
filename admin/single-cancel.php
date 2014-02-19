@@ -253,7 +253,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				  	 $num=$dbf->countRows("student_cancel","student_id='$student_id'");
 				  	  foreach($dbf->fetchOrder("student_cancel","student_id='$student_id'") as $valcancel) {
 					  $res_student = $dbf->strRecordID("student","*","id='$valcancel[student_id]'");
-					  $dtls = $dbf->strRecordID("student_group_dtls","*","student_id='$valcancel[student_id]'");
+					  $dtls = $dbf->strRecordID("student_group_dtls","*","student_id='$valcancel[group_id]'");
 					  $group = $dbf->strRecordID("student_group","*","id='$dtls[parent_id]'");
 					  
 				  ?>

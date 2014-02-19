@@ -212,22 +212,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
 				  </thead>
                 <?php
-					if($_REQUEST[teacher]!='' && $_REQUEST[start_date]!='' && $_REQUEST[end_date]!='')
-					{
+					if($_REQUEST[teacher]!='' && $_REQUEST[start_date]!='' && $_REQUEST[end_date]!=''){
 					 $cond="teacher_id='$_REQUEST[teacher]' And (frm <= '$_REQUEST[end_date]' And tto >= '$_REQUEST[start_date]')";
-					}
-					else if($_REQUEST[teacher]=='' && $_REQUEST[start_date]!='' && $_REQUEST[end_date]!='')
-					{
+					}else if($_REQUEST[teacher]=='' && $_REQUEST[start_date]!='' && $_REQUEST[end_date]!=''){
 					 $cond="(frm <= '$_REQUEST[end_date]' And tto >= '$_REQUEST[start_date]')";
-					}
-					else if($_REQUEST[teacher]!='' && $_REQUEST[start_date]=='' && $_REQUEST[end_date]=='')
-					{
+					}else if($_REQUEST[teacher]!='' && $_REQUEST[start_date]=='' && $_REQUEST[end_date]==''){
 					 $cond="teacher_id='$_REQUEST[teacher]'";
 					}
-					else
-					{
-					 $cond="";
-					}
+					else{$cond="";}
 					$i = 1;
 					$color="#ECECFF";
 					

@@ -37,7 +37,7 @@ ini_set('memory_limit', '-1');
 				$room = $dbf->strRecordID("centre_room","*","id='$val[room_id]'");
 			$html.='<tr>
 			  <td align="left" valign="middle" bgcolor="#F8F9FB">'.$i.'</td>
-			  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB">'.$val["group_name"].'&nbsp;'.$val["group_time"].'-'.$dbf->GetGroupTime($val["id"]).'</td>
+			  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB">'.$val[group_name]."&nbsp;".$dbf->printClassTimeFormat($val[group_start_time],$val[group_end_time]).'</td>
 			  <td align="left" valign="middle" bgcolor="#F8F9FB">'.$val["start_date"].'</td>
 			  <td align="left" valign="middle" bgcolor="#F8F9FB">'.$val["end_date"].'</td>
 			  <td align="left" valign="middle" bgcolor="#F8F9FB">'.$std["COUNT(student_id)"].'</td>
@@ -48,7 +48,7 @@ ini_set('memory_limit', '-1');
 			$html.='</tr>			
 		</table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_teacher_schedule.pdf", 'D');
 	exit;

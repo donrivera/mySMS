@@ -230,7 +230,7 @@ function gotfocus(){
 					$i = 1;
 					$color = "#ECECFF";
 					$num=$dbf->countRows('student',$condition);
-					foreach($dbf->fetchOrder('student',$condition,"id DESC") as $val){
+					foreach($dbf->fetchOrder('student',$condition,"first_name") as $val){
 						$num_comment=$dbf->countRows('student_comment',"student_id='$val[id]'");
 					?>
                 <tr bgcolor="<?php echo $color;?>"  onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;" >

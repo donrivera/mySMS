@@ -51,13 +51,13 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 			$re_amt = $dbf->strRecordID("student_fees","SUM(paid_amt)","student_id='$valenroll[student_id]' And course_id='$valenroll[course_id]' And status='1'");
 			$re_amt = $en_amt - $re_amt["SUM(paid_amt)"];
 		$html.='<tr>
-		  <td align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$student["first_name"].' '.$Arabic->en2ar($dbf->StudentName($student["id"])).'</span></td>
+		  <td align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($student["id"]).'</span></td>
 		  <td align="center" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$enroll.'</span></td>
-		  <td align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$group["group_name"].' '.$group["group_time"].'-'.$dbf->GetGroupTime($group["id"]).'</span></td>
+		  <td align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->FullGroupInfo($group['id']).'</span></td>
 		  <td align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$course["name"].'</span></td>
 		  <td align="right" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$valenroll["course_fee"].'&nbsp;'.$res_currency["symbol"].'</span></td>
 		  <td align="right" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$valenroll["discount"].'&nbsp;'.$res_currency["symbol"].'</span></td>
-		  <td align="right" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.number_format($dbf->getDiscountPercent($course_fees, $valenroll["discount"]),0).'%</span></td>
+		  <td align="right" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->getDiscountPercent($course_fees, $valenroll["discount"]).'%</span></td>
 		  <td align="right" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$en_amt.'&nbsp;'.$res_currency["symbol"].'</span></td>
 		  <td align="right" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$re_amt.'&nbsp;'.$res_currency["symbol"].'</span></td>';
 			  $i = $i + 1;

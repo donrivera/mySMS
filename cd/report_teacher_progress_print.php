@@ -22,7 +22,7 @@ $dbf = new User();
 include_once '../includes/language.php';
 $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[group_id]'");
 
-$teacher_id = $pro[teacher_id];
+$teacher_id =$_REQUEST['teacher_id']; #$pro[teacher_id];
 //echo base64_decode(base64_decode('U205bGJBPT0='));
 $rest = $dbf->strRecordID("teacher","*","id='$pro[teacher_id]'");
 
@@ -83,6 +83,7 @@ font-weight:bold;
  }
 </style>
 <body>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
     <td height="20" align="left" valign="middle" style="padding-left:5px;">&nbsp;</td>
@@ -202,7 +203,8 @@ font-weight:bold;
             <td height="20" align="left" valign="middle" class="leftmenu">&nbsp;<?php echo constant("STUDENT_PROGRESS_REPORT_ATTENDANCE");?> : </td>
             <?php
 			//Get number of Attendace present in e-PEDCARD (table : ped_attendance)
-			$num_att=$dbf->countRows('ped_attendance',"student_id='$teacher_id' And (shift1<>'' OR shift2<>'' OR shift3<>'' OR shift4<>'' OR shift5<>'' OR shift6<>'' OR shift7<>'' OR shift8<>'' OR shift9<>'')");
+			#$num_att=$dbf->countRows('ped_attendance',"student_id='$teacher_id' And (shift1<>'' OR shift2<>'' OR shift3<>'' OR shift4<>'' OR shift5<>'' OR shift6<>'' OR shift7<>'' OR shift8<>'' OR shift9<>'')");
+			$num_att=$dbf->No_Of_Attendance($_REQUEST['teacher_id'], $_REQUEST["group_id"]);
 			?>
             <td align="left" valign="middle" class="content"><b><?php echo $num_att;?></b>&nbsp;&nbsp;&nbsp;<?php echo constant("CD_REPORT_TEACHER_PROGRESS_OUTOF");?> &nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo $res_size[units];?></b></td>
             <td>&nbsp;</td>

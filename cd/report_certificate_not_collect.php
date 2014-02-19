@@ -239,19 +239,19 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				$color = "#ECECFF";
 				
 				if($_REQUEST[start_date]!='' && $_REQUEST[end_date]!=''){
-					$cond="certificate_collect='0' And (enroll_date BETWEEN '$_REQUEST[start_date]' And '$_REQUEST[end_date]') And centre_id='$_SESSION[centre_id]'";
+					$cond="e.group_id=s.id AND e.certificate_collect='0' And (e.enroll_date BETWEEN '$_REQUEST[start_date]' And '$_REQUEST[end_date]') And e.centre_id='$_SESSION[centre_id]'";
 				}else{
-					$cond="certificate_collect='0' And centre_id='$_SESSION[centre_id]'";
+					$cond="e.group_id=s.id AND e.certificate_collect='0' And e.centre_id='$_SESSION[centre_id]'";
 				}
 
 				//Get number of rows
-				$num=$dbf->countRows('student_enroll', $cond);
+				$num=$dbf->countRows('student_enroll e,student_group s',$cond." AND s.status='Completed'");
 				
 				//Get currency
 				$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 				
 				//Loop start
-				foreach($dbf->fetchOrder('student_enroll', $cond ,"","") as $val1){
+				foreach($dbf->fetchOrder('student_enroll e,student_group s',$cond." AND s.status='Completed'","","") as $val1){
 					$val = $dbf->strRecordID("student","*","id='$val1[student_id]'");	
 					$num_dtls=$dbf->countRows('student_enroll',"certificate_collect='0' And student_id='$val[id]'");				
 				?>

@@ -27,8 +27,8 @@ if($_REQUEST[number1]=="") { exit; }
 foreach($dbf->fetchOrder("student","family_name LIKE '$name%' OR family_name1 LIKE '$name%' OR first_name LIKE '$name%' OR student_first_name LIKE '$name%' OR first_name1 LIKE '$name%' And centre_id='$_SESSION[centre_id]'") as $val){
 ?>
   <tr>
-    <td width="196" align="left" valign="top" style="padding-left:5px;"><a href="sms_f.php?number=<?php echo $val["student_mobile"];?>" ><?php echo $val["first_name"];?> <?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?> </a></td>
-    <td width="148" align="left" valign="top" style="padding-left:5px;"><a href="sms_f.php?number=<?php echo $val["student_mobile"];?>" ><?php echo $val["student_mobile"];?></a></td>
+    <td width="196" align="left" valign="top" style="padding-left:5px;"><a href="sms_f.php?number=<?php echo $val["student_mobile"];?>&id=<?php echo $val["id"];?>" ><?php echo $val["first_name"];?> <?php echo $dbf->printStudentName($val["id"]);?> </a></td>
+    <td width="148" align="left" valign="top" style="padding-left:5px;"><a href="sms_f.php?number=<?php echo $val["student_mobile"];?>&id=<?php echo $val["id"];?>" ><?php echo $val["student_mobile"];?></a></td>
   </tr>
   <?php
 	}
@@ -42,8 +42,8 @@ foreach($dbf->fetchOrder("student","family_name LIKE '$name%' OR family_name1 LI
 	foreach($dbf->fetchOrder("student","family_name LIKE '$name%' OR family_name1 LIKE '$name%' OR first_name LIKE '$name%' OR student_first_name LIKE '$name%' OR first_name1 LIKE '$name%' And centre_id='$_SESSION[centre_id]'") as $val){
 ?>
   <tr>
-    <td width="147" align="left" valign="top" style="padding-left:5px;"><a href="sms_f.php?number=<?php echo $val["student_mobile"];?>" ><?php echo $val["first_name"];?> <?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></a></td>
-    <td width="197" align="left" valign="top" style="padding-left:5px;"><a href="sms_f.php?number=<?php echo $val["student_mobile"];?>" ><?php echo $val["student_mobile"];?></a></td>
+    <td width="147" align="left" valign="top" style="padding-left:5px;"><a href="sms_f.php?number=<?php echo $val["student_mobile"];?>&id=<?php echo $val["id"];?>" ><?php echo $val["first_name"];?> <?php echo $dbf->printStudentName($val["id"]);?></a></td>
+    <td width="197" align="left" valign="top" style="padding-left:5px;"><a href="sms_f.php?number=<?php echo $val["student_mobile"];?>&id=<?php echo $val["id"];?>" ><?php echo $val["student_mobile"];?></a></td>
   </tr>
   <?php
 		}

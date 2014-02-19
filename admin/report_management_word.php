@@ -175,7 +175,11 @@ header("Content-Disposition: attachment; Filename=report_management.doc");
                   <tr>
                     <td width="6%">&nbsp;</td>
                     <td width="61%" height="25" align="right" valign="middle" class="lable1">&nbsp;<?php echo constant("MANAGE_LISM_REPORT_STUDENT_CANCEL");?>:&nbsp;</td>
-                    <td width="33%" align="center" valign="middle" class="pedtext">&nbsp;</td>
+					<?php
+						$cancel = $dbf->strRecordID("student_cancel","COUNT(id)","(dated BETWEEN '$start_date' And '$end_date') And centre_id='$centre_id'");
+						$cancel = $cancel["COUNT(id)"];
+					?>
+                    <td align="center" valign="middle" class="pedtext"><?php echo $cancel;?></td>
                   </tr>
                   <tr>
                     <td>&nbsp;</td>
@@ -227,10 +231,17 @@ header("Content-Disposition: attachment; Filename=report_management.doc");
                     <td width="61%" height="25" align="right" valign="middle" class="lable1">&nbsp;<?php echo constant("MANAGE_LISM_REPORT_TEACH_UNIT");?> :&nbsp;</td>
                     <td width="33%" align="center" valign="middle" class="pedtext">
                     <?php
+						/*
                         $res=$dbf->strRecordID('student_group g,ped_attendance a', 'COUNT(a.id)',"g.id=a.group_id And g.centre_id='$centre_id' And (a.attend_date BETWEEN '$start_date' AND '$end_date')");
 						$no_student = $res["COUNT(a.id)"];
 						if($no_student == '') { $no_student = 0; }
-						echo $no_student;?>
+						echo $no_student;*/
+						$unit = 0;
+						foreach($dbf->fetchOrder('student_group g,ped_attendance a',"g.id=a.group_id And g.centre_id='$centre_id' And (a.attend_date BETWEEN '$start_date' AND '$end_date')","","a.unit","a.unit") as $valpay) {
+						$unit = $unit + 1;
+					}
+						echo $unit;
+					?>
                     </td>
                   </tr>
                   <tr>

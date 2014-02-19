@@ -54,9 +54,9 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 				$days = $dbf->dateDiff($group["end_date"],date('Y-m-d'));
 			$html.='<tr>
 			  <td align="left" valign="middle" >&nbsp;'.$valfee["payment_date"].'</td>
-			  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$student["first_name"].' '.$Arabic->en2ar($dbf->StudentName($student["id"])).'</span></td>
+			  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($student["id"]).'</span></td>
 			  <td align="center" valign="middle" >'.$enroll.'</td>
-			  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$group["group_name"].' '.$group["group_time"].' '.$dbf->GetGroupTime($group["id"]).'</span></td>
+			  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->FullGroupInfo($group['id']).'</span></td>
 			  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">&nbsp;'.$course["name"].'</span></td>
 			  <td align="right" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$valfee["discount"].'&nbsp;'.$res_currency["symbol"].'</span></td>
 			  <td align="right" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->getDiscountPercent($course_fees, $valfee["discount"]).'&nbsp;'.$res_currency["symbol"].'</span></td>
@@ -79,7 +79,7 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 			$html.='</tr>               
 		</table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_beddebt_report.pdf", 'D');
 	exit;

@@ -8,10 +8,11 @@ require '../I18N/Arabic.php';
 //Object initialization
 $dbf = new User();
 $Arabic = new I18N_Arabic('Transliteration');
-
+$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 include_once '../includes/language.php';
 ?>
-<link rel="stylesheet" type="text/css" href="glowtabs.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!--<link rel="stylesheet" type="text/css" href="glowtabs.css" />-->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">          
   <tr>
     <td align="center" valign="top" bgcolor="#FFFFFF">
@@ -24,7 +25,7 @@ include_once '../includes/language.php';
         <td width="25%" align="left" valign="middle">
           <?php
             foreach($dbf->fetchOrder('student',"id='$_REQUEST[student_id]'","first_name") as $valc) {
-                echo $valc[first_name]." ".$Arabic->en2ar($dbf->StudentName($valc["id"]));
+                echo $dbf->printStudentName($valc['id']);
             }
            ?></td>
         <td width="14%" align="left" valign="middle">&nbsp;</td>
@@ -48,7 +49,7 @@ include_once '../includes/language.php';
     ?>
     <table width="80%" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#CCC;">
       <tr>
-        <td width="14%" height="25" align="right" valign="middle" class="leftmenu">sdGroup Name :</td>
+        <td width="14%" height="25" align="right" valign="middle" class="leftmenu">Group Name :</td>
         <td width="52%" align="left" valign="middle" class="shop2">&nbsp;<span class="shop1"><?php echo $dbf->FullGroupInfo($valfee["parent_id"]);?></span></td>
         <td width="9%">&nbsp;</td>
         <td width="19%" align="center" valign="middle" class="shop1">&nbsp;</td>

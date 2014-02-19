@@ -18,6 +18,7 @@ include_once '../includes/class.Main.php';
 $dbf = new User();
 include_once '../includes/language.php';
 ?>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
 <table width="600" border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#AAAAAA" style="border:solid 1px; border-color:#AAAAAA;">
   <tr>
     <td width="52" height="30"></td>

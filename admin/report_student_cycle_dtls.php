@@ -146,7 +146,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <?php
 						foreach($dbf->fetchOrder('student',"first_name<>''","first_name") as $val) {
 						?>
-                    <option value="<?php echo $val[id]; ?>"<?php if($student_id==$val["id"]){?> selected="selected"<?php } ?>><?php echo $val[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></option>
+                    <option value="<?php echo $val[id]; ?>"<?php if($student_id==$val["id"]){?> selected="selected"<?php } ?>><?php echo $dbf->printStudentName($val["id"]);?></option>
                     <?php } ?>
                     </select>
                 </td>

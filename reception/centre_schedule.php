@@ -14,7 +14,7 @@ include_once '../includes/class.Main.php';
 
 $pageTitle='Welcome to Berlitz-KSA';
 
-include '../application_top.php';
+include 'application_top.php';
 
 //Object initialization
 $dbf = new User();
@@ -174,8 +174,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <script type="text/javascript">
                     $(function () {
                         $("#ganttChart").ganttView({ 
+							
                             data: ganttData,
-                            slideWidth: 1000,
+							slideWidth: 1000,
                             behavior: {
                                 onClick: function (data) { 
                                     var msg = "You clicked on an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
@@ -213,7 +214,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				//echo "d".$cond;
 				$i = 1;
 				$a="";
-				foreach($dbf->fetchOrder('student_group',$cond,"") as $val){
+				$year_now=date('Y');
+				foreach($dbf->fetchOrder('student_group',$cond."AND YEAR(start_date) = '$year_now'","group_name ASC") as $val){
 					
 					//Get Unit
 					$val_unit = $dbf->strRecordID("common","*","id='$val[units]'");
@@ -231,12 +233,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$sy = date('Y',strtotime($val[start_date]));
 					$sm = date('m',strtotime($val[start_date]))-1;
 					$sd = date('d',strtotime($val[start_date]));
-					
+					$ssm=(strlen($sm)==1?'0'.$sm:$sm);
+					$ssd=(strlen($sd)==1?'0'.$sd:$sd);
 					//Ending date of the group
 					$ey = date('Y',strtotime($val[end_date]));
 					$em = date('m',strtotime($val[end_date]))-1;
 					$ed = date('d',strtotime($val[end_date]));
-					
+					$eem=(strlen($em)==1?'0'.$em:$em);
+					$eed=(strlen($ed)==1?'0'.$ed:$ed);
 					////Starting date of the group from Units Table (Min date)
 					$num=$dbf->countRows('ped_units',"group_id='$val[id]'");
 					if($num==0){
@@ -244,11 +248,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$psy = $sy;
 						$psm = $sm;
 						$psd = $sd;
-						
+						$ppsm=(strlen($psm)==1?'0'.$psm:$psm);
+						$ppsd=(strlen($psd)==1?'0'.$psd:$psd);
 						//Ending date of the group
 						$pey = $sy;
 						$pem = $sm;
 						$ped = $sd;
+						$ppem=(strlen($pem)==1?'0'.$pem:$pem);
+						$pped=(strlen($ped)==1?'0'.$ped:$ped);
 					}else{
 						$res_min = $dbf->strRecordID("ped_units","MIN(dated)","group_id='$val[id]'");
 						
@@ -257,13 +264,16 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$psy = date('Y',strtotime($res_min["MIN(dated)"]));
 						$psm = date('m',strtotime($res_min["MIN(dated)"]))-1;
 						$psd = date('d',strtotime($res_min["MIN(dated)"]));
-						
-						$res_min = $dbf->strRecordID("ped_units","MAX(dated)","group_id='$val[id]'");						
+						$ppsm=(strlen($psm)==1?'0'.$psm:$psm);
+						$ppsd=(strlen($psd)==1?'0'.$psd:$psd);
+						$res_min1 = $dbf->strRecordID("ped_units","MAX(dated)","group_id='$val[id]'");						
 						
 						//Ending date of the group
-						$pey = date('Y',strtotime($res_min["MAX(dated)"]));
-						$pem = date('m',strtotime($res_min["MAX(dated)"]))-1;
-						$ped = date('d',strtotime($res_min["MAX(dated)"]));
+						$pey = date('Y',strtotime($res_min1["MAX(dated)"]));
+						$pem = date('m',strtotime($res_min1["MAX(dated)"]))-1;
+						$ped = date('d',strtotime($res_min1["MAX(dated)"]));
+						$ppem=(strlen($pem)==1?'0'.$pem:$pem);
+						$pped=(strlen($ped)==1?'0'.$ped:$ped);
 					}
 					
 					$smonth = $sm + 1;
@@ -273,16 +283,40 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					}else{
 						$count_student = $count_student. ' student';
 					}
+					$title=strtoupper($val['group_name']);
+					$timeSlot=$dbf->printClassTimeFormat($val['group_start_time'],$val['group_end_time']);
+					/*
 					$a =$a.','. '
 					{id: 1, name: "'.$val[group_name].' ('.$res_course[name].')<br>['.$count_student.']<br>Teacher : '.$res_teacher[name].'", series: [{ name: "Start : '.date('d/M/Y',strtotime($val[start_date])).'<br>'.$val[group_time].'", start: new Date('.$sy.','.$sm.','.$sd.'), end: new Date('.$ey.','.$em.','.$ed.') },
-																   { name: "End : '.date('d/M/Y',strtotime($val[end_date])).'<br>'.$dbf->GetGroupTime($val[id]).'", start: new Date('.$psy.','.$psm.','.$psd.'), end: new Date('.$pey.','.$pem.','.$ped.'), color: "#FFF000" }]
+																   { name: "End : '.date('d/M/Y',strtotime($val[end_date])).'<br>'.$val[group_time_end].'", start: new Date('.$psy.','.$psm.','.$psd.'), end: new Date('.$pey.','.$pem.','.$ped.'), color: "#FFF000" }]
 					}
 					';
+					*/
+					//Start:'.date('d/M/Y',strtotime($val[start_date])).'
+					$a =$a.','. '
+								{
+									id: 1, name: "'.$val[group_name].' <br/>'.$timeSlot.'",
+									series: [
+												{	name:"Start: '.date('d/M/Y',strtotime($val[start_date])).'<br>End : '.date('d/M/Y',strtotime($val[end_date])).'", 
+													title: "'.$title.'",
+													start: new Date('.$sy.','.$ssm.','.$ssd.'),
+													end: new Date('.$ey.','.$eem.','.$eed.'),
+													color: "#f7c89a"
+												},
+												{	name:"Attendance:", 
+													title: "'.$title.'",
+													start: new Date('.$psy.','.$ppsm.','.$ppsd.'),
+													end: new Date('.$pey.','.$ppem.','.$pped.'),
+													color: "#FFF000"
+												}
+											]	
+								}';
 				}
 				$a='['.substr($a,1).']';
 				?>
                 <script language="JavaScript" type="text/javascript">
-                var ganttData = <?php echo $a;?>;
+                var ganttData =<?php echo $a;?>;
+								/*$("#ganttChart").gantt({source: data, navigate: 'scroll', scale: 'days', maxScale: 'weeks', minScale: 'hours'});*/
                 </script></td>
                 </tr>
               </table></td>

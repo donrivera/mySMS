@@ -55,6 +55,35 @@ else
 
 <link rel="stylesheet" href="../table_sorter/themes/blue/style.css" type="text/css" media="print, projection, screen" />
 
+<!--UI JQUERY DATE PICKER-->
+<link rel="stylesheet" href="datepicker/jquery.ui.all.css">
+
+<script src="datepicker/jquery.ui.core.js"></script>
+<script src="datepicker/jquery.ui.widget.js"></script>
+<script src="datepicker/jquery.ui.datepicker.js"></script>
+<link rel="stylesheet" href="datepicker/demos.css">
+<script>
+$(function() {
+	$( "#start_date" ).datepicker({
+		defaultDate: "+1w",
+		changeMonth: true,
+		numberOfMonths: 2,
+		dateFormat: 'yy-mm-dd',
+		onClose: function( selectedDate ) {
+			$( "#end_date" ).datepicker( "option", "minDate", selectedDate );
+		}
+	});
+	$( "#end_date" ).datepicker({
+		defaultDate: "+1w",
+		changeMonth: true,
+		numberOfMonths: 2,
+		dateFormat: 'yy-mm-dd',
+		onClose: function( selectedDate ) {
+			$( "#start_date" ).datepicker( "option", "maxDate", selectedDate );
+		}
+	});
+});
+</script>
 <script type="text/javascript">
 function show_details(a)
 {
@@ -159,16 +188,18 @@ $count = $res_logout["name"]; // Set timeout period in seconds
             <td height="450" align="left" valign="top">
             <table width="100%" height="36" border="0" cellpadding="0" cellspacing="0">
                   <tr>
-                    <td width="71" height="36" align="right" valign="middle" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_SEARCH_FIRSTNAME");?> :</td>
-                    <td width="155" height="36" align="left" valign="middle" ><input name="fname" type="text" class="new_textbox100" id="fname" value="<?php echo $_REQUEST[fname];?>"></td>
-                    <td width="81" height="36" align="right" valign="middle" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_SEARCH_STUDENTID");?> :</td>
-                    <td width="102" height="36" align="left" valign="middle" ><input name="stid" type="text" class="new_textbox100" id="stid" value="<?php echo $_REQUEST[stid];?>" onKeyPress="return PhoneNo(event);"></td>
-                    <td width="68" height="36" align="right" valign="middle" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_SEARCH_MOBILENO");?> :</td>
-                    <td width="102" height="36" align="left" valign="middle" ><input name="mobile" type="text" class="new_textbox100" id="mobile" value="<?php echo $_REQUEST[mobile];?>" onKeyPress="return PhoneNo(event);"></td>
-                    <td width="58" height="36" align="right" valign="middle" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_SEARCH_EMAIL");?> :</td>
-                    <td width="113" height="36" align="left" valign="middle" ><input name="email" type="text" class="new_textbox100" id="email" value="<?php echo $_REQUEST[email];?>"></td>
-                    <td width="164" align="right" valign="middle">
-                    <input type="submit" name="submit" id="submit" value="<?php echo constant("btn_search");?>" class="btn1"/></td>
+					
+					<td width="15%" align="right" valign="middle" class="logintext">
+							<?php echo constant("ADMIN_REPORT_GROUP_TO_FINISH_PERIODFROM");?>  :&nbsp; 
+					</td>
+					<td width="10%" align="left">
+						<input name="start_date" readonly="" type="text" class="datepick validate[required] new_textbox80" id="start_date" value="<?php echo $_REQUEST[start_date];?>" size="45" minlength="4"/>
+					</td>
+					<td width="3%" align="center"><span class="logintext"><?php echo constant("ADMIN_REPORT_GROUP_TO_FINISH_TO");?></span> :&nbsp; </td>
+					<td width="100" align="left" valign="middle">
+                      <input name="end_date" readonly="" type="text" class="datepick validate[required] new_textbox80" id="end_date" value="<?php echo $_REQUEST[end_date];?>" size="45" minlength="4"/>
+					</td>
+                    <td width="164" align="left" valign="middle"><input type="submit" name="submit" id="submit" value="<?php echo constant("btn_search");?>" class="btn1"/></td>
                   </tr>
                 </table>
             <table width="99%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000" class="tablesorter" style="border-collapse:collapse;">
@@ -183,62 +214,32 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       </tr>
                   </thead>
                   <?php
-					$condition = '';
-					//Concate the Condition
-					//1.
-					if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[email]==''){
-						$condition = "s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%'";
-					}else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[email]==''){
-						$condition = "s.student_id LIKE '$_REQUEST[stid]%'";
-					}else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[email]==''){
-						$condition = "s.student_mobile LIKE '$_REQUEST[mobile]%'";
-					}else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[email]!=''){
-						$condition = "s.email LIKE '$_REQUEST[email]%'";
+					if($_REQUEST[start_date]!='' && $_REQUEST[end_date]!='')
+					{
+						$cond=" (m.dated BETWEEN '$_REQUEST[start_date]' AND '$_REQUEST[end_date]')";
 					}
-					//End 1.
-					
-					//2.
-					else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[email]==''){
-						$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.student_id LIKE '$_REQUEST[stid]%'";
-					}else if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[email]==''){
-						$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.student_mobile LIKE '$_REQUEST[mobile]%'";
-					}else if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[email]!=''){
-						$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.email LIKE '$_REQUEST[email]%'";
-					}else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[email]==''){
-						$condition = "s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.student_id LIKE '$_REQUEST[stid]%'";
-					}else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[email]!=''){
-						$condition = "s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.email LIKE '$_REQUEST[email]%'";
-					}else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[email]!=''){
-						$condition = "s.student_id LIKE  '$_REQUEST[stid]%' AND s.email LIKE '%$_REQUEST[email]%'";
+					else
+					{	$year_now=date("Y");
+						$cond="YEAR(m.dated) = $year_now";
 					}
-					//End 2.
-					
-					//3.
-					else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[email]==''){
-						$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.student_id LIKE '$_REQUEST[stid]%' AND s.student_mobile LIKE '$_REQUEST[mobile]%'";
-					}else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[email]!=''){
-						$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.student_id LIKE '$_REQUEST[stid]%' AND s.email LIKE '$_REQUEST[email]%'";
-					}else if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[email]!=''){
-						$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.email LIKE '$_REQUEST[email]%'";
-					}else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[email]!=''){
-						$condition = "s.student_id LIKE '$_REQUEST[stid]%' AND s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.email LIKE '$_REQUEST[email]%'";
-					}
-					//End 3.
-					
-					//4.
-					else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[email]!=''){
-						$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.student_first_name LIKE '$_REQUEST[fname]%') AND s.student_id LIKE  '$_REQUEST[stid]%' AND s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.email LIKE '$_REQUEST[email]%'";
-					}else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[email]==''){
-						$condition = "s.id>'0'";
-					}
-					//End 4.
 					
 					$i = 1;
 					$color = "#ECECFF";
 					
 					//Loop start
 					//SELECT * FROM sms_history WHERE centre_id='2' and id in (select parent_id from sms_history_dtls where student_id > 0) order by id 
-					foreach($dbf->fetchOrder('sms_history m,sms_history_dtls d,student s', $condition." And m.id=d.parent_id And s.id=d.student_id And d.student_id > '0' And s.centre_id='$_SESSION[centre_id]'","m.id","m.*") as $val){
+					#$dbf->fetchOrder('sms_history m,sms_history_dtls d,student s', $condition." And m.id=d.parent_id And s.id=d.student_id And d.student_id > '0' And s.centre_id='$_SESSION[centre_id]'","m.id","m.*")
+					$query=$dbf->genericQuery("
+												SELECT *
+												FROM sms_history m
+												INNER JOIN sms_history_dtls d ON m.id=d.parent_id
+												INNER JOIN student s ON s.id=d.student_id
+												WHERE ".$cond."
+												AND s.centre_id='$_SESSION[centre_id]'
+												ORDER BY m.dated DESC
+												LIMIT 0,30
+											");
+					foreach($query as $val){
 						
 						$num_user=$dbf->countRows('sms_history_dtls',"parent_id='$val[id]'");	
 						//Get user name

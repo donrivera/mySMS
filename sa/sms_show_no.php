@@ -25,8 +25,8 @@ if($_SESSION[lang] == "EN"){ ?>
 	foreach($dbf->fetchOrder("student","family_name LIKE '$_REQUEST[fname]%' OR family_name1 LIKE '$_REQUEST[fname]%' OR first_name LIKE '$name%' OR student_first_name LIKE '$name%' OR first_name1 LIKE '$name%' And centre_id='$_SESSION[centre_id]'") as $val){
 ?>
   <tr>
-    <td width="196" align="left" valign="top" style="padding-left:5px; font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:bold;"><a href="sms_f.php?number=<?php echo $val["student_mobile"];?>" style="text-decoration:none;" ><?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?></a></td>
-    <td width="148" align="left" valign="top" style="padding-left:5px;"><a href="sms_f.php?number=<?php echo $val["student_mobile"];?>" style="text-decoration:none;"><?php echo $val["student_mobile"];?></a></td>
+    <td width="196" align="left" valign="top" style="padding-left:5px; font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight:bold;"><a href="sms_f.php?number=<?php echo $val["student_mobile"];?>&id=<?php echo $val["id"];?>" style="text-decoration:none;" ><?php echo $dbf->printStudentName($val['id']);?></a></td>
+    <td width="148" align="left" valign="top" style="padding-left:5px;"><a href="sms_f.php?number=<?php echo $val["student_mobile"];?>&id=<?php echo $val["id"];?>" style="text-decoration:none;"><?php echo $val["student_mobile"];?></a></td>
   </tr>
   <?php	} ?>
 </table>

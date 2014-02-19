@@ -879,7 +879,7 @@ if($_REQUEST['action']=='search')
 	$res_en = $dbf->strRecordID("student_enroll","*","course_id='$course_id' And student_id='$student_id'");	
 	
 	$string="level_complete='$_POST[level]',other_amt='$_POST[otheramt]',othertext='$_POST[othertext]',payment_type='$_POST[ptype]',web='$_POST[web]',discount='$_POST[discount]',invoice_note='$invoice_note'";
-	#$dbf->updateTable("student_enroll",$string,"course_id='$course_id' And student_id='$student_id'");
+	$dbf->updateTable("student_enroll",$string,"course_id='$course_id' And student_id='$student_id'");
 	
 	# Check Opening balance
 	$is_opeing = $dbf->countRows("student_fees", "course_id='$course_id' And student_id='$student_id' And type='advance'");

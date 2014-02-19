@@ -16,7 +16,7 @@ require '../I18N/Arabic.php';
 //Object initialization
 $dbf = new User();
 $Arabic = new I18N_Arabic('Transliteration');
-
+$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 include_once '../includes/language.php';
 
 //Important below 2 lines
@@ -24,8 +24,8 @@ header("Content-type: application/vnd.ms-word");
 header("Content-Disposition: attachment; Filename=report_student_ledger_report.doc");
 ?>	
 <!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
-<link rel="stylesheet" type="text/css" href="glowtabs.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!--<link rel="stylesheet" type="text/css" href="glowtabs.css" />-->
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
           
           <tr>
@@ -83,7 +83,7 @@ header("Content-Disposition: attachment; Filename=report_student_ledger_report.d
                 <td width="25%" align="left" valign="middle">
                   <?php
 					foreach($dbf->fetchOrder('student',"id='$_REQUEST[student_id]'","first_name") as $valc) {
-						echo $valc[first_name]." ".$Arabic->en2ar($dbf->StudentName($valc["id"]));
+						echo $dbf->printStudentName($valc['id']);
 					}
 				   ?></td>
                 <td width="14%" align="left" valign="middle">&nbsp;</td>

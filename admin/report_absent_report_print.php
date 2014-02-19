@@ -15,7 +15,8 @@ include_once '../includes/class.Main.php';
 //Object initialization
 $dbf = new User();
 include_once '../includes/language.php';
-?>	
+?>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
 <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#AAAAAA"class="tablesorter" id="sort_table" style="border-collapse:collapse;">
     <thead>
     <tr class="logintext">
@@ -33,49 +34,50 @@ include_once '../includes/language.php';
     <?php
         $i = 1;
         //Get Number of Rows
-        $num=$dbf->countRows('student');
-        
-        //loop start
-        foreach($dbf->fetchOrder('student',"","first_name") as $val) {
-        
-        //Get Course
-        $g = $dbf->strRecordID("student_group_dtls","*","student_id='$val[id]'");
-        $course = $dbf->strRecordID("course","*","id='$g[course_id]'");
-        $group_dtls = $dbf->strRecordID("student_group","*","id='$g[parent_id]'");
-        //Get Total Absent
-        $res_max = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$val[id]' AND (shift1='A' OR shift2='A')");
-        $countid = $res_max["COUNT(id)"];
-        
-        //Get Last Attendance
-        $res_max = $dbf->strRecordID("ped_attendance","MAX(id)","student_id='$val[id]' AND (shift1='A' OR shift2='A')");
-        $maxid = $res_max["MAX(id)"];
-        
-        $reslast = $dbf->strRecordID("ped_attendance","*","id<'$maxid' AND student_id='$val[id]' AND (shift1='X' OR shift2='X')");
-        $resp = $dbf->strRecordID("ped_attendance","*","student_id='$val[id]' AND (shift1='X' OR shift2='X')");
-        
-        //Get Name Of Groups
-        $res = $dbf->strRecordID("student","*","id='$resp[student_id]'");
-        $res2 = $dbf->strRecordID("common","*","id='$resp[group_id]'");
-        
-        //Get Name Of Teacher
-        $res3 = $dbf->strRecordID("teacher","*","id='$resp[teacher_id]'");
+		$num=$dbf->countRows('student', $condition);					
+		//loop start
+		foreach($dbf->fetchOrder('student', $condition ,"first_name") as $val) {
+					
+		//Get Course
+		$g = $dbf->strRecordID("student_group_dtls","*","student_id='$val[id]'");
+					
+		$course = $dbf->strRecordID("course","*","id='$g[course_id]'");
+					
+		//Get Total Absent
+		$res_max = $dbf->strRecordID("ped_attendance","COUNT(id)","group_id='$g[parent_id]' AND student_id='$val[id]' AND (shift1='A' OR shift2='A' OR shift3='A' OR shift4='A' OR shift5='A' OR shift6='A' OR shift7='A' OR shift8='A' OR shift9='A')");
+		$countid = $res_max["COUNT(id)"];
+					
+		//Get Last Attendance
+		$res_max = $dbf->strRecordID("ped_attendance","MAX(id)","group_id='$g[parent_id]' AND student_id='$val[id]' AND (shift1='A' OR shift2='A' OR shift3='A' OR shift4='A' OR shift5='A' OR shift6='A' OR shift7='A' OR shift8='A' OR shift9='A')");
+		$maxid = $res_max["MAX(id)"];
+					
+		$reslast = $dbf->strRecordID("ped_attendance","*","group_id='$g[parent_id]' AND id<'$maxid' AND student_id='$val[id]' AND (shift1='X' OR shift2='X' OR shift3='X' OR shift4='X' OR shift5='X' OR shift6='X' OR shift7='X' OR shift8='X' OR shift9='X')");
+					
+		$resp = $dbf->strRecordID("ped_attendance","*","group_id='$g[parent_id]' AND student_id='$val[id]' AND (shift1='X' OR shift2='X' OR shift3='X' OR shift4='X' OR shift5='X' OR shift6='X' OR shift7='X' OR shift8='X' OR shift9='X')");
+					
+		//Get Name Of Groups
+		$res = $dbf->strRecordID("student","*","id='$resp[student_id]'");
+		$res2 = $dbf->strRecordID("student_group","group_name,teacher_id,start_date","id='$g[parent_id]'");
+					
+		//Get Name Of Teacher
+		$res3 = $dbf->strRecordID("teacher","*","id='$res2[teacher_id]'");
         
         if($countid>0) {
         ?>
     <tr>
       <td height="25" align="center" valign="middle" bgcolor="#F8F9FB" class="contenttext">&nbsp;</td>
-      <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $val[first_name];?></td>
-      <td align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $course[name];?></td>
-      <td align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $group_dtls[group_name];?></td>
+      <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $dbf->printStudentName($val[id]);?></td>
+      <td align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo (empty($course[name])?'N/A':$course[name]);?></td>
+      <td align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo (empty($res2[group_name])?'N/A':$res2[group_name]);?></td>
       <td align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $res3[name];?></td>
       <td align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $res[student_mobile];?></td>
       <td align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;"><?php echo $res[email];?></td>
       <?php
-      $last = '';
-      if($reslast["unit"] > 0)
-      {
-            $last = "Unit No (".$reslast["unit"].") ,". date('d/m/Y',strtotime($reslast[dated]));
-      }
+		if($reslast["unit"] > 0)
+		{	#"Unit(".$reslast["unit"].") ,".
+			$last_attend=$reslast["attend_date"];
+			$last = date('d/m/Y',strtotime($last_attend));
+		}else{$last= date('d/m/Y',strtotime($res2["start_date"]));}
       ?>
       <td align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="padding-left:5px;"><?php echo $last;?></td>
       <td width="11%" align="center" valign="middle" bgcolor="#F8F9FB"><span class="contenttext" style="padding-left:5px;"><?php echo $countid;?></span></td>

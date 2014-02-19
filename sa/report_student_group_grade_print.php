@@ -8,6 +8,7 @@ include_once '../includes/class.Main.php';
 $dbf = new User();
 include_once '../includes/language.php';
 ?>	
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#999999" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
       <tr>
         <td>&nbsp;</td>
@@ -46,18 +47,30 @@ include_once '../includes/language.php';
           <?php					
             $i = 1;
             $num=$dbf->countRows('grade');
-            foreach($dbf->fetchOrder('student_course',"student_id='$res[id]'","id DESC") as $val) {
+            foreach($dbf->fetchOrder('student_course',"student_id='$res[id]'","course_id") as $val) {
             $res_course = $dbf->strRecordID("course","*","id='$val[course_id]'");
+			if($res_course[name] !='') 
+			{
+						
+					//Get percentage
+					$res_per = $dbf->strRecordID("teacher_progress_certificate","*","course_id='$val[course_id]' And student_id='$_REQUEST[student_id]'");					
+					$mark = $res_per[final_percent];
+										
+					//Get Average
+					$grade = $dbf->strRecordID("grade","*","(tto>='$mark' And frm<='$mark')");
+					$grade_name = $grade[name];
             ?>
-          <tr>
-            <td height="25" align="center" valign="middle" bgcolor="#F8F9FB" class="contenttext">&nbsp;</td>
-            <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="padding-left:5px;"><?php echo $dbf->printStudentName($res_course[id]);?></td>
-            <td align="center" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="padding-left:5px;">&nbsp;</td>
-            <?php
-              $i = $i + 1;
-              }
-              ?>
-          </tr>
+			<tr>
+                <td height="25" align="center" valign="middle" bgcolor="#F8F9FB" class="contenttext">&nbsp;</td>
+                <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" class="mycon" style="padding-left:5px;"><?php echo $res_course[name];?></td>
+                <td align="center" valign="middle" bgcolor="#F8F9FB" class="mycon" style="padding-left:5px;"><?php echo $mark;?>%</td>
+                <td align="center" valign="middle" bgcolor="#F8F9FB" class="mycon" style="padding-left:5px;"><?php echo $grade_name;?></td>
+                <?php
+			}
+				$i = $i + 1;
+				}
+				?>
+             </tr>
           <?php
             if($num==0)
             {

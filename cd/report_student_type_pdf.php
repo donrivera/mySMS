@@ -21,12 +21,20 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0" style="b
         <td width="18%" align="left" valign="middle" bgcolor="#CDCDCD"><span id="result_box" lang="ar" xml:lang="ar">'.STUDENT_ADVISOR_SEARCH_EMAIL.'</span></td>
         <td width="13%"  align="center" valign="middle" bgcolor="#CDCDCD"><span id="result_box" lang="ar" xml:lang="ar">Group Name</span></td>
       </tr>';
-	$query=$dbf->genericQuery("	SELECT s.id,sg.group_name
+	$query=$dbf->genericQuery("	SELECT s.id,sg.group_name,sg.start_date,sg.end_date,sg.group_start_time,sg.group_end_time
 												FROM student s
 												INNER JOIN student_type stype ON stype.student_id = s.id
 												INNER JOIN common c ON c.id = stype.type_id
 												INNER JOIN student_group_dtls sgdtls ON sgdtls.student_id=s.id
-												INNER JOIN student_group sg ON sg.id=sgdtls.parent_id
+												INNER JOIN (SELECT 
+																	DISTINCT(group_name),
+																	group_start_time,
+																	group_end_time,
+																	start_date,
+																	end_date,
+																	centre_id,
+																	id 
+															FROM student_group LIMIT 1) sg ON sg.id=sgdtls.parent_id
 												WHERE sg.centre_id='$_SESSION[centre_id]' AND c.id ='$_REQUEST[teacher]'
 											");
 					/*
@@ -90,17 +98,17 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0" style="b
 		
 	$html.='<tr bgcolor="'.$color.'">
 	  <td height="25" align="center" valign="middle" class="contenttext">'.$i.'</td>
-	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val_student[first_name].'&nbsp;'.$val_student[father_name].'&nbsp;'.$val_student[family_name].'&nbsp;('.$val_student[first_name1].'&nbsp;'.$val_student[father_name1].'&nbsp;'.$val_student[grandfather_name1].'&nbsp;'.$val_student[family_name1].')</span></td>
+	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($val_student['id']).'</span></td>
 	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val_student["student_mobile"].'</td>
 	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val_student["email"].'</td>
-	 <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val[group_name].'</span></td>
+	 <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val['group_name']."&nbsp;,&nbsp;".date('d/m/Y',strtotime($val['start_date']))."&nbsp;-&nbsp;".date('d/m/Y',strtotime($val['end_date']))."&nbsp;,&nbsp;".$dbf->printClassTimeFormat($val[group_start_time],$val[group_end_time]).'</span></td>
 	 
   </tr>';
 	  $i = $i + 1;
 	  }
 	$html.='</table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_student_statuses.pdf", 'D');
 	exit;

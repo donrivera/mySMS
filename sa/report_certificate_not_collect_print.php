@@ -8,7 +8,7 @@ include_once '../includes/class.Main.php';
 $dbf = new User();
 include_once '../includes/language.php';
 ?>	
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
 <thead>
   <tr class="logintext">
@@ -27,20 +27,21 @@ include_once '../includes/language.php';
     $color = "#ECECFF";
     
     if($_REQUEST[start_date]!='' && $_REQUEST[end_date]!=''){
-        $cond="certificate_collect='0' And (enroll_date BETWEEN '$_REQUEST[start_date]' And '$_REQUEST[end_date]') And centre_id='$_SESSION[centre_id]'";
-    }else{
-        $cond="certificate_collect='0' And centre_id='$_SESSION[centre_id]'";
-    }
+		$cond="e.group_id=s.id AND e.certificate_collect='0' And (e.enroll_date BETWEEN '$_REQUEST[start_date]' And '$_REQUEST[end_date]') And e.centre_id='$_SESSION[centre_id]'";
+	}else{
+			$cond="e.group_id=s.id AND e.certificate_collect='0' And e.centre_id='$_SESSION[centre_id]'";
+	}
 
-    //Get number of rows
-    $num=$dbf->countRows('student_enroll', $cond,"");
-    
-    //Get currency
-    $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
-    
-    //Loop start
-    foreach($dbf->fetchOrder('student',"centre_id='$_SESSION[centre_id]'","","") as $val){
-        $num_dtls=$dbf->countRows('student_enroll',"certificate_collect='0' And student_id='$val[id]'");
+	//Get number of rows
+	$num=$dbf->countRows('student_enroll e,student_group s',$cond." AND s.status='Completed'");
+				
+	//Get currency
+	$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
+				
+	//Loop start
+	foreach($dbf->fetchOrder('student_enroll e,student_group s',$cond." AND s.status='Completed'","","") as $val1){
+        $val = $dbf->strRecordID("student","*","id='$val1[student_id]'");
+		$num_dtls=$dbf->countRows('student_enroll',"certificate_collect='0' And student_id='$val[id]'");
         if($num_dtls>0) {
     ?>
   <tr bgcolor="<?php echo $color;?>">

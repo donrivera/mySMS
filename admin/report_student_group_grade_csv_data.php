@@ -8,6 +8,7 @@ include_once '../includes/class.Main.php';
 $dbf = new User();
 include_once '../includes/language.php';
 ?>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
 <table width="500" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
         <td>&nbsp;</td>
@@ -43,7 +44,7 @@ include_once '../includes/language.php';
             $i = 1;
             
             $num=$dbf->countRows('grade');
-            foreach($dbf->fetchOrder('student_group_dtls',"student_id='$res[id]'","id DESC") as $val) {
+            foreach($dbf->fetchOrder('student_group_dtls',"student_id='$res[id]'","course_id") as $val) {
             
             $res_course = $dbf->strRecordID("course","*","id='$val[course_id]'");					
             if($res_course[name] !='') {

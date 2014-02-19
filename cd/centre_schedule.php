@@ -248,11 +248,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$psy = $sy;
 						$psm = $sm;
 						$psd = $sd;
-						
+						$ppsm=(strlen($psm)==1?'0'.$psm:$psm);
+						$ppsd=(strlen($psd)==1?'0'.$psd:$psd);
 						//Ending date of the group
 						$pey = $sy;
 						$pem = $sm;
 						$ped = $sd;
+						$ppem=(strlen($pem)==1?'0'.$pem:$pem);
+						$pped=(strlen($ped)==1?'0'.$ped:$ped);
 					}else{
 						$res_min = $dbf->strRecordID("ped_units","MIN(dated)","group_id='$val[id]'");
 						
@@ -261,13 +264,16 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$psy = date('Y',strtotime($res_min["MIN(dated)"]));
 						$psm = date('m',strtotime($res_min["MIN(dated)"]))-1;
 						$psd = date('d',strtotime($res_min["MIN(dated)"]));
-						
+						$ppsm=(strlen($psm)==1?'0'.$psm:$psm);
+						$ppsd=(strlen($psd)==1?'0'.$psd:$psd);
 						$res_min1 = $dbf->strRecordID("ped_units","MAX(dated)","group_id='$val[id]'");						
 						
 						//Ending date of the group
-						$pey = date('Y',strtotime($res_min1["MAX(dated)"]));echo "<BR/>";
-						$pem = date('m',strtotime($res_min1["MAX(dated)"]))-1;echo "<BR/>";
-						$ped = date('d',strtotime($res_min1["MAX(dated)"]));echo "<BR/>";
+						$pey = date('Y',strtotime($res_min1["MAX(dated)"]));
+						$pem = date('m',strtotime($res_min1["MAX(dated)"]))-1;
+						$ped = date('d',strtotime($res_min1["MAX(dated)"]));
+						$ppem=(strlen($pem)==1?'0'.$pem:$pem);
+						$pped=(strlen($ped)==1?'0'.$ped:$ped);
 					}
 					
 					$smonth = $sm + 1;
@@ -288,18 +294,22 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					*/
 					$a =$a.','. '
 								{
-									id: 1, name: "'.$val[group_name].' Start:'.date('d/M/Y',strtotime($val[start_date])).'",
+									id: 1, name: "'.$val[group_name].' <br/>'.$timeSlot.'",
 									series: [
-												{	name:"End : '.date('d/M/Y',strtotime($val[end_date])).'<br>'.$timeSlot.'", 
+												{	name:"Start: '.date('d/M/Y',strtotime($val[start_date])).'<br>End : '.date('d/M/Y',strtotime($val[end_date])).'", 
 													title: "'.$title.'",
 													start: new Date('.$sy.','.$ssm.','.$ssd.'),
 													end: new Date('.$ey.','.$eem.','.$eed.'),
 													color: "#f7c89a"
 												},
-												
+												{	name:"Attendance:", 
+													title: "'.$title.'",
+													start: new Date('.$psy.','.$ppsm.','.$ppsd.'),
+													end: new Date('.$pey.','.$ppem.','.$pped.'),
+													color: "#FFF000"
+												}
 											]	
 								}';
-					
 				}
 				$a='['.substr($a,1).']';
 				?>

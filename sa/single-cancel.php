@@ -172,7 +172,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr>
                     <td width="25%" height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?> :</td>
                     <td width="75%" align="left" valign="middle" class="mytext">
-						<?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";?>
+						<?php echo $dbf->printStudentName($student[id]);?>
 					</td>
                   </tr>
                   <?php if($student["student_id"] > 0){?>
@@ -255,7 +255,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				  	 $num=$dbf->countRows("student_cancel","student_id='$student_id'");
 				  	  foreach($dbf->fetchOrder("student_cancel","student_id='$student_id'") as $valcancel) {
 					  $res_student = $dbf->strRecordID("student","*","id='$valcancel[student_id]'");
-					  $dtls = $dbf->strRecordID("student_group_dtls","*","student_id='$valcancel[student_id]'");
+					  $dtls = $dbf->strRecordID("student_group_dtls","*","student_id='$valcancel[group_id]'");
+					  
 					  $group = $dbf->strRecordID("student_group","*","id='$dtls[parent_id]'");
 					  
 				  ?>

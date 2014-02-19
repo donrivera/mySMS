@@ -205,7 +205,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               
                 <td width="3%" align="center" valign="middle" class="contenttext"><?php echo $i;?></td>
                 <td width="9%" align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[dated];?></td>
-				  <td width="31%" align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $res[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res["id"]));?></td>
+				  <td width="31%" align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $dbf->printStudentName($res["id"]);?></td>
 				    <td width="39%" align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[comments];?></td>
 				    <td width="6%" align="center" valign="middle"><?php if($val["status"]==1) { ?>
 				      <a href="student_appoint_process.php?action=block&amp;id=<?php echo $val[id];?>"><img src="../images/tick.png" width="16" height="16" border="0" title="Click to de-active the User." /></a>

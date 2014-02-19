@@ -10,19 +10,19 @@ include_once '../includes/language.php';
 $dbf = new User();
 
 ini_set('memory_limit', '-1');
-
+$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 $centre_id = $_SESSION["centre_id"];
-
+$start_date = $_REQUEST["start_date"];
+$end_date = $_REQUEST["end_date"];
 	$html = '<table width="600" border="0" align="center" cellpadding="0" cellspacing="0">
 			  <tr>
 				<td width="12%" height="30" align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.ADMIN_VIEW_GROUP_SIZE_CENTRE.'</span>: &nbsp;</td>
 				<td width="22%" align="left" valign="middle">';
-					foreach($dbf->fetchOrder('centre',"","name") as $valc) {
-					if($valc["id"]==$_SESSION["centre_id"]){
-						echo $valc[name];
+					foreach($dbf->fetchOrder('centre',"","name") as $valc) 
+					{
+						if($valc["id"]==$centre_id){$centre_name=$valc[name];}
 					}
-					}
-                $html.='</td>
+                $html.=$centre_name.'</td>
 				<td width="12%" align="right" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.ADMIN_REPORT_TEACHER_LEAVE_REPORT_FROM.'</span>: &nbsp;</td>
 				<td width="20%" align="left" valign="middle">'.$_REQUEST[start_date].'</td>
 				<td width="6%" align="right" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.ADMIN_REPORT_TEACHER_LEAVE_REPORT_TO.'</span> : &nbsp;</td>
@@ -189,10 +189,11 @@ $centre_id = $_SESSION["centre_id"];
 					foreach($dbf->fetchOrder('common',"type='payment type'","id DESC") as $valpay) {						
 						
 						# it is sum amount from fees structures 
-						$amts = $dbf->strRecordID("student_fees","SUM(paid_amt)","payment_type='$valpay[id]' And centre_id='$centre_id' And (paid_date BETWEEN '$start_date' And '$end_date')");
-						$amts = $amts["SUM(paid_amt)"];
+						#$amts = $dbf->strRecordID("student_fees","SUM(paid_amt)","payment_type='$valpay[id]' And centre_id='$centre_id' And (paid_date BETWEEN '$start_date' And '$end_date')");
+						#$amts = $amts["SUM(paid_amt)"];
+						$amts_type=$dbf->getDataFromTable("student_fees", "SUM(paid_amt)", "payment_type='$valpay[id]' And (paid_date BETWEEN '$start_date' And '$end_date')");
 						
-						$total = $total + $amts;
+						$total = $total + $amts_type;
 						
 						# it is sum amount from student enrolled table (first payment or initial payment)
 						$amts_ob = $dbf->strRecordID("student_enroll","SUM(ob_amt)","payment_type='$valpay[id]' And centre_id='$centre_id' And (payment_date BETWEEN '$start_date' And '$end_date')");
@@ -202,7 +203,7 @@ $centre_id = $_SESSION["centre_id"];
 						
                       $html.='<tr class="mymenutext">
                         <td width="51%" align="center" valign="middle">'.$valpay["name"].'</td>
-                        <td width="49%" align="center" valign="middle" class="pedtext">'.$amts.'&nbsp;'.$res_currency[symbol].'</td>
+                        <td width="49%" align="center" valign="middle" class="pedtext">'.(empty($amts_type)?0:$amts_type).'&nbsp;'.$res_currency[symbol].'</td>
                       </tr>';
                       }
                       $html.='<tr class="mymenutext">
@@ -216,12 +217,13 @@ $centre_id = $_SESSION["centre_id"];
                     <td width="27%" align="center" valign="middle" class="pedtext">';
 					
 					$unit = 0;
-					foreach($dbf->fetchOrder('student_group g,ped_attendance a',"g.id=a.group_id And g.centre_id='$centre_id' And (a.attend_date BETWEEN '$start_date' AND '$end_date')","","a.unit","a.unit") as $valpay) {
+					foreach($dbf->fetchOrder('student_group g,ped_attendance a',"g.id=a.group_id And g.centre_id='$centre_id' And (a.attend_date BETWEEN '$start_date' AND '$end_date')","","a.unit","a.unit") as $valpay) 
+					{
 						$unit = $unit + 1;
 					}
-					$unit;
 					
-					$html.='</td>
+					
+					$html.=$unit.'</td>
                   </tr>
                   <tr>
                     <td>&nbsp;</td>
@@ -252,7 +254,7 @@ $centre_id = $_SESSION["centre_id"];
                   </tr>
                 </table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_management.pdf", 'D');
 	exit;

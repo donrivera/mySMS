@@ -68,7 +68,8 @@ $(function()
 						{ 
 							0:{sorter: false}, 
 							1:{sorter: false},
-							2:{sorter: "text"},
+							2:{sorter:false},
+							//2:{sorter: "text"},
 							3:{sorter: false},
 							4:{sorter: false}, 
 							5:{sorter: false}, 

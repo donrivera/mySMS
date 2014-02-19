@@ -24,12 +24,12 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0"  borderc
 					$cond="(frm <= '$_REQUEST[end_date]' And tto >= '$_REQUEST[start_date]')";
 				}else if($_REQUEST[teacher]!='' && $_REQUEST[start_date]=='' && $_REQUEST[end_date]==''){
 					$cond="teacher_id='$_REQUEST[teacher]'";
-				}else{
-					$cond="";
 				}
+				else{$cond="";}
 				$i = 1;
-				$num=$dbf->countRows('teacher_vacation',$cond);					
-				foreach($dbf->fetchOrder('teacher_vacation',$cond,"id DESC") as $val) {					
+				$color="#ECECFF";
+				$num=$dbf->countRows('teacher_vacation',$cond);
+				foreach($dbf->fetchOrder('teacher_vacation',$cond,"id DESC") as $val) {
 				$res = $dbf->strRecordID("teacher","*","id='$val[teacher_id]'");
 			$html.='<tr>
 			  <td height="25" align="center" valign="middle" bgcolor="#F8F9FB" style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;">'.$i.'</td>
@@ -46,7 +46,7 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0"  borderc
 			$html.='</tr>
 		</table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_teacher_leave_report.pdf", 'D');
 	exit;

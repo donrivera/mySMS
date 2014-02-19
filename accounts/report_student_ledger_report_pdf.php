@@ -25,7 +25,7 @@ $html = '<table width="100%" border="0" cellspacing="0" cellpadding="0">
 			  </tr>
 			  <tr>
 				<td width="10%" height="25" align="right" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.ADMIN_DASHBOARD_STUDENT.'</span> :&nbsp;</td>
-				<td width="35%" align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$valc["first_name"].' '.$Arabic->en2ar($dbf->StudentName($valc["id"])).'</span></td>
+				<td width="35%" align="left" valign="middle"><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($valc['id']).'</span></td>
 				<td width="4%" align="left" valign="middle">&nbsp;</td>
 				<td width="16%" align="right" valign="middle" >&nbsp;</td>
 				<td width="6%" align="center" valign="middle">&nbsp;</td>
@@ -40,7 +40,7 @@ $html = '<table width="100%" border="0" cellspacing="0" cellpadding="0">
 			foreach($dbf->fetchOrder('student_group m,student_group_dtls d', "m.id=d.parent_id And d.student_id='$_REQUEST[student_id]'" ,"m.id","m.start_date,m.end_date,m.id,d.*") as $valfee) {
 				$enroll = $dbf->strRecordID("student_enroll", "*", "student_id='$valfee[student_id]' And course_id='$valfee[course_id]'");
 				$course = $dbf->strRecordID("course", "*", "id='$valfee[course_id]'");
-				$course_fees = $dbf->getDataFromTable("course_fee","fees","id='$valfee[fee_id]'");
+				$course_fees = $dbf->getDataFromTable("course_fee","fees","id='$enroll[fee_id]'");
 				
 				$cr_tot = $course_fees + $enroll["other_amt"];
 				$dr_tot = $enroll["discount"];
@@ -200,7 +200,7 @@ $html.='<span id="result_box" lang="ar" xml:lang="ar">'.$enroll["discount"].'&nb
 		  </tr>	  
 		</table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_student_ledger_report.pdf", 'D');
 	exit;

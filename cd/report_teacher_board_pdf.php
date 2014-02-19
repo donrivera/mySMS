@@ -31,7 +31,7 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 					$grp = $dbf->strRecordID("common","*","id='$val[group_id]'");
 					$std = $dbf->strRecordID("student_group_dtls","COUNT(student_id)","parent_id='$val[id]'");
 					$room = $dbf->strRecordID("centre_room","*","id='$val[room_id]'");
-					$num1=$dbf->countRows('student_group_dtls',"parent_id='$val[id]'");
+					$num1=$dbf->countRows('student_group_dtls',"parent_id='$val[id]'"); 
 			$html.='<tr>
 			  <td height="25" align="center" valign="middle" bgcolor="#F8F9FB">'.$i.'</td>
 			  <td height="25" align="left" valign="middle" bgcolor="#F8F9FB">'.$res["name"].'</td>

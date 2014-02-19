@@ -54,7 +54,7 @@ if($status_id > 0){
 			$res_student = $dbf->strRecordID("student", "*", "id='$move[student_id]'");
 			if($res_student['first_name'] != ''){
 			?>
-            <option value="<?php echo $res_student['id'];?>"><?php echo $res_student['first_name'];?> <?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></option>
+            <option value="<?php echo $res_student['id'];?>"><?php echo $dbf->printStudentName($res_student["id"]);?></option>
             <?php
 			}
 		}else if($_REQUEST['opval']=="Waiting - Payment Pending" || $_REQUEST['opval']=="Enrolled - Payment Pending" || $_REQUEST['opval']=="Active - Payment Pending" || $_REQUEST['opval']=="On Hold - Payment Pending" || $_REQUEST['opval']=="Cancelled - Payment Pending" || $_REQUEST['opval']=="Completed - Payment Pending"){
@@ -64,7 +64,7 @@ if($status_id > 0){
 				$res_student = $dbf->strRecordID("student","*","id='$move[student_id]' And sms_status='1' And centre_id='$_SESSION[centre_id]'");
 				if($res_student['first_name'] != ''){
 				?>
-                <option value="<?php echo $res_student['id'];?>"><?php echo $res_student['first_name'];?> <?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></option>
+                <option value="<?php echo $res_student['id'];?>"><?php $dbf->printStudentName($res_student["id"]);?></option>
                 <?php
 				}
 			}
@@ -72,7 +72,7 @@ if($status_id > 0){
 			$res_student = $dbf->strRecordID("student","*","id='$move[student_id]' And sms_status='1' And centre_id='$_SESSION[centre_id]'");
 			if($res_student['first_name'] != ''){
 			?>
-            <option value="<?php echo $res_student['id'];?>"><?php echo $res_student['first_name'];?> <?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></option>
+            <option value="<?php echo $res_student['id'];?>"><?php echo $dbf->printStudentName($res_student["id"]);?></option>
             <?php
 			}
 		}
@@ -86,7 +86,7 @@ if($status_id > 0){
     <?php
 	foreach($dbf->fetchOrder('student',"centre_id='$_SESSION[centre_id]' And student_mobile<>'' And first_name <> ''","","","") as $move){
 	?>
-	<option value="<?php echo $move['id'];?>"><?php echo $move['first_name'];?> <?php echo $Arabic->en2ar($dbf->StudentName($move["id"]));?></option>
+	<option value="<?php echo $move['id'];?>"><?php echo $dbf->printStudentName($move["id"]);?></option>
 	<?php } ?>
 </select>
 <?php } ?>

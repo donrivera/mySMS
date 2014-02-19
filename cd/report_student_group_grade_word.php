@@ -14,8 +14,7 @@ header("Content-Disposition: attachment; Filename=report_student_group_grade.doc
 ?>
 
 <!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
-	
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <table width="500" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td>&nbsp;</td>
@@ -30,7 +29,7 @@ header("Content-Disposition: attachment; Filename=report_student_group_grade.doc
      $res = $dbf->strRecordID("student","*","id='$_REQUEST[student_id]'");			
      ?>
       <tr>
-        <td align="left" valign="middle" class="lable1"><?php echo constant("STUDENT_ADVISOR_S2_NAME");?> :<?php echo $dbf->printStudentName($res["id"]); ?> </td>
+        <td align="left" valign="middle" class="lable1"><?php echo constant("STUDENT_ADVISOR_S2_NAME");?> :<?php echo $dbf->printStudentName($res[id]); ?> </td>
       </tr>
       <tr>
         <td align="left" valign="middle" class="lable1"><?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_IDNO");?> : <?php echo $res[student_id]; ?> </td>
@@ -51,21 +50,33 @@ header("Content-Disposition: attachment; Filename=report_student_group_grade.doc
             <td width="67%" align="left" valign="middle" bgcolor="#99CC99" class="menutext" ><?php echo ADMIN_REPORT_STUDENT_GROUP_GRADE_COURSENAME?></td>
             <td width="27%" align="center" valign="middle" bgcolor="#99CC99" class="menutext" ><?php echo ADMIN_REPORT_STUDENT_GROUP_GRADE_GRADE?></td>
           </tr>
-          <?php					
+           <?php					
             $i = 1;
             $num=$dbf->countRows('grade');
-            foreach($dbf->fetchOrder('student_course',"student_id='$res[id]'","id DESC") as $val) {
+            foreach($dbf->fetchOrder('student_course',"student_id='$res[id]'","course_id") as $val) {
             $res_course = $dbf->strRecordID("course","*","id='$val[course_id]'");
+			if($res_course[name] !='') 
+			{
+						
+					//Get percentage
+					$res_per = $dbf->strRecordID("teacher_progress_certificate","*","course_id='$val[course_id]' And student_id='$_REQUEST[student_id]'");					
+					$mark = $res_per[final_percent];
+										
+					//Get Average
+					$grade = $dbf->strRecordID("grade","*","(tto>='$mark' And frm<='$mark')");
+					$grade_name = $grade[name];
             ?>
-          <tr>
-            <td height="25" align="center" valign="middle" bgcolor="#F8F9FB" class="contenttext">&nbsp;</td>
-            <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="padding-left:5px;"><?php echo $res_course[name];?></td>
-            <td align="center" valign="middle" bgcolor="#F8F9FB" class="contenttext" style="padding-left:5px;">&nbsp;</td>
-            <?php
-              $i = $i + 1;
-              }
-              ?>
-          </tr>
+			<tr>
+                <td height="25" align="center" valign="middle" bgcolor="#F8F9FB" class="contenttext">&nbsp;</td>
+                <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" class="mycon" style="padding-left:5px;"><?php echo $res_course[name];?></td>
+                <td align="center" valign="middle" bgcolor="#F8F9FB" class="mycon" style="padding-left:5px;"><?php echo $mark;?>%</td>
+                <td align="center" valign="middle" bgcolor="#F8F9FB" class="mycon" style="padding-left:5px;"><?php echo $grade_name;?></td>
+                <?php
+			}
+				$i = $i + 1;
+				}
+				?>
+             </tr>
           <?php
             if($num==0)
             {
@@ -81,5 +92,7 @@ header("Content-Disposition: attachment; Filename=report_student_group_grade.doc
       </tr>
       <tr>
         <td align="center" valign="middle">&nbsp;</td>
-	</tr>
-</table>
+</tr>
+    </table>
+            
+           

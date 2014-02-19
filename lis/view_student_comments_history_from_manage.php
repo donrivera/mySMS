@@ -208,7 +208,7 @@ $count = $res_logout[name]+1; // Set timeout period in seconds
               <tr>
                 <td align="center" valign="middle" bgcolor="#FFFFFF" style="padding-top:10px;"><table width="650" border="1" cellspacing="0" bordercolor="#336699" cellpadding="0">
                   <tr>
-                    <td height="30" align="center" valign="middle" class="loginheading" style="background-image:url(../images/phone-mid.png); "><?php echo $res_student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></td>
+                    <td height="30" align="center" valign="middle" class="loginheading" style="background-image:url(../images/phone-mid.png); "><?php echo $dbf->printStudentName($res_student["id"]);?></td>
                     </tr>
                   </table></td>
               </tr>                   

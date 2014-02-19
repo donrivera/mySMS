@@ -153,7 +153,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <img src="../images/rightarrow.png" width="16" height="16"><?php echo constant("ADMIN_MENU_REPORTS_NOT_ENROLLED");?></td>
                   <td width="7%"><span class="logintext"><?php echo constant("ADMIN_REPORT_STUDENT_NOT_ENROLLED_STATUS");?></span> :</td>
                   <td width="22%" align="left">
-                  <select name="teacher" id="teacher"  style="border:solid 1px; border-color:#FFCC33; height:20px; width:110px;" onChange="javascript:document.frm.action='report_student_type.php',document.frm.submit();">
+                  <select name="teacher" id="teacher"  style="border:solid 1px; border-color:#FFCC33; height:20px; width:200px;" onChange="javascript:document.frm.action='report_student_type.php',document.frm.submit();">
                     <option value=""> Select Status </option>
                     <?php
 						foreach($dbf->fetchOrder('common',"type='Type'","name") as $val1) {	
@@ -187,12 +187,20 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 </tr>
 				</thead>
                 <?php 
-					$query=$dbf->genericQuery("	SELECT s.id,sg.group_name
+					$query=$dbf->genericQuery("	SELECT s.id,sg.group_name,sg.start_date,sg.end_date,sg.group_start_time,sg.group_end_time
 												FROM student s
 												INNER JOIN student_type stype ON stype.student_id = s.id
 												INNER JOIN common c ON c.id = stype.type_id
 												INNER JOIN student_group_dtls sgdtls ON sgdtls.student_id=s.id
-												INNER JOIN student_group sg ON sg.id=sgdtls.parent_id
+												INNER JOIN (SELECT 
+																	DISTINCT(group_name),
+																	group_start_time,
+																	group_end_time,
+																	start_date,
+																	end_date,
+																	centre_id,
+																	id 
+															FROM student_group LIMIT 1) sg ON sg.id=sgdtls.parent_id
 												WHERE sg.centre_id='$_SESSION[centre_id]' AND c.id ='$_REQUEST[teacher]'
 											");
 					/*
@@ -272,7 +280,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php //echo $com["comments"];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php //echo $lead;?></td>
 				  -->
-				  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[group_name];?></td>
+				  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val['group_name']."&nbsp;,&nbsp;".date('d/m/Y',strtotime($val['start_date']))."&nbsp;-&nbsp;".date('d/m/Y',strtotime($val['end_date']))."&nbsp;,&nbsp;".$dbf->printClassTimeFormat($val[group_start_time],$val[group_end_time]);?></td>
                   <?php
 					  $i = $i + 1;
 					  if($color=="#ECECFF"){

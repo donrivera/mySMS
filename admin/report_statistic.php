@@ -159,9 +159,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 			
 				if($_REQUEST[startdate] !='' && $_REQUEST[enddate] !=''){
 					
-					  $cond1="s.status='Completed' And gs.group_id=s.group_id And ((s.start_date >='$_REQUEST[startdate]' AND s.start_date <='$_REQUEST[enddate]') OR (s.end_date >='$_REQUEST[startdate]' AND s.end_date <='$_REQUEST[enddate]'))";
+					  $cond1="s.status='Completed' And gs.group_id=s.group_id And (s.start_date BETWEEN '$_REQUEST[startdate]' AND '$_REQUEST[enddate]' OR s.end_date BETWEEN '$_REQUEST[startdate]' AND '$_REQUEST[enddate]')";
+					  #$cond1="s.status='Completed' And gs.group_id=s.group_id And ((s.start_date >='$_REQUEST[startdate]' AND s.start_date <='$_REQUEST[enddate]') OR (s.end_date >='$_REQUEST[startdate]' AND s.end_date <='$_REQUEST[enddate]'))";
 				}else{
-					$cond1="s.centre_id='$_SESSION[centre_id]'";
+					$cond1="";
 				}
 				
 			   //Get no. of students
@@ -219,6 +220,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                           <td width="47%" height="30" align="left" valign="middle" bgcolor="#FF6600">&nbsp;<?php echo constant("ADMIN_REPORT_STATISTIC_TXT4");?></td>
                           <td width="29%" align="left" valign="middle" bgcolor="#FF6600" ><?php echo constant("ADMIN_REPORT_STATISTIC_STARTDAT");?></td>
                           <td width="24%" align="left" valign="middle" bgcolor="#FF6600" ><?php echo constant("ADMIN_REPORT_STATISTIC_ENDDAT");?></td>
+						  <!--<td width="12%" align="left" valign="middle" bgcolor="#FF6600" ><?php echo "Qty";?></td>-->
                         </tr>
                          <tr>
                           <td colspan="3" align="left" valign="middle" >
@@ -239,12 +241,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							foreach($dbf->fetchOrder('student_group',$cond,"id","") as $val){
 	
 							//Get course name
-							$val_course = $dbf->strRecordID("course","*","id='$val[course_id]'");						
+							$val_course = $dbf->strRecordID("course","*","id='$val[course_id]'");	
+							$qty=$dbf->countRows('student_group_dtls',"parent_id='$val[id]'");							
 						?>
                             <tr class="red_smalltext">
-                              <td width="47%" height="25" align="left" valign="middle">&nbsp; <?php echo $val_course[name]; ?></td>
+                              <td width="47%" height="25" align="left" valign="middle">&nbsp; <?php echo $val[group_name]; ?></td>
                               <td width="29%" align="left" valign="middle">&nbsp; <?php echo $val[start_date]; ?></td>
                               <td width="24%" align="left" valign="middle">&nbsp; <?php echo $val[end_date]; ?></td>
+							  <!--<td width="24%" align="left" valign="middle">&nbsp; <?php echo $qty;?></td>-->
                             </tr>
                         <?php }} ?>                            
                           </table>

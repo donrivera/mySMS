@@ -173,7 +173,7 @@ function show_details(a)
 					$num=$dbf->countRows('student_group',$cond);
 
 					if($num > 0){
-					 foreach($dbf->fetchOrder('student_group',$cond,"id DESC") as $val) {
+					 foreach($dbf->fetchOrder('student_group',$cond,"group_name") as $val) {
 						
 						$res = $dbf->strRecordID("teacher","*","id='$val[teacher_id]'");
 						$grp = $dbf->strRecordID("common","*","id='$val[group_id]'");
@@ -186,7 +186,7 @@ function show_details(a)
                     <span id="plusArrow<?php echo $val[id];?>"><img src="../images/plus.gif" border="0" ></span>
                     </a></td>
                   <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $k; ?></td>
-                  <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[group_name];?> <?php echo $val["group_time"];?>-<?php echo $dbf->GetGroupTime($val["id"]);?></td>
+                  <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dbf->FullGroupInfo($val['id']);?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[start_date];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[end_date];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $std["COUNT(student_id)"];?></td>
@@ -213,7 +213,7 @@ function show_details(a)
 							?>
                           <tr bgcolor="<?php echo $color1;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color1;?>'" style="cursor:pointer;">
                             <td align="center" valign="middle"><?php echo $j; ?></td>
-                          <td height="25" align="left" valign="middle"><?php echo $val_student[first_name];?> <?php echo $Arabic->en2ar($dbf->StudentName($val_student["id"]));?></td>
+                          <td height="25" align="left" valign="middle"><?php echo $dbf->printStudentName($val_student["id"]);?></td>
                           <td align="left" valign="middle"><?php echo $val_student[student_id];?></td>
                           <td align="left" valign="middle"><?php echo $val_student[student_mobile];?></td>
                           <td align="left" valign="middle"><?php echo $val_student[email];?>&nbsp;&nbsp;</td>

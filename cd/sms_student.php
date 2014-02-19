@@ -5,7 +5,8 @@ include_once '../includes/class.Main.php';
 require '../I18N/Arabic.php';
 include 'application_top.php';
 include_once '../includes/language.php';
-
+unset($_SESSION['sms_student_id']);
+unset($_SESSION['email_student_id']);
 $dbf = new User();
 $Arabic = new I18N_Arabic('Transliteration');
 

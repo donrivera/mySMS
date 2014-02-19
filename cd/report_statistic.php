@@ -167,7 +167,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 			   //Get no. of students
 				$val_student = $dbf->strRecordID("student_group s,group_size gs","SUM(gs.units)",$cond1);
 				$val_student1 = $dbf->strRecordID("student_group s,group_size gs","*",$cond1);
-				$val_no_course = $dbf->strRecordID("student_group","COUNT(course_id)","course_id='$val_student1[course_id]'");
+				$val_no_course = $dbf->strRecordID("student_group","COUNT(course_id)","course_id='$val_student1[course_id]' AND status='Completed'");
 	
 				$val_std= $dbf->strRecordID("student","*","id='$val_student[student_id]' and level_complete='1'");
 				?>       
@@ -242,7 +242,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							$val_course = $dbf->strRecordID("course","*","id='$val[course_id]'");						
 						?>
                             <tr class="red_smalltext">
-                              <td width="47%" height="25" align="left" valign="middle">&nbsp; <?php echo $val_course[name]; ?></td>
+                              <td width="47%" height="25" align="left" valign="middle">&nbsp; <?php echo $val[group_name]; ?></td>
                               <td width="29%" align="left" valign="middle">&nbsp; <?php echo $val[start_date]; ?></td>
                               <td width="24%" align="left" valign="middle">&nbsp; <?php echo $val[end_date]; ?></td>
                             </tr>

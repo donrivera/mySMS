@@ -62,52 +62,61 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
           <?php
         $i = 1;
         $color="#ECECFF";
-                                                
-        //Conditions
-        $start_date = '';
-        $end_date = '';
-        if($_REQUEST["radio"] == 'Date_Range'){
-            $start_date = $_REQUEST[start_date];
-            $end_date = $_REQUEST[end_date];
-        }else if($_REQUEST["radio"] == 'Today'){
-            $start_date = date('Y-m-d');
-            $end_date = date('Y-m-d');
-        }else if($_REQUEST["radio"] == 'This Week'){
-            $start_date = $dbf->WeekStartDay(date('Y-m-d'));
-            $end_date = $dbf->WeekEndDay(date('Y-m-d'));
-        }else if($_REQUEST["radio"] == 'Last Week'){
-            $start_date = $dbf->LastWeekStartDay();
-            $end_date = $dbf->LastWeekEndDay();
-        }else if($_REQUEST["radio"] == 'This Month'){
-            $start_date = $dbf->MonthFirstDay(date('m'),date('Y'));
-            $end_date = $dbf->MonthLastDay(date('m'),date('Y'));
-        }else if($_REQUEST["radio"] == 'Last Month'){
-            $start_date = date("Y-m",strtotime("-1 Months"));
-            $start_date = $start_date.'-01';
-            
-            $end_date = date("Y-m",strtotime("-1 Months"));
-            $end_date = $end_date.'-31';
-        }else if($_REQUEST["radio"] == 'Last 3 Months'){
-            $start_date = date("Y-m",strtotime("-3 Months"));
-            $start_date = $start_date.'-01';
-            
-            $end_date = date("Y-m",strtotime("-1 Months"));
-            $end_date = $end_date.'-'.cal_days_in_month(CAL_GREGORIAN, date("m",strtotime("-1 Months")), date("Y",strtotime("-1 Months")));
-        }else if($_REQUEST["radio"] == 'Last 6 Months'){
-            $start_date = date("Y-m",strtotime("-6 Months"));
-            $start_date = $start_date.'-01';
-            
-            $end_date = date("Y-m",strtotime("-1 Months"));
-            $end_date = $end_date.'-'.cal_days_in_month(CAL_GREGORIAN, date("m",strtotime("-1 Months")), date("Y",strtotime("-1 Months")));
-        }else if($_REQUEST["radio"] == 'This Year'){
-            $start_date = date('Y').'-01-01';
-            $end_date = date('Y').'-12-31';
-        }else if($_REQUEST["radio"] == 'Last 3 Years'){
-            $last = date('Y') - 3;
-            $first = date('Y') - 1;
-            $start_date = $last.'-01-01';
-            $end_date = $first.'-12-31';
-        }
+        $range_option=$_REQUEST["radio"];
+		switch($range_option)
+		{
+			case 'Date_Range':		{
+										$start_date = $_REQUEST[start_date];
+										$end_date = $_REQUEST[end_date];
+									}break;
+			case 'Today':			{
+										$start_date = date('Y-m-d');
+										$end_date = date('Y-m-d');
+									}break;
+			case 'This Week':		{
+										$start_date = $dbf->WeekStartDay(date('Y-m-d'));
+										$end_date = $dbf->WeekEndDay(date('Y-m-d'));
+									}break;
+			case 'Last Week':		{
+										$start_date = $dbf->LastWeekStartDay();
+										$end_date = $dbf->LastWeekEndDay();
+									}break;
+			case 'This Month':		{
+										$start_date = $dbf->MonthFirstDay(date('m'),date('Y'));
+										$end_date = $dbf->MonthLastDay(date('m'),date('Y'));
+									}break;
+			case 'Last Month':		{
+										$start_date = date("Y-m",strtotime("-1 Months"));
+										$start_date = $start_date.'-01';
+										$end_date = date("Y-m",strtotime("-1 Months"));
+										$end_date = $end_date.'-'.cal_days_in_month(CAL_GREGORIAN, date("m",strtotime("-1 Months")), date("Y",strtotime("-1 Months")));
+									}break;
+			case 'Last 3 Months':	{
+										$start_date = date("Y-m",strtotime("-3 Months"));
+										$start_date = $start_date.'-01';
+										$end_date = date("Y-m",strtotime("-1 Months"));
+										$end_date = $end_date.'-'.cal_days_in_month(CAL_GREGORIAN, date("m",strtotime("-1 Months")), date("Y",strtotime("-1 Months")));
+									}break;
+			case 'Last 6 Months':	{
+										$start_date = date("Y-m",strtotime("-6 Months"));
+										$start_date = $start_date.'-01';
+										$end_date = date("Y-m",strtotime("-1 Months"));
+										$end_date = $end_date.'-'.cal_days_in_month(CAL_GREGORIAN, date("m",strtotime("-1 Months")), date("Y",strtotime("-1 Months")));
+									}break;
+			case 'This Year':		{
+										$start_date = date('Y').'-01-01';
+										$end_date = date('Y').'-12-31';
+									}break;
+			case 'Last 3 Years':	{
+										$last = date('Y') - 3;
+										$first = date('Y') - 1;
+										$start_date = $last.'-01-01';
+										$end_date = $first.'-12-31';
+									}break;
+			#case '':	{}break;
+			#case '':	{}break;
+			default:	{$start_date = date('Y-m-d');$end_date = date('Y-m-d');}break;
+		}
         //echo $start_date;
         //echo '<br>';			
         //echo $end_date;
@@ -120,8 +129,9 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
             }else{
                 $cond = "payment_type='$valpay[id]' And (paid_date BETWEEN '$start_date' And '$end_date') And status='1'";
             }
-            $amount = $amount + $dbf->getDataFromTable("student_fees","SUM(paid_amt)", $cond);
-        ?>
+            $amount = $dbf->getDataFromTable("student_fees","SUM(paid_amt)", $cond);
+			
+		?>
           <tr>
             <td align="center" valign="middle" class="mytext" height="22"><?php echo $i;?></td>
             <td align="left" valign="middle" class="mytext"><?php echo $valpay["name"];?></td>

@@ -183,7 +183,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <option value="">--Select Teacher--</option>
                   <?php
 						$query=$dbf->genericQuery("
-												SELECT t.name 
+												SELECT t.id,t.name 
 												FROM teacher t
 												INNER JOIN teacher_centre tc ON t.id=tc.teacher_id
 												WHERE tc.centre_id='$_SESSION[centre_id]'

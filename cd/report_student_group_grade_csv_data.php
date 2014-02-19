@@ -1,96 +1,91 @@
 <?php
 ob_start();
 session_start();
+
 include_once '../includes/class.Main.php';
 
 //Object initialization
 $dbf = new User();
+include '../includes/FusionCharts.php';
 include_once '../includes/language.php';
 ?>
-<table width='100%' border='1' cellpadding='0' cellspacing='0' style='border-collapse:collapse;' bordercolor='#AAAAAA'>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<table width="500" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td width='3%' height='29' align='center' valign='middle' bgcolor='#CDCDCD' >&nbsp;</td>
-        <td width='14%' align='left' valign='middle' bgcolor='#CDCDCD' style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#6a6868;font-weight:bold;" ><?php echo constant("ADMIN_VIEW_COMMENTS_MANAGE_STUDENT");?></td>
-        <td width='15%' align='left' valign='middle' bgcolor='#CDCDCD' style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#6a6868;font-weight:bold;" ><?php echo constant("ADMIN_TEACHER1_MANAGE_MOBILENUMBER");?> </td>
-        <td width='12%' align='left' valign='middle' bgcolor='#CDCDCD' style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#6a6868;font-weight:bold;"><?php echo constant("ADMIN_TEACHER1_MANAGE_EMAIL");?> </td>
-        <td width='16%' align='left' valign='middle' bgcolor='#CDCDCD' style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#6a6868;font-weight:bold;" ><?php echo constant("CD_REPORT_STUDENT_NOT_ENROLLED_CSV_DATA_EQUITYDATE");?></td>
-        <td width='15%' align='left' valign='middle' bgcolor='#CDCDCD' style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#6a6868;font-weight:bold;" ><?php echo constant("ADMIN_REPORT_STUDENT_NOT_ENROLLED_LASTCOMT");?> </td>
-        <td width='14%' align='left' valign='middle' bgcolor='#CDCDCD' style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#6a6868;font-weight:bold;" ><?php echo constant("ADMIN_REPORT_STUDENT_NOT_ENROLLED_LEADINFO");?> </td>
-        <td colspan='2' align='center' valign='middle' bgcolor='#CDCDCD' style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#6a6868;font-weight:bold;" ><?php echo constant("ADMIN_REPORT_STUDENT_NOT_ENROLLED_INTRESTEDIN");?> </td>
+        <td>&nbsp;</td>
       </tr>
-	  <?php
-					if($_REQUEST[teacher]!=''){
-						$cond = "s.id=c.student_id AND c.status_id='$_REQUEST[teacher]'";
-					}else{
-						$cond = "s.id=c.student_id";
-					}
-					
-					$i = 1;
-					$color="#ECECFF";
-					
-					//Get Number of Rows
-					$num=$dbf->countRows('student s,student_moving c',$cond,"");
-					
-					 //Loop start
-					foreach($dbf->fetchOrder('student s,student_moving c',$cond,"s.id DESC","s.id","s.id") as $val) {
-					
-					$val_student = $dbf->strRecordID("student","*","id='$val[id]'");
-					
-					//Get Course Name
-					$course = "";
-					foreach($dbf->fetchOrder('student_course',"student_id='$val[id]'","") as $valc) {
-					
-						$c = $dbf->strRecordID("course","name","id='$valc[course_id]'");
-						if($course==''){
-							$course  = $c[name];
-						}else{
-							$course  = $course.",".$c[name];
-						}
-					}
-					
-					//Get Lead Information
-					$lead = '';
-					foreach($dbf->fetchOrder('student_lead',"student_id='$val[id]'","") as $vall) {
-					
-						$c = $dbf->strRecordID("common","name","id='$vall[lead_id]'");
-						if($lead==''){
-							$lead  = $c[name];
-						}else{
-							$lead  = $lead.",".$c[name];
-						}
-					}
-					
-					//Register date
-					if($val[register_date] == "0000-00-00"){
-						$dt = '';
-					}else{
-						$dt = date('d-M-Y',strtotime($val_student[created_datetime]));
-					}
-					
-					//Last comment
-					$last_com = $dbf->getDataFromTable("student_comment", "MAX(id)", "student_id='$val[id]'");
-					$com = $dbf->strRecordID("student_comment", "*", "id='$last_com'");
-					?>
       <tr>
-        <td height='25' align='center' valign='middle' bgcolor='#F8F9FB'><?php echo $i;?></td>
-        <td height='25' align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $dbf->printStudentName($val_student[id]);?></td>
-        <td align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $val_student[student_mobile];?></td>
-        <td align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $val_student[email];?></td>
-        <td align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $dt;?></td>
-        <td align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $com["comments"];?></td>
-        <td align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $lead;?></td>
-        <td align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $course;?></td>
-        <?php
-	  $i = $i + 1;
-	  }
-		?>		  
-        </tr>
-		<?php
-		if($num==0)
-		{
-			?>
-		
+        <td align="center" valign="middle" bgcolor="#990066" class="headingtext"><?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_STUDENTDETAILS");?> </td>
+      </tr>
+      <tr>
+        <td height="5" align="left" valign="middle" class="lable1"></td>
+      </tr>
       <?php
-		}
-		?>
+     $res = $dbf->strRecordID("student","*","id='$_REQUEST[student_id]'");			
+     ?>
+      <tr>
+        <td align="left" valign="middle" class="lable1"><?php echo constant("STUDENT_ADVISOR_S2_NAME");?> :<?php echo $dbf->printStudentName($res[id]); ?> </td>
+      </tr>
+      <tr>
+        <td align="left" valign="middle" class="lable1"><?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_IDNO");?> : <?php echo $res[student_id]; ?> </td>
+      </tr>
+      <tr>
+        <td align="left" valign="middle" class="lable1"><?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_EMAIL");?>: &nbsp;<?php echo $res[email]; ?> </td>
+      </tr>
+   
+      <tr>
+        <td align="left" valign="middle">&nbsp;</td>
+      </tr>
+      
+      <tr>
+        <td align="center" valign="middle">
+        <table width="100%" border="1" cellpadding="0" cellspacing="0" style="border-collapse:collapse;" bordercolor="#DFF2DB" class="tablesorter" id="tablesorter-demo">
+          <tr>
+            <td width="6%" height="25" align="center" valign="middle" bgcolor="#99CC99" >&nbsp;</td>
+            <td width="67%" align="left" valign="middle" bgcolor="#99CC99" class="menutext" ><?php echo ADMIN_REPORT_STUDENT_GROUP_GRADE_COURSENAME?></td>
+            <td width="27%" align="center" valign="middle" bgcolor="#99CC99" class="menutext" ><?php echo ADMIN_REPORT_STUDENT_GROUP_GRADE_GRADE?></td>
+          </tr>
+          <?php					
+            $i = 1;
+            $num=$dbf->countRows('grade');
+            foreach($dbf->fetchOrder('student_course',"student_id='$res[id]'","course_id") as $val) {
+            $res_course = $dbf->strRecordID("course","*","id='$val[course_id]'");
+			if($res_course[name] !='') 
+			{
+						
+					//Get percentage
+					$res_per = $dbf->strRecordID("teacher_progress_certificate","*","course_id='$val[course_id]' And student_id='$_REQUEST[student_id]'");					
+					$mark = $res_per[final_percent];
+										
+					//Get Average
+					$grade = $dbf->strRecordID("grade","*","(tto>='$mark' And frm<='$mark')");
+					$grade_name = $grade[name];
+            ?>
+			<tr>
+                <td height="25" align="center" valign="middle" bgcolor="#F8F9FB" class="contenttext">&nbsp;</td>
+                <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" class="mycon" style="padding-left:5px;"><?php echo $res_course[name];?></td>
+                <td align="center" valign="middle" bgcolor="#F8F9FB" class="mycon" style="padding-left:5px;"><?php echo $mark;?>%</td>
+                <td align="center" valign="middle" bgcolor="#F8F9FB" class="mycon" style="padding-left:5px;"><?php echo $grade_name;?></td>
+                <?php
+			}
+				$i = $i + 1;
+				}
+				?>
+             </tr>
+          <?php
+            if($num==0)
+            {
+            ?>
+          <tr>
+            <td height="25" colspan="3" align="center" valign="middle" class="nametext1"><?php echo constant("COMMON_NORECFOUND");?> </td>
+          </tr>
+          <?php
+            }
+            ?>                  
+        </table>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" valign="middle">&nbsp;</td>
+</tr>
     </table>

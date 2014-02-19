@@ -420,7 +420,7 @@ else
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 			$headers .= "From:".$from."\n";
 			
-			$email_cont = $dbf->strRecordID("email_templetes","*","id='13'");
+			$email_cont = $dbf->strRecordID("email_templetes","*","id='15'");
 			$email_msg = $email_cont["content"];
 			
 			$email_msg = str_replace('%cd%',$name,$email_msg);

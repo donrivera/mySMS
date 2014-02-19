@@ -17,7 +17,7 @@ $dbf = new User();
 include_once '../includes/language.php';
 
 ?>	
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#AAAAAA" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
 			      <thead>
                 <tr class="logintext">
@@ -33,7 +33,7 @@ include_once '../includes/language.php';
 					$i = 1;
 					if($_REQUEST[start_date]!='' && $_REQUEST[end_date]!='')
 					{
-					 $cond="status<>'Completed' And (start_date <= '$_REQUEST[end_date]' And end_date >= '$_REQUEST[start_date]')";
+					 $cond="status<>'Completed' And (end_date BETWEEN '$_REQUEST[start_date]' AND '$_REQUEST[end_date]') And centre_id='$_SESSION[centre_id]'";
 					}
 					else
 					{

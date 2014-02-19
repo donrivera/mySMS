@@ -59,51 +59,60 @@ $html = '<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<td width="49%" align="left" bgcolor="#CCCCCC"><span id="result_box" lang="ar" xml:lang="ar">'.CD_REPORT_TEACHER_PROGRESS_TOTAL.'</span></td>
 				  </tr>';
 				$i = 1;
-											   
-				//Conditions
-				$start_date = '';
-				$end_date = '';
-				if($fl == 'Date_Range'){
-					$start_date = $_REQUEST[start_date];
-					$end_date = $_REQUEST[end_date];
-				}else if($fl == 'Today'){
-					$start_date = date('Y-m-d');
-					$end_date = date('Y-m-d');
-				}else if($fl == 'This Week'){
-					$start_date = $dbf->WeekStartDay(date('Y-m-d'));
-					$end_date = $dbf->WeekEndDay(date('Y-m-d'));
-				}else if($fl == 'Last Week'){
-					$start_date = $dbf->LastWeekStartDay();
-					$end_date = $dbf->LastWeekEndDay();
-				}else if($fl == 'This Month'){
-					$start_date = $dbf->MonthFirstDay(date('m'),date('Y'));
-					$end_date = $dbf->MonthLastDay(date('m'),date('Y'));
-				}else if($fl == 'Last Month'){
-					$start_date = date("Y-m",strtotime("-1 Months"));
-					$start_date = $start_date.'-01';
-					
-					$end_date = date("Y-m",strtotime("-1 Months"));
-					$end_date = $end_date.'-31';
-				}else if($fl == 'Last 3 Months'){
-					$start_date = date("Y-m",strtotime("-3 Months"));
-					$start_date = $start_date.'-01';
-					
-					$end_date = date("Y-m",strtotime("-1 Months"));
-					$end_date = $end_date.'-'.cal_days_in_month(CAL_GREGORIAN, date("m",strtotime("-1 Months")), date("Y",strtotime("-1 Months")));
-				}else if($fl == 'Last 6 Months'){
-					$start_date = date("Y-m",strtotime("-6 Months"));
-					$start_date = $start_date.'-01';
-					
-					$end_date = date("Y-m",strtotime("-1 Months"));
-					$end_date = $end_date.'-'.cal_days_in_month(CAL_GREGORIAN, date("m",strtotime("-1 Months")), date("Y",strtotime("-1 Months")));
-				}else if($fl == 'This Year'){
-					$start_date = date('Y').'-01-01';
-					$end_date = date('Y').'-12-31';
-				}else if($fl == 'Last 3 Years'){
-					$last = date('Y') - 3;
-					$first = date('Y') - 1;
-					$start_date = $last.'-01-01';
-					$end_date = $first.'-12-31';
+				$range_option=$_REQUEST["radio"];
+				switch($range_option)
+				{
+					case 'Date_Range':		{
+												$start_date = $_REQUEST[start_date];
+												$end_date = $_REQUEST[end_date];
+											}break;
+					case 'Today':			{
+												$start_date = date('Y-m-d');
+												$end_date = date('Y-m-d');
+											}break;
+					case 'This Week':		{
+												$start_date = $dbf->WeekStartDay(date('Y-m-d'));
+												$end_date = $dbf->WeekEndDay(date('Y-m-d'));
+											}break;
+					case 'Last Week':		{
+												$start_date = $dbf->LastWeekStartDay();
+												$end_date = $dbf->LastWeekEndDay();
+											}break;
+					case 'This Month':		{
+												$start_date = $dbf->MonthFirstDay(date('m'),date('Y'));
+												$end_date = $dbf->MonthLastDay(date('m'),date('Y'));
+											}break;
+					case 'Last Month':		{
+												$start_date = date("Y-m",strtotime("-1 Months"));
+												$start_date = $start_date.'-01';
+												$end_date = date("Y-m",strtotime("-1 Months"));
+												$end_date = $end_date.'-'.cal_days_in_month(CAL_GREGORIAN, date("m",strtotime("-1 Months")), date("Y",strtotime("-1 Months")));
+											}break;
+					case 'Last 3 Months':	{
+												$start_date = date("Y-m",strtotime("-3 Months"));
+												$start_date = $start_date.'-01';
+												$end_date = date("Y-m",strtotime("-1 Months"));
+												$end_date = $end_date.'-'.cal_days_in_month(CAL_GREGORIAN, date("m",strtotime("-1 Months")), date("Y",strtotime("-1 Months")));
+											}break;
+					case 'Last 6 Months':	{
+												$start_date = date("Y-m",strtotime("-6 Months"));
+												$start_date = $start_date.'-01';
+												$end_date = date("Y-m",strtotime("-1 Months"));
+												$end_date = $end_date.'-'.cal_days_in_month(CAL_GREGORIAN, date("m",strtotime("-1 Months")), date("Y",strtotime("-1 Months")));
+											}break;
+					case 'This Year':		{
+												$start_date = date('Y').'-01-01';
+												$end_date = date('Y').'-12-31';
+											}break;
+					case 'Last 3 Years':	{
+												$last = date('Y') - 3;
+												$first = date('Y') - 1;
+												$start_date = $last.'-01-01';
+												$end_date = $first.'-12-31';
+											}break;
+					#case '':	{}break;
+					#case '':	{}break;
+					default:	{$start_date = date('Y-m-d');$end_date = date('Y-m-d');}break;
 				}
 				//loop start
 				foreach($dbf->fetchOrder('common',"type='payment type'","") as $valpay) {
@@ -128,7 +137,7 @@ $html = '<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		  </tr>
 		</table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_sales_summary_report.pdf", 'D');
 	exit;

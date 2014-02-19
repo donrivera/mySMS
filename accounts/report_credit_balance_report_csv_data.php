@@ -8,6 +8,7 @@ include_once '../includes/class.Main.php';
 $dbf = new User();
 include_once '../includes/language.php';
 ?>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
 <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#999999" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
 	<thead>
     	<tr class="logintext">
@@ -41,7 +42,7 @@ include_once '../includes/language.php';
   <tr bgcolor="<?php echo $color;?>" onMouseOver="this.bgColor='#FDE6D0'" onMouseOut="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
     <td width="4%" height="25" align="center" valign="middle" class="contenttext">&nbsp;</td>
     <td width="5%" height="25" align="center" valign="middle" class="mycon"><?php echo $k; ?></td>
-    <td width="19%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $valstudent[first_name];?></td>
+    <td width="19%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dbf->printStudentName($valstudent["id"]);?></td>
     <td width="32%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $valstudent[email];?></td>
     <td width="33%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $valstudent[student_mobile];?></td>
     <td width="7%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $moving["name"];?></td>
