@@ -131,7 +131,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td width="22%">&nbsp;</td>
                 <td width="8%" align="left">&nbsp;</td>
                 <td width="8%" align="left">&nbsp;</td>
-                <td width="8%" align="left"><a href="user_add.php"> <input type="button" value="<?php echo constant("btn_add_btn");?>" class="btn1" border="0" align="left" /></a></td>
+                <!--<td width="8%" align="left"><a href="user_add.php"> <input type="button" value="<?php echo constant("btn_add_btn");?>" class="btn1" border="0" align="left" /></a></td>-->
               </tr>
             </table></td>
           </tr>

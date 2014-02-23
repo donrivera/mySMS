@@ -29,7 +29,7 @@ else if($_REQUEST[type]=="Student")
   <?php
   foreach($dbf->fetchOrder('student',"id NOT IN (select uid from user where user_type='Student')","first_name") as $val) {
   ?>
-  <option value="<?php echo $val["id"];?>"><?php echo $val["first_name"];?> <?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></option>
+  <option value="<?php echo $val["id"];?>"><?php echo $dbf->printStudentName($val["id"]);?></option>
   <?php } ?>
 </select>
 <?php

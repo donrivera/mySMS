@@ -563,7 +563,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$rfiles = "round-green.png";
 					}										
 					?>
-                        <td align="center" valign="middle" bgcolor="#FFFFFF" class="mycon"><?php echo $group_unit / 2;?></td>
+                        <td align="center" valign="middle" bgcolor="#FFFFFF" class="mycon"><?php echo $count_shift;/*$group_unit / 2;*/?></td>
                         <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                           <tr>
                             <td width="47%" align="right" valign="middle"><img src="../images/<?php echo $rfiles;?>"  /></td>
@@ -682,7 +682,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 									
 					?>
                     <tr>
-                      <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[first_name]."&nbsp;".$r[father_name]."&nbsp;".$r[family_name]."&nbsp;(".$r[first_name1]."&nbsp;".$r[father_name1]."&nbsp;".$r[grandfather_name1]."&nbsp;".$r[family_name1].")";?></td>
+                      <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $dbf->printStudentName($r[id]);?></td>
                       <td align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $res_country[value];?></td>
                       <td align="center" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[student_id];?>
                       <input type="hidden" name="student_id1<?php echo "_".$student_count;?>" id="student_id1<?php echo "_".$student_count;?>" value="<?php echo $r[id];?>">
@@ -817,7 +817,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$rfiles = "round-green.png";
 					}
 					?>
-                      <td align="center" valign="middle" class="mycon"><?php echo $res_size[units];?></td>
+                      <td align="center" valign="middle" class="mycon"><?php echo $count_shift;?></td>
                       <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                           <td width="47%" align="right" valign="middle"><img src="../images/<?php echo $rfiles;?>"/></td>

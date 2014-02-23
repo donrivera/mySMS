@@ -106,7 +106,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
       <tr>
         <td align="left" height="25" valign="top">
         <?php
-		$num=$dbf->countRows('student_group',"certificate_filled='No'");
+		
 		//if($num > 0) {
 		?>
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -192,47 +192,85 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td height="5" colspan="8" align="left" valign="middle">&nbsp;</td>
                     </tr>
                 </table>
-                <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#DFF2DB" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
+                <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#DFF2DB" class="tablesorter" id="sort_table1" style="border-collapse:collapse;">
                   <thead>
                     <tr class="logintext">
-                      <th width="3%" height="30" align="center" valign="middle" bgcolor="#99CC99">&nbsp;</th>
-                      <th width="9%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("LISM_DUE_DATE");?></th>
-                      <th width="21%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("ADMIN_REPORT_TEACHER_BOARD_TEACHERNAME");?></th>
-                      <th width="17%" height="30" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("ADMIN_CENTRE_MANAGE_CENTRENAME");?></th>
-                      <th width="12%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("ADMIN_REPORT_GROUP_TO_FINISH_GROUPNAME");?></th>
-                      <th width="15%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_COURSENAME");?></th>
-                      <th width="11%" align="center" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_REPORT_CD_GRAPHS_NOOFSTUDENT");?></th>
-                      <th width="12%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("LISM_UPDATE_DATE");?></th>
+                     <th width="21%" align="left" valign="middle" class="pedtext"><?php echo constant("ADMIN_REPORT_TEACHER_BOARD_TEACHERNAME");?></th>
+                      <th width="17%" align="left" valign="middle" class="pedtext"><?php echo constant("ADMIN_CENTRE_MANAGE_CENTRENAME");?></th>
+                      <th width="12%" align="left" valign="middle" class="pedtext"><?php echo constant("ADMIN_REPORT_GROUP_TO_FINISH_GROUPNAME");?></th>
+                      <th width="15%" align="left" valign="middle" class="pedtext"><?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_COURSENAME");?></th>
+                      <th width="11%" align="center" valign="middle" class="pedtext"><?php echo constant("CD_REPORT_CD_GRAPHS_NOOFSTUDENT");?></th>
                       </tr>
                     </thead>
                     <?php
                         $i = 1;
                         $color="#ECECFF";
-                                                                        
+                        //echo "preport_filled='No' And centre_id='$_REQUEST[centre_id]' And teacher_id='$_REQUEST[teacher_id]'";                                     
                         //loop start
-                        foreach($dbf->fetchOrder('student_group',"(certificate_filled='' OR certificate_filled='No') And centre_id='$_REQUEST[centre_id]' And teacher_id='$_REQUEST[teacher_id]'","id") as $val_leave) {
-                            $teacher = $dbf->strRecordID("teacher","*","id='$val_leave[teacher_id]'");
-							$centre = $dbf->strRecordID("centre","*","id='$val_leave[centre_id]'");
-							$course = $dbf->strRecordID("course","*","id='$val_leave[course_id]'");
-							$no_of_students = $dbf->countRows("student_group_dtls","parent_id='$val_leave[id]'");
-                        ?>                    
-                    <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
-                      <td align="center" valign="middle" class="mycon">&nbsp;</td>
-                      <td align="left" valign="middle" class="mycon" >&nbsp;<?php echo $val_leave[end_date];?></td>
-                      <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $teacher[name];?></td>
-                      <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $centre[name];?></td>
-                      <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dbf->FullGroupInfo($val_leave["id"]);?></td>
-                      <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $course[name];?></td>
-                      <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $no_of_students;?></td>
-                      <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val_leave[certificate_update_date];?></td>
-                      <?php
-                          $i = $i + 1;
-                          if($color=="#ECECFF"){
-                              $color = "#FBFAFA";
-                          }else{
-                              $color="#ECECFF";
-                          }					  
-                      }
+						$teacher_id=$_REQUEST['teacher_id'];
+						$centre_id=$_REQUEST['centre_id'];
+						$query=$dbf->genericQuery("SELECT sg.id , CEIL( sg.units / MAX( p.units ) *100 ) AS percentage
+													FROM student_group sg
+													INNER JOIN ped_units p ON p.group_id = sg.id
+													WHERE sg.teacher_id =  '$teacher_id'
+													AND centre_id =  '$centre_id'
+													AND p.dated !=  ''");
+						//echo var_dump($query);
+						foreach($query as $q)
+						{
+							$percent=$q['percentage'];
+							$group_id=$q['id'];
+							$progress=$dbf->getDataFromTable("teacher_progress","id","group_id='$group_id'"); 
+							if($percent>=50 && empty($progress))
+							{
+								$data=$dbf->genericQuery("SELECT sg.group_name, c.name AS course_name, t.name AS teacher_name, COUNT( sgrp.id ) AS total,ctr.name as centre_name
+														FROM student_group sg
+														INNER JOIN course c ON c.id = sg.course_id
+														INNER JOIN centre ctr ON ctr.id=sg.centre_id
+														INNER JOIN teacher t ON t.id = sg.teacher_id
+														INNER JOIN student_group_dtls sgrp ON sgrp.parent_id = sg.id
+														WHERE sg.id ='$group_id'");
+								$num=count($data);
+							}
+							else
+							{
+								$check_progress=$dbf->getDataFromTable("teacher_progress","id","group_id='$group_id' AND certificate_print=''"); 
+								if(!empty($check_proress))
+								{
+									$data=$dbf->genericQuery("SELECT sg.group_name, c.name AS course_name, t.name AS teacher_name, COUNT( sgrp.id ) AS total,ctr.name as centre_name
+														FROM student_group sg
+														INNER JOIN course c ON c.id = sg.course_id
+														INNER JOIN centre ctr ON ctr.id=sg.centre_id
+														INNER JOIN teacher t ON t.id = sg.teacher_id
+														INNER JOIN student_group_dtls sgrp ON sgrp.parent_id = sg.id
+														WHERE sg.id ='$group_id'");
+									$num=count($data);
+								}
+								else{$num=0;}
+							}
+							#$num=$dbf->countRows('student_group',"preport_filled='No'");
+							/*
+							foreach($dbf->fetchOrder('student_group',"(preport_filled='' OR preport_filled='No') And centre_id='$_REQUEST[centre_id]' And teacher_id='$_REQUEST[teacher_id]'","id") as $val_leave) 
+							{
+								$teacher = $dbf->strRecordID("teacher","*","id='$val_leave[teacher_id]'");
+								$centre = $dbf->strRecordID("centre","*","id='$val_leave[centre_id]'");
+								$course = $dbf->strRecordID("course","*","id='$val_leave[course_id]'");
+								$no_of_students = $dbf->countRows("student_group_dtls","parent_id='$val_leave[id]'");
+							*/
+							foreach($data as $row)
+							{
+					?>
+								<tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
+									<td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $row[teacher_name];?></td>
+									<td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $row[centre_name];?></td>
+									<td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dbf->FullGroupInfo($group_id);?></td>
+									<td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $row[course_name];?></td>
+									<td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $row[total];?></td>
+								<?php
+									$i = $i + 1;
+									if($color=="#ECECFF"){$color = "#FBFAFA";}else{$color="#ECECFF";}					  
+							}
+						}
                       ?>
                     </tr>                   
               </table>

@@ -165,7 +165,7 @@ foreach($dbf->fetchOrder('student_group m,student_group_dtls d',"m.id=d.parent_i
 				  }
 				  ?>
                   <tr>
-                    <th height="28" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head"><?php echo $gender;?></span>&nbsp;<span class="cer_my_head_bold"><?php echo $res[first_name];?></span></th>
+                    <th height="28" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head"><?php echo $gender;?></span>&nbsp;<span class="cer_my_head_bold"><?php echo $dbf->printStudentName($res[id]);?></span></th>
                   </tr>
                   <tr>
                     <th height="28" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">Nationality:</span>&nbsp;<span class="cer_my_head_bold"><?php echo $resc[value];?></span></th>

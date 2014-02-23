@@ -1,10 +1,10 @@
 ﻿<?php
 // index.php
-define("INDEX_LOGIN","الدخول");
+define("INDEX_LOGIN","معلومات المستخدم");
 define("INDEX_USER_NAME",": اسم المستخدم");
-define("INDEX_PASSWORD","الرقم السري");
-define("INDEX_LANG","اللغه");
-define("INDEX_FORGOT","نسيت الرقم السري");
+define("INDEX_PASSWORD","كلمة المرور");
+define("INDEX_LANG","اللغة");
+define("INDEX_FORGOT","نسيت كلمة المرور");
 
 // admin home.php
 define("ADMIN_DASHBOARD_DASHBOARD","مسوؤل لوحة القيادة");
@@ -608,8 +608,8 @@ define("ADMIN_TRANSLATE_TO","الى");
 define("ADMIN_TRANSLATE_TRANSL","ترجم");
 
 //COMMON
-define("COMMON_ACTION","فعل");
-define("COMMON_RECORDADDMSG","تم اضافة التسجيل بنجاح ");
+define("COMMON_ACTION","عمل اجراء");
+define("COMMON_RECORDADDMSG","تم الإجراء بنجاح");
 define("COMMON_RECORDALREADYAXIT","التسجيل موجود مسبقا ");
 define("COMMON_NORECFOUND","لا يوجد تسجيل !");
 //==============STUDENTS===================================================================================
@@ -618,41 +618,41 @@ define("COMMON_NORECFOUND","لا يوجد تسجيل !");
 define("STUDENT_HOME_LATESTALERTS","التنبيهات الاخيرة");
 define("STUDENT_HOME_LATESTNEWS","اخر الاخبار");
 define("STUDENT_HOME_POSTEDBYADMIN","ارسلت من قبل الادارة");
-define("STUDENT_HOME_MARKAS","سجلت ك");
+define("STUDENT_HOME_MARKAS","تم تصنيف الخبر على أنه");
 define("STUDENT_HOME_URGENT","ضروري");
 define("STUDENT_HOME_POSTEDBY","ارسلت من ");
-define("STUDENT_HOME_TEXT1","المواعيد الاخيرة للعملاء");
+define("STUDENT_HOME_TEXT1","المواعيد القادمة للعملاء");
 define("STUDENT_HOME_TEXT2","اختبار نهاية المستوى");
 define("STUDENT_HOME_IMPORTANT","مهم");
 define("STUDENT_HOME_MSGTYPE","نوع الرسالة");
 
 // student myschedule
 define("STUDENT_MYSCHEDULE_MY_SCHEDULE","جدولي");
-define("STUDENT_MYSCHEDULE_INSTRUCTOR","مدرس");
-define("STUDENT_MYSCHEDULE_MATERIALCOVER","المادة التي تم تغطيتها");
+define("STUDENT_MYSCHEDULE_INSTRUCTOR","معلم الدورة");
+define("STUDENT_MYSCHEDULE_MATERIALCOVER","الدروس التي تمت تغطيتها");
 define("STUDENT_MYSCHEDULE_HOMEWORK","الواجب");
 
 // student myaccount
 define("STUDENT_MYACCOUNT_MY_ACCOUNT","حسابي");
 define("STUDENT_MYACCOUNT_YOURNAME","اسمك");
-define("STUDENT_MYACCOUNT_STDUENTID","هوية الطالب");
+define("STUDENT_MYACCOUNT_STDUENTID","رقم هوية الطالب");
 define("STUDENT_MYACCOUNT_EMAIL","البريد الالكتروني");
 define("STUDENT_MYACCOUNT_MOBILENO","رقم الجوال");
 define("STUDENT_MYACCOUNT_PAYMENTHISTORY","وصف الدفعة");
-define("STUDENT_MYACCOUNT_SL","Sl.");
-define("STUDENT_MYACCOUNT_PAYMENTDATE","تاريخ الدفعة");
-define("STUDENT_MYACCOUNT_PAYMENTONDT","دفعت في (تاريخ)");
+define("STUDENT_MYACCOUNT_SL","رقم تسلسلي");
+define("STUDENT_MYACCOUNT_PAYMENTDATE","تواريخ الدفعات القادمة");
+define("STUDENT_MYACCOUNT_PAYMENTONDT","تواريخ الدفعات الفعلية");
 define("STUDENT_MYACCOUNT_PAYMENTMODE","طريقة الدفع");
 define("STUDENT_MYACCOUNT_FEE","الرسوم");
 define("STUDENT_MYACCOUNT_STATUS","الحالة");
-define("STUDENT_MYACCOUNT_FUTUREPAYMNT","مستقبل الدفعة");
-define("STUDENT_MYACCOUNT_BALANCEINFO","معلومات الرصيد");
+define("STUDENT_MYACCOUNT_FUTUREPAYMNT","الدفعات المتبقية");
+define("STUDENT_MYACCOUNT_BALANCEINFO","الملخص المالي");
 define("STUDENT_MYACCOUNT_TOTALCOURSEFEES","اجمالي رسوم الدورة");
-define("STUDENT_MYACCOUNT_TEXT","دفعت لتاريخ");
-define("STUDENT_MYACCOUNT_BALANCEFEES","رسوم الرصيد");
+define("STUDENT_MYACCOUNT_TEXT","المبالغ المدفوعة حتى تاريخه");
+define("STUDENT_MYACCOUNT_BALANCEFEES","المبلغ المتبقي");
 
 // student progress_report
-define("STUDENT_PROGRESS_REPORT_HEADINGTEXT","تقرير التقدم / درجة الشهادة");
+define("STUDENT_PROGRESS_REPORT_HEADINGTEXT","تقرير التقدم /درجة الشهادة");
 define("STUDENT_PROGRESS_REPORT_PROGRESSREPORT","تقرير التقدم");
 define("STUDENT_PROGRESS_REPORT_CERTIFICATEGRADE","درجة الشهادة");
 define("STUDENT_PROGRESS_REPORT_DESCRIPTION","الوصف");
@@ -665,7 +665,7 @@ define("STUDENT_PROGRESS_REPORT_GRAMMAR","القواعد");
 define("STUDENT_PROGRESS_REPORT_VOCABUL","الكلمات");
 define("STUDENT_PROGRESS_REPORT_LISTENING","الاستماع والاستيعاب");
 define("STUDENT_PROGRESS_REPORT_ATTENDANCE","الحضور");
-define("STUDENT_PROGRESS_REPORT_NOOFUNITS","عدد الوحدات");
+define("STUDENT_PROGRESS_REPORT_NOOFUNITS","عدد الدروس");
 define("STUDENT_PROGRESS_REPORT_TEXT1","نسبة الحضور");
 define("STUDENT_PROGRESS_REPORT_TEXT2","اختبار نهاية المستوى / 40");
 
@@ -693,18 +693,18 @@ define("STUDENT_ALERT_MSGTYPE","نوع الرسالة");
 
 // student Leave manage,add,edit
 define("STUDENT_LEAVE_MANAGE_MANAGE_WEEKLIST","ادارة لائحة الاسبوع");
-define("STUDENT_LEAVE_MANAGE_LEAVEFROM","مغادرة من");
-define("STUDENT_LEAVE_MANAGE_LEAVETO","مغادرة الى");
+define("STUDENT_LEAVE_MANAGE_LEAVEFROM","تاريخ أول يوم غياب");
+define("STUDENT_LEAVE_MANAGE_LEAVETO","تاريخ آخر يوم غياب");
 define("STUDENT_LEAVE_MANAGE_REASON","السبب");
-define("STUDENT_LEAVE_MANAGE_NEWLEAVE","مغادرة جديدة");
-define("STUDENT_LEAVE_MANAGE_EDITLEAVE","تعديل المغادرة");
+define("STUDENT_LEAVE_MANAGE_NEWLEAVE","طلب غياب جديد");
+define("STUDENT_LEAVE_MANAGE_EDITLEAVE","تعديل تواريخ الغياب");
 
 // student password
 define("STUDENT_PASSWORD_CHANGE_PASSWORD","تغيير الرقم السري");
 define("STUDENT_PASSWORD_OLDPASSWORD","رقم سري قديم");
 define("STUDENT_PASSWORD_NEWPASSWORD","رقم سري جديد");
 define("STUDENT_PASSWORD_CONFIRMPASSWORD","تاكيد الرقم السري");
-define("STUDENT_PASSWORD_INVALIDPWD","غير صالح رقم سري قديم ");
+define("STUDENT_PASSWORD_INVALIDPWD","الرقم السري القديم غير صحيح");
 define("STUDENT_PASSWORD_SUCMSG","تم حفظ رقمك السري بنجاح ");
 
 // student quicklink_manage
@@ -713,7 +713,7 @@ define("STUDENT_QUICKLINK_MANAGE_TEXTP","الرجاء اشر على الصفحة
 define("STUDENT_QUICKLINK_MANAGE_PAGENAME","اسم الصفحة");
 
 // student slot_view.php
-define("STUDENT_ADVISOR_SLOT_VIEW_SLOTVIEW","فتحة الشخصي");
+define("STUDENT_ADVISOR_SLOT_VIEW_SLOTVIEW","جدول الأوقات");
 //==============STUDENTS===================================================================================
 
 //================================RECEPTION================================================================
@@ -725,7 +725,7 @@ define("RECEPTION_HOME_POSTEDBYADMIN","ارسلت من قبل الادارة");
 define("RECEPTION_HOME_MARKAS","عينت ك");
 define("RECEPTION_HOME_URGENT","مستعجل");
 define("RECEPTION_HOME_POSTEDBY","ارسلت من");
-define("RECEPTION_HOME_TEXT1","مواعيد اخيرة للعملاء");
+define("RECEPTION_HOME_TEXT1","مواعيد للعملاء");
 define("RECEPTION_HOME_TEXT2","اختبار نهاية المستوى");
 define("RECEPTION_HOME_IMPORTANT","Iمهم");
 define("RECEPTION_HOME_MSGTYPE","نوع الرسالة");
@@ -739,14 +739,14 @@ define("RECEPTION_S_MANAGE_STUDENTNAME","اسم الطالب");
 define("RECEPTION_S_MANAGE_STUDENTID","هوية الطالب");
 define("RECEPTION_S_MANAGE_MOBILENO","رقم الجوال");
 define("RECEPTION_S_MANAGE_EMAILADDRESS","البريد الالكتروني");
-define("RECEPTION_S_MANAGE_STUDENTCOMMENT","تعليق الطالب");
+define("RECEPTION_S_MANAGE_STUDENTCOMMENT","ملاحظات عن الطالب");
 define("RECEPTION_S_MANAGE_STATUS","الحالة");
 
 // reception s_manage_search.php
 define("RECEPTION_S_MANAGE_SEARCH_NAME_TITLE","الاسم / العنوان");
 
 // reception student appoint manage,add,edit
-define("RECEPTION_STUDENT_APPOINT_MANAGE_MANAGE_STUDENT_APPOINTMENT","ادارة موعد الطالب");
+define("RECEPTION_STUDENT_APPOINT_MANAGE_MANAGE_STUDENT_APPOINTMENT","التحكم في موعد الطالب");
 define("RECEPTION_STUDENT_APPOINT_MANAGE_DATE","التاريخ");
 define("RECEPTION_STUDENT_APPOINT_MANAGE_STUDENTNAME","اسم الطالب");
 define("RECEPTION_STUDENT_APPOINT_MANAGE_COMMENT","التعليق");
@@ -765,16 +765,16 @@ define("RECEPTION_SEARCH_STUDENTNAME","اسم الطالب");
 define("RECEPTION_SEARCH_EMAILADDRESS","عنوان البريد الالكتروني");
 
 // reception group manage
-define("RECEPTION_GROUP_MANAGE_MANAGE_GROUPING","ادارة المجموعة");
+define("RECEPTION_GROUP_MANAGE_MANAGE_GROUPING","التحكم في المجموعات");
 define("RECEPTION_GROUP_MANAGE_GROUPNAME","اسم المجموعة");
 define("RECEPTION_GROUP_MANAGE_NAMECOURSE","اسم الدورة");
 define("RECEPTION_GROUP_MANAGE_NAMETEACHER","اسم المدرس");
 define("RECEPTION_GROUP_MANAGE_NOUNITS","عدد الوحدات");
-define("RECEPTION_GROUP_MANAGE_GROUPSTART","بداية المجموعة");
-define("RECEPTION_GROUP_MANAGE_GROUPEND","نهاية المجموعة");
-define("RECEPTION_GROUP_MANAGE_CLASSROOM","الفصل");
+define("RECEPTION_GROUP_MANAGE_GROUPSTART","تاريخ بداية المجموعة");
+define("RECEPTION_GROUP_MANAGE_GROUPEND","تاريخ نهاية المجموعة");
+define("RECEPTION_GROUP_MANAGE_CLASSROOM","رقم الفصل");
 define("RECEPTION_GROUP_MANAGE_UNITDAY","الوحدات/اليوم");
-define("RECEPTION_GROUP_MANAGE_TEXT","لا يوجد طلاب في هذة المجموعة.");
+define("RECEPTION_GROUP_MANAGE_TEXT","لا يوجد طلاب في هذه المجموعة");
 
 // reception calc_converter
 define("RECEPTION_CALC_CONVERTER_DATA_CONVERTER","محول التاريخ");
@@ -795,46 +795,46 @@ define("RECEPTION_TRANSLATE_TO","الى");
 define("RECEPTION_ALERT_VIEW_ALLALERTS","عرض كل التنبيهات");
 define("RECEPTION_ALERT_LATEST_INFORMATION","اخر المعلومات");
 define("RECEPTION_ALERT_POSTEDBYADMIN","ارسلت من قبل الادارة");
-define("RECEPTION_ALERT_MARKAS","عينت ك");
+define("RECEPTION_ALERT_MARKAS","تم تصنيف التنبيه على أنه");
 define("RECEPTION_ALERT_IMPORTANT","مهم");
 define("RECEPTION_ALERT_MSGTYPE","نوع الرسالة");
 
 // reception arf_manage
-define("RECEPTION_ARF_MANAGE_MANAGE_ARF","ادارة ARF");
+define("RECEPTION_ARF_MANAGE_MANAGE_ARF","ARF ادارة تقارير ال");
 define("RECEPTION_ARF_MANAGE_REPORTDATE","تاريخ التقرير");
 define("RECEPTION_ARF_MANAGE_STUDENTNAME","اسم الطالب");
-define("RECEPTION_ARF_MANAGE_ACTIONOWENER","صاحب التقرير");
+define("RECEPTION_ARF_MANAGE_ACTIONOWENER","المسئول عن اتخاذ اجراء");
 define("RECEPTION_ARF_MANAGE_REPORTBY","عمل التقرير من ");
 define("RECEPTION_ARF_MANAGE_REPORTTO","عمل التقرير الى");
 define("RECEPTION_ARF_MANAGE_VIEWARF","عرض ARF");
-define("RECEPTION_ARF_MANAGE_ACTIONREQUESTFRM","نموذج عمل استشارة");
+define("RECEPTION_ARF_MANAGE_ACTIONREQUESTFRM","ARF نموذج");
 
 define("RECEPTION_ARF_MANAGE_DATE","التاريخ");
-define("RECEPTION_ARF_MANAGE_NR","NR.");
-define("RECEPTION_ARF_MANAGE_ACTIONOWNER","صاحب التقرير");
+define("RECEPTION_ARF_MANAGE_NR","رقم تسلسلي");
+define("RECEPTION_ARF_MANAGE_ACTIONOWNER","المسئول عن اتخاذ اجراء");
 
 define("RECEPTION_ARF_MANAGE_REPORTEDTO","عمل التقرير الى");
-define("RECEPTION_ARF_MANAGE_FUNCTION","عمل");
-define("RECEPTION_ARF_MANAGE_CUSTOMER","عميل");
-define("RECEPTION_ARF_MANAGE_TEACHER","مدرس");
+define("RECEPTION_ARF_MANAGE_FUNCTION","اجراء");
+define("RECEPTION_ARF_MANAGE_CUSTOMER","طالب");
+define("RECEPTION_ARF_MANAGE_TEACHER","معلم");
 define("RECEPTION_ARF_MANAGE_RECEPTION","استقبال");
-define("RECEPTION_ARF_MANAGE_CS","CS");
+define("RECEPTION_ARF_MANAGE_CS","المرشد التعليمي");
 define("RECEPTION_ARF_MANAGE_OTHER","اخرى");
 define("RECEPTION_ARF_MANAGE_LCD","مدير المعهد");
 define("RECEPTION_ARF_MANAGE_AC","A/c");
-define("RECEPTION_ARF_MANAGE_LIS","مشرف التدريس");
-define("RECEPTION_ARF_MANAGE_LISM","LISM");
+define("RECEPTION_ARF_MANAGE_LIS","كبير المعلمين");
+define("RECEPTION_ARF_MANAGE_LISM","كبير المعلمين عبر الفروع");
 define("RECEPTION_ARF_MANAGE_SUBJECT","الموضوع");
 define("RECEPTION_ARF_MANAGE_INSTRUCTION","Iالتدريس");
-define("RECEPTION_ARF_MANAGE_MATERIAL","المادة");
+define("RECEPTION_ARF_MANAGE_MATERIAL","المواد التعليمية");
 define("RECEPTION_ARF_MANAGE_PROGRAMME","البرنامج");
-define("RECEPTION_ARF_MANAGE_PREMISSES","الافتراضات");
-define("RECEPTION_ARF_MANAGE_ADMINST","الادارة");
+define("RECEPTION_ARF_MANAGE_PREMISSES","المقر/المبنى");
+define("RECEPTION_ARF_MANAGE_ADMINST","الإدارة/الإداريين");
 
 define("RECEPTION_ARF_MANAGE_REPORT","التقرير");
 define("RECEPTION_ARF_MANAGE_ACTIONTAKEN","الاجراءات المتخذة");
-define("RECEPTION_ARF_MANAGE_RESULTCHECKED","النتيجة التي صلحت");
-define("RECEPTION_ARF_MANAGE_SIGNED","وقعت");
+define("RECEPTION_ARF_MANAGE_RESULTCHECKED","تقييم نتيجة الإجراء");
+define("RECEPTION_ARF_MANAGE_SIGNED","تم الاعتماد");
 
 // reception sms
 define("RECEPTION_SMS_SENDING_TEXTSMS","ارسال رسالة نصية");
@@ -849,11 +849,11 @@ define("RECEPTION_SMS_SEARCHFORSTUDENT","بحث عن الطلاب");
 
 // reception sms_error
 define("RECEPTION_SMS_ERROR_SMSBLOCKED","الرسائل النصية محظورة");
-define("RECEPTION_SMS_ERROR_TEXT","تم حظر الرسائل النصية من قبل الادارة.");
+define("RECEPTION_SMS_ERROR_TEXT","تم حظر الرسائل النصية من قبل الادارة");
 
 // reception email
 define("RECEPTION_EMAIL_SENDINGTHE","ارسال بريد الكتروني");
-define("RECEPTION_EMAIL_EMAILSUCMSG","تم ارسال البريد الالكتروني بنجاح.");
+define("RECEPTION_EMAIL_EMAILSUCMSG","تم ارسال البريد الالكتروني بنجاح");
 define("RECEPTION_EMAIL_SELECTOPT","حدد الخيار");
 define("RECEPTION_EMAIL_SELECTSTUDENTNM","اختر اسم الطالب");
 define("RECEPTION_EMAIL_SUBJECT","الموضوع");
@@ -867,7 +867,7 @@ define("RECEPTION_PASSWORD_CHANGE_PASSWORD","تغيير الرقم السري");
 define("RECEPTION_PASSWORD_OLDPASSWORD","رقم سري قديم");
 define("RECEPTION_PASSWORD_NEWPASSWORD","رقم سري جديد");
 define("RECEPTION_PASSWORD_CONFIRMPASSWORD","تاكيد الرقم السري");
-define("RECEPTION_PASSWORD_INVALIDPWD","غير مستخدم رقم سري قديم ");
+define("RECEPTION_PASSWORD_INVALIDPWD","الرقم السري القديم غير صحيح");
 define("RECEPTION_PASSWORD_SUCMSG","تم حفظ رقمك السري بنجاح ");
 
 // reception quicklink_manage
@@ -881,7 +881,7 @@ define("RECEPTION_QUICKLINK_MANAGE_PAGENAME","اسم الصفحة");
 define("STUDENT_ADVISOR_HOME_LATESTALERTS","التنبيهات الاخيرة");
 define("STUDENT_ADVISOR_HOME_LATESTNEWS","الاخبار الاخيرة");
 define("STUDENT_ADVISOR_HOME_POSTEDBYADMIN","ارسلت من قبل الادارة");
-define("STUDENT_ADVISOR_HOME_MARKAS","عينت ك");
+define("STUDENT_ADVISOR_HOME_MARKAS","تم تصنيف الخبر على أنه");
 define("STUDENT_ADVISOR_HOME_URGENT","عاجل");
 define("STUDENT_ADVISOR_HOME_POSTEDBY","ارسلت من");
 define("STUDENT_ADVISOR_HOME_TEXT1","مواعيد اخيرة للعملاء");
@@ -894,8 +894,8 @@ define("STUDENT_ADVISOR_HOME_MSGTYPE","نوع الرسالة");
 define("STUDENT_ADVISOR_STUDENT_MANAGE_MANAGE_STUDENTS","ادارة الطلاب");
 define("STUDENT_ADVISOR_STUDENT_MANAGE_STUDENTNAME","اسم الطالب");
 define("STUDENT_ADVISOR_STUDENT_MANAGE_STUDENTMOBNO","رقم جوال الطالب");
-define("STUDENT_ADVISOR_STUDENT_MANAGE_ENQUIREDABOUT","استفسر عن");
-define("STUDENT_ADVISOR_STUDENT_MANAGE_ENQUIREFROM","شكل الاستفسار");
+define("STUDENT_ADVISOR_STUDENT_MANAGE_ENQUIREDABOUT","استفسر الطالب عن");
+define("STUDENT_ADVISOR_STUDENT_MANAGE_ENQUIREFROM","تم الاستفسار عن طريق");
 define("STUDENT_ADVISOR_STUDENT_MANAGE_STUDENTSTATUS","حالة الطالب");
 define("STUDENT_ADVISOR_STUDENT_MANAGE_QUICKADD","اضافة سريعة");
 define("STUDENT_ADVISOR_STUDENT_MANAGE_NAMEEXT","اسم طالب موجود مسبقا ");
@@ -911,7 +911,7 @@ define("STUDENT_ADVISOR_STUDENT_MANAGE_GROUPNM","اسم المجموعة");
 define("STUDENT_ADVISOR_AJAX_WEEK_VIEW_TIMEVALUE","قيمة الوقت");
 
 //auto_search.php
-define("STUDENT_ADVISOR_AUTO_SEARCH_ALTCONTACT","بديل الاتصال");
+define("STUDENT_ADVISOR_AUTO_SEARCH_ALTCONTACT","رقم بديل للإتصال");
 
 // Student Advisor add student
 define("STUDENT_ADVISOR_ADD_STD_WELCOMETEXT","الترحيب باضافة طالب");
@@ -950,7 +950,7 @@ define("STUDENT_ADVISOR_S5_EMAIL","البريد الالكتروني");
 
 define("STUDENT_ADVISOR_S_GROUP_ADDINGSTDTOGRUP","اضافة طالب لمجموعة");
 
-define("STUDENT_ADVISOR_S6_LEFTTEXT","اختر الدورات المهتم بها العميل.");
+define("STUDENT_ADVISOR_S6_LEFTTEXT","اختر الدورات المهتم بها العميل");
 define("STUDENT_ADVISOR_S6_STATUS","الحالة");
 
 define("STUDENT_ADVISOR_S7_HTEXT","تعليقات ومعلومات اضافية");
@@ -1027,11 +1027,11 @@ define("STUDENT_ADVISOR_SEARCH_MANAGE_REGDFR","سجل ل");
 define("STUDENT_ADVISOR_SEARCH_MANAGE_INITIPAY","دفعة مقدمة");
 define("STUDENT_ADVISOR_SEARCH_MANAGE_PAYMENTTYPE","نوع الدفع");
 define("STUDENT_ADVISOR_SEARCH_MANAGE_GHTEXT","هيكل رسوم الدورة");
-define("STUDENT_ADVISOR_SEARCH_MANAGE_SL","Sl.");
+define("STUDENT_ADVISOR_SEARCH_MANAGE_SL","رقم تسلسلي");
 define("STUDENT_ADVISOR_SEARCH_MANAGE_PAYDT","تاريخ الدفعة");
-define("STUDENT_ADVISOR_SEARCH_MANAGE_SCHEDFE","رسوم الجدول");
+define("STUDENT_ADVISOR_SEARCH_MANAGE_SCHEDFE","جدول الدفعات");
 define("STUDENT_ADVISOR_SEARCH_MANAGE_PAYMODE","طريقة الدفع");
-define("STUDENT_ADVISOR_SEARCH_MANAGE_PAIDONDT","دفعت في (تاريخ)");
+define("STUDENT_ADVISOR_SEARCH_MANAGE_PAIDONDT","تواريخ الدفعات");
 define("STUDENT_ADVISOR_SEARCH_MANAGE_PAID","مدفوعة");
 define("STUDENT_ADVISOR_SEARCH_MANAGE_STATUS","الحالة");
 define("STUDENT_ADVISOR_SEARCH_MANAGE_PRINT","طباعة");
@@ -1040,8 +1040,8 @@ define("STUDENT_ADVISOR_SEARCH_MANAGE_TXT","الرجاء املأ رسوم هي�
 define("STUDENT_ADVISOR_SEARCH_MANAGE_PRICE","السعر");
 define("STUDENT_ADVISOR_SEARCH_MANAGE_MATERIALRECI","حصل على المواد");
 define("STUDENT_ADVISOR_SEARCH_MANAGE_LTEXT1","حصل على رقم الدخول للموقع");
-define("STUDENT_ADVISOR_SEARCH_MANAGE_LTEXT2","تقرير نقدم منشأ");
-define("STUDENT_ADVISOR_SEARCH_MANAGE_LTEXT3","تقرير تقدم مطبوع +تاريخ");
+define("STUDENT_ADVISOR_SEARCH_MANAGE_LTEXT2","تم استلام تقرير التقدم في الدورة من المعلم الكترونياً");
+define("STUDENT_ADVISOR_SEARCH_MANAGE_LTEXT3","تمت طباعة تقرير التقديم بتاريخ");
 define("STUDENT_ADVISOR_SEARCH_MANAGE_LTEXT4","اصدرت الشهادة");
 define("STUDENT_ADVISOR_SEARCH_MANAGE_LTEXT5","طبعت الشهادة+التاريخ");
 define("STUDENT_ADVISOR_SEARCH_MANAGE_COMMENTS","تعليقات");
@@ -1053,7 +1053,7 @@ define("STUDENT_ADVISOR_GROUP_TXT","الرجاء اختر مجموعة");
 define("STUDENT_ADVISOR_GROUP_ENTGRPNM","ادخل اسم المجموعة");
 define("STUDENT_ADVISOR_GROUP_TXT1","الرجاء قم باختيار دورة");
 define("STUDENT_ADVISOR_GROUP_TXT2","الرجاء اختر عدد الوحدات");
-define("STUDENT_ADVISOR_GROUP_TOTAL_UNIT","عدد الوحدات الاجمالي");
+define("STUDENT_ADVISOR_GROUP_TOTAL_UNIT","اجمالي عدد الوحدات");
 define("STUDENT_ADVISOR_GROUP_GROUP","المجموعة");
 define("STUDENT_ADVISOR_GROUP_COURSE","الدورة");
 define("STUDENT_ADVISOR_GROUP_TXT3","اختر ايام الاسبوع");
@@ -1068,9 +1068,9 @@ define("STUDENT_ADVISOR_GROUP_TXT7","الرجاء اختر فصل");
 define("STUDENT_ADVISOR_GROUP_UNIT","وحدة");
 define("STUDENT_ADVISOR_GROUP_TIMESLOT","الوقت");
 define("STUDENT_ADVISOR_GROUP_TXT8","هذة الدورة عينت لهذا المدرس في المجموعة المختارة");
-define("STUDENT_ADVISOR_GROUP_CLASSROOM","فصل");
+define("STUDENT_ADVISOR_GROUP_CLASSROOM","رقم الفصل");
 define("STUDENT_ADVISOR_GROUP_FINISH","نهاية");
-define("STUDENT_ADVISOR_GROUP_SUCMSG","اضف معلومات المجموعة بنجاح ");
+define("STUDENT_ADVISOR_GROUP_SUCMSG","تم اضافة معلومات المجموعة بنجاح ");
 
 // Student Advisor group_manage
 define("STUDENT_ADVISOR_GROUP_MANAGE_MANAGE_GROUPING","ادارة المجموعات");
@@ -1081,7 +1081,7 @@ define("STUDENT_ADVISOR_GROUP_MANAGE_NOUNITS","عدد الوحدات");
 define("STUDENT_ADVISOR_GROUP_MANAGE_GROUPSTART","بداية المجموعة");
 define("STUDENT_ADVISOR_GROUP_MANAGE_GROUPEND","نهاية المجموعة");
 define("STUDENT_ADVISOR_GROUP_MANAGE_CLASSROOM","الفصل");
-define("STUDENT_ADVISOR_GROUP_MANAGE_TXT3","لا يوجد طلاب في هذة المجموعة.");
+define("STUDENT_ADVISOR_GROUP_MANAGE_TXT3","لا يوجد طلاه في هذة المجموعة.");
 define("STUDENT_ADVISOR_GROUP_MANAGE_STUDENTNM","اسم الطالب");
 define("STUDENT_ADVISOR_GROUP_MANAGE_STUDENTID","رقم بطاقة احوال الطالب");
 define("STUDENT_ADVISOR_GROUP_MANAGE_MOBNO","رقم الجوال.");
@@ -1101,8 +1101,8 @@ define("STUDENT_ADVISOR_VIEW_GROUPSIZE_VIEWGROUPSIZE","عرض حجم المجم�
 define("STUDENT_ADVISOR_VIEW_GROUPSIZE_NOTE","ملاحظة");
 define("STUDENT_ADVISOR_VIEW_GROUPSIZE_TEXT","اذا ازداد عدد الطلاب في الدورة خلال اول اسبوعين فانة سيتم تمديد فترة الدورة بالاضافة الى عدد الوحدات.");
 define("STUDENT_ADVISOR_VIEW_GROUPSIZE_TEXT1","اسم نوع المجموعة");
-define("STUDENT_ADVISOR_VIEW_GROUPSIZE_TEXT2","حجم المجموعة (عدد الطلاب)");
-define("STUDENT_ADVISOR_VIEW_GROUPSIZE_LENGTHOFCOURSES","طول الدورات");
+define("STUDENT_ADVISOR_VIEW_GROUPSIZE_TEXT2","حجم المجموعة - أو عدد الطلاب");
+define("STUDENT_ADVISOR_VIEW_GROUPSIZE_LENGTHOFCOURSES","مدة الدورة");
 define("STUDENT_ADVISOR_VIEW_GROUPSIZE_TEXT3","الوحدات التي تم وضعها من قبل الادارة");
 define("STUDENT_ADVISOR_VIEW_GROUPSIZE_AFTERRESIZE","بعد اعادة التحجيم");
 
@@ -1141,11 +1141,11 @@ define("STUDENT_ADVISOR_SMS_SEARCHFORSTUDENT","البحث عن الطلاب");
 
 // Student Advisor sms_error
 define("STUDENT_ADVISOR_SMS_ERROR_SMSBLOCKED","الرسائل النصية محظورة");
-define("STUDENT_ADVISOR_SMS_ERROR_TEXT","تم حظر الرسائل النصية من قبل الادارة.");
+define("STUDENT_ADVISOR_SMS_ERROR_TEXT","تم حظر الرسائل النصية من قبل الادارة");
 
 // Student Advisor email
 define("STUDENT_ADVISOR_EMAIL_SENDINGTHE","ارسال البريد الالكتروني");
-define("STUDENT_ADVISOR_EMAIL_EMAILSUCMSG","تم ارسال البريد الالكتروني بنجاح.");
+define("STUDENT_ADVISOR_EMAIL_EMAILSUCMSG","تم ارسال البريد الالكتروني بنجاح");
 define("STUDENT_ADVISOR_EMAIL_SELECTOPT","حدد خيار");
 define("STUDENT_ADVISOR_EMAIL_SELECTSTUDENTNM","اختر اسم الطالب");
 define("STUDENT_ADVISOR_EMAIL_SUBJECT","الموضوع");
@@ -1163,7 +1163,7 @@ define("STUDENT_ADVISOR_GROUP_ADD_NOOFUNIT","عدد الوحدات");
 define("STUDENT_ADVISOR_GROUP_ADD_DAYOFWEEK","يوم من الأسبوع");
 define("STUDENT_ADVISOR_GROUP_ADD_SELECTDATE","حدد تاريخ");
 define("STUDENT_ADVISOR_GROUP_ADD_SCHEDULE","جدول");
-define("STUDENT_ADVISOR_GROUP_ADD_ENROLLED","لم يتم قائمة الطلاب الذين بالطبع لم تكتمل بعد لكن المسجلين.");
+define("STUDENT_ADVISOR_GROUP_ADD_ENROLLED","قائمة الطلاب المسجلين الذين يدرسون حالياً");
 
 // Student Advisor group_centre.php
 define("STUDENT_ADVISOR_GROUP_CENTRE_SELECTCENTRE","الرجاء اختيار مركز");
@@ -1183,8 +1183,8 @@ define("STUDENT_ADVISOR_PED_PEDAGOCARD","البطاقة التعليمية");
 define("STUDENT_ADVISOR_PED_UNITS","الوحدات");
 define("STUDENT_ADVISOR_PED_GRONAME","اسم المجموعة");
 define("STUDENT_ADVISOR_PED_STARTING","البداية");
-define("STUDENT_ADVISOR_PED_BLGOAL","هدف المعهد");
-define("STUDENT_ADVISOR_PED_MATERIALS","المواد");
+define("STUDENT_ADVISOR_PED_BLGOAL","المستوى المستهدف");
+define("STUDENT_ADVISOR_PED_MATERIALS","الموتد التعليمية");
 define("STUDENT_ADVISOR_PED_PROGREPORT","تقرير التقدم");
 define("STUDENT_ADVISOR_PED_LEVELCK","اختبار المستوى");
 define("STUDENT_ADVISOR_PED_YES","نعم");
@@ -1193,25 +1193,25 @@ define("STUDENT_ADVISOR_PED_STARTDT","تاريخ البداية");
 define("STUDENT_ADVISOR_PED_TMDAY","وقت/يوم");
 define("STUDENT_ADVISOR_PED_NOFSTUDENT","عدد الطلاب");
 define("STUDENT_ADVISOR_PED_TXT","التكرار 2×5 يوم");
-define("STUDENT_ADVISOR_PED_SLSPERSON","البائع");
+define("STUDENT_ADVISOR_PED_SLSPERSON","المرشد التعليمي");
 define("STUDENT_ADVISOR_PED_TXT1","نوع البرنامج");
 define("STUDENT_ADVISOR_PED_COMMENTS","التعليقات");
 define("STUDENT_ADVISOR_PED_LOCADIRECTION","الموقع/ الاتجاهات");
-define("STUDENT_ADVISOR_PED_TXT2","المحاضرة التعريفية اللائحة");
-define("STUDENT_ADVISOR_PED_TXT3","برنامج التوجية");
+define("STUDENT_ADVISOR_PED_TXT2","محاور المحاضرة التعريفية");
+define("STUDENT_ADVISOR_PED_TXT3","شرح النظم الالكترونية التعليمية");
 define("STUDENT_ADVISOR_PED_TXT4","تم شرح اختبار المستوى");
 define("STUDENT_ADVISOR_PED_TXT5","جولة حول المعهد وموقع الخدمات");
-define("STUDENT_ADVISOR_PED_TXT6","تم شرح نماذج النتائج");
-define("STUDENT_ADVISOR_PED_TXT7","ضع توقعات(مباديء طريقة بيرلتز)");
-define("STUDENT_ADVISOR_PED_TXT8","شرحت سياسة الالغاء");
-define("STUDENT_ADVISOR_PED_TXT9","المواد المستلمة وكيفية استخدامها");
+define("STUDENT_ADVISOR_PED_TXT6","تم شرح طريقة استبيانات تقييم الدورة");
+define("STUDENT_ADVISOR_PED_TXT7","تم شرح مبادئ طريقة بيرلتز في التدريس");
+define("STUDENT_ADVISOR_PED_TXT8","تم شرح سياسة التعامل مع الغياب");
+define("STUDENT_ADVISOR_PED_TXT9","تم شرح طريقة استخدام الكتب ومحتوياتها");
 define("STUDENT_ADVISOR_PED_TXT10","اهمية الحضور المنتظم");
-define("STUDENT_ADVISOR_PED_TEACHERTM","فريق المدرس");
+define("STUDENT_ADVISOR_PED_TEACHERTM","تم شرح معلومات عن المدرسين");
 define("STUDENT_ADVISOR_PED_TXT11","تاكيد الاهداف");
 define("STUDENT_ADVISOR_PED_TXT12","اهمية اكمال الواجبات البيتية");
-define("STUDENT_ADVISOR_PED_TXT13","تم تغطية النقاط من");
+define("STUDENT_ADVISOR_PED_TXT13","اسم الموظف الذي قام بالشرح");
 define("STUDENT_ADVISOR_PED_DATE","التاريخ");
-define("STUDENT_ADVISOR_PED_TXT14","مرحلة دورة التدريس");
+define("STUDENT_ADVISOR_PED_TXT14","مراحل الدورة التعليمية في بيرلتز");
 define("STUDENT_ADVISOR_PED_INSTRUCTOR","المدرس");
 define("STUDENT_ADVISOR_PED_MATERIALCOVER","المادة المعطاة");
 define("STUDENT_ADVISOR_PED_HOMEWORK","الواجب البيتي");
@@ -1226,7 +1226,7 @@ define("STUDENT_ADVISOR_PED_TEXT","اذا كان هناك اي قضايا الر
 define("STUDENT_ADVISOR_PED_Q7","تم تسليم طلب عمل الاستشارة؟ نعم/لا");
 define("STUDENT_ADVISOR_PED_TEXT1","توزيع نموذج الانطباع الاولي");
 define("STUDENT_ADVISOR_PED_DISTRIBTBY","وزع من");
-define("STUDENT_ADVISOR_PED_COLLECTBY","تم جمعة من");
+define("STUDENT_ADVISOR_PED_COLLECTBY","تم استلامه من قبل الموظف");
 define("STUDENT_ADVISOR_PED_TEXT2","اكمال درجات تقرير المتابعة");
 define("STUDENT_ADVISOR_PED_COUNSEL","استشارة");
 define("STUDENT_ADVISOR_PED_TEXT3","تأكد من تقدم الطلاب بوتيرة مناسبة");
@@ -1276,10 +1276,10 @@ define("STUDENT_ADVISOR_AUDITING_ACTIVE","نشط");
 define("STUDENT_ADVISOR_AUDITING_WAITING","انتظار");
 
 // Student Advisor ped.php
-define("STUDENT_ADVISOR_PED_STANDARD","معيار");
+define("STUDENT_ADVISOR_PED_STANDARD","برنامج عام");
 
 // Student Advisor student_add_check_mobile.php
-define("STUDENT_ADVISOR_STUDENT_ADD_CHECK_MOBILE_MOBNOEXIST","عدد الطلاب موبايل موجودة بالفعل ");
+define("STUDENT_ADVISOR_STUDENT_ADD_CHECK_MOBILE_MOBNOEXIST","رقم جوال الطالب موجود مسبقاً ");
 //======================================Student Advisor====================================================
 
 //====================================================TEACHER==========================================================
@@ -1473,16 +1473,16 @@ define("CD_HOME_TEXT2","اختبار نهاية المستوى");
 
 // Center Director view_group_history
 define("CD_VIEW_GROUP_HISTORY_VIEW_GROUP_HISTORY","عرض مسار الدورة");
-define("CD_VIEW_GROUP_HISTORY_GROUPNAME","اسم الجموعة");
+define("CD_VIEW_GROUP_HISTORY_GROUPNAME","اسم المجموعة");
 define("CD_VIEW_GROUP_HISTORY_NAMEOFTHE","اسم الدورة");
 define("CD_VIEW_GROUP_HISTORY_DATEOF","تاريخ الحذف والاضافة");
 define("CD_VIEW_GROUP_HISTORY_GROUPST","بداية المجموعة");
 define("CD_VIEW_GROUP_HISTORY_GROUPEND","نهاية الدورة");
 define("CD_VIEW_GROUP_HISTORY_TYPEOF","نوع العملية");
-define("CD_VIEW_GROUP_HISTORY_TEXT2","لا يوجد طلاب في هذة المجموعة.");
+define("CD_VIEW_GROUP_HISTORY_TEXT2","لا يوجد طلاب في هذة المجموعة");
 define("CD_VIEW_GROUP_HISTORY_STDNM","اسم الطالب");
 define("CD_VIEW_GROUP_HISTORY_STDID","بطاقة احوال الطالب");
-define("CD_VIEW_GROUP_HISTORY_MOBNO","رقم الجوال.");
+define("CD_VIEW_GROUP_HISTORY_MOBNO","رقم الجوال");
 define("CD_VIEW_GROUP_HISTORY_EMAILADD","عنوان البريد الالكتروني");
 
 // Center Director translate
@@ -1512,7 +1512,7 @@ define("CD_SMS_SEARCHFORSTUDENT","البحث عن طلاب");
 
 // Center Director sms_error
 define("CD_SMS_ERROR_SMSBLOCKED","حظر الرسائل");
-define("CD_SMS_ERROR_TEXT","تم حظر الرسائل من قبل الادارة.");
+define("CD_SMS_ERROR_TEXT","تم حظر الرسائل من قبل الادارة");
 
 // Center Director email
 define("CD_EMAIL_SENDINGTHE","ارسال بريد الكتروني");
@@ -1603,9 +1603,9 @@ define("ADMIN_MENU_LANGUAGE_CONVERTER","محول اللغة");
 //============== Admin Menu End ================================
 
 //============== Student Menu End ================================
-define("STUDENT_MENU_MY_SCHEDULE","بلدي الجدول الزمني");
-define("STUDENT_MENU_MY_PROGRESS","تقارير التقدم");
-define("STUDENT_MENU_CERTIFICATE_GRADES","درجات الشهادة");
+define("STUDENT_MENU_MY_SCHEDULE","الجدول الدراسي");
+define("STUDENT_MENU_MY_PROGRESS","تقارير التقدم الدراسي");
+define("STUDENT_MENU_CERTIFICATE_GRADES","الدرجات النهائية");
 define("STUDENT_MENU_DATE_CONVERTER","محول التاريخ");
 define("STUDENT_MENU_PREFERENCES","التفضيلات");
 define("STUDENT_MENU_LEAVE","مغادرة");
@@ -1617,8 +1617,8 @@ define("RE_MENU_CONVERTER","محول");
 define("RE_MENU_HELP","مساعدة");
 define("RE_MENU_SEARCH","بحث");
 define("RE_MENU_GROUPS","مجموعات");
-define("RE_MENU_ARF","طلب عمل اللازم");
-define("RE_MENU_CS","جدول المركز");
+define("RE_MENU_ARF","طلب اجراء");
+define("RE_MENU_CS","الجدول الدراسي للفرع");
 //RE
 
 //TEACHER
@@ -1634,7 +1634,7 @@ define("TE_MENU_PRE","التفضيلات");
 //SA
 define("SA_MENU_QUICKADD","اضافة سريعة");
 define("SA_MENU_ARF_REPORTS","تقارير ARF");
-define("SA_MENU_WIZARD_BASED","المعالج بناءاً على التفاعل");
+define("SA_MENU_WIZARD_BASED","المعالج التفاعلي");
 define("SA_MENU_GROUP","اعداد المجموعات");
 define("SA_MENU_TIME_SLOT","اعداد الاوقات");
 define("SA_MENU_GROUP_SIZE","عرض حجم المجموعة");
@@ -1720,11 +1720,11 @@ define("CD_CENTRE_SCHEDULE_TEACHER_RECORDDISPLAYACCORDINGTOTEACHER","ملاحظ�
 define("CD_CENTRE_SCHEDULE_TEACHER_COURSENAME","اسم الدورة "); 
 
 //date-converter.php
-define("CD_DATE_CONVERTER_S","سبت");
-define("CD_DATE_CONVERTER_M","احد"); 
-define("CD_DATE_CONVERTER_T","اثنين");
-define("CD_DATE_CONVERTER_W","ثلاثاء ");
-define("CD_DATE_CONVERTER_F","أربعاء");
+define("CD_DATE_CONVERTER_S","الأحد");
+define("CD_DATE_CONVERTER_M","الأثنين"); 
+define("CD_DATE_CONVERTER_T","الثلاثاء");
+define("CD_DATE_CONVERTER_W","الأربعاء");
+define("CD_DATE_CONVERTER_F","الخميس");
 
 //ep_adding_student.php
 define("CD_EP_ADDING_STUDENT_HEADING","اضافة طالب لمجموعة");
@@ -1778,17 +1778,17 @@ define("CD_GROUP_PROGRESS_COMPANYGROUP","شركة/مجموعة");
 define("CD_GROUP_PROGRESS_LANGUAGE","اللغة");
 define("CD_GROUP_PROGRESS_PROGRAMLENGTH","مدة البرنامج");
 define("CD_GROUP_PROGRESS_LESSIONTAKEN","الدروس التي اعطيت");
-define("CD_GROUP_PROGRESS_LONGTEXT","قادر على جمع واعادة صياغة المادة المعطاة لتلاقي احتياجات التدريس وتحقق التواصل السريع. فهم المعلومات من خلال مواضيع مألوفة وسياق مضبوط  وانتاج محادثة مستمرة مع الاخرين بتنوع واسع من الموضوعات العامة.");
+define("CD_GROUP_PROGRESS_LONGTEXT","يستطيع اعادة استخدام المعلومات التي تعلمها في الفصل واستخدامها لفهم المحادثات والمناقشات المطولة");
 define("CD_GROUP_PROGRESS_SCORE","الدرجة");
 define("CD_GROUP_PROGRESS_COMPREHENSION","الاستيعاب");
 define("CD_GROUP_PROGRESS_OVERALL","الاجمالي");
 define("CD_GROUP_PROGRESS_ATTENDACE","الحضور");
-define("CD_GROUP_PROGRESS_VERYGOOD","1.جيد جدا");
-define("CD_GROUP_PROGRESS_GOOD","2.جيد");
-define("CD_GROUP_PROGRESS_SATISFACTORY","3.مرضي");
-define("CD_GROUP_PROGRESS_FAIR","4.مقبول");
-define("CD_GROUP_PROGRESS_INSUFFICIENT","5.غير كاف");
-define("CD_GROUP_PROGRESS_PEDASUPERVISOR","المشرف التربوي");
+define("CD_GROUP_PROGRESS_VERYGOOD","جيد جدا");
+define("CD_GROUP_PROGRESS_GOOD","جيد");
+define("CD_GROUP_PROGRESS_SATISFACTORY","مرضي");
+define("CD_GROUP_PROGRESS_FAIR","مقبول");
+define("CD_GROUP_PROGRESS_INSUFFICIENT","غير كاف");
+define("CD_GROUP_PROGRESS_PEDASUPERVISOR","المرشد التعليمي");
 
 //center_check.php
 define("ADMIN_CENTER_CHECK_CENTEREXIST","لقد ادخلت اسم مركز موجود مسبقا");
@@ -1816,7 +1816,7 @@ define("CD_GROUP_TEACHER_8PM","08:00PM");
 
 //password.php
 define("CD_PASSWORD_HEADING","تغيير الرقم السري ");
-define("CD_PASSWORD_INVALIDPASSWORD","رقم سري قديم غير صالح !!! ");
+define("CD_PASSWORD_INVALIDPASSWORD","رقم سري قديم غير صالح ");
 
 //report_cd_graphs.php
 define("CD_REPORT_CD_GRAPHS_VERYGOOD","جيد جدا");
@@ -1862,7 +1862,7 @@ define("CD_REPORT_STUDENT_ON_HOLD_CSV_DATA_DATEPAUSED","تاريخ الدورة 
 
 //report_teacher_progress.php
 define("CD_REPORT_TEACHER_PROGRESS_TOTAL","الاجمالي");
-define("CD_REPORT_TEACHER_PROGRESS_LONGTEXT1","اي درجة تحت 3.5 تتطلب منك انتباه اكثر للموضوع الذي اخذت فيه هذه الدرجة لكي تكمل دورتك بنجاح.");
+define("CD_REPORT_TEACHER_PROGRESS_LONGTEXT1","اي درجة تحت 3.5 تتطلب منك انتباه اكثر للموضوع الذي اخذت فيه هذه الدرجة لكي تكمل دورتك بنجاح");
 define("CD_REPORT_TEACHER_PROGRESS_OUTOF","من");
 
 //report_teacher_progress_condition.php
@@ -1891,7 +1891,7 @@ define("CD_SEARCH_PRINT_CHALLAN_ADMISSION_SUMOF","مجموع");
 define("CD_SEARCH_PRINT_CHALLAN_ADMISSION_INWORD","في كلمة");
 define("CD_SEARCH_PRINT_CHALLAN_ADMISSION_SIGNATURE","التوقيع");
 define("CD_SEARCH_PRINT_CHALLAN_ADMISSION_FEESCHALLAN","وصل الرسوم");
-define("CD_SEARCH_PRINT_CHALLAN_ADMISSION_ADMISSIONFEES","لرسوم القبول");
+define("CD_SEARCH_PRINT_CHALLAN_ADMISSION_ADMISSIONFEES","رسوم التسجيل");
 
 //search_manage_mail.php
 define("CD_SEARCH_MANAGE_MAIL_ALERTSMS","رسالة تنبية");
@@ -1906,7 +1906,7 @@ define("CD_SEARCH_PRINT_INVOICE_BALANCE","الرصيد");
 define("CD_SEARCH_PRINT_INVOICE_TERMCONDITION","البنود/ الشروط");
 
 //sick_leave_add.php
-define("CD_SICK_LEAVE_ADD_LEAVESTATUS","حالة المغادرة");
+define("CD_SICK_LEAVE_ADD_LEAVESTATUS","حالة الاجازة");
 define("CD_SICK_LEAVE_ADD_OPTION","خيار");
 
 //sick_leave_manage.php
@@ -1917,10 +1917,10 @@ define("CD_SICK_LEAVE_MANAGE_OTHERS","اخرى");
 define("CD_SMS_SEARCH_STUDENT_SEARCHSTD","بحث عن طلاب");
 
 //vacation_center_status.php
-define("CD_VACATION_CENTER_STATUS_CENTERLEAVE","حالة مغادرة المركز");
+define("CD_VACATION_CENTER_STATUS_CENTERLEAVE","حالة توقف الفرع عن العمل");
 
 //vacation_exam_status.php
-define("CD_VACATION_EXAM_STATUS_EXAMVAC","حالة اجازة الاختبار");
+define("CD_VACATION_EXAM_STATUS_EXAMVAC","حالة التوقف للاختبارات");
 
 //vacation_teacher_status.php
 define("CD_VACATION_TEACHER_STATUS_TEACHERVACATION","اعداد اجازة المدرس");
@@ -1929,7 +1929,7 @@ define("CD_VACATION_TEACHER_STATUS_TEACHERVACATION","اعداد اجازة ال�
 define("CD_SLOT_MANAGE_CREATETIMESLOT","تجهيز الاوقات للمركز");
 
 //group_teacher_date_check.php
-define("CD_SLOT_MANAGE_BOOKEDSLOT","هذا الوقت محجوز مسبقا.");
+define("CD_SLOT_MANAGE_BOOKEDSLOT","هذا الوقت محجوز مسبقا");
 
 //===============================================CENTER DIRECTOR======================================================
 //======== All Buttons ============
@@ -1976,12 +1976,12 @@ define("ADMIN_MENU_STDAWT","طلاب في الانتظار");
 define("TEACHER_MENU_GRPFINISH","مجموعات قاربت على الانتهاء");
 
 //cd
-define("CD_MENU_CLASSICFRMBASESTD","نموذج قديم يعتمد الطالب");
-define("CD_MENU_WIZBASESTD","معالج يعتمد تفاعل الطالب");
-define("CD_MENU_WIZBASEGROUP","معالج يعتمد تفاعل المجموعة");
+define("CD_MENU_CLASSICFRMBASESTD","ادخال بيانات تسجيل طالب");
+define("CD_MENU_WIZBASESTD","تسجيل طالب باسلوب تفاعلي");
+define("CD_MENU_WIZBASEGROUP","تسجيل مجموعة باسلوب تفاعلي");
 define("CD_MENU_V_TABSTARTDATE","عرض الجدول باستخدام تاريخ البداية");
 define("CD_MENU_V_TABENDDATE","عرض الجدول باستخدام تاريخ النهاية");
-define("CD_MENU_V_TABRANGEDATE","عرض الجدول باستخدام تاريخ تقريبي");
+define("CD_MENU_V_TABRANGEDATE","عرض الجدول عبر تاريخين");
 define("CD_MENU_REMOVESTDFRMGRP","حذف طالب من مجموعة");
 define("CD_MENU_SCHMAKEUPCLASS","جدولة درس تعويضي");
 define("CD_MENU_CHANGECLASSROOM","تغيير فصل");
@@ -1991,8 +1991,8 @@ define("CD_MENU_ADDSTDTOGRP","اضافة طالب لمجموعة");
 define("SA_MENU_CUSTOMERNOTENROLLED","عميل لم يسجل");
 define("SA_MENU_CUSTOMERONHOLD","عميل في الانتظار");
 
-define("RECENT_ADDED_STUDENTS","أضيفت مؤخرا طلاب");
-define("RECENT_INITIAL_PAYMENT","الأولي");
+define("RECENT_ADDED_STUDENTS","طلاب أضيفوا مؤخراً");
+define("RECENT_INITIAL_PAYMENT","الدفعة الأولى");
 define("WELCOME","ترحيب");
 define("LOGOUT","تسجيل الخروج");
 define("RECOVER_HEADING","استعادة كلمة المرور");
@@ -2002,7 +2002,7 @@ define("STUDENT_ADVISOR_S_AGE_PARENT","ادخال تفاصيل ولي امر ا�
 define("STUDENT_ADVISOR_S_AGE_STUDENT_DETAILS","تفاصيل الطالب");
 define("STUDENT_ADVISOR_S_COUNTRY_ID","دولة الطالب / بطاقة الاحوال");
 define("STUDENT_ADVISOR_S_CONTACT","رقم اتصال الطالب");
-define("NO_COMMENTS","لا يوجد تعليقات !!!");
+define("NO_COMMENTS","لا يوجد تعليقات ");
 
 //Screen Tips 
 define("QUICK_ADD","اضافة طالب جديد");
@@ -2019,10 +2019,10 @@ define("HOME","مستخدم منزل");
 define("STUDENT_APPOINTMENT","موعد الطالب");
 define("NEW_ARF","اضافة ARF");
 define("EDIT_ARF","ARF");
-define("ADD_SICK_LEAVE","اضافة مغادرة مرضية");
-define("EDIT_SICK_LEAVE","تعديل مغادرة مرضية");
-define("ADD_LEAVE","اضافة مغادرة");
-define("LEAVE","مغادرة");
+define("ADD_SICK_LEAVE","اضافة اجازة مرضية");
+define("EDIT_SICK_LEAVE","تعديل اجازة مرضية");
+define("ADD_LEAVE","اضافة اجازة");
+define("LEAVE","اجازة");
 define("SMS_HEADER_MSG","هذا سيقوم بارسال الرسالة النصية الى جميع الطلاب في هذا المركز");
 define("SMS_HEADER_MSG_EMAIL","هذا سيقوم بارسال الرسالة النصية الى جميع الطلاب في هذا المركز");
 define("WEEK","اسبوع");
@@ -2030,7 +2030,7 @@ define("ADD_NEW_USER_STATUS","اضف حالة مستخدم جديد");
 define("EDIT_USER_STATUS","تعديل حالة مستخدم");
 define("TEACHER_PREFERENCE","المدرس المفضل");
 define("MATTERIAL","المادة");
-define("LEAD","قيادة");
+define("LEAD","مصدر رغبة العميل");
 define("TERMS_AND_CONDITION","البنود والشروط");
 define("CENTER","Center");
 define("VOCATION_CENTER","اجازة المركز");
@@ -2060,13 +2060,13 @@ define("STUDENT","الطالب ");
 define("EDIT_STUDENT","تعديل طالب");
 
 //Payment section
-define("MANAGE_LEAVE","اعداد مغادرة");
+define("MANAGE_LEAVE","اعدادات الاجازات");
 define("LAST_PAYMENT","اخر دفعة");
 define("PAYMENT_DATE","تاريخ الدفعة");
 define("LAST_PAYMENT_HISTORY","تاريخ اخر دفعة");
 
 //Student ID
-define("ENTER_STUDENT_ID","ادخل رقم بطقة الطالب");
+define("ENTER_STUDENT_ID","ادخل رقم بطاقة الطالب");
 
 //Email id aleready exist
 define("EMAIL_EXIST","الايميل موجود مسبقا");
@@ -2079,7 +2079,7 @@ define("EDIT_GROUP_SIZE","تعديل حجم محموعة");
 define("ADD_GROUP_SIZE","اضافة حجم مجموعة");
 
 //Button
-define("btn_english","تحويل اللا ميلادي");
+define("btn_english","تحويل الى ميلادي");
 define("btn_hijri","تحويل الى هجري");
 
 //Student Information
@@ -2103,14 +2103,14 @@ define("CD_MENU_CENTRE_REPORT","تقرير الشهادة");
 
 define("CD_HOME_PREV_SALE","مبيعات السنة السابقة المجموع");
 define("CD_HOME_CURR_SALE","مبيعات السنة الحالية المجموع");
-define("CD_HOME_SALE_OFDAY","ملخص من مبيعات في اليوم الواحد");
+define("CD_HOME_SALE_OFDAY","ملخص مبيعات اليوم");
 
 define("PAYMENT_EDIT_HEADER","تحرير الدفع");
 define("MENU_STUDENT_SERVICES","طالب الخدمات");
 
 define("ACTION_CAPTION_DELETE","حذف");
 
-define("REPORT_STUDENT_LIFE_CYCLE","طالب دورة الحياة");
+define("REPORT_STUDENT_LIFE_CYCLE","دورة حياة المتدرب في المعهد");
 define("PLACEMENT_TESTGRADE_ONLINE","درجات الطالب على موقع الويب");
 define("PLACEMENT_TESTGRADE_SPEAK","درجات الطالب - تحدث");
 
@@ -2345,7 +2345,7 @@ define("CERTIFICATE_PRINTED_ON", "المطبوعة على");
 define("CERTIFICATE_PRINTED_BY", "طباعتها من قبل");
 define("CERTIFICATE_NOT_PRINTED", "شهادة لا تطبع");
 
-define("NO_INTERESTED", "لا المهتمة في المجموعات أوبيند");
+define("NO_INTERESTED", "المجموعات المتوفرة غير مناسبة");
 define("DISCOUNT_PERCENT", "[%] خصم");
 
 define("CONGRATULATION", "تهنئة");

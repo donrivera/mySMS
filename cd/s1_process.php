@@ -175,6 +175,7 @@ if($_REQUEST['action']=='aboutus'){
 	}
 	$_SESSION[leadid] = $leadid;
 	
+	/*
 	$typeid='';
 	$count = $_POST[tcount];
 	for($i=1; $i<=$count; $i++){
@@ -188,9 +189,8 @@ if($_REQUEST['action']=='aboutus'){
 				$typeid=$typeid.','.$c;
 			}
 		}
-	}
-	$_SESSION['typeid'] = $typeid;
-		
+	}*/
+	$_SESSION['typeid'] = $_POST[type];	
 	header("Location:s10.php");
 }
  
@@ -856,7 +856,7 @@ if($_REQUEST['action']=='search'){
 	//Get data from student_enroll for checking the whether initial fee has been changed or not
 	$res_en = $dbf->strRecordID("student_enroll","*","course_id='$_REQUEST[course_id]' And student_id='$student_id'");
 	
-	$string="level_complete='$_POST[level]',other_amt='$_POST[otheramt]',othertext='$_POST[othertext]',payment_type='$_POST[ptype]',web='$_POST[web]',discount='$_POST[discount]',invoice_note='$invoice_note'";
+	$string="course_fee='$_POST[course_fee]',level_complete='$_POST[level]',other_amt='$_POST[otheramt]',othertext='$_POST[othertext]',payment_type='$_POST[ptype]',web='$_POST[web]',discount='$_POST[discount]',invoice_note='$invoice_note'";
 	$dbf->updateTable("student_enroll",$string,"course_id='$course_id' And student_id='$student_id'");
 	
 	# Check Opening balance

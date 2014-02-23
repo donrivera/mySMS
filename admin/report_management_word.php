@@ -27,7 +27,7 @@ header("Content-Disposition: attachment; Filename=report_management.doc");
 
 ?>	
 <!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td width="56%"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -212,13 +212,23 @@ header("Content-Disposition: attachment; Filename=report_management.doc");
                     <?php
 					$total = 0;
 					foreach($dbf->fetchOrder('common',"type='payment type'","id DESC") as $valpay) {						
-						$amts = $dbf->strRecordID("student_fees","SUM(paid_amt)","payment_type='$valpay[id]' And centre_id='$centre_id'");
-						$amts = $amts["SUM(paid_amt)"];
+						
+						# it is sum amount from fees structures 
+						#$amts = $dbf->strRecordID("student_fees","SUM(paid_amt) as total_paid_amt","payment_type='$valpay[id]' And (paid_date BETWEEN '$start_date' And '$end_date')");
+						#$amts = $amts["SUM(paid_amt)"];
+						$amts_type=$dbf->getDataFromTable("student_fees", "SUM(paid_amt)", "payment_type='$valpay[id]' And (paid_date BETWEEN '$start_date' And '$end_date')");
+						
+						$total = $total + $amts_type;
+						
+						# it is sum amount from student enrolled table (first payment or initial payment)
+						$amts_ob = $dbf->strRecordID("student_enroll","SUM(ob_amt)","payment_type='$valpay[id]' And centre_id='$centre_id' And (payment_date BETWEEN '$start_date' And '$end_date')");
+						$amts = $amts_ob["SUM(ob_amt)"];
+						
 						$total = $total + $amts;
 						?>
                       <tr class="mymenutext">
                         <td width="51%" align="center" valign="middle"><?php echo $valpay["name"];?></td>
-                        <td width="49%" align="center" valign="middle" class="pedtext"><?php echo $amts;?> <?php echo $res_currency[symbol];?></td>
+                        <td width="49%" align="center" valign="middle" class="pedtext"><?php echo (empty($amts_type)?0:$amts_type);?> <?php echo $res_currency[symbol];?></td>
                       </tr>
                       <?php } ?>
                       <tr class="mymenutext">

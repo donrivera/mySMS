@@ -19,91 +19,24 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0" style="b
         <td width="13%" align="left" valign="middle" bgcolor="#CDCDCD"><span id="result_box" lang="ar" xml:lang="ar">'.RECEPTION_S_MANAGE_STUDENTNAME.'</span></td>
         <td width="14%" align="left" valign="middle" bgcolor="#CDCDCD"><span id="result_box" lang="ar" xml:lang="ar">'.STUDENT_ADVISOR_S10_MOBNO.'</span></td>
         <td width="18%" align="left" valign="middle" bgcolor="#CDCDCD"><span id="result_box" lang="ar" xml:lang="ar">'.STUDENT_ADVISOR_SEARCH_EMAIL.'</span></td>
-        <td width="13%"  align="center" valign="middle" bgcolor="#CDCDCD"><span id="result_box" lang="ar" xml:lang="ar">Group Name</span></td>
       </tr>';
-	$query=$dbf->genericQuery("	SELECT s.id,sg.group_name,sg.start_date,sg.end_date,sg.group_start_time,sg.group_end_time
-												FROM student s
-												INNER JOIN student_type stype ON stype.student_id = s.id
-												INNER JOIN common c ON c.id = stype.type_id
-												INNER JOIN student_group_dtls sgdtls ON sgdtls.student_id=s.id
-												INNER JOIN (SELECT 
-																	DISTINCT(group_name),
-																	group_start_time,
-																	group_end_time,
-																	start_date,
-																	end_date,
-																	centre_id,
-																	id 
-															FROM student_group LIMIT 1) sg ON sg.id=sgdtls.parent_id
-												WHERE sg.centre_id='$_SESSION[centre_id]' AND c.id ='$_REQUEST[teacher]'
-											");
-					/*
-						INNER JOIN student_group_dtls sgdtls ON sgdtls.student_id=s.id
-						INNER JOIN student_group sg ON sg.id=sgdtls.parent_id
-					*/
-					if($_REQUEST[teacher]!=''){
-						//$cond = "s.id=c.student_id AND c.status_id='$_REQUEST[teacher]'";
-						$cond ="stype.student_id = st.id AND c.id = stype.type_id AND c.id = '$_REQUEST[teacher]' ";
-					}else{
-						//$cond = "s.id=c.student_id";
-						$cond="stype.student_id = st.id AND c.id = stype.type_id";
-					}
-					
-					$i = 1;
-					$color="#ECECFF";
-					
-					//Get Number of Rows
-					//$num=$dbf->countRows('student s,student_moving c',$cond,"");
-					$num=count($query);//$dbf->countRows('student s,student_type stype,common c',$cond,"");
-					 //Loop start
-					//foreach($dbf->fetchOrder('student s,student_moving c',$cond,"s.id DESC","s.id","s.id") as $val) {
-					  //foreach($dbf->fetchOrder('student s,student_type stype,common c',$cond,"s.id DESC","s.id","s.id") as $val) {
-					foreach($query as $val){
-					$val_student = $dbf->strRecordID("student","*","id='$val[id]'");
-					
-					//Get Course Name
-					$course = "";
-					foreach($dbf->fetchOrder('student_course',"student_id='$val[id]'","") as $valc) {
-					
-						$c = $dbf->strRecordID("course","name","id='$valc[course_id]'");
-						if($course==''){
-							$course  = $c[name];
-						}else{
-							$course  = $course.",".$c[name];
-						}
-					}
-					
-					//Get Lead Information
-					$lead = '';
-					foreach($dbf->fetchOrder('student_lead',"student_id='$val[id]'","") as $vall) {
-					
-						$c = $dbf->strRecordID("common","name","id='$vall[lead_id]'");
-						if($lead==''){
-							$lead  = $c[name];
-						}else{
-							$lead  = $lead.",".$c[name];
-						}
-					}
-					
-					//Register date
-					if($val[register_date] == "0000-00-00"){
-						$dt = '';
-					}else{
-						$dt = date('d-M-Y',strtotime($val_student[created_datetime]));
-					}
-					
-					//Last comment
-					$last_com = $dbf->getDataFromTable("student_comment", "MAX(id)", "student_id='$val[id]'");
-					$com = $dbf->strRecordID("student_comment", "*", "id='$last_com'");	
-		
+		$i = 1;
+		$color="#ECECFF";
+		$query=$dbf->genericQuery("SELECT s.id,s.student_mobile,s.email
+									FROM student s
+									INNER JOIN student_type st ON st.student_id = s.id
+									INNER JOIN common c ON c.id = st.type_id
+									WHERE c.id = '$_REQUEST[teacher]'
+									AND s.centre_id='$_SESSION[centre_id]'
+								");
+		$num=count($query);
+		foreach($query as $val){
 	$html.='<tr bgcolor="'.$color.'">
 	  <td height="25" align="center" valign="middle" class="contenttext">'.$i.'</td>
-	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($val_student['id']).'</span></td>
-	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val_student["student_mobile"].'</td>
-	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val_student["email"].'</td>
-	 <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val['group_name']."&nbsp;,&nbsp;".date('d/m/Y',strtotime($val['start_date']))."&nbsp;-&nbsp;".date('d/m/Y',strtotime($val['end_date']))."&nbsp;,&nbsp;".$dbf->printClassTimeFormat($val[group_start_time],$val[group_end_time]).'</span></td>
-	 
-  </tr>';
+	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($val['id']).'</span></td>
+	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val["student_mobile"].'</td>
+	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val["email"].'</td>
+	</tr>';
 	  $i = $i + 1;
 	  }
 	$html.='</table>';

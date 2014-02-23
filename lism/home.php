@@ -152,38 +152,38 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
                   <tr>
                     <td width="25%" height="72" align="center" valign="middle"><a href="home.php"><img src="../home_icon/home.jpg" width="80" height="63" border="0" /></a></td>
-                    <td width="25%" align="center" valign="middle"><a href="s_manage.php"><img src="../home_icon/student.jpg" width="70" height="60" border="0" /></a></td>
-                    <td width="25%" align="center" valign="middle"><a href="centre_schedule.php"><img src="../home_icon/center.jpg" width="60" height="56" border="0" /></a></td>
-                    <td width="25%" align="center" valign="middle"><a href="centre_schedule.php"></a><a href="alert.php"><img src="../home_icon/alert-icon.png" width="60" height="60" border="0" /></a></td>
+                    <td width="25%" align="center" valign="middle"><a href="search.php"><img src="../home_icon/student.jpg" width="70" height="60" border="0" /></a></td>
+                    <td width="25%" align="center" valign="middle"><a href="#"><img src="../home_icon/center.jpg" width="60" height="56" border="0" /></a></td>
+                    <td width="25%" align="center" valign="middle"><a href="#"></a><a href="alert1_manage.php"><img src="../home_icon/alert-icon.png" width="60" height="60" border="0" /></a></td>
                   </tr>
                   <tr class="leftmenu">
                     <td height="30" align="center" valign="top"><a href="home.php" title="<?php echo constant("ADMIN_MENU_HOME");?>"><span><?php echo constant("ADMIN_MENU_HOME");?></span></a></td>
-                    <td align="center" valign="top"><a href="s_manage.php" title="Student" rel=""><span><?php echo constant("ADMIN_NEWS_MANAGE_STUDENT");?></span></a></td>
-                    <td align="center" valign="top"><a href="centre_schedule.php" ><?php echo constant("RE_MENU_CS");?></a></td>
-                    <td align="center" valign="top"><a href="centre_schedule.php" ></a><a href="alert.php" title="Alerts"><?php echo constant("ADMIN_MENU_ALERTS");?></a></td>
+                    <td align="center" valign="top"><a href="search.php" title="Student" rel=""><span><?php echo constant("ADMIN_NEWS_MANAGE_STUDENT");?></span></a></td>
+                    <td align="center" valign="top"><a href="#" ><?php echo constant("RE_MENU_CS");?></a></td>
+                    <td align="center" valign="top"><a href="#" ></a><a href="alert1_manage.php" title="Alerts"><?php echo constant("ADMIN_MENU_ALERTS");?></a></td>
                   </tr>
                   <tr>
                     <td height="72" align="center" valign="middle"><a href="password.php"><img src="../home_icon/chg_pass.png" width="60" height="60" border="0" /></a></td>
                     <td align="center" valign="middle"><a href="calc_converter.php"><img src="../home_icon/calendar-icon.jpg" width="57" height="60" border="0" /></a></td>
-                    <td align="center" valign="middle"><a href="email.php"><img src="../home_icon/emial.jpg" width="60" height="60" border="0" /></a></td>
-                    <td align="center" valign="middle"><a href="quicklink_manage.php"><img src="../home_icon/quick-link.png" width="60" height="60" border="0" /></a><a href="alert.php"></a></td>
+                    <td align="center" valign="middle"><a href="#"><img src="../home_icon/emial.jpg" width="60" height="60" border="0" /></a></td>
+                    <td align="center" valign="middle"><a href="quicklink_manage.php"><img src="../home_icon/quick-link.png" width="60" height="60" border="0" /></a><a href="alert1_manage.php"></a></td>
                   </tr>
                   <tr class="leftmenu">
                     <td height="30" align="center" valign="top"><a href="password.php" title="Certificates Grade"><span><?php echo constant("ADMIN_TEACHER1_MANAGE_PASSWORD");?></span></a></td>
                     <td align="center" valign="top"><a href="calc_converter.php" title="Date Convertor"><span><?php echo constant("STUDENT_MENU_DATE_CONVERTER");?></span></a></td>
-                    <td align="center" valign="top"><a href="email.php"><?php echo constant("ADMIN_TEACHER1_MANAGE_EMAIL");?></a></td>
-                    <td align="center" valign="top"><a href="alert.php" title="Alerts"></a><a href="quicklink_manage.php"><?php echo constant("ADMIN_MENU_QUICK_LINKS");?></a></td>
+                    <td align="center" valign="top"><a href="#"><?php echo constant("ADMIN_TEACHER1_MANAGE_EMAIL");?></a></td>
+                    <td align="center" valign="top"><a href="alert1_manage.php" title="Alerts"></a><a href="quicklink_manage.php"><?php echo constant("ADMIN_MENU_QUICK_LINKS");?></a></td>
                   </tr>
                   <tr>
                     <td height="70" align="center" valign="middle"><a href="ped.php"><img src="../home_icon/time_attendance.png" width="60" height="60" border="0" /></a></td>
-                    <td align="center" valign="middle"><a href="sms.php"><img src="../home_icon/sms.jpg" width="60" height="60" border="0" /></a></td>
-                    <td align="center" valign="middle"><a href="email.php"></a></td>
+                    <td align="center" valign="middle"><a href="#"><img src="../home_icon/sms.jpg" width="60" height="60" border="0" /></a></td>
+                    <td align="center" valign="middle"><a href="#"></a></td>
                     <td align="center" valign="middle"><a href="quicklink_manage.php"></a></td>
                   </tr>
                   <tr class="leftmenu">
                     <td height="30" align="center" valign="top"><a href="ped.php"><?php echo constant("TE_MENU_EPEDCARD");?></a></td>
-                    <td align="center" valign="top"><a href="sms.php" title="Leave"><span><?php echo constant("ADMIN_MENU_SMS");?></span></a></td>
-                    <td align="center" valign="top"><a href="email.php"></a></td>
+                    <td align="center" valign="top"><a href="#" title="Leave"><span><?php echo constant("ADMIN_MENU_SMS");?></span></a></td>
+                    <td align="center" valign="top"><a href="#"></a></td>
                     <td align="center" valign="top"><a href="quicklink_manage.php"></a></td>
                   </tr>
                 </table>
@@ -398,14 +398,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               <tr>
                 <td align="left" valign="top">&nbsp;</td>
                 <td align="left" valign="top">
-                
+                <!--
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#FFCCFF;">
                   <tr>
                     <td width="12%" align="center" valign="middle" bgcolor="#FAFCE0"><img src="../images/appointment_con.jpg" width="25" height="25" /></td>
                     <td width="54%" align="left" valign="middle" bgcolor="#FAFCE0" class="red_smalltext">&nbsp;&nbsp;<?php echo constant("STUDENT_ADVISOR_HOME_TEXT1");?></td>
                     <td width="34%" bgcolor="#FAFCE0">&nbsp;</td>
                   </tr>
-                </table></td>
+                </table>--></td>
                 <td align="left" valign="top">&nbsp;</td>
                 <td align="left" valign="top">
                 <table width="450" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#FF9900;">

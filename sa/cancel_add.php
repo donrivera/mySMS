@@ -290,21 +290,18 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         <td>&nbsp;</td>
                                         <td height="30" align="right" class="nametext">Student : <span class="nametext1">*</span>&nbsp;</td>
                                         <td align="left" valign="middle">
-                                        <select name="student" id="student" class="chzn-select validate[required,minListOptions[]]" onChange="show_course();">
-                                            <option value="">-- Select Student --</option>
-                                            <?php
-												foreach($dbf->fetchOrder(	'student s,student_moving m',
-																			"s.id=m.student_id And (m.status_id='4' OR m.status_id='5') And s.centre_id='$_SESSION[centre_id]'",
-																			"s.first_name","s.*") as $ress2) {
-                                            ?>
-												<option value="<?php echo $ress2['id']?>">
-													<?php 
-															//echo $ress2['first_name'];echo $Arabic->en2ar($dbf->StudentName($ress2["id"]));
-															echo $ress2[first_name]."&nbsp;".$ress2[father_name]."&nbsp;".$ress2[family_name]."&nbsp;(".$ress2[first_name1]."&nbsp;".$ress2[father_name1]."&nbsp;".$ress2[grandfather_name1]."&nbsp;".$ress2[family_name1].")";
-													?>
-												</option>
-                                            <?php }?>
-                                        </select>
+										<?php
+											$query=$dbf->fetchOrder('student s,student_moving m',
+																	"s.id=m.student_id And (m.status_id='4' OR m.status_id='5') And s.centre_id='$_SESSION[centre_id]'",
+																	"s.first_name","s.*");
+										?>
+										
+										<select name="student" id="student" class="chzn-select validate[required,minListOptions[]]" onChange="show_course();">
+												<option value="">Select Student</option>
+											<?php foreach($query as $ress2):?>
+												<option value="<?php echo $ress2[id]?>"><?php echo $dbf->printStudentName($ress2["id"])?></option>
+											<?php endforeach;?>
+										</select>
 										<script type="text/javascript">
 										var form_error_stat=false;
 										$(".chzn-select").chosen(); 
@@ -334,7 +331,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 												}
 											}
 										}); 
-                                    </script>
+										</script>
                                         </td>
                                         <td width="330" rowspan="5" align="center" valign="top" id="lbl_student">&nbsp;</td>
                                       </tr>                                      

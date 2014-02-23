@@ -9,14 +9,17 @@ $dbf = new User();
 $teacher_id = $_SESSION[uid];
 
 if($_REQUEST['action']=='insert')
-{//echo var_dump($_REQUEST);	
+{
+	
+	#echo var_dump($_REQUEST);	
+	$group_center_id = $dbf->getDataFromTable("student_group","centre_id","id='$_REQUEST[group_id]'");
 	
 	$function=$_REQUEST["function"];
 	$cr_date = date('Y-m-d H:i:s A');
 	$string="
 				teacher_id='$_SESSION[id]',
 				student_id='$_REQUEST[student]',
-				centre_id='$_SESSION[centre_id]',
+				centre_id='$group_center_id',
 				group_id='$_REQUEST[group_id]',
 				dated='$_REQUEST[dated]',
 				nr='$_REQUEST[nr]',

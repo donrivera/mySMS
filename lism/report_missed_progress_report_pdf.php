@@ -13,36 +13,71 @@ ini_set('memory_limit', '-1');
 
 	$html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#999999" style="border-collapse:collapse;">
 			<tr>
-			  <th width="3%" height="30" align="center" valign="middle">&nbsp;</th>
-			  <th width="9%" align="left" ><span id="result_box" lang="ar" xml:lang="ar">'.LISM_DUE_DATE.'</span></th>
 			  <th width="21%" align="left" ><span id="result_box" lang="ar" xml:lang="ar">'.ADMIN_REPORT_TEACHER_BOARD_TEACHERNAME.'</span></th>
 			  <th width="17%" height="30" align="left" ><span id="result_box" lang="ar" xml:lang="ar">'.ADMIN_CENTRE_MANAGE_CENTRENAME.'</span></th>
 			  <th width="12%" align="left"><span id="result_box" lang="ar" xml:lang="ar">'.ADMIN_REPORT_GROUP_TO_FINISH_GROUPNAME.'</span></th>
 			  <th width="15%" align="left"><span id="result_box" lang="ar" xml:lang="ar">'.ADMIN_REPORT_STUDENT_GROUP_GRADE_COURSENAME.'</span></th>
 			  <th width="11%" align="center"><span id="result_box" lang="ar" xml:lang="ar">'.CD_REPORT_CD_GRAPHS_NOOFSTUDENT.'</span></th>
-			  <th width="12%" align="left"><span id="result_box" lang="ar" xml:lang="ar">'.LISM_UPDATE_DATE.'</span></th>
-			  </tr>';
-				$i = 1;
-				foreach($dbf->fetchOrder('student_group',"(preport_filled='' OR preport_filled='No') And centre_id='$_REQUEST[centre_id]' And teacher_id='$_REQUEST[teacher_id]'","id") as $val_leave) {
-					$teacher = $dbf->strRecordID("teacher","*","id='$val_leave[teacher_id]'");
-					$centre = $dbf->strRecordID("centre","*","id='$val_leave[centre_id]'");
-					$course = $dbf->strRecordID("course","*","id='$val_leave[course_id]'");
-					$no_of_students = $dbf->countRows("student_group_dtls","parent_id='$val_leave[id]'");               
+			</tr>';
+			
+	$i = 1;
+    $color="#ECECFF";
+	$teacher_id=$_REQUEST['teacher_id'];
+	$centre_id=$_REQUEST['centre_id'];
+	$query=$dbf->genericQuery("SELECT sg.id , CEIL( sg.units / MAX( p.units ) *100 ) AS percentage
+								FROM student_group sg
+								INNER JOIN ped_units p ON p.group_id = sg.id
+								WHERE sg.teacher_id =  '$teacher_id'
+								AND centre_id =  '$centre_id'
+								AND p.dated !=  ''");
+	//echo var_dump($query);
+	foreach($query as $q)
+	{
+		$percent=$q['percentage'];
+		$group_id=$q['id'];
+		$progress=$dbf->getDataFromTable("teacher_progress","id","group_id='$group_id'"); 
+		if($percent>=50 && empty($progress))
+		{
+			$data=$dbf->genericQuery("SELECT sg.group_name, c.name AS course_name, t.name AS teacher_name, COUNT( sgrp.id ) AS total,ctr.name as centre_name
+										FROM student_group sg
+										INNER JOIN course c ON c.id = sg.course_id
+										INNER JOIN centre ctr ON ctr.id=sg.centre_id
+										INNER JOIN teacher t ON t.id = sg.teacher_id
+										INNER JOIN student_group_dtls sgrp ON sgrp.parent_id = sg.id
+										WHERE sg.id ='$group_id'");
+			$num=count($data);
+		}
+		else
+		{
+			$check_progress=$dbf->getDataFromTable("teacher_progress","id","group_id='$group_id' AND progress_report_date=''"); 
+			if(!empty($check_proress))
+			{
+				$data=$dbf->genericQuery("SELECT sg.group_name, c.name AS course_name, t.name AS teacher_name, COUNT( sgrp.id ) AS total,ctr.name as centre_name
+											FROM student_group sg
+											INNER JOIN course c ON c.id = sg.course_id
+											INNER JOIN centre ctr ON ctr.id=sg.centre_id
+											INNER JOIN teacher t ON t.id = sg.teacher_id
+											INNER JOIN student_group_dtls sgrp ON sgrp.parent_id = sg.id
+											WHERE sg.id ='$group_id'");
+				$num=count($data);
+			}
+			else{$num=0;}
+		}
+		foreach($data as $row)
+		{                
 			$html.='<tr>
-			  <td align="center" valign="middle" class="mycon">&nbsp;</td>
-			  <td align="left" valign="middle" class="mycon" >&nbsp;'.$val_leave[end_date].'</td>
-			  <td align="left" valign="middle" class="mycon" style="padding-left:5px;">'.$teacher[name].'</td>
-			  <td align="left" valign="middle" class="mycon" style="padding-left:5px;">'.$centre[name].'</td>
-			  <td align="left" valign="middle" class="mycon" style="padding-left:5px;">'.$dbf->FullGroupInfo($val_leave["id"]).'</td>
-			  <td align="left" valign="middle" class="mycon" style="padding-left:5px;">'.$course[name].'</td>
-			  <td align="center" valign="middle" class="mycon" style="padding-left:5px;">'.$no_of_students.'</td>
-			  <td align="left" valign="middle" class="mycon" style="padding-left:5px;">'.$val_leave[preport_update_date].'</td>';
-				  $i = $i + 1;
-			  }
+				<td align="left" valign="middle" class="mycon" style="padding-left:5px;">'.$row[teacher_name].'</td>
+				<td align="left" valign="middle" class="mycon" style="padding-left:5px;">'.$row[centre_name].'</td>
+				<td align="left" valign="middle" class="mycon" style="padding-left:5px;">'.$dbf->FullGroupInfo($group_id).'</td>
+				<td align="left" valign="middle" class="mycon" style="padding-left:5px;">'.$row[course_name].'</td>
+				<td align="center" valign="middle" class="mycon" style="padding-left:5px;">'.$row[total].'</td>';
+			    $i = $i + 1;
+		}
+	}
 			$html.='</tr>                   
 		</table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_missed_progress_report.pdf", 'D');
 	exit;

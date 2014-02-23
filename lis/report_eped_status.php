@@ -282,7 +282,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					  ?>
                     <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                       <td align="center" valign="middle"><?php echo $j;?></td>
-                      <td align="left" valign="middle">&nbsp;<?php echo $student["first_name"];?>&nbsp;<?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                      <td align="left" valign="middle">&nbsp;<?php echo $dbf->printStudentName($student["id"]);?></td>
                       <td align="left" valign="middle">&nbsp;<?php echo $teacher["name"];?></td>
                       <td align="left" valign="middle"><?php echo $dbf->FullGroupInfo($group["id"]);?></td>
                       <td align="center" valign="middle"><?php echo $unit;?>&nbsp;</td>

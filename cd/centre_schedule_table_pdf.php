@@ -34,8 +34,8 @@ $html = '<table width="1000" border="1" bordercolor="#000000" cellspacing="0" ce
 		$val_teacher = $dbf->strRecordID("teacher","*","id='$val[teacher_id]'");
 		
 	  $html.='<tr>
-		<td width="388" height="25" align="left" valign="middle"  class="mycon"><?php echo $val_teacher[name];?></td>
-		<td width="138" align="left" valign="middle">'.$val[group_name].' '.$val["group_time"].'-'.$dbf->GetGroupTime($val["id"]).'</td>
+		<td width="388" height="25" align="left" valign="middle"  class="mycon">'.$val_teacher[name].'</td>
+		<td width="138" align="left" valign="middle">'.$dbf->FullGroupInfo($val["id"]).'</td>
 		<td width="143" align="center" valign="middle"  class="mycon">'.$val_no["COUNT(id)"].'</td>
 		<td width="123" align="center" valign="middle"  class="mycon">'.date("m/d/Y",strtotime($val[start_date])).'</td>
 		<td width="130" align="center" valign="middle"  class="mycon">'.date("m/d/Y",strtotime($val[end_date])).'</td>
@@ -44,7 +44,7 @@ $html = '<table width="1000" border="1" bordercolor="#000000" cellspacing="0" ce
       }
 	$html.='</table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_schedule_table.pdf", 'D');
 	exit;

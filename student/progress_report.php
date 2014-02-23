@@ -119,12 +119,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               </tr>
             <tr>
               <td height="20" align="left" valign="middle" bgcolor="#FFFFFF" class="leftmenu">&nbsp;<?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?> : </td>
-              <td align="left" valign="middle" bgcolor="#FFFFFF" class="mytext"><?php echo $res_student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></td>
+              <td align="left" valign="middle" bgcolor="#FFFFFF" class="mytext"><?php echo $dbf->printStudentName($res_student["id"]);?></td>
               <td bgcolor="#FFFFFF">&nbsp;</td>
               <td bgcolor="#FFFFFF"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td width="41%" height="20" align="left" valign="middle" class="leftmenu"><?php echo constant("CD_GROUP_PROGRESS_COMPANYGROUP");?> : </td>
-                  <td width="59%" align="left" valign="middle" class="mytext" ><?php echo $res_g["group_name"];?> <?php echo $res_g["group_time"];?>-<?php echo $dbf->GetGroupTime($res_g["id"]);?></td>
+                  <td width="59%" align="left" valign="middle" class="mytext" ><?php echo $res_g["group_name"];?> <?php echo $dbf->printClassTimeFormat($res_g["group_start_time"],$res_g["group_end_time"]);?></td>
                   </tr>
                 </table></td>
               <td bgcolor="#FFFFFF"><table width="100%" border="0" cellspacing="0" cellpadding="0">

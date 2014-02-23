@@ -22,9 +22,9 @@ include_once '../includes/language.php';
 
 $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[group_id]'");
 
-$teacher_id = $pro[teacher_id];
+$teacher_id = $_REQUEST[teacher_id];
 //echo base64_decode(base64_decode('U205bGJBPT0='));
-$rest = $dbf->strRecordID("teacher","*","id='$pro[teacher_id]'");
+$rest = $dbf->strRecordID("teacher","*","id='$teacher_id'");
 
 $res_g = $dbf->strRecordID("student_group","*","id='$_REQUEST[group_id]'");
 $res_course = $dbf->strRecordID("course","*","id='$res_g[course_id]'");
@@ -123,12 +123,12 @@ font-weight:bold;
 		  ?>
           <tr>
             <td height="20" align="left" valign="middle" class="leftmenu">&nbsp;<?php echo constant("STUDENT_ADVISOR_S2_NAME");?> : </td>
-            <td align="left" valign="middle" class="content"><?php echo $res_student[first_name];?></td>
+            <td align="left" valign="middle" class="content"><?php echo $dbf->printStudentName($res_student[id]);?></td>
             <td>&nbsp;</td>
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="41%" height="20" align="left" valign="middle" class="leftmenu"><?php echo constant("CD_GROUP_PROGRESS_COMPANYGROUP");?> : </td>
-                <td width="59%" align="left" valign="middle" class="content" ><?php echo $res_g[group_name];?> <?php echo $res_g["group_start_time"];?>-<?php echo $res_g["group_end_time"];?></td>
+                <td width="59%" align="left" valign="middle" class="content" ><?php echo $res_g[group_name];?> <?php echo $dbf->printClassTimeFormat($res_g["group_start_time"],$res_g["group_end_time"]);?></td>
               </tr>
             </table></td>
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -197,7 +197,7 @@ font-weight:bold;
             <td height="20" align="left" valign="middle" class="leftmenu">&nbsp;<?php echo constant("STUDENT_PROGRESS_REPORT_ATTENDANCE");?> : </td>
             <?php
 			//Get number of Attendace present in e-PEDCARD (table : ped_attendance)
-			$num_att=$dbf->countRows('ped_attendance',"student_id='$teacher_id' And (shift1<>'' OR shift2<>'' OR shift3<>'' OR shift4<>'' OR shift5<>'' OR shift6<>'' OR shift7<>'' OR shift8<>'' OR shift9<>'')");
+			$num_att=$dbf->No_Of_Attendance($_REQUEST['teacher_id'], $_REQUEST['group_id']);
 			?>
             <td align="left" valign="middle" class="content"><b><?php echo $num_att;?></b>&nbsp;&nbsp;&nbsp;<?php echo constant("CD_REPORT_TEACHER_PROGRESS_OUTOF");?> &nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo $res_size[units];?></b></td>
             <td>&nbsp;</td>

@@ -157,7 +157,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                   <td height="30" align="center" valign="middle" bgcolor="#FEF7D8"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                       <td width="10%" align="center" valign="middle"><img src="../images/ip_block.png" width="16" height="16"></td>
-                                      <td width="90%" class="red_smalltext">If you want to Receipt Information By SMS then ticked as Enable on the checkbox.</td>
+                                      <td width="90%" class="red_smalltext">If you prefer not to receive information by SMS please disable the checkbox.</td>
                                     </tr>
                                   </table></td>
                                 </tr>

@@ -502,9 +502,9 @@ define("ADMIN_REPORT_STUDENT_ON_HOLD_STUDENTONHOLD","Students on hold");
 define("ADMIN_REPORT_STUDENT_ON_HOLD_EMAIL","Email");
 define("ADMIN_REPORT_STUDENT_ON_HOLD_ENQDATE","Enquiry date");
 define("ADMIN_REPORT_STUDENT_ON_HOLD_LASTCOMMENT","Last comment");
-define("ADMIN_REPORT_STUDENT_ON_HOLD_COURSEWASP","Course that was paused");
+define("ADMIN_REPORT_STUDENT_ON_HOLD_COURSEWASP","Course that was pause");
 define("ADMIN_REPORT_STUDENT_ON_HOLD_DATEOF","Date of paused");
-define("ADMIN_REPORT_STUDENT_ON_HOLD_LASTCHAPTED","Last chapter that was attended");
+define("ADMIN_REPORT_STUDENT_ON_HOLD_LASTCHAPTED","Last chapter that was attened");
 
 // admin admin report_statistic
 define("ADMIN_REPORT_STATISTIC_STATISTICREPORT","Statistic report");
@@ -621,7 +621,7 @@ define("STUDENT_HOME_POSTEDBYADMIN","Posted by admin");
 define("STUDENT_HOME_MARKAS","Mark as");
 define("STUDENT_HOME_URGENT","Urgent");
 define("STUDENT_HOME_POSTEDBY","Posted by");
-define("STUDENT_HOME_TEXT1","Latest appointments for customers");
+define("STUDENT_HOME_TEXT1","Future appointments for customers");
 define("STUDENT_HOME_TEXT2","End of the level examination");
 define("STUDENT_HOME_IMPORTANT","Important");
 define("STUDENT_HOME_MSGTYPE","Message type");
@@ -640,15 +640,15 @@ define("STUDENT_MYACCOUNT_EMAIL","Email");
 define("STUDENT_MYACCOUNT_MOBILENO","Mobile no");
 define("STUDENT_MYACCOUNT_PAYMENTHISTORY","Payment history");
 define("STUDENT_MYACCOUNT_SL","Sl.");
-define("STUDENT_MYACCOUNT_PAYMENTDATE","Payment date");
-define("STUDENT_MYACCOUNT_PAYMENTONDT","Paid On (date)");
+define("STUDENT_MYACCOUNT_PAYMENTDATE","Instalment Planned date");
+define("STUDENT_MYACCOUNT_PAYMENTONDT","Actual Payment date");
 define("STUDENT_MYACCOUNT_PAYMENTMODE","Payment mode");
 define("STUDENT_MYACCOUNT_FEE","Fee");
 define("STUDENT_MYACCOUNT_STATUS","Status");
-define("STUDENT_MYACCOUNT_FUTUREPAYMNT","Future payment");
-define("STUDENT_MYACCOUNT_BALANCEINFO","Balance information");
+define("STUDENT_MYACCOUNT_FUTUREPAYMNT","Remaining payments");
+define("STUDENT_MYACCOUNT_BALANCEINFO","Financial Summary");
 define("STUDENT_MYACCOUNT_TOTALCOURSEFEES","Total course fees");
-define("STUDENT_MYACCOUNT_TEXT","You have paid till date");
+define("STUDENT_MYACCOUNT_TEXT","Paid amount to date");
 define("STUDENT_MYACCOUNT_BALANCEFEES","Balance fees");
 
 // student progress_report
@@ -693,11 +693,11 @@ define("STUDENT_ALERT_MSGTYPE","Message type");
 
 // student Leave manage,add,edit
 define("STUDENT_LEAVE_MANAGE_MANAGE_WEEKLIST","Manage week list");
-define("STUDENT_LEAVE_MANAGE_LEAVEFROM","Leave from");
-define("STUDENT_LEAVE_MANAGE_LEAVETO","Leave to");
+define("STUDENT_LEAVE_MANAGE_LEAVEFROM","ِFirst day of absence");
+define("STUDENT_LEAVE_MANAGE_LEAVETO","Last day of absence");
 define("STUDENT_LEAVE_MANAGE_REASON","Reason");
-define("STUDENT_LEAVE_MANAGE_NEWLEAVE","New leave");
-define("STUDENT_LEAVE_MANAGE_EDITLEAVE","Edit leave");
+define("STUDENT_LEAVE_MANAGE_NEWLEAVE","Request new absence");
+define("STUDENT_LEAVE_MANAGE_EDITLEAVE","Edit absence dates");
 
 // student password
 define("STUDENT_PASSWORD_CHANGE_PASSWORD","Change password");
@@ -713,7 +713,7 @@ define("STUDENT_QUICKLINK_MANAGE_TEXTP","Please tick on Page and save. It will a
 define("STUDENT_QUICKLINK_MANAGE_PAGENAME","Page name");
 
 // student slot_view.php
-define("STUDENT_ADVISOR_SLOT_VIEW_SLOTVIEW","Slot view");
+define("STUDENT_ADVISOR_SLOT_VIEW_SLOTVIEW","Time Slot view");
 //==============STUDENTS===================================================================================
 
 //================================RECEPTION================================================================
@@ -1293,9 +1293,8 @@ define("TEACHER_HOME_MSGTYPE","Message type");
 // teacher my_groups
 define("TEACHER_MY_GROUPS_MYGROUPS","My groups");
 define("TEACHER_MY_GROUPS_NOTE","Note");
-define("TEACHER_MY_GROUPS_RED","Red = Not Started");
-define("TEACHER_MY_GROUPS_ORANGE","Orange = In Progress");
-define("TEACHER_MY_GROUPS_GREEN","Green = Completed");
+define("TEACHER_MY_GROUPS_RED","Red = Not started");
+define("TEACHER_MY_GROUPS_GREEN","Green = Continue");
 define("TEACHER_MY_GROUPS_COMPLETED","Completed");
 define("TEACHER_MY_GROUPS_GROUPNM","Group name");
 define("TEACHER_MY_GROUPS_TEXT","Name of the course");
@@ -1595,9 +1594,8 @@ define("ADMIN_MENU_REPORTS_CUSTOMER","VIP students");
 define("ADMIN_MENU_REPORTS_GROUP_GRADE","Detailed students results");
 define("ADMIN_MENU_REPORTS_NOT_ENROLLED","Students statuses");
 define("ADMIN_MENU_REPORTS_ON_HOLD","Student on hold");
-define("ADMIN_MENU_REPORTS_CANCELLED","Student cancelled");
 define("ADMIN_MENU_REPORTS_STATISTIC","Statistic report");
-
+define("ADMIN_MENU_REPORTS_CANCELLED","Student cancelled");
 define("ADMIN_MENU_CERTIFICATE","Certificate");
 
 define("ADMIN_MENU_MY_ACCOUNT","My account");
@@ -1996,7 +1994,7 @@ define("SA_MENU_CUSTOMERNOTENROLLED","Customer not enrolled");
 define("SA_MENU_CUSTOMERONHOLD","Customer on hold");
 
 define("RECENT_ADDED_STUDENTS","Recently added students");
-define("RECENT_INITIAL_PAYMENT","Initial");
+define("RECENT_INITIAL_PAYMENT","Initial Payment");
 define("WELCOME","Welcome");
 define("LOGOUT","Log out");
 define("RECOVER_HEADING","Recover your password");
@@ -2353,7 +2351,7 @@ define("CERTIFICATE_PRINTED_ON", "Printed on");
 define("CERTIFICATE_PRINTED_BY", "Printed by");
 define("CERTIFICATE_NOT_PRINTED", "Certificate not printed !!!");
 
-define("NO_INTERESTED", "No interested in groups opened");
+define("NO_INTERESTED", "Not interested in groups opened");
 define("DISCOUNT_PERCENT", "Discount [%]");
 
 define("CONGRATULATION", "Congratulation");

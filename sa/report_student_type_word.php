@@ -24,102 +24,33 @@ header("Content-Disposition: attachment; Filename=report_student_not_enrolled.do
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <body>
 <table width='100%' border='1' cellpadding='0' cellspacing='0' style='border-collapse:collapse;' bordercolor='#AAAAAA'>
-     <tr>
-        <td width='3%' height='29' align='center' valign='middle' bgcolor='#CDCDCD' >&nbsp;</td>
-        <td width='14%' align='left' valign='middle' bgcolor='#CDCDCD' style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#6a6868;font-weight:bold;" ><?php echo constant("ADMIN_VIEW_COMMENTS_MANAGE_STUDENT");?></td>
-        <td width='15%' align='left' valign='middle' bgcolor='#CDCDCD' style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#6a6868;font-weight:bold;"><?php echo constant("ADMIN_TEACHER1_MANAGE_MOBILENUMBER");?> </td>
-        <td width='12%' align='left' valign='middle' bgcolor='#CDCDCD' style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#6a6868;font-weight:bold;"><?php echo constant("ADMIN_TEACHER1_MANAGE_EMAIL");?> </td>
-        <td colspan='2' align='center' valign='middle' bgcolor='#CDCDCD' style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#6a6868;font-weight:bold;"><?php echo "Group Name";?></td>
-      </tr>
+		<tr>
+			<td width='3%' height='29' align='center' valign='middle' bgcolor='#CDCDCD' >&nbsp;</td>
+			<td width='14%' align='left' valign='middle' bgcolor='#CDCDCD' style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#6a6868;font-weight:bold;" ><?php echo constant("ADMIN_VIEW_COMMENTS_MANAGE_STUDENT");?></td>
+			<td width='15%' align='left' valign='middle' bgcolor='#CDCDCD' style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#6a6868;font-weight:bold;"><?php echo constant("ADMIN_TEACHER1_MANAGE_MOBILENUMBER");?> </td>
+			<td width='12%' align='left' valign='middle' bgcolor='#CDCDCD' style="font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#6a6868;font-weight:bold;"><?php echo constant("ADMIN_TEACHER1_MANAGE_EMAIL");?> </td>
+		</tr>
 	 <?php
-	  
-			$query=$dbf->genericQuery("	SELECT s.id,sg.group_name,sg.start_date,sg.end_date,sg.group_start_time,sg.group_end_time
-												FROM student s
-												INNER JOIN student_type stype ON stype.student_id = s.id
-												INNER JOIN common c ON c.id = stype.type_id
-												INNER JOIN student_group_dtls sgdtls ON sgdtls.student_id=s.id
-												INNER JOIN (SELECT 
-																	DISTINCT(group_name),
-																	group_start_time,
-																	group_end_time,
-																	start_date,
-																	end_date,
-																	centre_id,
-																	id 
-															FROM student_group LIMIT 1) sg ON sg.id=sgdtls.parent_id
-												WHERE sg.centre_id='$_SESSION[centre_id]' AND c.id ='$_REQUEST[teacher]'
-											");
-					/*
-						INNER JOIN student_group_dtls sgdtls ON sgdtls.student_id=s.id
-						INNER JOIN student_group sg ON sg.id=sgdtls.parent_id
-					*/
-					if($_REQUEST[teacher]!=''){
-						//$cond = "s.id=c.student_id AND c.status_id='$_REQUEST[teacher]'";
-						$cond ="stype.student_id = st.id AND c.id = stype.type_id AND c.id = '$_REQUEST[teacher]' ";
-					}else{
-						//$cond = "s.id=c.student_id";
-						$cond="stype.student_id = st.id AND c.id = stype.type_id";
-					}
-					
-					$i = 1;
-					$color="#ECECFF";
-					
-					//Get Number of Rows
-					//$num=$dbf->countRows('student s,student_moving c',$cond,"");
-					$num=count($query);//$dbf->countRows('student s,student_type stype,common c',$cond,"");
-					 //Loop start
-					//foreach($dbf->fetchOrder('student s,student_moving c',$cond,"s.id DESC","s.id","s.id") as $val) {
-					  //foreach($dbf->fetchOrder('student s,student_type stype,common c',$cond,"s.id DESC","s.id","s.id") as $val) {
-					foreach($query as $val){
-					$val_student = $dbf->strRecordID("student","*","id='$val[id]'");
-					
-					//Get Course Name
-					$course = "";
-					foreach($dbf->fetchOrder('student_course',"student_id='$val[id]'","") as $valc) {
-					
-						$c = $dbf->strRecordID("course","name","id='$valc[course_id]'");
-						if($course==''){
-							$course  = $c[name];
-						}else{
-							$course  = $course.",".$c[name];
-						}
-					}
-					
-					//Get Lead Information
-					$lead = '';
-					foreach($dbf->fetchOrder('student_lead',"student_id='$val[id]'","") as $vall) {
-					
-						$c = $dbf->strRecordID("common","name","id='$vall[lead_id]'");
-						if($lead==''){
-							$lead  = $c[name];
-						}else{
-							$lead  = $lead.",".$c[name];
-						}
-					}
-					
-					//Register date
-					if($val[register_date] == "0000-00-00"){
-						$dt = '';
-					}else{
-						$dt = date('d-M-Y',strtotime($val_student[created_datetime]));
-					}
-					
-					//Last comment
-					$last_com = $dbf->getDataFromTable("student_comment", "MAX(id)", "student_id='$val[id]'");
-					$com = $dbf->strRecordID("student_comment", "*", "id='$last_com'");
-					
-					
-	  
+		$i = 1;
+		$color="#ECECFF";
+		$query=$dbf->genericQuery("SELECT s.id,s.student_mobile,s.email
+									FROM student s
+									INNER JOIN student_type st ON st.student_id = s.id
+									INNER JOIN common c ON c.id = st.type_id
+									WHERE c.id = '$_REQUEST[teacher]'
+									AND s.centre_id='$_SESSION[centre_id]'
+								");
+		$num=count($query);
+		foreach($query as $val){
 	  ?>		
       <tr>
         <td height='25' align='center' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $i;?></td>
-        <td height='25' align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $dbf->printStudentName($val_student['id']);?></td>
-        <td align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $val_student[student_mobile];?></td>
-        <td align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $val_student[email];?></td>
-        <td align='center' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $val['group_name']."&nbsp;,&nbsp;".date('d/m/Y',strtotime($val['start_date']))."&nbsp;-&nbsp;".date('d/m/Y',strtotime($val['end_date']))."&nbsp;,&nbsp;".$dbf->printClassTimeFormat($val[group_start_time],$val[group_end_time]);?></td>
+        <td height='25' align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $dbf->printStudentName($val['id']);?></td>
+        <td align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $val[student_mobile];?></td>
+        <td align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $val[email];?></td>
         <?php
-	  $i = $i + 1;
-	  }
+			$i = $i + 1;
+		}
 		?>		  
         </tr>
 		<?php

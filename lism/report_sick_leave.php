@@ -179,6 +179,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td height="5" colspan="9" align="left" valign="middle">&nbsp;</td>
                 </tr>
             </table>
+			<!--
             <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#DFF2DB" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
 			    <thead>
                 <tr class="logintext">
@@ -225,7 +226,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                
             </table>
             <br>
-            <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#DFF2DB" class="tablesorter" id="sort_table" style="border-collapse:collapse;">
+			-->
+           <table width="100%" border="1" cellpadding="0" cellspacing="0"  bordercolor="#DFF2DB" class="tablesorter" id="sort_table1" style="border-collapse:collapse;">
 			    <thead>
                 <tr class="logintext">
                   <th width="3%" height="30" align="center" valign="middle" bgcolor="#99CC99">&nbsp;</th>

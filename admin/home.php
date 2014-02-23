@@ -147,6 +147,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td width="25%" height="25" align="right" valign="middle" bgcolor="#CCCCCC" class="logintext"><?php echo constant("ADMIN_DASHBOARD_AMOUNT");?>&nbsp;</td>
                   </tr>
                   <?php
+				  
 				  $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
                   foreach($dbf->fetchOrder('student_fees',"paid_date<>'0000-00-00'","paid_date DESC LIMIT 0,7") as $val_pay) {
 					  
@@ -163,7 +164,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
                   <tr>
                     <td height="25" align="center" valign="middle"><img src="<?php echo $photo;?>" oncontextmenu="return false;" width="20" height="20" /></td>
-                    <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $res_stu[first_name]."&nbsp;".$res_stu[father_name]."&nbsp;".$res_stu[family_name]."&nbsp;(".$res_stu[first_name1]."&nbsp;".$res_stu[father_name1]."&nbsp;".$res_stu[grandfather_name1]."&nbsp;".$res_stu[family_name1].")";?></td>
+                    <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $dbf->printStudentName($res_stu['id']);?></td>
                     <td align="center" valign="middle" class="mycon"><?php echo date('d-M-Y',strtotime($val_pay[paid_date]));?></td>
                     <td align="right" valign="middle" class="mycon"><?php echo $val_pay[paid_amt];?>&nbsp;<?php echo $res_currency[symbol];?>&nbsp;</td>
                   </tr>
@@ -200,12 +201,15 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td>&nbsp;</td>
                 <td align="center" valign="top"><table width="99%" border="1" cellspacing="0" bordercolor="#999999" cellpadding="0" style="border-collapse:collapse;" >
                   <tr>
-                    <td width="12%" height="25" align="left" valign="middle" bgcolor="#CCCCCC">&nbsp;</td>
+                    <!--<td width="12%" height="25" align="left" valign="middle" bgcolor="#CCCCCC">&nbsp;</td>-->
                     <td width="38%" align="left" valign="middle" bgcolor="#CCCCCC" class="logintext"><?php echo constant("ADMIN_DASHBOARD_STUDENT");?></td>
                     <td width="50%" align="center" valign="middle" bgcolor="#CCCCCC" class="logintext"><?php echo constant("ADMIN_DASHBOARD_DATED_TIME");?></td>
                   </tr>
-                  <?php
-					foreach($dbf->fetchOrder('student',"*","id DESC LIMIT 0,7") as $val_en) {
+                  <?php 
+					$sql=$dbf->genericQuery("SELECT * FROM student ORDER BY id DESC LIMIT 0,5");
+					#echo var_dump($sql);
+					foreach($sql as $val_en) 
+					{ 
 						if($val_en["photo"]!=''){
 							$photo = "../sa/photo/".$val_en["photo"];
 						}else{
@@ -218,8 +222,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						}
 					?>
                   <tr>
-                    <td height="25" align="center" valign="middle"><img src="<?php echo $photo;?>" oncontextmenu="return false;" width="20" height="20" /></td>
-                    <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $val_en[first_name]."&nbsp;".$val_en[father_name]."&nbsp;".$val_en[family_name]."&nbsp;(".$val_en[first_name1]."&nbsp;".$val_en[father_name1]."&nbsp;".$val_en[grandfather_name1]."&nbsp;".$val_en[family_name1].")";?></td>
+                    <!--<td height="25" align="center" valign="middle"><img src="<?php echo $photo;?>" oncontextmenu="return false;" width="20" height="20" /></td>-->
+                    <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $dbf->printStudentName($val_en['id']);?>dadsadsad</td>
                     <td align="center" valign="middle" class="mycon" ><?php echo $dt;?></td>
                   </tr>
                   <?php } ?>

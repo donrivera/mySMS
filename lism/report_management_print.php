@@ -21,6 +21,7 @@ $start_date = $_REQUEST["start_date"];
 $end_date = $_REQUEST["end_date"];
 $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 ?>	
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td width="56%"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -168,7 +169,11 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
                   <tr>
                     <td width="6%">&nbsp;</td>
                     <td width="61%" height="25" align="right" valign="middle" class="lable1">&nbsp;<?php echo constant("MANAGE_LISM_REPORT_STUDENT_CANCEL");?>:&nbsp;</td>
-                    <td width="33%" align="center" valign="middle" class="pedtext">&nbsp;</td>
+                    <?php
+					$cancel = $dbf->strRecordID("student_cancel","COUNT(id)","(dated BETWEEN '$start_date' And '$end_date') And centre_id='$centre_id'");
+					$cancel = $cancel["COUNT(id)"];
+					?>
+                    <td align="center" valign="middle" class="pedtext"><?php echo $cancel;?></td>
                   </tr>
                   <tr>
                     <td>&nbsp;</td>
@@ -201,13 +206,23 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
                     <?php
 					$total = 0;
 					foreach($dbf->fetchOrder('common',"type='payment type'","id DESC") as $valpay) {						
-						$amts = $dbf->strRecordID("student_fees","SUM(paid_amt)","payment_type='$valpay[id]' And centre_id='$centre_id'");
-						$amts = $amts["SUM(paid_amt)"];
+						
+						# it is sum amount from fees structures 
+						#$amts = $dbf->strRecordID("student_fees","SUM(paid_amt) as total_paid_amt","payment_type='$valpay[id]' And (paid_date BETWEEN '$start_date' And '$end_date')");
+						#$amts = $amts["SUM(paid_amt)"];
+						$amts_type=$dbf->getDataFromTable("student_fees", "SUM(paid_amt)", "payment_type='$valpay[id]' And (paid_date BETWEEN '$start_date' And '$end_date')");
+						
+						$total = $total + $amts_type;
+						
+						# it is sum amount from student enrolled table (first payment or initial payment)
+						$amts_ob = $dbf->strRecordID("student_enroll","SUM(ob_amt)","payment_type='$valpay[id]' And centre_id='$centre_id' And (payment_date BETWEEN '$start_date' And '$end_date')");
+						$amts = $amts_ob["SUM(ob_amt)"];
+						
 						$total = $total + $amts;
 						?>
                       <tr class="mymenutext">
                         <td width="51%" align="center" valign="middle"><?php echo $valpay["name"];?></td>
-                        <td width="49%" align="center" valign="middle" class="pedtext"><?php echo $amts;?> <?php echo $res_currency[symbol];?></td>
+                        <td width="49%" align="center" valign="middle" class="pedtext"><?php echo (empty($amts_type)?0:$amts_type);?> <?php echo $res_currency[symbol];?></td>
                       </tr>
                       <?php } ?>
                       <tr class="mymenutext">
@@ -220,10 +235,11 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
                     <td width="61%" height="25" align="right" valign="middle" class="lable1">&nbsp;<?php echo constant("MANAGE_LISM_REPORT_TEACH_UNIT");?> :&nbsp;</td>
                     <td width="33%" align="center" valign="middle" class="pedtext">
                     <?php
-                        $res=$dbf->strRecordID('student_group g,ped_attendance a', 'COUNT(a.id)',"g.id=a.group_id And g.centre_id='$centre_id' And (a.attend_date BETWEEN '$start_date' AND '$end_date')");
-						$no_student = $res["COUNT(a.id)"];
-						if($no_student == '') { $no_student = 0; }
-						echo $no_student;?>
+                        $unit = 0;
+						foreach($dbf->fetchOrder('student_group g,ped_attendance a',"g.id=a.group_id And g.centre_id='$centre_id' And (a.attend_date BETWEEN '$start_date' AND '$end_date')","","a.unit","a.unit") as $valpay) {
+						$unit = $unit + 1;
+						}
+						echo $unit;?>
                     </td>
                   </tr>
                   <tr>

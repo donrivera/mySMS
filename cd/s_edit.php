@@ -703,11 +703,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                   <?php
 								$t = 1;
 								foreach($dbf->fetchOrder('common',"type='Type'","") as $valt){
-									$n11=$dbf->countRows('student_type',"student_id='$student_id' AND type_id='$valc[id]'");
+									$n11=$dbf->countRows('student_type',"student_id='$student_id' AND type_id='$valt[id]'");
 								?>
                                   <tr>
                                     <td width="6%" align="left" valign="middle">
-                                    <input name="type<?php echo $t;?>" id="type<?php echo $t;?>" type="checkbox" value="<?php echo $valt["id"];?>"  <?php if($n11>0) { ?> checked="checked" <?php } ?>>
+                                    <!--<input name="type<?php echo $t;?>" id="type<?php echo $t;?>" type="checkbox" value="<?php echo $valt["id"];?>"  <?php if($n11>0) { ?> checked="checked" <?php } ?>>-->
+									<input name="type" id="type" type="radio" value="<?php echo $valt["id"];?>" <?php if($n11>0) { ?> checked="checked" <?php } ?>/>
                                     </td>
                                     <td width="94%" align="left" valign="middle" class="mycon"><?php echo $valt["name"];?></td>
                                   </tr>

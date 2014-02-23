@@ -131,7 +131,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <table width="100%" border="1" bordercolor="#CCCCCC" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
                         <tr>
                           <td width="22%" height="20" align="left" valign="middle" bgcolor="#E8E8E8" class="leftmenu">&nbsp;<?php echo constant("STUDENT_MYACCOUNT_YOURNAME");?> :</td>
-                          <td width="78%" align="left" valign="middle" class="pedtext">&nbsp;<?php echo $res["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($res["id"]));?></td>
+                          <td width="78%" align="left" valign="middle" class="pedtext">&nbsp;<?php echo $dbf->printStudentName($res["id"]);?></td>
                           </tr>
                           <?php if($res["student_id"] > 0){?>
                         <tr>
@@ -215,7 +215,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 															
 					if($totalunits!=0)
 					{
-						$attend_calc=round((($attend/$totalunits)*100)/10);
+						echo $attend_calc=round((($attend/$totalunits)*100)/10);
 					}
 					
 					if($course_mark[end_of_level] > 0)

@@ -421,42 +421,42 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				    <td align="center" valign="top"><input name="att9" type="text" class="new_textbox40" id="att9" value="20" /></td>
 				    <?php $res_com = $dbf->strRecordID("sms_templete","*","id='32'");?>
 				    <td height="40" align="left" valign="top">
-				      <textarea name="attc31" id="attc31" class="mytextarea" autocomplete="off"><?php echo $res_com["contents"];?></textarea></td>
+				      <textarea name="attc32" id="attc32" class="mytextarea" autocomplete="off"><?php echo $res_com["contents"];?></textarea></td>
 				    </tr>
                     <tr>
 				    <td align="center" valign="middle">&nbsp;</td>
 				    <td align="center" valign="top"><input name="att9" type="text" class="new_textbox40" id="att9" value="21" /></td>
 				    <?php $res_com = $dbf->strRecordID("sms_templete","*","id='33'");?>
 				    <td height="40" align="left" valign="top">
-				      <textarea name="attc31" id="attc31" class="mytextarea" autocomplete="off"><?php echo $res_com["contents"];?></textarea></td>
+				      <textarea name="attc33" id="attc33" class="mytextarea" autocomplete="off"><?php echo $res_com["contents"];?></textarea></td>
 				    </tr>
                     <tr>
 				    <td align="center" valign="middle">&nbsp;</td>
 				    <td align="center" valign="top"><input name="att9" type="text" class="new_textbox40" id="att9" value="22" /></td>
 				    <?php $res_com = $dbf->strRecordID("sms_templete","*","id='34'");?>
 				    <td height="40" align="left" valign="top">
-				      <textarea name="attc31" id="attc31" class="mytextarea" autocomplete="off"><?php echo $res_com["contents"];?></textarea></td>
+				      <textarea name="attc34" id="attc34" class="mytextarea" autocomplete="off"><?php echo $res_com["contents"];?></textarea></td>
 				    </tr>
                     <tr>
 				    <td align="center" valign="middle">&nbsp;</td>
 				    <td align="center" valign="top"><input name="att9" type="text" class="new_textbox40" id="att9" value="23" /></td>
 				    <?php $res_com = $dbf->strRecordID("sms_templete","*","id='35'");?>
 				    <td height="40" align="left" valign="top">
-				      <textarea name="attc31" id="attc31" class="mytextarea" autocomplete="off"><?php echo $res_com["contents"];?></textarea></td>
+				      <textarea name="attc35" id="attc35" class="mytextarea" autocomplete="off"><?php echo $res_com["contents"];?></textarea></td>
 				    </tr>
                     <tr>
 				    <td align="center" valign="middle">&nbsp;</td>
 				    <td align="center" valign="top"><input name="att9" type="text" class="new_textbox40" id="att9" value="24" /></td>
 				    <?php $res_com = $dbf->strRecordID("sms_templete","*","id='36'");?>
 				    <td height="40" align="left" valign="top">
-				      <textarea name="attc31" id="attc31" class="mytextarea" autocomplete="off"><?php echo $res_com["contents"];?></textarea></td>
+				      <textarea name="attc36" id="attc36" class="mytextarea" autocomplete="off"><?php echo $res_com["contents"];?></textarea></td>
 				    </tr>
                     <tr>
 				    <td align="center" valign="middle">&nbsp;</td>
 				    <td align="center" valign="top"><input name="att9" type="text" class="new_textbox40" id="att9" value="25" /></td>
 				    <?php $res_com = $dbf->strRecordID("sms_templete","*","id='37'");?>
 				    <td height="40" align="left" valign="top">
-				      <textarea name="attc31" id="attc31" class="mytextarea" autocomplete="off"><?php echo $res_com["contents"];?></textarea></td>
+				      <textarea name="attc37" id="attc37" class="mytextarea" autocomplete="off"><?php echo $res_com["contents"];?></textarea></td>
 				    </tr>
                     <tr>
 				    <td align="center" valign="middle">&nbsp;</td>

@@ -186,15 +186,22 @@ if($_REQUEST['action']=='classic')
 	}
 	
 	//Type
-	$count = $_POST[tcount];
-	for($i=1; $i<=$count; $i++){
-		$c = "type".$i;
-		$c = $_REQUEST[$c];		
-		if($c != ''){
-			$string="student_id='$sid',type_id='$c'";
-			$dbf->insertSet("student_type",$string);
-		}
-	}	
+	#$count = $_POST[tcount];
+	#for($i=1; $i<=$count; $i++){
+	#	$c = "type".$i;
+	#	$c = $_REQUEST[$c];		
+	#	if($c != ''){
+	#		$string="student_id='$sid',type_id='$c'";
+	#		$dbf->insertSet("student_type",$string);
+	#	}
+	#}
+
+	#$check_type=$dbf->countRows('student_type',"student_id='$sid'");
+	#if(empty($check_type))
+	#{	
+		$string_student_type="student_id='$sid',type_id='$_REQUEST[type]'";
+		$dbf->insertSet("student_type",$string_student_type);
+	#}else{$dbf->updateTable("student_type","type_id='$_REQUEST[type]'","student_id='$student_id'");}
 	
 	//Get select group
 	$group = $_REQUEST["group"];
@@ -783,17 +790,23 @@ $student_id = $_REQUEST['student_id'];
 	}
 	
 	//Type Delete from student course table
-	$dbf->deleteFromTable("student_type","student_id='$student_id'");
+	#$dbf->deleteFromTable("student_type","student_id='$student_id'");
 	
-	$count = $_POST[tcount];
-	for($i=1; $i<=$count; $i++){
-		$c = "type".$i;
-		$c = $_REQUEST[$c];
-		if($c != ''){
-			$string="student_id='$student_id',type_id='$c'";
-			$dbf->insertSet("student_type",$string);
-		}
-	}
+	#$count = $_POST[tcount];
+	#for($i=1; $i<=$count; $i++){
+	#	$c = "type".$i;
+	#	$c = $_REQUEST[$c];
+	#	if($c != ''){
+	#		$string="student_id='$student_id',type_id='$c'";
+	#		$dbf->insertSet("student_type",$string);
+	#	}
+	#}
+	
+	$check_type=$dbf->countRows('student_type',"student_id='$student_id'");
+	if(empty($check_type))
+	{	$string_student_type="student_id='$student_id',type_id='$_REQUEST[type]'";
+		$dbf->insertSet("student_type",$string_student_type);
+	}else{$dbf->updateTable("student_type","type_id='$_REQUEST[type]'","student_id='$student_id'");}
 	
 	//Delete from student course table
 	$dbf->deleteFromTable("student_lead","student_id='$student_id'");
@@ -979,17 +992,23 @@ if($_REQUEST['action'] == 'edit_from_student_profile'){
 	}
 	
 	//Type Delete from student course table
-	$dbf->deleteFromTable("student_type","student_id='$student_id'");
+	#$dbf->deleteFromTable("student_type","student_id='$student_id'");
+	#$count = $_POST[tcount];
+	#for($i=1; $i<=$count; $i++){
+	#	$c = "type".$i;
+	#	$c = $_REQUEST[$c];
+	#	if($c != ''){
+	#		$string="student_id='$student_id',type_id='$c'";
+	#		$dbf->insertSet("student_type",$string);
+	#	}
+	#}
 	
-	$count = $_POST[tcount];
-	for($i=1; $i<=$count; $i++){
-		$c = "type".$i;
-		$c = $_REQUEST[$c];
-		if($c != ''){
-			$string="student_id='$student_id',type_id='$c'";
-			$dbf->insertSet("student_type",$string);
-		}
-	}
+	$check_type=$dbf->countRows('student_type',"student_id='$student_id'");
+	if(empty($check_type))
+	{	$string_student_type="student_id='$student_id',type_id='$_REQUEST[type]'";
+		$dbf->insertSet("student_type",$string_student_type);
+	}else{$dbf->updateTable("student_type","type_id='$_REQUEST[type]'","student_id='$student_id'");}
+	 
 	
 	//Delete from student course table
 	$dbf->deleteFromTable("student_lead","student_id='$student_id'");

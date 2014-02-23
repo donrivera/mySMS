@@ -302,7 +302,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							foreach($dbf->fetchOrder('common',"type='Type'","") as $valt) 
 							{
 							?>
-							<input name="type<?php echo $t;?>" id="type<?php echo $t;?>" type="checkbox" value="<?php echo $valt["id"];?>" <?php if(in_array($valt[id], $typeid)) { ?> checked="checked" <?php } ?>><?php echo $valt["name"];?><br>
+							<!--<input name="type<?php echo $t;?>" id="type<?php echo $t;?>" type="checkbox" value="<?php echo $valt["id"];?>" <?php if(in_array($valt[id], $typeid)) { ?> checked="checked" <?php } ?>>-->
+							<input name="type" id="type" type="radio" value="<?php echo $valt["id"];?>"/>
+							<?php echo $valt["name"];?><br>
 							<?php
 							$t = $t + 1;
 							}

@@ -217,8 +217,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                      </td>
                   </tr>
                 </table></td>
-                <td width="23%" align="left">&nbsp;</td>
-                <td width="7%" align="left">&nbsp;</td>
+                <td width="23%" align="left">Search:<input type="text" name="search_group"/></td>
+                <td width="7%" align="left"><input type="submit" value="Search" class="btn1" border="0" align="left" /></td>
                 <td width="14%" align="left"><a href="group_course.php"><input type="button" value="<?php echo constant("btn_add_btn");?>" class="btn1" border="0" align="left" /></a></td>
               </tr>
             </table></td>
@@ -246,8 +246,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$i = 1;
 					$color = "#ECECFF";
 					
+					$find_group=$_REQUEST['search_group'];
 					$cond = '';
-					if($_REQUEST["group_status"] != ""){
+					if($find_group !='')
+					{$cond="And group_name LIKE '%$find_group%'";}
+					elseif($_REQUEST["group_status"] != ""){
 						if($_REQUEST["group_status"] != "All"){
 							$cond = " And status='$_REQUEST[group_status]'";
 						}

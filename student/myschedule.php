@@ -146,10 +146,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						  if($cl == 10) { $color = "#D8D6FE"; }
 					  ?>
                       <p></p>
-                      <table width="250" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                      <table width="450" border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
                         <tr>
                           <td width="89" height="30" align="left" valign="middle" bgcolor="#FEF1E0" class="pedtext"><?php echo constant("TEACHER_REPORT_TEACHER_COURSE");?></td>
-                          <td width="161" align="left" valign="middle" bgcolor="#FEF1E0" class="red_smalltext"><?php echo $course[name];?></td>
+                          <td width="300" align="left" valign="middle" bgcolor="#FEF1E0" class="red_smalltext"><?php echo $course[name];?></td>
                         </tr>
                       </table>
                       <p></p>
@@ -169,12 +169,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$res_unit = $dbf->strRecordID("ped_units","*","group_id='$res_g[id]' And course_id='$res_g[course_id]' AND units='$i'");
 						$res_teacher = $dbf->strRecordID("teacher","*","id='$res_unit[teacher_id]'");
 						
-						$num_attd = $dbf->countRows('ped_attendance',"group_id='$res_g[id]' And course_id='$res_g[course_id]' And unit='$i' And student_id='$student_id' And (shift1='X' OR shift2='X' OR shift3='X' OR shift4='X' OR shift5='X' OR shift6='X' OR shift7='X' OR shift8='X' OR shift9='X')");
+						//$num_attd = $dbf->countRows('ped_attendance',"group_id='$res_g[id]' And course_id='$res_g[course_id]' And unit='$i' And student_id='$student_id' And (shift1='X' OR shift2='X' OR shift3='X' OR shift4='X' OR shift5='X' OR shift6='X' OR shift7='X' OR shift8='X' OR shift9='X')");
+						#$num_attd=$dbf->getDataFromTable('ped_attendance', $fldName,"student_id='$student_id'")
+						$num_attd = $dbf->strRecordID("ped_attendance","COUNT(id) as total","attend_date='$res_unit[dated]' And student_id='$student_id' And teacher_id='$res_unit[teacher_id]' And group_id='$res_g[id]' And (shift1='X' OR shift2='X' OR shift3='X' OR shift4='X' OR shift5='X' OR shift6='X' OR shift7='X' OR shift8='X' OR shift9='X')");
 						?>
                         <tr >
                           <td width="58" height="20" align="center" valign="middle" class="pedtext_normal" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px; background-color:<?php echo $color;?>"><?php echo $i;?></td>
                           <td width="92" align="center" valign="middle" bgcolor="#FFFFFF" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;background-color:<?php echo $color;?>"><?php echo $res_unit["dated"];?></td>
-                          <td width="45" align="center" valign="middle" bgcolor="#FFFFFF" class="pedtext_normal" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;background-color:<?php echo $color;?>"><?php if($num_attd > 0) { ?><?php }?></td>
+                          <td width="45" align="center" valign="middle" bgcolor="#FFFFFF" class="pedtext_normal" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;background-color:<?php echo $color;?>"><?php echo $num_attd['total'];?></td>
                           <td width="142" align="center" valign="middle" bgcolor="#FFFFFF" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;background-color:<?php echo $color;?> "><?php echo $res_teacher["name"];?></td>
                           <td width="251" align="left" valign="middle" bgcolor="#FFFFFF" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;background-color:<?php echo $color;?>"><?php echo $res_unit["material_overed"];?></td>
                           <td width="199"  align="center" valign="middle" bgcolor="#FFFFFF" style="border-bottom:solid 1px; border-color:#000000;background-color:<?php echo $color;?>">&nbsp;<?php echo $res_unit["homework"];?></td>

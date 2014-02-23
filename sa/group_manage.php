@@ -208,7 +208,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td width="27%"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <td width="30%" align="right" valign="middle" class="logintext">Status : &nbsp;</td>
-                    <td width="70%" align="left" valign="middle">
+                    <td width="40%" align="left" valign="middle">
 					  
                       <select name="group_status" id="group_status" style="width:150px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onChange="javascript:document.frm.action='group_manage.php',document.frm.submit();">
                         <option value="All">-- All --</option>
@@ -217,11 +217,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <option value="Completed" <?php if($_REQUEST["group_status"] == "Completed") { ?> selected="selected" <?php } ?>>Completed</option>
                       </select>
 					  
-                     </td>
+                     
                   </tr>
                 </table></td>
-                <td width="23%" align="left">&nbsp;</td>
-                <td width="7%" align="left">&nbsp;</td>
+                <td width="23%" align="left" class="logintext">Search:<input type="text" name="search_group"/></td>
+                <td width="7%" align="left"><input type="submit" value="Search" class="btn1" border="0" align="left" /></td>
                 <td width="14%" align="left"><a href="group_course.php"><input type="button" value="<?php echo constant("btn_add_btn");?>" class="btn1" border="0" align="left" /></a></td>
               </tr>
             </table></td>
@@ -248,9 +248,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 			     $k=1;
 					$i = 1;
 					$color = "#ECECFF";
-					
+					$find_group=$_REQUEST['search_group'];
 					$cond = '';
-					if($_REQUEST["group_status"] != ""){
+					if($find_group !='')
+					{$cond="And group_name LIKE '%$find_group%'";}
+					elseif($_REQUEST["group_status"] != ""){
 						if($_REQUEST["group_status"] != "All"){
 							$cond = " And status='$_REQUEST[group_status]'";
 						}

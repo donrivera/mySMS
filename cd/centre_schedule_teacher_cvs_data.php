@@ -8,8 +8,8 @@ include_once '../includes/class.Main.php';
 $dbf = new User();
 include_once '../includes/language.php';
 ?>	
-<link href="css/style.css" rel="stylesheet" type="text/css" />
 <?php if($_SESSION[lang]=="EN"){?>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <table width="100%" border="1" bordercolor="#000000" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
             
               <tr>

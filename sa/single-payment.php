@@ -146,6 +146,22 @@ if($_SESSION[font]=='big'){
 <script src="datepicker/jquery.ui.widget.js"></script>
 <script src="datepicker/jquery.ui.datepicker.js"></script>
 <link rel="stylesheet" href="datepicker/demos.css">
+<script>	
+$(document).ready(function() 
+{	
+	
+	$("#submit").click(function()
+	{
+		/*var init_pay=$("#payment").val();*/
+		var post_pay=$("#td_paid_amt").html();
+		if(post_pay === null)
+		{
+			alert("Please Enroll Student!");
+			return false;
+		}
+	});
+});
+</script>	
 <script>
 $(function() {
 	$( ".datepick" ).datepicker({
@@ -584,7 +600,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td class="text_structure" align="center"><?php echo $ptype[name]; ?></td>
                             <?php if($vali["paid_date"]!="0000-00-00") { $dt = $vali["paid_date"]; } ?>
                             <td align="center" class="text_structure"><?php echo $dt;?>&nbsp;&nbsp;</td>
-                            <td align="right" class="text_structure"><?php if($vali["paid_amt"]!="0") { echo $vali["paid_amt"].'&nbsp;&nbsp;'.$res_currency[symbol]; }?>
+                            <td align="right" class="text_structure" id="td_paid_amt"><?php if($vali["paid_amt"]!="0") { echo $vali["paid_amt"].'&nbsp;&nbsp;'.$res_currency[symbol]; }?>
                               &nbsp;&nbsp;</td>
                             <td align="center" ><?php if($vali["paid_amt"]>0) { ?>
                               <a href="search_print_challan_admission.php?course_id=<?php echo $_REQUEST[course_id];?>&amp;fee_id=<?php echo $vali["id"];?>&amp;id=<?php echo $val_student["id"];?>&amp;page=search_print_challan_admission.php&amp;TB_iframe=true&amp;height=440&amp;width=675&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox"><img src="../images/print.png" width="16" height="16" border="0" title="Print" /></a>

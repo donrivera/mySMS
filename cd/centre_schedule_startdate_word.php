@@ -31,7 +31,7 @@ header("Content-Disposition: attachment; Filename=centre_schedule_startdate.doc"
 <title>Welcome to Berlitz</title>
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
+
 </head>
 <body onLoad="countdown_init(<?php echo $count;?>);">
 <?php if($_SESSION[lang]=="EN"){?>

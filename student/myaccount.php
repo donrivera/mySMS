@@ -135,7 +135,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <td align="left" valign="middle" class="menutext"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                           <td width="16%" align="left" valign="middle"><span class="leftmenu"><?php echo constant("STUDENT_MYACCOUNT_YOURNAME");?> :</span></td>
-                          <td width="71%" align="left" valign="middle"><?php echo $res["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($res["id"]));?></td>
+                          <td width="71%" align="left" valign="middle"><?php echo $dbf->printStudentName($res["id"]);?></td>
 						  <?php
 						     if($res["photo"]!=''){
 							  $photo="../sa/photo/".$res["photo"];

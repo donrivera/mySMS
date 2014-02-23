@@ -214,8 +214,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <th width="9%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("RECEPTION_GROUP_MANAGE_GROUPSTART");?><br><?php echo constant("RECEPTION_GROUP_MANAGE_GROUPEND");?></th>
                   <th width="9%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("LIS_DISCOUNT_AMOUNT");?></th>
                   <th width="8%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("ACCOUNTANT_EN_AMT");?></th>
-                  <th width="8%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("ACCOUNTANT_REPT_AMT");?></th>
-                  <th width="10%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("CD_SEARCH_INVOICE_BALANCEAMOUNT");?></th>
+                  <th width="8%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo "Balance";?></th>
+
                   </tr>
 				</thead>
                 <?php
@@ -223,7 +223,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$color="#ECECFF";
 										
 					//loop start
-					foreach($dbf->fetchOrder('student_enroll',"payment_date<>'0000-00-00' And (payment_date BETWEEN '$_REQUEST[start_date]' And '$_REQUEST[end_date]')","payment_date") as $valenroll) {
+					foreach($dbf->fetchOrder('student_enroll',"enroll_date<>'0000-00-00' And (enroll_date BETWEEN '$_REQUEST[start_date]' And '$_REQUEST[end_date]')","enroll_date") as $valenroll) {
 					
 					$enroll = $valenroll["enrolled_status"];
 					
@@ -233,24 +233,24 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$student = $dbf->strRecordID("student","*","id='$valenroll[student_id]'");
 					//Get Course Name
 					$course = $dbf->strRecordID("course","*","id='$valenroll[course_id]'");
-					
+					$payment=$dbf->getDataFromTable("student_fees","SUM(paid_amt)","student_id='$valenroll[student_id]' And course_id='$valenroll[course_id]'");
 					$en_amt = $valenroll[course_fee] - $valenroll[discount];
 					$re_amt = $dbf->strRecordID("student_fees","SUM(paid_amt)","student_id='$valenroll[student_id]' And course_id='$valenroll[course_id]' And status='1'");
 					$re_amt = $en_amt - $re_amt["SUM(paid_amt)"];
 					$bal_amt = $en_amt - $re_amt;
-					if($bal_amt < 0){
+					if($bal_amt > 0){
 					?>                    
                     <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
-                      <td align="left" valign="middle" class="mycon"><?php echo $valenroll[payment_date];?></td>
-                      <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $student[first_name];?>&nbsp;(<?php echo $Arabic->en2ar($student[first_name]);?>)</td>
-                      <td align="right" valign="middle" class="mycon"><?php echo $valenroll["course_fee"];?>&nbsp;<?php echo $res_currency[symbol];?></td>
-                      <td align="center" valign="middle" class="mycon">&nbsp;<?php echo $enroll;?> <?php echo $res_currency[symbol];?></td>
-                      <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $group["group_name"];?> <?php echo $group["group_time"];?>-<?php echo $dbf->GetGroupTime($group["id"]);?></td>
+                      <td align="left" valign="middle" class="mycon"><?php echo $valenroll[enroll_date];?></td>
+                      <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $dbf->printStudentName($student[id]);?></td>
+                      <td align="right" valign="middle" class="mycon"><?php echo $payment;?>&nbsp;<?php echo $res_currency[symbol];?></td>
+                      <td align="center" valign="middle" class="mycon">&nbsp;<?php echo $enroll;?></td>
+                      <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $group["group_name"];?> <?php echo $dbf->printClassTimeFormat($group["group_start_time"],$group["group_end_time"]);?></td>
                       <td align="center" valign="middle" class="mycon"><?php echo $group["start_date"].'<br>'.$group["end_date"];?></td>
-                      <td align="right" valign="middle" class="mycon"><?php echo $valenroll["course_fee"];?>&nbsp;<?php echo $res_currency[symbol];?></td>
-                      <td align="right" valign="middle" class="mycon"><?php echo $en_amt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
+                      <td align="right" valign="middle" class="mycon"><?php echo $valenroll["discount"];?>&nbsp;<?php echo $res_currency[symbol];?></td>
+                      <td align="right" valign="middle" class="mycon"><?php echo $valenroll['course_fee'];?>&nbsp;<?php echo $res_currency[symbol];?></td>
                       <td align="right" valign="middle" class="mycon"><?php echo $re_amt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
-                      <td align="right" valign="middle" class="mycon"><?php echo $bal_amt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
+                      
                       <?php
                               $i = $i + 1;
                               if($color=="#ECECFF")

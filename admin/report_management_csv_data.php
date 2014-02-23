@@ -13,6 +13,7 @@ $start_date = $_REQUEST["start_date"];
 $end_date = $_REQUEST["end_date"];
 $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 ?>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td width="56%"><table width="100%" border="0" cellspacing="0" cellpadding="0">

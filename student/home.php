@@ -201,7 +201,7 @@ $(function(){
                 </table></td>
                 <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
-                    <td align="center" valign="middle" class="lable1"><?php echo $res_student[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res_student["id"]));?></td>
+                    <td align="center" valign="middle" class="lable1"><?php echo $dbf->printStudentName($res_student["id"]);?></td>
                   </tr>
                   <tr>
                     <td height="2" align="center" valign="middle"></td>

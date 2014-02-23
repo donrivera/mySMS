@@ -39,7 +39,7 @@ $html = '<table width="100%" border="1" bordercolor="#000000" cellspacing="0" ce
 		  }
 		$html.='</table>';
 
-	$mpdf = new mPDF('utf-8', 'A4-L');
+	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
 	$mpdf->Output("report_schedule_teacher.pdf", 'D');
 	exit;

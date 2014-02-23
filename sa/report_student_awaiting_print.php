@@ -32,22 +32,39 @@ $Arabic = new I18N_Arabic('Transliteration');
     </tr>
     </thead>
     <?php
-    if($_REQUEST[status]!=''){
-    $cond="s.id = c.student_id And c.course_id = '$_REQUEST[status]' And c.student_id > '0' And c.status_id='3' And s.centre_id='$_SESSION[centre_id]'";
-    }else{
-    $cond = "s.id = c.student_id And c.student_id > '0' And c.status_id = '3' And s.centre_id='$_SESSION[centre_id]'";
-    }
-    $i = 1;
-    $color="#ECECFF";
-    
-    //Get Number of Rows
-    if($cond != ''){
-    $num=$dbf->countRows('student s,student_moving c',$cond);
-    }
-    
-    //Loop start
-    foreach($dbf->fetchOrder('student s,student_moving c',$cond,"s.first_name","s.*,c.date_time") as $val){
-    $course = $dbf->getDataFromTable("course", "name", "id='$_REQUEST[status]'");
+	if($_REQUEST[status]!='')
+		{
+			//$cond = "s.id = c.student_id And sf.student_id=c.student_id And sf.type='advance' And sf.course_id = '$_REQUEST[status]' And c.student_id > '0' And c.status_id='3' And s.centre_id='$_SESSION[centre_id]'";
+			$query=$dbf->genericQuery("	SELECT s.id,s.student_mobile,s.email,c.date_time,sf.course_id
+										FROM student_moving c
+										INNER JOIN student s ON s.id=c.student_id
+										INNER JOIN (SELECT DISTINCT(course_id),type,student_id FROM student_fees) sf ON c.student_id=sf.student_id
+										WHERE 
+											c.status_id = '3' 
+											AND s.centre_id='1' 
+											AND sf.course_id = '$_REQUEST[status]'
+											AND s.centre_id='$_SESSION[centre_id]'
+											AND sf.type='advance' ORDER BY s.first_name");
+		}
+		else
+		{
+			//$cond = "s.id = c.student_id And c.student_id > '0' And c.status_id = '3' And s.centre_id='$_SESSION[centre_id]' And sf.student_id=c.student_id And sf.type='advance'";
+			$query=$dbf->genericQuery("	SELECT s.id,s.student_mobile,s.email,c.date_time,sf.course_id
+										FROM student_moving c
+							            INNER JOIN student s ON s.id=c.student_id
+							            INNER JOIN (SELECT DISTINCT(course_id),type,student_id FROM student_fees) sf ON c.student_id=sf.student_id
+							            WHERE 
+											c.status_id = '3' 
+											AND s.centre_id='$_SESSION[centre_id]'
+											AND sf.type='advance' ORDER BY s.first_name");
+		}
+		$i = 1;
+		$color="#ECECFF";
+		$num=count($query);#$dbf->countRows('student s,student_moving c',$cond);
+		#$query=$dbf->fetchOrder('student s,student_moving c,student_fees sf',$cond,"s.first_name","s.*,c.date_time,sf.course_id")
+		//Loop start
+		foreach($query as $val){
+			$course = $dbf->getDataFromTable("course", "name", "id='$val[course_id]'");
     ?>
     <tr>
     <td height="25" align="center" valign="middle" bgcolor="#F8F9FB" class="contenttext"><?php echo $i;?></td>

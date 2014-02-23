@@ -116,7 +116,7 @@ else
                   </tr>
                   <tr>
                     <td width="36%" height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_REPORT_CERTIFICATE_REPORT_STUDENTNAME");?> :&nbsp;</td>
-                    <td width="64%" align="left" valign="middle"><span class="lable1"><?php echo $res[first_name]; ?> <?php echo $dbf->printStudentName($res[id]);?></span></td>
+                    <td width="64%" align="left" valign="middle"><span class="lable1"><?php echo $dbf->printStudentName($res[id]);?></span></td>
                   </tr>
                   <tr>
                     <td height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_REPORT_STUDENT_GROUP_GRADE_IDNO");?> :&nbsp;</td>

@@ -185,8 +185,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
           </tr>
           <tr>
             <td align="left" valign="top" bgcolor="#FFFFFF"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-              <tr>
+              
+			  <tr>
                 <td width="3%" align="left" valign="middle">&nbsp;</td>
+				<!--
                 <td width="9%" height="30" align="right" valign="middle" class="red_smalltext"><?php echo constant("ADMIN_VIEW_GROUP_SIZE_CENTRE");?> :&nbsp;</td>
                 <td width="88%" align="left" valign="middle"><select name="centre_id" id="centre_id" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:192px;" onChange="javascript:document.frm.action='news_manage.php',document.frm.submit();">
                   <option value="">--Select--</option>
@@ -197,7 +199,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <?php
 					   }
 					   ?>
-                </select></td>
+                </select></td>-->
               </tr>
             </table>
               <table width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000" class="tablesorter" id="sort_table" style="border-collapse:collapse;">

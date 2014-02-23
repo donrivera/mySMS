@@ -29,9 +29,9 @@ header("Content-Disposition: attachment; Filename=centre_schedule_teacher.doc");
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Welcome to Berlitz</title>
-<link href="css/style.css" rel="stylesheet" type="text/css" />
+
 <!--Important-->
-<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">
+
 </head>
 <body onload="countdown_init(<?php echo $count;?>);">
 <?php if($_SESSION[lang]=="EN"){?>

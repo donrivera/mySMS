@@ -848,7 +848,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								?> 
                                   <tr>
                                     <td width="6%" align="left" valign="middle">
-                                    <input name="type<?php echo $t;?>" id="type<?php echo $t;?>" type="checkbox" value="<?php echo $valt["id"];?>">
+                                    <!--<input name="type<?php echo $t;?>" id="type<?php echo $t;?>" type="checkbox" value="<?php echo $valt["id"];?>">-->
+									<input name="type" id="type" type="radio" value="<?php echo $valt["id"];?>"/>
                                     </td>
                                     <td width="94%" align="left" valign="middle" class="mycon"><?php echo $valt["name"];?></td>
                                   </tr>
@@ -1516,7 +1517,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <tr>
                                     <td width="94%" align="right" valign="middle" class="mycon"><?php echo $valt["name"];?></td>
                                     <td width="6%" align="right" valign="middle">
-                                    <input name="type<?php echo $t;?>" id="type<?php echo $t;?>" type="checkbox" value="<?php echo $valt["id"];?>">
+                                    <!--<input name="type<?php echo $t;?>" id="type<?php echo $t;?>" type="checkbox" value="<?php echo $valt["id"];?>">-->
+									<input name="type" id="type" type="radio" value="<?php echo $valt["id"];?>"/>
                                     </td>
                                   </tr>
                                   <?php

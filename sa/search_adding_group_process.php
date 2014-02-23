@@ -291,6 +291,7 @@ if($studentSendSMS==1)
 	}
 }
 ?>
+
 <script type="text/javascript">
 	self.parent.location.href='search_manage.php?student_id=<?php echo $student_id;?>';
 	self.parent.tb_remove();
