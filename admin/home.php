@@ -223,7 +223,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
                   <tr>
                     <!--<td height="25" align="center" valign="middle"><img src="<?php echo $photo;?>" oncontextmenu="return false;" width="20" height="20" /></td>-->
-                    <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $dbf->printStudentName($val_en['id']);?>dadsadsad</td>
+                    <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $dbf->printStudentName($val_en['id']);?></td>
                     <td align="center" valign="middle" class="mycon" ><?php echo $dt;?></td>
                   </tr>
                   <?php } ?>

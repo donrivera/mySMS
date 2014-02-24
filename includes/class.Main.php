@@ -1186,7 +1186,8 @@ class User extends Dbfunctions{
 		if(empty($checknextclass) || $checknextclass==NULL)
 		{//echo"1";
 			$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
-			$total_ped_units=$max_ped['max'] *  $current_total_unit['unit_per_day'];
+			#$total_ped_units=$max_ped['max'] *  $current_total_unit['unit_per_day'];
+			$total_ped_units=$max_ped['max'];
 			if(empty($max_ped) || $max_ped==NULL)
 			{	#echo"2";
 				$dbf->updateTable("student_group","units='$new_no_units',end_date='$end_date'","id='$group'");
@@ -1220,7 +1221,7 @@ class User extends Dbfunctions{
 				if(empty($thirdchecknextclass) || $thirdchecknextclass==NULL)
 				{	
 					$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
-					$total_ped_units=$max_ped['max'] *  $current_total_unit['unit_per_day'];
+					$total_ped_units=$max_ped['max'];
 					if(empty($max_ped) || $max_ped==NULL)
 					{	
 						$dbf->updateTable("student_group","units='$new_no_units',end_date='$end_date'","id='$group'");
@@ -1249,7 +1250,7 @@ class User extends Dbfunctions{
 					$thirdc_compute_end_date=$dbf->printClassChangedEndDate($thirdc_dt1);
 				
 					$max_ped=$dbf->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
-					$total_ped_units=$max_ped['max'] *  $current_total_unit['unit_per_day'];
+					$total_ped_units=$max_ped['max'];
 					//echo var_dump($max_ped);
 					if(empty($max_ped) || $max_ped==NULL)
 					{	

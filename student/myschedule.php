@@ -159,7 +159,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                           <td align="center" valign="middle" bgcolor="#CCCCCC" class="red_smalltext" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;border-top: solid 1px;"><?php echo constant("ADMIN_NEWS_MANAGE_DATE");?></td>
                           <td align="center" valign="middle" bgcolor="#CCCCCC" class="red_smalltext" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;border-top: solid 1px;"><?php echo constant("STUDENT_ADVISOR_PED_CSV_DATA_ATTD");?></td>
                           <td align="center" valign="middle" bgcolor="#CCCCCC" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px; border-top: solid 1px;"><span class="red_smalltext"><?php echo constant("STUDENT_MYSCHEDULE_INSTRUCTOR");?></span></td>
-                          <td align="left" valign="middle" bgcolor="#CCCCCC" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;border-top: solid 1px;"><span class="red_smalltext"><?php echo constant("STUDENT_MYSCHEDULE_MATERIALCOVER");?></span></td>
+                          <!--<td align="left" valign="middle" bgcolor="#CCCCCC" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;border-top: solid 1px;"><span class="red_smalltext"><?php echo constant("STUDENT_MYSCHEDULE_MATERIALCOVER");?></span></td>-->
                           <td  align="center" valign="middle" bgcolor="#CCCCCC" style="border-bottom:solid 1px; border-color:#000000;border-top: solid 1px;"><span class="red_smalltext"><?php echo constant("STUDENT_MYSCHEDULE_HOMEWORK");?></span></td>
                           </tr>
                         <?php
@@ -178,7 +178,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                           <td width="92" align="center" valign="middle" bgcolor="#FFFFFF" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;background-color:<?php echo $color;?>"><?php echo $res_unit["dated"];?></td>
                           <td width="45" align="center" valign="middle" bgcolor="#FFFFFF" class="pedtext_normal" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;background-color:<?php echo $color;?>"><?php echo $num_attd['total'];?></td>
                           <td width="142" align="center" valign="middle" bgcolor="#FFFFFF" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;background-color:<?php echo $color;?> "><?php echo $res_teacher["name"];?></td>
-                          <td width="251" align="left" valign="middle" bgcolor="#FFFFFF" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;background-color:<?php echo $color;?>"><?php echo $res_unit["material_overed"];?></td>
+                          <!--<td width="251" align="left" valign="middle" bgcolor="#FFFFFF" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;background-color:<?php echo $color;?>"><?php echo $res_unit["material_overed"];?></td>-->
                           <td width="199"  align="center" valign="middle" bgcolor="#FFFFFF" style="border-bottom:solid 1px; border-color:#000000;background-color:<?php echo $color;?>">&nbsp;<?php echo $res_unit["homework"];?></td>
                           </tr>
                         <?php } ?>
@@ -283,7 +283,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                           <table width="100%" border="0" cellspacing="0" cellpadding="0" >                        
                             <tr style="background-color:<?php echo $color;?>">                              
                               <td  align="center" valign="middle" bgcolor="#CCCCCC" style="border-bottom:solid 1px;  border-right:solid 1px; border-color:#000000;border-top: solid 1px;"><span class="red_smalltext"><?php echo constant("STUDENT_MYSCHEDULE_HOMEWORK");?></span></td>
-                              <td align="right" valign="middle" bgcolor="#CCCCCC" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;border-top: solid 1px;"><span class="red_smalltext"><?php echo constant("STUDENT_MYSCHEDULE_MATERIALCOVER");?>&nbsp;</span></td>
+                              <!--<td align="right" valign="middle" bgcolor="#CCCCCC" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;border-top: solid 1px;"><span class="red_smalltext"><?php echo constant("STUDENT_MYSCHEDULE_MATERIALCOVER");?>&nbsp;</span></td>-->
                               <td align="center" valign="middle" bgcolor="#CCCCCC" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px; border-top: solid 1px;"><span class="red_smalltext"><?php echo constant("STUDENT_MYSCHEDULE_INSTRUCTOR");?></span></td>
                               <td align="center" valign="middle" bgcolor="#CCCCCC" class="red_smalltext" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;border-top: solid 1px;"><?php echo constant("STUDENT_ADVISOR_PED_CSV_DATA_ATTD");?></td>
                               <td align="center" valign="middle" bgcolor="#CCCCCC" class="red_smalltext" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;border-top: solid 1px;"><?php echo constant("ADMIN_NEWS_MANAGE_DATE");?></td>
@@ -300,7 +300,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						?>
                             <tr>                              
                               <td width="199"  align="center" valign="middle" bgcolor="#FFFFFF" style="border-bottom:solid 1px; border-right:solid 1px; border-color:#000000;background-color:<?php echo $color;?>">&nbsp;<?php echo $res_unit["homework"];?></td>
-                              <td width="251" align="right" valign="middle" bgcolor="#FFFFFF" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;background-color:<?php echo $color;?>"><?php echo $res_unit["material_overed"];?>&nbsp;</td>
+                              <!--<td width="251" align="right" valign="middle" bgcolor="#FFFFFF" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;background-color:<?php echo $color;?>"><?php echo $res_unit["material_overed"];?>&nbsp;</td>-->
                               <td width="142" align="center" valign="middle" bgcolor="#FFFFFF" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;background-color:<?php echo $color;?> "><?php echo $res_teacher["name"];?></td>
                               <td width="45" align="center" valign="middle" bgcolor="#FFFFFF" class="pedtext_normal" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;background-color:<?php echo $color;?>"><?php if($num_attd > 0) { echo $num_attd; }?></td>
                               <td width="92" align="center" valign="middle" bgcolor="#FFFFFF" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;background-color:<?php echo $color;?>"><?php echo $res_unit["dated"];?></td>
