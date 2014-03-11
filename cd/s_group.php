@@ -165,6 +165,32 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               <tr>
                 <td align="center" valign="top" bgcolor="#FFFFFF" height="3"></td>
               </tr>
+			  <?php if($_REQUEST[msg]=="corp_acct_exist") { ?>
+					<tr>
+						<td align="center" valign="top" bgcolor="#FFFFFF">
+							<table width="300" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#66CC66;">
+								<tr>
+									<td width="37" height="30" align="center" valign="middle" bgcolor="#EAFDEB"><img src="../images/errror.png" width="28" height="28" /></td>
+									<td width="10" bgcolor="#EAFDEB">&nbsp;</td>
+									<td width="253" align="left" valign="middle" bgcolor="#EAFDEB" class="lable2"><?php echo "Corporate Account Exists";?></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<?php } ?>
+				<?php if($_REQUEST[msg]=="corp_acct_exceed") { ?>
+					<tr>
+						<td align="center" valign="top" bgcolor="#FFFFFF">
+							<table width="300" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#66CC66;">
+								<tr>
+									<td width="37" height="30" align="center" valign="middle" bgcolor="#EAFDEB"><img src="../images/errror.png" width="28" height="28" /></td>
+									<td width="10" bgcolor="#EAFDEB">&nbsp;</td>
+									<td width="253" align="left" valign="middle" bgcolor="#EAFDEB" class="lable2"><?php echo "Corporate Account Exceeds";?></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<?php } ?>
               <tr>
                 <td height="200" align="center" valign="top" bgcolor="#FFFFFF" style="padding-top:10px;">
                 
@@ -293,14 +319,120 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <select name="group" class="combo" id="group" style="width:300px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onBlur="checkTab('group');">
                                 <option value=""><?php echo $select_first_value;?></option>
                                 <?php
-							foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And status<>'Completed' And course_id in (".$interest_course.")","") as $res_g) {
+								$group_query=$dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And status<>'Completed' And course_id in (".$interest_course.")","");
+							foreach($group_query as $res_g) {
 							  ?>
-                                <option value="<?php echo $res_g['id']?>" <?php if($res_g["id"]==$_SESSION[group]) { echo "Selected"; }?>><?php echo $res_g['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_g['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_g['end_date'])) ?>,  <?php echo $res_g["group_time"];?>-<?php echo $dbf->GetGroupTime($res_g["id"]);?></option>
+                                <option value="<?php echo $res_g['id']?>" <?php if($res_g["id"]==$_SESSION[group]) { echo "Selected"; }?>><?php echo $res_g['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_g['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_g['end_date'])) ?>,  <?php echo $dbf->printClassTimeFormat($res_g["group_time"],$res_g["group_time_end"]);?></option>
                                 </option>
                                 <?php }?>
                                 </select>
                             </td>
                             </tr>
+							<!--CORPORATE ACCOUNT OPTION-->
+							<script language="javascript" type="text/javascript">
+							$(document).ready(function() 
+							{	
+								$('#corp_acct').change(function() 
+								{
+									
+									$.post( "corp_acct_tab.php", function( data ) 
+									{$( "#corp_acct_tab" ).html( data );});
+									
+									
+								});
+							});
+							function validate_corp_acct()
+							{
+								var ajaxRequest;  // The variable that makes Ajax possible!
+								try
+								{
+									// Opera 8.0+, Firefox, Safari
+									ajaxRequest = new XMLHttpRequest();
+								} 
+								catch (e)
+								{
+									// Internet Explorer Browsers
+									try
+									{ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");} 
+									catch (e) {
+												try{ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");} 
+												catch (e){
+															// Something went wrong
+															alert("Your browser broke!");
+															return false;
+														}
+											}
+								}
+								// Create a function that will receive data sent from the server
+								ajaxRequest.onreadystatechange = function()
+								{
+									if(ajaxRequest.readyState != 4){
+										//var c = ajaxRequest.responseText;
+										document.getElementById('lblgroup').innerHTML="Validating...";
+									}
+									if(ajaxRequest.readyState == 4){
+										var c = ajaxRequest.responseText;
+										document.getElementById('lblgroup').innerHTML=c;
+									}
+								}
+								var account = document.getElementById('account').value;
+								ajaxRequest.open("GET", "corporate_show_ajax.php" + "?account=" + account, true);
+								ajaxRequest.send(null); 
+							}
+							</script>
+							<?php
+								$sql=$dbf->genericQuery("SELECT code,name FROM corporate WHERE centre_id='".$_SESSION[centre_id]."'");
+							?>
+							<tr>
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td height="28" align="left" valign="middle" class="leftmenu">
+									Corporate Account:
+								</td>
+								
+								<td>
+									<select name="corp_acct" 
+											class="combo" 
+											id="corp_acct" 
+											style="width:180px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;"
+											<?php echo (empty($group_query)?'disabled':'');?>>
+										<option value=""> Select Account</option>
+										<?php foreach($sql as $s):?>
+										<option value="<?php echo $s['code'];?>"><?php echo $s['name'];?></option>
+										<?php endforeach;?>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td height="28" align="left" valign="middle" class="leftmenu">
+									Account Id:
+								</td>
+								
+								<td align="left" valign="middle">
+									<div id="validate_corporate_account">
+										<div id="corp_acct_tab"></div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td height="28" align="left" valign="middle" class="leftmenu">
+									&nbsp;
+								</td>
+								
+								<td align="left" valign="middle" id="lblgroup">
+									<div id="validate_corporate_account">
+					
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td height="28" align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td width="3%">&nbsp;</td>
+								<td align="left" valign="middle">&nbsp;</td>
+							</tr>
+							<!--CORPORATE ACCOUNT OPTION-->
                           <tr>
                             <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                             <td height="28" align="left" valign="middle" class="leftmenu">&nbsp;</td>

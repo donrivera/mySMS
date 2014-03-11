@@ -147,6 +147,8 @@ function showweek(type, dt, tm){
 		
 		document.getElementById('dt').value = dt;
 		document.getElementById('tm').value = tm;
+		date_change();
+		document.getElementById('tm').value = tm;
 	}else{
 		document.getElementById('lblweek').innerHTML = type;
 		
@@ -565,6 +567,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								$no_unit = ($no_unit/10) * 7;
 								$dt = date('Y-m-d');							
 								$dt1 = date('Y-m-d',strtotime(date("Y-m-d", strtotime($dt)) . "+$no_unit day"));
+								$new_dt1=$dbf->printClassChangedEndDate($dt1);
 								?>
                                 <td align="left" valign="middle">
                                 <input type="text" name="gr_course_endt" class="validate[required] new_textbox80"  id="gr_course_endt" value="<?php echo $group_end_date;?>" readonly="" />&nbsp;

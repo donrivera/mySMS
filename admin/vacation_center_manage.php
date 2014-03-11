@@ -107,6 +107,7 @@ function countdown_trigger() {
 		window.location.href='../logout.php';
 	}
 }
+
 </script>
 <?php
 //Get from the table
@@ -217,14 +218,18 @@ $count = $res_logout[name]+1; // Set timeout period in seconds
 						$status = 'Rejected';
 					}
 					?>
-              <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" onClick="javascript:window.location.href='vacation_center_edit.php?id=<?php echo $val[id];?>'" style="cursor:pointer;">
+              <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'"  style="cursor:pointer;"><!--onClick="javascript:window.location.href='vacation_center_edit.php?id=<?php echo $val[id];?>'"-->
                 <td height="25" align="center" valign="middle" class="contenttext"><?php echo $i;?></td>
                 <td height="25" align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $res[name];?></td>
 				  <td height="25" align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[frm];?></td>
 				    <td height="25" align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[tto];?></td>
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[type];?></td>
-                    <td width="4%" align="center" valign="middle"><a href="vacation_center_edit.php?id=<?php echo $val[id];?>"><img src="../images/edit.gif" width="16" height="16" border="0" title="Edit" /></a></td>                    
-                    <td width="4%" align="center" valign="middle"><a href="vacation_center_process.php?action=delete&amp;id=<?php echo $val[id];?>"  class="linktext" onclick="return confirm('Are you sure you want to delete this record ?')"><img src="../images/delete.png" width="16" height="16" border="0" title="<?php echo ACTION_CAPTION_DELETE ?>" /></a></td>
+                    <td width="4%" align="center" valign="middle">
+						<a href="vacation_center_edit.php?id=<?php echo $val[id];?>"><img src="../images/edit.gif" width="16" height="16" border="0" title="Edit"/></a>
+					</td>                    
+                    <td width="4%" align="center" valign="middle">
+						<a href="vacation_center_process.php?action=delete&id=<?php echo $val[id];?>"  onclick="return confirm('Are you sure you want to delete this record?');"><img src="../images/delete.png" width="16" height="16" border="0" title="Delete"/></a>
+					</td>
                 <?php
 					  $i = $i + 1;
 					  if($color=="#ECECFF"){

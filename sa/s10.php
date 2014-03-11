@@ -245,6 +245,24 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td align="right" valign="middle" style="padding-top:3px;">&nbsp;</td>
                             </tr>
                             <?php }?>
+							<?php if($_SESSION['corp_acct'] != ''){?>
+							<tr>
+                            <td>&nbsp;</td>
+                            <td height="25" align="right" valign="middle" class="leftmenu"><?php echo "Corporate Code";?> : </td>
+                            <td>&nbsp;</td>
+                            <td align="left" valign="middle" class="mytext"><?php echo $_SESSION['corp_acct'];?></td>
+                            <td align="right" valign="middle" class="mytext">&nbsp;</td>
+                            </tr>
+                            <?php } ?>
+							<?php if($_SESSION['corp_student_acct'] != ''){?>
+							<tr>
+                            <td>&nbsp;</td>
+                            <td height="25" align="right" valign="middle" class="leftmenu"><?php echo "Corporate Account";?> : </td>
+                            <td>&nbsp;</td>
+                            <td align="left" valign="middle" class="mytext"><?php echo $_SESSION['corp_student_acct'];?></td>
+                            <td align="right" valign="middle" class="mytext">&nbsp;</td>
+                            </tr>
+                            <?php } ?>
                           <tr>
                             <td width="9%">&nbsp;</td>
                             <td width="24%" align="left" valign="middle" class="lable1">&nbsp;</td>

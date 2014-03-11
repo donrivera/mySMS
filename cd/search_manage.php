@@ -402,7 +402,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <option value="">---Select---</option>
                                 <?php
 									
-									$query=$dbf->genericQuery("SELECT course_id FROM student_group_dtls WHERE student_id ='$student_id'");
+									$query=$dbf->genericQuery("SELECT DISTINCT(course_id) FROM student_group_dtls WHERE student_id ='$student_id'");
 									//$query=$dbf->fetchOrder('student_course',"student_id='$student_id'","");
 									foreach($query as $rescourse) { 
 										$course = $dbf->strRecordID("course","*","id='$rescourse[course_id]'");

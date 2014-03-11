@@ -211,21 +211,27 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <tr>
                               <td align="left" valign="top"><table width="850" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
-                                  <td width="227" align="center" valign="middle" ><p align="center" dir="rtl"><strong><span dir="ltr" class="cer7_bold">Kingdom  of Saudi Arabia</span></strong><strong> </strong><br />
+                                  <td width="227" align="center" valign="middle" >
+									<!--
+									<p align="center" dir="rtl"><strong><span dir="ltr" class="cer7_bold">Kingdom  of Saudi Arabia</span></strong><strong> </strong><br />
                                     <strong><span dir="ltr" class="cer7_bold">Dar  Al-Khibrah Language Center </span></strong><br />
                                     <strong><span dir="ltr"  class="cer7_bold">Under  the Patronage of the <br />Ministry of Education - Al Ahsa <br />(Male)</span></strong><br /><strong><span class="cer7_bold">Licence No. :  05023006</span></strong></p>
-                                    </td>
+                                    -->
+								   </td>
                                   <td width="364" align="center" valign="middle"><img src="../images/logo_big.jpg" width="278" height="80" /></td>
                                   <td width="309" align="right" valign="middle">
                                   <table dir="rtl" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                       <td width="255" valign="top">
-                                      <p align="center" dir="rtl" class="cer7_normal">المملكة العربية السعودية<br />
+										<!--
+										<p align="center" dir="rtl" class="cer7_normal">المملكة العربية السعودية<br />
                                         معهد دار الخبرة لتعليم اللغة الإنجليزية<br />
                                         تحت اشراف وزارة التربية والتعليم<br />
                                         الإدارة العامة للتربية والتعليم بمحافظة الاحساء <br />
                                         (بنين)<br />
-                                        ترخيص رقم: 05023006&nbsp;&nbsp;</p></td>
+                                        ترخيص رقم: 05023006&nbsp;&nbsp;</p>
+										-->
+										</td>
                                       </tr>
                                     </table></td>
                                   </tr>
@@ -238,7 +244,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <td height="40" align="center" valign="middle"><p align="center" dir="rtl" class="cer_my_head_bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;شهادة اجتياز دورة في اللغة الانجليزية</p></td>
                               </tr>
                             <tr>
-                              <td align="center" valign="middle" class="cer_my_cer_head_bold">A CERTIFICATE OF ACHIEVEMENT IN ENGLISH LANGUAGE</td>
+                              <td align="center" valign="middle" class="cer_my_cer_head_bold">A CERTIFICATE OF ACHIEVEMENT IN THE ENGLISH LANGUAGE</td>
                               </tr>
                             <tr>
                               <td height="12"></td>
@@ -255,15 +261,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                     <tr>
                                       <th height="21" align="left" valign="middle" scope="col" class="cer_my_head">This is to certify that</th>
                                       </tr>
-                                      <?php
-									  if($res[gender]=='female'){
-										  $gender = 'Ms.';
-									  }else{
-										  $gender = 'Mr.';
-									  }
-									  ?>
+                                      <?php $gender=($res[gender]=='female'?'Ms.':'Mr.');?>
                                     <tr>
-                                      <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head"><?php echo $gender;?>&nbsp;</span><span class="cer_my_head_bold"><?php echo $res[first_name];?></span></th>
+                                      <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head"><?php echo $gender;?>&nbsp;</span><span class="cer_my_head_bold"><?php echo $res['first_name']."&nbsp;".$res['father_name']."&nbsp;".$res['family_name'];?></span></th>
                                       </tr>
                                     <tr>
                                       <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">Nationality:</span>&nbsp;<span class="cer_my_head_bold"><?php echo $resc[value];?></span></th>
@@ -319,10 +319,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       <th height="21" align="right" valign="middle" class="cer9_arial" scope="col"><span class="cer_my_head_bold" dir="rtl">يشهد معهد دار الخبرة لتعليم اللغة  الانجليزية بالاحساء</span></th>
                                     </tr>
                                     <tr>
-                                      <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">بأن المتدرب: <?php echo $Arabic->en2ar($res[first_name]);?></span></th>
+                                      <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">بأن المتدرب: <?php echo $res['first_name1']."&nbsp;".$res['father_name1']."&nbsp;".$res['grandfather_name1']."&nbsp;".$res['family_name1'];#echo $Arabic->en2ar($res[first_name]);?></span></th>
                                     </tr>
                                     <tr>
-                                      <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold"></span><span class="cer_my_head_bold">&nbsp;<span dir="rtl">الجنسية : <?php echo $Arabic->en2ar($resc[value]);?></span> </span></th>
+                                      <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold"></span><span class="cer_my_head_bold" dir="rtl">الجنسية:<?php echo $resc["arabic"];?></span></th>
                                     </tr>
                                     <tr>
                                       <th height="21" align="right" valign="middle" class="cer2" scope="col" >&nbsp;<span class="cer_my_head_bold" dir="rtl">رقم السجل المدني / الإقامة:<span class="cer_my_head_bold"><?php if($res[student_id]>0) { echo $dbf->enNo2ar($res[student_id],''); } ?></span></span></th>
@@ -331,14 +331,16 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       <th height="21" align="right" valign="middle" class="cer_my_head_bold" scope="col"><span class="cer_my_head_bold" dir="rtl">قد اجتاز دورة في اللغة  الانجليزية لغير الناطقين بها:</span></th>
                                     </tr>
                                     <tr>
-                                      <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $Arabic->en2ar($course_name[name]);?>  , وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span></th>
+                                      <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $course_name[name];?>  , وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span></th>
                                     </tr>
                                     <tr>
-                                      <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في الفترة من: <?php echo $dbf->enNo2ar($res_g[start_date],'-');?>   إلى: <?php echo $dbf->enNo2ar($res_g[end_date],'-');?></span></th>
+                                      <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في الفترة من: <?php echo $dbf->enNo2ar($res_g[start_date],'-');?> إلى: <?php echo $dbf->enNo2ar($res_g[end_date],'-');?></span></th>
                                     </tr>
-                                    <tr>
+                                    <!--
+									<tr>
                                       <th height="21" align="right" valign="middle" class="cer2" scope="col"></th>
                                     </tr>
+									-->
                                     <tr>
                                       <th height="21" align="right" valign="middle" class="cer2" scope="col" dir="rtl">
                                       <span class="cer_my_head_bold" dir="rtl">الموافق من: <?php if($_REQUEST[student] !='' ) { if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($sdt,'-');}} ?>إلى: <?php if($_REQUEST[student] !='' ) { if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($edt,'-');}} ?></span>
@@ -346,7 +348,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                    </tr>
                                   </table>
                                   <br />
-                                  <span class="cer_my_head_bold" dir="rtl">وحصل على تقدير   <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %  , ونسبة  <?php echo $Arabic->en2ar($res_grade["name"]);?></span></td>
+                                  <span class="cer_my_head_bold" dir="rtl">وحصل على تقدير  <?php echo $Arabic->en2ar($res_grade["name"]);?> , ونسبة  <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %</span></td>
                                   </tr>
                                 </table></td>
                               </tr>
@@ -362,21 +364,26 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <td height="20">&nbsp;</td>
                               </tr>
                             <tr>
-                              <td align="left" valign="middle"><table width="850" border="0" cellspacing="0" cellpadding="0">
-                                <tr>
-                                  <td width="349" align="center" valign="middle"><p dir="rtl"><span dir="rtl"> </span><strong><span dir="rtl"> </span>   تصادق إدارة التربية والتعليم  علي صحة ختم وتوقيع مدير المعهد</strong></p>
-                                    <p align="center" dir="rtl"><strong>مدير عام التربية والتعليم بمحافظة الإحساء</strong><br />
-                                      <strong>أ/أحمد بن محمد بالغنيم</strong><strong> </strong></p>
+                              <td align="left" valign="middle">
+								<!--
+								<table width="850" border="0" cellspacing="0" cellpadding="0">
+									<tr>
+									<td width="349" align="center" valign="middle"><p dir="rtl"><span dir="rtl"> </span><strong><span dir="rtl"> </span>   تصادق إدارة التربية والتعليم  علي صحة ختم وتوقيع مدير المعهد</strong></p>
+										<p align="center" dir="rtl"><strong>مدير عام التربية والتعليم بمحافظة الإحساء</strong><br />
+										<strong>أ/أحمد بن محمد بالغنيم</strong><strong> </strong></p>
                                     </td>
-                                  <td width="94">&nbsp;</td>
-                                  <td width="87" align="center" valign="middle"><p align="center" dir="rtl"><strong>ختم المعهد</strong><strong><span dir="ltr"> </span></strong><br />
-                                    <strong><span dir="ltr">Stamp</span></strong></p></td>
-                                  <td width="115">&nbsp;</td>
-                                  <td width="255" align="center" valign="middle"><p dir="rtl"><span dir="rtl"> </span><strong><span dir="rtl"> </span>            المدير  العام</strong><br />
-                                    <strong><span dir="ltr">Managing  Director&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></strong></p>
-                                    <strong><span dir="rtl">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;م /مشارى بن عبد اللطيف الحليبى</span></strong></td>
-                                </tr>
-                              </table></td>
+									<td width="94">&nbsp;</td>
+									<td width="87" align="center" valign="middle"><p align="center" dir="rtl"><strong>ختم المعهد</strong><strong><span dir="ltr"> </span></strong><br />
+										<strong><span dir="ltr">Stamp</span></strong></p></td>
+									<td width="115">&nbsp;</td>
+									<td width="255" align="center" valign="middle"><p dir="rtl"><span dir="rtl"> </span><strong><span dir="rtl"> </span>            المدير  العام</strong><br />
+										<strong><span dir="ltr">Managing  Director&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></strong></p>
+										<strong><span dir="rtl">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;م /مشارى بن عبد اللطيف الحليبى</span></strong>
+									</td>
+									</tr>
+								</table>
+								-->
+							   </td>
                             </tr>
                             <tr>
                               <td align="left" valign="middle" class="loginheading">

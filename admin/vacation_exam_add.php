@@ -40,6 +40,7 @@ $(function() {
 		changeMonth: true,
 		numberOfMonths: 2,
 		dateFormat: 'yy-mm-dd',
+		beforeShowDay:function (dt){return [dt.getDay() == 5 || dt.getDay() == 6 ? false : true];},
 		onClose: function( selectedDate ) {
 			$( "#enddate" ).datepicker( "option", "minDate", selectedDate );
 		}
@@ -49,6 +50,7 @@ $(function() {
 		changeMonth: true,
 		numberOfMonths: 2,
 		dateFormat: 'yy-mm-dd',
+		beforeShowDay:function (dt){return [dt.getDay() == 5 || dt.getDay() == 6 ? false : true];},
 		onClose: function( selectedDate ) {
 			$( "#startdate" ).datepicker( "option", "maxDate", selectedDate );
 		}

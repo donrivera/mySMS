@@ -120,7 +120,19 @@ if($_REQUEST['action']=='classic'){
 			header("Location:s_classic.php?student_id=$student_id&token=0_k_0&msg=invalid");
 		}
 	}
+	#Corporate Account
+	$corporate_account=$dbf->countRows('corporate_students',"account='$_REQUEST[account]'");
+	$corporate_student_limit=$dbf->getDataFromTable("corporate","no_of_students * no_of_class AS student_limit","code='$_REQUEST[corp_acct]'");
+	$corporate_student=$dbf->getDataFromTable("corporate_students","COUNT(id)","code='$_REQUEST[corp_acct]'");
+	$corporate_count_student=($corporate_student==0?0:$corporate_student + 1);
+	
+	if(!empty($_REQUEST['account']) && !empty($_REQUEST['corp_acct']))
+	{
+		if($corporate_account==1){header("Location:s_classic.php?msg=corp_acct_exist");exit;}
+		if($corporate_count_student > $corporate_student_limit){header("Location:s_classic.php?msg=corp_acct_exceed");exit;}
 		
+	}
+	#Corporate Account	
 	if($_FILES['signature']['name']<>''){		
 		$filename1=$_REQUEST[txt_src]."-".$_FILES['signature']['name'];
 		move_uploaded_file($_FILES[signature][tmp_name],"../sa/photo/".$filename1);
@@ -279,7 +291,10 @@ if($_REQUEST['action']=='classic'){
 			//update in group details table
 			$string_g1="group_id='$group_range[group_id]'";
 			$dbf->updateTable("student_group_dtls",$string_g1,"parent_id='$group'");
-			
+			#corporate account insert to db
+			if(!empty($_REQUEST['account']) && !empty($_REQUEST['corp_acct']))
+			{$dbf->addCorporateStudent($_REQUEST['corp_acct'],$_REQUEST['account'],$sid,$course_id,$_SESSION['id']);}
+			#corporate account insert to db
 		}else{
 			//Get Previous Group after re-arranged
 			//====================================
@@ -295,7 +310,11 @@ if($_REQUEST['action']=='classic'){
 			
 			//Check whether selected group has been start or not
 			$no_unit_finined = $dbf->countRows('ped_units',"group_id='$group'");
-			
+			$dbf->scheduleCall($prev_num,$sid,$_REQUEST["group"],$res_group[teacher_id]);//adjust schedules
+			#corporate account insert to db
+			if(!empty($_REQUEST['account']) && !empty($_REQUEST['corp_acct']))
+			{$dbf->addCorporateStudent($_REQUEST['corp_acct'],$_REQUEST['account'],$sid,$course_id,$_SESSION['id']);}
+			#corporate account insert to db
 			if($no_unit_finined > 0){
 				//Example : 70 units in admin panel
 				//Get the Original Units which is entry By Administrator
@@ -653,9 +672,14 @@ if($_REQUEST['action']=='classic'){
 	session_unregister('classic_age');
 	unset($_SESSION['classic_email']);
 	session_unregister('classic_email');
-	
-	header("Location:search.php");
-	exit;
+	if($group > 0)
+	{
+		header("Location:search_manage.php?student_id=$sid");exit;
+	}
+	else
+	{
+		header("Location:search.php");exit;
+	}
 }
 
 if($_REQUEST['action']=='edit'){

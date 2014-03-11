@@ -142,7 +142,7 @@ foreach($dbf->fetchOrder('student_group m,student_group_dtls d',"m.id=d.parent_i
             <td height="40" align="center" valign="middle"><p align="center" dir="rtl" class="cer_my_head_bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;شهادة اجتياز دورة في اللغة الانجليزية</p></td>
             </tr>
           <tr>
-            <td align="center" valign="middle" class="cer_my_cer_head_bold">A CERTIFICATE OF ACHIEVEMENT IN ENGLISH LANGUAGE</td>
+            <td align="center" valign="middle" class="cer_my_cer_head_bold">A CERTIFICATE OF ACHIEVEMENT IN THE ENGLISH LANGUAGE</td>
             </tr>
           <tr>
             <td height="20">&nbsp;</td>
@@ -159,7 +159,7 @@ foreach($dbf->fetchOrder('student_group m,student_group_dtls d',"m.id=d.parent_i
                   </tr>
                    <?php $gender=($res[gender]=='female'?'Ms.':'Mr.');?>
                   <tr>
-                    <th height="28" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head"><?php echo $gender;?></span>&nbsp;<span class="cer_my_head_bold"><?php echo $dbf->printStudentName($res[id]);?></span></th>
+                    <th height="28" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head"><?php echo $gender;?></span>&nbsp;<span class="cer_my_head_bold"><?php echo $res['first_name']."&nbsp;".$res['father_name']."&nbsp;".$res['family_name'];?></span></th>
                   </tr>
                   <tr>
                     <th height="28" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">Nationality:</span>&nbsp;<span class="cer_my_head_bold"><?php echo $resc[value];?></span></th>
@@ -204,7 +204,7 @@ foreach($dbf->fetchOrder('student_group m,student_group_dtls d',"m.id=d.parent_i
                     <th height="28" align="left" valign="middle" scope="col"><span class="cer_my_head">and has received a final grade of </span><span class="cer_my_head_bold"><?php echo $res_grade["name"];?>, <?php echo $res_per["final_percent"];?> %</span></th>
                   </tr>
                   <tr>
-                    <th height="28" align="left" valign="middle" class="cer_my_head" scope="col">Berlitz issued this certificate in recognition of the above</th>
+                    <th height="28" align="left" valign="middle" class="cer_my_head" scope="col">Berlitz issued this certificate in recognition of the above.</th>
                   </tr>
                   </table><p align="left" class="cer1" dir="rtl">&nbsp;</p></td>
                 <td width="380" align="right" valign="top" ><table width="100%" border="0" align="right" cellpadding="0" cellspacing="0">
@@ -215,10 +215,10 @@ foreach($dbf->fetchOrder('student_group m,student_group_dtls d',"m.id=d.parent_i
                     <th height="26" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">يشهد معهد دار الخبرة لتعليم اللغة  الانجليزية بالاحساء</span></th>
                     </tr>
                   <tr>
-                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">بأن المتدرب: <?php echo $Arabic->en2ar($res[first_name]);?></span>&nbsp; </th>
+                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">بأن المتدرب: <?php echo $res['first_name1']."&nbsp;".$res['father_name1']."&nbsp;".$res['grandfather_name1']."&nbsp;".$res['family_name1'];#echo $Arabic->en2ar($res[first_name]);?></span>&nbsp; </th>
                     </tr>
                   <tr>
-                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold"><?php echo $Arabic->en2ar($resc[value]);?></span>&nbsp;<span class="cer_my_head_bold"><span dir="rtl">الجنسية: </span> </span></th>
+                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold"><span dir="rtl">الجنسية: <?php echo $resc["arabic"];?></span> </span></th>
                     </tr>
                   <tr>
                     <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold"></span>&nbsp;<span class="cer_my_head_bold" dir="rtl">رقم السجل المدني / الإقامة:<?php if($res[student_id]>0) { echo $dbf->enNo2ar($res[student_id],''); } ?></span></th>
@@ -227,20 +227,22 @@ foreach($dbf->fetchOrder('student_group m,student_group_dtls d',"m.id=d.parent_i
                     <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">قد اجتاز دورة في اللغة  الانجليزية لغير الناطقين بها:</span></th>
                     </tr>
                   <tr>
-                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $Arabic->en2ar($course_name[name]);?>  , وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span></th>
+                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $course_name[name];?>  , وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span></th>
                     </tr>
                   <tr>
-                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في الفترة من: <?php echo $dbf->enNo2ar($res_g[start_date],'-');?>   إلى: <?php echo $dbf->enNo2ar($res_g[end_date],'-');?></span></th>
+                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في الفترة من: <?php echo $dbf->enNo2ar($res_g[start_date],'-');?> إلى: <?php echo $dbf->enNo2ar($res_g[end_date],'-');?></span></th>
                     </tr>
-                  <tr>
+                  <!--
+				  <tr>
                     <th height="28" align="right" valign="middle" class="cer2" scope="col">&nbsp;</th>
                     </tr>
+					-->
                   <tr>
-                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">الموافق من: <?php if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($sdt,'-');} ?>إلى: <?php if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($edt,'-');} ?></span>                    
+					<th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">الموافق من: <?php if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($sdt,'-');} ?>إلى: <?php if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($edt,'-');} ?></span>                    
                     </th>
                     </tr>
                   <tr>
-                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">وحصل على تقدير   <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %   , ونسبة <?php echo $Arabic->en2ar($res_grade["name"]);?> </span></th>
+                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">وحصل على تقدير  <?php echo $Arabic->en2ar($res_grade["name"]);?> , ونسبة  <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %</span></th>
                   </tr>
                   <tr>
                     <th height="28" align="right" valign="middle" class="cer_my_head_bold" scope="col"><span dir="rtl">وبناء عليه مُنح هذه  الشهادة.</span></th>
@@ -252,20 +254,25 @@ foreach($dbf->fetchOrder('student_group m,student_group_dtls d',"m.id=d.parent_i
           </table></td>
       </tr>
       <tr>
-        <td align="left" valign="top"><table width="900" border="0" cellspacing="0" cellpadding="0" style="display:none;">
-          <tr>
-            <td width="349" align="center" valign="middle"><p dir="rtl"><span dir="rtl"> </span><strong><span dir="rtl"> </span>   تصادق إدارة التربية والتعليم  علي صحة ختم وتوقيع مدير المعهد</strong></p>
-              <p align="center" dir="rtl"><strong>مدير عام التربية والتعليم بمحافظة الإحساء</strong><br />
-                <strong>أ/أحمد بن محمد بالغنيم</strong><strong> </strong></p></td>
-            <td width="94">&nbsp;</td>
-            <td width="87" align="center" valign="middle"><p align="center" dir="rtl"><strong>ختم المعهد</strong><strong><span dir="ltr"> </span></strong><br />
-              <strong><span dir="ltr">Stamp</span></strong></p></td>
-            <td width="115">&nbsp;</td>
-            <td width="255" align="center" valign="middle"><p dir="rtl"><span dir="rtl"> </span><strong><span dir="rtl"> </span>            المدير  العام</strong><br />
-              <strong><span dir="ltr">Managing  Director&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></strong></p>
-              <strong><span dir="rtl">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;م /مشارى بن عبد اللطيف الحليبى</span></strong></td>
-          </tr>
-        </table></td>
+        <td align="left" valign="top">
+			<!--
+			<table width="900" border="0" cellspacing="0" cellpadding="0" style="display:none;">
+				<tr>
+				<td width="349" align="center" valign="middle"><p dir="rtl"><span dir="rtl"> </span><strong><span dir="rtl"> </span>   تصادق إدارة التربية والتعليم  علي صحة ختم وتوقيع مدير المعهد</strong></p>
+					<p align="center" dir="rtl"><strong>مدير عام التربية والتعليم بمحافظة الإحساء</strong><br />
+					<strong>أ/أحمد بن محمد بالغنيم</strong><strong> </strong></p></td>
+				<td width="94">&nbsp;</td>
+				<td width="87" align="center" valign="middle"><p align="center" dir="rtl"><strong>ختم المعهد</strong><strong><span dir="ltr"> </span></strong><br />
+					<strong><span dir="ltr">Stamp</span></strong></p></td>
+				<td width="115">&nbsp;</td>
+				<td width="255" align="center" valign="middle"><p dir="rtl"><span dir="rtl"> </span><strong><span dir="rtl"> </span>            المدير  العام</strong><br />
+					<strong><span dir="ltr">Managing  Director&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></strong></p>
+					<strong><span dir="rtl">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;م /مشارى بن عبد اللطيف الحليبى</span></strong>
+				</td>
+				</tr>
+			</table>
+			-->
+		</td>
       </tr>
       <tr>
         <td align="left" valign="top">&nbsp;</td>

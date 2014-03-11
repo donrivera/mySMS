@@ -310,7 +310,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								<a href="group_manage_edit.php?id=<?php echo $val[id];?>" class="linktext"><img src="../images/edit.gif" width="16" height="16" border="0" title="Edit" /></a>
 							</td>
 							<td>
-								<a href="group_course_process.php?action=delete&amp;id=<?php echo $val[id];?>"  class="linktext" onclick="return confirm('Are you sure you want to delete this record ?')">
+								<a href="group_course_process.php?action=delete&amp;id=<?php echo $val[id];?>"  class="linktext" onclick="return confirm('Are you sure you want to delete this record?')">
 								<?php if($num_dtls <=0 ) { ?>
 															<img src="../images/delete.png"width="16" height="16" border="0" title="Delete" />
 								<?php } ?>

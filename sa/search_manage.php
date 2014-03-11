@@ -399,7 +399,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <select name="course" id="course" style="width:250px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onChange="show_payment();">
                                 <option value="">---Select---</option>
                                 <?php
-									$query=$dbf->genericQuery("SELECT course_id FROM student_group_dtls WHERE student_id ='$student_id'");
+									$query=$dbf->genericQuery("SELECT DISTINCT(course_id) FROM student_group_dtls WHERE student_id ='$student_id'");
 									//$query=$dbf->fetchOrder('student_course',"student_id='$student_id'","");
 									foreach($query as $rescourse) {
 										$course = $dbf->strRecordID("course","*","id='$rescourse[course_id]'");

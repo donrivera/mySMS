@@ -268,18 +268,18 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                           <tr>
                             <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                             <td height="28" align="right" valign="middle" class="leftmenu">
-							<?php echo constant("STUDENT_ADVISOR_S2_COUNTRY");?> : <span class="nametext1">*</span> </td>
+							<?php echo constant("STUDENT_ADVISOR_HOME_S_CLASSIC_NATIONALITY");?> : <span class="nametext1">*</span> </td>
                             <?php
 								if($_SESSION[country]!=''){
 									$cid = $_SESSION[country];
 								}else{
-									$cid = "189";
+									$cid = "153";
 								}								
 								?>
                             <td></td>
                             <td align="left" valign="middle" >
 							<select name="country" class="combo" id="country" style="width:190px; border:solid 1px; border-color:#999999;background-color:#ECF1FF; font:Verdana, Geneva, sans-serif; font-size:12px;" >
-                                <option value="">--- Select Country ---</option>
+                                <option value="">--- Select---</option>
                                 <?php
 									foreach($dbf->fetchOrder('countries',"","") as $resc) {
 								?>
@@ -350,7 +350,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td>&nbsp;</td>
                             <td align="left" valign="middle">&nbsp;</td>
                             <?php
-							if($cid == '189')
+							if($cid == '153')
 							{
 								$dd = "none";
 							}
@@ -535,12 +535,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 											if($_SESSION[country]!=''){
 												$cid = $_SESSION[country];
 											}else{
-												$cid = "189";
+												$cid = "153";
 											}									
 											?>
                                           <td height="25" align="right" valign="middle" >
                                           <select name="country" class="combo" id="country" style="width:190px; border:solid 1px; border-color:#999999;background-color:#ECF1FF; font:Verdana, Geneva, sans-serif; font-size:12px;" >
-                                              <option value="">--- <?php echo constant("SELECT_COUNTRY");?> ---</option>
+                                              <option value="">--- <?php echo "Select";#constant("SELECT_COUNTRY");?> ---</option>
                                               <?php
 												foreach($dbf->fetchOrder('countries',"","") as $resc) {
 											  ?>
@@ -621,7 +621,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                           <td align="left" valign="middle">&nbsp;</td>
                                           <td>&nbsp;</td>
                                           <?php
-										if($cid == '189')
+										if($cid == '153')
 										{
 											$dd = "none";
 										}

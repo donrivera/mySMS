@@ -12,6 +12,7 @@ $res_user = $dbf->strRecordID("user","*","id='$_SESSION[id]'");
 
 if($_REQUEST['action']=='insert')
 {
+	#echo var_dump($_POST);
 	$teacher_id = $_REQUEST[teacher];
 	$days = $dbf->dateDiff($_POST[startdate], $_POST[enddate])+1;
 	//Current date and Time

@@ -202,10 +202,29 @@ $(document).ready(function() {
 		  ?>
         <li><a <?php echo $mystyle;?> href="javascript:void(0);" title="<?php echo constant("ADMIN_MENU_STUDENT");?>" rel="mnu_enroll"><span <?php echo $mystyle;?>><?php echo constant("ADMIN_MENU_STUDENT");?></span></a></li>
         
-         <?php
+         <?php 
 		$mystyle = '';
-		  if($page_name == "report_teacher_board.php" || $page_name=="report_teacher_schedule.php" || $page_name=="report_student_awaiting.php" || $page_name == "report_group_to_finish.php" || $page_name == "report_certificate_not_collect.php" || $page_name=="report_absent_report.php" || $page_name=="report_teacher_leave_report.php" || $page_name == "report_teacher_overtime_report.php" || $page_name == "report_teacher_capacity.php" || $page_name=="report_certificate_report.php" || $page_name == "report_student_group_grade_dtls.php" || $page_name== "report_freq_customer_report.php" || $page_name == "report_student_group_grade.php" || $page_name == "report_student_not_enrolled.php" || $page_name == "report_student_on_hold.php" || $page_name == "report_statistic.php" || $page_name == "report_student_cycle.php" || $page_name == "report_student_cycle_dtls.php" || $page_name == "report_management.php") {
-			  $mystyle = 'style="background-color:#003399; background-image:none;"';
+		  if(	$page_name == "report_teacher_board.php" || 
+				$page_name=="report_teacher_schedule.php" || 
+				$page_name=="report_student_awaiting.php" || 
+				$page_name == "report_group_to_finish.php" || 
+				$page_name == "report_certificate_not_collect.php" || 
+				$page_name=="report_absent_report.php" || 
+				$page_name=="report_teacher_leave_report.php" || 
+				$page_name == "report_teacher_overtime_report.php" || 
+				$page_name == "report_teacher_capacity.php" || 
+				$page_name== "report_certificate_report.php" || 
+				$page_name == "report_student_group_grade_dtls.php" || 
+				$page_name== "report_freq_customer_report.php" || 
+				$page_name == "report_student_group_grade.php" || 
+				$page_name == "report_student_not_enrolled.php" || 
+				$page_name == "report_student_on_hold.php" || 
+				$page_name == "report_statistic.php" || 
+				$page_name == "report_student_cycle.php" || 
+				$page_name == "report_student_cycle_dtls.php" || 
+				$page_name == "report_management.php") {
+			
+			$mystyle = 'style="background-color:#003399; background-image:none;"';
 		  }
 		  ?>
         <li><a <?php echo $mystyle;?> href="#" title="<?php echo constant("ADMIN_MENU_REPORTS");?>" rel="rpt_progress_report"><span <?php echo $mystyle;?>><?php echo constant("ADMIN_MENU_REPORTS");?></span></a></li>   
@@ -275,6 +294,7 @@ $(document).ready(function() {
             <a href="currency_setup.php"><?php echo constant("ADMIN_MENU_RULE_CURRENCY");?></a>
             <a href="help_manage.php"><?php echo constant("ADMIN_MENU_RULE_HELP");?></a>
             <a href="type_manage.php"><?php echo constant("TYPE_OF_STUDENTS");?></a>
+			<a href="corp_acct_manage.php"><?php echo constant("ADMIN_MENU_CORPORATE_ACCT");?></a>
 			</div>
 			
         <div id="vacation" class="dropmenudiv_d">

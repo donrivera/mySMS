@@ -35,8 +35,12 @@ $student_mobile_no = $res_teacher['mobile'];
 
 //Get the Numbers of students in a particular Group with Centre wise
 $num_student = $dbf->countRows('student_group_dtls',"parent_id='$group'");
-
-
+#corporate account
+$corporate_account=$dbf->countRows('corporate_students',"account='$_REQUEST[account]'");
+$corporate_student_limit=$dbf->getDataFromTable("corporate","no_of_students * no_of_class AS student_limit","code='$_REQUEST[corp_acct]'");
+$corporate_student=$dbf->getDataFromTable("corporate_students","COUNT(id)","code='$_REQUEST[corp_acct]'");
+$corporate_count_student=($corporate_student==0?0:$corporate_student + 1);
+#corporate account
 $room_id = $res_group["room_id"];
 $centre_id = $_SESSION["centre_id"];
 $course_id = $res_group["course_id"];
@@ -50,6 +54,14 @@ if($num_student == 0)
 	if($duplicate_course==1)
 	{
 		echo '<script type="text/javascript">alert("Duplicate Course!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
+	}
+	elseif($corporate_account==1)
+	{
+		echo '<script type="text/javascript">alert("Corporate Account Exists!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
+	}
+	elseif($corporate_count_student > $corporate_student_limit)
+	{
+		echo '<script type="text/javascript">alert("Corporate Account Exceeded!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
 	}
 	else
 	{	$studentSendSMS=1;
@@ -111,6 +123,10 @@ if($num_student == 0)
 		$dbf->updateTable("student_group",$string_g,"id='$group'");
 		$string_g1="group_id='$sizegroup[group_id]'";
 		$dbf->updateTable("student_group_dtls",$string_g1,"parent_id='$group'");
+		#corporate account insert to db
+		if(!empty($_REQUEST['account']) && !empty($_REQUEST['corp_acct']))
+		{$dbf->addCorporateStudent($_REQUEST['corp_acct'],$_REQUEST['account'],$student_id,$course_id,$_SESSION['id']);}
+		#corporate account insert to db
 	}
 }
 else
@@ -143,12 +159,24 @@ else
 	{
 		echo '<script type="text/javascript">alert("Duplicate Entry!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
 	}
+	elseif($corporate_account==1)
+	{
+		echo '<script type="text/javascript">alert("Corporate Account Exists!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
+	}
+	elseif($corporate_count_student > $corporate_student_limit)
+	{
+		echo '<script type="text/javascript">alert("Corporate Account Exceeded!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
+	}
 	else
 	{	$studentSendSMS=1;
 		$_SESSION['group_id']=$_REQUEST["group"];
 		#DON 9-18-2013
 		$dbf->scheduleCall($prev_num,$student_id,$_REQUEST["group"],$res_group[teacher_id]);
 		#DON 09-18-2013
+		#corporate account insert to db
+		if(!empty($_REQUEST['account']) && !empty($_REQUEST['corp_acct']))
+		{$dbf->addCorporateStudent($_REQUEST['corp_acct'],$_REQUEST['account'],$student_id,$course_id,$_SESSION['id']);}
+		#corporate account insert to db
 		//update the Group ID to Student_group Table means we can get the student according to group_id
 		$prev_group_id = $prev_group[group_id];
 		$num_st = $dbf->countRows('student_moving',"student_id='$student_id' And course_id='$course_id'");

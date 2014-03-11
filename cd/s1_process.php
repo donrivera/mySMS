@@ -128,6 +128,18 @@ if($_REQUEST['action']=='email'){
 }
 
 if($_REQUEST['action']=='group'){
+	$corporate_account=$dbf->countRows('corporate_students',"account='$_REQUEST[account]'");
+	$corporate_student_limit=$dbf->getDataFromTable("corporate","no_of_students * no_of_class AS student_limit","code='$_REQUEST[corp_acct]'");
+	$corporate_student=$dbf->getDataFromTable("corporate_students","COUNT(id)","code='$_REQUEST[corp_acct]'");
+	$corporate_count_student=($corporate_student==0?0:$corporate_student + 1);
+	
+	if(!empty($_REQUEST['account']) && !empty($_REQUEST['corp_acct']))
+	{
+		if($corporate_account==1){header("Location:s_group.php?msg=corp_acct_exist");exit;}
+		if($corporate_count_student > $corporate_student_limit){header("Location:s_group.php?msg=corp_acct_exceed");exit;}
+		$_SESSION['corp_acct']=$_REQUEST['corp_acct'];
+		$_SESSION['corp_student_acct']=$_REQUEST['account'];
+	}
 	$_SESSION[group] = $_REQUEST[group];	
 	header("Location:s7.php");
 }
@@ -321,6 +333,10 @@ if($_REQUEST['action']=='insert')
 			//update in group details table
 			$string_g1="group_id='$group[group_id]'";
 			$dbf->updateTable("student_group_dtls",$string_g1,"parent_id='$_SESSION[group]'");
+			#corporate account insert to db
+			if(!empty($_SESSION['corp_student_acct']) && !empty($_SESSION['corp_acct']))
+			{$dbf->addCorporateStudent($_SESSION['corp_acct'],$_SESSION['corp_student_acct'],$ids,$course_id,$_SESSION['id']);}
+			#corporate account insert to db
 		}
 		else
 		{
@@ -339,6 +355,10 @@ if($_REQUEST['action']=='insert')
 			//Check whether selected group has been start or not
 			$no_unit_finined = $dbf->countRows('ped_units',"group_id='$_SESSION[group]'");
 			$dbf->scheduleCall($prev_num,$ids,$_SESSION[group],$res_group[teacher_id]);//adjust schedules
+			#corporate account insert to db
+			if(!empty($_SESSION['corp_student_acct']) && !empty($_SESSION['corp_acct']))
+			{$dbf->addCorporateStudent($_SESSION['corp_acct'],$_SESSION['corp_student_acct'],$ids,$course_id,$_SESSION['id']);}
+			#corporate account insert to db
 			if($no_unit_finined > 0)
 			{
 				//Example : 70 units in admin panel
@@ -825,6 +845,13 @@ if($_REQUEST['action']=='insert')
 	
 	unset($_SESSION['studentid']);
 	session_unregister('studentid');
+	
+	#corporate account insert to db
+	unset($_SESSION['corp_student_acct']);
+	session_unregister('corp_student_acct');
+	unset($_SESSION['corp_acct']);
+	session_unregister('corp_acct');
+	#corporate account insert to db
 	
 	if($group_id > 0)
 	{

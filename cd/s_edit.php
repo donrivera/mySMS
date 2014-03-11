@@ -433,12 +433,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <td>&nbsp;</td>
                               <td align="left" valign="middle">
                                 <select name="country" id="country" class="mycon" style="width:190px;">
-                                  <option value="">--- Select Country ---</option>
+                                  <option value="">--- Select ---</option>
                                   <?php
 								if($res_edit_student["country_id"]!=''){
 									$cid = $res_edit_student["country_id"];
 								}else{
-									$cid = "189";
+									$cid = "153";
 								}
 								foreach($dbf->fetchOrder('countries',"","") as $resc) {
 								?>
@@ -1004,12 +1004,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                       <td height="28" align="right" valign="middle" class="leftmenu">
                                       <select name="country" id="country" class="mycon" style="width:190px;">
-                                          <option value="">--- Select Country ---</option>
+                                          <option value="">--- Select ---</option>
                                           <?php
                                         if($res_edit_student["country_id"]!=''){
                                             $cid = $res_edit_student["country_id"];
                                         }else{
-                                            $cid = "189";
+                                            $cid = "153";
                                         }
                                         foreach($dbf->fetchOrder('countries',"","") as $resc) {
                                         ?>

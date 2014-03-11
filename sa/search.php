@@ -278,7 +278,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				  // Check the student whether student is HOLD or not
 				  $is_hold = $dbf->countRows('student_moving',"status_id='6' And student_id='$val[id]'"); // (6 = HOLD)				  
 				  ?>
-                <td width="4%" align="center" valign="middle" ><a href="search_adding_group.php?student_id=<?php echo $val["id"];?>&page=search_adding_group.php&amp;TB_iframe=true&amp;height=290&amp;width=475&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox">
+                <td width="4%" align="center" valign="middle" ><a href="search_adding_group.php?student_id=<?php echo $val["id"];?>&page=search_adding_group.php&amp;TB_iframe=true&amp;height=320&amp;width=475&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox">
                   <img src="../images/group.png" width="16" height="16" border="0" title="<?php echo ICON_ADD_GROUP ?>">
                 </a></td>
                 <td width="4%" align="center" valign="middle" ><a href="search_advance.php?student_id=<?php echo $val["id"];?>">

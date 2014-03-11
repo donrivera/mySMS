@@ -11,17 +11,23 @@ $dbf = new User();
 	
 //Query string
 $string="sick_status='$_POST[status]'";
-$res_s = $dbf->strRecordID("sick_leave","*","id='$_REQUEST[id]'");echo $_REQUEST[id];
+$res_s = $dbf->strRecordID("sick_leave","*","id='$_REQUEST[id]'");
+#echo $_REQUEST[id];
+#echo var_dump($res_s);
 //Excute query
 	
 //Mail start
 //===================================================================
 if($_POST[status]=="1"){$status = "Approved";}else{$status = "Rejected";}
-if($_POST[option]=="1"){$optionmsg = "Substitute Teacher";}else{$optionmsg = "Class is Cancelled";}
+if($_POST[option]=="1")
+{$optionmsg = "Substitute Teacher";}
+else
+{$optionmsg = "Class is Cancelled";}
 $cd_id = $_SESSION[id];
 $cr_date = date('Y-m-d H:i:s A');
 $days = $dbf->dateDiff($res_s[from_date],$res_s[to_date])+1;
-$getDates=$dbf->schedLeaves("Teacher",$res_s[teacher_id],$res_s[from_date],$res_s[to_date],"");
+if($_POST['status']==1 && $_POST['option']==2)
+{$dbf->schedLeaves("Teacher",$res_s[teacher_id],$res_s[from_date],$res_s[to_date],"");}
 $leave_string="teacher_id='$res_s[teacher_id]',frm='$res_s[from_date]',tto='$res_s[to_date]',type='Sick leave',no_days='$days',created_datetime='$cr_date',created_by='$_SESSION[id]'";
 $id = $dbf->insertSet("teacher_vacation",$leave_string);
 $dbf->updateTable("sick_leave","sick_status='$_POST[status]'","id='$_REQUEST[id]'");

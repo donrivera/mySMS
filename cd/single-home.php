@@ -230,22 +230,23 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </table>
                   <table width="97%" border="1" cellspacing="0" cellpadding="0" bordercolor="#999" style="border-collapse:collapse;">
                   <tr>
-                    <td width="7%" height="22" align="center" valign="middle" bgcolor="#DDDDFF" class="pedtext"><?php echo constant("STUDENT_MYACCOUNT_SL");?></td>
+                    <td width="12%" height="22" align="center" valign="middle" bgcolor="#DDDDFF" class="pedtext"><?php echo constant("STUDENT_MYACCOUNT_SL")."/<BR/> Corp Acct";?></td>
                     <td width="20%" align="center" valign="middle" bgcolor="#DDDDFF" class="pedtext"><?php echo constant("RECEPTION_GROUP_MANAGE_GROUPNAME");?></td>
                     <td width="20%" align="center" valign="middle" bgcolor="#DDDDFF" class="pedtext"><?php echo constant("STUDENT_ADVISOR_GROUP_COURSE");?></td>
-                    <td width="39%" align="center" valign="middle" bgcolor="#DDDDFF" class="pedtext"><?php echo constant("STUDENT_ADVISOR_GROUP_GRPSTARTDT");?></td>
+                    <td width="29%" align="center" valign="middle" bgcolor="#DDDDFF" class="pedtext"><?php echo constant("STUDENT_ADVISOR_GROUP_GRPSTARTDT");?></td>
                     <td width="14%" align="center" valign="middle" bgcolor="#DDDDFF" class="pedtext"><?php echo constant("TEACHER_MY_GROUPS_STATUS");?></td>
                   </tr>
                   <?php
 				  $k = 1;
 				  foreach($dbf->fetchOrder('student_group_dtls',"student_id='$student_id'","id") as $dtls){
 					  $group = $dbf->strRecordID("student_group","*","id='$dtls[parent_id]'");
+					  $corp_acct=$dbf->getDataFromTable("corporate_students","account","student_id='$dtls[student_id]' AND course_id='$dtls[course_id]'");
 				  ?>
                   <tr>
-                    <td height="22" align="center" valign="middle" class="pedtext"><?php echo $k;?></td>
-                    <td align="left" valign="middle" class="mytext"><?php echo $group["group_name"];?> <?php echo $group["group_start_time"];?>-<?php echo $group["group_end_time"];?></td>
+                    <td height="22" align="center" valign="middle" class="pedtext"><?php echo (empty($corp_acct)?$k:$corp_acct);?></td>
+                    <td align="left" valign="middle" class="mytext"><?php echo $group["group_name"];?> <?php #echo $dbf->printClassTimeFormat($group["group_start_time"],$group["group_end_time"]);?></td>
                     <td align="left" valign="middle" class="mytext"><?php echo $dbf->getDataFromTable("course","name","id='$group[course_id]'");?></td>
-                    <td align="left" valign="middle" class="mytext"><?php echo 'From '.$group["start_date"].' To '.$group["end_date"];?></td>
+                    <td align="left" valign="middle" class="mytext"><?php echo $group["start_date"].' To '.$group["end_date"];?></td>
                     <td align="center" valign="middle" class="mytext"><?php echo $group["status"];?></td>
                   </tr>
                   <?php $k++; } ?>

@@ -24,7 +24,47 @@ function check(){
 		return false;
 	}
 }
+function validate_corp_acct(){
+	var ajaxRequest;  // The variable that makes Ajax possible!
+	
+	try{
+		// Opera 8.0+, Firefox, Safari
+		ajaxRequest = new XMLHttpRequest();
+	} catch (e){
+		// Internet Explorer Browsers
+		try{
+			ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch (e) {
+			try{
+				ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (e){
+				// Something went wrong
+				alert("Your browser broke!");
+				return false;
+			}
+		}
+	}
+		
+	// Create a function that will receive data sent from the server
+	ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState != 4){
+			//var c = ajaxRequest.responseText;
+			document.getElementById('lblgroup').innerHTML="Validating...";
+		}
+			if(ajaxRequest.readyState == 4){
+			var c = ajaxRequest.responseText;
+			
+			document.getElementById('lblgroup').innerHTML=c;
+		}
+	}
+
+	var account = document.getElementById('account').value;
+
+	ajaxRequest.open("GET", "corporate_show_ajax.php" + "?account=" + account, true);
+	ajaxRequest.send(null); 
+}
 </script>
+<script src="js/jquery.min.js" type="text/javascript"></script>
 <?php
 if($_SESSION[font]=='big'){
 	?>
@@ -128,7 +168,9 @@ text-transform:uppercase;
 													FROM student_group  sg
 													INNER JOIN student_course sc ON sg.course_id=sc.course_id
 													INNER JOIN course c ON c.id=sc.course_id
+													INNER JOIN student_moving smv ON smv.student_id=sc.student_id
 													WHERE sc.student_id='$student_id' 
+													AND smv.status_id >'2'
 													AND sg.centre_id='$_SESSION[centre_id]' 
 													AND status!='Completed' AND YEAR(sg.start_date) = '$year_now' ORDER BY sg.group_name ASC");
 			  ?>
@@ -157,7 +199,88 @@ text-transform:uppercase;
 					<option value="<?php echo $q[id];?>"><?php echo $q['group_name'].' ['.$q["name"].']';?></option>
 				<?php endforeach;?>
               </select></td>
-              </tr>
+            </tr>
+			<?php
+				$sql=$dbf->genericQuery("SELECT code,name FROM corporate WHERE centre_id='".$_SESSION[centre_id]."'");
+			?>
+			
+			<tr>
+				<td width="31%" align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; color:#003333; font-weight:normal; font-size:12px;">
+				Corporate Account:</td>
+				<td width="3%">&nbsp;</td>
+				<td width="66%" align="left" valign="middle">
+					
+					<select name="corp_acct" 
+							class="combo" 
+							id="corp_acct" 
+							style="width:180px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;"
+							<?php echo (empty($query)?'disabled':'');?>>
+						<option value=""> Select Account</option>
+						<?php foreach($sql as $s):?>
+						<option value="<?php echo $s['code'];?>"><?php echo $s['name'];?></option>
+						<?php endforeach;?>
+					</select>
+					
+				</td>
+			</tr>
+			<tr>
+				<td width="31%" align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; color:#003333; font-weight:normal; font-size:12px;">
+				Account Id:</td>
+				<td width="3%">&nbsp;</td>
+				<td width="66%" align="left" valign="middle">
+					<div id="validate_corporate_account">
+					<div id="corp_acct_tab"></div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td width="31%" align="right" valign="middle" style="font-family:Arial, Helvetica, sans-serif; color:#003333; font-weight:normal; font-size:12px;">
+				&nbsp;</td>
+				<td width="3%">&nbsp;</td>
+				<td width="66%" align="left" valign="middle" id="lblgroup">
+					<div id="validate_corporate_account">
+					
+					</div>
+				</td>
+			</tr>
+			<script language="javascript" type="text/javascript">
+				$(document).ready(function() 
+				{	
+					$('#corp_acct').change(function() 
+					{
+		
+						$.post( "corp_acct_tab.php", function( data ) 
+						{
+			
+							$( "#corp_acct_tab" ).html( data );
+						});
+		
+					});
+					/*
+					$('#account').keyup(function()
+					{
+						var key=$("#account").val();
+						$.post("corporate_show_ajax.php",
+						{account:key,},
+						function (data)
+						{$("#validate_corporate_account").html(data);});
+					});
+					*/
+				});
+			</script>
+			<!--
+			<tr>
+				<td>Corporate Account:</td>
+				<td>
+					<select>
+						<option value=""> Select Account</option>
+						<?php foreach($sql as $s):?>
+						<option value="<?php echo $s[code];?>"><?php echo $q['name'];?></option>
+						<?php endforeach;?>
+					</select>
+				</td>
+			</tr>
+			-->
             <tr>
               <td height="5" colspan="3" align="right" valign="middle"></td>
               </tr>

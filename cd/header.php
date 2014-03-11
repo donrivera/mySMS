@@ -326,7 +326,8 @@ $(document).ready(function() {
         <a href="report_management.php"><?php echo constant("MANAGEMENT_REPORT");?></a>
         <a href="report_student_cycle.php"><?php echo constant("REPORT_STUDENT_LIFE_CYCLE");?></a>
 		<a href="report_student_type.php"><?php echo constant("REPORT_STUDENT_TYPE");?></a>
-        </div>
+        <a href="report_corp_acct.php"><?php echo constant("REPORT_CORPORATE_ACCT");?></a>
+		</div>
             
         <div id="help" class="dropmenudiv_d">
 		<?php

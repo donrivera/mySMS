@@ -51,6 +51,7 @@ else
 <script type="text/javascript" src="js/filter_textbox.js"></script>
 <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
 <link rel="stylesheet" href="js/validationEngine.jquery.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 <?php 
 if($_SESSION[lang]=='')
 {
@@ -203,7 +204,19 @@ $count = $res_logout[name]+1; // Set timeout period in seconds
                           <td height="28" align="right" valign="top" class="leftmenu"><?php echo constant("ADMIN_CHALLAN_COND_NARRATION");?> : <span class="nametext1">*</span> </td>
                           <td>&nbsp;</td>
                           <td align="left" valign="middle">
-						  <textarea name="name" cols="45" class="new_textbox190" id="name" minlength="4" style="height:200px; width:350px;"><?php echo $res[name];?></textarea></td>
+						  <textarea name="name" cols="45" class="new_textbox190" id="name" minlength="4" style="height:200px; width:350px;"><?php echo $res[name];?></textarea>
+						  <script type="text/javascript">
+							//<![CDATA[
+									CKEDITOR.replace( 'name', {
+									extraPlugins : 'autogrow',
+									autoGrow_maxHeight : 600,toolbar:[
+									['Bold','Italic','Underline','Strike'],
+									['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+									['Undo','Redo'],['Format'],['Styles'],['Font'],['FontSize'],['TextColor']]																
+															});				
+							//]]>
+							</script>
+						  </td>
                           <td>&nbsp;</td>
                           </tr>
                         <tr>

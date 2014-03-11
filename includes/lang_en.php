@@ -281,7 +281,7 @@ define("ADMIN_VACATION_CENTRE_AJAX_SHOWSCHEDULE","Show the running schedule");
 
 //vacation_exam_add.php
 define("ADMIN_VACATION_EXAM_ADD_NEWEXAM","Add exam vacation");
-define("ADMIN_VACATION_EXAM_ADD_EXAMNAME","Exam name");
+define("ADMIN_VACATION_EXAM_ADD_EXAMNAME","Group name");
 define("ADMIN_VACATION_EXAM_ADD_VACATIONFROM","Vacation  from");
 define("ADMIN_VACATION_EXAM_ADD_VACATIONEND","Vacation end");
 
@@ -1546,7 +1546,7 @@ define("ADMIN_MENU_RULE_VIEW_GROUP_HISTORY","View group history");
 define("ADMIN_MENU_RULE_VIEW_COMMENT_HISTORY","Students comments history");
 define("ADMIN_MENU_RULE_CURRENCY","Currency setup");
 define("ADMIN_MENU_RULE_HELP","Manage help document");
-
+define("ADMIN_MENU_CORPORATE_ACCT","Manage Corporate Acct");
 define("ADMIN_MENU_QUICK_LINKS","Quick links");
 
 define("ADMIN_MENU_LEADS","Leads");
@@ -2115,6 +2115,7 @@ define("ACTION_CAPTION_DELETE","Delete");
 
 define("REPORT_STUDENT_LIFE_CYCLE","Student life cycle");
 define("REPORT_STUDENT_TYPE","Student Type");
+define("REPORT_CORPORATE_ACCT","Corporate Account");
 define("PLACEMENT_TESTGRADE_ONLINE","Placement test grade - online");
 define("PLACEMENT_TESTGRADE_SPEAK","Placement test grade - speaking");
 

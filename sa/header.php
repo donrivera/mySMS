@@ -109,7 +109,7 @@ $(document).ready(function() {
         
          <?php
 	  $mystyle = '';
-	  if($page_name == "report_teacher_board.php" || $page_name == "report_teacher_schedule.php" || $page_name == "report_student_awaiting.php" || $page_name == "report_group_to_finish.php" || $page_name == "report_certificate_not_collect.php" || $page_name == "report_absent_report.php" || $page_name == "report_teacher_leave_report.php" || $page_name == "report_teacher_capacity.php" || $page_name == "report_certificate_report.php" || $page_name == "report_freq_customer_report.php" || $page_name == "view_student_comments_history_from_manage.php" || $page_name == "report_student_group_grade.php" || $page_name == "report_student_group_grade_dtls.php" || $page_name == "report_student_not_enrolled.php" || $page_name == "report_student_on_hold.php" || $page_name == "view_student_comments_history.php" || $page_name == "report_student_cycle.php" || $page_name == "report_student_cycle_dtls.php" || $page_name == "report_student_type.php"){
+	  if($page_name == "report_teacher_board.php" || $page_name == "report_teacher_schedule.php" || $page_name == "report_student_awaiting.php" || $page_name == "report_group_to_finish.php" || $page_name == "report_certificate_not_collect.php" || $page_name == "report_absent_report.php" || $page_name == "report_teacher_leave_report.php" || $page_name == "report_teacher_capacity.php" || $page_name == "report_certificate_report.php" || $page_name == "report_freq_customer_report.php" || $page_name == "view_student_comments_history_from_manage.php" || $page_name == "report_student_group_grade.php" || $page_name == "report_student_group_grade_dtls.php" || $page_name == "report_student_not_enrolled.php" || $page_name == "report_student_on_hold.php" || $page_name == "view_student_comments_history.php" || $page_name == "report_student_cycle.php" || $page_name == "report_student_cycle_dtls.php" || $page_name == "report_student_type.php" || $page_name == "report_corp_acct.php"){
 		  $mystyle = 'style="background-color:#003399; background-image:none;"';
 	  }
 	  ?>
@@ -246,6 +246,7 @@ $(document).ready(function() {
         <a href="view_student_comments_history.php"><?php echo constant("ADMIN_MENU_RULE_VIEW_COMMENT_HISTORY");?></a>
         <a href="report_student_cycle.php"><?php echo constant("REPORT_STUDENT_LIFE_CYCLE");?></a>
 		<a href="report_student_type.php"><?php echo constant("REPORT_STUDENT_TYPE");?></a>
+		<a href="report_corp_acct.php"><?php echo constant("REPORT_CORPORATE_ACCT");?></a>
 	</div>
      
     <!-- grouping -->

@@ -227,7 +227,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td align="left" valign="middle" class="mycon" style="padding-left:5px;background-color:<?php echo $color;?>"><?php echo $status;?></td>
                     <td width="6%" align="center" valign="middle" class="mycon" style="padding-left:5px;background-color:<?php echo $color;?>">
                     <?php if($val[sick_status]== '0') { ?>
-                    <a href="sick_leave_add.php?page=sick_leave_add.php&id=<?php echo $val[id];?>&amp;TB_iframe=true&amp;height=330&amp;width=475&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox ">
+                    <a href="sick_leave_add.php?page=sick_leave_add.php&id=<?php echo $val['parent_id'];?>&amp;TB_iframe=true&amp;height=330&amp;width=475&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox ">
                     <img src="../images/change_status.png" name="edit" id="edit" title="Change Status" border="0"/></a>
                     <?php } ?>
                     </td>

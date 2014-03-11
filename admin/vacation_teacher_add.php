@@ -38,6 +38,7 @@ $(function() {
 		changeMonth: true,
 		numberOfMonths: 2,
 		dateFormat: 'yy-mm-dd',
+		beforeShowDay:function (dt){return [dt.getDay() == 5 || dt.getDay() == 6 ? false : true];},
 		onClose: function( selectedDate ) {
 			$( "#enddate" ).datepicker( "option", "minDate", selectedDate );
 		}
@@ -47,6 +48,7 @@ $(function() {
 		changeMonth: true,
 		numberOfMonths: 2,
 		dateFormat: 'yy-mm-dd',
+		beforeShowDay:function (dt){return [dt.getDay() == 5 || dt.getDay() == 6 ? false : true];},
 		onClose: function( selectedDate ) {
 			$( "#startdate" ).datepicker( "option", "maxDate", selectedDate );
 		}
@@ -84,7 +86,7 @@ function validate()
 		document.getElementById('lblerror').innerHTML = "";
 	}	
 			
-	if(document.frm.center.value == '')
+	if(document.frm.teacher.value == '')
 	{
 		document.getElementById('lblerror').innerHTML = "<html><table width='200' border='0' cellspacing='0' cellpadding='0' style='border:solid 1px; border-color:#990000;'><tr><td width='14%' rowspan='2' align='center' valign='middle' bgcolor='#FFCCFF'><img src='../images/block.png' width='16' height='16' /></td><td width='6%' bgcolor='#FFCCFF'>&nbsp;</td><td width='80%' rowspan='2' bgcolor='#FFCCFF' class='nametext1'>Select Teacher Name. </td></tr><tr><td bgcolor='#FFCCFF'>&nbsp;</td></tr></table></html>";
 		

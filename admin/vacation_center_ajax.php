@@ -74,18 +74,19 @@ if($teacher_id > 0)
     <tr>
       <td height="20" align="left" valign="middle">
       <?php
-      foreach($dbf->fetchOrder('student_group',"centre_id='$teacher_id'","id","*","") as $val) {
+      foreach($dbf->fetchOrder('student_group',"centre_id='$teacher_id'","start_date DESC LIMIT 0,3","*","") as $val) {
 		  
 		  //Get group Name
-		  $res_group = $dbf->strRecordID("common","*","id='$val[group_id]'");
+		  
+		  #$res_group = $dbf->strRecordID("common","*","id='$val[group_id]'");
 		  
       ?>
       <table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
         <tr>
-          <td height="20" align="left" valign="middle" bgcolor="#FFCC99" class="leftmenu" style="padding-left:5px;"><?php echo $val[group_name];?> <?php echo $val["group_time"];?>-<?php echo $dbf->GetGroupTime($val["id"]);?></td>
+          <td height="20" align="left" valign="middle" bgcolor="#FFCC99" class="leftmenu" style="padding-left:5px;"><?php echo $val[group_name];?> <?php echo $dbf->printClassTimeFormat($val["group_start_time"],$val["group_end_time"]);?></td>
         </tr>
         <?php
-		foreach($dbf->fetchOrder('student_group',"group_id='$val[group_id]' AND centre_id='$teacher_id'","id") as $val_c) {
+		foreach($dbf->fetchOrder('student_group',"id='$val[id]' AND centre_id='$teacher_id'","id") as $val_c) {
 			
 			//Get Course Name
 			$res_course = $dbf->strRecordID("course","*","id='$val_c[course_id]'");
@@ -98,7 +99,7 @@ if($teacher_id > 0)
           <table width="90%" border="1" cellspacing="0" bordercolor="#FFCC99" cellpadding="0" style="border-collapse:collapse;">
           <?php
 		  $i = 1;
-		  foreach($dbf->fetchOrder('student_group',"course_id='$val_c[course_id]' AND group_id='$val[group_id]' AND centre_id='$teacher_id'","id") as $val_dtls) {
+		  foreach($dbf->fetchOrder('student_group',"course_id='$val_c[course_id]' AND id='$val[id]' AND centre_id='$teacher_id'","id") as $val_dtls) {
 		  ?>
             <tr>
               <td width="10%" height="20" align="center" valign="middle" bgcolor="#FFFFCC" class="mytext"><?php echo $i;?> </td>
