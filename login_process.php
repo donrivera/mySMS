@@ -11,7 +11,7 @@ $dbf = new User();
 
 $pwd = base64_encode(base64_encode($_REQUEST['password'])); // Get password
 $uname = addslashes($_REQUEST['uname']);	// Get user name
-$time = time();								// Gets the current server time
+$time = time()+60*60*2;								// Gets the current server time
 $check = $_REQUEST['setcookie'];			// Checks if the remember me button was ticked
 
 $num = $dbf->countRows("user", "user_id='$uname' and password='$pwd'");
@@ -26,8 +26,8 @@ if($num > 0){
 	
 	//Set in Cookies (If checked the Remember Me in Login Page)
 	if($check !=''){ // Check to see if the 'setcookie' box was ticked to remember the user
-		setcookie("cook_username", $uname, $time + 3600);    	// Sets the cookie username
-		setcookie("cook_password", $pwd, $time + 3600);	// Sets the cookie password
+		setcookie("cook_username", $uname, $time);    	// Sets the cookie username
+		setcookie("cook_password", $pwd, $time);	// Sets the cookie password
 	}
 	//--- End ---------------------------
 	

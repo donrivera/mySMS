@@ -252,6 +252,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td colspan="2" rowspan="3" align="left" valign="top" class="leftmenu">
 							<textarea name="student_comment" id="student_comment" rows="20" cols="50" class="mytext" onBlur="checkTab('student_comment');"><?php echo $_SESSION[student_comment];?></textarea></td>
                             </tr>
+							
                           <tr>
                             <td height="28" align="left" valign="middle" class="leftmenu">&nbsp;</td>
                             </tr>

@@ -1457,9 +1457,32 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <td>&nbsp;</td>
 
                               </tr>
-
-                            
-
+							<!-- ADDRESS FUNCTION -->
+							<?php $area_code_sql=$dbf->genericQuery("SELECT * FROM area");?>
+                            <tr>
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td height="28" align="right" valign="middle" class="leftmenu">Area Code:</td>
+								<td>&nbsp;</td>
+								<td align="left" valign="middle">
+									<select name="area_code" id="area_code" class="combo" style="width:270px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;">
+										<option value="">-- Select --</option>
+										<?php foreach($area_code_sql as $a_c_sql):?>
+										<option value="<?php echo $a_c_sql['code']; ?>"><?php echo $a_c_sql['name'];?></option>
+										<?php endforeach;?>
+									</select>
+								</td>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td height="28" align="right" valign="middle" class="leftmenu">Address:</td>
+								<td>&nbsp;</td>
+								<td align="left" valign="middle">
+									<textarea name="address" id="address" cols="30" rows="5" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF;"></textarea>
+								</td>
+								<td>&nbsp;</td>
+							</tr>
+							<!-- ADDRESS FUNCTION -->
                             <tr>
 
                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
@@ -1750,6 +1773,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 
                             </tr>
 							<!--CORPORATE ACCOUNT OPTION-->
+							
 							<script language="javascript" type="text/javascript">
 							$(document).ready(function() 
 							{	
@@ -1853,6 +1877,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								<td width="3%">&nbsp;</td>
 								<td width="66%" align="left" valign="middle">&nbsp;</td>
 							</tr>
+							
 							<!--CORPORATE ACCOUNT OPTION-->
                             <tr>
 

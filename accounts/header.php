@@ -174,7 +174,22 @@ $(document).ready(function() {
         
       <?php
 	  $mystyle = '';
-	  if($page_name == "report_transaction.php" || $page_name=="report_student_ledger.php" || $page_name == "report_student_ledger_search.php" || $page_name == "report_group_ledger.php" || $page_name=="report_discount.php" || $page_name == "report_center_to_center.php" || $page_name == "student_to_different_center_manage.php" || $page_name=="report_student_to_center.php" || $page_name == "report_enrolled.php" || $page_name=="report_sales_summary.php" || $page_name == "report_overdue.php" || $page_name == "report_baddebt.php" || $page_name == "report_credit_balance.php" || $page_name == "report_student_type.php" || $page_name =="report_corp_acct.php")
+	  if(	$page_name == "report_transaction.php" || 
+			$page_name=="report_student_ledger.php" || 
+			$page_name == "report_student_ledger_search.php" || 
+			$page_name == "report_group_ledger.php" || 
+			$page_name=="report_discount.php" || 
+			$page_name == "report_center_to_center.php" || 
+			$page_name == "student_to_different_center_manage.php" || 
+			$page_name=="report_student_to_center.php" || 
+			$page_name == "report_enrolled.php" || 
+			$page_name=="report_sales_summary.php" || 
+			$page_name == "report_overdue.php" || 
+			$page_name == "report_baddebt.php" || 
+			$page_name == "report_credit_balance.php" || 
+			$page_name == "report_student_type.php" || 
+			$page_name =="report_corp_acct.php" || 
+			$page_name =="report_student_address.php")
 	  {
 		  $mystyle = 'style="background-color:#003399; background-image:none;"';
 	  }
@@ -223,6 +238,7 @@ $(document).ready(function() {
         <a href="report_credit_balance.php"><?php echo constant("ACCOUNTANT_CREDIT");?></a>
 		<a href="report_student_type.php"><?php echo constant("REPORT_STUDENT_TYPE");?></a>
         <a href="report_corp_acct.php"><?php echo constant("REPORT_CORPORATE_ACCT");?></a>
+		<a href="report_student_address.php"><?php echo constant("REPORT_STUDENT_ADDRESS_REPORT");?></a>
 		</div>
         
         <!-- Transfer -->

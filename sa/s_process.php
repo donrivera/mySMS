@@ -141,7 +141,7 @@ if($_REQUEST['action']=='classic')
 		$filename1=$_REQUEST[txt_src]."-".$_FILES['signature']['name'];
 		move_uploaded_file($_FILES[signature][tmp_name],"photo/".$filename1);
 	}
-		
+	$address = mysql_real_escape_string($_POST[address]);	
 	 $string="	first_name='$_REQUEST[mytxt_src]',
 				first_name1='$_REQUEST[ar_mytxt_src]',
 				father_name='$_REQUEST[mytxt_src1]',
@@ -165,7 +165,9 @@ if($_REQUEST['action']=='classic')
 				created_datetime='$dt',
 				centre_id='$_SESSION[centre_id]',
 				id_type='$_POST[id_type]',
-				sms_status='1'";
+				sms_status='1',
+				area_code='$_REQUEST[area_code]',
+				address='$address'";
 		
 	$sid = $dbf->insertSet("student",$string);
 	
@@ -740,7 +742,7 @@ $student_id = $_REQUEST['student_id'];
 	}else{
 		$gender = $_REQUEST["gender1"];
 	}
-	
+	$address = mysql_real_escape_string($_POST[address]);
 	$string="	first_name='$_POST[mytxt_src]',
 				first_name1='$ar_firstname',
 				father_name='$father_name',
@@ -756,7 +758,9 @@ $student_id = $_REQUEST['student_id'];
 				guardian_name='$_REQUEST[gname]',
 				guardian_contact='$_REQUEST[pcontact]',
 				guardian_comment='$_REQUEST[information]',
-				id_type='$_REQUEST[id_type]'";
+				id_type='$_REQUEST[id_type]',
+				area_code='$_POST[area_code]',
+				address='$address'";
 	
 	$dbf->updateTable("student",$string,"id='$student_id'");
 	
@@ -942,7 +946,7 @@ if($_REQUEST['action'] == 'edit_from_student_profile'){
 	}else{
 		$gender = $_REQUEST["gender1"];
 	}
-	
+	$address = mysql_real_escape_string($_POST[address]);
 	$string="	first_name='$_POST[mytxt_src]',
 				first_name1='$ar_firstname',
 				father_name='$father_name',
@@ -959,7 +963,9 @@ if($_REQUEST['action'] == 'edit_from_student_profile'){
 				guardian_contact='$_REQUEST[pcontact]',
 				guardian_comment='$_REQUEST[information]',
 				student_mobile='$_REQUEST[mobile]',
-				id_type='$_REQUEST[id_type]'";
+				id_type='$_REQUEST[id_type]',
+				area_code='$_POST[area_code]',
+				address='$address'";
 	
 	$dbf->updateTable("student",$string,"id='$student_id'");
 	

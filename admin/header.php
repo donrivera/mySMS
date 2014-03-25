@@ -222,10 +222,11 @@ $(document).ready(function() {
 				$page_name == "report_statistic.php" || 
 				$page_name == "report_student_cycle.php" || 
 				$page_name == "report_student_cycle_dtls.php" || 
-				$page_name == "report_management.php") {
-			
-			$mystyle = 'style="background-color:#003399; background-image:none;"';
-		  }
+				$page_name == "report_management.php" ||
+				$page_name =="report_student_address.php") 
+			{
+				$mystyle = 'style="background-color:#003399; background-image:none;"';
+			}
 		  ?>
         <li><a <?php echo $mystyle;?> href="#" title="<?php echo constant("ADMIN_MENU_REPORTS");?>" rel="rpt_progress_report"><span <?php echo $mystyle;?>><?php echo constant("ADMIN_MENU_REPORTS");?></span></a></li>   
         
@@ -295,6 +296,7 @@ $(document).ready(function() {
             <a href="help_manage.php"><?php echo constant("ADMIN_MENU_RULE_HELP");?></a>
             <a href="type_manage.php"><?php echo constant("TYPE_OF_STUDENTS");?></a>
 			<a href="corp_acct_manage.php"><?php echo constant("ADMIN_MENU_CORPORATE_ACCT");?></a>
+			<a href="area_manage.php"><?php echo constant("ADMIN_MENU_MANAGE_AREA");?></a>
 			</div>
 			
         <div id="vacation" class="dropmenudiv_d">
@@ -340,6 +342,7 @@ $(document).ready(function() {
             <a href="report_statistic.php"><?php echo constant("ADMIN_MENU_REPORTS_STATISTIC");?></a>
             <a href="report_student_cycle.php"><?php echo constant("REPORT_STUDENT_LIFE_CYCLE");?></a>
             <a href="report_management.php"><?php echo constant("MANAGEMENT_REPORT");?></a>
+			<a href="report_student_address.php"><?php echo constant("REPORT_STUDENT_ADDRESS_REPORT");?></a>
         </div>
       <script type="text/javascript">
 		//SYNTAX: tabdropdown.init("menu_id", [integer OR "auto"])

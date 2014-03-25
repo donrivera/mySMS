@@ -132,6 +132,8 @@ if($_REQUEST['action']=='email')
 	if(empty($_REQUEST['email']) || $_REQUEST['email']==null)
 	{
 		$_SESSION[email] = $_REQUEST[email];
+		$_SESSION[area_code] = $_REQUEST[area_code];
+		$_SESSION[address] = $_REQUEST[address];
 		//header("Location:s_group.php");
 		header("Location:s6.php");
 		exit;
@@ -146,6 +148,8 @@ if($_REQUEST['action']=='email')
 		}else
 		{
 			$_SESSION[email] = $_REQUEST[email];
+			$_SESSION[area_code] = $_REQUEST[area_code];
+			$_SESSION[address] = $_REQUEST[address];
 			//header("Location:s_group.php");
 			header("Location:s6.php");
 			exit;
@@ -252,7 +256,7 @@ if($_REQUEST['action']=='insert')
 		$gender = $_SESSION[gender];
 	}
 	$student_name = $_SESSION["name"].' '.$_SESSION["family_name"];
-	
+	$address = mysql_real_escape_string($_SESSION[address]);
 	//insert into student table
 	$string="	first_name='$_SESSION[name]',
 				first_name1='$_SESSION[name1]',
@@ -276,7 +280,9 @@ if($_REQUEST['action']=='insert')
 				centre_id='$centre_id',
 				created_datetime='$dt1',
 				created_by='$_SESSION[id]',
-				sms_status='1'";
+				sms_status='1',
+				area_code='$_SESSION[area_code]',
+				address='$address'";
 	
 	$ids = $dbf->insertSet("student",$string);
 	

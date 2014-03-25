@@ -1,4 +1,5 @@
 <?php
+#echo print_r($_POST);
 ob_start();
 session_start();
 include_once '../includes/class.Main.php';
@@ -393,7 +394,7 @@ else
 		foreach($dbf->fetchOrder('ped_attendance',"group_id='$_POST[cmbgroup]' And student_id='$val_at[student_id]'","","","") as $val_ab){
 			//Get per units
 			$nnn = $dbf->countRows('ped_attendance',"group_id='$_POST[cmbgroup]' And student_id='$val_at[student_id]' And unit='$val_ab[unit]' And (shift1='A' Or shift2='A' Or shift3='A' Or shift4='A' Or shift5='A' Or shift6='A' Or shift7='A' Or shift8='A' Or shift9='A')");
-			echo $nnn;
+			#echo $nnn;
 			if($nnn > 0){
 				$at_count = $at_count + 1;
 			}			

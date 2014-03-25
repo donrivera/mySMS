@@ -130,6 +130,9 @@ function show_js(){
 
 function get_arabic(){
 	document.getElementById('ar_mytxt_src').value = document.getElementById('t4').value;
+	document.getElementById('ar_mytxt_src1').value = document.getElementById('t3').value;
+	document.getElementById('ar_mytxt_src2').value = document.getElementById('t2').value;
+	document.getElementById('ar_mytxt_src3').value = document.getElementById('t1').value;
 }
 
 function chk_age(){
@@ -250,6 +253,28 @@ color:#FFFFFF;border:none;text-align:center;cursor:pointer;padding-bottom:5px;}
                 </table></td>
               </tr>
               <?php } ?>
+			  <?php if($_REQUEST[msg]=="emailexist") { ?>
+				<tr>
+					<td align="center" valign="top" bgcolor="#FFFFFF"><table width="300" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#66CC66;">
+						<tr>
+							<td width="37" height="30" align="center" valign="middle" bgcolor="#FFF2FD"><img src="images/close-btn.png" width="25" height="25" /></td>
+							<td width="10" bgcolor="#FFF2FD">&nbsp;</td>
+							<td width="253" align="left" valign="middle" bgcolor="#FFF2FD" class="nametext"><?php echo constant("EMAIL_EXIST");?></td>
+						</tr>
+					</table></td>
+				</tr>
+			  <?php } ?>
+			  			  <?php if($_REQUEST[msg]=="centre") { ?>
+				<tr>
+					<td align="center" valign="top" bgcolor="#FFFFFF"><table width="300" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#66CC66;">
+						<tr>
+							<td width="37" height="30" align="center" valign="middle" bgcolor="#FFF2FD"><img src="images/close-btn.png" width="25" height="25" /></td>
+							<td width="10" bgcolor="#FFF2FD">&nbsp;</td>
+							<td width="253" align="left" valign="middle" bgcolor="#FFF2FD" class="nametext"><?php echo "Please Select Centre";?></td>
+						</tr>
+					</table></td>
+				</tr>
+			  <?php } ?>
               <tr>
                 <td height="200" align="center" valign="top">
 				<table width="800" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -303,7 +328,24 @@ color:#FFFFFF;border:none;text-align:center;cursor:pointer;padding-bottom:5px;}
                           <tr>
                             <td height="10" colspan="5" align="right" valign="middle" style="border-left:solid 1px; border-color:#CCC; border-right:solid 1px; border-color:#CCC;">
                             <table width="715" border="0" align="center" cellpadding="0" cellspacing="0">
-                              <tr>
+								<!--
+								<tr>
+									<td width="41" align="left" valign="middle" class="leftmenu">&nbsp;</td>
+									<td width="179" height="25" align="left" valign="middle" class="leftmenu">
+										<?php echo "Centre Name:";?> &nbsp;
+										<select name="centre" class="combo" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF;">
+											<option value="">Select</option>
+											<?php foreach($dbf->fetchOrder('centre',"","") as $ctr):?>
+											<option value="<?php echo $ctr['id'];?>"><?php echo $ctr['name'];?></option>	
+											<?php endforeach;?>
+										</select>
+									</td>
+									<td width="169"></td>
+									<td width="158">&nbsp;</td>
+									<td width="168">&nbsp;</td>
+								</tr>
+								-->
+							  <tr>
                                 <td width="41" align="left" valign="middle" class="leftmenu">&nbsp;</td>
                                 <td width="179" height="25" align="left" valign="middle" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_S1_ENGNAME");?></td>
                                 <td width="169">&nbsp;</td>
@@ -445,6 +487,9 @@ color:#FFFFFF;border:none;text-align:center;cursor:pointer;padding-bottom:5px;}
                                 <input name="mytxt_src2" type="hidden" id="mytxt_src2"/>
                                 <input name="mytxt_src3" type="hidden" id="mytxt_src3"/>
                                 <input name="ar_mytxt_src" type="hidden" id="ar_mytxt_src"/>
+								<input name="ar_mytxt_src1" type="hidden" id="ar_mytxt_src1"/>
+								<input name="ar_mytxt_src2" type="hidden" id="ar_mytxt_src2"/>
+								<input name="ar_mytxt_src3" type="hidden" id="ar_mytxt_src3"/>
                                 <input type="hidden" name="mycentre_id" id="mycentre_id" value="<?php echo $page;?>" />
                                 </td>
                               <td width="1%">&nbsp;</td>
@@ -459,7 +504,7 @@ color:#FFFFFF;border:none;text-align:center;cursor:pointer;padding-bottom:5px;}
                                 <select name="country" id="country" class="mycombo">
                                   <option value="">--- Select Country ---</option>
                                   <?php
-								$cid = "189";
+								$cid = "153";
 								foreach($dbf->fetchOrder('countries',"","") as $resc) {
 								?>
                                   <option value="<?php echo $resc['id'];?>" <?php if($resc["id"]==$cid) { ?> selected="selected" <?php } ?>><?php echo $resc['value'];?></option>
@@ -587,8 +632,33 @@ color:#FFFFFF;border:none;text-align:center;cursor:pointer;padding-bottom:5px;}
                               <td>&nbsp;</td>
                               <td align="left" valign="middle"><input name="email" type="text" class="validate[required,custom[email]] new_textbox190" id="email" value="<?php echo $_SESSION[classic_email];?>" onfocus="get_arabic();"/></td>
                               <td>&nbsp;</td>
-                              </tr>
-                            
+                            </tr>
+                            <!-- ADDRESS FUNCTION -->
+							<?php $area_code_sql=$dbf->genericQuery("SELECT * FROM area");?>
+                            <tr>
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td height="28" align="right" valign="middle" class="leftmenu">Area Code:</td>
+								<td>&nbsp;</td>
+								<td align="left" valign="middle">
+									<select name="area_code" id="area_code" class="combo" style="width:270px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;">
+										<option value="">-- Select --</option>
+										<?php foreach($area_code_sql as $a_c_sql):?>
+										<option value="<?php echo $a_c_sql['code']; ?>"><?php echo $a_c_sql['name'];?></option>
+										<?php endforeach;?>
+									</select>
+								</td>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td height="28" align="right" valign="middle" class="leftmenu">Address:</td>
+								<td>&nbsp;</td>
+								<td align="left" valign="middle">
+									<textarea name="address" id="address" cols="30" rows="5" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF;"></textarea>
+								</td>
+								<td>&nbsp;</td>
+							</tr>
+							<!-- ADDRESS FUNCTION -->
                             <tr>
                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                               <td height="28" align="right" valign="top" class="leftmenu"><label class="description" for="element_11"><?php echo constant("STUDENT_ADVISOR_HOME_S_CLASSIC_INTERESTIN");?> </label>
@@ -687,7 +757,8 @@ color:#FFFFFF;border:none;text-align:center;cursor:pointer;padding-bottom:5px;}
 								?>
                                   <tr>
                                     <td width="7%" align="left" valign="middle">
-                                    <input name="type<?php echo $t;?>" id="type<?php echo $t;?>" type="checkbox" value="<?php echo $valt["id"];?>">
+										<!--<input name="type<?php echo $t;?>" id="type<?php echo $t;?>" type="checkbox" value="<?php echo $valt["id"];?>">-->
+										<input name="type" id="type" type="radio" value="<?php echo $valt["id"];?>"/>
                                     </td>
                                     <td width="93%" align="left" valign="middle" class="mycon"><?php echo $valt["name"];?></td>
                                   </tr>

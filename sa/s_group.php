@@ -74,7 +74,7 @@ function checkTab(id)
 {
 	if(id=="group")
 	{
-	document.getElementById('submit').focus();
+		//document.getElementById('submit').focus();
 	}
 }
 </script>	

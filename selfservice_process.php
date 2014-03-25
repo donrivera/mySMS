@@ -76,7 +76,7 @@ if($_REQUEST['action']=='classic'){
 	//Checking for duplcate Email Address
 	$num_email = $dbf->countRows('student',"email='$_POST[email]'");
 	if($num_email > 0){
-		header("Location:$_REQUEST[my_pagename]?msg=emailexist");
+		header("Location:selfservice.php?msg=emailexist");
 		exit;
 	}else{
 		$dbf->updateTable("student","email='$_POST[email]'","id='$student_id'"); 
@@ -85,11 +85,11 @@ if($_REQUEST['action']=='classic'){
 	if($_REQUEST[mobile] != '009665'){
 		$num=$dbf->countRows('student',"student_mobile='$_POST[mobile]'");
 		if($num>0){
-			header("Location:$_REQUEST[my_pagename]?msg=mexist");
+			header("Location:selfservice.php?msg=mexist");
 			exit;
 		}
 	}
-	
+	#if(empty($_REQUEST['centre']) || $_REQUEST['centre']==null){header("Location:selfservice.php?msg=centre");exit;}
 	# Student National ID
 	$national_id = $_REQUEST['sidn'];
 	if($national_id != ''){
@@ -117,15 +117,15 @@ if($_REQUEST['action']=='classic'){
 		$filename1=$_REQUEST[txt_src]."-".$_FILES['signature']['name'];
 		move_uploaded_file($_FILES[signature][tmp_name],"sa/photo/".$filename1);
 	}
-		
-	 $string="	first_name='$_POST[mytxt_src]',
-				first_name1='$ar_firstname',
-				father_name='$father_name',
-				father_name1='$ar_fathername',
-				grandfather_name='$grandfather_name',
-				grandfather_name1='$ar_gfathrname',
-				family_name='$family_name',
-				family_name1='$ar_familyname',
+	$address = mysql_real_escape_string($_POST[address]);		
+	 $string="	first_name='$_REQUEST[mytxt_src]',
+				first_name1='$_REQUEST[ar_mytxt_src]',
+				father_name='$_REQUEST[mytxt_src1]',
+				father_name1='$_REQUEST[ar_mytxt_src1]',
+				grandfather_name='$_REQUEST[mytxt_src2]',
+				grandfather_name1='$_REQUEST[ar_mytxt_src2]',
+				family_name='$_REQUEST[mytxt_src3]',
+				family_name1='$_REQUEST[ar_mytxt_src3]',
 				guardian_name='$_REQUEST[gname]',
 				age='$_REQUEST[age]',
 				guardian_contact='$_REQUEST[pcontact]',
@@ -141,7 +141,9 @@ if($_REQUEST['action']=='classic'){
 				created_datetime='$dt',
 				centre_id='$mycentre_id',
 				id_type='$_POST[id_type]',
-				sms_status='1'";
+				sms_status='1',
+				area_code='$_REQUEST[area_code]',
+				address='$address'";
 	
 	$sid = $dbf->insertSet("student",$string);
 	
@@ -174,15 +176,17 @@ if($_REQUEST['action']=='classic'){
 	}
 	
 	//Type
-	$count = $_POST[tcount];
-	for($i=1; $i<=$count; $i++){
-		$c = "type".$i;
-		$c = $_REQUEST[$c];		
-		if($c != ''){
-			$string="student_id='$sid',type_id='$c'";
-			$dbf->insertSet("student_type",$string);
-		}
-	}	
+	#$count = $_POST[tcount];
+	#for($i=1; $i<=$count; $i++){
+	#	$c = "type".$i;
+	#	$c = $_REQUEST[$c];		
+	#	if($c != ''){
+			#$string="student_id='$sid',type_id='$c'";
+			#$dbf->insertSet("student_type",$string);
+			$string_student_type="student_id='$sid',type_id='$_REQUEST[type]'";
+			$dbf->insertSet("student_type",$string_student_type);
+	#	}
+	#}	
 		
 	//UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
 	//=======================================================
@@ -229,6 +233,7 @@ if($_REQUEST['action']=='classic'){
 		
 	header("Location:sucess.php?reg_page_name=$_REQUEST[my_pagename]");
 	exit;
+	
 }
 
 ?>

@@ -532,6 +532,9 @@ define("ADMIN_PASSWORD_CONFIRMPASSWORD","Confirm password");
 define("ADMIN_PASSWORD_INVALIDPWD","Invalid old password !!!");
 define("ADMIN_PASSWORD_SUCMSG","Your password has been successfully saved !!!");
 
+//admin address details
+define("ADMIN_PRINT_AREA","Area");
+define("ADMIN_PRINT_ADDRESS","Address");
 //s3.php
 define("ADMIN_S3_ENTERCONTACTINFO","Please enter the students contact information");
 define("ADMIN_S3_STDALTNUM","Student alternative contact number");
@@ -1547,6 +1550,7 @@ define("ADMIN_MENU_RULE_VIEW_COMMENT_HISTORY","Students comments history");
 define("ADMIN_MENU_RULE_CURRENCY","Currency setup");
 define("ADMIN_MENU_RULE_HELP","Manage help document");
 define("ADMIN_MENU_CORPORATE_ACCT","Manage Corporate Acct");
+define("ADMIN_MENU_MANAGE_AREA","Manage Area");
 define("ADMIN_MENU_QUICK_LINKS","Quick links");
 
 define("ADMIN_MENU_LEADS","Leads");
@@ -2116,6 +2120,7 @@ define("ACTION_CAPTION_DELETE","Delete");
 define("REPORT_STUDENT_LIFE_CYCLE","Student life cycle");
 define("REPORT_STUDENT_TYPE","Student Type");
 define("REPORT_CORPORATE_ACCT","Corporate Account");
+define("REPORT_STUDENT_ADDRESS_REPORT","Student Addresses Report");
 define("PLACEMENT_TESTGRADE_ONLINE","Placement test grade - online");
 define("PLACEMENT_TESTGRADE_SPEAK","Placement test grade - speaking");
 

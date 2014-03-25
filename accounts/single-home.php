@@ -156,6 +156,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_TEACHER1_MANAGE_NATIONALITY");?> : &nbsp;</td>
                     <td align="left" valign="middle" class="mytext"><?php echo $dbf->getDataFromTable("countries","value","id='$student[country_id]'");?></td>
                   </tr>
+				  <tr>
+                    <td height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_PRINT_AREA");?> : &nbsp;</td>
+                    <td align="left" valign="middle" class="mytext"><?php echo $dbf->getDataFromTable("area","name","code='$student[area_code]'");?></td>
+                  </tr>
+				   <tr>
+                    <td height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_PRINT_ADDRESS")?> : &nbsp;</td>
+                    <td align="left" valign="middle" class="mytext"><?php echo $student['address'];?></td>
+                  </tr>
                   <tr>
                     <td height="22" align="right" valign="middle" class="pedtext">Add Date : &nbsp;</td>
                     <td align="left" valign="middle" class="mytext"><?php echo date('D,d M Y , h:i A',strtotime($student["created_datetime"]));?></td>

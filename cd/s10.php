@@ -324,6 +324,24 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td align="right" valign="middle" class="mytext">&nbsp;</td>
                             </tr>
                             <?php } ?>
+							<?php if($_SESSION['area_code'] != ''){?>
+							<tr>
+                            <td>&nbsp;</td>
+                            <td height="25" align="right" valign="middle" class="leftmenu"><?php echo "Area";?> : </td>
+                            <td>&nbsp;</td>
+                            <td align="left" valign="middle" class="mytext"><?php echo $dbf->getDataFromTable("area","name","code='$_SESSION[area_code]'");?></td>
+                            <td align="right" valign="middle" class="mytext">&nbsp;</td>
+                            </tr>
+                            <?php } ?>
+							<?php if($_SESSION['address'] != ''){?>
+							<tr>
+                            <td>&nbsp;</td>
+                            <td height="25" align="right" valign="middle" class="leftmenu"><?php echo "Address";?> : </td>
+                            <td>&nbsp;</td>
+                            <td align="left" valign="middle" class="mytext"><?php echo $_SESSION['address'];?></td>
+                            <td align="right" valign="middle" class="mytext">&nbsp;</td>
+                            </tr>
+                            <?php } ?>
                           <tr>
                             <td width="9%">&nbsp;</td>
                             <td width="24%" align="left" valign="middle" class="lable1">&nbsp;</td>

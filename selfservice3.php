@@ -459,7 +459,7 @@ color:#FFFFFF;border:none;text-align:center;cursor:pointer;padding-bottom:5px;}
                                 <select name="country" id="country" class="mycombo">
                                   <option value="">--- Select Country ---</option>
                                   <?php
-								$cid = "189";
+								$cid = "153";
 								foreach($dbf->fetchOrder('countries',"","") as $resc) {
 								?>
                                   <option value="<?php echo $resc['id'];?>" <?php if($resc["id"]==$cid) { ?> selected="selected" <?php } ?>><?php echo $resc['value'];?></option>
@@ -588,7 +588,32 @@ color:#FFFFFF;border:none;text-align:center;cursor:pointer;padding-bottom:5px;}
                               <td align="left" valign="middle"><input name="email" type="text" class="validate[required,custom[email]] new_textbox190" id="email" value="<?php echo $_SESSION[classic_email];?>" onfocus="get_arabic();"/></td>
                               <td>&nbsp;</td>
                               </tr>
-                            
+                             <!-- ADDRESS FUNCTION -->
+							<?php $area_code_sql=$dbf->genericQuery("SELECT * FROM area");?>
+                            <tr>
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td height="28" align="right" valign="middle" class="leftmenu">Area Code:</td>
+								<td>&nbsp;</td>
+								<td align="left" valign="middle">
+									<select name="area_code" id="area_code" class="combo" style="width:270px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;">
+										<option value="">-- Select --</option>
+										<?php foreach($area_code_sql as $a_c_sql):?>
+										<option value="<?php echo $a_c_sql['code']; ?>"><?php echo $a_c_sql['name'];?></option>
+										<?php endforeach;?>
+									</select>
+								</td>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td height="28" align="right" valign="middle" class="leftmenu">Address:</td>
+								<td>&nbsp;</td>
+								<td align="left" valign="middle">
+									<textarea name="address" id="address" cols="30" rows="5" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF;"></textarea>
+								</td>
+								<td>&nbsp;</td>
+							</tr>
+							<!-- ADDRESS FUNCTION -->
                             <tr>
                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                               <td height="28" align="right" valign="top" class="leftmenu"><label class="description" for="element_11"><?php echo constant("STUDENT_ADVISOR_HOME_S_CLASSIC_INTERESTIN");?> </label>
@@ -687,7 +712,8 @@ color:#FFFFFF;border:none;text-align:center;cursor:pointer;padding-bottom:5px;}
 								?>
                                   <tr>
                                     <td width="7%" align="left" valign="middle">
-                                    <input name="type<?php echo $t;?>" id="type<?php echo $t;?>" type="checkbox" value="<?php echo $valt["id"];?>">
+                                    <!--<input name="type<?php echo $t;?>" id="type<?php echo $t;?>" type="checkbox" value="<?php echo $valt["id"];?>">-->
+									<input name="type" id="type" type="radio" value="<?php echo $valt["id"];?>"/>
                                     </td>
                                     <td width="93%" align="left" valign="middle" class="mycon"><?php echo $valt["name"];?></td>
                                   </tr>

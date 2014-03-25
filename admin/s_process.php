@@ -249,8 +249,22 @@ if($_REQUEST['action'] == 'edit_from_student_profile'){
 	}else{
 		$gender = $_REQUEST["gender1"];
 	}
-	
-	$string="first_name='$student_name',first_name1='$first_name1',father_name='$father_name',grandfather_name='$grandfather_name',family_name='$family_name',gender='$gender',country_id='$_POST[country]',alt_contact='$_POST[altmobile]',age='$_REQUEST[age]',guardian_name='$_REQUEST[gname]',guardian_contact='$_REQUEST[pcontact]',guardian_comment='$_REQUEST[information]',id_type='$_REQUEST[id_type]'";
+	$address = mysql_real_escape_string($_POST[address]);
+	$string="	first_name='$student_name',
+				first_name1='$first_name1',
+				father_name='$father_name',
+				grandfather_name='$grandfather_name',
+				family_name='$family_name',
+				gender='$gender',
+				country_id='$_POST[country]',
+				alt_contact='$_POST[altmobile]',
+				age='$_REQUEST[age]',
+				guardian_name='$_REQUEST[gname]',
+				guardian_contact='$_REQUEST[pcontact]',
+				guardian_comment='$_REQUEST[information]',
+				id_type='$_REQUEST[id_type]',
+				area_code='$_POST[area_code]',
+				address='$address'";
 	
 	$dbf->updateTable("student",$string,"id='$student_id'");
 	

@@ -616,8 +616,6 @@ if($_REQUEST['action']=='quick_add_group'){
 }
 if($_REQUEST['action']=='update_group')
 {
-	#echo var_dump($_POST);
-	
 	$end_date=$_REQUEST[gr_course_endt];
 	$students=$_REQUEST[student_id];
 	if(empty($students) || $students==NULL):
@@ -665,18 +663,11 @@ if($_REQUEST['action']=='update_group')
 	$num = $dbf->teacherSlotAvailable($teacher_id,$choosen_date,$end_date,$start,$end);
 
 	//echo var_dump($num);	
-
 	$_SESSION["tm"] = $_REQUEST["tm"];
 	$_SESSION["end_tm"] = $group_end_time;
-	
-	if($num == true){
-		header("Location:group_quick.php?msg=o0k9b4");
-		exit;
-	}
-	
-	//$_REQUEST[unit]
+	$current_group=$dbf->genericQuery("SELECT * FROM student_group WHERE id='$_REQUEST[group_id]' AND (start_date='$choosen_date' AND end_date='$end_date') AND (group_time='$start' AND group_time_end='$end') ");
 	$string="
-				group_name='$_REQUEST[group]',
+				group_name='$_POST[group]',
 				centre_id='$centre_id',
 				course_id='$course_id',
 				teacher_id='$_REQUEST[teacher]',
@@ -691,10 +682,23 @@ if($_REQUEST['action']=='update_group')
 				group_end_time='$group_end_time',
 				end_date='$end_date',
 				sa_id='$_SESSION[id]'";
-	
-	$my_group_id = $dbf->updateTable("student_group",$string,"id='$_REQUEST[group_id]'");	
-	header("Location:group_manage.php");
-	exit;
-	
+	if($current_group >0)
+	{
+		$my_group_id = $dbf->updateTable("student_group",$string,"id='$_REQUEST[group_id]'");	
+		header("Location:group_manage.php");exit;
+	}
+	else
+	{
+		if($num == true)
+		{
+			header("Location:group_quick.php?msg=o0k9b4");
+			exit;
+		}
+		else
+		{
+			$my_group_id = $dbf->updateTable("student_group",$string,"id='$_REQUEST[group_id]'");	
+			header("Location:group_manage.php");exit;
+		}
+	}
 }
 ?>

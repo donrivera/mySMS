@@ -40,7 +40,7 @@ if($_REQUEST['action'] == 'edit_from_student_profile'){
 	}
 		
 	$student_name = $_REQUEST[txt_src].' '.$_REQUEST[txt_src3];
-	
+	$address = mysql_real_escape_string($_POST[address]);
 	$string="	first_name='$_REQUEST[mytxt_src]',
 				first_name1='$ar_firstname',
 				father_name='$_REQUEST[mytxt_src1]',
@@ -51,7 +51,9 @@ if($_REQUEST['action'] == 'edit_from_student_profile'){
 				family_name1='$ar_familyname',
 				gender='$_POST[gender]',
 				country_id='$_POST[country]',
-				alt_contact='$_POST[altmobile]'";
+				alt_contact='$_POST[altmobile]',
+				area_code='$_POST[area_code]',
+				address='$address'";
 	
 	$dbf->updateTable("student",$string,"id='$student_id'");
 	

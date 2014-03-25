@@ -556,6 +556,32 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <td align="left" valign="middle"><textarea name="grade_speak" id="grade_speak" rows="2" cols="40" style="border:solid 1px; background-color:#ECF1FF; border-color:#999999;"><?php echo $res_grade_test["grade_speak"];?></textarea></td>
                               <td>&nbsp;</td>
                             </tr>
+							<!-- ADDRESS FUNCTION -->
+							<?php $area_code_sql=$dbf->genericQuery("SELECT * FROM area ");?>
+                            <tr>
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td height="28" align="right" valign="middle" class="leftmenu">Area Code:</td>
+								<td>&nbsp;</td>
+								<td align="left" valign="middle">
+									<select name="area_code" id="area_code" class="combo" style="width:270px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;">
+										<option value="">-- Select --</option>
+										<?php foreach($area_code_sql as $a_c_sql):?>
+										<option value="<?php echo $a_c_sql['code']; ?>" <?php echo ($a_c_sql['code']==$res_edit_student["area_code"]?"selected":"");?>><?php echo $a_c_sql['name'];?></option>
+										<?php endforeach;?>
+									</select>
+								</td>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td height="28" align="right" valign="middle" class="leftmenu">Address:</td>
+								<td>&nbsp;</td>
+								<td align="left" valign="middle">
+									<textarea name="address" id="address" cols="30" rows="5" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF;"><?php echo $res_edit_student["address"];?></textarea>
+								</td>
+								<td>&nbsp;</td>
+							</tr>
+							<!-- ADDRESS FUNCTION -->
                             <tr>
                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                               <td height="28" align="right" valign="top" class="leftmenu"><label class="description" for="element_11"><?php echo constant("STUDENT_ADVISOR_HOME_S_CLASSIC_INTERESTIN");?> </label>

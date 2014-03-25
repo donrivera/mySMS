@@ -109,9 +109,30 @@ $(document).ready(function() {
         
          <?php
 	  $mystyle = '';
-	  if($page_name == "report_teacher_board.php" || $page_name == "report_teacher_schedule.php" || $page_name == "report_student_awaiting.php" || $page_name == "report_group_to_finish.php" || $page_name == "report_certificate_not_collect.php" || $page_name == "report_absent_report.php" || $page_name == "report_teacher_leave_report.php" || $page_name == "report_teacher_capacity.php" || $page_name == "report_certificate_report.php" || $page_name == "report_freq_customer_report.php" || $page_name == "view_student_comments_history_from_manage.php" || $page_name == "report_student_group_grade.php" || $page_name == "report_student_group_grade_dtls.php" || $page_name == "report_student_not_enrolled.php" || $page_name == "report_student_on_hold.php" || $page_name == "view_student_comments_history.php" || $page_name == "report_student_cycle.php" || $page_name == "report_student_cycle_dtls.php" || $page_name == "report_student_type.php" || $page_name == "report_corp_acct.php"){
+	  if(	$page_name == "report_teacher_board.php" || 
+			$page_name == "report_teacher_schedule.php" || 
+			$page_name == "report_student_awaiting.php" || 
+			$page_name == "report_group_to_finish.php" || 
+			$page_name == "report_certificate_not_collect.php" || 
+			$page_name == "report_absent_report.php" || 
+			$page_name == "report_teacher_leave_report.php" || 
+			$page_name == "report_teacher_capacity.php" || 
+			$page_name == "report_certificate_report.php" || 
+			$page_name == "report_freq_customer_report.php" || 
+			$page_name == "view_student_comments_history_from_manage.php" || 
+			$page_name == "report_student_group_grade.php" || 
+			$page_name == "report_student_group_grade_dtls.php" || 
+			$page_name == "report_student_not_enrolled.php" || 
+			$page_name == "report_student_on_hold.php" || 
+			$page_name == "view_student_comments_history.php" || 
+			$page_name == "report_student_cycle.php" || 
+			$page_name == "report_student_cycle_dtls.php" || 
+			$page_name == "report_student_type.php" || 
+			$page_name == "report_corp_acct.php" || 
+			$page_name =="report_student_address.php")
+		{
 		  $mystyle = 'style="background-color:#003399; background-image:none;"';
-	  }
+		}
 	  ?>
         <li><a <?php echo $mystyle;?> href="javascript:void(0);" title="Reports" rel="rpt_report"><span <?php echo $mystyle;?>><?php echo constant("ADMIN_MENU_REPORTS");?></span></a></li>
         
@@ -247,6 +268,7 @@ $(document).ready(function() {
         <a href="report_student_cycle.php"><?php echo constant("REPORT_STUDENT_LIFE_CYCLE");?></a>
 		<a href="report_student_type.php"><?php echo constant("REPORT_STUDENT_TYPE");?></a>
 		<a href="report_corp_acct.php"><?php echo constant("REPORT_CORPORATE_ACCT");?></a>
+		<a href="report_student_address.php"><?php echo constant("REPORT_STUDENT_ADDRESS_REPORT");?></a>
 	</div>
      
     <!-- grouping -->

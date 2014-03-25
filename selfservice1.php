@@ -936,7 +936,7 @@ color:#FFFFFF;border:none;text-align:center;cursor:pointer;padding-bottom:5px;}
 
                                   <?php
 
-								$cid = "189";
+								$cid = "153";
 
 								foreach($dbf->fetchOrder('countries',"","") as $resc) {
 
@@ -1194,7 +1194,32 @@ color:#FFFFFF;border:none;text-align:center;cursor:pointer;padding-bottom:5px;}
 
                               </tr>
 
-                            
+                            <!-- ADDRESS FUNCTION -->
+							<?php $area_code_sql=$dbf->genericQuery("SELECT * FROM area");?>
+                            <tr>
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td height="28" align="right" valign="middle" class="leftmenu">Area Code:</td>
+								<td>&nbsp;</td>
+								<td align="left" valign="middle">
+									<select name="area_code" id="area_code" class="combo" style="width:270px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;">
+										<option value="">-- Select --</option>
+										<?php foreach($area_code_sql as $a_c_sql):?>
+										<option value="<?php echo $a_c_sql['code']; ?>"><?php echo $a_c_sql['name'];?></option>
+										<?php endforeach;?>
+									</select>
+								</td>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td height="28" align="right" valign="middle" class="leftmenu">Address:</td>
+								<td>&nbsp;</td>
+								<td align="left" valign="middle">
+									<textarea name="address" id="address" cols="30" rows="5" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF;"></textarea>
+								</td>
+								<td>&nbsp;</td>
+							</tr>
+							<!-- ADDRESS FUNCTION -->
 
                             <tr>
 
@@ -1392,8 +1417,8 @@ color:#FFFFFF;border:none;text-align:center;cursor:pointer;padding-bottom:5px;}
 
                                     <td width="7%" align="left" valign="middle">
 
-                                    <input name="type<?php echo $t;?>" id="type<?php echo $t;?>" type="checkbox" value="<?php echo $valt["id"];?>">
-
+                                    <!--<input name="type<?php echo $t;?>" id="type<?php echo $t;?>" type="checkbox" value="<?php echo $valt["id"];?>">-->
+									<input name="type" id="type" type="radio" value="<?php echo $valt["id"];?>"/>
                                     </td>
 
                                     <td width="93%" align="left" valign="middle" class="mycon"><?php echo $valt["name"];?></td>

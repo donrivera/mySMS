@@ -159,7 +159,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
                   <tr class="leftmenu">
                     <td height="30" align="center" valign="top"><a href="home.php" title="<?php echo constant("ADMIN_MENU_HOME");?>"><span><?php echo constant("ADMIN_MENU_HOME");?></span></a></td>
-                    <td align="center" valign="top"><a href="s_manage.php" title="Student" rel=""><span><?php echo constant("ADMIN_NEWS_MANAGE_STUDENT");?></span></a></td>
+                    <td align="center" valign="top"><a href="search.php" title="Student" rel=""><span><?php echo constant("ADMIN_NEWS_MANAGE_STUDENT");?></span></a></td>
                     <td align="center" valign="top"><a href="centre_schedule.php" ><?php echo constant("RE_MENU_CS");?></a></td>
                     <td align="center" valign="top"><a href="centre_schedule.php" ></a><a href="alert1_manage.php" title="Alerts"><?php echo constant("ADMIN_MENU_ALERTS");?></a></td>
                   </tr>
