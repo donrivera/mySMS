@@ -158,7 +158,7 @@ if($_REQUEST['action']=='email')
 }
 
 if($_REQUEST['action']=='group'){
-	$corporate_account=$dbf->countRows('corporate_students',"account='$_REQUEST[account]'");
+	$corporate_account=count($dbf->genericQuery("SELECT student_id FROM corporate_students WHERE account='$_REQUEST[account]' AND sub_account='$_REQUEST[sub_account]'"));
 	$corporate_student_limit=$dbf->getDataFromTable("corporate","no_of_students * no_of_class AS student_limit","code='$_REQUEST[corp_acct]'");
 	$corporate_student=$dbf->getDataFromTable("corporate_students","COUNT(id)","code='$_REQUEST[corp_acct]'");
 	$corporate_count_student=($corporate_student==0?0:$corporate_student + 1);
@@ -169,6 +169,7 @@ if($_REQUEST['action']=='group'){
 		if($corporate_count_student > $corporate_student_limit){header("Location:s_group.php?msg=corp_acct_exceed");exit;}
 		$_SESSION['corp_acct']=$_REQUEST['corp_acct'];
 		$_SESSION['corp_student_acct']=$_REQUEST['account'];
+		$_SESSION['corp_student_sub_acct']=$_REQUEST['sub_account'];
 	}
 	$_SESSION[group] = $_REQUEST[group];
 	header("Location:s7.php");
@@ -366,7 +367,7 @@ if($_REQUEST['action']=='insert')
 			$dbf->updateTable("student_group_dtls",$string_g1,"parent_id='$_SESSION[group]'");
 			#corporate account insert to db
 			if(!empty($_SESSION['corp_student_acct']) && !empty($_SESSION['corp_acct']))
-			{$dbf->addCorporateStudent($_SESSION['corp_acct'],$_SESSION['corp_student_acct'],$ids,$course_id,$_SESSION['id']);}
+			{$dbf->addCorporateStudent($_SESSION['corp_acct'],$_SESSION['corp_student_acct'],$_SESSION['corp_student_sub_acct'],$ids,$course_id,$_SESSION['id']);}
 			#corporate account insert to db
 		}
 		else
@@ -388,7 +389,7 @@ if($_REQUEST['action']=='insert')
 			$dbf->scheduleCall($prev_num,$ids,$_SESSION[group],$res_group[teacher_id]);//adjust schedules
 			#corporate account insert to db
 			if(!empty($_SESSION['corp_student_acct']) && !empty($_SESSION['corp_acct']))
-			{$dbf->addCorporateStudent($_SESSION['corp_acct'],$_SESSION['corp_student_acct'],$ids,$course_id,$_SESSION['id']);}
+			{$dbf->addCorporateStudent($_SESSION['corp_acct'],$_SESSION['corp_student_acct'],$_SESSION['corp_student_sub_acct'],$ids,$course_id,$_SESSION['id']);}
 			#corporate account insert to db
 			if($no_unit_finined > 0)
 			{

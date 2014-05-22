@@ -284,6 +284,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td>&nbsp;</td>
                     <td height="25" align="left" valign="middle" class="lable1">&nbsp;Total number of students absent :&nbsp;</td>
                     <?php
+					/*
 					$no_of_attand = 0;
 					foreach($dbf->fetchOrder('ped_attendance', "(shift1='A' OR shift2='A' OR shift3='A' OR shift4='A' OR shift5='A' OR shift6='A' OR shift7='A' OR shift8='A' OR shift9='A') And (attend_date BETWEEN '$start_date' And '$end_date')") as $cer) {
 						$centre_grp = $dbf->strRecordID("student_group","centre_id","id='$cer[group_id]'");
@@ -292,6 +293,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							$no_of_attand = $no_of_attand + 1;
 						}
 					}
+					*/
+					$attend=$dbf->genericQuery("SELECT COUNT(DISTINCT(p.student_id)) as total
+												FROM ped_attendance p
+												INNER JOIN student_group sg ON p.group_id=sg.id
+												WHERE
+													(p.shift1='A' OR p.shift2='A' OR p.shift3='A' OR p.shift4='A' OR p.shift5='A' OR p.shift6='A' OR p.shift7='A' OR p.shift8='A' OR p.shift9='A') 
+													AND (p.attend_date BETWEEN '$start_date' AND '$end_date') AND sg.centre_id='$centre_id'");
+					foreach($attend as $atd){$no_of_attand=$atd['total'];}
 					?>
                     <td align="center" valign="middle" class="pedtext"><?php echo $no_of_attand;?></td>
                   </tr>
@@ -348,15 +357,15 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						# it is sum amount from fees structures 
 						#$amts = $dbf->strRecordID("student_fees","SUM(paid_amt) as total_paid_amt","payment_type='$valpay[id]' And (paid_date BETWEEN '$start_date' And '$end_date')");
 						#$amts = $amts["SUM(paid_amt)"];
-						$amts_type=$dbf->getDataFromTable("student_fees", "SUM(paid_amt)", "payment_type='$valpay[id]' And (paid_date BETWEEN '$start_date' And '$end_date')");
+						$amts_type=$dbf->getDataFromTable("student_fees", "SUM(paid_amt)", "payment_type='$valpay[id]' And centre_id='$centre_id' And (paid_date BETWEEN '$start_date' And '$end_date')");
 						
 						$total = $total + $amts_type;
 						
 						# it is sum amount from student enrolled table (first payment or initial payment)
-						$amts_ob = $dbf->strRecordID("student_enroll","SUM(ob_amt)","payment_type='$valpay[id]' And centre_id='$centre_id' And (payment_date BETWEEN '$start_date' And '$end_date')");
-						$amts = $amts_ob["SUM(ob_amt)"];
+						#$amts_ob = $dbf->strRecordID("student_enroll","SUM(ob_amt)","payment_type='$valpay[id]' And centre_id='$centre_id' And (payment_date BETWEEN '$start_date' And '$end_date')");
+						#$amts = $amts_ob["SUM(ob_amt)"];
 						
-						$total = $total + $amts;
+						#$total = $total + $amts;
 						
 						?>
                       <tr class="mymenutext">
@@ -374,11 +383,16 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td width="63%" height="25" align="left" valign="middle" class="lable1">&nbsp;Total number of teaching units :&nbsp;</td>
                     <td width="31%" align="center" valign="middle" class="pedtext">
                     <?php
-					$unit = 0;
-					foreach($dbf->fetchOrder('student_group g,ped_attendance a',"g.id=a.group_id And g.centre_id='$centre_id' And (a.attend_date BETWEEN '$start_date' AND '$end_date')","","a.unit","a.unit") as $valpay) {
-						$unit = $unit + 1;
-					}
-						echo $unit;?>                    
+					$total_unit = 0;
+					#foreach($dbf->fetchOrder('student_group g,ped_attendance a',"g.id=a.group_id And g.centre_id='$centre_id' And (a.attend_date BETWEEN '$start_date' AND '$end_date')","","a.unit","a.unit") as $valpay) {
+					$teach_unit=$dbf->genericQuery("SELECT COUNT(*) as total
+										FROM ped_units p 
+										INNER JOIN student_group sg ON p.group_id=sg.id
+										WHERE (p.dated BETWEEN '$start_date' AND '$end_date') AND sg.centre_id='$centre_id' GROUP BY p.group_id");
+					foreach($teach_unit as $unit)
+					{$total_unit +=$unit['total'];}
+					echo $total_unit;
+					?>                    
 					</td>
                   </tr>
                   <tr>

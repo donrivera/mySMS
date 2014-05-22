@@ -119,9 +119,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <?php //if($_REQUEST[cmbgroup]!='') { ?>
                 <table width="30%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
-                    <td width="36" align="center" valign="middle"><a href="ped_word.php?cmbgroup=<?php echo $_REQUEST[cmbgroup];?>&mystatus=<?php echo $_REQUEST['mystatus'];?>"><img src="../images/word2007.png" width="20" height="20" border="0" title="Export to Word"></a></td>
-                    <td width="36" align="center" valign="middle"><a href="ped_print.php?cmbgroup=<?php echo $_REQUEST[cmbgroup];?>&mystatus=<?php echo $_REQUEST['mystatus'];?>" target="_blank">                  
+                    <td width="36" align="center" valign="middle"><a href="ped_word.php?cmbgroup=<?php echo $_REQUEST[cmbgroup];?>"><img src="../images/word2007.png" width="20" height="20" border="0" title="Export to Word"></a></td>
+                    <td width="36" align="center" valign="middle"><a href="ped_print.php?cmbgroup=<?php echo $_REQUEST[cmbgroup];?>" target="_blank"><!--&mystatus=<?php echo $_REQUEST['mystatus'];?>-->                  
                       <img src="../images/print.png" alt="" width="16" height="16" border="0" title="Print"></a></td>
+					<!--<td width="36" align="center" valign="middle"><a href="ped_pdf.php?cmbgroup=<?php echo $_REQUEST[cmbgroup];?>"><img src="../images/pdf.png" width="20" height="20" border="0" title="Export to Word"></a></td>-->
                     </tr>
                   </table>
                 <?php //} ?>
@@ -195,7 +196,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 			  
 			  $teacher_id = $res_teacher_group[teacher_id];
 			  
-			  $unit = $res_size["units"];			  
+			  $unit = $course["units"];			  
 			?>
             <tr>
               <td colspan="3" align="left" valign="top">
@@ -944,13 +945,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       foreach($dbf->fetchOrder('student_group',"id='$_REQUEST[cmbgroup]'","","") as $val_course)
                       {
 					  	$courseName=$dbf->getDataFromTable('course','name',"id='$val_course[course_id]'");
+						$labels=1;#$dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*");
                     ?>
-                      <div style="width:1000px;">
-                        <div style="width:100%; overflow:scroll;overflow-y:hidden; margin-bottom:15px;" >
+                      <div style="width:800px;">
+                        <div style="width:600px;overflow-x:scroll;overflow-y:hidden;margin-right:-200px;float:right;" >
                           <table width="100%" border="1" align="center" cellpadding="3" bordercolor="#000000" cellspacing="0" style="border-collapse:collapse;">
                             <!-- Start Column Heading -->
                             <tr>
-                              <td width="10%" align="left" bgcolor="#4D7373"><div class="logouttext" style="width:130px;"><strong><?php echo "Student Name";?></strong>
+                              <td width="10%" height="4.7%" align="left" bgcolor="#4D7373" style="position:absolute;width:390px;left: 150px;float: right; display:block;"><div class="logouttext" style="width:130px;"><strong><?php echo (empty($labels)?"":"Student Name");?></strong>
                                 </div></td>
                               <?php
 								$unit_per_day=$val_course['unit_per_day'];
@@ -981,9 +983,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         foreach($dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*") as $r) {
                         ?>
                             <tr>
-                              <td width="10%" align="left" bgcolor="#E9EFEF" class="pedtext">
+                              <td width="10%" height="4.7%" align="left" bgcolor="#E9EFEF" class="pedtext" style="position:absolute;width:388px;left: 150px;float: right; display:block;">
 									<?php //echo $r[first_name];?> <?php //echo $Arabic->en2ar($dbf->StudentName($r["id"]));?>
-									<?php echo $dbf->printStudentName($r["id"]);?>
+									<?php $name_student=$dbf->printStudentName($r["id"]);?>
+									<?php echo (empty($name_student)?"&nbsp;":$name_student);?>
                               </td>
                               <?php
 							$no_cols = $unit / 2;
@@ -999,7 +1002,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							for($i=0;$i<$no_cols;$i++)
 							{
 							?>
-                          <td colspan="3" align="center" bgcolor="#E9EFEF">
+                          <td colspan="3" align="center" bgcolor="#E9EFEF" id="mySelectedTd">
                           <?php
 						
 						//Get status of the student in a particular Unit
@@ -1067,7 +1070,23 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						{
 							$status_shift1 = $status_shift9;
 						}
-						echo $status_shift1;//echo '<span class="pedtext">'.$status_shift1.'</span>';
+						$js_td_script="<script>
+										$(document).ready(function(e)
+										{
+											var td_count='".$i."';
+											for(var i=0; i <= td_count; i++)
+											{
+												document.getElementById('mySelectedTd').style.height='20px';
+											}
+										});
+										</script>";
+						if(empty($status_shift1))
+						{
+							$df=$no_shift-1;
+							echo ($df==$k)?"&nbsp;".$js_td_script:"";
+							
+						}
+						else{echo $status_shift1;}
 						?>
                           </div>
                         <?php

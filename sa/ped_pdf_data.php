@@ -44,6 +44,7 @@ text-decoration:none;
  text-decoration:none;
  }
 </style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td align="left" valign="top" class="loginheading"></td>

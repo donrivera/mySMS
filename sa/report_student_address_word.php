@@ -17,7 +17,7 @@ $dbf = new User();
 include_once '../includes/language.php';
 //Important below 2 lines
 header("Content-type: application/vnd.ms-word");
-header("Content-Disposition: attachment; Filename=report_student_not_enrolled.doc");
+header("Content-Disposition: attachment; Filename=report_student_address.doc");
 ?>
 
 <!--Important-->

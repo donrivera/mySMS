@@ -65,7 +65,7 @@ if($_REQUEST['action']=='insert'){
 	</style>
     <?php
 	$headers .= 'MIME-Version: 1.0' . "\n";
-	$headers .= 'Content-type: text/html; charset=iso-8859-6' . "\r\n";
+	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 	$headers .= "From:".$from."\n";
 	
 	$email_cont = $dbf->strRecordID("email_templetes","*","id='10'");
@@ -85,7 +85,7 @@ if($_REQUEST['action']=='insert'){
         <table width="250" border="1" cellspacing="0" cellpadding="0" bordercolor="#9999FF" style="border-collapse:collapse;">
           <tr>
             <td width="54%" height="20" align="right" valign="middle" class="mycon">Student Name : &nbsp;</td>
-            <td width="46%" align="left" valign="middle" class="shop2">&nbsp;'.$stu["first_name"].'</td>
+            <td width="46%" align="left" valign="middle" class="shop2">&nbsp;'.$dbf->printStudentName($stu["id"]).'</td>
           </tr>
           <tr>
             <td width="54%" height="20" align="right" valign="middle" class="mycon">Course : &nbsp;</td>
@@ -140,8 +140,9 @@ if($_REQUEST['action']=='insert'){
 	</table>';	
 	
 	$subj = $email_cont["title"];
-	$subject = str_replace('%username%',$teacher,$email_msg);
-	
+	#$subject = str_replace('%username%',$teacher,$email_msg);
+	$subject = str_replace('%status%','filed',$email_msg);
+	$subject .= str_replace('%from_name%',$teacher,$email_msg);
 	//$subject ="Student on-hold request from ".$teacher;
 	mail($to,$subject,$body1,$headers);
 	// End Mail

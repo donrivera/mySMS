@@ -22,7 +22,7 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0" style="b
       </tr>';
 		$i = 1;
 		$color="#ECECFF";
-		$query=$dbf->genericQuery("SELECT s.id,cs.account,crs.name
+		$query=$dbf->genericQuery("SELECT s.id,cs.account,cs.sub_account,crs.name
 									FROM student s
 									INNER JOIN corporate_students cs ON cs.student_id=s.id
 									INNER JOIN course crs ON crs.id=cs.course_id												
@@ -34,7 +34,7 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0" style="b
 	$html.='<tr bgcolor="'.$color.'">
 	  <td height="25" align="center" valign="middle" class="contenttext">'.$i.'</td>
 	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($val['id']).'</span></td>
-	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val["account"].'</td>
+	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val["account"].'-'.$val["sub_account"].'</td>
 	  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$val["name"].'</td>
 	</tr>';
 	  $i = $i + 1;

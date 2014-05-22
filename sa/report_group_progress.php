@@ -42,7 +42,7 @@ if($_SESSION[font]=='big'){
 }
 ?>
 <script type="text/javascript" src="dropdowntabs.js"></script>
-
+<script type="text/javascript"  src="../js/jquery-1.3.2.min.js"></script>
 <script type="text/javascript">
 function setsubmit(){
 	
@@ -296,10 +296,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td height="1" colspan="10" align="left" valign="middle" bgcolor="#000000"></td>
                 </tr>
                 <?php 
+					
 				 $attend_calc=0;
 				 $student_count = 1;
 				 foreach($dbf->fetchOrder('student s,student_group_dtls c',"s.id=c.student_id AND c.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*,c.course_id") as $r){ 
-				 
+					
 				 	$res_progress = $dbf->strRecordID("teacher_progress_course","*","group_id='$_REQUEST[cmbgroup]' And student_id='$r[id]'");
 					
 					//$res_progress["course_attendance_perc"]+

@@ -59,7 +59,7 @@ $(function() {
 		changeMonth: true,
 		changeYear: true,
 		//numberOfMonths: 2,
-		minDate: new Date(),
+		//minDate: new Date(),
 		
 		//maxDate: new Date(2011, 10, 25, 17, 30),
 

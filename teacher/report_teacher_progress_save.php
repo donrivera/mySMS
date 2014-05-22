@@ -26,7 +26,7 @@ if($_REQUEST['action']=='insert')
 	//Check duplicate
 	$num=$dbf->countRows('teacher_progress',"teacher_id='$uid' and group_id='$_POST[group_id]'");
 	if($num==0)
-	{echo "1";
+	{#echo "1";
 		
 		//Query string
 		$string="teacher_id='$uid',group_id='$_POST[group_id]',course_id='$res_group[course_id]',grade_submit='$_POST[grade_submit]',report_print='$_POST[report_print]',report_print_by='$_POST[report_print_by]',certificate_print='$_POST[certificate_print]',certificate_print_by='$_POST[certificate_print_by]', progress_report_date='$_POST[progress_report_date]', certificate='$_POST[certificate]',narration='$narration'";
@@ -249,7 +249,7 @@ if($_REQUEST['action']=='insert')
 		header("Location:report_teacher_progress.php?msg=added&group_id=$_POST[group_id]");
 	}	
 	else
-	{echo "2";
+	{#echo "2";
 		
 		//Query string
  		$string="report_print='$_POST[report_print]',report_print_by='$_POST[report_print_by]',certificate_print='$_POST[certificate_print]',certificate_print_by='$_POST[certificate_print_by]', progress_report_date='$_POST[progress_report_date]', certificate='$_POST[certificate]',grade_submit='$_POST[grade_submit]',narration='$narration'";
@@ -329,19 +329,55 @@ if($_REQUEST['action']=='insert')
 			if($num==0)
 			{
 				//Insert in progress certificate table
-				$string="teacher_id='$uid',group_id='$_POST[group_id]',course_id='$res_group[course_id]',student_id='$student_id',fluency='$fluency',fluency_perc='$fluency_perc', pronunciation='$pronunciation',pronunciation_perc='$pronunciation_perc',grammer='$grammer',grammer_perc='$grammer_perc',vocabulary='$vocabulary',vocabulary_perc='$vocabulary_perc', listening='$listening', listening_perc='$listening_perc',end_of_level='$end_of_level', end_of_level_perc='$end_of_level_perc', attendance='$attendance', attendance_perc='$attend_calc',parent_id='$ids',final_percent='$final_grade',grade_id='$grade_id'";
+				$string="	teacher_id='$uid',
+							group_id='$_POST[group_id]',
+							course_id='$res_group[course_id]',
+							student_id='$student_id',
+							fluency='$fluency',
+							fluency_perc='$fluency_perc', 
+							pronunciation='$pronunciation',
+							pronunciation_perc='$pronunciation_perc',
+							grammer='$grammer',
+							grammer_perc='$grammer_perc',
+							vocabulary='$vocabulary',
+							vocabulary_perc='$vocabulary_perc', 
+							listening='$listening', 
+							listening_perc='$listening_perc',
+							end_of_level='$end_of_level', 
+							end_of_level_perc='$end_of_level_perc', 
+							attendance='$attendance', 
+							attendance_perc='$attend_calc',
+							parent_id='$ids',
+							final_percent='$final_grade',
+							grade_id='$grade_id'";
 				
 				$dbf->insertSet("teacher_progress_certificate",$string);
 			}
 			else
 			{
 				//update progress certificate table
-				$string="fluency='$fluency',fluency_perc='$fluency_perc', pronunciation='$pronunciation', pronunciation_perc='$pronunciation_perc', grammer='$grammer',grammer_perc='$grammer_perc',vocabulary='$vocabulary',vocabulary_perc='$vocabulary_perc', listening='$listening', listening_perc='$listening_perc', end_of_level='$end_of_level',end_of_level_perc='$end_of_level_perc', attendance='$attendance', attendance_perc='$attend_calc', parent_id='$ids',final_percent='$final_grade',grade_id='$grade_id'";
+				$string="	fluency='$fluency',
+							fluency_perc='$fluency_perc', 
+							pronunciation='$pronunciation', 
+							pronunciation_perc='$pronunciation_perc', 
+							grammer='$grammer',
+							grammer_perc='$grammer_perc',
+							vocabulary='$vocabulary',
+							vocabulary_perc='$vocabulary_perc', 
+							listening='$listening', 
+							listening_perc='$listening_perc', 
+							end_of_level='$end_of_level',
+							end_of_level_perc='$end_of_level_perc', 
+							attendance='$attendance', 
+							attendance_perc='$attend_calc', 
+							parent_id='$ids',
+							final_percent='$final_grade',
+							grade_id='$grade_id'";
 				
 				$dbf->updateTable("teacher_progress_certificate",$string,"teacher_id='$uid' AND group_id='$_POST[group_id]' AND course_id='$res_group[course_id]' AND student_id='$student_id'");
 			
 			}
-			
+			#echo "<BR/>".$student_id."-".$res_group['course_id']."-".$_POST[group_id];
 		}
 		
 		//==============================
@@ -391,7 +427,7 @@ if($_REQUEST['action']=='insert')
 			$num=$dbf->countRows('teacher_progress_course',"teacher_id='$uid' AND group_id='$_POST[group_id]' AND course_id='$res_group[course_id]' AND student_id='$student_id'");
 			if($num==0)
 			{
-				$string="teacher_id='$uid',group_id='$_POST[group_id]',course_id='$_REQUEST[course_id]',student_id='$student_id',course_partication='$course_partication',course_partication_perc='$course_partication_perc',course_homework='$course_homework', course_homework_perc='$course_homework_perc', course_fluency='$course_fluency', course_fluency_perc='$course_fluency_perc', course_pro='$course_pro',course_pro_perc='$course_pro_perc', course_grammer='$course_grammer', course_grammer_perc='$course_grammer_perc', course_voca='$course_voca', course_voca_perc='$course_voca_perc',course_listen='$course_listen',course_listen_perc='$course_listen_perc',course_attendance='$course_attendance',course_attendance_perc='$course_attendance_perc',parent_id='$ids'";
+				$string="teacher_id='$uid',group_id='$_POST[group_id]',course_id='$res_group[course_id]',student_id='$student_id',course_partication='$course_partication',course_partication_perc='$course_partication_perc',course_homework='$course_homework', course_homework_perc='$course_homework_perc', course_fluency='$course_fluency', course_fluency_perc='$course_fluency_perc', course_pro='$course_pro',course_pro_perc='$course_pro_perc', course_grammer='$course_grammer', course_grammer_perc='$course_grammer_perc', course_voca='$course_voca', course_voca_perc='$course_voca_perc',course_listen='$course_listen',course_listen_perc='$course_listen_perc',course_attendance='$course_attendance',course_attendance_perc='$course_attendance_perc',parent_id='$ids'";
 				
 				$dbf->insertSet("teacher_progress_course",$string);
 			}

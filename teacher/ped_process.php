@@ -321,7 +321,7 @@ else
 		$from = $res_admin[email];
 		
 		$headers .= 'MIME-Version: 1.0' . "\n";
-		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 		$headers .= "From:".$from."\n";
 		
 		$email_cont = $dbf->strRecordID("email_templetes","*","id='14'");
@@ -393,7 +393,7 @@ else
 		//Get per units
 		foreach($dbf->fetchOrder('ped_attendance',"group_id='$_POST[cmbgroup]' And student_id='$val_at[student_id]'","","","") as $val_ab){
 			//Get per units
-			$nnn = $dbf->countRows('ped_attendance',"group_id='$_POST[cmbgroup]' And student_id='$val_at[student_id]' And unit='$val_ab[unit]' And (shift1='A' Or shift2='A' Or shift3='A' Or shift4='A' Or shift5='A' Or shift6='A' Or shift7='A' Or shift8='A' Or shift9='A')");
+			$nnn = $dbf->countRows('ped_attendance',"group_id='$_POST[cmbgroup]' And student_id='$val_at[student_id]' And unit='$val_ab[unit]' And attend_date='$today' And (shift1='A' Or shift2='A' Or shift3='A' Or shift4='A' Or shift5='A' Or shift6='A' Or shift7='A' Or shift8='A' Or shift9='A')");
 			#echo $nnn;
 			if($nnn > 0){
 				$at_count = $at_count + 1;
@@ -402,10 +402,10 @@ else
 		//if($at_count == 3 || $at_count == 6 || $at_count == 9 || $at_count == 12 || $at_count == 15 || $at_count == 18 || $at_count == 21 || $at_count == 24 || $at_count == 27 || $at_count == 30 || $at_count == 33 || $at_count == 36 || $at_count == 39 || $at_count == 42 || $at_count == 45 || $at_count == 48 || $at_count == 51 || $at_count == 54 || $at_count == 57 || $at_count == 60|| $at_count == 63 || $at_count == 66 || $at_count == 69|| $at_count == 72 || $at_count == 75 || $at_count == 78 || $at_count == 81)
 		if($at_count ==1 || $at_count==3 || $at_count==5)
 		{
-			
+			echo $val_at['student_id']."<BR/>";
 			//Student details
 			$res_student=$dbf->fetchSingle("student","id='$val_at[student_id]' And sms_status='1'");
-			$student_name = $res_student["first_name"];
+			$student_name = $dbf->printStudentName($res_student["id"]);#$res_student["first_name"]
 						
 			$teacher_name = $res_teacher["name"];
 			
@@ -418,7 +418,7 @@ else
 			$name = $res_cd["user_name"];
 			
 			$headers .= 'MIME-Version: 1.0' . "\n";
-			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 			$headers .= "From:".$from."\n";
 			
 			$email_cont = $dbf->strRecordID("email_templetes","*","id='15'");

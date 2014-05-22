@@ -234,7 +234,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 			  $res_size = $dbf->strRecordID("group_size","*","group_id='$course[group_id]'");
 			  $res_group_name = $dbf->strRecordID("common","*","id='$course[group_id]'");
 			  $res_cource_name = $dbf->strRecordID("course","*","id='$course[group_id]'");
-			  $unit = $res_size["units"];			  
+			  $unit = $course["units"];			  
 			?>
             <tr>
               <td colspan="3" align="left" valign="top">
@@ -970,14 +970,15 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							//No of unit in a day
 							$perday = $dbf->getDataFromTable("common","name","id='$val_course[units]'");
                     ?>
-                      <div style="width:1000px;">
-                        <div style="width:100%; overflow:scroll;overflow-y:hidden; margin-bottom:15px;" >
+						
+                      <div style="width:800px;">
+                        <div style="width:600px;overflow-x:scroll;overflow-y:hidden;margin-right:-200px;float:right;" >
                           <table width="100%" border="1" align="center" cellpadding="3" bordercolor="#000000" cellspacing="0" style="border-collapse:collapse;">
                             <!-- Start Column Heading -->
                             <tr>
-                              <td width="10%" align="left" bgcolor="#4D7373"><div class="logouttext" style="width:130px;"><strong><?php echo "Student Name";?></strong>
+                              <th width="10%" height="6%" align="left" bgcolor="#4D7373" style="position:absolute;width:328px;left: 70px;float: right; display:block;"><div class="logouttext" ><strong><?php echo "Student Name";?></strong>
                                 <input type="hidden" name="course_id<?php echo $count_course;?>" id="course_id<?php echo $count_course;?>" value="<?php echo $val_course["course_id"];?>">
-                                </div></td>
+                                </div></th>
                               <?php
 							  $unit_per_day=$val_course['unit_per_day'];
 							$no_cols = $unit / $unit_per_day;
@@ -1012,8 +1013,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         foreach($dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*") as $r) {
                         ?>
                             <tr>
-                              <td width="10%" align="left" bgcolor="#E9EFEF" class="pedtext"><?php echo $r[first_name]."&nbsp;".$r[father_name]."&nbsp;".$r[family_name]."&nbsp;(".$r[family_name1]."&nbsp;".$r[grandfather_name1]."&nbsp;".$r[father_name1]."&nbsp;".$r[first_name1].")";?>
-                                <input type="hidden" name="student_id<?php echo $s_count."_".$count_course;?>" id="student_id<?php echo $s_count."_".$count_course;?>" value="<?php echo $r["id"];?>"></td>
+                              <th width="10%" height="9%" align="left" bgcolor="#E9EFEF" class="pedtext" style="position:absolute;width:328px;left: 70px;float: right; display:block;">
+								<?php #echo $r[first_name]."&nbsp;".$r[father_name]."&nbsp;".$r[family_name]."&nbsp;(".$r[family_name1]."&nbsp;".$r[grandfather_name1]."&nbsp;".$r[father_name1]."&nbsp;".$r[first_name1].")";?>
+                                <?php echo $dbf->printStudentName($r["id"]);?>
+								<input type="hidden" name="student_id<?php echo $s_count."_".$count_course;?>" id="student_id<?php echo $s_count."_".$count_course;?>" value="<?php echo $r["id"];?>"></th>
                               <?php
 							$no_cols = $unit / $unit_per_day;
 							$num = cal_days_in_month(CAL_GREGORIAN, $month, $year); 

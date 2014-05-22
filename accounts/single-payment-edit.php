@@ -29,7 +29,7 @@ $course_id =  $_REQUEST['course_id'];
 $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 
 if($_REQUEST['action']=='edit_payment'){
-	
+	echo var_dump($_POST);
 	//Current date and time
 	$dt = date('Y-m-d h:m:s');
 	
@@ -67,6 +67,7 @@ if($_REQUEST['action']=='edit_payment'){
 		$dbf->insertSet("student_fee_edit_history",$string2);
 		
 	}
+	$dbf->updateTable("student_fees","fee_amt='$_POST[amt]',paid_amt='$_POST[amt]',payment_type='$_POST[payment_type]',fee_date='$_POST[dated]',paid_date='$_POST[dated]'","id='$_REQUEST[schid]'");
 	//=================================================================================
 	
 	header("Location:single-payment.php?student_id=$student_id&course_id=$course_id");
@@ -323,7 +324,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr>
                     <td width="71%" align="left" valign="top">
                     
-                    <form action="single-payment-edit.php?action=edit_payment&ids=<?=$student_id;?>&amp;schid=<?=$_REQUEST[schid];?>&course_id=<?=$course_id;?>" name="frm" method="post" id="frm" onSubmit="return validate();">
+                    <form action="single-payment-edit.php?action=edit_payment&student_id=<?=$student_id;?>&amp;schid=<?=$_REQUEST[schid];?>&course_id=<?=$course_id;?>" name="frm" method="post" id="frm" onSubmit="return validate();">
                       <?php
                       $val = $dbf->strRecordID("student_fees","*","id='$_REQUEST[schid]'");					  
 					  ?>

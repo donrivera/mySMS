@@ -251,8 +251,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td align="left" valign="middle" class="mytext">&nbsp;<?php echo $adv["paid_date"];?></td>
                             <td align="right" valign="middle" class="mytext">&nbsp;<?php echo $adv["paid_amt"];?> <?php echo $res_currency[symbol];?>&nbsp;</td>
                             <td align="center" valign="middle" class="mytext"><?php echo $dbf->getDataFromTable("common", "name", "id='$adv[payment_type]'");?>
-							<a href="search_print_challan_admission.php?course_id=<?php echo $course_id;?>&amp;fee_id=<?php echo $adv[id];?>&amp;id=<?php echo $student_id;?>&amp;page=search_print_challan_admission.php&amp;TB_iframe=true&amp;height=440&amp;width=675&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox"><img src="../images/print.png" width="16" height="16" border="0" title="Print" /></a>
-							<!--<a href="search_print_invoice.php?course_id=<?php echo $_REQUEST["course_id"];?>&amp;student_id=<?php echo $student_id;?>&amp;page=search_print_invoice.php&amp;TB_iframe=true&amp;height=600&amp;width=690&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox"><img src="../images/print.png" width="16" height="16" border="0" title="Print" /></a>-->
+							<a href="search_print_challan_admission.php?course_id=<?php echo $course_id;?>&amp;fee_id=<?php echo $adv[id];?>&amp;id=<?php echo $student_id;?>&amp;page=search_print_challan_admission.php&amp;TB_iframe=true&amp;height=440&amp;width=675&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox"><img src="../images/print.png" width="16" height="16" border="0" title="Receipt" /></a>
+							<a href="search_print_invoice.php?course_id=<?php echo $course_id;?>&amp;student_id=<?php echo $student_id;?>&amp;page=search_print_invoice.php&amp;TB_iframe=true&amp;height=600&amp;width=690&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox"><img src="../images/payment.png" width="16" height="16" border="0" title="Invoice" /></a>
 							</td>
                             </tr>
                           <?php $m++; } ?>

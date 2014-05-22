@@ -18,8 +18,10 @@ $dbf = new User();
 include_once '../includes/language.php';
 
 $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[group_id]'");
-
-$teacher_id = $_REQUEST["teacher_id"];
+$teacher_id = $pro[teacher_id];
+#$teacher_id = $_REQUEST["teacher_id"];
+header("Content-type: application/vnd.ms-word");
+header("Content-Disposition: attachment; Filename=group_progress_report.doc");
 ?>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="../css/print.css" rel="stylesheet" type="text/css" />
@@ -332,8 +334,10 @@ $teacher_id = $_REQUEST["teacher_id"];
     <td bgcolor="#FFFFFF">&nbsp;</td>
   </tr>
 </table>
-</body>
-</html>
+<!--
 <script type="text/javascript">
 window.print();
 </script>
+-->
+</body>
+</html>

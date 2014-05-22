@@ -18,7 +18,7 @@ include_once '../includes/language.php';
 	  <?php
 		$i = 1;
 		$color="#ECECFF";
-		$query=$dbf->genericQuery("SELECT s.id,cs.account,crs.name
+		$query=$dbf->genericQuery("SELECT s.id,cs.account,cs.sub_account,crs.name
 									FROM student s
 									INNER JOIN corporate_students cs ON cs.student_id=s.id
 									INNER JOIN course crs ON crs.id=cs.course_id												
@@ -31,7 +31,7 @@ include_once '../includes/language.php';
       <tr>
          <td height='25' align='center' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $i;?></td>
         <td height='25' align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $dbf->printStudentName($val['id']);?></td>
-        <td align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $val[account];?></td>
+        <td align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $val[account]."".$val[sub_account];?></td>
         <td align='left' valign='middle' bgcolor='#F8F9FB' style='font-family:Arial, Helvetica, sans-serif;font-size:12px;color:#000000;padding-left:3px;'><?php echo $val[name];?></td>
         <?php
 			$i = $i + 1;

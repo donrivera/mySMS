@@ -182,7 +182,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <?php 
 					$i = 1;
 					$color="#ECECFF";
-					$query=$dbf->genericQuery(" SELECT s.id,cs.account,crs.name
+					$query=$dbf->genericQuery(" SELECT s.id,cs.account,cs.sub_account,crs.name
 												FROM student s
 												INNER JOIN corporate_students cs ON cs.student_id=s.id
 												INNER JOIN course crs ON crs.id=cs.course_id												
@@ -203,7 +203,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     </tr>
                   </table></td>
 				  -->
-                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val['account'];?></td>
+                  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val['account']."-".$val['sub_account'];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val['name'];?></td>
                  <?php
 					  $i = $i + 1;

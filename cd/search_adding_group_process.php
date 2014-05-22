@@ -143,13 +143,14 @@ else
 	$group_status = $dbf->strRecordID("student_group","status","id='$group'");
 	$duplicate_course=$dbf->countRows('student_group_dtls',"course_id='$course_id' && student_id='$student_id'");
 	$date_time = date('Y-m-d H:i:s A');
+	$student_limit=15;
 	if($group_status=='Completed')
 	{
 		echo '<script type="text/javascript">alert("Group Status: Completed");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
 	}
-	elseif($total_students >12)
+	elseif($total_students >$student_limit)
 	{
-		echo '<script type="text/javascript">alert("Group has 12 students!!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Group has '.$student_limit.' students!!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
 	}
 	elseif($duplicate_course > 0)
 	{

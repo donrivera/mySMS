@@ -101,7 +101,7 @@ $(document).ready(function() {
         
         <?php
 	  $mystyle = '';
-	  if($page_name == "group_course.php" ||  $page_name=="group_quick.php" ||  $page_name=="group.php" || $page_name=="group_unit.php" || $page_name=="group_teacher.php" || $page_name=="group_classroom.php" || $page_name=="group_review.php" || $page_name=="group_manage.php" || $page_name=="view_group_size.php" || $page_name=="view_group_history.php")
+	  if($page_name == "group_course.php" ||  $page_name=="group_quick.php" ||  $page_name=="group.php" || $page_name=="group_unit.php" || $page_name=="group_teacher.php" || $page_name=="group_classroom.php" || $page_name=="group_review.php" || $page_name=="group_manage.php" || $page_name=="view_group_size.php" || $page_name=="view_group_history.php" || $page_name=="cer_manage.php")
 	  {
 		  $mystyle = 'style="background-color:#003399; background-image:none;"';
 	  }
@@ -316,6 +316,7 @@ $(document).ready(function() {
 		<a href="group_manage.php"><?php echo constant("SA_MENU_GROUP");?></a>
         <a href="view_group_size.php"><?php echo constant("SA_MENU_GROUP_SIZE");?></a>
         <a href="view_group_history.php"><?php echo constant("ADMIN_MENU_RULE_VIEW_GROUP_HISTORY");?></a>
+		<a href="cer_manage.php"><?php echo constant("TEACHER_CER_MANAGE");?></a>
      </div>
       
     <!-- Transfer -->

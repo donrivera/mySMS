@@ -957,7 +957,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <td height="10" colspan="5" align="left" valign="middle"></td>
                             </tr>
 							<!--CORPORATE ACCOUNT OPTION-->
-							<!--
+							
 							<script language="javascript" type="text/javascript">
 							$(document).ready(function() 
 							{	
@@ -1005,7 +1005,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 									}
 								}
 								var account = document.getElementById('account').value;
-								ajaxRequest.open("GET", "corporate_show_ajax.php" + "?account=" + account, true);
+								var sub = document.getElementById('sub_account').value;
+								ajaxRequest.open("GET", "corporate_show_ajax.php" + "?account=" + account+"&sub="+sub, true);
 								ajaxRequest.send(null); 
 							}
 							</script>
@@ -1061,7 +1062,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								<td width="3%">&nbsp;</td>
 								<td width="66%" align="left" valign="middle">&nbsp;</td>
 							</tr>
-							-->
+							
 							<!--CORPORATE ACCOUNT OPTION-->
                             <tr>
                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>

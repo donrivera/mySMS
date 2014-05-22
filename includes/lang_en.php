@@ -653,7 +653,7 @@ define("STUDENT_MYACCOUNT_BALANCEINFO","Financial Summary");
 define("STUDENT_MYACCOUNT_TOTALCOURSEFEES","Total course fees");
 define("STUDENT_MYACCOUNT_TEXT","Paid amount to date");
 define("STUDENT_MYACCOUNT_BALANCEFEES","Balance fees");
-
+define("STUDENT_MYACCOUNT_CORPACCT","Corporate Account");
 // student progress_report
 define("STUDENT_PROGRESS_REPORT_HEADINGTEXT","My progress report / certificate grade");
 define("STUDENT_PROGRESS_REPORT_PROGRESSREPORT","Progress report");
@@ -2121,6 +2121,7 @@ define("REPORT_STUDENT_LIFE_CYCLE","Student life cycle");
 define("REPORT_STUDENT_TYPE","Student Type");
 define("REPORT_CORPORATE_ACCT","Corporate Account");
 define("REPORT_STUDENT_ADDRESS_REPORT","Student Addresses Report");
+define("REPORT_STUDENT_TRANSPORT","Transport Report");
 define("PLACEMENT_TESTGRADE_ONLINE","Placement test grade - online");
 define("PLACEMENT_TESTGRADE_SPEAK","Placement test grade - speaking");
 
@@ -2377,4 +2378,13 @@ define("ICON_VIEW", "View");
 define("ICON_EXPORT_WORD", "Export to word");
 define("ICON_EXPORT_XLS", "Export to excel");
 define("ICON_EXPORT_PDF", "Export to PDF");
+
+define("TEACHER_CER_MANAGE","Class Extension Request");
+define("TEACHER_CER_DATE","Date Added");
+define("TEACHER_CER_GROUP","Group");
+define("TEACHER_CER_DTL","Teacher");
+define("TEACHER_CER_UNIT","Units");
+define("TEACHER_CER_REMARK","Remarks");
+define("TEACHER_CER_STATUS","Status");
+define("TEACHER_CER_APPROVED","Approved By");
 ?>

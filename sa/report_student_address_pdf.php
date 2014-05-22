@@ -101,6 +101,6 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0" style="b
 
 	$mpdf = new mPDF('ar', 'A4-L');
 	$mpdf->WriteHTML($html);
-	$mpdf->Output("report_student_not_enrolled.pdf", 'D');
+	$mpdf->Output("report_student_address.pdf", 'D');
 	exit;
 ?>

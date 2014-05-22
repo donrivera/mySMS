@@ -80,7 +80,7 @@ $(document).ready(function() {
 		  $mystyle = 'style="background-color:#003399; background-image:none;"';
 	  }
 	  ?>
-        <li><a <?php echo $mystyle;?> href="my_groups.php" title="Rule / Regulation"><span <?php echo $mystyle;?> ><?php echo constant("TE_MENU_MY_GROUP");?></span></a></li>
+        <li><a <?php echo $mystyle;?> href="#" title="Rule / Regulation" rel="my_group"><span <?php echo $mystyle;?> ><?php echo constant("TE_MENU_MY_GROUP");?></span></a></li>
         
         <?php
 	  $mystyle = '';
@@ -221,6 +221,10 @@ $(document).ready(function() {
             <a href="help.php?id=<?php echo $val[id]; ?>"><?php echo $val["title"];?></a>
         <?php } ?>
       </div>
+		<div id="my_group" class="dropmenudiv_d"> 
+            <a href="my_groups.php"><?php echo "Groups";?></a>
+            <a href="cer_manage.php"><?php echo "Class Extension";?></a>
+        </div>
       <script type="text/javascript">
 		//SYNTAX: tabdropdown.init("menu_id", [integer OR "auto"])
 		tabdropdown.init("glowmenu", "auto")

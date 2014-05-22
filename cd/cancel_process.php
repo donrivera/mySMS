@@ -82,7 +82,7 @@ if($_REQUEST['action']=='update'){
 	</style>
     <?php
 	$headers .= 'MIME-Version: 1.0' . "\n";
-	$headers .= 'Content-type: text/html; charset=iso-8859-6' . "\r\n";
+	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 	$headers .= "From:".$from."\n";
 	
 	$email_cont = $dbf->strRecordID("email_templetes","*","id='5'");
@@ -335,7 +335,7 @@ if($_REQUEST['action']=='update'){
 		if($to_user != '' || $admin_mail != ''){
 	
 			$headers .= 'MIME-Version: 1.0' . "\n";
-			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 			$headers .= "From:".$from."\n";
 									
 			$email_cont = $dbf->strRecordID("email_templetes","*","id='6'");

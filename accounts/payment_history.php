@@ -286,7 +286,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <a href="javascript:void(0);" onClick="show_details('<?php echo 'c'.$val_s_course[id];?>');"> <span id="plusArrow<?php echo 'c'.$val_s_course[id];?>"><img src="../images/plus.gif" border="0" /></span></a>
                         </td>
                         <td width="30%" align="left" valign="middle" class="mycon"><?php echo $course["name"];?></td>
-                        <td width="12%" align="center" valign="middle" class="mycon"><?php echo $dbf->GetBillNo($val_s_course["student_id"], $val_s_course["course_id"]);?>jj</td>
+                        <td width="12%" align="center" valign="middle" class="mycon"><?php echo $dbf->GetBillNo($val_s_course["student_id"], $val_s_course["course_id"]);?></td>
                         <td width="11%" align="right" valign="middle" class="mycon"><?php echo $course_fee;?>&nbsp;<?php echo $res_currency["symbol"];?></td>
                         <td width="19%" align="right" valign="middle" class="mycon">
                           <?php

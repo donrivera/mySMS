@@ -343,6 +343,7 @@ $(document).ready(function() {
             <a href="report_student_cycle.php"><?php echo constant("REPORT_STUDENT_LIFE_CYCLE");?></a>
             <a href="report_management.php"><?php echo constant("MANAGEMENT_REPORT");?></a>
 			<a href="report_student_address.php"><?php echo constant("REPORT_STUDENT_ADDRESS_REPORT");?></a>
+			<a href="report_transport.php"><?php echo constant("REPORT_STUDENT_TRANSPORT");?></a>
         </div>
       <script type="text/javascript">
 		//SYNTAX: tabdropdown.init("menu_id", [integer OR "auto"])

@@ -195,7 +195,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 			  
 			  $teacher_id = $res_teacher_group[teacher_id];
 			  
-			  $unit = $res_size["units"];			  
+			  $unit = $course["units"];			  
 			?>
             <tr>
               <td colspan="3" align="left" valign="top">
@@ -945,12 +945,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       {
 					  	$courseName=$dbf->getDataFromTable('course','name',"id='$val_course[course_id]'");
                     ?>
-                      <div style="width:1000px;">
-                        <div style="width:100%; overflow:scroll;overflow-y:hidden; margin-bottom:15px;" >
+                      <div style="width:800px;">
+                        <div style="width:600px;overflow-x:scroll;overflow-y:hidden;margin-right:-200px;float:right;" >
                           <table width="100%" border="1" align="center" cellpadding="3" bordercolor="#000000" cellspacing="0" style="border-collapse:collapse;">
                             <!-- Start Column Heading -->
                             <tr>
-                              <td width="10%" align="left" bgcolor="#4D7373"><div class="logouttext" style="width:130px;"><strong><?php echo "Student Name";?></strong>
+                              <td width="10%" height="4.7%" align="left" bgcolor="#4D7373" style="position:absolute;width:390px;left: 150px;float: right; display:block;"><div class="logouttext" style="width:130px;"><strong><?php echo "Student Name";?></strong>
                                 </div></td>
                               <?php
 								$unit_per_day=$val_course['unit_per_day'];
@@ -981,7 +981,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         foreach($dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*") as $r) {
                         ?>
                             <tr>
-                              <td width="10%" align="left" bgcolor="#E9EFEF" class="pedtext">
+                              <td width="10%" height="4.7%" align="left" bgcolor="#E9EFEF" class="pedtext" style="position:absolute;width:390px;left: 150px;float: right; display:block;">
 									<?php //echo $r[first_name];?> <?php //echo $Arabic->en2ar($dbf->StudentName($r["id"]));?>
 									<?php echo $dbf->printStudentName($r["id"]);?>
                               </td>

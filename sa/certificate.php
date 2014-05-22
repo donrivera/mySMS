@@ -208,6 +208,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$resc = $dbf->strRecordID("countries","*","id='$res[country_id]'");
 									
 					$course_name = $dbf->strRecordID("course","*","id='$_REQUEST[course_id]'");
+					$exp_course_name=explode("-",$course_name[name]);
+					$eng_course_name=$exp_course_name[0];
+					$arb_course_name=$exp_course_name[1];
 					$res_enroll = $dbf->strRecordID("student_enroll","*","student_id='$_REQUEST[student]' And course_id='$_REQUEST[course_id]'");
 					$res_g = $dbf->strRecordID("student_group","*","id='$res_enroll[group_id]'");
 					$res_size = $dbf->strRecordID("group_size","*","group_id='$res_g[group_id]'");
@@ -295,7 +298,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head"> passed the following English language course</span><span class="cer9_arial">:</span></th>
                                       </tr>
                                     <tr>
-                                      <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">Level: </span><span class="cer_my_head_bold"><?php echo $course_name[name];?></span><span class="cer_my_head"> with a total number of </span><span class="cer_my_head_bold"> <?php echo $hr;?></span>&nbsp;<span class="cer_my_head">hours</span></th>
+                                      <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">Level: </span><span class="cer_my_head_bold"><?php echo $eng_course_name;?></span><span class="cer_my_head"> with a total number of </span><span class="cer_my_head_bold"> <?php echo $hr;?></span>&nbsp;<span class="cer_my_head">hours</span></th>
                                       </tr>
                                     <tr>
                                       <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">From: </span><span class="cer_my_head_bold"><?php echo $res_g[start_date];?> &nbsp;</span><span class="cer_my_head">to:</span><span class="cer_my_head_bold">&nbsp;<?php echo $res_g[end_date];?> </span></th>
@@ -351,7 +354,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       <th height="21" align="right" valign="middle" class="cer_my_head_bold" scope="col"><span class="cer_my_head_bold" dir="rtl">قد اجتاز دورة في اللغة  الانجليزية لغير الناطقين بها:</span></th>
                                       </tr>
                                     <tr>
-                                      <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $course_name[name];?>  , وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span></th>
+                                      <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $arb_course_name;?>  , وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span></th>
                                       </tr>
                                     <tr>
                                       <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في الفترة من: <?php echo $dbf->enNo2ar($res_g[start_date],'-');?> إلى: <?php echo $dbf->enNo2ar($res_g[end_date],'-');?></span></th>
@@ -385,8 +388,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               </tr>
                             <tr>
                               <td align="left" valign="middle">
-								<!--
+								<br/><br/><br/>
 								<table width="850" border="0" cellspacing="0" cellpadding="0">
+									
 									<tr>
 									<td width="349" align="center" valign="middle"><p dir="rtl"><span dir="rtl"> </span><strong><span dir="rtl"> </span>   تصادق إدارة التربية والتعليم  علي صحة ختم وتوقيع مدير المعهد</strong></p>
 										<p align="center" dir="rtl"><strong>مدير عام التربية والتعليم بمحافظة الإحساء</strong><br />
@@ -402,7 +406,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 									</td>
 									</tr>
 								</table>
-								-->
+								
 							   </td>
                             </tr>
                             <tr>

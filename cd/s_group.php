@@ -376,7 +376,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 									}
 								}
 								var account = document.getElementById('account').value;
-								ajaxRequest.open("GET", "corporate_show_ajax.php" + "?account=" + account, true);
+								var sub = document.getElementById('sub_account').value;
+								ajaxRequest.open("GET", "corporate_show_ajax.php" + "?account=" + account+"&sub="+sub, true);
 								ajaxRequest.send(null); 
 							}
 							</script>

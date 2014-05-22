@@ -170,9 +170,9 @@ text-transform:uppercase;
 													INNER JOIN course c ON c.id=sc.course_id
 													INNER JOIN student_moving smv ON smv.student_id=sc.student_id
 													WHERE sc.student_id='$student_id' 
-													AND smv.status_id >'2'
+													AND smv.status_id >'1'
 													AND sg.centre_id='$_SESSION[centre_id]' 
-													AND status!='Completed' AND YEAR(sg.start_date) = '$year_now' ORDER BY sg.group_name ASC");
+													AND sg.status!='Completed' AND YEAR(sg.start_date) = '$year_now' ORDER BY sg.group_name ASC");
 			  ?>
               </td>
               </tr>
