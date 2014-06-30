@@ -123,6 +123,17 @@ $count = $res_logout["name"]; // Set timeout period in seconds
         });
     </script>
     <?php }?>
+	<tr>
+    <td align="left" height="25" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>&nbsp;</td>
+          <td width="36" align="center" valign="middle"><a href="arf_word.php?fname=<?php echo $_REQUEST["fname"];?>&stid=<?php echo $_REQUEST["stid"];?>&mobile=<?php echo $_REQUEST["mobile"];?>&email=<?php echo $_REQUEST["email"];?>"><img src="../images/word2007.png" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_WORD ?>"></a></td>
+          <td width="36" align="center" valign="middle"><a href="arf_csv.php?fname=<?php echo $_REQUEST["fname"];?>&stid=<?php echo $_REQUEST["stid"];?>&mobile=<?php echo $_REQUEST["mobile"];?>&email=<?php echo $_REQUEST["email"];?>"><img src="../images/excel2007.PNG" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_XLS ?>"></a></td>
+          <td width="36" align="center" valign="middle"><a href="arf_pdf.php?fname=<?php echo $_REQUEST["fname"];?>&stid=<?php echo $_REQUEST["stid"];?>&mobile=<?php echo $_REQUEST["mobile"];?>&email=<?php echo $_REQUEST["email"];?>"><img src="../images/pdf.png" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_PDF ?>"></a></td>
+          <td width="36" align="center" valign="middle"><a href="arf_print.php?fname=<?php echo $_REQUEST["fname"];?>&stid=<?php echo $_REQUEST["stid"];?>&mobile=<?php echo $_REQUEST["mobile"];?>&email=<?php echo $_REQUEST["email"];?>" target="_blank"><img src="../images/print.png" width="16" height="16" border="0" title="<?php echo STUDENT_ADVISOR_SEARCH_MANAGE_PRINT ?>"></a></td>
+        </tr>
+      </table></td>
+      </tr>
   <tr>
     <td align="left" valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
       <tr>
@@ -194,12 +205,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$num=$dbf->countRows('student s, arf c', $condition);
 					foreach($dbf->fetchOrder('student s, arf c', $condition ,"c.dated desc") as $val) 
 					{	
-						$res_student = $dbf->strRecordID("student","*","id='$val[student_id]'");
+						#$res_student = $dbf->strRecordID("student","*","id='$val[student_id]'");
 				  ?>
                   <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" onClick="javascript:window.location.href='arf_edit.php?id=<?php echo $val[id];?>'" style="cursor:pointer;">
                     <td height="25" align="center" valign="middle" class="contenttext"><?php echo $i;?></td>
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[dated];?></td>
-                    <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $res_student[first_name]."&nbsp;".$res_student[father_name]."&nbsp;".$res_student[family_name]."&nbsp;(".$res_student[first_name1]."&nbsp;".$res_student[father_name1]."&nbsp;".$res_student[grandfather_name1]."&nbsp;".$res_student[family_name1].")";?></td>
+                    <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $dbf->printStudentName($val[student_id]);?></td>
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[action_owner];?></td>
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[arf_function];?></td>
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[arf_function1];?></td>

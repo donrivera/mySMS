@@ -190,17 +190,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <?php
 				  $i = 1;
 					$color="#ECECFF";
-					
-					//Concate the Condition
-					#$condition = $dbf->getSearchStrings($_REQUEST["fname"],$_REQUEST["stid"],$_REQUEST["mobile"],$_REQUEST["email"], $centre_id,"s."," And s.id=c.student_id AND c.teacher_id='$teacher_id'");
-					//End 4.					
-					#$num=$dbf->countRows('student s, arf c', $condition);
-					$sql=$dbf->genericQuery("SELECT * FROM cer");
+					$sql=$dbf->genericQuery("	SELECT c . * 
+												FROM cer c
+												INNER JOIN student_group s ON s.id = c.group_id
+												WHERE s.centre_id='$_SESSION[centre_id]'");
 					$num=count($sql);
-					#foreach($dbf->fetchOrder('student s, arf c', $condition ,"c.dated desc") as $val)
 					foreach($sql as $val)
 					{	
-						#$res_student = $dbf->strRecordID("student","*","id='$val[student_id]'");
 				  ?>
                   <tr bgcolor="<?php echo $color;?>" onmouseover="this.bgColor='#FDE6D0'" onmouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                     <td height="25" align="center" valign="middle" class="contenttext"><?php echo $i;?></td>

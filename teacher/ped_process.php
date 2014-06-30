@@ -284,7 +284,7 @@ else
 	//==========================================================
 	
 	$group_type = $res_group[group_id];
-	$group_size = $dbf->strRecordID("group_size","*","group_id='$group_type'");
+	$group_size = $dbf->strRecordID("student_group","*","id='$_POST[cmbgroup]'");
 	
 	$original_unit = $group_size["units"];
 	

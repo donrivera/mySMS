@@ -143,7 +143,7 @@ else
 	$group_status = $dbf->strRecordID("student_group","status","id='$group'");
 	$duplicate_course=$dbf->countRows('student_group_dtls',"course_id='$course_id' && student_id='$student_id'");
 	$date_time = date('Y-m-d H:i:s A');
-	$student_limit=15;
+	$student_limit=$dbf->getDataFromTable("common","name","type='class limit'");
 	if($group_status=='Completed')
 	{
 		echo '<script type="text/javascript">alert("Group Status: Completed");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';

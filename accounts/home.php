@@ -160,7 +160,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <td height="30" align="center" valign="top"><a href="home.php" title="<?php echo constant("ADMIN_MENU_HOME");?>"><span><?php echo constant("ADMIN_MENU_HOME");?></span></a></td>
                       <td align="center" valign="top"><a href="search.php" title="Student" rel=""><span><?php echo constant("ADMIN_NEWS_MANAGE_STUDENT");?></span></a></td>
                       <td align="center" valign="top"><a href="course_manage.php" ><span><?php echo constant("ADMIN_GROUP_MANAGE_COURSE");?></span></a></td>
-                      <td align="center" valign="top"><a href="centre_schedule.php" ><span><?php echo constant("RE_MENU_CS");?></span></a></td>
+                      <td align="center" valign="top"><a href="centre_schedule.php" title="<?php echo constant("RE_MENU_CS");?>" ><span><?php echo constant("RE_MENU_CS");?></span></a></td>
                     </tr>
                     <tr>
                       <td height="72" align="center" valign="middle"><a href="password.php"><img src="../home_icon/chg_pass.png" width="60" height="60" border="0" /></a></td>
@@ -183,8 +183,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <tr class="lable1">
                       <td height="30" align="center" valign="top"><a href="alert1_manage.php"><?php echo constant("ADMIN_MENU_ALERTS");?></a></td>
                       <td align="center" valign="top"><a href="sms.php" title="Leave"><span><?php echo constant("ADMIN_MENU_SMS");?></span></a></td>
-                      <td align="center" valign="top"><a href="email.php"><?php echo constant("ADMIN_TEACHER1_MANAGE_EMAIL");?></a></td>
-                      <td align="center" valign="top"><a href="news_manage.php"><?php echo constant("ADMIN_MENU_NEWS");?></a></td>
+                      <td align="center" valign="top"><a href="email.php" title="<?php echo constant("ADMIN_TEACHER1_MANAGE_EMAIL");?>"><?php echo constant("ADMIN_TEACHER1_MANAGE_EMAIL");?></a></td>
+                      <td align="center" valign="top"><a href="news_manage.php" title="<?php echo constant("ADMIN_MENU_NEWS");?>"><?php echo constant("ADMIN_MENU_NEWS");?></a></td>
                     </tr>
                   </table>
                   </td>

@@ -210,11 +210,19 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[units];?></td>
                     <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $dbf->getDataFromTable("user","user_type","id='$val[approved_by]'");?></td>
 					<td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[status];?></td>
-                    <td width="5%" align="center" valign="middle"><a href="cer_edit.php?id=<?php echo $val[id];?>"> <img src="../images/edit.gif" border="0" title="Edit" /></a></td>
                     <td width="5%" align="center" valign="middle">
+						<?php if($val[status]!='Approved'):?>
+							<a href="cer_edit.php?id=<?php echo $val[id];?>"> <img src="../images/edit.gif" border="0" title="Edit" /></a>
+						<?php else:?>&nbsp;
+						<?php endif;?>
+					</td>
+                    <td width="5%" align="center" valign="middle">
+						<?php if($val[status]!='Approved'):?>
 						<a href="cer_process.php?action=delete&amp;id=<?php echo $val[id];?>"  class="linktext" onclick="return confirm('Are you sure you want to delete this record ?')">
 							<img src="../images/delete.png" width="16" height="16" border="0" title="<?php echo ACTION_CAPTION_DELETE ?>" />
 						</a>
+						<?php else:?>&nbsp;
+						<?php endif;?>
 					</td>
                     <?php
 					  $i = $i + 1;

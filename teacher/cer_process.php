@@ -22,11 +22,12 @@ if($_REQUEST['action']=='insert')
 			";
 	$ids = $dbf->insertSet("cer",$string);
 	$from = $dbf->getDataFromTable("teacher","email","id='$_SESSION[uid]'");
-	$to = $dbf->getDataFromTable("user","email","user_type='Center Director' And center_id='$_REQUEST[group_id]'");
+	
 	$centre_id = $dbf->getDataFromTable("student_group","centre_id","id='$_REQUEST[group_id]'");
 	$cd = $dbf->getDataFromTable("user","user_name","user_type='Center Director' And center_id='$centre_id'");
 	$teacher = $dbf->getDataFromTable("teacher","name","id='$teacher_id'");
 	$group_name = $dbf->getDataFromTable("student_group","group_name","id='$_REQUEST[group_id]'");
+	$to = $dbf->getDataFromTable("user","email","user_type='Center Director' And center_id='$centre_id'");
 	$headers .= 'MIME-Version: 1.0' . "\n";
 	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 	$headers .= "From:".$from."\n";

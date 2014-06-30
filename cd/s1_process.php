@@ -145,8 +145,26 @@ if($_REQUEST['action']=='group'){
 		$_SESSION['corp_student_acct']=$_REQUEST['account'];
 		$_SESSION['corp_student_sub_acct']=$_REQUEST['sub_account'];
 	}
-	$_SESSION[group] = $_REQUEST[group];	
-	header("Location:s7.php");
+	#Group Validation
+	if(!empty($_REQUEST["group"]))
+	{
+		$student_limit=$dbf->getDataFromTable("common","name","type='class limit'");
+		$total_student_group=$dbf->getDataFromTable("student_group_dtls","COUNT(student_id)","parent_id='$_REQUEST[group]'");
+		$total_students=$total_student_group + 1;
+		if($total_students >$student_limit)
+		{header("Location:s_group.php?msg=group_exceed");exit;}
+		else
+		{
+			$_SESSION[group] = $_REQUEST[group];
+			header("Location:s7.php");
+		}
+	}
+	else
+	{
+		$_SESSION[group] = $_REQUEST[group];
+		header("Location:s7.php");
+	}
+	#Group Validation
 }
  
 if($_REQUEST['action']=='course'){

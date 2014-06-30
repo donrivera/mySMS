@@ -22,7 +22,9 @@ $res = $dbf->strRecordID("student","*","id='$_REQUEST[student_id]'");
 
 if($_REQUEST['action']=='classic')
 { 
-
+	
+	
+	
 	/*
 	if($_REQUEST[mytxt_src] == '')
 	{$first_name=$_REQUEST[txt_src];}
@@ -112,15 +114,18 @@ if($_REQUEST['action']=='classic')
 			header("Location:s_classic.php?student_id=$student_id&token=0_k_0&msg=idexist");
 			exit;
 		}
-	}				
-	if($national_id != ''){
-		$stu_id = $std->check($national_id);
-		//echo $stu_id;exit;
-		if($stu_id > 0){
-			//$dbf->updateTable("student","student_id='$national_id'","id='$sid'");
-			//header("Location:s_edit.php?student_id=$student_id&token=0_k_0");
-		}else{			
-			header("Location:s_classic.php?student_id=$student_id&token=0_k_0&msg=invalid");
+	}	
+	if($_REQUEST['id_type']=='National ID')
+	{
+		if($national_id != '')
+		{
+			$stu_id = $std->check($national_id);
+			//echo $stu_id;exit;
+			if($stu_id > 0)
+			{
+				//$dbf->updateTable("student","student_id='$national_id'","id='$sid'");
+				//header("Location:s_edit.php?student_id=$student_id&token=0_k_0");
+			}else{header("Location:s_classic.php?student_id=$student_id&token=0_k_0&msg=invalid");exit;}
 		}
 	}
 	#Corporate Account
@@ -136,6 +141,18 @@ if($_REQUEST['action']=='classic')
 		
 	}
 	#Corporate Account
+	#Group Validation
+	if(!empty($_REQUEST["group"]))
+	{
+		$student_limit=$dbf->getDataFromTable("common","name","type='class limit'");
+		$total_student_group=$dbf->getDataFromTable("student_group_dtls","COUNT(student_id)","parent_id='$_REQUEST[group]'");
+		$total_students=$total_student_group + 1;
+		if($total_students >$student_limit)
+		{
+			header("Location:s_classic.php?msg=group_exceed");exit;
+		}
+	}
+	#Group Validation
 	if($_FILES['signature']['name']<>''){
 		
 		$filename1=$_REQUEST[txt_src]."-".$_FILES['signature']['name'];
@@ -220,7 +237,8 @@ if($_REQUEST['action']=='classic')
 	//Get select group
 	$group = $_REQUEST["group"];
 	
-	if($group > 0){
+	if($group > 0)
+	{
 		
 		//Get the Group details with Centre wise
 		$res_group = $dbf->strRecordID("student_group","*","id='$group'");
@@ -588,6 +606,10 @@ if($_REQUEST['action']=='classic')
 				$dbf->updateTable("student_group_dtls",$string_g1,"parent_id='$group'");
 			}
 		}
+		#PROCESS PAYMENT
+		$dbf->processPayment($_POST["pay_status"],$sid,$course_id,$_POST["pay_type"],$_POST["pay_amt"],$_POST["discount"]);
+		#PROCESS PAYMENT
+
 	}
 	//End re-sizing   >================================
 	
@@ -595,7 +617,8 @@ if($_REQUEST['action']=='classic')
 	//=======================================================
 	$date_time = date('Y-m-d h:i:s');
 	$res_group = $dbf->strRecordID("student_group","*","id='$group'");	
-	if($group > 0){
+	if($group > 0)
+	{
 		
 		//Check the Group has been start or not
 		$no_unit_finined = $dbf->countRows('ped_units',"group_id='$group'");	
@@ -639,6 +662,24 @@ if($_REQUEST['action']=='classic')
 		$string_g1="status_id='2'";
 		$dbf->updateTable("student_enroll",$string_g1,"student_id='$sid' And course_id='$res_group[course_id]'");
 	}
+	#POST ADVANCE PAYMENT
+	if($_POST["pay_status"]!='' && $_POST["pay_type"]!='' && empty($group))
+	{
+		$count = $_POST[count];
+		for($i=1; $i<=$count; $i++)
+		{
+			$c = "course".$i;
+			$c = $_REQUEST[$c];		
+			if($c != '')
+			{	
+				$course_id=$c;		
+				#$string="student_id='$sid',course_id='$c'";
+				#$dbf->insertSet("student_course",$string);
+			}
+		}
+		$dbf->processPayment($_POST["pay_status"],$sid,$course_id,$_POST["pay_type"],$_POST["pay_amt"],$_POST["discount"]);
+	}
+	#POST ADVANCE PAYMENT
 	//=======================================================
 	//UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
 	
@@ -667,7 +708,7 @@ if($_REQUEST['action']=='classic')
 	session_unregister('classic_age');
 	unset($_SESSION['classic_email']);
 	session_unregister('classic_email');
-		
+	
 	if($group > 0)
 	{
 		header("Location:search_manage.php?student_id=$sid");exit;

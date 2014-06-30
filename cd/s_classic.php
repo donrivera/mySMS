@@ -402,6 +402,19 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					</td>
 				</tr>
 				<?php } ?>
+				 <?php if($_REQUEST[msg]=="group_exceed") { ?>
+				<tr>
+					<td align="center" valign="top" bgcolor="#FFFFFF">
+						<table width="300" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#66CC66;">
+							<tr>
+								<td width="37" height="30" align="center" valign="middle" bgcolor="#FFF2FD"><img src="../images/close-btn.png" width="25" height="25" /></td>
+								<td width="10" bgcolor="#FFF2FD">&nbsp;</td>
+								<td width="253" align="left" valign="middle" bgcolor="#FFF2FD" class="nametext"><?php echo "Group Exceeds";?></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<?php } ?>
               <tr>
                 <td height="200" align="center" valign="top" bgcolor="#FFFFFF" style="padding-top:10px;">
                  

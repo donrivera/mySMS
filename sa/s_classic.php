@@ -147,7 +147,7 @@ if($LANGUAGE=='AR'){
 $(document).ready(function() {	
 
 	$("#frm").validationEngine()
-
+	hidePaymentTab();
 });
 
 function isNumberKey(evt){
@@ -335,7 +335,7 @@ function chk_age(){
 function get_interest_group(){
 
 	var ajaxRequest;  // The variable that makes Ajax possible!
-
+	
 	
 
 	try{
@@ -383,7 +383,7 @@ function get_interest_group(){
 			//var c = ajaxRequest.responseText;
 
 			document.getElementById('lbl_show_group').innerHTML="---";
-
+			
 		}
 
 			if(ajaxRequest.readyState == 4){
@@ -391,7 +391,7 @@ function get_interest_group(){
 			var c = ajaxRequest.responseText;			
 
 			document.getElementById('lbl_show_group').innerHTML=c;
-
+			
 		}
 
 	}
@@ -405,7 +405,7 @@ function get_interest_group(){
 	// Get interest course id
 
 	var i_count = document.getElementById('count').value;
-
+	if(i_count==""){hidePaymentTab();}else{showPaymentTab();}
 	for(k = 1; k <= i_count; k++){
 
 		
@@ -413,15 +413,15 @@ function get_interest_group(){
 		var c_id = "course"+k;
 
 		if(document.getElementById(c_id).checked == true){
-
+			
 			if(course_id == ''){
 
 				course_id = document.getElementById(c_id).value;
-
+				
 			}else{
 
 				course_id = course_id + ',' + document.getElementById(c_id).value;
-
+				
 			}
 
 		}
@@ -777,6 +777,27 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <td width="10" bgcolor="#FFF2FD">&nbsp;</td>
 
                       <td width="253" align="left" valign="middle" bgcolor="#FFF2FD" class="nametext"><?php echo "Corporate Account Exceeds";?></td>
+
+                    </tr>
+
+                </table></td>
+
+              </tr>
+
+              <?php } ?>
+			  <?php if($_REQUEST[msg]=="group_exceed") { ?>
+
+              <tr>
+
+                <td align="center" valign="top" bgcolor="#FFFFFF"><table width="300" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#66CC66;">
+
+                    <tr>
+
+                      <td width="37" height="30" align="center" valign="middle" bgcolor="#FFF2FD"><img src="../images/close-btn.png" width="25" height="25" /></td>
+
+                      <td width="10" bgcolor="#FFF2FD">&nbsp;</td>
+
+                      <td width="253" align="left" valign="middle" bgcolor="#FFF2FD" class="nametext"><?php echo "Group Exceeds";?></td>
 
                     </tr>
 
@@ -1862,14 +1883,88 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							</tr>
 							<tr>
 								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td width="31%" align="right" valign="middle" class="leftmenu">--Payment Details--</td>
+								<td width="3%">&nbsp;</td>
+								<td width="66%" align="left" valign="middle">&nbsp;</td>
+							</tr>
+							
+							<!--CORPORATE ACCOUNT OPTION-->
+							<!--PAYMENT-->
+							<script language="javascript" type="text/javascript">
+							function showPaymentTab() 
+							{
+								var paymentOption = document.getElementById("paymentOption");
+								var paymentOption1 = document.getElementById("paymentOption1");
+								var paymentOption2 = document.getElementById("paymentOption2");
+								var paymentOption3 = document.getElementById("paymentOption3");
+								paymentOption.style.visibility = "visible";
+								paymentOption1.style.visibility = "visible";
+								paymentOption2.style.visibility = "visible";
+								paymentOption3.style.visibility = "visible";
+							}
+							function hidePaymentTab()
+							{
+								var paymentOption = document.getElementById("paymentOption");
+								var paymentOption1 = document.getElementById("paymentOption1");
+								var paymentOption2 = document.getElementById("paymentOption2");
+								var paymentOption3 = document.getElementById("paymentOption3");
+								paymentOption.style.visibility = "hidden";
+								paymentOption1.style.visibility = "hidden";
+								paymentOption2.style.visibility = "hidden";
+								paymentOption3.style.visibility = "hidden";
+							}
+							</script>
+							<tr id="paymentOption">
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
 								<td width="31%" align="right" valign="middle" class="leftmenu">
-									&nbsp;
+									Payment Status:
 								</td>
 								<td width="3%">&nbsp;</td>
-								<td width="66%" align="left" valign="middle" id="lblgroup">
-									<div id="validate_corporate_account">
-					
-									</div>
+								<td width="66%" align="left" valign="middle">
+									<select name="pay_status" id="pay_status" style="width:100px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;">
+										<option>Select</option>
+										<option value="advance">Advance</option>
+										<option value="enroll">Enrollment</option>
+									</select>
+								</td>
+							</tr>
+							<tr id="paymentOption1">
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td width="31%" align="right" valign="middle" class="leftmenu">
+									Payment Type:
+								</td>
+								<td width="3%">&nbsp;</td>
+								<td width="66%" align="left" valign="middle">
+										<select name="pay_type" id="pay_type" style="width:103px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;">
+                                            <option value="">Select</option>
+                                            <?php
+												foreach($dbf->fetchOrder('common',"type='payment type'","") as $resp):
+											?>
+                                            <option value="<?php echo $resp['id'];?>"><?php echo $resp['name'];?></option>
+                                            <?php 
+												endforeach; 
+											?>
+                                        </select>
+								</td>
+							</tr>
+							<tr id="paymentOption2">
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td width="31%" align="right" valign="middle" class="leftmenu">
+									Amount:
+								</td>
+								<td width="3%">&nbsp;</td>
+								<td width="66%" align="left" valign="middle">
+									<input type="text" name="pay_amt" id="pay_amt" onKeyPress="return isNumberKey(event);" style="width:90px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;"/>
+								</td>
+							</tr>
+							<tr id="paymentOption3">
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td width="31%" align="right" valign="middle" class="leftmenu">
+									Discount:
+								</td>
+								<td width="3%">&nbsp;</td>
+								<td width="66%" align="left" valign="middle">
+									<input type="text" name="discount" id="discount" onKeyPress="return isNumberKey(event);" style="width:90px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;"/>
 								</td>
 							</tr>
 							<tr>
@@ -1879,8 +1974,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								<td width="66%" align="left" valign="middle">&nbsp;</td>
 							</tr>
 							
-							<!--CORPORATE ACCOUNT OPTION-->
-                            <tr>
+                            <!--PAYMENT-->
+							<tr>
 
                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
 

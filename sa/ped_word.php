@@ -17,19 +17,20 @@ $res_teacher = $dbf->strRecordID("teacher","*","id='$teacher_id'");
 
 $month = date("m");
 $year = date("Y");
-
+$dateNow=date("Y-m-d G:i:s");
+$file_group_name=trim($dbf->getDataFromTable("student_group", "group_name", "id='$cmbgroup'"));
 //Important below 2 lines
 header("Content-type: application/vnd.ms-word");
-header("Content-Disposition: attachment; Filename=ped.doc");
+header("Content-Disposition: attachment; Filename=ped_".$file_group_name."_".$dateNow.".doc");
 
 ?>
 <style>
-.pedtext{font-family:Arial, Helvetica, sans-serif;font-size:8px;color:#000000;padding-left:7px;font-weight:bold;}
+.pedtext{font-family:Arial, Helvetica, sans-serif;font-size:8px;color:#000000;padding-left:3px;font-weight:bold;}
 .pedtext_normal{
 font-family:Arial, Helvetica, sans-serif;
 font-size:8px;
 color:#000000;
-padding-left:7px;
+padding-left:3px;
 font-weight:normal;
 }
 .logouttext{
@@ -41,7 +42,7 @@ text-decoration:none;
 }
 .heading{
  font-family:Arial, Helvetica, sans-serif;
- font-size:8px;
+ font-size:10px;
  font-weight:bold;
  color:#000000;
  text-decoration:none;
@@ -394,12 +395,12 @@ text-decoration:none;
             <table width="1000" border="1" cellspacing="0" bordercolor="#000000" cellpadding="0" style="border-collapse:collapse;">
               <tr>
                 <td width="230" height="25" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_TXT14");?></td>
-                <td width="37" align="center" valign="middle" class="pedtext">LIS</td>
-                <td width="31" align="center" valign="middle" class="pedtext">Units</td>
-                <td width="100" align="center" valign="middle" class="pedtext">Date</td>
-                <td width="31" align="center" valign="middle" class="pedtext">Attd.</td>
-                <td width="130" align="center" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_INSTRUCTOR");?></td>
-                <td width="230" align="center" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_MATERIALCOVER");?></td>
+                <td width="58" align="center" valign="middle" class="pedtext">LIS</td>
+                <td width="42" align="center" valign="middle" class="pedtext">Units</td>
+                <td width="97" align="center" valign="middle" class="pedtext">Date</td>
+                <td width="40" align="center" valign="middle" class="pedtext">Attd.</td>
+                <td width="126" align="center" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_INSTRUCTOR");?></td>
+                <td width="223" align="center" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_MATERIALCOVER");?></td>
                 <td align="center" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_HOMEWORK");?></td>
               </tr>
               <tr bgcolor="#E9EFEF">
@@ -884,7 +885,7 @@ text-decoration:none;
                 foreach($dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*") as $r) {
                 ?>
                     <tr>
-                      <td width="10%" align="left" bgcolor="#E9EFEF" class="pedtext"><?php echo $dbf->printStudentName($r["id"]);?>
+                      <td width="10%" align="left" bgcolor="#E9EFEF" class="pedtext" style="max-width:300px;"><?php echo $dbf->printStudentName($r["id"]);?>
                         </td>
                       <?php
                     $no_cols = $unit / $unit_per_day;

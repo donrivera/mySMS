@@ -632,14 +632,13 @@ if($_REQUEST['action']=='update_group')
 		exit;
 	}
 	
-	//$_REQUEST[unit]
+	#units='$compute_units',
+	#unit_per_day='$perday',
 	$string="
-				group_name='$_REQUEST[group]',
+				group_name='$_POST[group]',
 				centre_id='$centre_id',
 				course_id='$course_id',
 				teacher_id='$_REQUEST[teacher]',
-				units='$compute_units',
-				unit_per_day='$perday',
 				status='Not Started',
 				room_id='$_REQUEST[class_room]',
 				start_date='$_REQUEST[dt]',

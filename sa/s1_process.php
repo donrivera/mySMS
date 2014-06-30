@@ -171,8 +171,26 @@ if($_REQUEST['action']=='group'){
 		$_SESSION['corp_student_acct']=$_REQUEST['account'];
 		$_SESSION['corp_student_sub_acct']=$_REQUEST['sub_account'];
 	}
-	$_SESSION[group] = $_REQUEST[group];
-	header("Location:s7.php");
+	#Group Validation
+	if(!empty($_REQUEST["group"]))
+	{
+		$student_limit=$dbf->getDataFromTable("common","name","type='class limit'");
+		$total_student_group=$dbf->getDataFromTable("student_group_dtls","COUNT(student_id)","parent_id='$_REQUEST[group]'");
+		$total_students=$total_student_group + 1;
+		if($total_students >$student_limit)
+		{header("Location:s_group.php?msg=group_exceed");exit;}
+		else
+		{
+			$_SESSION[group] = $_REQUEST[group];
+			header("Location:s7.php");
+		}
+	}
+	else
+	{
+		$_SESSION[group] = $_REQUEST[group];
+		header("Location:s7.php");
+	}
+	#Group Validation
 }
  
 if($_REQUEST['action']=='course'){
@@ -1169,7 +1187,7 @@ if($_REQUEST['action']=='advance')
 	//=======================================================
 
 	//insert into student_fee table
-	$string2="student_id='$student_id',course_id='$course_id',paid_amt='$_REQUEST[amts]',fee_amt='$_REQUEST[amts]',comments='$ad_comment',fee_date='$_REQUEST[dated]',paid_date='$_REQUEST[dated]',payment_type='$_REQUEST[payment_type]',centre_id='$centre_id',created_date=NOW(),created_by='$_SESSION[id]',type='advance',invoice_sl='$inv_sl',invoice_no='$inv_no',status='1'";
+	$string2="discount='$_REQUEST[discount]',student_id='$student_id',course_id='$course_id',paid_amt='$_REQUEST[amts]',fee_amt='$_REQUEST[amts]',comments='$ad_comment',fee_date='$_REQUEST[dated]',paid_date='$_REQUEST[dated]',payment_type='$_REQUEST[payment_type]',centre_id='$centre_id',created_date=NOW(),created_by='$_SESSION[id]',type='advance',invoice_sl='$inv_sl',invoice_no='$inv_no',status='1'";
 	
 	$dbf->insertSet("student_fees",$string2);
 	

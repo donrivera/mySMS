@@ -133,6 +133,18 @@ if($_REQUEST['action']=='classic'){
 		
 	}
 	#Corporate Account	
+	#Group Validation
+	if(!empty($_REQUEST["group"]))
+	{
+		$student_limit=$dbf->getDataFromTable("common","name","type='class limit'");
+		$total_student_group=$dbf->getDataFromTable("student_group_dtls","COUNT(student_id)","parent_id='$_REQUEST[group]'");
+		$total_students=$total_student_group + 1;
+		if($total_students >$student_limit)
+		{
+			header("Location:s_classic.php?msg=group_exceed");exit;
+		}
+	}
+	#Group Validation
 	if($_FILES['signature']['name']<>''){		
 		$filename1=$_REQUEST[txt_src]."-".$_FILES['signature']['name'];
 		move_uploaded_file($_FILES[signature][tmp_name],"../sa/photo/".$filename1);

@@ -170,7 +170,7 @@ $(document).ready(function() {
         
         <?php
 	  $mystyle = '';
-	  if($page_name == "password.php" || $page_name=="quicklink_manage.php")
+	  if($page_name == "password.php" || $page_name=="quicklink_manage.php" || $page_name=="preferences.php")
 	  {
 		  $mystyle = 'style="background-color:#003399; background-image:none;"';
 	  }
@@ -211,6 +211,7 @@ $(document).ready(function() {
 		
 		<div id="pre" class="dropmenudiv_d"> 
             <a href="password.php"><?php echo constant("ADMIN_MENU_CHANGE_PASSWORD");?></a>
+			<a href="preferences.php"><?php echo "Preferences";?></a>
             <a href="quicklink_manage.php"><?php echo constant("ADMIN_MENU_QUICK_LINKS");?></a>
         </div>
 		

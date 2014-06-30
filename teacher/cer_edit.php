@@ -339,7 +339,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                               <tr>
                                 <td width="15" align="left" valign="top"><img src="../images/left_top_bg.png" width="15" height="31" alt="left_top" /></td>
-                                <td width="100%" class="logintext" style="background:url(../images/left_mid_bg.png) repeat-x;"><?php echo constant("TEACHER_ARF_MANAGE_ACTIONREQUESTFRM");?></td>
+                                <td width="100%" class="logintext" style="background:url(../images/left_mid_bg.png) repeat-x;"><?php echo "Request";?></td>
                                 <td width="15" align="right" valign="top"><img src="../images/top_right_bg.png" width="15" height="31" /></td>
                               </tr>
                             </table></td>

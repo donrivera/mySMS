@@ -101,7 +101,7 @@ $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[group_id]'"
                   <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
                       <tr>
                         <td width="41%" height="20" align="left" valign="middle" class="nametext"><?php echo constant("TEACHER_REPORT_TEACHER_TXT5");?> : </td>
-                        <td width="59%" align="center" valign="middle" class="nametext" style="border-bottom:dotted 1px #000000;"><?php echo $res_size[units];?>
+                        <td width="59%" align="center" valign="middle" class="nametext" style="border-bottom:dotted 1px #000000;"><?php echo $res_g[units];#$res_size[units];?>
 						
 						</td>
                       </tr>
@@ -306,7 +306,7 @@ $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[group_id]'"
 									
 					?>
                   <tr>
-                    <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $dbf->printStudentName($r['id']);?></td>
+                    <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext" style="max-width:150px;overflow:hidden;text-overflow:ellipsis;"><?php echo $dbf->printStudentName($r['id']);?></td>
                     <td align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $res_country[value];?></td>
                     <td align="center" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[student_id];?></td>
                     <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $course_mark['fluency'];?></td>
@@ -366,12 +366,13 @@ $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[group_id]'"
 						$count_all = $shift1E+$shift2E+$shift3E+$shift1B+$shift2B+$shift3B+$shift1S+$shift2S+$shift3S+$shift1V+$shift2V+$shift3V;
 						
 						//Sum of shift 1 and shift 2
-						$count_shift = $shift1+$shift2+$shift3+$count_all;
+						#$count_shift = ($shift1+$shift2+$shift3+$count_all) / 4;
+						$count_shift = $dbf->No_Of_Attendance($r["id"], $_REQUEST["group_id"])/4;
 						?>
                     <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $count_shift;?></td>
                     <?php
 					//$group_unit = $res_size[effect_units];
-					$group_unit = $res_size[units];
+					$group_unit = $res_g[units]/2;#$res_size[units];
 					$attend_perc=0;
 					if($count_shift!='0')
 					{
@@ -390,11 +391,11 @@ $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[group_id]'"
 						$rfiles = "round-green.png";
 					}
 					?>
-                    <td align="center" valign="middle"><?php echo $res_size[units];?></td>
+                    <td align="center" valign="middle"><?php echo $group_unit;#$res_size[units];?></td>
                     <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                       <tr>
                         <td width="47%" align="right" valign="middle"><img src="../images/<?php echo $rfiles;?>"/></td>
-                        <td width="53%" align="center" valign="middle"><?php echo $attend_perc;?></td>
+                        <td width="53%" align="center" valign="middle"><?php echo $attend_perc;?>%</td>
                       </tr>
                     </table></td>
                   </tr>
@@ -511,7 +512,7 @@ $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[group_id]'"
 									
 					?>
                     <tr>
-                      <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[first_name];?></td>
+                      <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext" style="max-width:150px;overflow:hidden;text-overflow:ellipsis;"><?php echo $dbf->printStudentName($r['id']);?></td>
                       <td align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $res_country[value];?></td>
                       <td align="center" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[student_id];?>
                       
@@ -588,13 +589,14 @@ $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[group_id]'"
 						$count_all = $shift1E+$shift2E+$shift3E+$shift1B+$shift2B+$shift3B+$shift1S+$shift2S+$shift3S+$shift1V+$shift2V+$shift3V;
 						
 						//Sum of shift 1 and shift 2
-						$count_shift = $shift1+$shift2+$shift3+$count_all;
+						#$count_shift = ($shift1+$shift2+$shift3+$count_all) /2;
+						$count_shift = $dbf->No_Of_Attendance($r["id"], $_REQUEST["group_id"])/2;
 						?>
                       <td align="center" valign="middle" bgcolor="#FFFFFF">
                       <?php echo $count_shift;?></td>
                       
                      <?php
-					$group_unit = $res_size[units];
+					$group_unit = $res_g[units];#$res_size[units];
 					
 					$attend_perc=0;
 					if($count_shift!='0')
@@ -614,11 +616,11 @@ $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[group_id]'"
 						$rfiles = "round-green.png";
 					}
 					?>
-                      <td align="center" valign="middle"><?php echo $res_size[effect_units];?></td>
+                      <td align="center" valign="middle"><?php echo $group_unit;#$res_size[effect_units];?></td>
                       <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                           <td width="47%" align="right" valign="middle"><img src="../images/<?php echo $rfiles;?>"/></td>
-                          <td width="53%" align="center" valign="middle"><?php echo $attend_perc;?></td>
+                          <td width="53%" align="center" valign="middle"><?php echo $attend_perc;?>%</td>
                         </tr>
                       </table></td>
                     </tr>

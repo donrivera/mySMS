@@ -263,7 +263,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <?php
 							$res_g = $dbf->strRecordID("student_group","*","id='$_SESSION[group]'");
 							?>
-                            <td align="left" valign="middle" class="mytext"><?php echo $res_g["group_name"];?> <?php echo $res_g["group_time"];?>-<?php echo $dbf->GetGroupTime($res_g["id"]);?></td>
+                            <td align="left" valign="middle" class="mytext"><?php echo $res_g["group_name"];?> <?php echo $dbf->printClassTimeFormat($res_g[group_start_time],$res_g[group_end_time]);?></td>
                             <td align="right" valign="middle" style="padding-top:3px;">&nbsp;</td>
                             </tr>
                             <?php } ?>

@@ -268,7 +268,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$course = $dbf->strRecordID("course","*","id='$g[course_id]'");
 					
 					//Get Total Absent
-					$res_max = $dbf->strRecordID("ped_attendance","COUNT(id)","group_id='$g[parent_id]' AND student_id='$val[id]' AND (shift1='A' OR shift2='A' OR shift3='A' OR shift4='A' OR shift5='A' OR shift6='A' OR shift7='A' OR shift8='A' OR shift9='A')");
+					$res_max = $dbf->strRecordID("ped_attendance","COUNT(id) as absent","group_id='$g[parent_id]' AND student_id='$val[id]' AND (shift1='A' OR shift2='A' OR shift3='A' OR shift4='A' OR shift5='A' OR shift6='A' OR shift7='A' OR shift8='A' OR shift9='A')");
 					$countid = $res_max["COUNT(id)"];
 					
 					//Get Last Attendance

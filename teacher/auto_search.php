@@ -174,7 +174,7 @@ function countdown_trigger(){
 	}
 }
 </script>
-<?php
+<?php 
 //Get from the table
 $res_logout = $dbf->strRecordID("conditions","*","type='Logout Time'");
 $count = $res_logout["name"]; // Set timeout period in seconds
@@ -220,12 +220,22 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               <?php
 				$i = 1;
 				$color = "#ECECFF";
-				$num=$dbf->countRows('student',"first_name like '$_REQUEST[testinput]%' OR student_first_name like '$_REQUEST[testinput]%'");
-				foreach($dbf->fetchOrder('student',"first_name like '$_REQUEST[testinput]%' OR student_first_name like '$_REQUEST[testinput]%'","first_name") as $val) {
+				$sql=$dbf->genericQuery("
+											SELECT s . * 
+											FROM student s
+											INNER JOIN student_group_dtls sgd ON sgd.student_id = s.id
+											INNER JOIN student_group sg ON sg.id=sgd.parent_id AND sg.teacher_id='$_SESSION[uid]'
+											WHERE (s.first_name like '%$_REQUEST[testinput]%' OR s.student_first_name like '%$_REQUEST[testinput]%')
+											ORDER BY s.first_name 
+										");
+				#$num=$dbf->countRows('student',"first_name like '$_REQUEST[testinput]%' OR student_first_name like '$_REQUEST[testinput]%'");
+				#foreach($dbf->fetchOrder('student',"first_name like '$_REQUEST[testinput]%' OR student_first_name like '$_REQUEST[testinput]%'","first_name") as $val) {
+				$num=count($sql);
+				foreach($sql as $val) {
 				?>
               <tr bgcolor="<?php echo $color;?>"  onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" >
                 <td height="25" align="center" valign="middle" class="contenttext" ><?php echo $i;?></td>
-                <td align="left" valign="middle" class="contenttext"><?php echo $val[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></td>
+                <td align="left" valign="middle" class="contenttext"><?php echo $dbf->printStudentName($val["id"]);?></td>
                 <td align="left" valign="middle" class="contenttext"><?php echo $val[email];?></td>
                 <td align="center" valign="middle" class="contenttext"><?php 
 					if($val[age] != '0')

@@ -1,4 +1,5 @@
 <?php
+
 ob_start();
 session_start();
 include_once 'includes/class.Main.php';
@@ -10,6 +11,7 @@ $dbf = new User();
 $sms_gateway = $dbf->strRecordID("sms_gateway","*","status='Enable'");
 
 $is_enable = $dbf->countRows("sms_gateway","status='Enable'");
+
 if($is_enable == 0){
 	exit;
 }
@@ -23,10 +25,10 @@ foreach($dbf->fetchOrder('student_group',"","","","") as $group){
 	$course_unit = $dbf->strRecordID("group_size","","group_id='$group[group_id]'");
 	
 	//To Get 50% of Unit
-	$unit = $course_unit["units"]/2;
+	$unit = $group["units"]/2;
 	  
 	//Get no.of unit completed
-    $num_cnt_unt = $dbf->countRows('ped_unit',"group_id='$group[id]'");	
+    $num_cnt_unt = $dbf->countRows('ped_units',"group_id='$group[id]'");	
 	
 	//To Get Mobile no. of Teacher
 	$teacher_mob = $dbf->strRecordID("teacher","*","id=$group[teacher_id]");
@@ -35,7 +37,6 @@ foreach($dbf->fetchOrder('student_group',"","","","") as $group){
 	//Get The Course Name
     $course = $dbf->strRecordID("course","*","id=$group[course_id]");
 	$course_name = $course["name"];
-	
 	 if($unit==$num_cnt_unt){
 		 
 		// Your username
@@ -56,7 +57,7 @@ foreach($dbf->fetchOrder('student_group',"","","","") as $group){
 		//$msg = "The Course ".$course_name." is 50% Completed. Please filled up the Progress Report";
 		
 		$sms_cont = $dbf->getDataFromTable("sms_templete","contents","id='14'");
-		$msg = str_replace('%course_name%',$course_name,$sms_cont);
+		$msg = str_replace('%course_name%',$group["group_name"],$sms_cont);
 		$Message=$msg;
 		
 		# Check whether SMS has been sent to Teacher of a particular group or not

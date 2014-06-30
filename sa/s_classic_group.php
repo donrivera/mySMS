@@ -19,7 +19,7 @@ if($_SESSION['lang']=='EN'){?>
     <?php
     foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And status<>'Completed' And course_id in (".$interest_course.")","") as $res_g) {
     ?>
-    <option value="<?php echo $res_g['id']?>"><?php echo $res_g['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_g['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_g['end_date'])) ?>,  <?php echo $res_g["group_time"];?>-<?php echo $dbf->GetGroupTime($res_g["id"]);?></option>
+    <option value="<?php echo $res_g['id']?>"><?php echo $res_g['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_g['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_g['end_date'])) ?>,  <?php echo $dbf->printClassTimeFormat($res_g["group_start_time"],$res_g["group_end_time"]);?></option>
     </option>
     <?php }?>
 </select>

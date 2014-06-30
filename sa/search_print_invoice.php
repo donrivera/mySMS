@@ -230,9 +230,10 @@ function print_page()
 			  
 			 $fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1'");
 			 $feeamt = $fee["SUM(paid_amt)"];
-			 
-			 $net_amt = $camt - $res_enroll["discount"];			 
-			 $bal_amt = $camt - ($feeamt + $res_enroll["discount"]);
+			 $discount_student_fee=$dbf->getDataFromTable('student_fees',"discount","course_id='$course_id' And student_id='$student_id'");
+			 $discount_student_payment=(empty($res_enroll["discount"])?$discount_student_fee:$res_enroll["discount"]);
+			 $net_amt = $camt - $discount_student_payment;			 
+			 $bal_amt = $camt - ($feeamt + $discount_student_payment);
 			?>
           <tr>
             <td height="100" align="right" valign="middle" class="text_structure"><table width="100%" border="0" cellspacing="0" cellpadding="0">

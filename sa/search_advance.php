@@ -295,6 +295,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                   </span></td>
                                 <td>&nbsp;</td>
                                 </tr>
+							
+								<tr>
+                                <td height="28" align="right" valign="middle"><span class="leftmenu">&nbsp;Discount :</span></td>
+                                <td align="left" valign="middle">
+                                <input name="discount" type="text"  class="new_textbox100" id="discount" onKeyPress="return isNumberKey(event);"/>
+                                </td>
+                                </tr>
+								
                               <tr>
                                 <td height="28" align="right" valign="top" class="leftmenu"><?php echo constant("ADMIN_COMMNAME");?>:</td>
                                 <td align="left" valign="middle"><textarea name="comment" id="comment" rows="5" cols="30" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF;"></textarea></td>

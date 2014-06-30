@@ -307,6 +307,7 @@ font-weight:bold;
                 <canvas id="graph" width="350" height="220"></canvas>
                 <script type="text/javascript" src="../js/jquery.js"></script>
                 <script type="text/javascript" src="../js/mocha.js"></script>
+				
                 </td>
               </tr>
               <tr valign="top">

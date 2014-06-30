@@ -159,6 +159,17 @@ $count = $res_logout["name"]; // Set timeout period in seconds
         });
     </script>
     <?php }?>
+	<tr>
+    <td align="left" height="25" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>&nbsp;</td>
+          <td width="36" align="center" valign="middle"><a href="sick_leave_word.php?start_date=<?php echo $_REQUEST["start_date"];?>&end_date=<?php echo $_REQUEST["end_date"];?>"><img src="../images/word2007.png" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_WORD ?>"></a></td>
+          <td width="36" align="center" valign="middle"><a href="sick_leave_csv.php?start_date=<?php echo $_REQUEST["start_date"];?>&end_date=<?php echo $_REQUEST["end_date"];?>"><img src="../images/excel2007.PNG" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_XLS ?>"></a></td>
+          <td width="36" align="center" valign="middle"><a href="sick_leave_pdf.php?start_date=<?php echo $_REQUEST["start_date"];?>&end_date=<?php echo $_REQUEST["end_date"];?>"><img src="../images/pdf.png" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_PDF ?>"></a></td>
+          <td width="36" align="center" valign="middle"><a href="sick_leave_print.php?start_date=<?php echo $_REQUEST["start_date"];?>&end_date=<?php echo $_REQUEST["end_date"];?>" target="_blank"><img src="../images/print.png" width="16" height="16" border="0" title="<?php echo STUDENT_ADVISOR_SEARCH_MANAGE_PRINT ?>"></a></td>
+        </tr>
+      </table></td>
+      </tr>
   <tr>
     <td align="left" valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
       <tr>

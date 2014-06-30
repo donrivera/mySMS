@@ -1189,6 +1189,7 @@ class User extends Dbfunctions{
 														OR 
 														('$group_e_time' BETWEEN group_time AND group_time_end)
 													)
+												AND status NOT IN('Completed','Continue')
 											");
 		if(empty($checknextclass) || $checknextclass==NULL)
 		{//echo"1";
@@ -1224,6 +1225,7 @@ class User extends Dbfunctions{
 															WHERE teacher_id='$teacher_id' 
 															AND (id != '$group' AND id !='$nc_group_id')
 															AND ('$nc_compute_end_date' BETWEEN start_date AND end_date)
+															AND status NOT IN('Completed','Continue')
 														");
 				if(empty($thirdchecknextclass) || $thirdchecknextclass==NULL)
 				{	
@@ -1831,9 +1833,10 @@ class User extends Dbfunctions{
 														('$group_s_time' BETWEEN group_time AND group_time_end)
 														OR 
 														('$group_e_time' BETWEEN group_time AND group_time_end)
-													)");
+													)
+												AND status NOT IN('Completed','Continue')");
 			$max_ped=$this->strRecordID("ped_units","MAX(units) as max","group_id='$group'");
-			$total_ped_units=$max_ped['max'] *  $current_group['unit_per_day'];
+			$total_ped_units=$max_ped['max'];
 			if(empty($second_group) || $second_group==NULL)
 			{	
 				if(empty($max_ped) || $max_ped==NULL)
@@ -1862,7 +1865,8 @@ class User extends Dbfunctions{
 					$third_group= $this->genericQuery(" SELECT * FROM student_group 
 														WHERE teacher_id='$teacher_id' 
 														AND (id != '$group' AND id !='$second_group[id]')
-														AND ('$group2_end_date' BETWEEN start_date AND end_date)");
+														AND ('$group2_end_date' BETWEEN start_date AND end_date)
+														AND status NOT IN('Completed','Continue')");
 				
 					if(empty($third_group) || $third_group==NULL)
 					{
@@ -2073,7 +2077,7 @@ class User extends Dbfunctions{
 		$this->insertSet("corporate_students",$string);
 	}
 	function extendSchedule($group,$days,$req_unit)
-	{	echo "Push Group";
+	{	
 		$class=$this->strRecordID("student_group","*","id='$group'");
 		$start=$class['end_date'];
 		$end=date('Y-m-d', strtotime($start.' +'.$days.' day'));
@@ -2091,14 +2095,14 @@ class User extends Dbfunctions{
 			{
 				case 'Not Started':	{
 										$first_start_date=$this->printClassEndDate(date('Y-m-d', strtotime($g['start_date'].' +'.$days.' day'))); 
-										$first_total_days=$this->printUnitToDays($req_unit,$g['unit_per_day']);
-										$first_end_date=$this->printClassChangedEndDate(date('Y-m-d', strtotime($first_start_date.' +'.$first_total_days.' day')));
-										#$this->updateTable("student_group","start_date='$first_start_date',end_date='$first_end_date',units='$req_unit'","id='$group_id'");
+										#$first_total_days=$this->printUnitToDays($req_unit,$g['unit_per_day']);
+										$first_end_date=$this->printClassChangedEndDate(date('Y-m-d', strtotime($g['end_date'].' +'.$days.' day')));
+										$this->updateTable("student_group","start_date='$first_start_date',end_date='$first_end_date',units='$req_unit'","id='$group_id'");
 									}break;
 				case 'Continue':	{
 										$first_start_date=$g['start_date'];
 										$first_end_date=$this->printClassEndDate(date('Y-m-d', strtotime($g['end_date'].' +'.$days.' day'))); 
-										#$this->updateTable("student_group","end_date='$first_end_date',units='$req_unit'","id='$group_id'");
+										$this->updateTable("student_group","end_date='$first_end_date',units='$req_unit'","id='$group_id'");
 									}break;
 			}
 			echo "Loop 1:".$group_id.$first_start_date.$first_end_date."<BR/>";
@@ -2109,8 +2113,8 @@ class User extends Dbfunctions{
 			$second_start_date=$this->printClassEndDate(date('Y-m-d', strtotime($first_end_date.' +1 day'))); 
 			$total_days=$this->printUnitToDays($g2['units'],$g2['unit_per_day']);
 			$second_end_date=$this->printClassChangedEndDate(date('Y-m-d', strtotime($second_start_date.' +'.$total_days.' day')));
-			#$this->updateTable("student_group","start_date='$second_start_date',end_date='$second_end_date'","id='$group2_id'");
-			echo "Loop 2:".$group2_id.$second_start_date.$second_end_date."<BR/>";
+			$this->updateTable("student_group","start_date='$second_start_date',end_date='$second_end_date'","id='$group2_id'");
+			#echo "Loop 2:".$group2_id.$second_start_date.$second_end_date."<BR/>";
 			$g2_keys[]=$group2_id;
 		endforeach;
 		$merge=array_merge($g1_keys,$g2_keys);
@@ -2121,9 +2125,71 @@ class User extends Dbfunctions{
 			$third_start_date=$this->printClassEndDate(date('Y-m-d', strtotime($second_end_date.' +1 day'))); 
 			$third_total_days=$this->printUnitToDays($g3['units'],$g3['unit_per_day']);
 			$third_end_date=$this->printClassChangedEndDate(date('Y-m-d', strtotime($third_start_date.' +'.$third_total_days.' day')));
-			#$this->updateTable("student_group","start_date='$third_start_date',end_date='$third_end_date'","id='$group3_id'");								
-			echo "Loop 3:".$group3_id.$third_start_date.$third_end_date."<BR/>";
+			$this->updateTable("student_group","start_date='$third_start_date',end_date='$third_end_date'","id='$group3_id'");								
+			#echo "Loop 3:".$group3_id.$third_start_date.$third_end_date."<BR/>";
 		endforeach;
+	}
+	function processPayment($status,$student_id,$course_id,$payment_type,$fee,$discount)
+	{
+		$inv_no = $this->GenerateInvoiceNo($_SESSION['centre_id']);
+		$inv_sl = $this->GetBillNo($student_id, $course_id);
+		$fee_id = $this->getDataFromTable("student_enroll","fee_id","student_id='$student_id' AND course_id='$course_id'");
+		$course_fee = $this->getDataFromTable("course_fee","fees","id='$fee_id'");
+		$dt = date('Y-m-d h:m:s');
+		$dto = date('Y-m-d');
+		switch($status)
+		{
+			case 'advance': {
+								$status="	status_id='3',
+											date_time='$dt',
+											user_id='$_SESSION[id]'";
+								$advance="	student_id='$student_id',
+											course_id='$course_id',
+											paid_amt='$fee',
+											fee_amt='$fee',
+											fee_date='$dt',
+											paid_date='$dt',
+											payment_type='$payment_type',
+											centre_id='$_SESSION[centre_id]',
+											created_date='$dt',
+											created_by='$_SESSION[id]',
+											type='advance',
+											invoice_sl='$inv_sl',
+											invoice_no='$inv_no',
+											status='1',
+											discount='$discount'";
+								$this->insertSet("student_fees",$advance);
+								$this->updateTable("student_moving",$status,"student_id='$student_id'");	
+							}break;
+			case 'enroll':  {
+								$enroll="	course_fee='$course_fee',
+											payment_type='$payment_type',
+											enroll_date='$dto',
+											discount='$_POST[discount]'";
+								$fee="		student_id='$student_id',
+											course_id='$course_id',
+											paid_amt='$fee',
+											fee_amt='$fee',
+											fee_date='$dt',
+											paid_date='$dt',
+											payment_type='$payment_type',
+											centre_id='$_SESSION[centre_id]',
+											created_date='$dt',
+											created_by='$_SESSION[id]',
+											type='opening',
+											invoice_sl='$inv_sl',
+											invoice_no='$inv_no',
+											status='1',
+											discount='$discount'";
+								$status="	course_id='$course_id',
+											status_id='5',
+											date_time='$dt',
+											user_id='$_SESSION[id]'";
+								$this->insertSet("student_fees",$fee);
+								$this->updateTable("student_enroll",$enroll,"course_id='$course_id' And student_id='$student_id'");
+								$this->updateTable("student_moving",$status,"student_id='$student_id'");	
+							}break;
+		}
 	}
 }
 ?>

@@ -7,6 +7,9 @@ if($_SESSION["lang"] == "EN"){
 	$logo = "../logo/logo-ar.png";
 }
 ?>
+<script>
+
+</script>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">	
 <tr>
     <td width="50%" height="50" align="left" valign="middle">
@@ -25,7 +28,7 @@ if($_SESSION["lang"] == "EN"){
               <tr>
                 <td width="12%" align="left" valign="middle"><a href="../logout.php" title="Logout" style="text-decoration:none"><span class="leftmenu"><img src="../images/logout.png" width="15" height="15" border="0" /></span></a></td>
                 <td width="88%" align="left" valign="middle">
-                <a href="../logout.php" title="Logout" style="text-decoration:none"><span class="leftmenu">&nbsp;&nbsp;<?php echo constant("LOGOUT");?></span></a></td>
+                <a href="../logout.php" title="Logout" style="text-decoration:none" onclick="return confirm('Are you sure you want to Log Out ?')"><span class="leftmenu">&nbsp;&nbsp;<?php echo constant("LOGOUT");?></span></a></td>
               </tr>
             </table>
             

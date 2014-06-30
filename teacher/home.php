@@ -163,9 +163,9 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                   </tr>
                   <tr class="lable1">
                     <td height="30" align="center" valign="top" class="mymenutext"><a href="home.php" title="<?php echo constant("ADMIN_MENU_HOME");?>"><span><?php echo constant("ADMIN_MENU_HOME");?></span></a></td>
-                    <td align="center" valign="top" class="mymenutext"><a href="my_groups.php" title="My schedule" rel=""><?php echo constant("TE_MENU_MY_GROUP");?></a></td>
-                    <td align="center" valign="top" class="mymenutext"><a href="my_schedules.php" ><?php echo constant("STUDENT_MENU_MY_SCHEDULE");?></a></td>
-                    <td align="center" valign="top" class="mymenutext"><a href="report_teacher_progress.php" ><?php echo constant("STUDENT_MENU_MY_PROGRESS");?></a></td>
+                    <td align="center" valign="top" class="mymenutext"><a href="my_groups.php" title="<?php echo constant("TE_MENU_MY_GROUP");?>" rel=""><?php echo constant("TE_MENU_MY_GROUP");?></a></td>
+                    <td align="center" valign="top" class="mymenutext"><a href="my_schedules.php" title="<?php echo constant("STUDENT_MENU_MY_SCHEDULE");?>" ><?php echo constant("STUDENT_MENU_MY_SCHEDULE");?></a></td>
+                    <td align="center" valign="top" class="mymenutext"><a href="report_teacher_progress.php" title="<?php echo constant("STUDENT_MENU_MY_PROGRESS");?>" ><?php echo constant("STUDENT_MENU_MY_PROGRESS");?></a></td>
                   </tr>
                   <tr>
                     <td height="72" align="center" valign="middle"><a href="report_center_director.php"><img src="../home_icon/cert.png" width="64" height="64" border="0" /></a></td>
@@ -182,7 +182,7 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                     <td align="center" valign="top"><a href="translate.php" title="Language Convertor"><span><?php echo constant("ADMIN_MENU_LANGUAGE_CONVERTER");?></span></a></td>
                     <td align="center" valign="top">
 						<!--<a href="alert_page.php?choice=alert_respose&amp;page=alert_page.php&amp;TB_iframe=true&amp;height=240&amp;width=465&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox "><?php echo constant("ADMIN_MENU_ALERTS");?></a>-->
-						<a href="alert.php"><?php echo constant("ADMIN_MENU_ALERTS");?></a>
+						<a href="alert.php" title="<?php echo constant("ADMIN_MENU_ALERTS");?>"><?php echo constant("ADMIN_MENU_ALERTS");?></a>
 					</td>
 					<!--alert_page.php?page=alert_page.php&amp;TB_iframe=true&amp;height=240&amp;width=465&amp;inlineId=hiddenModalContent&amp;modal=true-->
 				  </tr>
@@ -193,10 +193,10 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                     <td align="center" valign="middle"><a href="quicklink_manage.php"><img src="../home_icon/quick-link.png" width="60" height="60" border="0" /></a></td>
                   </tr>
                   <tr class="mymenutext">
-                    <td height="30" align="center" valign="top"><a href="ped.php"><?php echo constant("TE_MENU_EPEDCARD");?></a></td>
+                    <td height="30" align="center" valign="top"><a href="ped.php" title="<?php echo constant("TE_MENU_EPEDCARD");?>"><?php echo constant("TE_MENU_EPEDCARD");?></a></td>
                     <td align="center" valign="top"><a href="manage_sick_leave.php" title="Leave"><span><?php echo constant("STUDENT_MENU_LEAVE");?></span></a></td>
-                    <td align="center" valign="top"><a href="password.php"><?php echo constant("ADMIN_MENU_CHANGE_PASSWORD");?></a></td>
-                    <td align="center" valign="top"><a href="quicklink_manage.php"><?php echo constant("ADMIN_MENU_QUICK_LINKS");?></a></td>
+                    <td align="center" valign="top"><a href="password.php" title="<?php echo constant("ADMIN_MENU_CHANGE_PASSWORD");?>"><?php echo constant("ADMIN_MENU_CHANGE_PASSWORD");?></a></td>
+                    <td align="center" valign="top"><a href="quicklink_manage.php" title="<?php echo constant("ADMIN_MENU_QUICK_LINKS");?>"><?php echo constant("ADMIN_MENU_QUICK_LINKS");?></a></td>
                   </tr>
                 </table></td>
                 <td width="8%" align="left" valign="top">&nbsp;</td>

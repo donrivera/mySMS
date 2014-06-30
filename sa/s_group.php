@@ -172,6 +172,19 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						</td>
 					</tr>
 					<?php } ?>
+				<?php if($_REQUEST[msg]=="group_exceed") { ?>
+					<tr>
+						<td align="center" valign="top" bgcolor="#FFFFFF">
+							<table width="300" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#66CC66;">
+								<tr>
+									<td width="37" height="30" align="center" valign="middle" bgcolor="#EAFDEB"><img src="../images/errror.png" width="28" height="28" /></td>
+									<td width="10" bgcolor="#EAFDEB">&nbsp;</td>
+									<td width="253" align="left" valign="middle" bgcolor="#EAFDEB" class="lable2"><?php echo "Group Exceeds";?></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<?php } ?>
               <tr>
                 <td height="200" align="center" valign="top" bgcolor="#FFFFFF" style="padding-top:10px;">
                 
@@ -303,7 +316,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								$group_query=$dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And status<>'Completed' And course_id in (".$interest_course.")","");
 							foreach($group_query as $res_g) {
 							  ?>
-                                <option value="<?php echo $res_g['id']?>" <?php if($res_g["id"]==$_SESSION[group]) { echo "Selected"; }?>><?php echo $res_g['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_g['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_g['end_date'])) ?>,  <?php echo $dbf->printClassTimeFormat($res_g["group_time"],$res_g["group_time_end"]);?></option>
+                                <option value="<?php echo $res_g['id']?>" <?php if($res_g["id"]==$_SESSION[group]) { echo "Selected"; }?>><?php echo $res_g['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_g['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_g['end_date'])) ?>,  <?php echo $dbf->printClassTimeFormat($res_g["group_start_time"],$res_g["group_end_time"]);?></option>
                                 </option>
                                 <?php }?>
                                 </select>

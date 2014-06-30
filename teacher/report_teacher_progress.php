@@ -172,7 +172,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					  ?>
                       <td align="left" valign="middle" bgcolor="#FFCB7D" class="heading">
                       <select name="mystatus" id="mystatus" style="width:150px; border:solid 1px; border-color:#999999;">
-                        <option value="">All</option>
+                        <!--<option value="">All</option>-->
                         <option value="Not Started" <?php if($status=='Not Started'){ ?> selected="" <?php } ?>>Not Started</option>
                         <option value="Continue" <?php if($status=='Continue'){ ?> selected="" <?php } ?>>Active - In Progress</option>
                         <option value="Completed" <?php if($status=='Completed'){ ?> selected="" <?php } ?>>Completed</option>
@@ -231,7 +231,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
                       <tr>
                         <td width="41%" height="20" align="left" valign="middle" class="nametext"><?php echo constant("TEACHER_REPORT_TEACHER_TXT5");?> : </td>
-                        <td width="59%" align="center" valign="middle" class="nametext"><?php echo $res_size[units];?>
+                        <td width="59%" align="center" valign="middle" class="nametext"><?php echo $res_g[units];#$res_size[units];?>
 						<input type="hidden" name="hidAttend" id="hidAttend" value="<?php echo $res_size[effect_units];?>"/>
 						</td>
                       </tr>
@@ -290,7 +290,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <td width="11%" align="left" valign="middle" class="nametext">&nbsp;</td>
                         <td width="29%" height="20" align="left" valign="middle" class="nametext"><?php echo constant("TEACHER_REPORT_TEACHER_TXT6");?>  : </td>
                         <?php
-						$or_unit = $res_size[units];
+						$or_unit = $res_g[units];#$res_size[units];
 						$per_unit = 45; //minute
 						$tot_unit = $or_unit * $per_unit;
 						$hr = $tot_unit / 60;
@@ -460,7 +460,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$course_mark = $dbf->strRecordID("teacher_progress_course","*","student_id='$r[id]' AND teacher_id='$teacher_id' AND group_id='$_REQUEST[group_id]'");					
 					?>
                       <tr>                  
-                        <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $dbf->printStudentName($r[id]);?></td>
+                        <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext" style="max-width:150px;overflow:hidden;text-overflow:ellipsis;"><?php echo $dbf->printStudentName($r[id]);?></td>
                         <td align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $res_country[value];?></td>
                         <td align="center" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[student_id];?>
                         <input type="hidden" name="student_id<?php echo "_".$student_count;?>" id="student_id<?php echo "_".$student_count;?>" value="<?php echo $r[id];?>"></td>
@@ -535,20 +535,20 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                           </select>
                         </td>
                         <?php
-					$count_shift = $dbf->No_Of_Attendance($r["id"], $_REQUEST["group_id"]);
+					$count_shift = $dbf->No_Of_Attendance($r["id"], $_REQUEST["group_id"]) / 4;
 					?>
                         <td align="center" valign="middle" bgcolor="#FFFFFF">
                           <input type="text" name="course_attendance<?php echo "_".$student_count;?>" id="course_attendance<?php echo "_".$student_count;?>" style="border:none; width:50px; text-align:center; font-weight:bold;" maxlength="3" onKeyPress="return isNumberKey(event);" value="<?php echo $count_shift; ?>" readonly="">
                         </td>
                         <?php					
-					$group_unit = $res_size[effect_units];
+					$group_unit = $res_g[units];#$res_size[effect_units];
 					
 					$uu = $dbf->strRecordID("common","*","id='$r[units]'");
 					//get unit from common table					
 					                    
 					//$group_unit = $group_unit / $uu[name];
 					//$group_unit = $group_unit / $uu[name];
-					$group_unit = $res_size[units];
+					$group_unit = $res_g[units]/2;#$res_size[units];
 					
 					$attend_perc=0;
 					if($count_shift!='0'){
@@ -563,11 +563,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$rfiles = "round-green.png";
 					}										
 					?>
-                        <td align="center" valign="middle" bgcolor="#FFFFFF" class="mycon"><?php echo $count_shift;/*$group_unit / 2;*/?></td>
+                        <td align="center" valign="middle" bgcolor="#FFFFFF" class="mycon"><?php echo $group_unit;#$count_shift;?></td>
                         <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                           <tr>
                             <td width="47%" align="right" valign="middle"><img src="../images/<?php echo $rfiles;?>"  /></td>
-                            <td width="53%" align="center" valign="middle" class="mycon"><?php echo $attend_perc;?></td>
+                            <td width="53%" align="center" valign="middle" class="mycon"><?php echo $attend_perc;?>%</td>
                             </tr>
                         </table></td>
                       </tr>
@@ -612,7 +612,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                           <tr>
                             <td width="47%" align="right" valign="middle"><img src="../images/round-red.png"  /></td>
-                            <td width="53%" align="center" valign="middle"><?php echo constant("CD_REPORT_CENTER_DIRECTOR_PRINT_0");?></td>
+                            <td width="53%" align="center" valign="middle"><?php echo constant("CD_REPORT_CENTER_DIRECTOR_PRINT_0");?>%</td>
                             </tr>
                         </table></td>
                       </tr>
@@ -682,7 +682,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 									
 					?>
                     <tr>
-                      <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $dbf->printStudentName($r[id]);?></td>
+                      <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext" style="max-width:150px;overflow:hidden;text-overflow:ellipsis;"><?php echo $dbf->printStudentName($r[id]);?></td>
                       <td align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $res_country[value];?></td>
                       <td align="center" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[student_id];?>
                       <input type="hidden" name="student_id1<?php echo "_".$student_count;?>" id="student_id1<?php echo "_".$student_count;?>" value="<?php echo $r[id];?>">
@@ -797,13 +797,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                           <option value="40"<?php if($course_mark['end_of_level']=="40") { ?> selected="selected" <?php } ?>>40</option>
                         </select></td>
 						<?php
-						$count_shift = $dbf->No_Of_Attendance($r["id"], $_REQUEST["group_id"]);
+						$count_shift = $dbf->No_Of_Attendance($r["id"], $_REQUEST["group_id"]) / 2;
 						?>
                       <td align="center" valign="middle" bgcolor="#FFFFFF">
                       <input type="text" name="attendance<?php echo "_".$student_count;?>" id="attendance<?php echo "_".$student_count;?>" style="border:none; width:50px; text-align:center; font-weight:bold;" maxlength="3" onKeyPress="return isNumberKey(event);" value="<?php echo $count_shift;?>" readonly=""></td>
                       
-                     <?php
-					$group_unit = $res_size[units];
+                     <?php 
+					$group_unit = $res_g[units];#$res_size[units];
 					
 					$attend_perc=0;
 					if($count_shift!='0'){
@@ -817,11 +817,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$rfiles = "round-green.png";
 					}
 					?>
-                      <td align="center" valign="middle" class="mycon"><?php echo $count_shift;?></td>
+                      <td align="center" valign="middle" class="mycon"><?php echo $group_unit;#$count_shift;?></td>
                       <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                           <td width="47%" align="right" valign="middle"><img src="../images/<?php echo $rfiles;?>"/></td>
-                          <td width="53%" align="center" valign="middle" class="mycon"><?php echo $attend_perc;?></td>
+                          <td width="53%" align="center" valign="middle" class="mycon"><?php echo $attend_perc;?>%</td>
                         </tr>
                       </table></td>
                     </tr>
@@ -866,7 +866,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                           <td width="47%" align="right" valign="middle"><img src="../images/round-red.png"/></td>
-                          <td width="53%" align="center" valign="middle"><?php echo constant("CD_REPORT_CENTER_DIRECTOR_PRINT_0");?></td>
+                          <td width="53%" align="center" valign="middle"><?php echo constant("CD_REPORT_CENTER_DIRECTOR_PRINT_0");?>%</td>
                         </tr>
                       </table></td>
                     </tr>
@@ -1367,7 +1367,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                           <tr>
                             <td width="47%" align="right" valign="middle"><img src="../images/<?php echo $rfiles;?>"  /></td>
-                            <td width="53%" align="center" valign="middle" class="mycon"><?php echo $attend_perc;?></td>
+                            <td width="53%" align="center" valign="middle" class="mycon"><?php echo $attend_perc;?>%</td>
                             </tr>
                         </table></td>
                       </tr>
@@ -1412,7 +1412,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                           <tr>
                             <td width="47%" align="right" valign="middle"><img src="../images/round-red.png"  /></td>
-                            <td width="53%" align="center" valign="middle"><?php echo constant("CD_REPORT_CENTER_DIRECTOR_PRINT_0");?></td>
+                            <td width="53%" align="center" valign="middle"><?php echo constant("CD_REPORT_CENTER_DIRECTOR_PRINT_0");?>%</td>
                             </tr>
                         </table></td>
                       </tr>
@@ -1620,7 +1620,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                           <td width="47%" align="right" valign="middle"><img src="../images/<?php echo $rfiles;?>"/></td>
-                          <td width="53%" align="center" valign="middle" class="mycon"><?php echo $attend_perc;?></td>
+                          <td width="53%" align="center" valign="middle" class="mycon"><?php echo $attend_perc;?>%</td>
                         </tr>
                       </table></td>
                     </tr>
@@ -1665,7 +1665,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                           <td width="47%" align="right" valign="middle"><img src="../images/round-red.png"/></td>
-                          <td width="53%" align="center" valign="middle"><?php echo constant("CD_REPORT_CENTER_DIRECTOR_PRINT_0");?></td>
+                          <td width="53%" align="center" valign="middle"><?php echo constant("CD_REPORT_CENTER_DIRECTOR_PRINT_0");?>%</td>
                         </tr>
                       </table></td>
                     </tr>

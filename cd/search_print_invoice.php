@@ -222,7 +222,9 @@ function print_page()
           <?php $j++; } ?>
           <?php
 		  	 $course_dtls = $dbf->strRecordID("course","*","id='$course_id'");
-			 $fee_id = $dbf->getDataFromTable("student_enroll","fee_id","course_id='$course_id' And student_id='$student_id'");
+			 $get_fee_id = $dbf->getDataFromTable("student_enroll","fee_id","course_id='$course_id' And student_id='$student_id'");
+			 $get_fee_by_advance=$dbf->getDataFromTable("student_fees","course_id","course_id='$course_id' And student_id='$student_id'");
+			 $fee_id=(empty($get_fee_id)?$get_fee_by_advance:$get_fee_id);
 			 $course_fees = $dbf->getDataFromTable("course_fee","fees","id='$fee_id'");
 			 $camt = $course_fees;
 			  

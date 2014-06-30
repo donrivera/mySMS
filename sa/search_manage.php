@@ -420,6 +420,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							$val_student = $dbf->strRecordID("student","*","id='$student_id'");
 							$res_enroll = $dbf->strRecordID("student_enroll","*","course_id='$course_id' And student_id='$student_id'");
 							$course_fees = $dbf->getDataFromTable("course_fee","fees","id='$res_enroll[fee_id]'");
+							$discount_student_fee=$dbf->getDataFromTable('student_fees',"discount","course_id='$course_id' And student_id='$student_id'");
 						  ?>
                         <tr>
                           <td colspan="5" align="left" valign="top" style="padding-top:3px;">
@@ -450,7 +451,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <td>&nbsp;</td>
                               <td colspan="2" rowspan="4" align="left" valign="top" ><table width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
-                                  <td width="14%" height="28" align="left" valign="middle"><input name="discount" type="text" class="new_textbox100" id="discount" value="<?php echo $res_enroll["discount"];?>" onKeyPress="return isNumberKey(event);" onBlur="checkDiscount();"/></td>
+                                  <td width="14%" height="28" align="left" valign="middle"><input name="discount" type="text" class="new_textbox100" id="discount" value="<?php echo (empty($res_enroll["discount"])?$discount_student_fee:$res_enroll["discount"]);?>" onKeyPress="return isNumberKey(event);" onBlur="checkDiscount();"/></td>
                                   <td width="7%" align="left" valign="middle" class="mycon"><?php echo $res_currency[symbol];?></td>
                                   <td width="27%" align="left" valign="middle">&nbsp;</td>
                                   <td width="52%" rowspan="4" align="left" valign="top">

@@ -165,8 +165,8 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                     <tr class="lable1">
                       <td height="30" align="center" valign="top"><a href="home.php" title="<?php echo constant("ADMIN_MENU_HOME");?>"><span><?php echo constant("ADMIN_MENU_HOME");?></span></a></td>
                       <td align="center" valign="top"><a href="s_manage.php" title="Student" rel=""><span><?php echo constant("ADMIN_NEWS_MANAGE_STUDENT");?></span></a></td>
-                      <td align="center" valign="top"><a href="group_manage.php" ><span><?php echo constant("ADMIN_REPORT_ABSENT_REPORT_GROUP");?></span></a></td>
-                      <td align="center" valign="top"><a href="centre_schedule.php" ><span><?php echo constant("RE_MENU_CS");?></span></a></td>
+                      <td align="center" valign="top"><a href="group_manage.php" title="<?php echo constant("ADMIN_REPORT_ABSENT_REPORT_GROUP");?>"><span><?php echo constant("ADMIN_REPORT_ABSENT_REPORT_GROUP");?></span></a></td>
+                      <td align="center" valign="top"><a href="centre_schedule.php" title="<?php echo constant("RE_MENU_CS");?>" ><span><?php echo constant("RE_MENU_CS");?></span></a></td>
                     </tr>
                     <tr>
                       <td height="72" align="center" valign="middle"><a href="password.php"><img src="../home_icon/chg_pass.png" width="60" height="60" border="0" /></a></td>
@@ -189,8 +189,8 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                     <tr class="lable1">
                       <td height="30" align="center" valign="top"><a href="alert_page.php?page=alert_page.php&amp;TB_iframe=true&amp;height=240&amp;width=465&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox "><?php echo constant("ADMIN_MENU_ALERTS");?></a></td>
                       <td align="center" valign="top"><a href="sms.php" title="Leave"><span><?php echo constant("ADMIN_MENU_SMS");?></span></a></td>
-                      <td align="center" valign="top"><a href="email.php"><?php echo constant("ADMIN_TEACHER1_MANAGE_EMAIL");?></a></td>
-                      <td align="center" valign="top"><a href="quicklink_manage.php"><?php echo constant("ADMIN_MENU_QUICK_LINKS");?></a></td>
+                      <td align="center" valign="top"><a href="email.php" title="<?php echo constant("ADMIN_TEACHER1_MANAGE_EMAIL");?>"><?php echo constant("ADMIN_TEACHER1_MANAGE_EMAIL");?></a></td>
+                      <td align="center" valign="top"><a href="quicklink_manage.php" title="<?php echo constant("ADMIN_MENU_QUICK_LINKS");?>"><?php echo constant("ADMIN_MENU_QUICK_LINKS");?></a></td>
                     </tr>
                   </table></td>
                 <td width="8%" align="left" valign="top">&nbsp;</td>

@@ -297,6 +297,7 @@ $(document).ready(function() {
             <a href="type_manage.php"><?php echo constant("TYPE_OF_STUDENTS");?></a>
 			<a href="corp_acct_manage.php"><?php echo constant("ADMIN_MENU_CORPORATE_ACCT");?></a>
 			<a href="area_manage.php"><?php echo constant("ADMIN_MENU_MANAGE_AREA");?></a>
+			<a href="class_limit.php"><?php echo constant("ADMIN_MENU_CLASS_LIMIT");?></a>
 			</div>
 			
         <div id="vacation" class="dropmenudiv_d">

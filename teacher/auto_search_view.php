@@ -207,7 +207,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                               <td height="28" align="right" valign="middle" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_HOME_S_CLASSIC_L1");?>: <span class="nametext1">*</span> </td>
                               <td>&nbsp;</td>
-                              <td align="left" valign="middle"><?php echo $res[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($res["id"]));?></td>
+                              <td align="left" valign="middle"><?php echo $dbf->printStudentName($res["id"]);?></td>
                               <td>&nbsp;</td>
                               </tr>
                             <tr>

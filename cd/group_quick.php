@@ -458,7 +458,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                   <select name="course" class="validate[required]" id="course" style="width:250px; border:solid 1px; border-color:#999999;" onChange="show_students();">
                                     <option value="">--Select Course--</option>
                                     <?php
-									foreach($dbf->fetchOrder('course',"","") as $ress) {
+									foreach($dbf->fetchOrder('course',"","name") as $ress) {
 								  	?>
                                     <option value="<?php echo $ress['id']?>"><?php echo $ress['name'];?></option>
                                     <?php }?>

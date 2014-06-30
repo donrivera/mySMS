@@ -187,6 +187,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <input name="your_name" type="text" class="textfield1" id="your_name" value="<?php echo $res["your_name"];?>"/>
                          	</td>
                             </tr>
+							 <tr>
+                              <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+                              <td width="22%" height="28" align="right" valign="middle" class="leftmenu"><?php echo "Credits";?> :</td>
+                              <td width="66%" align="left" valign="middle">
+							  <?php include("../includes/saudismsNET-API.php");?>
+                            <input type="text" class="textfield1" value="<?php echo GetCredits($res["user"],$res["password"]);?>" readonly="readonly"/>
+                         	</td>
+                            </tr>
                             <tr>
                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                               <td height="28" align="left" valign="middle" class="leftmenu">&nbsp;</td>
@@ -234,7 +242,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <tr>
                               <td height="10" colspan="3" align="left" valign="middle"></td>
                             </tr>
-                          </table>
+							</table>
                       </form></td>
                       </tr>
                     <tr>
