@@ -226,7 +226,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     $color = "#ECECFF";
                     $num=$dbf->countRows('student_appointment',"student_id='$student_id'");
                     foreach($dbf->fetchOrder('student_appointment',"student_id='$student_id'","student_id") as $val) {
-                    $res = $dbf->strRecordID("student","*","id='$val[student_id]'");
+                    #$res = $dbf->strRecordID("student","*","id='$val[student_id]'");
                   ?>
                         
                   <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
@@ -234,7 +234,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <td width="3%" height="22" align="center" valign="middle" class="contenttext"><?php echo $i;?></td>
                       <td width="9%" align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[dated];?></td>
                       <td width="28%" align="left" valign="middle" class="contenttext" style="padding-left:5px;">
-						<?php echo $res[first_name]."&nbsp;".$res[father_name]."&nbsp;".$res[family_name]."&nbsp;(".$res[first_name1]."&nbsp;".$res[father_name1]."&nbsp;".$res[grandfather_name1]."&nbsp;".$res[family_name1].")";?>
+						<?php echo $dbf->printStudentName($val[student_id]);?>
 					  </td>
                         <td width="42%" align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[comments];?></td>
                               <td width="4%" align="center" valign="middle"><a href="single-appoint.php?action=delete&amp;appoint_id=<?php echo $val[id];?>&student_id=<?php echo $student_id;?>"  class="linktext" onClick="return confirm('Are you sure you want to delete this record ?')"><img src="../images/delete.png" width="16" height="16" border="0" title="Delete" /></a></td>

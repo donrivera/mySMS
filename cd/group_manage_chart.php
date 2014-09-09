@@ -32,7 +32,7 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 
 //Get no of unit of a group
 $res_unit = $dbf->strRecordID("group_size","*","group_id='$res_group[group_id]'");
-$group_unit = $res_unit["units"];
+$group_unit = $res_group["units"];
 
 $group_name = $res_group["group_name"];
 

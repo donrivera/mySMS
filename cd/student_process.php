@@ -195,7 +195,12 @@ if($_REQUEST['action']=='edit'){
 	//Update in Comments Table
 	$string="comments='$comm'";
 	$dbf->updateTable("student_comment",$string,"student_id='$_REQUEST[stud_id]' And status_id='1'");
-	
+	//Update Appointment
+	$student_appointment=$dbf->countRows('student_appointment',"student_id='$_REQUEST[stud_id]'");
+	$appointment_string="dated='$_POST[app_date]',student_id='$_REQUEST[stud_id]',comments='$comm',user_id='$_SESSION[id]',status='1',centre_id='$_SESSION[centre_id]'";
+	if($student_appointment > 0)
+	{$dbf->updateTable("student_appointment",$appointment_string,"student_id='$_REQUEST[stud_id]'");}
+	else{$dbf->insertSet("student_appointment",$appointment_string);}
 	//Set Header Location
 	header("Location:student_manage.php");
 }

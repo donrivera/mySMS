@@ -23,6 +23,9 @@ $res = $dbf->strRecordID("student","*","id='$_REQUEST[student_id]'");
 $resc = $dbf->strRecordID("countries","*","id='$res[country_id]'");
 
 $course_name = $dbf->strRecordID("course","*","id='$_REQUEST[course_id]'");
+$exp_course_name=explode("-",$course_name[name]);
+$eng_course_name=$exp_course_name[0];
+$arb_course_name=$exp_course_name[1];
 $res_enroll = $dbf->strRecordID("student_enroll","*","student_id='$_REQUEST[student_id]' And course_id='$_REQUEST[course_id]'");
 $res_g = $dbf->strRecordID("student_group","*","id='$res_enroll[group_id]'");
 $res_size = $dbf->strRecordID("group_size","*","group_id='$res_g[group_id]'");
@@ -82,13 +85,13 @@ color:#000000;
 
 .cer_my_head{
 font-family:Arial, Helvetica, sans-serif;
-font-size:12px;
+font-size:14px;
 color:#000000;
 font-weight:normal;
 }
 .cer_my_head_bold{
 font-family:Arial, Helvetica, sans-serif;
-font-size:12px;
+font-size:14px;
 color:#000000;
 font-weight:bold;
 }
@@ -131,6 +134,7 @@ font-style:italic;
           <tr>
             <td align="left" valign="middle" ><table width="870" border="0" cellspacing="0" cellpadding="0">
               <tr>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 <td width="447" align="left" valign="top"><table width="92%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <th height="20" align="left" valign="middle" scope="col">&nbsp;</th>
@@ -152,7 +156,7 @@ font-style:italic;
                     <th height="28" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head"> passed the following English language course: </span></th>
                   </tr>
                   <tr>
-                    <th height="28" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">Level: <span class="cer_my_head_bold"><?php echo $course_name[name];?></span> with a total number of <span class="cer_my_head_bold"><?php echo $hr;?></span> hours </span></th>
+                    <th height="28" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">Level: <span class="cer_my_head_bold"><?php echo $eng_course_name;?></span> with a total number of <span class="cer_my_head_bold"><?php echo $hr;?></span> hours </span></th>
                   </tr>
                   <tr>
                     <th height="28" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">From: </span><span class="cer_my_head_bold"><?php echo $res_g[start_date];?></span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="cer_my_head">to: </span><span class="cer_my_head_bold"><?php echo $res_g[end_date];?></span></th>
@@ -208,7 +212,7 @@ font-style:italic;
                     <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">قد اجتاز دورة في اللغة  الانجليزية لغير الناطقين بها:</span></th>
                     </tr>
                   <tr>
-                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $course_name[name];?>  , وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span></th>
+                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $arb_course_name;?>  , وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span></th>
                     </tr>
                   <tr>
                     <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في الفترة من: <?php echo $dbf->enNo2ar($res_g[start_date],'-');?> إلى: <?php echo $dbf->enNo2ar($res_g[end_date],'-');?></span></th>
@@ -223,7 +227,7 @@ font-style:italic;
                     </th>
                     </tr>
                   <tr>
-                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">وحصل على تقدير  <?php echo $Arabic->en2ar($res_grade["name"]);?> , ونسبة  <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %</span></th>
+                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">وحصل على تقدير  <?php echo $res_grade["arabic"];?> , ونسبة  <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %</span></th>
                   </tr>
                   <tr>
                     <th height="28" align="right" valign="middle" class="cer_my_head_bold" scope="col"><span dir="rtl">وبناء عليه مُنح هذه  الشهادة.</span></th>

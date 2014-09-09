@@ -260,6 +260,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				$paid_amt = $enroll["discount"];
 				$paid_stucture = $dbf->getDataFromTable("student_fees","SUM(paid_amt)","student_id='$student_id' And course_id='$course_id'");
 				$paid_amt = $paid_amt + $paid_stucture;
+				
 				if($paid_amt < $course_fee){
 					$pay_status = constant("STUDENT_ADVISOR_AUDITING_PAYPENDING");
 				}else{
@@ -503,7 +504,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <?php if($status == 3){ ?> <script type="text/javascript">blinkId('3');</script>
                         <table width="90%" border="1" bordercolor="#CCCCCC" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
                           <tr>
-                            <td width="83%" height="20" align="center" valign="middle" bgcolor="#9999CC" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_AUDITING_WAITING");?> <?php echo $pay_status;?></td>
+                            <td width="83%" height="20" align="center" valign="middle" bgcolor="#9999CC" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_AUDITING_WAITING");?>  <?php echo constant("STUDENT_ADVISOR_AUDITING_WAITING_PAYMENT");?></td>
                           </tr>
                           </table>
                           <?php } ?>

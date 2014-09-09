@@ -112,7 +112,7 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0"  borderc
 																OR p.shift7='X'
 																OR p.shift8='X'
 																OR p.shift9='X')
-														ORDER BY pu.units DESC 
+														ORDER BY pu.units DESC LIMIT 0,1
 													");
 						foreach($lessons as $l):$student_last_lesson=$l[lesson];endforeach;
                 $html.='<tr>
@@ -123,7 +123,7 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0"  borderc
                   <td align="left" valign="middle" bgcolor="#F8F9FB" >'.$val["student_comment"].'</td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB" >'.$course["name"].'</td>
                   <td width="11%" align="left" valign="middle" bgcolor="#F8F9FB" >'.$date_hold[dated].'</td>
-				    <td align="left" valign="middle" bgcolor="#F8F9FB" >'.$student_last_lesson.'</td>';
+				    <td align="left" valign="middle" bgcolor="#F8F9FB" >'.(empty($student_last_lesson)?"Beginning of Course":$student_last_lesson).'</td>';
 					  $i = $i + 1;
 					  }
                 $html.='</tr>

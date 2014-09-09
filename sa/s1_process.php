@@ -914,7 +914,7 @@ if($_REQUEST['action']=='insert')
 }
 
 if($_REQUEST['action']=='search')
-{
+{ 
 //Current date and time
 	$dt = date('Y-m-d h:m:s');
 	$c_dt = date('Y-m-d');
@@ -930,19 +930,21 @@ if($_REQUEST['action']=='search')
 	//=======================================================
 	//Get data from student_enroll for checking the whether initial fee has been changed or not
 	$res_en = $dbf->strRecordID("student_enroll","*","course_id='$course_id' And student_id='$student_id'");	
-	
 	$string="course_fee='$_POST[course_fee]',level_complete='$_POST[level]',other_amt='$_POST[otheramt]',othertext='$_POST[othertext]',payment_type='$_POST[ptype]',web='$_POST[web]',discount='$_POST[discount]',invoice_note='$invoice_note'";
 	$dbf->updateTable("student_enroll",$string,"course_id='$course_id' And student_id='$student_id'");
-	
+	$duplicate_fees= $dbf->countRows("student_fees", "course_id='$course_id' And student_id='$student_id' And fee_date='$_REQUEST[pdate1]' And paid_amt='$_REQUEST[amt1]'");
 	# Check Opening balance
 	$is_opeing = $dbf->countRows("student_fees", "course_id='$course_id' And student_id='$student_id' And type='advance'");
 	if($is_opeing == 0)
 	{
 		if($_REQUEST['payment'] !='')
 		{
+			
 			# if not available then save
 			$string2="student_id='$student_id',course_id='$course_id',paid_amt='$_REQUEST[payment]',fee_amt='$_REQUEST[payment]',comments='$invoice_note',fee_date='$c_dt',paid_date='$c_dt',payment_type='$_REQUEST[ptype]',centre_id='$centre_id',created_date=NOW(),created_by='$_SESSION[id]',type='opening',invoice_sl='$inv_sl',invoice_no='$inv_no',status='1'";
-			$dbf->insertSet("student_fees",$string2);		
+			#$dbf->insertSet("student_fees",$string2);
+			if($duplicate_fees==0)
+			{$dbf->insertSet("student_fees",$string2);}else{header("Location:search_manage.php?student_id=$student_id&course_id=$_REQUEST[course_id]&msg=duplicate");exit;}
 		}
 	}
 	else
@@ -998,7 +1000,7 @@ if($_REQUEST['action']=='search')
 	//----------------------------------------------------
 	//Insert in student course_fees table
 	$tot = $_REQUEST['count'];
-
+	
 	for($k=1; $k<=$tot;$k++)
 	{
 		$name = "pdate".$k;
@@ -1008,9 +1010,10 @@ if($_REQUEST['action']=='search')
 		$amt = $_REQUEST[$amt];
 		
 		if($name != "" && $amt != "")
-		{
+		{	
 			$string="student_id='$student_id',course_id='$_REQUEST[course]',fee_date='$name',fee_amt='$amt',created_date='$dt',created_by='$_SESSION[id]',centre_id='$_SESSION[centre_id]'";
-			$dbf->insertSet("student_fees",$string);
+			if($duplicate_fees==0)
+			{$dbf->insertSet("student_fees",$string);}else{header("Location:search_manage.php?student_id=$student_id&course_id=$_REQUEST[course_id]&msg=duplicate");exit;}
 		}
 	}
 	//----------------------------------------------------
@@ -1035,8 +1038,8 @@ if($_REQUEST['action']=='invoice')
 	//=======================================================
 	
 	$dt = date('Y-m-d h:m:s');
-	
-	$string="paid_date='$_POST[dated]',	payment_type='$_POST[payment_type]',paid_amt='$_POST[amt]',status='1',comments='$comments',fee_amt='$_POST[amt]',created_date=NOW(),created_by='$_SESSION[id]',type='direct',invoice_sl='$inv_sl',invoice_no='$inv_no'";
+	$c_dt = date('Y-m-d');
+	$string="paid_date='$c_dt',	payment_type='$_POST[payment_type]',paid_amt='$_POST[amt]',status='1',comments='$comments',fee_amt='$_POST[amt]',created_date=NOW(),created_by='$_SESSION[id]',type='direct',invoice_sl='$inv_sl',invoice_no='$inv_no'";
 	
 	$dbf->updateTable("student_fees",$string,"id='$_REQUEST[schid]'");
 	
@@ -1179,7 +1182,7 @@ if($_REQUEST['action']=='advance')
 	$centre_id = $_SESSION["centre_id"];
 	$ad_comment = mysql_real_escape_string($_REQUEST["comment"]);
 	$date_time = date('Y-m-d h:i:s');
-	
+	$dated=date('Y-m-d');
 	//Get Invoice Number
 	# -------------------------------------------------------
 	$inv_no = $dbf->GenerateInvoiceNo($centre_id);
@@ -1187,7 +1190,7 @@ if($_REQUEST['action']=='advance')
 	//=======================================================
 
 	//insert into student_fee table
-	$string2="discount='$_REQUEST[discount]',student_id='$student_id',course_id='$course_id',paid_amt='$_REQUEST[amts]',fee_amt='$_REQUEST[amts]',comments='$ad_comment',fee_date='$_REQUEST[dated]',paid_date='$_REQUEST[dated]',payment_type='$_REQUEST[payment_type]',centre_id='$centre_id',created_date=NOW(),created_by='$_SESSION[id]',type='advance',invoice_sl='$inv_sl',invoice_no='$inv_no',status='1'";
+	$string2="discount='$_REQUEST[discount]',student_id='$student_id',course_id='$course_id',paid_amt='$_REQUEST[amts]',fee_amt='$_REQUEST[amts]',comments='$ad_comment',fee_date='$dated',paid_date='$dated',payment_type='$_REQUEST[payment_type]',centre_id='$centre_id',created_date=NOW(),created_by='$_SESSION[id]',type='advance',invoice_sl='$inv_sl',invoice_no='$inv_no',status='1'";
 	
 	$dbf->insertSet("student_fees",$string2);
 	

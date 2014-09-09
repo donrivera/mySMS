@@ -848,7 +848,7 @@ define("RECEPTION_SMS_SELECTOPT","Select option");
 define("RECEPTION_SMS_ENTERSTUDENTNO","Enter student number");
 define("RECEPTION_SMS_CHOOSETHETEMP","Choose the templates");
 define("RECEPTION_SMS_OR","or");
-define("RECEPTION_SMS_SEARCHFORSTUDENT","Search for students");
+define("RECEPTION_SMS_SEARCHFORSTUDENT","General Search For Student");
 
 // reception sms_error
 define("RECEPTION_SMS_ERROR_SMSBLOCKED","SMS blocked");
@@ -887,7 +887,7 @@ define("STUDENT_ADVISOR_HOME_POSTEDBYADMIN","Posted by admin");
 define("STUDENT_ADVISOR_HOME_MARKAS","Mark as");
 define("STUDENT_ADVISOR_HOME_URGENT","Urgent");
 define("STUDENT_ADVISOR_HOME_POSTEDBY","Posted by");
-define("STUDENT_ADVISOR_HOME_TEXT1","Latest appointments for students");
+define("STUDENT_ADVISOR_HOME_TEXT1","Today's appointments for students");
 define("STUDENT_ADVISOR_HOME_TEXT2","Current classes scheduled of the day.");
 define("STUDENT_ADVISOR_HOME_TEXT3","There are no scheduled of the current day !!!");
 define("STUDENT_ADVISOR_HOME_IMPORTANT","Important");
@@ -1277,7 +1277,7 @@ define("STUDENT_ADVISOR_AUDITING_ONHOLD","On hold");
 define("STUDENT_ADVISOR_AUDITING_POTENTI","Potential");
 define("STUDENT_ADVISOR_AUDITING_ACTIVE","Active");
 define("STUDENT_ADVISOR_AUDITING_WAITING","Waiting");
-
+define("STUDENT_ADVISOR_AUDITING_WAITING_PAYMENT","Advanced Payment");
 // Student Advisor ped.php
 define("STUDENT_ADVISOR_PED_STANDARD","Standard");
 
@@ -1322,7 +1322,7 @@ define("TEACHER_REPORT_TEACHER_TXT","Group start date (Gregorian)");
 define("TEACHER_REPORT_TEACHER_TXT1","Group end date (Gregorian)");
 define("TEACHER_REPORT_TEACHER_GROUPSTDT","Group start date (Arabic)");
 define("TEACHER_REPORT_TEACHER_GROUPENDDT","Group end date (Arabic)");
-define("TEACHER_REPORT_TEACHER_TXT2","Date grade submitted");
+define("TEACHER_REPORT_TEACHER_TXT2","Progress report submitted");
 define("TEACHER_REPORT_TEACHER_TXT3","Progress report printed");
 define("TEACHER_REPORT_TEACHER_TXT4","Certificates printed");
 define("TEACHER_REPORT_TEACHER_TXT5","Numbers of units");
@@ -2372,8 +2372,8 @@ define("CONGRATULATION_LOGIN", "to Register another student for this center.");
 define("VIEW_COMMENTS", "View comments");
 define("ICON_NO_COMMENTS", "No comments");
 define("ICON_STUDENT_HOME", "Go to student home page");
-define("ICON_DOLLAR", "Adding additional information");
-define("ICON_ADVANCE", "Advance section");
+define("ICON_DOLLAR", "Completing Payment");
+define("ICON_ADVANCE", "Advance Payment");
 define("ICON_ADD_GROUP", "Adding to group");
 define("ICON_VIEW", "View");
 define("ICON_EXPORT_WORD", "Export to word");

@@ -218,7 +218,7 @@ header("Content-Disposition: attachment; Filename=group_progress_report.doc");
 						$avg = $avg / 7;
 						$avg = round($avg,1);
 					}
-					$at = $res_progress["course_attendance_perc"];
+					$at = $res_progress["course_attendance"] * $res_g["unit_per_day"];
 					$parti = $res_progress["course_partication"];
 					$home = $res_progress["course_homework"];
 					$flu = $res_progress["course_fluency"];

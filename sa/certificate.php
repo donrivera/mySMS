@@ -79,13 +79,13 @@ h2 {
 -->
 .cer_my_head{
 font-family:Arial, Helvetica, sans-serif;
-font-size:12px;
+font-size:14px;
 color:#000000;
 font-weight:normal;
 }
 .cer_my_head_bold{
 font-family:Arial, Helvetica, sans-serif;
-font-size:12px;
+font-size:14px;
 color:#000000;
 font-weight:bold;
 }
@@ -170,12 +170,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <?php
 					//If the students balance should be Zero
 					$bal_amt = $dbf->BalanceAmount($_REQUEST["student"],$_REQUEST["course_id"]);
-					//if($bal_amt <= 0){
+					if($bal_amt <= 0){
 					?>
                     <a href="certificate_condition.php?course_id=<?php echo $_REQUEST[course_id];?>&student_id=<?php echo $_REQUEST[student];?>" target="_blank"><?php if($_REQUEST[student]!="" && $_REQUEST[course_id]!=''){ ?><img src="../images/print.png" width="16" height="16" border="0" title="<?php echo STUDENT_ADVISOR_SEARCH_MANAGE_PRINT ?>"/><?php } ?></a>
-                    <?php //} ?><a href="search_groupname.php?page=search_groupname.php&amp;TB_iframe=true&amp;height=200&amp;width=475&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox "><?php echo constant("RECEPTION_SMS_SEARCHFORSTUDENT");?></a>
-                    </td>
-                    
+                    <?php } ?>
+					<p align="right">
+					<a href="search_groupname.php?page=search_groupname.php&amp;TB_iframe=true&amp;height=200&amp;width=475&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox "><?php echo constant("RECEPTION_SMS_SEARCHFORSTUDENT");?></a>
+                    </p>
+					</td>
                     </tr>
                   <tr>
                     <td  height="30" align="left" valign="middle" style="padding-left:12px;">
@@ -371,7 +373,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       </tr>
                                   </table>
                                   <br />
-                                  <span class="cer_my_head_bold" dir="rtl">وحصل على تقدير  <?php echo $Arabic->en2ar($res_grade["name"]);?> , ونسبة  <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %</span></td>
+                                  <span class="cer_my_head_bold" dir="rtl">وحصل على تقدير  <?php echo $res_grade["arabic"];?> , ونسبة  <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %</span></td>
                                   </tr>
                                 </table></td>
                               </tr>

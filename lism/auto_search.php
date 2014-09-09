@@ -131,14 +131,31 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 </tr>
               </thead>
               <?php
-					$i = 1;
-					$color = "#ECECFF";
-					$num=$dbf->countRows('student',"first_name like '$_REQUEST[testinput]%' OR student_first_name like '$_REQUEST[testinput]%'");
-					foreach($dbf->fetchOrder('student',"first_name like '$_REQUEST[testinput]%' OR student_first_name like '$_REQUEST[testinput]%'","") as $val) {
+				$auto_search=$_REQUEST[testinput];
+				#$auto_search=explode(" ",$_REQUEST[testinput]);
+				#$fname=$auto_search[0];
+				#$father_name=$auto_search[1];
+				#$family_name=$auto_search[2]." ".$auto_search[3];
+				$sql_string=$dbf->genericQuery("SELECT * 
+												FROM student 
+												WHERE centre_id='$_SESSION[centre_id]' 
+												AND (concat_ws(' ',first_name,father_name,family_name)
+												LIKE '%$auto_search%')");
+				$i = 1;
+				$color = "#ECECFF";
+				$num=$dbf->countRows('student',"(family_name='$family_name' AND father_name='$father_name' AND first_name LIKE '$fname')  And centre_id='$_SESSION[centre_id]'");
+				#foreach($dbf->fetchOrder('student',"(family_name='$family_name' AND father_name='$father_name' AND first_name LIKE '$fname')  And centre_id='$_SESSION[centre_id]'","id DESC ") as $val){
+				foreach($sql_string as $val){
+					$num_comment=$dbf->countRows('student_comment',"student_id='$val[id]'");
+					$valc = $dbf->strRecordID("common","*","id='$val[studentstatus_id]'");
+					
+					$status_id = $dbf->getDataFromTable("student_moving", "MAX(id)", "student_id='$val[id]'");
+					$status_id = $dbf->getDataFromTable("student_moving", "status_id", "id='$status_id'");
+					$moving = $dbf->strRecordID("student_status","*","id='$status_id'");
 					?>
               <tr bgcolor="<?php echo $color;?>"  onmouseover="this.bgColor='#FDE6D0'" onmouseout="this.bgColor='<?php echo $color;?>'" onclick="javascript:window.location.href='auto_search_edit.php?id=<?php echo $val[id];?>'" style="cursor:pointer;">
                 <td height="25" align="center" valign="middle" class="contenttext" style=""><?php echo $i;?></td>
-                <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[first_name];?><?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></td>
+                <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $dbf->printStudentName($val["id"]);?></td>
                 <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[email];?></td>
                 <td align="center" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[age];?></td>
                 <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>

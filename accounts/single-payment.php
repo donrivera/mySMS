@@ -410,7 +410,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <?php					
 					$val_student = $dbf->strRecordID("student","*","id='$student_id'");
 					$res_enroll = $dbf->strRecordID("student_enroll","*","course_id='$course_id' And student_id='$student_id'");
-					$course_fees = $dbf->getDataFromTable("course_fee","fees","id='$res_enroll[fee_id]'");
+					$course_fees = $dbf->getDataFromTable("course_fee","fees","course_id='$res_enroll[fee_id]'");
 				  ?>
                   <tr>
                     <td colspan="5" align="left" valign="top" style="padding-top:3px;">
@@ -445,7 +445,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td width="53%" rowspan="4" align="left" valign="top">
                             <table width="80%" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#000000" style="border-collapse:collapse;">
                               <?php			 
-								 $camt = $course_fees-$res_enroll["discount"]+$res_enroll["other_amt"];
+								 $camt = $course_fees-$res_enroll["discount"] + $res_enroll["other_amt"];
 								 
 								 $fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1'");
 								 $feeamt = $fee["SUM(paid_amt)"]+$res_enroll["ob_amt"];
@@ -457,7 +457,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								?>
                               <tr>
                                 <td width="62%" height="25" align="left" valign="middle" bgcolor="#A9CFFE" class="pedtext"><?php echo constant("ADMIN_COURSE_MANAGE_COURSEFEES");?> :</td>
-                                <td width="38%" align="left" valign="middle" bgcolor="#F1E8FF" class="mycon">&nbsp;<?php echo $course_fees;?>&nbsp;<?php echo $res_currency[symbol];?></td>
+                                <td width="38%" align="left" valign="middle" bgcolor="#F1E8FF" class="mycon">&nbsp;<?php echo $camt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
                                 </tr>
                               <tr>
                                 <td height="25" align="left" valign="middle" bgcolor="#A9CFFE" class="pedtext"><?php echo constant("CD_SEARCH_INVOICE_PAIDAMOUNT");?> :</td>

@@ -145,14 +145,22 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <th colspan="6" align="center" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("COMMON_ACTION");?></th>
                 </tr>
               </thead>
-              <?php $auto_search=explode(" ",$_REQUEST[testinput]);
-					$fname=$auto_search[0];
-					$father_name=$auto_search[1];
-					$family_name=$auto_search[2];
+              <?php 
+				$auto_search=$_REQUEST[testinput];
+				#$auto_search=explode(" ",$_REQUEST[testinput]);
+				#$fname=$auto_search[0];
+				#$father_name=$auto_search[1];
+				#$family_name=$auto_search[2]." ".$auto_search[3];
+				$sql_string=$dbf->genericQuery("SELECT * 
+												FROM student 
+												WHERE centre_id='$_SESSION[centre_id]' 
+												AND (concat_ws(' ',first_name,father_name,family_name)
+												LIKE '%$auto_search%')");
 				$i = 1;
 				$color = "#ECECFF";
 				$num=$dbf->countRows('student',"(family_name='$family_name' AND father_name='$father_name' AND first_name LIKE '$fname')  And centre_id='$_SESSION[centre_id]'");
-				foreach($dbf->fetchOrder('student',"(family_name='$family_name' AND father_name='$father_name' AND first_name LIKE '$fname')  And centre_id='$_SESSION[centre_id]'","id DESC ") as $val){
+				#foreach($dbf->fetchOrder('student',"(family_name='$family_name' AND father_name='$father_name' AND first_name LIKE '$fname')  And centre_id='$_SESSION[centre_id]'","id DESC ") as $val){
+				foreach($sql_string as $val){
 					$num_comment=$dbf->countRows('student_comment',"student_id='$val[id]'");
 					$valc = $dbf->strRecordID("common","*","id='$val[studentstatus_id]'");
 					
@@ -162,7 +170,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 			  ?>
               <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" onClick="javascript:window.location.href='s_edit.php?id=<?php echo $val[id];?>'" style="cursor:pointer;">
                 <td height="25" align="center" valign="middle" class="mycon" ><?php echo $i;?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val[id];?>" style="cursor:pointer;"><?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?></a></td>
+                <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val[id];?>" style="max-width:100px;overflow:hidden;text-overflow:ellipsis;"><?php echo $dbf->printStudentName($val["id"]);?></a></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php if($val[student_id] > 0) { echo $val[student_id]; } ?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>

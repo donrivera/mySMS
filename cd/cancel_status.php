@@ -311,7 +311,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                         <td height="30" align="left" valign="middle" class="leftmenu"></td>
                                         <td align="left" valign="middle">&nbsp;</td>
                                         <td align="left" valign="middle">
-                                        <input type="submit" name="submit" id="submit" value="<?php echo constant("btn_save_btn");?>" class="btn1"/></td>
+                                        <input type="submit" name="submit" id="submit" value="Approve" class="btn1"/></td>
                                       </tr>
                                     </table>
                                   </form></td>

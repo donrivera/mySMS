@@ -33,7 +33,7 @@ foreach($dbf->fetchOrder('student',"(
 										grandfather_name,
 										grandfather_name1,
 										family_name,
-										family_name1
+										family_name1,id
 										limit 10") as $top_stu_list)
 {
 	$fname  = $top_stu_list["first_name"];
@@ -45,7 +45,8 @@ foreach($dbf->fetchOrder('student',"(
 	$family_name = $top_stu_list["family_name"];
 	$family_name1 = $top_stu_list["family_name1"];
 	//echo $str_top_stu_list.$Arabic->en2ar($dbf->StudentName($top_stu_list["id"]))."\n";
-	echo $fname." ".$father_name." ".$family_name." (".$first_name1." ".$father_name1." ".$grandfather_name1." ".$family_name1.")\n";
+	#echo $fname." ".$father_name." ".$family_name." (".$fname1." ".$father_name1." ".$grandfather_name1." ".$family_name1.")\n";
+	echo  $fname." ".$father_name." ".$family_name."\n";
 	//echo $fname."\n";
 }
 ?>

@@ -81,9 +81,23 @@ $(document).ready(function() {
 	{
 		var init_pay=$("#payment").val();//document.getElementById('payment').value;
 		var post_pay=$("#td_paid_amt").html();//document.getElementById('td_paid_amt').value;
+		var amt1=$("#amt1").val();
+		var amt2=$("#amt2").val();
+		var amt3=$("#amt3").val();
+		var amt4=$("#amt4").val();
+		var amt5=$("#amt5").val();
+		var amt_total=amt1+amt2+amt3+amt4+amt5;
+		var balance=$("#course_fee_balance").val();
 		if(init_pay=='' && post_pay === null)
 		{
 			alert("Please Enter Initial Payment!");
+			//document.getElementById('othertext').focus();
+			return false;
+		}
+		if(amt_total>balance)
+		{
+			//alert("Payment Exceeds Balance!");
+			alert(amt_total+'-'+balance);
 			//document.getElementById('othertext').focus();
 			return false;
 		}
@@ -273,6 +287,19 @@ $count = $res_logout["name"]; // Set timeout period in seconds
           <tr>
             <td align="center" valign="top" bgcolor="#FFFFFF" height="3"></td>
           </tr>
+		  <?php if($_REQUEST[msg]=="duplicate") { ?>
+			<tr>
+				<td align="center" valign="top" bgcolor="#FFFFFF">
+					<table width="300" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#66CC66;">
+						<tr>
+							<td width="37" height="30" align="center" valign="middle" bgcolor="#FFF2FD"><img src="../images/close-btn.png" width="25" height="25" /></td>
+							<td width="10" bgcolor="#FFF2FD">&nbsp;</td>
+							<td width="253" align="left" valign="middle" bgcolor="#FFF2FD" class="nametext"><?php echo "Duplicate Payment";?></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<?php } ?>
           <tr>
             <td height="200" align="center" valign="top" bgcolor="#FFFFFF" style="padding-top:10px;"><table width="96%" border="0" align="center" cellpadding="0" cellspacing="0">
               <tr>
@@ -422,7 +449,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <?php														
 							$val_student = $dbf->strRecordID("student","*","id='$student_id'");
 							$res_enroll = $dbf->strRecordID("student_enroll","*","course_id='$course_id' And student_id='$student_id'");
-							$course_fees = $dbf->getDataFromTable("course_fee","fees","id='$res_enroll[fee_id]'");
+							$course_fees = $dbf->getDataFromTable("course_fee","fees","course_id='$res_enroll[course_id]'");
 						  ?>
                         <tr>
                           <td colspan="5" align="left" valign="top" style="padding-top:3px;">
@@ -458,7 +485,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                   <td width="28%" align="left" valign="middle">&nbsp;</td>
                                   <td width="49%" rowspan="4" align="left" valign="top"><table width="80%" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#000000" style="border-collapse:collapse;">
                                     <?php			 
-                                         $camt = $course_fees-$res_enroll["discount"]+$res_enroll["other_amt"];
+                                         $camt = $course_fees-$res_enroll["discount"] + $res_enroll["other_amt"];
                                          
                                          $fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1'");
                                          $feeamt = $fee["SUM(paid_amt)"];
@@ -507,13 +534,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								
 								$num11=$dbf->countRows('student_fees',"course_id='$course_id' And student_id='$student_id'");
 								$is_advance=$dbf->getDataFromTable('student_enroll',"discount","course_id='$course_id' And student_id='$student_id'");
-								//if($num11 > 0 || $is_advance > 0 || $bal_amt <= 0) {
-									if($course_id != '' && $student_id != ''){
-									?>
-								<a href="search_print_invoice.php?course_id=<?php echo $_REQUEST["course_id"];?>&amp;student_id=<?php echo $student_id;?>&amp;page=search_print_invoice.php&amp;TB_iframe=true&amp;height=600&amp;width=690&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox">
-								  <input type="button" value="<?php echo constant("btn_prnt_inv_btn");?>" class="btn1" border="0" align="left" />
-								  </a>
-								<?php } ?></td>
+								?>
+								</td>
                                 </tr>
                                 <tr>
                                   <td height="28" align="left" valign="middle">
@@ -552,6 +574,27 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <tr>
                                   <td width="19%" align="right" valign="middle" class="leftmenu"><?php echo constant("NOTE_FOR_INVOICE");?> : &nbsp;</td>
                                   <td width="81%" align="left" valign="middle" style="padding-left:4px;"><input name="note" class="new_textbox690" type="text" id="note" value="<?php echo $res_enroll["invoice_note"];?>" /></td>
+                                </tr>
+                              </table></td>
+                            </tr>
+							 <tr>
+                              <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+                              <td height="18" colspan="4" align="left" valign="top" class="leftmenu">
+                              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+									<td width="19%" align="right" valign="middle" class="leftmenu">
+								  
+									</td>
+									<td width="81%" align="left" valign="middle" style="padding-left:4px;">
+									<?php
+									//if($num11 > 0 || $is_advance > 0 || $bal_amt <= 0) {
+									if($course_id != '' && $student_id != ''){
+									?>
+									<a href="search_print_invoice.php?course_id=<?php echo $_REQUEST["course_id"];?>&amp;student_id=<?php echo $student_id;?>&amp;page=search_print_invoice.php&amp;TB_iframe=true&amp;height=600&amp;width=690&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox">
+										<input type="button" value="<?php echo constant("btn_prnt_inv_btn");?>" class="btn1" border="0" align="left" />
+									</a>
+									<?php } ?>
+									</td>
                                 </tr>
                               </table></td>
                             </tr>
@@ -609,7 +652,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                     $fifo_id = $fifo["id"];
                                     
 									//Get Course has been finished or not (If 0 = Not completed else Completed)
-									$num_complete = $dbf->countRows('student_group g,student_group_dtls d',"g.id=d.parent_id And g.status='Completed' And g.course_id='$course_id' And d.student_id='$student_id'");
+									$num_complete = 0;#$dbf->countRows('student_group g,student_group_dtls d',"g.id=d.parent_id And g.status='Completed' And g.course_id='$course_id' And d.student_id='$student_id'");
 									
                                     foreach($dbf->fetchOrder('student_fees',"course_id='$course_id' And student_id='$student_id' AND type !='advance'","") as $vali) {
                                         

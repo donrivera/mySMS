@@ -37,7 +37,7 @@ $centre_id = $_SESSION["centre_id"];
 										INNER JOIN student as s ON s.id=sm.student_id
 										WHERE s.centre_id='$centre_id' 
 										AND sm.course_id='$course_id' 
-										AND sm.status_id='3'
+										AND sm.status_id='2'
 										AND s.student_id NOT IN(SELECT student_id FROM student_group_dtls) LIMIT 5");
 			if(empty($query) || $query==null):
 		?>
@@ -57,8 +57,8 @@ $centre_id = $_SESSION["centre_id"];
 		<?//echo var_dump($query);//($valstudent==0?"1":"2");?>
 		
 		<tr>
-			<td align="center" valign="middle"><?php //echo $m;?><input type="checkbox" checked="checked" name="student_id[]" id="student_id[]" value="<?php echo $student["id"];?>"></td>
-			<td align="left" valign="middle" class="mycon">&nbsp;<?php echo $dbf->printStudentName($student['id']);?></td>
+			<td align="center" valign="middle"><?php //echo $m;?><!--<input type="checkbox" checked="checked" name="student_id[]" id="student_id[]" value="<?php echo $student["id"];?>">--></td>
+			<td align="left" valign="middle" class="mycon" style="max-width:150px;overflow:hidden;text-overflow:ellipsis;">&nbsp;<?php echo $dbf->printStudentName($student['id']);?></td>
 			<td align="left" valign="middle" class="mycon">&nbsp;<?php echo $student[email];?></td>
 			<td align="left" valign="middle" class="mycon">&nbsp;<?php echo $student[student_mobile];?></td>
 		</tr>

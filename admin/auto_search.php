@@ -132,18 +132,31 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 			  </thead>
 			  
               <?php
-					$auto_search=explode(" ",$_REQUEST[testinput]);
-					$fname=$auto_search[0];
-					$father_name=$auto_search[1];
-					$family_name=$auto_search[2];
-					$i = 1;
-					$color = "#ECECFF";
-					$num=$dbf->countRows('student',"(family_name='$family_name' AND father_name='$father_name' AND first_name LIKE '$fname')");
-				foreach($dbf->fetchOrder('student',"(family_name='$family_name' AND father_name='$father_name' AND first_name LIKE '$fname')","id DESC ") as $val){
+				$auto_search=$_REQUEST[testinput];
+				#$auto_search=explode(" ",$_REQUEST[testinput]);
+				#$fname=$auto_search[0];
+				#$father_name=$auto_search[1];
+				#$family_name=$auto_search[2]." ".$auto_search[3];
+				$sql_string=$dbf->genericQuery("SELECT * 
+												FROM student 
+												WHERE centre_id='$_SESSION[centre_id]' 
+												AND (concat_ws(' ',first_name,father_name,family_name)
+												LIKE '%$auto_search%')");
+				$i = 1;
+				$color = "#ECECFF";
+				$num=$dbf->countRows('student',"(family_name='$family_name' AND father_name='$father_name' AND first_name LIKE '$fname')  And centre_id='$_SESSION[centre_id]'");
+				#foreach($dbf->fetchOrder('student',"(family_name='$family_name' AND father_name='$father_name' AND first_name LIKE '$fname')  And centre_id='$_SESSION[centre_id]'","id DESC ") as $val){
+				foreach($sql_string as $val){
+					$num_comment=$dbf->countRows('student_comment',"student_id='$val[id]'");
+					$valc = $dbf->strRecordID("common","*","id='$val[studentstatus_id]'");
+					
+					$status_id = $dbf->getDataFromTable("student_moving", "MAX(id)", "student_id='$val[id]'");
+					$status_id = $dbf->getDataFromTable("student_moving", "status_id", "id='$status_id'");
+					$moving = $dbf->strRecordID("student_status","*","id='$status_id'");		
 					?>
               <tr bgcolor="<?php echo $color;?>"  onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
                 <td height="25" align="center" valign="middle" class="contenttext" style=""><?php echo $i;?></td>
-                <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[first_name]."&nbsp;".$val[father_name]."&nbsp;".$val[family_name]."&nbsp;(".$val[first_name1]."&nbsp;".$val[father_name1]."&nbsp;".$val[grandfather_name1]."&nbsp;".$val[family_name1].")";?></td>
+                <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $dbf->printStudentName($val["id"]);?></td>
                 <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[email];?></td>
                 <td align="center" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[age];?></td>
                 <td align="left" valign="middle" class="contenttext" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>

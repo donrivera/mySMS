@@ -222,17 +222,18 @@ function print_page()
           <?php $j++; } ?>
           <?php
 		  	 $course_dtls = $dbf->strRecordID("course","*","id='$course_id'");
-			 $get_fee_id = $dbf->getDataFromTable("student_enroll","fee_id","course_id='$course_id' And student_id='$student_id'");
+			 echo $get_fee_id = $dbf->getDataFromTable("student_enroll","course_id","course_id='$course_id' And student_id='$student_id'");
 			 $get_fee_by_advance=$dbf->getDataFromTable("student_fees","course_id","course_id='$course_id' And student_id='$student_id'");
 			 $fee_id=(empty($get_fee_id)?$get_fee_by_advance:$get_fee_id);
-			 $course_fees = $dbf->getDataFromTable("course_fee","fees","id='$fee_id'");
+			 $course_fees = $dbf->getDataFromTable("course_fee","fees","course_id='$fee_id'");
 			 $camt = $course_fees;
 			  
 			 $fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1'");
 			 $feeamt = $fee["SUM(paid_amt)"];
 			 $discount_student_fee=$dbf->getDataFromTable('student_fees',"discount","course_id='$course_id' And student_id='$student_id'");
 			 $discount_student_payment=(empty($res_enroll["discount"])?$discount_student_fee:$res_enroll["discount"]);
-			 $net_amt = $camt - $discount_student_payment;			 
+			 $other_amt = $dbf->getDataFromTable("student_enroll","other_amt","course_id='$course_id' And student_id='$student_id''");
+			 $net_amt = $camt - $discount_student_payment + $other_amt;			 
 			 $bal_amt = $camt - ($feeamt + $discount_student_payment);
 			?>
           <tr>

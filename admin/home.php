@@ -164,7 +164,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
                   <tr>
                     <td height="25" align="center" valign="middle"><img src="<?php echo $photo;?>" oncontextmenu="return false;" width="20" height="20" /></td>
-                    <td align="left" valign="middle" class="mycon" style="max-width:300px;">&nbsp;<?php echo $dbf->printStudentName($res_stu['id']);?></td>
+                    <td align="left" valign="middle" class="mycon" style="width:200px;text-overflow: ellipsis;overflow: hidden;">&nbsp;<?php echo $dbf->printStudentName($res_stu['id']);?></td>
                     <td align="center" valign="middle" class="mycon"><?php echo date('d-M-Y',strtotime($val_pay[paid_date]));?></td>
                     <td align="right" valign="middle" class="mycon"><?php echo $val_pay[paid_amt];?>&nbsp;<?php echo $res_currency[symbol];?>&nbsp;</td>
                   </tr>
@@ -223,7 +223,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
                   <tr>
                     <!--<td height="25" align="center" valign="middle"><img src="<?php echo $photo;?>" oncontextmenu="return false;" width="20" height="20" /></td>-->
-                    <td align="left" valign="middle" class="mycon" style="max-width:300px;">&nbsp;<?php echo $dbf->printStudentName($val_en['id']);?></td>
+                    <td align="left" valign="middle" class="mycon" style="width:200px;text-overflow: ellipsis;overflow: hidden;">&nbsp;<?php echo $dbf->printStudentName($val_en['id']);?></td>
                     <td align="center" valign="middle" class="mycon" ><?php echo $dt;?></td>
                   </tr>
                   <?php } ?>

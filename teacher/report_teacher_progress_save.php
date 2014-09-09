@@ -221,7 +221,7 @@ if($_REQUEST['action']=='insert')
 			$course_listen_perc= get_percent($course_listen,$total_units,15);
 			
 			$course_attendance = "course_attendance"."_".$j;
-			$course_attendance = $_REQUEST[$course_attendance];
+			$course_attendance = $_REQUEST[$course_attendance]/$res_group['unit_per_day'];
 			$course_attendance_perc= get_percent($course_attendance,$total_units,10);
 			
 			//Check duplicate
@@ -420,7 +420,7 @@ if($_REQUEST['action']=='insert')
 			$course_listen_perc= get_percent($course_listen,$total_units,15);
 			
 			$course_attendance = "course_attendance"."_".$j;
-			$course_attendance = $_REQUEST[$course_attendance];
+			$course_attendance = $_REQUEST[$course_attendance]/$res_group['unit_per_day'];
 			$course_attendance_perc= get_percent($course_attendance,$total_units,10);
 			
 			//Check duplicate

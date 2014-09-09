@@ -999,7 +999,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 										<?php
 											$s_count = 1;
 											//Retrive all records the table
-											foreach($dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*") as $r) 
+											$student_name=$dbf->genericQuery("SELECT student_id as id FROM student_group_dtls WHERE parent_id='$_REQUEST[cmbgroup]'");
+											#foreach($dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*") as $r) 
+											foreach($student_name as $r)
 											{
 										?>
 										<tr>
@@ -1022,7 +1024,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 										<?php
 											$s_count = 1;
 											//Retrive all records the table
-											foreach($dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*") as $r) 
+											#foreach($dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*") as $r) 
+											foreach($student_name as $r)
 											{
 										?>
 										<tr>
@@ -1040,8 +1043,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 												{
 										?>
 										
-										<td align="right" bgcolor="#E9EFEF" style="border:0;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" bgcolor="#E9EFEF"  style="width:25px;height:35px;">
+										<td align="center" bgcolor="#E9EFEF" style="border:0;padding:1px;">&nbsp;</td>
+										<td bgcolor="#E9EFEF"  height="33" align="center">
 										<?php
 													$status_shift1 = $dbf->getDataFromTable("ped_attendance","shift1","ped_id='$res_ped[id]' AND teacher_id='$teacher_id' AND student_id='$r[id]' AND unit='$shift_count'");
 													$status_shift2 = $dbf->getDataFromTable("ped_attendance","shift2","ped_id='$res_ped[id]' AND teacher_id='$teacher_id' AND student_id='$r[id]' AND unit='$shift_count'");
@@ -1082,6 +1085,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 													}
 										?>
 										</td>
+										<td align="center" bgcolor="#E9EFEF" style="border:0;padding:1px;">&nbsp;</td>
 										<td  align="right" bgcolor="#E9EFEF" style="border:0;"><?php echo (($k%5)?'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;':'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');?></td>
 								<?php
 												$st++;

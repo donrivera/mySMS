@@ -573,7 +573,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								  ?>
                                     <tr>
                                       <td align="center" valign="middle">&nbsp;</td>
-                                      <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valstudent[first_name]."&nbsp;".$valstudent[father_name]."&nbsp;".$valstudent[family_name]."&nbsp;(".$valstudent[first_name1]."&nbsp;".$valstudent[father_name1]."&nbsp;".$valstudent[grandfather_name1]."&nbsp;".$valstudent[family_name1].")";?></td>
+                                      <td align="left" valign="middle" class="mycon" style="max-width:150px;overflow:hidden;text-overflow:ellipsis;">&nbsp;<?php echo $dbf->printStudentName($valstudent['id']);?></td>
                                       <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valstudent[email];?></td>
                                       <td align="left" valign="middle" class="mycon">&nbsp;<?php echo $valstudent[student_mobile];?></td>
                                       </tr>

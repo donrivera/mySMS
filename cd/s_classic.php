@@ -822,7 +822,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <tr>
                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                               <td height="28" align="right" valign="top" class="leftmenu"><label class="description" for="element_11"><?php echo constant("STUDENT_ADVISOR_HOME_S_CLASSIC_INTERESTIN");?> </label>
-                                <span> </span>:</td>
+                                <span> </span>:<span class="nametext1">*</span></td>
                               <td>&nbsp;</td>
                               <td align="left" valign="middle">
 							  

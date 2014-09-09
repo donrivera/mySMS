@@ -60,6 +60,19 @@ if($_SESSION[font]=='big'){
 <script src="datepicker/jquery.ui.datepicker.js"></script>
 <link rel="stylesheet" href="datepicker/demos.css">
 <script>
+$(document).ready(function() 
+{	
+	$("#frm").submit(function()
+	{
+		/*var init_pay=$("#payment").val();*/
+		var amts=$("#amts").val();
+		if(amts < 0)
+		{
+			alert("Please Input Payment Value!");
+			return false;
+		}
+	});
+});
 $(function() {
 	$( ".datepick" ).datepicker({
 		changeMonth: true,
@@ -99,11 +112,28 @@ $(function() {
 </script>
 <script language="javascript" type="text/javascript">
 function validate(){
+/*
 	if(document.frm.dated.value == ''){		
 		document.frm.dated.focus();
 		return false;
-	}else{
+	}
+	elseif(document.getElementById('amts').value == '')
+	{
+		document.getElementById('comment').focus();
+		return false;
+	}
+	else{
 		document.getElementById('lblname').innerHTML = "";
+	}
+	if(document.getElementById('comment').value == ''){
+		document.getElementById('comment').focus();
+		return false;
+	}
+*/
+	if(document.getElementById('amts').value == '')
+	{
+		document.getElementById('amts').focus();
+		return false;
 	}
 	if(document.getElementById('comment').value == ''){
 		document.getElementById('comment').focus();
@@ -271,11 +301,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <td>&nbsp;<input type="hidden" name="student_id" id="student_id" value="<?php echo $student_id;?>"></td>
                                 <td width="7%">&nbsp;<input type="hidden" name="course_id" id="course_id" value="<?php echo $course_id;?>"></td>
                                 </tr>
+								<!--
                               <tr>
                                 <td width="25%" height="28" align="right" valign="middle"><span class="leftmenu">&nbsp;<?php echo constant("STUDENT_MYACCOUNT_PAYMENTDATE");?> :</span></td>
                                 <td width="24%" align="left" valign="middle"><input name="dated" type="text" class="datepickFuture new_textbox100" readonly="" id="dated"/></td>
                                 <td rowspan="2" align="left" valign="top" id="lblname">&nbsp;</td>
                                 </tr>
+								-->
                               <tr>
                                 <td height="28" align="right" valign="middle"><span class="leftmenu">&nbsp;<?php echo constant("CD_SEARCH_INVOICE_FEES");?> :</span></td>
                                 <td align="left" valign="middle">

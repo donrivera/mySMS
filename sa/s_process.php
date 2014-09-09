@@ -23,8 +23,6 @@ $res = $dbf->strRecordID("student","*","id='$_REQUEST[student_id]'");
 if($_REQUEST['action']=='classic')
 { 
 	
-	
-	
 	/*
 	if($_REQUEST[mytxt_src] == '')
 	{$first_name=$_REQUEST[txt_src];}
@@ -41,6 +39,7 @@ if($_REQUEST['action']=='classic')
 	if($_REQUEST[mytxt_src3] == '')
 	{$family_name=$_REQUEST[txt_src3];}
 	else{$family_name=$_REQUEST[mytxt_src3];}
+	
 	*/
 
 	$student_name = $first_name.' '.$family_name;
@@ -57,10 +56,14 @@ if($_REQUEST['action']=='classic')
 	$_SESSION[information] = $_REQUEST[information];
 	$_SESSION[classic_gname] = $_REQUEST[gname];
 	
-	$_SESSION[classic_name] = $first_name;
-	$_SESSION[classic_fathername] = $father_name;
-	$_SESSION[classic_gfathername] = $grandfather_name;
-	$_SESSION[classic_familyname] = $family_name;
+	$_SESSION[classic_name] = $_REQUEST[mytxt_src];
+	$_SESSION[classic_fathername] = $_REQUEST[mytxt_src1];
+	$_SESSION[classic_gfathername] = $_REQUEST[mytxt_src2];
+	$_SESSION[classic_familyname] = $_REQUEST[mytxt_src3];
+	$_SESSION[classic_name1] = $ar_firstname;
+	$_SESSION[classic_fathername1] = $ar_fathername;
+	$_SESSION[classic_gfathername1] = $ar_gfathrname;
+	$_SESSION[classic_familyname1] = $ar_familyname;
 	
 	$_SESSION[classic_sidn] = $_REQUEST[sidn];
 	$_SESSION[classic_age] = $_REQUEST[age];
@@ -159,14 +162,14 @@ if($_REQUEST['action']=='classic')
 		move_uploaded_file($_FILES[signature][tmp_name],"photo/".$filename1);
 	}
 	$address = mysql_real_escape_string($_POST[address]);	
-	 $string="	first_name='$_REQUEST[mytxt_src]',
-				first_name1='$_REQUEST[ar_mytxt_src]',
-				father_name='$_REQUEST[mytxt_src1]',
-				father_name1='$_REQUEST[ar_mytxt_src1]',
-				grandfather_name='$_REQUEST[mytxt_src2]',
-				grandfather_name1='$_REQUEST[ar_mytxt_src2]',
-				family_name='$_REQUEST[mytxt_src3]',
-				family_name1='$_REQUEST[ar_mytxt_src3]',
+	$string="	first_name='$_SESSION[classic_name]',
+				first_name1='$_SESSION[classic_name1]',
+				father_name='$_SESSION[classic_fathername]',
+				father_name1='$_SESSION[classic_fathername1]',
+				grandfather_name='$_SESSION[classic_gfathername]',
+				grandfather_name1='$_SESSION[classic_gfathername1]',
+				family_name='$_SESSION[classic_familyname]',
+				family_name1='$_SESSION[classic_familyname1]',
 				guardian_name='$_REQUEST[gname]',
 				age='$_REQUEST[age]',
 				guardian_contact='$_REQUEST[pcontact]',
@@ -662,24 +665,7 @@ if($_REQUEST['action']=='classic')
 		$string_g1="status_id='2'";
 		$dbf->updateTable("student_enroll",$string_g1,"student_id='$sid' And course_id='$res_group[course_id]'");
 	}
-	#POST ADVANCE PAYMENT
-	if($_POST["pay_status"]!='' && $_POST["pay_type"]!='' && empty($group))
-	{
-		$count = $_POST[count];
-		for($i=1; $i<=$count; $i++)
-		{
-			$c = "course".$i;
-			$c = $_REQUEST[$c];		
-			if($c != '')
-			{	
-				$course_id=$c;		
-				#$string="student_id='$sid',course_id='$c'";
-				#$dbf->insertSet("student_course",$string);
-			}
-		}
-		$dbf->processPayment($_POST["pay_status"],$sid,$course_id,$_POST["pay_type"],$_POST["pay_amt"],$_POST["discount"]);
-	}
-	#POST ADVANCE PAYMENT
+	
 	//=======================================================
 	//UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
 	
@@ -702,6 +688,14 @@ if($_REQUEST['action']=='classic')
 	session_unregister('classic_gfathername');
 	unset($_SESSION['classic_familyname']);
 	session_unregister('classic_familyname');
+	unset($_SESSION['classic_name1']);
+	session_unregister('classic_name1');
+	unset($_SESSION['classic_fathername1']);
+	session_unregister('classic_fathername1');
+	unset($_SESSION['classic_gfathername1']);
+	session_unregister('classic_gfathername1');
+	unset($_SESSION['classic_familyname1']);
+	session_unregister('classic_familyname1');
 	unset($_SESSION['classic_sidn']);
 	session_unregister('classic_sidn');
 	unset($_SESSION['classic_age']);
@@ -715,7 +709,21 @@ if($_REQUEST['action']=='classic')
 	}
 	else
 	{
-		header("Location:search.php");exit;
+		#POST ADVANCE PAYMENT
+		if($_POST["pay_status"]!='' && $_POST["pay_type"]!='' && empty($group))
+		{
+			$count = $_POST[count];
+			for($i=1; $i<=$count; $i++)
+			{
+				$c = "course".$i;
+				$c = $_REQUEST[$c];		
+				if($c != '')
+				{$course_id=$c;}
+			}
+			$dbf->processPayment($_POST["pay_status"],$sid,$course_id,$_POST["pay_type"],$_POST["pay_amt"],$_POST["discount"]);
+			header("Location:search_advance.php?student_id=$sid&course_id=$course_id");exit;
+		}else{header("Location:search.php");exit;}
+		#POST ADVANCE PAYMENT
 	}
 
 }

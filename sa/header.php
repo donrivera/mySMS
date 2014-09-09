@@ -238,6 +238,7 @@ $(document).ready(function() {
     <div id="lbl_progress_rpt" class="dropmenudiv_d">
     	<a href="report_group_progress.php"><?php echo constant("SINGLE_GROUP");?></a> 
         <a href="report_teacher_progress.php"><?php echo constant("STUDENT_WISE");?></a> 
+		<a href="report_teacher_progress_form.php"><?php echo "Group Progress Form";?></a>
     </div>
     <div id="conv" class="dropmenudiv_d">
         <a href="calc_converter.php"><?php echo constant("STUDENT_CALC_CONVERTER_DATA_CONVERTER");?></a> 
@@ -269,6 +270,7 @@ $(document).ready(function() {
 		<a href="report_student_type.php"><?php echo constant("REPORT_STUDENT_TYPE");?></a>
 		<a href="report_corp_acct.php"><?php echo constant("REPORT_CORPORATE_ACCT");?></a>
 		<a href="report_student_address.php"><?php echo constant("REPORT_STUDENT_ADDRESS_REPORT");?></a>
+		<a href="report_transaction.php"><?php echo constant("ACCOUNTANT_TRANS");?></a> 
 	</div>
      
     <!-- grouping -->

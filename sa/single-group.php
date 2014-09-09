@@ -237,7 +237,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td align="left" valign="middle" class="shop2">
 					<?php echo $dbf->getDataFromTable("course","name","id='$group[course_id]'");?></td>
                     <td align="left" valign="middle" class="shop2"><?php echo $dbf->getDataFromTable("teacher","name","id='$group[teacher_id]'");?></td>
-                    <td align="center" valign="middle" class="mytext"><?php echo $group["status"];?></td>
+                    <td align="center" valign="middle" class="mytext"><?php echo $dbf->groupStatus($group["status"]);?></td>
                     <td align="center" valign="middle" class="mytext"><?php echo $dbf->getDataFromTable("teacher_progress_certificate","final_percent","course_id='$dtls[course_id]' And student_id='$student_id'");?>%</td>
                   </tr>
                   <?php $k++; } ?>

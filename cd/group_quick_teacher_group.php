@@ -19,7 +19,7 @@ $teacher_id = $_REQUEST["teacher_id"];
       <td width="14%" align="center" valign="middle" bgcolor="#000066">% Completed</td>
   </tr>
     <?php
-    foreach($dbf->fetchOrder('student_group',"teacher_id='$teacher_id'","","") as $valstudent){
+    foreach($dbf->fetchOrder('student_group',"teacher_id='$teacher_id' AND status !='Completed'","group_time,start_date ASC","") as $valstudent){
 	$course = $dbf->strRecordID("course","*","id='$valstudent[course_id]'");
 	
 	# Calculate Percentanges of Complition

@@ -1510,7 +1510,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 
                               <td height="28" align="right" valign="top" class="leftmenu"><label class="description" for="element_11"><?php echo constant("STUDENT_ADVISOR_HOME_S_CLASSIC_INTERESTIN");?> </label>
 
-                                <span> </span>:</td>
+                                <span> </span>:<span class="nametext1">*</span></td>
 
                               <td>&nbsp;</td>
 
@@ -1518,39 +1518,43 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 
 							  
 
-                            <table width="80%" border="0" cellspacing="0" cellpadding="0" style="float:left;">
+								<table width="80%" border="0" cellspacing="0" cellpadding="0" style="float:left;">
+									<?php
 
-                                  <?php
-
-								$i = 1;
-
-								foreach($dbf->fetchOrder('course',"","") as $valc) {							
-
-								$n=$dbf->countRows('student_course',"student_id='$student_id' AND course_id='$valc[id]'");							
-
-								?>
-
-                                  <tr>
-
-                                    <td width="6%" align="left" valign="middle">
-
-                                    <input name="course<?php echo $i;?>" id="course<?php echo $i;?>" type="checkbox" value="<?php echo $valc["id"];?>" onchange="get_interest_group();" >
-
-                                    </td>
-
-                                    <td width="94%" align="left" valign="middle" class="mycon"><?php echo $valc["name"];?></td>
-
-                                  </tr>
-
-                                  <?php
-
-								$i = $i + 1;
-
-								}
-
-								?>
-
-                                </table>							
+										$i = 1;
+										foreach($dbf->fetchOrder('course',"","") as $valc) 
+										{							
+											$n=$dbf->countRows('student_course',"student_id='$student_id' AND course_id='$valc[id]'");							
+									?>
+									
+									<tr>
+										<td width="6%" align="left" valign="middle">
+										<input name="course<?php echo $i;?>" id="course<?php echo $i;?>" type="checkbox" value="<?php echo $valc["id"];?>" onchange="get_interest_group();" >
+										</td>
+										<td width="94%" align="left" valign="middle" class="mycon"><?php echo $valc["name"];?></td>
+									</tr>
+									
+									<?php
+											$i = $i + 1;
+										}
+										
+									?>
+									<!--
+									<tr>
+										<td width="6%" align="left" valign="middle">
+										
+										<select name="course" id="course" multiple>
+											<option value="">Course</option>
+											<?php foreach($dbf->fetchOrder('course',"","name") as $valc):?>
+												<option value="<?php echo $valc['id']?>"><?php echo $valc['name']?></option>
+											<?php endforeach;?>
+										</select>
+										
+										</td>
+										<td width="94%" align="left" valign="middle" class="mycon"><?php #echo $valc["name"];?></td>
+									</tr>
+									-->
+								</table>							
 
 							
 

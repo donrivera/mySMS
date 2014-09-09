@@ -355,6 +355,7 @@ $(document).ready(function() {
 		<a href="report_student_type.php"><?php echo constant("REPORT_STUDENT_TYPE");?></a>
         <a href="report_corp_acct.php"><?php echo constant("REPORT_CORPORATE_ACCT");?></a>
 		<a href="report_student_address.php"><?php echo constant("REPORT_STUDENT_ADDRESS_REPORT");?></a>
+		<a href="report_transaction.php"><?php echo constant("ACCOUNTANT_TRANS");?></a> 
 		</div>
             
         <div id="help" class="dropmenudiv_d">

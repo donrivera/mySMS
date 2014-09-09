@@ -32,12 +32,21 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 			  </tr>';
 			  
 				$i = 1;
-				$num=$dbf->countRows('student_enroll',"centre_id='$_REQUEST[centre_id]' And beddebt_amt > 0 And (enroll_date between '$_REQUEST[start_date]' And '$_REQUEST[end_date]')");
-				
+				$sql=$dbf->genericQuery("
+											SELECT SUM(sf.paid_amt) as total_paid,(se.course_fee - (SUM(sf.paid_amt) + se.discount)) as bad_debt,se.*
+											FROM student_enroll se
+											LEFT JOIN student_fees sf ON sf.student_id=se.student_id AND sf.course_id=se.course_id
+											WHERE se.centre_id='$_REQUEST[centre_id]' AND (se.enroll_date between '$_REQUEST[start_date]' AND '$_REQUEST[end_date]')
+											GROUP BY se.student_id,sf.student_id
+											HAVING bad_debt > 0
+											ORDER BY se.enroll_date
+										");
+				#$num=$dbf->countRows('student_enroll',"centre_id='$_REQUEST[centre_id]' And beddebt_amt > 0 And (enroll_date between '$_REQUEST[start_date]' And '$_REQUEST[end_date]')");
+				$num=count($sql);
 				//loop start
-				foreach($dbf->fetchOrder('student_enroll',"centre_id='$_REQUEST[centre_id]' And beddebt_amt > 0 And (enroll_date between '$_REQUEST[start_date]' And '$_REQUEST[end_date]')","payment_date") as $valfee) {
-				
-				$student = $dbf->strRecordID("student","*","id='$valfee[student_id]'");
+				#foreach($dbf->fetchOrder('student_enroll',"centre_id='$_REQUEST[centre_id]' And beddebt_amt > 0 And (enroll_date between '$_REQUEST[start_date]' And '$_REQUEST[end_date]')","payment_date") as $valfee) {
+				foreach($sql as $valfee) {
+				$student = $valfee[student_id];#$dbf->strRecordID("student","*","id='$valfee[student_id]'");
 				$course = $dbf->strRecordID("course","*","id='$valfee[course_id]'");
 				$group = $dbf->strRecordID("student_group","*","id='$valfee[group_id]'");
 				
@@ -47,14 +56,14 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 				$course_fees = $dbf->getDataFromTable("course_fee","fees","id='$valfee[fee_id]'");
 				$en_amt = ($course_fees - $valfee["discount"]) + $valfee["other_amt"];
 				
-				$paid = $dbf->strRecordID("student_fees","SUM(paid_amt)","status='1' And student_id='$valfee[student_id]' And course_id='$valfee[course_id]'");
-				$paid = $paid["SUM(paid_amt)"];
+				$paid = $valfee[total_paid];#$dbf->strRecordID("student_fees","SUM(paid_amt)","student_id='$valfee[student_id]' And course_id='$valfee[course_id]' And status='1'");
+				#$paid = $paid["SUM(paid_amt)"];
 				
 				$bal_amt = $dbf->BalanceAmount($valfee["student_id"],$valfee["course_id"]);
 				$days = $dbf->dateDiff($group["end_date"],date('Y-m-d'));
 			$html.='<tr>
-			  <td align="left" valign="middle" >&nbsp;'.$valfee["payment_date"].'</td>
-			  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($student["id"]).'</span></td>
+			  <td align="left" valign="middle" >&nbsp;'.$valfee["enroll_date"].'</td>
+			  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($student).'</span></td>
 			  <td align="center" valign="middle" >'.$enroll.'</td>
 			  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->FullGroupInfo($group['id']).'</span></td>
 			  <td align="left" valign="middle" ><span id="result_box" lang="ar" xml:lang="ar">&nbsp;'.$course["name"].'</span></td>
@@ -66,12 +75,12 @@ $html = '<table width="100%" border="1" cellpadding="0" cellspacing="0"  borderc
 			  <td align="center" valign="middle" >';
 			  
 			  if($days <= 30){
-				  $days;
+				  $html .=$days;
 			  }
 			  $html.='</td>
 			  <td align="center" valign="middle" >';
 			  if($days > 30){
-				  $days;
+				  $html .=$days;
 			  }
 			  $html.='</td>';
 				  $i = $i + 1;

@@ -62,13 +62,13 @@ h2 {
 -->
 .cer_my_head{
 font-family:Arial, Helvetica, sans-serif;
-font-size:12px;
+font-size:14px;
 color:#000000;
 font-weight:normal;
 }
 .cer_my_head_bold{
 font-family:Arial, Helvetica, sans-serif;
-font-size:12px;
+font-size:14px;
 color:#000000;
 font-weight:bold;
 }
@@ -150,9 +150,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td>&nbsp;</td>
                 <td height="30" align="left" valign="middle">
                 <select name="mystatus" id="mystatus" style="width:150px; border:solid 1px; border-color:#999999;">
-                <option value="">All</option>
+                <!--
+				<option value="">All</option>
                 <option value="Not Started" <?php if($_REQUEST['mystatus']=='Not Started'){ ?> selected="" <?php } ?>>Not Started</option>
                 <option value="Continue" <?php if($_REQUEST['mystatus']=='Continue'){ ?> selected="" <?php } ?>>Active - In Progress</option>
+				-->
+				<option value="">Select</option>
                 <option value="Completed" <?php if($_REQUEST['mystatus']=='Completed'){ ?> selected="" <?php } ?>>Completed</option>
                 </select>
                 </td>
@@ -181,8 +184,18 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               </tr>
             </table>
               <form name="frm" id="frm" method="post">
-              <?php			  
-			  foreach($dbf->fetchOrder('student_group m,student_group_dtls d',"m.id=d.parent_id And m.id='$group_id'") as $val_my_group) {
+              <?php	
+				$show_passing_grade=$dbf->getDataFromTable("grade","frm","name='Fair'");
+				$sql=$dbf->genericQuery("	SELECT m.*,d.* 
+											FROM student_group m 
+											INNER JOIN student_group_dtls d ON m.id=d.parent_id
+											INNER JOIN teacher_progress_certificate t ON t.student_id=d.student_id AND t.group_id = m.id
+											WHERE m.id='$group_id' AND t.final_percent >=$show_passing_grade");			  
+				#foreach($dbf->fetchOrder('student_group m,student_group_dtls d',"m.id=d.parent_id And m.id='$group_id'") as $val_my_group) 
+				foreach($sql as $val_my_group)
+				{
+					$bal_amt = $dbf->BalanceAmount($val_my_group["student_id"],$val_my_group["course_id"]);
+					if($bal_amt <= 0):
 			  ?>
                 <table width="1126" border="0" align="center" cellpadding="0" cellspacing="0">
                   <?php
@@ -193,6 +206,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$resc = $dbf->strRecordID("countries","*","id='$res[country_id]'");
 					
 					$course_name = $dbf->strRecordID("course","*","id='$course_id'");
+					$exp_course_name=explode("-",$course_name[name]);
+					$eng_course_name=$exp_course_name[0];
+					$arb_course_name=$exp_course_name[1];
 					$res_enroll = $dbf->strRecordID("student_enroll","*","student_id='$student_id' And course_id='$course_id'");
 					$res_g = $dbf->strRecordID("student_group","*","id='$res_enroll[group_id]'");
 					$res_size = $dbf->strRecordID("group_size","*","group_id='$res_g[group_id]'");
@@ -279,7 +295,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head"> passed the following English language course</span><span class="cer9_arial">:</span></th>
                                       </tr>
                                     <tr>
-                                      <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">Level: </span><span class="cer_my_head_bold"><?php echo $course_name["name"];?></span><span class="cer_my_head"> with a total number of </span><span class="cer_my_head_bold"> <?php echo $hr;?></span>&nbsp;<span class="cer_my_head">hours</span></th>
+                                      <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">Level: </span><span class="cer_my_head_bold"><?php echo $eng_course_name;?></span><span class="cer_my_head"> with a total number of </span><span class="cer_my_head_bold"> <?php echo $hr;?></span>&nbsp;<span class="cer_my_head">hours</span></th>
                                       </tr>
                                     <tr>
                                       <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">From: </span><span class="cer_my_head_bold"><?php echo $res_g["start_date"];?> &nbsp;</span><span class="cer_my_head">to:</span><span class="cer_my_head_bold">&nbsp;<?php echo $res_g["end_date"];?> </span></th>
@@ -335,7 +351,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       <th height="21" align="right" valign="middle" class="cer_my_head_bold" scope="col"><span class="cer_my_head_bold" dir="rtl">قد اجتاز دورة في اللغة  الانجليزية لغير الناطقين بها:</span></th>
                                       </tr>
                                     <tr>
-                                      <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $Arabic->en2ar($course_name["name"]);?>  , وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span></th>
+                                      <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $eng_course_name;?>  , وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span></th>
                                       </tr>
                                     <tr>
                                       <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في الفترة من: <?php echo $dbf->enNo2ar($res_g["start_date"],'-');?>   إلى: <?php echo $dbf->enNo2ar($res_g["end_date"],'-');?></span></th>
@@ -352,7 +368,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       </tr>
                                   </table>
                                   <br />
-                                  <span class="cer_my_head_bold" dir="rtl">وحصل على تقدير  <?php echo $Arabic->en2ar($res_grade["name"]);?> , ونسبة  <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %</span></td>
+                                  <span class="cer_my_head_bold" dir="rtl">وحصل على تقدير  <?php echo $res_grade["arabic"];?> , ونسبة  <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %</span></td>
                                   </tr>
                                 </table></td>
                               </tr>
@@ -402,7 +418,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td colspan="2">&nbsp;</td>
                     </tr>
   </table>
-  				<?php }?>
+  				<?php endif;}?>
                 <?php if($group_id == ''){?>
                 <table width="1126" border="0" align="center" cellpadding="0" cellspacing="0">
                   <tr>                    
@@ -533,7 +549,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       </tr>
                                   </table>
                                   <br />
-                                  <span class="cer_my_head_bold" dir="rtl">وحصل على تقدير  <?php echo $Arabic->en2ar($res_grade["name"]);?> , ونسبة  <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %</span></td>
+                                  <span class="cer_my_head_bold" dir="rtl">وحصل على تقدير  <?php echo $res_grade["arabic"];?> , ونسبة  <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %</span></td>
                                   </tr>
                                 </table></td>
                               </tr>

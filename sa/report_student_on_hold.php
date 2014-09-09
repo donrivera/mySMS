@@ -272,13 +272,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 																OR p.shift7='X'
 																OR p.shift8='X'
 																OR p.shift9='X')
-														ORDER BY pu.units DESC 
+														ORDER BY pu.units DESC LIMIT 0,1
 													");
 						foreach($lessons as $l):$student_last_lesson=$l[lesson];endforeach;
 						
 					?>                    
                 <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
-                  <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><a href="single-home.php?student_id=<?php echo $val[id];?>" style="cursor:pointer;">
+                  <td height="25" align="left" valign="middle" class="mycon" style="max-width:100px;overflow:hidden;text-overflow:ellipsis;"><a href="single-home.php?student_id=<?php echo $val[id];?>" style="cursor:pointer;">
 					<?php echo $dbf->printStudentName($val[id]);?>
 				  </a></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
@@ -287,7 +287,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_comment];?></td>
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $course[name];?></td>
                   <td width="15%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $date_hold[dated];?></td>
-				  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $student_last_lesson;?></td>
+				  <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo (empty($student_last_lesson)?"Beginning of Course":$student_last_lesson);?></td>
                   <?php
 					  $i = $i + 1;
 					  if($color=="#ECECFF"){

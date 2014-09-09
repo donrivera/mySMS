@@ -123,8 +123,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
             <td height="25" align="left" bgcolor="#FFCB7D" class="pedtext">Status:</td>
             <td align="left" valign="middle" bgcolor="#FFCB7D" class="heading">
             <select name="mystatus" id="mystatus" style="width:150px; border:solid 1px; border-color:#999999;">
-            <option value="">All</option>
+            <!--
+			<option value="">All</option>
             <option value="Not Started" <?php if($_REQUEST['mystatus']=='Not Started'){ ?> selected="" <?php } ?>>Not Started</option>
+			-->
+			<option value="">Select</option>
             <option value="Continue" <?php if($_REQUEST['mystatus']=='Continue'){ ?> selected="" <?php } ?>>Active - In Progress</option>
             <option value="Completed" <?php if($_REQUEST['mystatus']=='Completed'){ ?> selected="" <?php } ?>>Completed</option>
             </select>
@@ -253,7 +256,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td width="34%" height="20" align="left" valign="middle" class="leftmenu"> <?php echo constant("CD_GROUP_PROGRESS_LESSIONTAKEN");?>:</td>
                 <?php				
 				//Get number of Attendace present in e-PEDCARD (table : ped_attendance)
-				$num_total_class=$dbf->countRows('ped_units',"group_id='$_REQUEST[cmbgroup]'");
+				$num_total_class=$dbf->countRows('ped_units',"group_id='$_REQUEST[cmbgroup]'");# / $res_g["unit_per_day"]
 				?>
                 <td width="45%" align="left" valign="middle" class="pedtext_normal"><?php echo $num_total_class;?></td>
                 <td width="16%" align="center" valign="middle" class="nametext" >&nbsp;</td>
@@ -285,16 +288,17 @@ $count = $res_logout["name"]; // Set timeout period in seconds
             <td height="20" align="left" valign="middle" class="leftmenu">&nbsp;<?php echo constant("STUDENT_PROGRESS_REPORT_ATTENDANCE");?> : </td>
             <?php
 			//Get number of Attendace present in e-PEDCARD (table : ped_attendance)
-			$num_att=$dbf->No_Of_Attendance($_REQUEST['teacher_id'], $_REQUEST["cmbgroup"]);
+			$num_att=$dbf->No_Of_Attendance($_REQUEST['teacher_id'], $_REQUEST["cmbgroup"]);# / $res_g["unit_per_day"]
+			$num_total_unit_teach=$res_g[units];#$dbf->getDataFromTable("ped_units","MAX(units)","group_id='$_REQUEST[cmbgroup]'");# / $res_g["unit_per_day"]
 			?>
-            <td align="left" valign="middle" class="pedtext_normal"><b><?php echo $num_att;?></b>&nbsp;&nbsp;&nbsp;<?php echo constant("CD_REPORT_TEACHER_PROGRESS_OUTOF");?> &nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo $res_size[units];?></b></td>
+            <td align="left" valign="middle" class="pedtext_normal"><b><?php echo $num_att / $res_g[unit_per_day];?></b>&nbsp;&nbsp;&nbsp;<?php echo constant("CD_REPORT_TEACHER_PROGRESS_OUTOF");?> &nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo $num_total_unit_teach;?></b></td>
             <td>&nbsp;</td>
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="41%" height="20" align="left" valign="middle" class="leftmenu"><?php echo constant("CD_REPORT_TEACHER_PROGRESS_TOTAL");?> : </td>
                 <?php
 				if($num_att>0){
-					$per = round(($num_att / $res_size[units]) * 100);
+					$per = round((($num_att / $res_g[unit_per_day]) / $num_total_unit_teach) * 100);
 				}
 				?>
                 <td width="59%" align="left" valign="middle" class="pedtext_normal"><?php echo $per;?>%</td>
@@ -347,7 +351,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				<?php if($num_att<$total) { echo "Low attendance can keep you from reaching the goals for this level."; } ?> </td>
                 <td rowspan="11" align="left" valign="top">
                 <?php
-				$at = $res_progress["course_attendance_perc"];
+				$at = $res_progress["course_attendance"];
 				$parti = $res_progress["course_partication"];
 				$home = $res_progress["course_homework"];
 				$flu = $res_progress["course_fluency"];

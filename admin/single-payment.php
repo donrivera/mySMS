@@ -410,7 +410,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <?php					
 					$val_student = $dbf->strRecordID("student","*","id='$student_id'");
 					$res_enroll = $dbf->strRecordID("student_enroll","*","course_id='$course_id' And student_id='$student_id'");
-					$course_fees = $dbf->getDataFromTable("course_fee","fees","id='$res_enroll[fee_id]'");
+					$course_fees = $dbf->getDataFromTable("course_fee","fees","course_id='$res_enroll[fee_id]'");
 				  ?>
                   <tr>
                     <td colspan="5" align="left" valign="top" style="padding-top:3px;">

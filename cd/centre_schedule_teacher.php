@@ -215,7 +215,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td width="278" height="25" align="left" valign="middle" bgcolor="#FDF9F2" class="mycon"><?php echo $val_course[name];?></td>
                 <td width="430" align="left" valign="middle" bgcolor="#FDF9F2" class="mycon">&nbsp;<?php echo $dbf->FullGroupInfo($val["id"]);?></td>
                 <td width="127" align="center" valign="middle" bgcolor="#FDF9F2" class="mycon"><?php echo $val_no["COUNT(id)"];?></td>
-                <td width="126" align="center" valign="middle" bgcolor="#FDF9F2" class="mycon"><?php echo $val[status];?></td>
+                <td width="126" align="center" valign="middle" bgcolor="#FDF9F2" class="mycon"><?php echo $dbf->groupStatus($val[status]);?></td>
               </tr>
             <?php 
 			if($color=="#ECECFF")

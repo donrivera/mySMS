@@ -215,9 +215,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 			$shift3 = $count_att_3["COUNT(id)"];
 			
 			$num_att = $shift1+$shift2+$shift3;
-			
+			$num_total_unit_teach=$dbf->getDataFromTable("ped_units","MAX(units)","group_id='$group_id'");
 			?>
-              <td align="left" valign="middle" bgcolor="#FFFFFF" class="mytext"><b><?php echo $num_att;?></b>&nbsp;&nbsp;&nbsp;<?php echo constant("CD_REPORT_TEACHER_PROGRESS_OUTOF");?>&nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo $res_size[units];?></b></td>
+              <td align="left" valign="middle" bgcolor="#FFFFFF" class="mytext"><b><?php echo $num_att;?></b>&nbsp;&nbsp;&nbsp;<?php echo constant("CD_REPORT_TEACHER_PROGRESS_OUTOF");?>&nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo $num_total_unit_teach;?></b></td>
               <td bgcolor="#FFFFFF">&nbsp;</td>
               <td bgcolor="#FFFFFF"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
@@ -226,7 +226,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				$per = 0;
 				if($num_att>0)
 				{
-					 $per = round(($num_att / $res_size[units]) * 100);
+					 $per = round(($num_att / $num_total_unit_teach) * 100);
 				}
 				?>
                   <td width="59%" align="left" valign="middle" class="mytext"><?php echo $per;?>%</td>

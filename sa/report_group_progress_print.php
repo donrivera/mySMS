@@ -226,20 +226,20 @@ header("Content-Disposition: attachment; Filename=group_progress_report.doc");
 						{ 
 							$res_progress = $dbf->strRecordID("teacher_progress_course","*","group_id='$_REQUEST[group_id]' And student_id='$r[id]'");
 							//$res_progress["course_attendance_perc"]+
-							$avg = $res_progress["course_partication"]+$res_progress["course_homework"]+$res_progress["course_fluency"]+$res_progress["course_pro"]+$res_progress["course_grammer"]+$res_progress["course_voca"]+$res_progress["course_comp"];
+							$avg = $res_progress["course_partication"]+$res_progress["course_homework"]+$res_progress["course_fluency"]+$res_progress["course_pro"]+$res_progress["course_grammer"]+$res_progress["course_voca"]+$res_progress["course_listen"];
 							if($avg>0)
 							{
 								$avg = $avg / 7;
 								$avg = round($avg,1);
 							}
-							$at = $res_progress["course_attendance_perc"];
+							$at = $res_progress["course_attendance"] * $res_g["unit_per_day"];
 							$parti = $res_progress["course_partication"];
 							$home = $res_progress["course_homework"];
 							$flu = $res_progress["course_fluency"];
 							$pro = $res_progress["course_pro"];
 							$gra = $res_progress["course_grammer"];
 							$voca = $res_progress["course_voca"];
-							$comp = $res_progress["course_comp"];								
+							$comp = $res_progress["course_listen"];								
 					?>
 					<tr>
 						<td height="25" align="left" valign="middle" class="pedtext_normal" bgcolor="#F7F7F7" style=" border-bottom:solid 1px;">&nbsp;<?php echo $dbf->printStudentName($r["id"]);?></td>

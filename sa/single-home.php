@@ -258,7 +258,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td align="left" valign="middle" class="mytext"><?php echo $group["group_name"];?> <?php #echo $dbf->printClassTimeFormat($group["group_start_time"],$group["group_end_time"]);?></td>
                     <td align="left" valign="middle" class="mytext"><?php echo $dbf->getDataFromTable("course","name","id='$group[course_id]'");?></td>
                     <td align="left" valign="middle" class="mytext"><?php echo $group["start_date"].' TO '.$group["end_date"];?></td>
-                    <td align="center" valign="middle" class="mytext"><?php echo $group["status"];?></td>
+                    <td align="center" valign="middle" class="mytext"><?php echo $dbf->groupStatus($group["status"]);?></td>
                   </tr>
                   <?php $k++; } ?>
                   </table></td>

@@ -169,11 +169,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
             <td align="left" valign="middle" bgcolor="#b4b4b4" class="title headingtext" style="background:url(../images/footer_repeat.png) repeat-x;"><table width="100%" border="0" cellspacing="0">
                 <tr class="logintext">
                   <td width="30%" height="30" class="logintext">
-				  <img src="../images/rightarrow.png" width="16" height="16"><?php echo constant("ADMIN_MENU_REPORTS_FINISH");?></td>
+				  <img src="../images/rightarrow.png" width="16" height="16"><?php echo "Group Completion Date Range";#constant("ADMIN_MENU_REPORTS_FINISH");?></td>
                   <td width="15%" align="right" valign="middle" class="logintext"><?php echo constant("ADMIN_REPORT_GROUP_TO_FINISH_PERIODFROM");?>  :&nbsp; </td>
                   <td width="10%" align="left">
                   <input name="start_date" readonly="" type="text" class="datepick validate[required] new_textbox80" id="start_date" value="<?php echo $_REQUEST[start_date];?>" size="45" minlength="4"/></td>
-                  <td width="3%" align="center"><span class="logintext"><?php echo constant("ADMIN_REPORT_GROUP_TO_FINISH_TO");?></span> :&nbsp; </td>
+                  <td width="3%" align="center"><span class="logintext"><?php echo constant("ADMIN_REPORT_GROUP_TO_FINISH_TO");?></span> :&nbsp;</td>
                   <td width="28%" align="left" valign="middle">
                   <table width="200" border="0" cellspacing="0" cellpadding="0">
                     <tr>

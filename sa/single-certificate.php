@@ -277,11 +277,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				$per_unit = 45; //minute
 				$tot_unit = $or_unit * $per_unit;
 				$hr = $tot_unit / 60;
+				$level_test=$dbf->getDataFromTable("teacher_progress_certificate","end_of_level","student_id='$student_id' And course_id='$course_id'");
 				?>
               <tr>
                 <td colspan="5" align="left" valign="top">               
-                
-                <table width="820" border="0" align="center" cellpadding="0" cellspacing="0" style="border:solid 1px #ccc;" bgcolor="#FFFFFF">
+                <?php if($level_test>0): ?>
+				<table width="820" border="0" align="center" cellpadding="0" cellspacing="0" style="border:solid 1px #ccc;" bgcolor="#FFFFFF">
                   <tr>
                     <td width="110"><img src="../images/left-img.jpg" alt="left-img" width="110" height="670" /></td>
                     <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
@@ -490,7 +491,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       </tr>
                     </table></td>
                   </tr>
-                </table></td>
+                </table>
+				<?php else: echo "The Student did not complete his end-of-level test...";endif;?>
+				</td>
                 </tr>
               <tr>
                 <td>&nbsp;</td>

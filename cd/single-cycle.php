@@ -493,7 +493,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <?php if($status == 3){ ?>
                         <table width="90%" border="1" bordercolor="#CCCCCC" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
                           <tr>
-                            <td width="83%" height="20" align="center" valign="middle" bgcolor="#9999CC" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_AUDITING_WAITING");?> <?php echo $pay_status;?></td>
+                            <td width="83%" height="20" align="center" valign="middle" bgcolor="#9999CC" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_AUDITING_WAITING");?> <?php echo constant("STUDENT_ADVISOR_AUDITING_WAITING_PAYMENT");?></td>
                           </tr>
                           </table>
                           <?php } ?>

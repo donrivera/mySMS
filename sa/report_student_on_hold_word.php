@@ -134,7 +134,7 @@ header("Content-Disposition: attachment; Filename=report_student_on_hold.doc");
 													OR p.shift7='X'
 													OR p.shift8='X'
 													OR p.shift9='X')
-											ORDER BY pu.units DESC 
+											ORDER BY pu.units DESC LIMIT 0,1
 										");
 			foreach($lessons as $l):$student_last_lesson=$l[lesson];endforeach;
         ?>                    
@@ -146,7 +146,7 @@ header("Content-Disposition: attachment; Filename=report_student_on_hold.doc");
       <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_comment];?></td>
       <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $course[name];?></td>
       <td width="11%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $date_hold[dated];?></td>
-      <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $student_last_lesson;?></td>
+      <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo (empty($student_last_lesson)?"Beginning of Course":$student_last_lesson);?></td>
       <?php
           $i = $i + 1;
           if($color=="#ECECFF"){

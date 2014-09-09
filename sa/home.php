@@ -443,7 +443,7 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
 					$i = 1;
 					$dt = date('Y-m-d');
 					$centre_id=$_SESSION['centre_id'];
-					foreach($dbf->fetchOrder('student_appointment',"dated>='$dt' AND status='1' AND centre_id='$centre_id'","dated DESC LIMIT 0,10") as $val_s) {
+					foreach($dbf->fetchOrder('student_appointment',"dated='$dt' AND status='1' AND centre_id='$centre_id'","dated DESC LIMIT 0,10") as $val_s) {
 					//foreach($dbf->fetchOrder('student_appointment',"user_id='$_SESSION[id]' AND dated>='$dt' AND status='0'","dated") as $val_s) {
 						
 						//Get student name

@@ -285,16 +285,17 @@ $count = $res_logout["name"]; // Set timeout period in seconds
             <td height="20" align="left" valign="middle" class="leftmenu">&nbsp;<?php echo constant("STUDENT_PROGRESS_REPORT_ATTENDANCE");?> : </td>
             <?php
 			//Get number of Attendace present in e-PEDCARD (table : ped_attendance)
-			$num_att=$dbf->No_Of_Attendance($_REQUEST['teacher_id'], $_REQUEST["cmbgroup"]);
+			$num_att=$dbf->No_Of_Attendance($_REQUEST['teacher_id'], $_REQUEST["cmbgroup"]);# / $res_g["unit_per_day"]
+			$num_total_unit_teach=$res_g[units];#$dbf->getDataFromTable("ped_units","MAX(units)","group_id='$_REQUEST[cmbgroup]'");# / $res_g["unit_per_day"]
 			?>
-            <td align="left" valign="middle" class="pedtext_normal"><b><?php echo $num_att;?></b>&nbsp;&nbsp;&nbsp;<?php echo constant("CD_REPORT_TEACHER_PROGRESS_OUTOF");?> &nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo $res_size[units];?></b></td>
+            <td align="left" valign="middle" class="pedtext_normal"><b><?php echo $num_att / $res_g[unit_per_day];?></b>&nbsp;&nbsp;&nbsp;<?php echo constant("CD_REPORT_TEACHER_PROGRESS_OUTOF");?> &nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo $num_total_unit_teach;?></b></td>
             <td>&nbsp;</td>
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="31%" height="20" align="left" valign="middle" class="leftmenu"><?php echo constant("CD_REPORT_TEACHER_PROGRESS_TOTAL");?> : </td>
                 <?php
 				if($num_att>0){
-					$per = round(($num_att / $res_size[units]) * 100);
+					$per = round((($num_att / $res_g[unit_per_day]) / $res_size[units]) * 100);
 				}
 				?>
                 <td width="69%" align="left" valign="middle" class="pedtext_normal"><?php echo $per;?>%</td>

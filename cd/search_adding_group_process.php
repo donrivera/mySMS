@@ -48,10 +48,11 @@ $course_id = $res_group["course_id"];
 $res_inv = $dbf->strRecordID("centre","invoice_from","id='$centre_id'");
 $studentSendSMS=0;
 $student_reenroll=0;
+$group_status = $dbf->getDataFromTable("student_group","status","id='$group'");
 if($num_student == 0)
 {	
 	$duplicate_course=$dbf->countRows('student_group_dtls',"course_id='$course_id' && student_id='$student_id'");
-	if($duplicate_course==1)
+	if($duplicate_course==1 && $group_status!='Completed')
 	{
 		echo '<script type="text/javascript">alert("Duplicate Course!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
 	}
@@ -69,7 +70,10 @@ if($num_student == 0)
 		$str_d="parent_id='$group',student_id='$student_id',course_id='$course_id',centre_id='$centre_id',room_id='$room_id'";
 		$dbf->insertSet("student_group_dtls",$str_d);
 		//=====================================
-	
+		#Ped Card Update
+		$student_moving_status=$dbf->getDataFromTable("student_moving","status_id","student_id='$student_id'");
+		if($student_moving_status=='6'){$dbf->studentOnHoldPedCard($student_id,$group,$course_id);}
+		#Ped Card Update
 		//UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
 		//=======================================================
 		$date_time = date('Y-m-d H:i:s A');
@@ -140,7 +144,6 @@ else
 	$new_enrolee=$dbf->countRows('student',"id='$student_id'");
 	$total_students=$prev_num + $new_enrolee;
 	//check duplicate course
-	$group_status = $dbf->strRecordID("student_group","status","id='$group'");
 	$duplicate_course=$dbf->countRows('student_group_dtls',"course_id='$course_id' && student_id='$student_id'");
 	$date_time = date('Y-m-d H:i:s A');
 	$student_limit=$dbf->getDataFromTable("common","name","type='class limit'");
@@ -152,7 +155,7 @@ else
 	{
 		echo '<script type="text/javascript">alert("Group has '.$student_limit.' students!!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
 	}
-	elseif($duplicate_course > 0)
+	elseif($duplicate_course > 0 && $group_status!='Completed')
 	{
 		echo '<script type="text/javascript">alert("Duplicate Course!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
 	}
@@ -180,6 +183,10 @@ else
 		#corporate account insert to db
 		//update the Group ID to Student_group Table means we can get the student according to group_id
 		$prev_group_id = $prev_group[group_id];
+		#Ped Card Update
+		$student_moving_status=$dbf->getDataFromTable("student_moving","status_id","student_id='$student_id'");
+		if($student_moving_status=='6'){$dbf->studentOnHoldPedCard($student_id,$group,$course_id);}
+		#Ped Card Update
 		$num_st = $dbf->countRows('student_moving',"student_id='$student_id' And course_id='$course_id'");
 		if($num_st > 0)
 		{

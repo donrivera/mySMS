@@ -46,78 +46,71 @@ if($_REQUEST['action']=='search'){
 	
 	$string="other_amt='$_POST[otheramt]',othertext='$_POST[othertext]',web='$_POST[web]',discount='$_POST[discount]'";
 	$dbf->updateTable("student_enroll",$string,"course_id='$course_id' And student_id='$student_id'");
-	
-	//For record the previous data with current data if any changes with the any field
-	if($res_en[other_amt] != $_POST[otheramt]){
-		
-		$string2="fld_name='Other Amount',chg_from='$res_en[other_amt]',chg_to='$_POST[otheramt]',by_user='$_SESSION[id]',date_time='$dt',student_id='$student_id',centre_id='$_SESSION[centre_id]',create_date='$c_date'";
-		
-		$dbf->insertSet("student_fee_edit_history",$string2);
-	}
-	
-	if($res_en[payment_type] != $_POST[ptype]){
-		
-		$res_com_from = $dbf->strRecordID("common","*","id='$res_en[payment_type]'");
-		$res_com_to = $dbf->strRecordID("common","*","id='$_REQUEST[payment_type]'");
-		
-		$string2="fld_name='Payment Type',chg_from='$res_com_from[name]',chg_to='$res_com_to[name]',by_user='$_SESSION[id]',date_time='$dt',student_id='$student_id',centre_id='$_SESSION[centre_id]',create_date='$c_date'";
-		
-		$dbf->insertSet("student_fee_edit_history",$string2);		
-	}
-	
-	if($res_en[discount] != $_POST[discount]){
-		
-		$string2="fld_name='Discount  Amount',chg_from='$res_en[discount]',chg_to='$_POST[discount]',by_user='$_SESSION[id]',date_time='$dt',student_id='$student_id',centre_id='$_SESSION[centre_id]',create_date='$c_date'";		
-		$dbf->insertSet("student_fee_edit_history",$string2);		
-	}
-	//=================================================================================
-	
-	
-	//insert into student_comment table	
-	$newcomment=mysql_real_escape_string($_POST[newcomment]);
-	if($newcomment!=''){
-		$string2="student_id='$student_id',user_id='$_SESSION[id]',comments='$newcomment',date_time='$dt'";
-		$dbf->insertSet("student_comment",$string2);
-	}
-	
-	//Delete from student material table
-	$dbf->deleteFromTable("student_material","course_id='$course_id' And student_id='$student_id'");
-	
-	//Insert in student material table
-	//---------------------------------------------------
-	$totrow_cont = $_REQUEST['mcount'];
-
-	for($i=1; $i<=$totrow_cont;$i++){
-		$name = "material".$i;
-		$name = $_REQUEST[$name];
-		
-		if($name != ""){
-			$string="student_id='$student_id',course_id='$course_id',mate_id='$name'";
-			$dbf->insertSet("student_material",$string);
+	$duplicate_fees= $dbf->countRows("student_fees", "course_id='$course_id' And student_id='$student_id' And fee_date='$_REQUEST[pdate1]' And paid_amt='$_REQUEST[amt1]'");
+	if($duplicate_fees==0)
+	{
+		//For record the previous data with current data if any changes with the any field
+		if($res_en[other_amt] != $_POST[otheramt])
+		{
+			$string2="fld_name='Other Amount',chg_from='$res_en[other_amt]',chg_to='$_POST[otheramt]',by_user='$_SESSION[id]',date_time='$dt',student_id='$student_id',centre_id='$_SESSION[centre_id]',create_date='$c_date'";
+			$dbf->insertSet("student_fee_edit_history",$string2);
 		}
-	}
-	//----------------------------------------------------
-	
-	//Insert in student course_fees table
-	$tot = $_REQUEST['count'];
-
-	for($k=1; $k<=$tot;$k++){
-		$name = "pdate".$k;
-		$name = $_REQUEST[$name];
-		
-		$amt = "amt".$k;
-		$amt = $_REQUEST[$amt];
-		
-		if($name != "" && $amt != ""){
-		$string="student_id='$student_id',course_id='$course_id',fee_date='$name',fee_amt='$amt',created_date='$dt',created_by='$_SESSION[id]',centre_id='$_SESSION[centre_id]'";
+		if($res_en[payment_type] != $_POST[ptype])
+		{
+			$res_com_from = $dbf->strRecordID("common","*","id='$res_en[payment_type]'");
+			$res_com_to = $dbf->strRecordID("common","*","id='$_REQUEST[payment_type]'");
+			$string2="fld_name='Payment Type',chg_from='$res_com_from[name]',chg_to='$res_com_to[name]',by_user='$_SESSION[id]',date_time='$dt',student_id='$student_id',centre_id='$_SESSION[centre_id]',create_date='$c_date'";
+			$dbf->insertSet("student_fee_edit_history",$string2);		
+		}
+		if($res_en[discount] != $_POST[discount])
+		{
+			$string2="fld_name='Discount  Amount',chg_from='$res_en[discount]',chg_to='$_POST[discount]',by_user='$_SESSION[id]',date_time='$dt',student_id='$student_id',centre_id='$_SESSION[centre_id]',create_date='$c_date'";		
+			$dbf->insertSet("student_fee_edit_history",$string2);		
+		}
+		//=================================================================================
+		//insert into student_comment table	
+		$newcomment=mysql_real_escape_string($_POST[newcomment]);
+		if($newcomment!='')
+		{
+			$string2="student_id='$student_id',user_id='$_SESSION[id]',comments='$newcomment',date_time='$dt'";
+			$dbf->insertSet("student_comment",$string2);
+		}
+		//Delete from student material table
+		$dbf->deleteFromTable("student_material","course_id='$course_id' And student_id='$student_id'");
+		//Insert in student material table
+		//---------------------------------------------------
+		$totrow_cont = $_REQUEST['mcount'];
+		for($i=1; $i<=$totrow_cont;$i++)
+		{
+			$name = "material".$i;
+			$name = $_REQUEST[$name];
+			if($name != "")
+			{
+				$string="student_id='$student_id',course_id='$course_id',mate_id='$name'";
+				$dbf->insertSet("student_material",$string);
+			}
+		}
+		//----------------------------------------------------
+		//Insert in student course_fees table
+		$tot = $_REQUEST['count'];
+		for($k=1; $k<=$tot;$k++)
+		{
+			$name = "pdate".$k;
+			$name = $_REQUEST[$name];
+			$amt = "amt".$k;
+			$amt = $_REQUEST[$amt];
+			if($name != "" && $amt != "")
+			{
+			$string="student_id='$student_id',course_id='$course_id',fee_date='$name',fee_amt='$amt',created_date='$dt',created_by='$_SESSION[id]',centre_id='$_SESSION[centre_id]'";
 			$dbf->insertSet("student_fees",$string);
+			}
 		}
-	}
-	//----------------------------------------------------
-	
-	header("Location:single-payment.php?student_id=$student_id&course_id=$course_id");
-	exit;
+		//----------------------------------------------------
+		header("Location:single-payment.php?student_id=$student_id&course_id=$course_id");
+		exit;
+	}else{header("Location:single-payment.php?student_id=$student_id&course_id=$course_id&msg=duplicate");exit;}
 }
+
 ?>
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <?php
@@ -154,9 +147,18 @@ $(document).ready(function()
 	{
 		/*var init_pay=$("#payment").val();*/
 		var post_pay=$("#td_paid_amt").html();
+		var amt1=$("#amt1").val();
+		var amt_total=amt1;
+		var balance=$("#course_fee_balance").val();
 		if(post_pay === null)
 		{
 			alert("Please Enroll Student!");
+			return false;
+		}
+		if(amt_total>balance)
+		{
+			alert("Payment Exceeds Balance!");
+			//document.getElementById('othertext').focus();
 			return false;
 		}
 	});
@@ -310,6 +312,24 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               <tr>
                 <td height="15" colspan="5" align="left" valign="middle" bgcolor="#FFFFFF" >&nbsp;</td>
               </tr>
+			<?php if($_REQUEST[msg]=="duplicate") { ?>
+			<tr>
+				<td width="25%" height="30" align="left" class="logintext" bgcolor="#FFFFFF"></td>
+                <td width="6%" id="lblname" bgcolor="#FFFFFF">&nbsp;</td>
+				
+				<td align="center" valign="top" bgcolor="#FFFFFF">
+					<table width="300" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#66CC66;" bgcolor="#FFFFFF">
+						<tr>
+							<td width="37" height="30" align="center" valign="middle" bgcolor="#FFF2FD"><img src="../images/close-btn.png" width="25" height="25" /></td>
+							<td width="10" bgcolor="#FFF2FD">&nbsp;</td>
+							<td width="253" align="left" valign="middle" bgcolor="#FFF2FD" class="nametext"><?php echo "Duplicate Payment";?></td>
+						</tr>
+					</table>
+				</td>
+				<td width="41%" align="left" bgcolor="#FFFFFF">&nbsp;</td>
+                <td width="18%" align="right" bgcolor="#FFFFFF"></td>
+			</tr>
+			<?php } ?>
             </table></td>
           </tr>		  
           <tr>
@@ -409,8 +429,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <select name="course" id="course" style="width:200px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onChange="show_payment();">
                           <option value="">---Select---</option>
                           <?php
-							#$query=$dbf->genericQuery("SELECT DISTINCT(course_id) FROM student_group_dtls WHERE student_id ='$student_id'");
-							$query=$dbf->fetchOrder('student_course',"student_id='$student_id'","");
+							$query=$dbf->genericQuery("SELECT DISTINCT(course_id) FROM student_fees WHERE student_id ='$student_id'");
+							#$query=$dbf->fetchOrder('student_course',"student_id='$student_id'","");
 							foreach($query as $rescourse) {
 								$course = $dbf->strRecordID("course","*","id='$rescourse[course_id]'");
 						  ?>
@@ -429,7 +449,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <?php					
 					$val_student = $dbf->strRecordID("student","*","id='$student_id'");
 					$res_enroll = $dbf->strRecordID("student_enroll","*","course_id='$course_id' And student_id='$student_id'");
-					$course_fees = $dbf->getDataFromTable("course_fee","fees","id='$course_id'");
+					$course_fees = $dbf->getDataFromTable("course_fee","fees","course_id='$course_id'");
 				  ?>
                   <tr>
                     <td colspan="5" align="left" valign="top" style="padding-top:3px;">
@@ -446,6 +466,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <?php
 						$res_course = $dbf->strRecordID("course","*","id='$course_id'");
 						$course_fee = $course_fees;
+						$discount_student_fee=$dbf->getDataFromTable('student_fees',"discount","course_id='$course_id' And student_id='$student_id'");
+						$discount_student_payment=(empty($res_enroll["discount"])?$discount_student_fee:$res_enroll["discount"]);
 						?>
                       <tr>
                         <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
@@ -459,12 +481,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <td>&nbsp;</td>
                         <td colspan="2" rowspan="4" align="left" valign="top" ><table width="100%" border="0" cellspacing="0" cellpadding="0">
                           <tr>
-                            <td width="17%" height="28" align="left" valign="middle" class="mytext"><input name="discount" type="text" class="new_textbox100" id="discount" value="<?php echo $res_enroll["discount"];?>" onKeyPress="return isNumberKey(event);" onBlur="checkDiscount();"/></td>
+                            <td width="17%" height="28" align="left" valign="middle" class="mytext"><input name="discount" type="text" class="new_textbox100" id="discount" value="<?php echo $discount_student_payment;?>" onKeyPress="return isNumberKey(event);" onBlur="checkDiscount();"/></td>
                             <td width="30%" align="left" valign="middle">&nbsp;</td>
                             <td width="53%" rowspan="4" align="left" valign="top">
                             <table width="80%" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#000000" style="border-collapse:collapse;">
                               <?php			 
-								 $camt = $course_fees-$res_enroll["discount"]+$res_enroll["other_amt"];
+								 $camt = $course_fees-$discount_student_payment + $res_enroll["other_amt"];
 								 
 								 $fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1'");
 								 $feeamt = $fee["SUM(paid_amt)"];
@@ -476,7 +498,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								?>
                               <tr>
                                 <td width="62%" height="25" align="left" valign="middle" bgcolor="#A9CFFE" class="pedtext"><?php echo constant("ADMIN_COURSE_MANAGE_COURSEFEES");?> :</td>
-                                <td width="38%" align="left" valign="middle" bgcolor="#F1E8FF" class="mycon">&nbsp;<?php echo $course_fee;?>&nbsp;<?php echo $res_currency[symbol];?></td>
+                                <td width="38%" align="left" valign="middle" bgcolor="#F1E8FF" class="mycon">&nbsp;<?php echo $camt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
                                 </tr>
                               <tr>
                                 <td height="25" align="left" valign="middle" bgcolor="#A9CFFE" class="pedtext"><?php echo constant("CD_SEARCH_INVOICE_PAIDAMOUNT");?> :</td>
@@ -484,6 +506,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 </tr>
                               <tr>
                                 <td height="25" align="left" valign="middle" bgcolor="#A9CFFE" class="pedtext"><?php echo constant("CD_SEARCH_INVOICE_BALANCEAMOUNT");?> :</td>
+								<input type="hidden" id="course_fee_balance" value="<?php echo $bal_amt;?>"/>
                                 <td align="left" valign="middle" bgcolor="#F1E8FF" class="mycon">&nbsp;<?php echo $bal_amt;?>&nbsp;<?php echo $res_currency[symbol];?></td>
                                 </tr>
                               </table></td>
@@ -517,7 +540,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <?php } ?></td>
                             </tr>
                           <tr>
-                            <td height="28" align="left" valign="middle" class="mytext"><select name="ptype" id="ptype" style="width:103px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;">
+                            <td height="28" align="left" valign="middle" class="mytext"><select name="ptype" id="ptype" class="validate[required]" style="width:103px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;">
                               <option>---Select---</option>
                                 <?php
 									foreach($dbf->fetchOrder('common',"type='payment type'","") as $resp) {

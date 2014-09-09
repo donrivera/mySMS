@@ -498,7 +498,7 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                       $no = $dbf->strRecordID("student_group_dtls","COUNT(id)","parent_id='$valgroup[id]'");					  
                       ?>
                     <tr class="mycon">
-                      <td height="20" align="center" valign="middle" bgcolor="#FFFFFF"><a href="group_manage.php?group_id=<?php echo $valgroup["id"];?>" style="text-decoration:none;"><?php echo $valgroup["group_name"];?> <?php echo $dbf->printClassTimeFormat($valgroup["group_start_time"],$valgroup["group_end_time"]);?></a></td>
+                      <td height="20" align="center" valign="middle" bgcolor="#FFFFFF"><a href="group_manage.php?search_group=<?php echo $valgroup["group_name"];?>" style="text-decoration:none;"><?php echo $valgroup["group_name"];?> <?php echo $dbf->printClassTimeFormat($valgroup["group_start_time"],$valgroup["group_end_time"]);?></a></td>
                       <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $valgroup["start_date"].'<br>'.$valgroup["end_date"];?></td>
                       <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $teacher["name"];?></td>
                       <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $course["name"];?></td>
@@ -900,7 +900,7 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
               <tr>
                 <td>&nbsp;</td>                
                 <td align="left" style="padding-top:2px;">&nbsp;</td>
-                <td height="30" align="center" valign="bottom" class="cer7_bold">All Groups Status within a Center</td>
+                <td height="30" align="center" valign="bottom" class="cer7_bold">All Active Groups within a Center</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
               </tr>
@@ -911,7 +911,7 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                  echo $strXML1="<chart palette='1' showValues='0' yAxisValuesPadding='10'>			
                         <categories>";
 						
-						foreach($dbf->fetchOrder('student_group', "centre_id='$centre_id'") as $cer) {
+						foreach($dbf->fetchOrder('student_group', "centre_id='$centre_id' AND status='Continue'","id") as $cer) {
 							
 							$grp_name = $cer["group_name"];							
                             $strXML1.=" <category label='$grp_name'/>";
@@ -921,11 +921,12 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
 						$strXML1.="</categories>						
 						<dataset seriesName='Total Unit(s)'>";
 						
-						foreach($dbf->fetchOrder('student_group', "centre_id='$centre_id'") as $cer) {
+						foreach($dbf->fetchOrder('student_group', "centre_id='$centre_id' AND status='Continue'","id") as $cer) {
 							
 							//Get no of unit of a group
-							$res_unit = $dbf->strRecordID("group_size","*","group_id='$cer[group_id]'");
-							$group_unit = $res_unit["units"];							
+							#$res_unit = $dbf->strRecordID("group_size","*","group_id='$cer[group_id]'");
+							$group_unit = $cer["units"];	
+							$teacher_id=$cer["teacher_id"];
 							$strXML1.="<set value='$group_unit'/>";
 							
 						}
@@ -933,9 +934,10 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
 						$strXML1.="</dataset>
 						<dataset seriesname='Completed Unit(s)'>";
 						
-						foreach($dbf->fetchOrder('student_group', "centre_id='$centre_id'") as $cer) {
+						foreach($dbf->fetchOrder('student_group', "centre_id='$centre_id' AND status='Continue'","id") as $cer) {
 							
-							$left_units = $dbf->countRows('ped_units',"group_id='$cer[id]'");
+							$left_units = $dbf->countRows('ped_units',"group_id='$cer[id]' AND teacher_id !=''");
+							
 							$strXML1.="<set value='$left_units'/>";
 							
 						}

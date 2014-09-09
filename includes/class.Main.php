@@ -579,6 +579,7 @@ class User extends Dbfunctions{
 								"teacher_id='$teacher_id' 
 								AND ('$start_date' BETWEEN start_date AND end_date)
 								AND ('$user_start_time' BETWEEN group_time And group_time_end)
+								AND status !='Completed'
 								","");
 		#echo $teacher_id."<BR/>";
 		#echo $start_date."<BR/>";
@@ -672,6 +673,7 @@ class User extends Dbfunctions{
 										OR 
 										('$e_time' BETWEEN group_time AND group_time_end)
 									)
+								AND status !='Completed'
 							  ");
 		if($q <= 0 || empty($q)):
 		$result=false;
@@ -2190,6 +2192,81 @@ class User extends Dbfunctions{
 								$this->updateTable("student_moving",$status,"student_id='$student_id'");	
 							}break;
 		}
+	}
+	function groupStatus($status)
+	{
+		return ($status=='Continue'?'Active':$status);
+	}
+	function studentOnHoldPedCard($student_id,$group_id,$course_id)
+	{ 
+		#Transfer previous attendance to new Ped Card
+		$group_dtls=$this->strRecordID("student_group", "*", "id='$group_id'");
+		$attd=$group_dtls['units']/$group_dtls['unit_per_day'];
+		$prev_group_id=$this->getDataFromTable("student_moving","group_id","student_id='$student_id'");
+		$ped_id=$this->getDataFromTable("ped_units","ped_id","group_id='$group_id'");
+		for($a=1;$a<=$attd;$a++):
+			$dt = date('Y-m-d');
+			$prev_ped_attd=$this->strRecordID("ped_attendance", "*", "group_id='$prev_group_id' AND unit='$a'");
+			$attend_date=$this->getDataFromTable("ped_units", "dated", "group_id='$group_id' AND unit='$a'");
+			$string="	ped_id='$ped_id',
+						teacher_id='$group_dtls[teacher_id]',
+						course_id='$course_id',
+						student_id='$student_id',
+						unit='$a',
+						shift1='$prev_ped_attd[shift1]',
+						shift2='$prev_ped_attd[shift2]',
+						shift3='$prev_ped_attd[shift3]',
+						shift4='$prev_ped_attd[shift4]',
+						shift5='$prev_ped_attd[shift5]',
+						shift6='$prev_ped_attd[shift6]',
+						shift7='$prev_ped_attd[shift4]',
+						shift8='$prev_ped_attd[shift5]',
+						shift9='$prev_ped_attd[shift6]',
+						dated='$dt', 
+						group_id='$group_id',
+						attend_date='$attend_date'";
+			$this->insertSet("ped_attendance",$string);
+		endfor;
+		/*
+		$prev_class=$this->genericQuery("	SELECT * FROM `ped_attendance` 
+											WHERE student_id='$student_id' 
+											AND course_id='$course_id' 
+											AND group_id !='$group_id' 
+											AND (	shift1 !='' OR 
+													shift2 !='' OR 
+													shift3 !='' OR 
+													shift4 !='' OR 
+													shift5 !='' OR 
+													shift6 !='' OR 
+													shift7 !='' OR 
+													shift8 !='' OR 
+													shift9 !='') ORDER BY unit");
+		#$attd=$class['units']/$class['unit_per_day'];
+		foreach($prev_class as $p_class):
+		{
+			$dt = date('Y-m-d');
+			$new_ped_unit=$this->strRecordID("ped_units", "*", "group_id='$group_id' AND units='$p_class['unit']'");
+			$string="	ped_id='$new_ped_unit[ped_id]',
+						teacher_id='$new_ped_unit[teacher_id]',
+						course_id='$course_id',
+						student_id='$student_id',
+						unit='$p_class[unit]',
+						shift1='$new_ped_unit[shift1]',
+						shift2='$new_ped_unit[shift2]',
+						shift3='$new_ped_unit[shift3]',
+						shift4='$new_ped_unit[shift4]',
+						shift5='$new_ped_unit[shift5]',
+						shift6='$new_ped_unit[shift6]',
+						shift7='$new_ped_unit[shift4]',
+						shift8='$new_ped_unit[shift5]',
+						shift9='$new_ped_unit[shift6]',
+						dated='$dt', 
+						group_id='$group_id',
+						attend_date='$new_ped_unit[attend_date]'";
+			$this->insertSet("ped_attendance",$string);
+		}
+		*/
+		#Transfer previous attendance to new Ped Card
 	}
 }
 ?>

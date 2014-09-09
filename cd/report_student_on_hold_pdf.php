@@ -94,7 +94,27 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0"  borderc
 						$grp = $dbf->strRecordID("student_group g,student_group_dtls d","g.*","g.id=d.parent_id And g.status<>'Completed' And d.student_id='$val1[student_id]'");
 						
 						//get course name
-						$course = $dbf->strRecordID("course","*","id='$grp[course_id]'");
+						$date_hold=$dbf->strRecordID("student_hold","dated,course_id","student_id='$val[id]'");
+						$course = $dbf->strRecordID("course","*","id='$date_hold[course_id]'");
+						$lessons=$dbf->genericQuery("
+														SELECT pu.material_overed as lesson
+														FROM `ped_attendance` p
+														INNER JOIN ped_units pu ON pu.course_id=p.course_id AND pu.units=p.unit
+														WHERE p.student_id='$val[id]' 
+														AND p.course_id='$date_hold[course_id]'
+														AND (	p.shift1='X' 
+																OR p.shift1='X' 
+																OR p.shift2='X'
+																OR p.shift3='X'
+																OR p.shift4='X'
+																OR p.shift5='X'
+																OR p.shift6='X'
+																OR p.shift7='X'
+																OR p.shift8='X'
+																OR p.shift9='X')
+														ORDER BY pu.units DESC LIMIT 0,1
+													");
+						foreach($lessons as $l):$student_last_lesson=$l[lesson];endforeach;
                 $html.='<tr>
                   <td height="25" align="left" valign="middle" bgcolor="#F8F9FB" ><span id="result_box" lang="ar" xml:lang="ar">'.$dbf->printStudentName($val["id"]).'</span></td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB">'.$val["student_mobile"].'</td>
@@ -102,8 +122,8 @@ $html = '<table width="1000" border="1" cellpadding="0" cellspacing="0"  borderc
                   <td align="center" valign="middle" bgcolor="#F8F9FB" >'.$dt.'</td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB" >'.$val["student_comment"].'</td>
                   <td align="left" valign="middle" bgcolor="#F8F9FB" >'.$course["name"].'</td>
-                  <td width="11%" align="left" valign="middle" bgcolor="#F8F9FB" >&nbsp;</td>
-				    <td align="left" valign="middle" bgcolor="#F8F9FB" >&nbsp;</td>';
+                  <td width="11%" align="left" valign="middle" bgcolor="#F8F9FB" >'.$date_hold[dated].'</td>
+				    <td align="left" valign="middle" bgcolor="#F8F9FB" >'.(empty($student_last_lesson)?"Beginning of Course":$student_last_lesson).'</td>';
 					  $i = $i + 1;
 					  }
                 $html.='</tr>

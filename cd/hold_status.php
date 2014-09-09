@@ -114,7 +114,8 @@ function gotfocus()
           <p>&nbsp;</p>
           <p>&nbsp;</p>
           <p>&nbsp;</p></td>
-        <td width="79%" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <td width="79%" align="left" valign="top">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td bgcolor="#b4b4b4" style="background:url(../images/footer_repeat.png) repeat-x;"><table width="100%" border="0" cellspacing="0">
               <tr>
@@ -281,7 +282,7 @@ function gotfocus()
                                         <td height="30" align="left" valign="middle" class="leftmenu"></td>
                                         <td align="left" valign="middle">&nbsp;</td>
                                         <td align="left" valign="middle">
-                                        <input type="submit" name="submit" id="submit" value="<?php echo constant("btn_save_btn");?>" class="btn1"/></td>
+                                        <input type="submit" name="submit" id="submit" value="Approve" class="btn1"/></td>
                                       </tr>
                                     </table>
                                   </form></td>

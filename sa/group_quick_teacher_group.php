@@ -19,7 +19,7 @@ sleep(1);
       <td width="15%" align="left" valign="middle" bgcolor="#000066"> % <?php echo constant("STUDENT_ADVISOR_AUDITING_COMPLETED");?></td>
   </tr>
     <?php
-    foreach($dbf->fetchOrder('student_group',"teacher_id='$teacher_id'","id ASC","") as $valstudent){
+    foreach($dbf->fetchOrder('student_group',"teacher_id='$teacher_id' AND status !='Completed'","group_time,start_date ASC","") as $valstudent){
 	$course = $dbf->strRecordID("course","*","id='$valstudent[course_id]'");
 	
 	# Calculate Percentanges of Complition

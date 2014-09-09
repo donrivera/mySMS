@@ -212,11 +212,15 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <td width="1%">&nbsp;</td>
                             </tr>
                             <tr>
-                              <td width="25%" height="28" align="right" valign="middle"><span class="leftmenu">&nbsp;<?php echo constant("STUDENT_MYACCOUNT_PAYMENTDATE");?> :</span></td>
-                              <td width="24%" align="left" valign="middle"><input name="dated" type="text" class="datepickFuture new_textbox100" readonly="" id="dated" size="45" minlength="4"/></td>
+                              <td width="25%" height="28" align="right" valign="middle">
+									<!--<span class="leftmenu">&nbsp;<?php echo constant("STUDENT_MYACCOUNT_PAYMENTDATE");?> :</span>-->
+								</td>
+								<td width="24%" align="left" valign="middle">
+									<!--<input name="dated" type="text" class="datepickFuture new_textbox100" readonly="" id="dated" size="45" minlength="4"/>-->
+								</td>
                               <td width="43%" rowspan="3" align="center" valign="middle"><table width="100%" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#000000" style="border-collapse:collapse;">
                                 <?php			 
-								 $camt = $course_fees - $res_enroll["discount"] + $res_enroll["other_amt"];
+								 $camt = $course_fees - $res_enroll["discount"] - $res_enroll["other_amt"];
 								 
 								 $fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1'");
 								 $feeamt = $fee["SUM(paid_amt)"];

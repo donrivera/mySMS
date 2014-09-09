@@ -89,7 +89,7 @@ include_once '../includes/language.php';
         
         $condition = $condition." And s.id = m.student_id And m.status_id='6'";
         
-        $num=$dbf->countRows('student s,student_moving m', $condition);
+		$num=$dbf->countRows('student s,student_moving m', $condition);
         foreach($dbf->fetchOrder('student s,student_moving m', $condition , "", "m.*") as $val1) {
             
             $val = $dbf->strRecordID("student","*","id='$val1[student_id]'");
@@ -102,8 +102,28 @@ include_once '../includes/language.php';
             //get current course of the student
             $grp = $dbf->strRecordID("student_group g,student_group_dtls d","g.*","g.id=d.parent_id And g.status<>'Completed' And d.student_id='$val1[student_id]'");
             
-            //get course name
-            $course = $dbf->strRecordID("course","*","id='$grp[course_id]'");
+           //get course name
+			$date_hold=$dbf->strRecordID("student_hold","dated,course_id","student_id='$val[id]'");
+			$course = $dbf->strRecordID("course","*","id='$date_hold[course_id]'");
+			$lessons=$dbf->genericQuery("
+											SELECT pu.material_overed as lesson
+											FROM `ped_attendance` p
+											INNER JOIN ped_units pu ON pu.course_id=p.course_id AND pu.units=p.unit
+											WHERE p.student_id='$val[id]' 
+											AND p.course_id='$date_hold[course_id]'
+											AND (	p.shift1='X' 
+													OR p.shift1='X' 
+													OR p.shift2='X'
+													OR p.shift3='X'
+													OR p.shift4='X'
+													OR p.shift5='X'
+													OR p.shift6='X'
+													OR p.shift7='X'
+													OR p.shift8='X'
+													OR p.shift9='X')
+											ORDER BY pu.units DESC LIMIT 0,1
+										");
+			foreach($lessons as $l):$student_last_lesson=$l[lesson];endforeach;
         ?>                    
     <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;">
       <td height="25" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dbf->printStudentName($val["id"]);?></td>
@@ -112,8 +132,8 @@ include_once '../includes/language.php';
       <td align="center" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $dt;?></td>
       <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_comment];?></td>
       <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $course[name];?></td>
-      <td width="11%" align="left" valign="middle" class="mycon" style="padding-left:5px;">&nbsp;</td>
-      <td align="left" valign="middle" class="mycon" style="padding-left:5px;">&nbsp;</td>
+      <td width="11%" align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $date_hold[dated];?></td>
+      <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo (empty($student_last_lesson)?"Beginning of Course":$student_last_lesson);?></td>
       <?php
           $i = $i + 1;
           if($color=="#ECECFF"){
