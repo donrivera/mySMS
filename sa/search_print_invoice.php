@@ -17,6 +17,7 @@ $val = $dbf->strRecordID("student","*","id='$student_id'");
 $res_enroll = $dbf->strRecordID("student_enroll","*","course_id='$course_id' And student_id='$student_id'");
 $res_course = $dbf->strRecordID("course","*","id='$course_id'");
 $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
+$enroll_dtl=$dbf->getInvoiceCode($student_id,$course_id);
 ?>
 <script language="javascript" type="text/javascript">
 function print_page() 
@@ -206,8 +207,8 @@ function print_page()
           <?php
 			$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");			
 			$j = 1;
-				
-			foreach($dbf->fetchOrder('student_fees',"paid_amt>0 And course_id='$course_id' And student_id='$student_id'","") as $vali) {
+			 	
+			foreach($dbf->fetchOrder('student_fees',"paid_amt>0 And course_id='$course_id' And student_id='$student_id' And invoice_sl LIKE '$enroll_dtl%'","") as $vali) {
 			$dt="";
 			$ptype = $dbf->strRecordID("common","*","id='$vali[payment_type]'");
 			?>
@@ -222,16 +223,21 @@ function print_page()
           <?php $j++; } ?>
           <?php
 		  	 $course_dtls = $dbf->strRecordID("course","*","id='$course_id'");
-			 echo $get_fee_id = $dbf->getDataFromTable("student_enroll","course_id","course_id='$course_id' And student_id='$student_id'");
-			 $get_fee_by_advance=$dbf->getDataFromTable("student_fees","course_id","course_id='$course_id' And student_id='$student_id'");
+			 $get_fee_id = $dbf->getDataFromTable("student_enroll","course_id","course_id='$course_id' And student_id='$student_id'");
+			 $get_fee_by_advance=$dbf->getDataFromTable("student_fees","course_id","course_id='$course_id' And student_id='$student_id' And invoice_sl LIKE '$enroll_dtl%'");
 			 $fee_id=(empty($get_fee_id)?$get_fee_by_advance:$get_fee_id);
 			 $course_fees = $dbf->getDataFromTable("course_fee","fees","course_id='$fee_id'");
 			 $camt = $course_fees;
 			  
-			 $fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1'");
+			 $fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1' And invoice_sl LIKE '$enroll_dtl%'");
 			 $feeamt = $fee["SUM(paid_amt)"];
-			 $discount_student_fee=$dbf->getDataFromTable('student_fees',"discount","course_id='$course_id' And student_id='$student_id'");
-			 $discount_student_payment=(empty($res_enroll["discount"])?$discount_student_fee:$res_enroll["discount"]);
+			 $discount_student_fee=$dbf->getDataFromTable('student_fees',"discount","course_id='$course_id' And student_id='$student_id' And invoice_sl LIKE '$enroll_dtl%'");
+			 $discount_student_fee_wo_eid=$dbf->getDataFromTable('student_fees',"discount","course_id='$course_id' And student_id='$student_id' And type='advance'");
+			 #$discount_student_payment=(empty($res_enroll["discount"])?$discount_student_fee:$res_enroll["discount"]);
+			 if($res_enroll["level_complete"]==1 && $discount_student_fee_wo_eid==1){$discount_student_payment=$discount_student_fee_wo_eid;}
+			 elseif($res_enroll["level_complete"]==1 && empty($res_enroll["discount"])){$discount_student_payment=$discount_student_fee;}
+			 elseif(empty($res_enroll["discount"])){$discount_student_payment=$discount_student_fee;}
+			 else{$discount_student_payment=$res_enroll["discount"];}
 			 $other_amt = $dbf->getDataFromTable("student_enroll","other_amt","course_id='$course_id' And student_id='$student_id''");
 			 $net_amt = $camt - $discount_student_payment + $other_amt;			 
 			 $bal_amt = $camt - ($feeamt + $discount_student_payment);

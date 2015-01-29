@@ -1,5 +1,7 @@
 <?php
 #echo print_r($_POST);
+#ini_set('max_input_vars', 9999);
+
 ob_start();
 session_start();
 include_once '../includes/class.Main.php';
@@ -17,6 +19,8 @@ $res_group = $dbf->strRecordID("student_group","*","id='$_REQUEST[cmbgroup]'");
 $course_id = $res_group[course_id];
 //Check duplicate
 $num=$dbf->countRows('ped',"teacher_id='$uid' and group_id='$_REQUEST[cmbgroup]' and course_id='$course_id'");
+
+
 if($num == 0)
 {
 	$string="teacher_id='$uid',group_id='$_POST[cmbgroup]',course_id='$course_id',estart_date='$_POST[estart_date]',material='$mate',bl='$_POST[bl]',arf_submit='$_POST[arf]',level='$_POST[level]',comments='$_POST[comments]',location='$_POST[location]',checklist='$chklist',point_cover1='$_POST[point_cover1]',point_date1='$_POST[point_date1]', point_cover2='$_POST[point_cover2]', point_date2='$_POST[point_date2]', ini_feedback='$ini_feedback', inst1='$_POST[inst1]', date1='$_POST[date1]',arf1='$_POST[arf1]', dby1='$_POST[dby1]', dby1_date1='$_POST[dby1_date1]', cby1='$_POST[cby1]', cby1_date1='$_POST[cby1_date1]', inst2='$_POST[inst2]', inst2_date2='$_POST[inst2_date2]', counselling='$counselling', inst3='$_POST[inst3]', inst3_date3='$_POST[inst3_date3]', inst4='$_POST[inst4]', inst4_date4='$_POST[inst4_date4]', not_apply='$_POST[not_apply]',distrbute_by='$_POST[distrbute_by]',distrbute_date='$_POST[distrbute_date]',collect_by='$_POST[collect_by]',collect_date='$_POST[collect_date]',pro_report='$_POST[pro_report]'";
@@ -114,8 +118,9 @@ if($num == 0)
 					
 					$dt = date('Y-m-d');
 					$string="ped_id='$id',teacher_id='$uid',course_id='$course_id',student_id='$student_id',unit='$k',shift1='$shift1',shift2='$shift2',shift3='$shift3',dated='$dt', group_id='$_POST[cmbgroup]',attend_date='$attend_date'";
-					
-					$dbf->insertSet("ped_attendance",$string);
+					$duplicate_attendance=$dbf->genericQuery("SELECT * FROM ped_attendance WHERE group_id='$_POST[cmbgroup]' AND student_id='$student_id' AND unit='$k' AND (shift1 !='' OR shift2 !='')");
+					if(empty($duplicate_attendance)){$dbf->insertSet("ped_attendance",$string);}
+					#$dbf->insertSet("ped_attendance",$string);
 				}
 			}
 		}
@@ -162,7 +167,7 @@ if($num == 0)
 	
 }
 else
-{
+{#echo "1";echo var_dump($_POST);
 	
 	//Query string
 	$string="level='$_POST[level]',estart_date='$_POST[estart_date]',material='$mate',bl='$_POST[bl]',arf_submit='$_POST[arf]',comments='$_POST[comments]',location='$_POST[location]',checklist='$chklist',point_cover1='$_POST[point_cover1]',point_date1='$_POST[point_date1]',point_cover2='$_POST[point_cover2]', point_date2='$_POST[point_date2]', ini_feedback='$ini_feedback', inst1='$_POST[inst1]', date1='$_POST[date1]', arf1='$_POST[arf1]',dby1='$_POST[dby1]',dby1_date1='$_POST[dby1_date1]', cby1='$_POST[cby1]', cby1_date1='$_POST[cby1_date1]', inst2='$_POST[inst2]', inst2_date2='$_POST[inst2_date2]',counselling='$counselling',inst3='$_POST[inst3]', inst3_date3='$_POST[inst3_date3]', inst4='$_POST[inst4]',inst4_date4='$_POST[inst4_date4]', not_apply='$_POST[not_apply]',distrbute_by='$_POST[distrbute_by]',distrbute_date='$_POST[distrbute_date]',collect_by='$_POST[collect_by]',collect_date='$_POST[collect_date]',pro_report='$_POST[pro_report]'";
@@ -248,21 +253,26 @@ else
 										
 				$course_id = "course_id".$i;
 				$course_id = $_REQUEST[$course_id];
-													
+				#echo $_POST[ped_id].$uid.course_id.$student_id.$k.$_POST[cmbgroup]."<BR/>";									
 				//Check duplicate
 				$num=$dbf->countRows('ped_attendance',"ped_id='$_POST[ped_id]' AND teacher_id='$uid' AND course_id='$course_id' AND student_id='$student_id' AND unit='$k' and group_id='$_POST[cmbgroup]'");
-				if($num>0){
+				
+				#$ped_attendance=$dbf->genericQuery("SELECT * FROM ped_attendance WHERE group_id='$_POST[cmbgroup]' AND student_id='$student_id' AND unit='$k' AND (shift1 !='' OR shift2 !='')");
+				if($num>0){echo "a";
+				#if(!empty($ped_attendance)){
 					
 					$string="shift1='$shift1',shift2='$shift2',shift3='$shift3',attend_date='$attend_date'";
 					//echo '<br>';
 					$dbf->updateTable("ped_attendance",$string,"ped_id='$_POST[ped_id]' AND teacher_id='$uid' AND course_id='$course_id' AND student_id='$student_id' AND unit='$k' and group_id='$_POST[cmbgroup]'");
 					
-				}else{
+				}else{echo "b";
 					
 					$dt = date('Y-m-d');
 					$string="ped_id='$_POST[ped_id]',teacher_id='$uid',course_id='$course_id',student_id='$student_id',unit='$k',shift1='$shift1',shift2='$shift2',shift3='$shift3',dated='$dt',group_id='$_POST[cmbgroup]',attend_date='$attend_date'";
-					
+					$duplicate_attendance=$dbf->genericQuery("SELECT * FROM ped_attendance WHERE group_id='$_POST[cmbgroup]' AND student_id='$student_id' AND unit='$k' AND (shift1 !='' OR shift2 !='')");
+					if(empty($duplicate_attendance)){$dbf->insertSet("ped_attendance",$string);}
 					$dbf->insertSet("ped_attendance",$string);
+					
 				}
 			}
 		}
@@ -288,7 +298,7 @@ else
 	
 	$original_unit = $group_size["units"];
 	
-	$group_size = $dbf->strRecordID("ped_units","COUNT(id)","group_id='$_POST[cmbgroup]'");
+	$group_size = $dbf->strRecordID("ped_units","COUNT(id)","group_id='$_POST[cmbgroup]' AND dated != '0000-00-00'");
 	$pending_unit = $group_size["COUNT(id)"];	
 	
 	//teacher
@@ -312,10 +322,11 @@ else
 			$dbf->insertSet("student_moving_history",$string2);
 		
 		}
-				
+		$dbf->updateTable("student_moving","status_id='8'","group_id='$_POST[cmbgroup]'");		
 		$string = "status='Completed',completed_date='$today'";
 		$dbf->updateTable("student_group",$string,"id='$_POST[cmbgroup]'");
-		
+		$string_enroll = "level_complete='1'";
+		$dbf->updateTable("student_enroll",$string_enroll,"group_id='$_POST[cmbgroup]'");
 		//admin
 		$res_admin=$dbf->fetchSingle("user","user_type='Administrator'");
 		$from = $res_admin[email];

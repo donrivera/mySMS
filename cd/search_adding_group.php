@@ -172,7 +172,7 @@ text-transform:uppercase;
 													WHERE sc.student_id='$student_id' 
 													AND smv.status_id >'1'
 													AND sg.centre_id='$_SESSION[centre_id]' 
-													AND sg.status!='Completed' AND YEAR(sg.start_date) = '$year_now' ORDER BY sg.group_name ASC");
+													AND sg.status!='Completed' AND YEAR(sg.start_date) = '$year_now' ORDER BY substring('sg.group_name',1,2) ASC");
 			  ?>
               </td>
               </tr>

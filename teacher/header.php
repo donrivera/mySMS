@@ -93,12 +93,12 @@ $(document).ready(function() {
         
         <?php
 	  $mystyle = '';
-	  if($page_name == "ped.php")
+	  if($page_name == "ped.php" || $page_name == "daily_ped.php")
 	  {
 		  $mystyle = 'style="background-color:#003399; background-image:none;"';
 	  }
 	  ?>
-        <li><a <?php echo $mystyle;?> href="ped.php" title=""><span <?php echo $mystyle;?> ><?php echo constant("TE_MENU_EPEDCARD");?></span></a></li>        
+        <li><a <?php echo $mystyle;?> href="ped.php" title="" rel="ped" ><span <?php echo $mystyle;?> ><?php echo constant("TE_MENU_EPEDCARD");?></span></a></li>        
         
         <?php
 	  $mystyle = '';
@@ -192,7 +192,10 @@ $(document).ready(function() {
         	<a href="calc_converter.php"><?php echo constant("STUDENT_CALC_CONVERTER_DATA_CONVERTER");?></a> 
             <a href="translate.php"><?php echo constant("ADMIN_MENU_LANGUAGE_CONVERTER");?></a> 
         </div>
-        
+         <div id="ped" class="dropmenudiv_d">
+        	<a href="ped.php"><?php echo constant("TE_MENU_EPEDCARD");?></a> 
+            <a href="daily_ped.php"><?php echo "Daily&nbsp;".constant("TE_MENU_EPEDCARD");?></a> 
+        </div>
 		 <!--link  down menu -->
 		<div id="mnu_rel" class="dropmenudiv_d">
 		<?php

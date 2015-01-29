@@ -237,12 +237,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
           </tr>
           <tr>
             <td height="20" align="left" valign="middle" class="leftmenu">&nbsp;<?php echo constant("RECEPTION_ARF_MANAGE_PROGRAMME");?> :</td>
-            <td align="left" valign="middle" class="pedtext_normal"><?php echo $res_group[name];?></td>
+            <td align="left" valign="middle" class="pedtext_normal"><?php echo $res_group[name];?>fff</td>
             <td>&nbsp;</td>
             <td align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="41%" height="20" align="left" valign="middle" class="leftmenu"><?php echo constant("CD_GROUP_PROGRESS_PROGRAMLENGTH");?> : </td>
-                <td width="59%" align="left" valign="middle" class="pedtext_normal" ><?php echo $res_size[units];?></td>
+                <td width="59%" align="left" valign="middle" class="pedtext_normal" ><?php echo $res_g[units];?></td>
               </tr>
             </table></td>
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -251,7 +251,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td width="34%" height="20" align="left" valign="middle" class="leftmenu"> <?php echo constant("CD_GROUP_PROGRESS_LESSIONTAKEN");?>:</td>
                 <?php				
 				//Get number of Attendace present in e-PEDCARD (table : ped_attendance)
-				$num_total_class=$dbf->countRows('ped_units',"group_id='$_REQUEST[cmbgroup]'");#/ $res_g["unit_per_day"]
+				$num_total_class=$res_g["units"];
 				?>
                 <td width="45%" align="left" valign="middle" class="pedtext_normal"><?php echo $num_total_class;?></td>
                 <td width="16%" align="center" valign="middle" class="nametext" >&nbsp;</td>
@@ -286,14 +286,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 			$num_att=$dbf->No_Of_Attendance($_REQUEST['teacher_id'], $_REQUEST["cmbgroup"]);#/ $res_g["unit_per_day"]
 			$num_total_unit_teach=$res_g[units];#$dbf->getDataFromTable("ped_units","MAX(units)","group_id='$_REQUEST[cmbgroup]'");# / $res_g["unit_per_day"]
 			?>
-            <td align="left" valign="middle" class="pedtext_normal"><b><?php echo $num_att/$res_g[unit_per_day];?></b>&nbsp;&nbsp;&nbsp;<?php echo constant("CD_REPORT_TEACHER_PROGRESS_OUTOF");?> &nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo $num_total_unit_teach;?></b></td>
+            <td align="left" valign="middle" class="pedtext_normal"><b><?php echo $num_att;?></b>&nbsp;&nbsp;&nbsp;<?php echo constant("CD_REPORT_TEACHER_PROGRESS_OUTOF");?> &nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo $num_total_unit_teach;?></b></td>
             <td>&nbsp;</td>
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="41%" height="20" align="left" valign="middle" class="leftmenu"><?php echo constant("CD_REPORT_TEACHER_PROGRESS_TOTAL");?> : </td>
                 <?php
 				if($num_att>0){
-					$per = round((($num_att/$res_g[unit_per_day]) / $num_total_unit_teach) * 100);
+					$per = round((($num_att) / $num_total_unit_teach) * 100);
 				}
 				?>
                 <td width="59%" align="left" valign="middle" class="mycon"><?php echo $per;?>%</td>

@@ -7,6 +7,7 @@ $dbf = new User();
 $Arabic = new I18N_Arabic('Transliteration');
 
 $write_text = strtolower($_GET["q"]);
+$ctr_id = $_REQUEST['centre_id'];
 
 if (!$write_text) return;
 foreach($dbf->fetchOrder('student',"(

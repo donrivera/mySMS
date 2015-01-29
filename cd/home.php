@@ -936,7 +936,7 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
 						
 						foreach($dbf->fetchOrder('student_group', "centre_id='$centre_id' AND status='Continue'","id") as $cer) {
 							
-							$left_units = $dbf->countRows('ped_units',"group_id='$cer[id]' AND teacher_id !=''");
+							$left_units = $dbf->countRows('ped_units',"group_id='$cer[id]' AND teacher_id !='' AND dated !='0000-00-00'");
 							
 							$strXML1.="<set value='$left_units'/>";
 							

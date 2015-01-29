@@ -1,6 +1,7 @@
 <?php
 ob_start();
 session_start();
+$_SESSION["lang"] = "EN";
 include_once 'includes/class.Main.php';
 require 'I18N/Arabic.php';
 

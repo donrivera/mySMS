@@ -374,11 +374,11 @@ $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[group_id]'"
 						if($group_percentage<61)
 						{$count_shift = $dbf->No_Of_Attendance($r["id"], $group_id);}
 						else if($group_percentage >= 61 && $group_percentage <= 84)
-						{$count_shift = $dbf->No_Of_Attendance($r["id"], $group_id)/2;}
+						{$count_shift = $dbf->No_Of_Attendance($r["id"], $group_id);}
 						else if($group_percentage >= 85)
-						{$count_shift = $dbf->No_Of_Attendance($r["id"], $group_id)/4;}	
+						{$count_shift = $dbf->No_Of_Attendance($r["id"], $group_id);}	
 						?>
-                    <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $count_shift / $res_g[unit_per_day];?></td>
+                    <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $count_shift;?></td>
                     <?php
 					//$group_unit = $res_size[effect_units];
 					$group_unit = $res_g[units]/2;#$res_size[units];
@@ -602,7 +602,7 @@ $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[group_id]'"
 						$count_shift = $dbf->No_Of_Attendance($r["id"], $_REQUEST["group_id"]);
 						?>
                       <td align="center" valign="middle" bgcolor="#FFFFFF">
-                      <?php echo $count_shift / $res_g['unit_per_day'];?></td>
+                      <?php echo $count_shift;?></td>
                       
                      <?php
 					$group_unit = $res_g[units];#$res_size[units];
@@ -610,7 +610,8 @@ $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[group_id]'"
 					$attend_perc=0;
 					if($count_shift!='0')
 					{
-						$attend_perc=round((($count_shift / $res_g[unit_per_day])/$group_unit)*100);
+						#$attend_perc=round((($count_shift / $res_g[unit_per_day])/$group_unit)*100);
+						$attend_perc=round(($count_shift/$group_unit)*100);
 					}
 					if($attend_perc<61)
 					{

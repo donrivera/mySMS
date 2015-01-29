@@ -135,8 +135,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               <?php
 					$i = 1;
 					$color = "#ECECFF";
-					$num=$dbf->countRows('teacher_vacation',"");
-					foreach($dbf->fetchOrder('teacher_vacation',"","id DESC") as $val)
+					$sql=$dbf->genericQuery("	SELECT tv.* 
+												FROM teacher_vacation tv
+												INNER JOIN teacher_centre tc ON tc.teacher_id=tv.teacher_id AND tc.centre_id='$_SESSION[centre_id]'");
+					#$num=$dbf->countRows('teacher_vacation',"");
+					#foreach($dbf->fetchOrder('teacher_vacation',"","id DESC") as $val)
+					$num=count($sql);
+					foreach($sql as $val)
 					{
 					
 					$res = $dbf->strRecordID("teacher","*","id='$val[teacher_id]'");

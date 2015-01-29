@@ -21,33 +21,18 @@ $Arabic = new I18N_Arabic('Transliteration');
 $res = $dbf->strRecordID("student","*","id='$_REQUEST[student_id]'");
 
 if($_REQUEST['action']=='classic')
-{ 
-	
-	/*
-	if($_REQUEST[mytxt_src] == '')
-	{$first_name=$_REQUEST[txt_src];}
-	else{$first_name=$_REQUEST[mytxt_src];}
-	
-	$ar_first_name = $_REQUEST[ar_mytxt_src];
-	
-	if($_REQUEST[mytxt_src1] == '')
-	{$father_name=$_REQUEST[txt_src1];}
-	else{$father_name=$_REQUEST[mytxt_src1];}
-	if($_REQUEST[mytxt_src2] == '')
-	{$grandfather_name=$_REQUEST[txt_src2];}
-	else{$grandfather_name=$_REQUEST[mytxt_src2];}
-	if($_REQUEST[mytxt_src3] == '')
-	{$family_name=$_REQUEST[txt_src3];}
-	else{$family_name=$_REQUEST[mytxt_src3];}
-	
-	*/
-
+{ 	
 	$student_name = $first_name.' '.$family_name;
 	$last_name_arabic = $Arabic->en2ar($family_name);
-	$ar_familyname=$_REQUEST[ar_mytxt_src3];//aaaa
-	$ar_gfathrname=$_REQUEST[ar_mytxt_src2];//bbbb
-	$ar_fathername=$_REQUEST[ar_mytxt_src1];//cccc
-	$ar_firstname=$_REQUEST[ar_mytxt_src];//dddd
+	
+	$ar_familyname=(empty($_REQUEST['ar_mytxt_src3'])?$_SESSION['classic_familyname1']:$_REQUEST['ar_mytxt_src3']);
+	$ar_gfathrname=(empty($_REQUEST['ar_mytxt_src2'])?$_SESSION['classic_gfathername1']:$_REQUEST['ar_mytxt_src2']);
+	$ar_fathername=(empty($_REQUEST['ar_mytxt_src1'])?$_SESSION['classic_fathername1']:$_REQUEST['ar_mytxt_src1']);
+	$ar_firstname=(empty($_REQUEST['ar_mytxt_src'])?$_SESSION['classic_name1']:$_REQUEST['ar_mytxt_src']);
+	$en_firstname=(empty($_REQUEST['mytxt_src'])?$_SESSION['classic_name']:$_REQUEST['mytxt_src']);
+	$en_fathername=(empty($_REQUEST['mytxt_src1'])?$_SESSION['classic_fathername']:$_REQUEST['mytxt_src1']); 
+	$en_gfathername=(empty($_REQUEST['mytxt_src2'])?$_SESSION['classic_gfathername']:$_REQUEST['mytxt_src2']);
+	$en_familyname=(empty($_REQUEST['mytxt_src3'])?$_SESSION['classic_familyname']:$_REQUEST['mytxt_src3']); 
 	
 	$_SESSION[gender] = $_REQUEST[gender];
 	$_SESSION[gender1] = $_REQUEST[gender1];
@@ -60,15 +45,17 @@ if($_REQUEST['action']=='classic')
 	$_SESSION[classic_fathername] = $_REQUEST[mytxt_src1];
 	$_SESSION[classic_gfathername] = $_REQUEST[mytxt_src2];
 	$_SESSION[classic_familyname] = $_REQUEST[mytxt_src3];
-	$_SESSION[classic_name1] = $ar_firstname;
-	$_SESSION[classic_fathername1] = $ar_fathername;
-	$_SESSION[classic_gfathername1] = $ar_gfathrname;
-	$_SESSION[classic_familyname1] = $ar_familyname;
+	$_SESSION[classic_name1] = $_REQUEST[ar_mytxt_src];
+	$_SESSION[classic_fathername1] = $_REQUEST[ar_mytxt_src1];
+	$_SESSION[classic_gfathername1] = $_REQUEST[ar_mytxt_src2];
+	$_SESSION[classic_familyname1] = $_REQUEST[ar_mytxt_src3];
 	
 	$_SESSION[classic_sidn] = $_REQUEST[sidn];
 	$_SESSION[classic_age] = $_REQUEST[age];
 	$_SESSION[classic_email] = $_REQUEST[email];
 	
+	
+
 	//Get Gender from Session
 	if($_SESSION[gender]==''){
 		$gender = $_SESSION[gender1];
@@ -162,14 +149,14 @@ if($_REQUEST['action']=='classic')
 		move_uploaded_file($_FILES[signature][tmp_name],"photo/".$filename1);
 	}
 	$address = mysql_real_escape_string($_POST[address]);	
-	$string="	first_name='$_SESSION[classic_name]',
-				first_name1='$_SESSION[classic_name1]',
-				father_name='$_SESSION[classic_fathername]',
-				father_name1='$_SESSION[classic_fathername1]',
-				grandfather_name='$_SESSION[classic_gfathername]',
-				grandfather_name1='$_SESSION[classic_gfathername1]',
-				family_name='$_SESSION[classic_familyname]',
-				family_name1='$_SESSION[classic_familyname1]',
+	$string="	first_name='$en_firstname',
+				first_name1='$ar_firstname',
+				father_name='$en_fathername',
+				father_name1='$ar_fathername',
+				grandfather_name='$en_gfathrname',
+				grandfather_name1='$ar_gfathrname',
+				family_name='$en_familyname',
+				family_name1='$ar_familyname',
 				guardian_name='$_REQUEST[gname]',
 				age='$_REQUEST[age]',
 				guardian_contact='$_REQUEST[pcontact]',
@@ -473,7 +460,7 @@ if($_REQUEST['action']=='classic')
 						$sms_cont = str_replace('%grp%',$g_name,$sms_cont);
 						$msg = str_replace('%unt_fnd%',$no_unit_finined,$sms_cont);
 						*/
-
+/*
 						$search = array('%unit%','%std%','%grp%','%unt_fnd%');
 						$replace = array($unit,$student,$g_name,$no_unit_finined);
 						$msg=str_replace($search, $replace, $sms_cont); 

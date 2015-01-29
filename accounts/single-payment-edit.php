@@ -29,7 +29,7 @@ $course_id =  $_REQUEST['course_id'];
 $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 
 if($_REQUEST['action']=='edit_payment'){
-	echo var_dump($_POST);
+	
 	//Current date and time
 	$dt = date('Y-m-d h:m:s');
 	

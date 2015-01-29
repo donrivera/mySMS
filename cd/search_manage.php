@@ -96,8 +96,8 @@ $(document).ready(function() {
 		}
 		if(amt_total>balance)
 		{
-			//alert("Payment Exceeds Balance!");
-			alert(amt_total+'-'+balance);
+			alert("Payment Exceeds Balance!");
+			//alert(amt_total+'-'+balance);
 			//document.getElementById('othertext').focus();
 			return false;
 		}
@@ -466,7 +466,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               </select></td>
                               <td width="24%" align="left" valign="middle"></td>
                             </tr>
-                            <?php $course_fee = $dbf->getDataFromTable("course_fee","fees","course_id='$course_id' And status='1'"); ?>
+                            <?php 	$course_fee = $dbf->getDataFromTable("course_fee","fees","course_id='$course_id' And status='1'"); 
+									$enroll_dtl=$dbf->getInvoiceCode($student_id,$res_enroll[course_id]); 
+							?>
                             <tr>
                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                               <td height="28" align="right" valign="middle" class="leftmenu"><?php echo constant("ADMIN_COURSE_MANAGE_COURSEFEES");?> :</td>
@@ -487,7 +489,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                     <?php			 
                                          $camt = $course_fees-$res_enroll["discount"] + $res_enroll["other_amt"];
                                          
-                                         $fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1'");
+                                         $fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1' And invoice_sl LIKE '$enroll_dtl%'");
                                          $feeamt = $fee["SUM(paid_amt)"];
                                           
                                          $bal_amt = $camt - $feeamt;
@@ -515,18 +517,18 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                   <td align="left" valign="middle"><input name="othertext" type="text" class="new_textbox190" id="othertext" value="<?php echo $res_enroll["othertext"];?>" /></td>
                                 </tr>
                                 <?php
-								$opening_amt = $dbf->getDataFromTable('student_fees',"paid_amt","course_id='$course_id' And student_id='$student_id' And type='advance'");
-								$opening_payment_comment=$dbf->getDataFromTable('student_fees',"comments","course_id='$course_id' And student_id='$student_id' And (type='advance')");
+								$opening_amt = $dbf->getDataFromTable('student_fees',"paid_amt","course_id='$course_id' And student_id='$student_id' And (type='advance') And invoice_sl LIKE '$enroll_dtl%'");
+								$opening_payment_comment=$dbf->getDataFromTable('student_fees',"comments","course_id='$course_id' And student_id='$student_id' And (type='advance') And invoice_sl LIKE '$enroll_dtl%'");
 								if($opening_amt > 0){$readonly='readonly=""';}
 								elseif($feeamt >0){$readonly='readonly=""';}
 								else{$readonly='';}
-								$opening_payment_type=$dbf->getDataFromTable('student_fees',"payment_type","course_id='$course_id' And student_id='$student_id' And (type='advance')");
+								$opening_payment_type=$dbf->getDataFromTable('student_fees',"payment_type","course_id='$course_id' And student_id='$student_id' And (type='advance') And invoice_sl LIKE '$enroll_dtl%'");
 								?>
                                 <tr>
                                   <td height="28" align="left" valign="middle"><input name="payment" type="text" <?php echo $readonly;?> class="new_textbox100" id="payment" value="<?php echo $opening_amt;?>"  onKeyPress="return isNumberKey(event);"/></td>
                                   <td align="left" valign="middle" class="mycon"><?php echo $res_currency[symbol];?></td>
                                   <td align="left" valign="middle"><?php
-								  $valno = $dbf->strRecordID("student_fees","MAX(id)","id <> (SELECT MAX(id) FROM student_fees WHERE student_id='$student_id') AND student_id='$student_id'");
+								  $valno = $dbf->strRecordID("student_fees","MAX(id)","id <> (SELECT MAX(id) FROM student_fees WHERE student_id='$student_id') AND student_id='$student_id' And invoice_sl LIKE '$enroll_dtl%'");
 								  $maxid = $valno["MAX(id)"];
 								  
 								  $valno = $dbf->strRecordID("student_fees","*","id='$maxid'");
@@ -654,7 +656,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 									//Get Course has been finished or not (If 0 = Not completed else Completed)
 									$num_complete = 0;#$dbf->countRows('student_group g,student_group_dtls d',"g.id=d.parent_id And g.status='Completed' And g.course_id='$course_id' And d.student_id='$student_id'");
 									
-                                    foreach($dbf->fetchOrder('student_fees',"course_id='$course_id' And student_id='$student_id' AND type !='advance'","") as $vali) {
+                                    foreach($dbf->fetchOrder('student_fees',"course_id='$course_id' And student_id='$student_id' AND type !='advance' And (invoice_sl LIKE '$enroll_dtl%')","") as $vali) {
                                         
                                     $dt="";                                    
                                     $ptype = $dbf->strRecordID("common","*","id='$vali[payment_type]'");                                    

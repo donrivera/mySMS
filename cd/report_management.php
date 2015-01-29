@@ -320,7 +320,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td>&nbsp;</td>
                     <td height="25" align="left" valign="middle" class="lable1"><?php echo constant("MANAGE_LISM_REPORT_GROUP_TRANSFER");?>&nbsp;:&nbsp;&nbsp;</td>
                     <?php
-					$group = $dbf->strRecordID("student_group","COUNT(id)","status='Continue' And (created_datetime BETWEEN '$start_date' And '$end_date') And centre_id='$centre_id'");
+					$group = $dbf->strRecordID("student_group","COUNT(id)","(status='Continue' OR status='Not Started') And (created_datetime BETWEEN '$start_date' And '$end_date') And centre_id='$centre_id'");
 					$group = $group["COUNT(id)"];
 					?>
                     <td align="center" valign="middle" class="pedtext"><?php echo $group;?></td>
@@ -329,7 +329,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td>&nbsp;</td>
                     <td height="25" align="left" valign="middle" class="lable1"><?php echo constant("MANAGE_LISM_REPORT_GROUP_COMPLETED");?>&nbsp;:&nbsp;&nbsp;</td>
                     <?php
-					$group = $dbf->strRecordID("student_group","COUNT(id)","status='Completed' And (completed_date BETWEEN '$start_date' And '$end_date') And centre_id='$centre_id'");
+					$group = $dbf->strRecordID("student_group","COUNT(id)","status='Completed' And (end_date BETWEEN '$start_date' And '$end_date') And centre_id='$centre_id'");
 					$group = $group["COUNT(id)"];
 					?>
                     <td align="center" valign="middle" class="pedtext"><?php echo $group;?></td>

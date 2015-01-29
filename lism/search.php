@@ -163,7 +163,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							<?php
                             foreach($dbf->fetchOrder('centre',"","name") as $valc) {	
                             ?>
-							<option value="<?php echo $valc[id];?>" <?php if($valc["id"]==$_REQUEST["centre_id"]){?> selected="" <?php } ?>><?php echo $valc[name];?></option>
+							<option value="<?php echo $valc[id];?>" <?php if($valc["id"]==$_SESSION["centre_id"]){?> selected="" <?php } ?>><?php echo $valc[name];?></option>
 							<?php
 							   }
 							   ?>
@@ -263,8 +263,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					
 					$i = 1;
 					$color = "#ECECFF";
-					$num=$dbf->countRows('student',$condition);
-					foreach($dbf->fetchOrder('student',$condition,"id DESC") as $val){
+					$num=$dbf->countRows('student',$condition."AND centre_id=".$_REQUEST[centre_id]);
+					foreach($dbf->fetchOrder('student',$condition."AND centre_id=".$_REQUEST[centre_id],"id DESC") as $val){
 						$num_comment=$dbf->countRows('student_comment',"student_id='$val[id]'");
 					?>
                 <tr bgcolor="<?php echo $color;?>"  onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'" style="cursor:pointer;" >
@@ -275,7 +275,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
                   <td width="5%" align="center" valign="middle"><?php echo $dbf->VVIP_Icon($val["id"]);?></td>
                   <td width="5%" align="center" valign="middle"><?php if($num_comment!=0){?>
-                  <a href="view_student_comments_history_from_manage.php?center_id=<?php echo $_REQUEST[center_id]; ?>&ids=<?php echo $val[id]; ?>"><img src="../images/comments.png" width="20" height="20" border="0" title="<?php echo VIEW_COMMENTS ?>"></a>
+                  <a href="view_student_comments_history_from_manage.php?center_id=<?php echo $_REQUEST[centre_id]; ?>&ids=<?php echo $val[id]; ?>"><img src="../images/comments.png" width="20" height="20" border="0" title="<?php echo VIEW_COMMENTS ?>"></a>
                   <?php }else {?>
                   <img src="../images/comments-no.png" title="<?php echo ICON_NO_COMMENTS ?>" />
                   <?php } ?></a></td>

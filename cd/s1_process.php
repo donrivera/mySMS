@@ -995,7 +995,7 @@ if($_REQUEST['action']=='search'){
 		$amt = $_REQUEST[$amt];
 		
 		if($name != "" && $amt != ""){
-			$string="student_id='$student_id',course_id='$_REQUEST[course]',fee_date='$name',fee_amt='$amt',created_date='$dt',created_by='$_SESSION[id]',centre_id='$_SESSION[centre_id]'";
+			$string="student_id='$student_id',course_id='$_REQUEST[course]',fee_date='$name',fee_amt='$amt',created_date='$dt',created_by='$_SESSION[id]',centre_id='$_SESSION[centre_id]',invoice_sl='$inv_sl'";
 			if($duplicate_fees==0)
 			{$dbf->insertSet("student_fees",$string);}else{header("Location:search_manage.php?student_id=$student_id&course_id=$_REQUEST[course_id]&msg=duplicate");exit;}
 		}
@@ -1021,7 +1021,7 @@ if($_REQUEST['action']=='advance'){
 	//=======================================================
 	
 	//insert into student_fee table
-	$string2="student_id='$student_id',course_id='$course_id',paid_amt='$_REQUEST[amts]',fee_amt='$_REQUEST[amts]',comments='$ad_comment',fee_date='$dated',paid_date='$dated',payment_type='$_REQUEST[payment_type]',centre_id='$centre_id',created_date=NOW(),created_by='$_SESSION[id]',type='advance',invoice_sl='$inv_sl',invoice_no='$inv_no',status='1'";	
+	$string2="discount='$_REQUEST[discount]',student_id='$student_id',course_id='$course_id',paid_amt='$_REQUEST[amts]',fee_amt='$_REQUEST[amts]',comments='$ad_comment',fee_date='$dated',paid_date='$dated',payment_type='$_REQUEST[payment_type]',centre_id='$centre_id',created_date=NOW(),created_by='$_SESSION[id]',type='advance',invoice_sl='$inv_sl',invoice_no='$inv_no',status='1'";	
 	$dbf->insertSet("student_fees",$string2);
 	
 	#$dbf->deleteFromTable("student_moving", "student_id='$student_id' And status_id <='2'");

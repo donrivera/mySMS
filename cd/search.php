@@ -200,12 +200,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               </thead>
               <?php			  	
 			  	$condition = '';
+				$stid=trim($_REQUEST[stid]);
 				//Concate the Condition
 				//1.
 				if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[email]==''){
 					$condition = "(family_name LIKE '$_REQUEST[fname]%' OR family_name1 LIKE '$_REQUEST[fname]%' OR first_name LIKE '$_REQUEST[fname]%' OR first_name1 LIKE '$_REQUEST[fname]%') And centre_id='$centre_id'";
 				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[email]==''){
-					$condition = "student_id LIKE '$_REQUEST[stid]%'  And centre_id='$centre_id'";
+					$condition = "student_id LIKE '%$stid%'  And centre_id='$centre_id'";
 				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[email]==''){
 					$condition = "student_mobile LIKE '$_REQUEST[mobile]%'  And centre_id='$centre_id'";
 				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[email]!=''){
@@ -253,7 +254,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				$i = 1;
 				$color = "#ECECFF";
 				$num=$dbf->countRows('student',$condition);
-				foreach($dbf->fetchOrder('student',$condition,"id DESC ") as $val){
+				foreach($dbf->fetchOrder('student',$condition,"id DESC LIMIT 0,100") as $val){
 					$num_comment=$dbf->countRows('student_comment',"student_id='$val[id]'");
 					$valc = $dbf->strRecordID("common","*","id='$val[studentstatus_id]'");
 					

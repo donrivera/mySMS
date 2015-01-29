@@ -33,6 +33,8 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 <script type="text/javascript" src="dropdowntabs.js"></script>
 <link rel="stylesheet" type="text/css" href="glowtabs.css" />
 
+<script type="text/javascript" src="../modal/thickbox.js"></script>
+<link rel="stylesheet" href="../modal/thickbox.css" type="text/css" media="screen" />
 <!--UI JQUERY DATE PICKER-->
 <link rel="stylesheet" href="datepicker/jquery.ui.all.css">
 
@@ -41,6 +43,19 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 <script src="datepicker/jquery.ui.datepicker.js"></script>
 <link rel="stylesheet" href="datepicker/demos.css">
 <script>
+$(document).ready(function() 
+{	
+	$("#frm").submit(function()
+	{
+		/*var init_pay=$("#payment").val();*/
+		var amts=$("#amts").val();
+		if(amts < 0)
+		{
+			alert("Please Input Payment Value!");
+			return false;
+		}
+	});
+});
 $(function() {
 	$( ".datepick" ).datepicker({
 		changeMonth: true,
@@ -210,9 +225,15 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 																WHERE sc.student_id='$student_id' 
 																AND sc.course_id 
 																NOT IN (SELECT se.course_id 
-																		FROM student_enroll se
-																		WHERE se.student_id='$student_id')
+																		FROM student_group_dtls se
+																		LEFT JOIN student_group sg ON se.parent_id=sg.id
+																		WHERE se.student_id='$student_id' AND sg.status !='Completed')
 																");
+									/*
+										NOT IN (SELECT se.course_id 
+										FROM student_enroll se
+										WHERE se.student_id='$student_id')
+									*/							
 									//$query=$dbf->fetchOrder('student_course',"student_id='$student_id' And course_id > 0","");
 									foreach($query as $rescourse) {
 										$crs = $dbf->strRecordID("course", "*", "id='$rescourse[course_id]'");
@@ -242,7 +263,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td height="22" align="center" valign="middle" class="mytext"><?php echo $m;?></td>
                             <td align="left" valign="middle" class="mytext">&nbsp;<?php echo $adv["paid_date"];?></td>
                             <td align="right" valign="middle" class="mytext">&nbsp;<?php echo $adv["paid_amt"];?> <?php echo $res_currency[symbol];?>&nbsp;</td>
-                            <td align="center" valign="middle" class="mytext"><?php echo $dbf->getDataFromTable("common", "name", "id='$adv[payment_type]'");?></td>
+                            <td align="center" valign="middle" class="mytext"><?php echo $dbf->getDataFromTable("common", "name", "id='$adv[payment_type]'");?>
+							<a href="search_print_challan_admission.php?course_id=<?php echo $course_id;?>&amp;fee_id=<?php echo $adv[id];?>&amp;id=<?php echo $student_id;?>&amp;page=search_print_challan_admission.php&amp;TB_iframe=true&amp;height=440&amp;width=675&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox"><img src="../images/print.png" width="16" height="16" border="0" title="Receipt" /></a>
+							<a href="search_print_invoice.php?course_id=<?php echo $course_id;?>&amp;student_id=<?php echo $student_id;?>&amp;page=search_print_invoice.php&amp;TB_iframe=true&amp;height=600&amp;width=690&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox"><img src="../images/payment.png" width="16" height="16" border="0" title="Invoice" /></a>
+							</td>
                             </tr>
                           <?php $m++; } ?>
                           <?php if($is_advance_exist == 0){?>
@@ -285,6 +309,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                     </select>
                                   </span></td>
                                 <td>&nbsp;</td>
+                                </tr>
+								<tr>
+                                <td height="28" align="right" valign="middle"><span class="leftmenu">&nbsp;Discount :</span></td>
+                                <td align="left" valign="middle">
+                                <input name="discount" type="text"  class="new_textbox100" id="discount" onKeyPress="return isNumberKey(event);"/>
+                                </td>
                                 </tr>
                               <tr>
                                 <td height="28" align="right" valign="top" class="leftmenu"><?php echo constant("ADMIN_COMMNAME");?>:</td>

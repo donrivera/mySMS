@@ -48,11 +48,17 @@ $course_id = $res_group["course_id"];
 $res_inv = $dbf->strRecordID("centre","invoice_from","id='$centre_id'");
 $studentSendSMS=0;
 $student_reenroll=0;
-$group_status = $dbf->getDataFromTable("student_group","status","id='$group'");
+$prev_group=$dbf->genericQuery(" 	SELECT g.status
+									FROM  student_group g
+									INNER JOIN student_group_dtls sgd ON g.id = sgd.parent_id
+									WHERE sgd.student_id ='$student_id'
+									AND g.course_id ='$course_id'
+								");
+foreach($prev_group as $p_grp):$previous_group_status=$p_grp['status'];endforeach;
 if($num_student == 0)
 {	
 	$duplicate_course=$dbf->countRows('student_group_dtls',"course_id='$course_id' && student_id='$student_id'");
-	if($duplicate_course==1 && $group_status!='Completed')
+	if($duplicate_course==1 && $previous_group_status!='Completed')
 	{
 		echo '<script type="text/javascript">alert("Duplicate Course!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
 	}

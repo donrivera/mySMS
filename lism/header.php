@@ -19,7 +19,7 @@ $page_name = $parts[count($parts) - 1];
 <link rel="stylesheet" type="text/css" href="../css/jquery.autocomplete.css" />
 <script type="text/javascript" language="javascript">
 $(document).ready(function() {
-	$("#testinput").autocomplete("autosuggest_tech.php", {
+	$("#testinput").autocomplete("autosuggest_tech.php?centre_id=<?php echo $_SESSION['centre_id'];?>", {
 		width: 260,
 		matchContains: true,
 		selectFirst: false
@@ -126,7 +126,7 @@ $(document).ready(function() {
 			  $mystyle = 'style="background-color:#003399; background-image:none;"';
 		  }
 		  ?>
-        <li><a <?php echo $mystyle;?> href="user_manage.php" title="<?php echo constant("ADMIN_MENU_USERS");?>"><span <?php echo $mystyle;?>><?php echo constant("ADMIN_MENU_USERS");?></span></a></li>
+        <!--<li><a <?php echo $mystyle;?> href="user_manage.php" title="<?php echo constant("ADMIN_MENU_USERS");?>"><span <?php echo $mystyle;?>><?php echo constant("ADMIN_MENU_USERS");?></span></a></li>-->
         
          <?php
 	  $mystyle = '';
@@ -231,7 +231,7 @@ $(document).ready(function() {
         <a href="report_missed_eped.php"><?php echo constant("LISM_MISSED_EPED");?></a> <!--report_missed_eped.php-->
         <a href="report_missed_progress.php"><?php echo constant("LISM_MISSED_PROGRESS");?></a> 
         <a href="report_missed_certificate.php"><?php echo constant("LISM_MISSED_CERTIFICATE");?></a>        
-        <a href="report_management.php"><?php echo constant("MANAGEMENT_REPORT");?></a>
+       <!-- <a href="report_management.php"><?php echo constant("MANAGEMENT_REPORT");?></a>-->
      </div>
    
     <div id="help" class="dropmenudiv_d">

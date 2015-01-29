@@ -15,7 +15,6 @@ function get_percent($input){
 		return $out;
 	}					
 }
-
 if($_REQUEST['action']=='insert')
 {
 	
@@ -221,22 +220,22 @@ if($_REQUEST['action']=='insert')
 			$course_listen_perc= get_percent($course_listen,$total_units,15);
 			
 			$course_attendance = "course_attendance"."_".$j;
-			$course_attendance = $_REQUEST[$course_attendance]/$res_group['unit_per_day'];
-			$course_attendance_perc= get_percent($course_attendance,$total_units,10);
+			$course_attendance_count =$dbf->No_Of_Attendance($student_id, $_POST['group_id']);#$_REQUEST[$course_attendance]/$res_group['unit_per_day'];
+			$course_attendance_perc=$_REQUEST[$course_attendance]; #get_percent($course_attendance,$total_units,10);
 			
 			//Check duplicate
 			$num=$dbf->countRows('teacher_progress_course',"teacher_id='$uid' AND group_id='$_POST[group_id]' AND course_id='$res_group[course_id]' AND student_id='$student_id'");
 			if($num==0)
 			{
 				//Insert in Progress course table	
-				$string="teacher_id='$uid',group_id='$_POST[group_id]',course_id='$res_group[course_id]',student_id='$student_id',course_partication='$course_partication',course_partication_perc='$course_partication_perc',course_homework='$course_homework', course_homework_perc='$course_homework_perc', course_fluency='$course_fluency', course_fluency_perc='$course_fluency_perc', course_pro='$course_pro',course_pro_perc='$course_pro_perc', course_grammer='$course_grammer', course_grammer_perc='$course_grammer_perc', course_voca='$course_voca', course_voca_perc='$course_voca_perc',course_listen='$course_listen',course_listen_perc='$course_listen_perc',course_attendance='$course_attendance',course_attendance_perc='$course_attendance_perc',parent_id='$ids'";
+				$string="teacher_id='$uid',group_id='$_POST[group_id]',course_id='$res_group[course_id]',student_id='$student_id',course_partication='$course_partication',course_partication_perc='$course_partication_perc',course_homework='$course_homework', course_homework_perc='$course_homework_perc', course_fluency='$course_fluency', course_fluency_perc='$course_fluency_perc', course_pro='$course_pro',course_pro_perc='$course_pro_perc', course_grammer='$course_grammer', course_grammer_perc='$course_grammer_perc', course_voca='$course_voca', course_voca_perc='$course_voca_perc',course_listen='$course_listen',course_listen_perc='$course_listen_perc',course_attendance='$course_attendance_count',course_attendance_perc='$course_attendance_perc',parent_id='$ids'";
 				
 				$dbf->insertSet("teacher_progress_course",$string);
 			}
 			else
 			{
 				//update Progress course table	
-				$string="course_partication='$course_partication',course_partication_perc='$course_partication_perc',course_homework='$course_homework', course_homework_perc='$course_homework_perc',course_fluency='$course_fluency', course_fluency_perc='$course_fluency_perc', course_pro='$course_pro', course_pro_perc='$course_pro_perc',course_grammer='$course_grammer', course_grammer_perc='$course_grammer_perc', course_voca='$course_voca', course_voca_perc='$course_voca_perc', course_listen='$course_listen',course_listen_perc='$course_listen_perc',course_attendance='$course_attendance',course_attendance_perc='$course_attendance_perc',parent_id='$ids'";
+				$string="course_partication='$course_partication',course_partication_perc='$course_partication_perc',course_homework='$course_homework', course_homework_perc='$course_homework_perc',course_fluency='$course_fluency', course_fluency_perc='$course_fluency_perc', course_pro='$course_pro', course_pro_perc='$course_pro_perc',course_grammer='$course_grammer', course_grammer_perc='$course_grammer_perc', course_voca='$course_voca', course_voca_perc='$course_voca_perc', course_listen='$course_listen',course_listen_perc='$course_listen_perc',course_attendance='$course_attendance_count',course_attendance_perc='$course_attendance_perc',parent_id='$ids'";
 				
 				$dbf->updateTable("teacher_progress_course",$string,"teacher_id='$uid' AND group_id='$_POST[group_id]' AND course_id='$res_group[course_id]' AND student_id='$student_id'");
 			
@@ -420,20 +419,23 @@ if($_REQUEST['action']=='insert')
 			$course_listen_perc= get_percent($course_listen,$total_units,15);
 			
 			$course_attendance = "course_attendance"."_".$j;
-			$course_attendance = $_REQUEST[$course_attendance]/$res_group['unit_per_day'];
-			$course_attendance_perc= get_percent($course_attendance,$total_units,10);
+			#$course_attendance = $_REQUEST[$course_attendance]/$res_group['unit_per_day'];
+			#$course_attendance_perc= get_percent($course_attendance,$total_units,10);
+			
+			$course_attendance_count=$dbf->No_Of_Attendance($student_id,$_POST['group_id']);
+			$course_attendance_perc=$_REQUEST[$course_attendance];
 			
 			//Check duplicate
 			$num=$dbf->countRows('teacher_progress_course',"teacher_id='$uid' AND group_id='$_POST[group_id]' AND course_id='$res_group[course_id]' AND student_id='$student_id'");
 			if($num==0)
 			{
-				$string="teacher_id='$uid',group_id='$_POST[group_id]',course_id='$res_group[course_id]',student_id='$student_id',course_partication='$course_partication',course_partication_perc='$course_partication_perc',course_homework='$course_homework', course_homework_perc='$course_homework_perc', course_fluency='$course_fluency', course_fluency_perc='$course_fluency_perc', course_pro='$course_pro',course_pro_perc='$course_pro_perc', course_grammer='$course_grammer', course_grammer_perc='$course_grammer_perc', course_voca='$course_voca', course_voca_perc='$course_voca_perc',course_listen='$course_listen',course_listen_perc='$course_listen_perc',course_attendance='$course_attendance',course_attendance_perc='$course_attendance_perc',parent_id='$ids'";
+				$string="teacher_id='$uid',group_id='$_POST[group_id]',course_id='$res_group[course_id]',student_id='$student_id',course_partication='$course_partication',course_partication_perc='$course_partication_perc',course_homework='$course_homework', course_homework_perc='$course_homework_perc', course_fluency='$course_fluency', course_fluency_perc='$course_fluency_perc', course_pro='$course_pro',course_pro_perc='$course_pro_perc', course_grammer='$course_grammer', course_grammer_perc='$course_grammer_perc', course_voca='$course_voca', course_voca_perc='$course_voca_perc',course_listen='$course_listen',course_listen_perc='$course_listen_perc',course_attendance='$course_attendance_count',course_attendance_perc='$course_attendance_perc',parent_id='$ids'";
 				
 				$dbf->insertSet("teacher_progress_course",$string);
 			}
 			else
 			{
-				$string="course_partication='$course_partication',course_partication_perc='$course_partication_perc',course_homework='$course_homework', course_homework_perc='$course_homework_perc', course_fluency='$course_fluency', course_fluency_perc='$course_fluency_perc', course_pro='$course_pro', course_pro_perc='$course_pro_perc',course_grammer='$course_grammer', course_grammer_perc='$course_grammer_perc', course_voca='$course_voca', course_voca_perc='$course_voca_perc', course_listen='$course_listen',course_listen_perc='$course_listen_perc',course_attendance='$course_attendance',course_attendance_perc='$course_attendance_perc',parent_id='$ids'";
+				$string="course_partication='$course_partication',course_partication_perc='$course_partication_perc',course_homework='$course_homework', course_homework_perc='$course_homework_perc', course_fluency='$course_fluency', course_fluency_perc='$course_fluency_perc', course_pro='$course_pro', course_pro_perc='$course_pro_perc',course_grammer='$course_grammer', course_grammer_perc='$course_grammer_perc', course_voca='$course_voca', course_voca_perc='$course_voca_perc', course_listen='$course_listen',course_listen_perc='$course_listen_perc',course_attendance='$course_attendance_count',course_attendance_perc='$course_attendance_perc',parent_id='$ids'";
 				
 			$dbf->updateTable("teacher_progress_course",$string,"teacher_id='$uid' AND group_id='$_POST[group_id]' AND course_id='$res_group[course_id]' AND student_id='$student_id'");
 			
@@ -442,7 +444,6 @@ if($_REQUEST['action']=='insert')
 			
 		}
 		//End 1st
-		
 		//Header location
 		header("Location:report_teacher_progress.php?msg=added&group_id=$_POST[group_id]");
 	}

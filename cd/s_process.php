@@ -21,35 +21,17 @@ $Arabic = new I18N_Arabic('Transliteration');
 $res = $dbf->strRecordID("student","*","id='$_REQUEST[student_id]'");
 if($_REQUEST['action']=='classic'){
 
-	if($_REQUEST[mytxt_src] == ''){
-		$first_name=$_REQUEST[txt_src];
-	}else{
-		$first_name=$_REQUEST[mytxt_src];
-	}
 	
-	$ar_first_name = $_REQUEST[ar_mytxt_src];
-	
-	if($_REQUEST[mytxt_src1] == ''){
-		$father_name=$_REQUEST[txt_src1];
-	}else{
-		$father_name=$_REQUEST[mytxt_src1];
-	}
-	if($_REQUEST[mytxt_src2] == ''){
-		$grandfather_name=$_REQUEST[txt_src2];
-	}else{
-		$grandfather_name=$_REQUEST[mytxt_src2];
-	}
-	if($_REQUEST[mytxt_src3] == ''){
-		$family_name=$_REQUEST[txt_src3];
-	}else{
-		$family_name=$_REQUEST[mytxt_src3];
-	}
 	$last_name_arabic = $Arabic->en2ar($family_name);
 	$student_name = $first_name.' '.$family_name;
-	$ar_familyname=$_REQUEST[ar_mytxt_src3];//aaaa
-	$ar_gfathrname=$_REQUEST[ar_mytxt_src2];//bbbb
-	$ar_fathername=$_REQUEST[ar_mytxt_src1];//cccc
-	$ar_firstname=$_REQUEST[ar_mytxt_src];//dddd
+	$ar_familyname=(empty($_REQUEST['ar_mytxt_src3'])?$_SESSION['classic_familyname1']:$_REQUEST['ar_mytxt_src3']);
+	$ar_gfathrname=(empty($_REQUEST['ar_mytxt_src2'])?$_SESSION['classic_gfathername1']:$_REQUEST['ar_mytxt_src2']);
+	$ar_fathername=(empty($_REQUEST['ar_mytxt_src1'])?$_SESSION['classic_fathername1']:$_REQUEST['ar_mytxt_src1']);
+	$ar_firstname=(empty($_REQUEST['ar_mytxt_src'])?$_SESSION['classic_name1']:$_REQUEST['ar_mytxt_src']);
+	$en_firstname=(empty($_REQUEST['mytxt_src'])?$_SESSION['classic_name']:$_REQUEST['mytxt_src']);
+	$en_fathername=(empty($_REQUEST['mytxt_src1'])?$_SESSION['classic_fathername']:$_REQUEST['mytxt_src1']); 
+	$en_gfathername=(empty($_REQUEST['mytxt_src2'])?$_SESSION['classic_gfathername']:$_REQUEST['mytxt_src2']);
+	$en_familyname=(empty($_REQUEST['mytxt_src3'])?$_SESSION['classic_familyname']:$_REQUEST['mytxt_src3']); 
 	
 	$_SESSION[gender] = $_REQUEST[gender];
 	$_SESSION[gender1] = $_REQUEST[gender1];
@@ -58,10 +40,14 @@ if($_REQUEST['action']=='classic'){
 	$_SESSION[information] = $_REQUEST[information];
 	$_SESSION[classic_gname] = $_REQUEST[gname];
 	
-	$_SESSION[classic_name] = $first_name;
-	$_SESSION[classic_fathername] = $father_name;
-	$_SESSION[classic_gfathername] = $grandfather_name;
-	$_SESSION[classic_familyname] = $family_name;
+	$_SESSION[classic_name] = $_REQUEST[mytxt_src];
+	$_SESSION[classic_fathername] = $_REQUEST[mytxt_src1];
+	$_SESSION[classic_gfathername] = $_REQUEST[mytxt_src2];
+	$_SESSION[classic_familyname] = $_REQUEST[mytxt_src3];
+	$_SESSION[classic_name1] = $_REQUEST[ar_mytxt_src];
+	$_SESSION[classic_fathername1] = $_REQUEST[ar_mytxt_src1];
+	$_SESSION[classic_gfathername1] = $_REQUEST[ar_mytxt_src2];
+	$_SESSION[classic_familyname1] = $_REQUEST[ar_mytxt_src3];
 	
 	$_SESSION[classic_sidn] = $_REQUEST[sidn];
 	$_SESSION[classic_age] = $_REQUEST[age];
@@ -97,7 +83,13 @@ if($_REQUEST['action']=='classic'){
 			$dbf->updateTable("student","email='$_POST[email]'","id='$student_id'"); 
 		}
 	}
-	
+	if($_REQUEST[mobile] != '009665'){
+		$num=$dbf->countRows('student',"student_mobile='$_POST[mobile]'");
+		if($num>0){
+			header("Location:s_classic.php?msg=mexist");
+			exit;
+		}
+	}
 	# Student National ID
 	$national_id = $_REQUEST['sidn'];
 
@@ -150,13 +142,13 @@ if($_REQUEST['action']=='classic'){
 		move_uploaded_file($_FILES[signature][tmp_name],"../sa/photo/".$filename1);
 	}
 	$address = mysql_real_escape_string($_POST[address]);	
-	$string="	first_name='$first_name',
+	$string="	first_name='$en_firstname',
 				first_name1='$ar_firstname',
-				father_name='$father_name',
+				father_name='$en_fathername',
 				father_name1='$ar_fathername',
-				grandfather_name='$grandfather_name',
+				grandfather_name='$en_gfathrname',
 				grandfather_name1='$ar_gfathrname',
-				family_name='$family_name',
+				family_name='$en_familyname',
 				family_name1='$ar_familyname',
 				guardian_name='$_REQUEST[gname]',
 				age='$_REQUEST[age]',
@@ -680,6 +672,14 @@ if($_REQUEST['action']=='classic'){
 	session_unregister('classic_gfathername');
 	unset($_SESSION['classic_familyname']);
 	session_unregister('classic_familyname');
+	unset($_SESSION['classic_name1']);
+	session_unregister('classic_name1');
+	unset($_SESSION['classic_fathername1']);
+	session_unregister('classic_fathername1');
+	unset($_SESSION['classic_gfathername1']);
+	session_unregister('classic_gfathername1');
+	unset($_SESSION['classic_familyname1']);
+	session_unregister('classic_familyname1');
 	unset($_SESSION['classic_sidn']);
 	session_unregister('classic_sidn');
 	unset($_SESSION['classic_age']);

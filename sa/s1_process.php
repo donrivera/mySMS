@@ -1011,7 +1011,7 @@ if($_REQUEST['action']=='search')
 		
 		if($name != "" && $amt != "")
 		{	
-			$string="student_id='$student_id',course_id='$_REQUEST[course]',fee_date='$name',fee_amt='$amt',created_date='$dt',created_by='$_SESSION[id]',centre_id='$_SESSION[centre_id]'";
+			$string="student_id='$student_id',course_id='$_REQUEST[course]',fee_date='$name',fee_amt='$amt',created_date='$dt',created_by='$_SESSION[id]',centre_id='$_SESSION[centre_id]',invoice_sl='$inv_sl'";
 			if($duplicate_fees==0)
 			{$dbf->insertSet("student_fees",$string);}else{header("Location:search_manage.php?student_id=$student_id&course_id=$_REQUEST[course_id]&msg=duplicate");exit;}
 		}

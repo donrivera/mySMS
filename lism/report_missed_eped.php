@@ -165,7 +165,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <?php
                         foreach($dbf->fetchOrder('centre',"","") as $valc) {
                       ?>
-                      <option value="<?php echo $valc[id];?>" <?php if($valc["id"]==$_REQUEST["centre_id"]){?> selected="" <?php } ?>><?php echo $valc[name];?></option>
+                      <option value="<?php echo $valc[id];?>" <?php if($valc["id"]==$_SESSION["centre_id"]){?> selected="" <?php } ?>><?php echo $valc[name];?></option>
                       <?php
                        }
                        ?>
@@ -175,8 +175,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <select name="teacher_id" id="teacher_id" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; height:25px; width:170px;">
                       <option value=""> Select Teacher </option>
                       <?php
-                        foreach($dbf->fetchOrder('teacher',"","") as $valc) {
-                      ?>
+						$sql=$dbf->genericQuery("	SELECT t.id,t.name 
+													FROM teacher t
+													INNER JOIN teacher_centre tc ON tc.teacher_id=t.id AND tc.centre_id='$_SESSION[centre_id]'");
+                        #foreach($dbf->fetchOrder('teacher',"","") as $valc) {
+						foreach($sql as $valc){
+					  ?>
                       <option value="<?php echo $valc[id];?>" <?php if($valc["id"]==$_REQUEST["teacher_id"]){?> selected="" <?php } ?>><?php echo $valc[name];?></option>
                       <?php
                        }

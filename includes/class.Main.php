@@ -780,33 +780,33 @@ class User extends Dbfunctions{
 		
 		$dbf = new User();
 		
-		$count_att_1 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$student_id' AND group_id='$group_id' AND shift1='X'");
+		$count_att_1 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$student_id' AND group_id='$group_id' AND (shift1='X' OR shift1='L')");
 		$shift1 = $count_att_1["COUNT(id)"];
 		
-		$count_att_2 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$student_id' AND group_id='$group_id' AND shift2='X'");
+		$count_att_2 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$student_id' AND group_id='$group_id' AND (shift2='X' OR shift2='L')");
 		$shift2 = $count_att_2["COUNT(id)"];
 		
-		$count_att_3 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$student_id' AND group_id='$group_id' AND shift3='X'");
+		$count_att_3 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$student_id' AND group_id='$group_id' AND (shift3='X' OR shift3='L')");
 		$shift3 = $count_att_3["COUNT(id)"];
 		
 		
-		$count_att_1 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$student_id' AND group_id='$group_id' AND shift4='X'");
+		$count_att_1 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$student_id' AND group_id='$group_id' AND (shift4='X' OR shift4='L')");
 		$shift4 = $count_att_1["COUNT(id)"];
 		
-		$count_att_2 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$student_id' AND group_id='$group_id' AND shift5='X'");
+		$count_att_2 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$student_id' AND group_id='$group_id' AND (shift5='X' OR shift5='L')");
 		$shift5 = $count_att_2["COUNT(id)"];
 		
-		$count_att_3 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$student_id' AND group_id='$group_id' AND shift6='X'");
+		$count_att_3 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$student_id' AND group_id='$group_id' AND (shift6='X' OR shift6='L')");
 		$shift6 = $count_att_3["COUNT(id)"];
 		
 		
-		$count_att_1 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$student_id' AND group_id='$group_id' AND shift7='X'");
+		$count_att_1 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$student_id' AND group_id='$group_id' AND (shift7='X' OR shift7='L')");
 		$shift7 = $count_att_1["COUNT(id)"];
 		
-		$count_att_2 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$student_id' AND group_id='$group_id' AND shift8='X'");
+		$count_att_2 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$student_id' AND group_id='$group_id' AND (shift8='X' OR shift8='L'))");
 		$shift8 = $count_att_2["COUNT(id)"];
 		
-		$count_att_3 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$student_id' AND group_id='$group_id' AND shift9='X'");
+		$count_att_3 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$student_id' AND group_id='$group_id' AND (shift9='X' OR shift9='L')");
 		$shift9 = $count_att_3["COUNT(id)"];
 		
 		return $shift1+$shift2+$shift3+$shift4+$shift5+$shift6+$shift7+$shift8+$shift9;
@@ -1148,16 +1148,23 @@ class User extends Dbfunctions{
 	# Get Bill number of courses enrolled By the Students
 	# Created On : 10-05-2013
 	# Created By : BLET
-	function GetBillNo($student_id, $course_id){
-		
-		$dbf = new User();
-		$enroll_dtls = $dbf->strRecordID('student_enroll', "*", "student_id='$student_id' And course_id='$course_id'");
-		$course_dtls = $dbf->strRecordID('course', "*", "id='$course_id'");
-		
+	function GetBillNo($student_id, $course_id)
+	{
+		$enroll=$this->genericQuery("
+										SELECT e.id
+										FROM student_enroll e 
+										INNER JOIN student_group_dtls sgd ON e.student_id=sgd.student_id
+										INNER JOIN student_group sg ON sgd.parent_id=sg.id
+										WHERE e.student_id='$student_id' AND e.course_id='$course_id' AND sg.status IN('Continue','Not Started') 
+									");
+		foreach($enroll as $e):$enroll_id=$e['id'];endforeach;
+		$enroll_dtls = (empty($enroll_id)?"":$enroll_id);
+		#$enroll_dtls = $this->strRecordID('student_enroll', "*", "student_id='$student_id' And course_id='$course_id'");
+		$course_dtls = $this->strRecordID('course', "*", "id='$course_id'");
 		//Invoice No
 		// Return values like Enrollment Serial No + Course Code + Student Serial No
 		#str_pad($enroll_dtls["id"], 8, "0", STR_PAD_LEFT).$course_dtls["code"].str_pad($student_id, 8, "0", STR_PAD_LEFT);
-		return $inv_no = "00".$enroll_dtls["id"].$course_dtls["code"].str_pad($student_id, 8, "0", STR_PAD_LEFT);
+		return $inv_no = "00".$enroll_dtls.$course_dtls["code"].str_pad($student_id, 8, "0", STR_PAD_LEFT);
 	}
 	# CORE SCHEDULING 
 	# Created On: 9-22-2013
@@ -2267,6 +2274,35 @@ class User extends Dbfunctions{
 		}
 		*/
 		#Transfer previous attendance to new Ped Card
+	}
+	function getInvoiceCode($student_id,$course_id)
+	{
+		$p_group=$this->genericQuery(" 	SELECT g.status
+										FROM  `student_group` g
+										INNER JOIN student_group_dtls sgd ON g.id = sgd.parent_id
+										WHERE sgd.student_id =  '$student_id'
+										AND g.course_id =  '$course_id'
+										ORDER BY end_date DESC LIMIT 0,1
+									");
+		foreach($p_group as $p_grp):$previous_group_status=$p_grp['status'];endforeach;	
+		$advance_fee=$this->countRows('student_fees',"student_id='$student_id' And course_id='$course_id' And type='advance'");
+		$enroll=$this->genericQuery("
+										SELECT e.id
+										FROM student_enroll e 
+										INNER JOIN student_group_dtls sgd ON e.student_id=sgd.student_id
+										INNER JOIN student_group sg ON sgd.parent_id=sg.id
+										INNER JOIN student_fees sf ON sg.course_id=sf.course_id
+										WHERE e.student_id='$student_id' AND e.course_id='$course_id' AND (sg.status IN('Continue','Not Started') OR sf.type!='advance') 
+										
+									");
+		foreach($enroll as $e):$enroll_id=$e['id'];endforeach;
+		#$student_enrolled_id=($advance_fee<0 && $previous_group_status='Completed'?"":$enroll_id);
+		if($advance_fee<0 && $previous_group_status='Completed'){$student_enrolled_id="";}
+		elseif($previous_group_status !='Completed' && $advance_fee>0){$student_enrolled_id="";}
+		elseif($previous_group_status !='Completed'){$student_enrolled_id=$enroll_id;}
+		else{$student_enrolled_id=$enroll_id;}
+		$course_code=$this->getDataFromTable("course", "code", "id='$course_id'");
+		return "00".$student_enrolled_id.$course_code;
 	}
 }
 ?>

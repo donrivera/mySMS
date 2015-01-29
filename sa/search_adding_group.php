@@ -116,6 +116,7 @@ text-transform:uppercase;
 </style>
 </head>
 <body>
+
 <?php if($_SESSION['lang']=='EN'){?>
 <form id="frm" name="frm" method="post" action="search_adding_group_process.php" onSubmit="return check()">
   <table width="470" border="1" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" style="border:solid 2px; border-color:#FF9900;">
@@ -166,17 +167,18 @@ text-transform:uppercase;
 			  }
 			  ?>
 			    <?php $year_now=date('Y');
-					$query=$dbf->genericQuery(
-												"SELECT sg.group_name,c.name,sg.id
-													FROM student_group  sg
-													INNER JOIN student_course sc ON sg.course_id=sc.course_id
-													INNER JOIN course c ON c.id=sc.course_id
-													INNER JOIN student_moving smv ON smv.student_id=sc.student_id
-													WHERE sc.student_id='$student_id' 
-													AND smv.status_id >'1'
-													AND sg.centre_id='$_SESSION[centre_id]' 
-													AND sg.status!='Completed' AND YEAR(sg.start_date) = '$year_now' ORDER BY sg.group_name ASC");
 					
+					$query=$dbf->genericQuery("
+												SELECT sg.group_name,c.name,sg.id
+												FROM student_group  sg
+												INNER JOIN student_course sc ON sg.course_id=sc.course_id
+												INNER JOIN course c ON c.id=sc.course_id
+												INNER JOIN student_moving smv ON smv.student_id=sc.student_id
+												WHERE sc.student_id='$student_id' 
+												AND smv.status_id >'1' AND sg.centre_id='$_SESSION[centre_id]'
+												AND sg.status!='Completed' AND YEAR(sg.start_date) = '$year_now'
+												ORDER BY substring('sg.group_name',1,2) ASC
+					");
 				  ?>
               </td>
               </tr>

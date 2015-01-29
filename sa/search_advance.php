@@ -248,9 +248,15 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 																WHERE sc.student_id='$student_id' 
 																AND sc.course_id 
 																NOT IN (SELECT se.course_id 
-																		FROM student_enroll se
-																		WHERE se.student_id='$student_id')
+																		FROM student_group_dtls se
+																		LEFT JOIN student_group sg ON se.parent_id=sg.id
+																		WHERE se.student_id='$student_id' AND sg.status !='Completed')
 																");
+									/*
+										NOT IN (SELECT se.course_id 
+										FROM student_enroll se
+										WHERE se.student_id='$student_id')
+									*/
 									//$query=$dbf->fetchOrder('student_course',"student_id='$student_id' And course_id > 0","");
 									foreach($query as $rescourse) {
 										$crs = $dbf->strRecordID("course", "*", "id='$rescourse[course_id]'");

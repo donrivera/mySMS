@@ -212,7 +212,7 @@ function date_change(){
 		var yy = end_date.getFullYear();
 		var year = (yy < 1000) ? yy + 1900 : yy;
 		new_end_date = year + "-" + month + "-" + day;
-		document.getElementById('gr_course_endt').value = new_end_date;
+		document.getElementById('gr_course_endt').value = new_end_date;//Date.parseExact("2010-11-29", "yyyy-MM-dd");
 	}
 }
 

@@ -934,6 +934,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$res_unit = $dbf->strRecordID("ped_units","*","group_id='$_REQUEST[cmbgroup]' And teacher_id='$_SESSION[uid]' AND units='$i'");
 						//Get the Number of Present in a particular Units
 						$present = $dbf->strRecordID("ped_attendance","COUNT(id) as total","attend_date='$res_unit[dated]' And teacher_id='$_SESSION[uid]' And group_id='$_REQUEST[cmbgroup]' And (shift1='X' OR shift2='X' OR shift3='X' OR shift4='X' OR shift5='X' OR shift6='X' OR shift7='X' OR shift8='X' OR shift9='X')");
+						#$present_unit_per_day=$dbf->getDataFromTable("student_group","unit_per_day","id='$_REQUEST[cmbgroup]'");
 						$res_teacher = $dbf->strRecordID("teacher","*","id='$res_teacher_group[teacher_id]'");
 						if($i==9 || $i==10){$row_bg_color="#CCCCCC";}
 						elseif(($i==$unit/2) || ($i==($unit/2)-1)){$row_bg_color="#CCCCCC";}
@@ -943,7 +944,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						
                           <tr>
                             <td width="32" height="30" align="center" valign="middle" bgcolor="<?php echo $row_bg_color;?>" class="pedtext_normal" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;"><?php echo $i;?></td>
-                            <td width="100" align="center" valign="middle" bgcolor="<?php echo $row_bg_color;?>" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;"><input name="u_dated<?php echo $i;?>" type="text" class="attendance_datepick datefield new_textbox80" id="u_dated<?php echo $i;?>" readonly=""  value="<?php echo $res_unit["dated"];?>"></td>
+                            <td width="100" align="center" valign="middle" bgcolor="<?php echo $row_bg_color;?>" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;"><input name="u_dated<?php echo $i;?>" type="text" class="attendance_datepick datefield new_textbox80" id="u_dated<?php echo $i;?>" readonly=""  value="<?php echo ($res_unit["dated"]=='0000-00-00'?'':$res_unit["dated"]);?>"></td>
                             <td width="32" align="center" valign="middle" bgcolor="<?php echo $row_bg_color;?>" class="pedtext_normal" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;"><?php echo $present["total"];?></td>
                             <td width="131" align="center" valign="middle" bgcolor="<?php echo $row_bg_color;?>" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px; ">
 							<?php echo $res_teacher[name];?></td>
@@ -990,19 +991,25 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							$perday = $dbf->getDataFromTable("common","name","id='$val_course[units]'");
                     ?>
 					<style>
-						#rowScroll { height: 205px; } /* Subtract the scrollbar height */
-						#contentScroll { height: 210px; width: 500px; }
-						#colScroll { width: 500px; } /* Subtract the scrollbar width */
+						#rowScroll { height: 210px; } /* Student Names */
+						#contentScroll { height: 210px; width: 500px; }/*Student Attendance*/
+						#colScroll { width: 500px; } /* date */
 					</style>
-					<table  cellspacing="0" cellpadding="0" align="center" style="width:850px;margin-right:0px;float:right;" >
+					<table  cellspacing="0" cellpadding="0" align="center" style="width:950px;margin-right:0px;float:right;" >
 						 <tr>
 							<td width="30%" height="6%" align="left" bgcolor="#4D7373">
-								<?php echo "Student Name";?>
+								<strong>Student Name</strong>
 								<input type="hidden" name="course_id<?php echo $count_course;?>" id="course_id<?php echo $count_course;?>" value="<?php echo $val_course["course_id"];?>">
 							</td>
 							<td id="rowHeaders" width="70%">
+							<div id="colScroll" style="overflow-x:hidden;">
+								<table bgcolor="#4D7373" width="100%" >
+								<tr><th align="center"><strong>Attendance</strong></th></tr>
+								</table>
+							</div>
+							<!--
 								<div id="colScroll" style="overflow-x:hidden;">
-									<table cellspacing="0" cellpadding="1" style="width: 600px;">
+									<table cellspacing="0" cellpadding="1" width="100%">
 										<tr>
 											<?php
 												$unit_per_day=$val_course['unit_per_day'];
@@ -1015,13 +1022,22 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 													$dayNum = date('d/m', strtotime($hs_date));
 													//Get per unit date
 													//echo "unit='$j' And ped_id='$res_ped[id]'";
-													$attend_date=$dbf->strRecordID('ped_attendance','*',"unit='$j' And ped_id='$res_ped[id]'");
-													if($attend_date["attend_date"] == '0000-00-00'){ $attend_dt = '';}else{ $attend_dt = $attend_date["attend_date"]; }
+													#$attend_date=$dbf->strRecordID('ped_attendance','*',"unit='$j' And ped_id='$res_ped[id]' AND attend_date!='0000-00-00'");
+													#if($attend_date["attend_date"] == '0000-00-00'){ $attend_dt = '';}else{ $attend_dt = $attend_date["attend_date"]; }
+													$attend_date=$dbf->genericQuery("
+																						SELECT p.attend_date 
+																						FROM ped_attendance p
+																						INNER JOIN student_group_dtls s ON s.student_id=p.student_id
+																						WHERE p.unit='$j' And p.ped_id='$res_ped[id]'
+																						LIMIT 0,1
+																					");
+													foreach($attend_date as $a):$attend_dt=($a["attend_date"] == '0000-00-00' ? '' : $a["attend_date"]);endforeach;
+													#$attend_dt=($attend_date["attend_date"] == '0000-00-00' ? '' : $attend_date["attend_date"]);
 											?>
 											
 											<th align="center" bgcolor="#4D7373" colspan="3">
 												<strong><?php echo $j;?></strong>
-												<input type="text" readonly="" class="attendance_datepick" style="width:60px; height:12px; font-size:10px;" name="attend_date<?php echo $j;?>" id="attend_date<?php echo $j;?>"  value="<?php echo $attend_dt;?>">
+												<input type="text" readonly="" class="attendance_datepick" style="width:53px; height:12px; font-size:10px;" name="attend_date<?php echo $j;?>" id="attend_date<?php echo $j;?>"  value="<?php echo $attend_dt;?>">
 											</th>
 											<?php
 													$j++;							 
@@ -1031,13 +1047,18 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 										</tr>
 									</table>
 									
-								</div>
+								</div>-->
 							</td>
 						</tr>
 						<tr>
 							<td id="colHeaders">
 								<div id="rowScroll" style="overflow-y:hidden">
 									<table cellspacing="0" cellpadding="0" border="1">
+										<tr>
+											<td height="31" bgcolor="#4D7373" class="pedtext" style="max-width:300px;overflow:hidden;text-overflow:ellipsis;">
+											&nbsp;
+											</td>
+										</tr>
 										<?php
 											$s_count = 1;
 											//Retrive all records the table
@@ -1047,7 +1068,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 											{
 										?>
 										<tr>
-											<td height="47" bgcolor="#E9EFEF" class="pedtext" style="max-width:300px;">
+											<td height="38" bgcolor="#E9EFEF" class="pedtext" style="max-width:300px;overflow:hidden;text-overflow:ellipsis;">
 												<?php echo $dbf->printStudentName($r["id"]);?>
 												<input type="hidden" name="student_id<?php echo $s_count."_".$count_course;?>" id="student_id<?php echo $s_count."_".$count_course;?>" value="<?php echo $r["id"];?>">
 											</td>
@@ -1062,7 +1083,42 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							<td id="content">
 								 <div id="contentScroll" style="overflow:auto">
 									
-									<table cellspacing="0" cellpadding="0" style="width: 600px;" border="1">
+									<table cellspacing="0" cellpadding="0" border="1" width="100%">
+										<tr>
+											<?php
+												$unit_per_day=$val_course['unit_per_day'];
+												$no_cols = $unit / $unit_per_day;
+												$num = cal_days_in_month(CAL_GREGORIAN, $month, $year); 
+												$j = 1;
+												$z = 1;
+												for($i=0;$i<$no_cols;$i++)
+												{
+													$dayNum = date('d/m', strtotime($hs_date));
+													//Get per unit date
+													//echo "unit='$j' And ped_id='$res_ped[id]'";
+													#$attend_date=$dbf->strRecordID('ped_attendance','*',"unit='$j' And ped_id='$res_ped[id]' AND attend_date!='0000-00-00'");
+													#if($attend_date["attend_date"] == '0000-00-00'){ $attend_dt = '';}else{ $attend_dt = $attend_date["attend_date"]; }
+													$attend_date=$dbf->genericQuery("
+																						SELECT p.attend_date 
+																						FROM ped_attendance p
+																						INNER JOIN student_group_dtls s ON s.student_id=p.student_id
+																						WHERE p.unit='$j' And p.ped_id='$res_ped[id]'
+																						LIMIT 0,1
+																					");
+													foreach($attend_date as $a):$attend_dt=($a["attend_date"] == '0000-00-00' ? '' : $a["attend_date"]);endforeach;
+													#$attend_dt=($attend_date["attend_date"] == '0000-00-00' ? '' : $attend_date["attend_date"]);
+											?>
+											
+											<th align="center" bgcolor="#4D7373" colspan="3">
+												<strong><?php echo $j;?></strong>
+												<input type="text" readonly="" class="attendance_datepick" style="width:53px; height:12px; font-size:10px;" name="attend_date<?php echo $j;?>" id="attend_date<?php echo $j;?>"  value="<?php echo $attend_dt;?>">
+											</th>
+											<?php
+													$j++;							 
+													$z = $z + $perday;
+												}
+											?>
+										</tr>
 										<?php
 											$s_count = 1;
 											//Retrive all records the table
@@ -1081,7 +1137,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 												//echo var_dump($val_course);
 												//Get the number of shift in a Days
 												$no_shift =$val_course[unit_per_day]; //$dbf->getDataFromTable("common","name","id='$val_course[units]'");
-												for($i=0;$i<$no_cols;$i++)
+												for($i=1;$i<=$no_cols;$i++)
 												{
 										?>
 										
@@ -1127,7 +1183,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 													}
 										?>
 										</td>
-										<td align="center" bgcolor="#E9EFEF" style="border:0;padding:1px;">&nbsp;</td>
+										<!--<td align="center" bgcolor="#E9EFEF" style="border:0;padding:1px;">&nbsp;</td>-->
 										<td  align="right" bgcolor="#E9EFEF" style="border:0;"><?php echo (($k%5)?'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;':'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');?></td>
 								<?php
 												$st++;

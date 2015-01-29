@@ -551,13 +551,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <tr>
                                 <td align="left" valign="middle">&nbsp;</td>
                                 <td height="28" align="left" valign="middle">
-                                  <input name="t1" type="text" class="new_textbox140" id="t1" value="<?php echo $_SESSION[classic_name1];?>" onBlur="checkTab('t1');"/></td>
+                                  <input name="t1" type="text" class="new_textbox140_ar" id="t1" value="<?php echo $_SESSION[classic_name1];?>" onBlur="checkTab('t1');"/></td>
                                 <td align="left" valign="middle">
-                                  <input name="t2" type="text" class="new_textbox140" id="t2" value="<?php echo $_SESSION[classic_fathername1];?>" onBlur="checkTab('t2');"/></td>
+                                  <input name="t2" type="text" class="new_textbox140_ar" id="t2" value="<?php echo $_SESSION[classic_fathername1];?>" onBlur="checkTab('t2');"/></td>
                                 <td align="left" valign="middle">
-                                  <input name="t3" type="text" class="new_textbox140" id="t3" value="<?php echo $_SESSION[classic_gfathername1];?>" onBlur="checkTab('t3');"/></td>
+                                  <input name="t3" type="text" class="new_textbox140_ar" id="t3" value="<?php echo $_SESSION[classic_gfathername1];?>" onBlur="checkTab('t3');"/></td>
                                 <td align="left" valign="middle">
-                                  <input name="t4" type="text" class="new_textbox140" id="t4" value="<?php echo $_SESSION[classic_familyname1];?>" onBlur="checkTab('t4');"/></td>
+                                  <input name="t4" type="text" class="new_textbox140_ar" id="t4" value="<?php echo $_SESSION[classic_familyname1];?>" onBlur="checkTab('t4');"/></td>
                                 </tr>
                               <tr class="shop2">
                                 <td align="left" valign="top">&nbsp;</td>
@@ -774,7 +774,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                               <td height="28" align="right" valign="middle" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_HOME_S_CLASSIC_MOBNUMB");?> : <span class="nametext1">*</span></td>
                               <td>&nbsp;</td>
-                              <td align="left" valign="middle"><input name="mobile" value="009665" type="text" class="validate[required] new_textbox190" id="mobile" onkeypress="return PhoneNo(event);"/></td>
+                              <td align="left" valign="middle"><input name="mobile" value="00966" type="text" class="validate[required] new_textbox190" id="mobile" onkeypress="return PhoneNo(event);"/></td>
                               <td>&nbsp;</td>
                               </tr>
                             <tr>

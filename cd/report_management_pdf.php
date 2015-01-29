@@ -172,7 +172,7 @@ $end_date = $_REQUEST["end_date"];
                     <td>&nbsp;</td>
                     <td height="25" align="left" valign="middle" class="lable1">&nbsp;Total number of new groups started &nbsp;</td>';
 					
-					$group = $dbf->strRecordID("student_group","COUNT(id)","status='Continue' And (created_datetime BETWEEN '$start_date' And '$end_date') And centre_id='$centre_id'");
+					$group = $dbf->strRecordID("student_group","COUNT(id)","(status='Continue' OR status='Not Started') And (created_datetime BETWEEN '$start_date' And '$end_date') And centre_id='$centre_id'");
 					$group = $group["COUNT(id)"];
 					
                     $html.='<td align="center" valign="middle" class="pedtext">'.$group.'</td>
@@ -181,7 +181,7 @@ $end_date = $_REQUEST["end_date"];
                     <td>&nbsp;</td>
                     <td height="25" align="left" valign="middle" class="lable1">&nbsp;Total number of groups completed :&nbsp;</td>';
 					
-					$group = $dbf->strRecordID("student_group","COUNT(id)","status='Completed' And (completed_date BETWEEN '$start_date' And '$end_date') And centre_id='$centre_id'");
+					$group = $dbf->strRecordID("student_group","COUNT(id)","status='Completed' And (end_date BETWEEN '$start_date' And '$end_date') And centre_id='$centre_id'");
 					$group = $group["COUNT(id)"];
 					
                     $html.='<td align="center" valign="middle" class="pedtext">'.$group.'</td>
