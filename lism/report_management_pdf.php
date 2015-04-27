@@ -129,7 +129,7 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
                   <tr>
                     <td>&nbsp;</td>
                     <td height="25" align="left" valign="middle" class="lable1">&nbsp;Total number of students absent :&nbsp;</td>';
-					
+					/*
 					$no_of_attand = 0;
 					foreach($dbf->fetchOrder('ped_attendance', "(shift1='A' OR shift2='A' OR shift3='A' OR shift4='A' OR shift5='A' OR shift6='A' OR shift7='A' OR shift8='A' OR shift9='A') And (attend_date BETWEEN '$start_date' And '$end_date')") as $cer) {
 						$centre_grp = $dbf->strRecordID("student_group","centre_id","id='$cer[group_id]'");
@@ -138,9 +138,17 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 							$no_of_attand = $no_of_attand + 1;
 						}
 					}
-					
+					*/
+					$attend=$dbf->genericQuery("SELECT COUNT(DISTINCT(p.student_id)) as total
+												FROM ped_attendance p
+												INNER JOIN student_group sg ON p.group_id=sg.id
+												WHERE
+													(p.shift1='A' OR p.shift2='A' OR p.shift3='A' OR p.shift4='A' OR p.shift5='A' OR p.shift6='A' OR p.shift7='A' OR p.shift8='A' OR p.shift9='A') 
+													AND (p.attend_date BETWEEN '$start_date' AND '$end_date') AND sg.centre_id='$centre_id'");
+					foreach($attend as $atd){$no_of_attand=$atd['total'];}
                     $html.='<td align="center" valign="middle" class="pedtext">'.$no_of_attand.'</td>
-                  </tr>
+                  </tr>';
+				  /*
                   <tr>
                     <td align="left">&nbsp;</td>
                     <td height="25" align="left" valign="middle" class="lable1">&nbsp;Total number of students SMS (automatically by the system) :&nbsp;</td>';
@@ -150,6 +158,8 @@ $res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 					
                     $html.='<td align="center" valign="middle" class="pedtext">'.$sms.'</td>
                   </tr>
+				  */
+				  $html .='
                   <tr>
                     <td width="6%">&nbsp;</td>
                     <td width="67%" height="25" align="left" valign="middle" class="lable1">&nbsp;Total number of students cancelled :&nbsp;</td>';

@@ -183,7 +183,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 		  $res_course = $dbf->strRecordID("course","*","id='$res_g[course_id]'");
 		  $teacher_id = $res_g["teacher_id"];
 		  
-		  $res_size = $dbf->strRecordID("group_size","*","group_id='$res_g[group_id]'");
+		  //$res_size =$dbf->strRecordID("group_size","*","group_id='$res_g[group_id]'");
 		  $res_group = $dbf->strRecordID("common","*","id='$res_g[group_id]'");
 		  
 		  if($_REQUEST[group_id]!=''){
@@ -225,7 +225,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
             <td align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="41%" height="20" align="left" valign="middle" class="leftmenu"><?php echo constant("CD_GROUP_PROGRESS_PROGRAMLENGTH");?>: </td>
-                <td width="59%" align="left" valign="middle" class="pedtext_normal" ><?php echo $res_size[units];?></td>
+                <td width="59%" align="left" valign="middle" class="pedtext_normal" ><?php echo $res_g[units];?></td>
               </tr>
             </table></td>
             <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -234,7 +234,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td width="34%" height="20" align="left" valign="middle" class="leftmenu"><?php echo constant("CD_GROUP_PROGRESS_LESSIONTAKEN");?>:</td>
                 <?php				
 				//Get number of Attendace present in e-PEDCARD (table : ped_attendance)
-				$num_total_class=$dbf->countRows('ped_units',"group_id='$_REQUEST[cmbgroup]'");# / $res_g["unit_per_day"]
+				$num_total_class=$dbf->getDataFromTable("ped_units","MAX(units)","group_id='$_REQUEST[cmbgroup]' AND dated != '0000-00-00'");
+				//$dbf->countRows('ped_units',"group_id='$_REQUEST[cmbgroup]'");//$res_g["unit_per_day"]
 				?>
                 <td width="45%" align="left" valign="middle" class="pedtext_normal"><?php echo $num_total_class;?></td>
                 <td width="16%" align="center" valign="middle" class="nametext" >&nbsp;</td>
@@ -312,7 +313,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$avg = $avg / 7;
 						$avg = round($avg,1);
 					}
-					$at = $res_progress["course_attendance"] * $res_g["unit_per_day"];
+					//$at = $res_progress["course_attendance"] * $res_g["unit_per_day"];
+					$at=$res_progress["course_attendance_perc"];
 					$parti = $res_progress["course_partication"];
 					$home = $res_progress["course_homework"];
 					$flu = $res_progress["course_fluency"];

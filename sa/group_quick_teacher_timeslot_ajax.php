@@ -171,7 +171,7 @@ $minutes = $minutes / 15;
                     <tr onMouseOver="this.style.backgroundColor='#EBDDE2'" onMouseOut="this.style.backgroundColor=''">
                     <td width="3" align="left" valign="middle"></td>
                     <?php
-					$num = $dbf->timeSlotAvailable($teacher_id, $sun1, $centre_time);                                           
+					$num = $dbf->timeSlotAvailable($teacher_id, $sun1, $centre_time,$sum_day);                                           
                     //$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$sun1' BETWEEN start_date And end_date)");
                     if($num == false){
                         $class = 'teachertext';
@@ -203,7 +203,7 @@ $minutes = $minutes / 15;
                     <td width="3" align="left" valign="middle"></td>
                     <?php
                     //$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$mon1' BETWEEN start_date And end_date)");
-					$num = $dbf->timeSlotAvailable($teacher_id, $mon1, $centre_time);
+					$num = $dbf->timeSlotAvailable($teacher_id, $mon1, $centre_time,$mon_day);
                     if($num == false){
                         $class = 'teachertext';
                         $text = 'Available';
@@ -234,7 +234,7 @@ $minutes = $minutes / 15;
                 <td width="3" align="left" valign="middle"></td>
                 <?php
                 //$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$tue1' BETWEEN start_date And end_date)");
-				$num = $dbf->timeSlotAvailable($teacher_id, $tue1, $centre_time);
+				$num = $dbf->timeSlotAvailable($teacher_id, $tue1, $centre_time,$tue_day);
                 if($num == false){
                     $class = 'teachertext';
                     $text = 'Available';
@@ -266,7 +266,7 @@ $minutes = $minutes / 15;
                 <td width="3" align="left" valign="middle"></td>
                 <?php
                 //$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$wed1' BETWEEN start_date And end_date)");
-				$num = $dbf->timeSlotAvailable($teacher_id, $wed1, $centre_time); 
+				$num = $dbf->timeSlotAvailable($teacher_id, $wed1, $centre_time,$wed_day); 
                 if($num == false){
                     $class = 'teachertext';
                     $text = 'Available';
@@ -298,7 +298,7 @@ $minutes = $minutes / 15;
                 <td width="3" align="left" valign="middle"></td>
                 <?php
                 //$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$thu1' BETWEEN start_date And end_date)");
-				$num = $dbf->timeSlotAvailable($teacher_id, $thu1, $centre_time); 
+				$num = $dbf->timeSlotAvailable($teacher_id, $thu1, $centre_time,$thu_day); 
                 if($num == false){
                     $class = 'teachertext';
                     $text = 'Available';
@@ -329,7 +329,7 @@ $minutes = $minutes / 15;
                 <td width="3" align="left" valign="middle"></td>
                 <?php
                 //$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$fri1' BETWEEN start_date And end_date)");
-				$num = $dbf->timeSlotAvailable($teacher_id, $fri1, $centre_time); 
+				$num = $dbf->timeSlotAvailable($teacher_id, $fri1, $centre_time,$fri_day); 
                 if($num == false){
                     $class = 'teachertext';
                     $text = 'Available';
@@ -360,7 +360,7 @@ $minutes = $minutes / 15;
                 <td width="3" align="left" valign="middle"></td>
                 <?php
                 //$num=$dbf->countRows('student_group',"teacher_id='$teacher_id' And ('$sat1' BETWEEN start_date And end_date)");
-				$num = $dbf->timeSlotAvailable($teacher_id, $sat1, $centre_time); 
+				$num = $dbf->timeSlotAvailable($teacher_id, $sat1, $centre_time,$sat_day); 
                 if($num == false){
                     $class = 'teachertext';
                     $text = 'Available';

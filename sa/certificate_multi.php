@@ -212,6 +212,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				foreach($sql as $val_my_group)
 				{ 			  
 					$bal_amt = $dbf->BalanceAmount($val_my_group["student_id"],$val_my_group["course_id"]);
+					
 					if($bal_amt <= 0):
 			  ?>
                 <table width="1126" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -229,9 +230,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$res_enroll = $dbf->strRecordID("student_enroll","*","student_id='$student_id' And course_id='$course_id'");
 					$res_g = $dbf->strRecordID("student_group","*","id='$res_enroll[group_id]'");
 					$res_size = $dbf->strRecordID("group_size","*","group_id='$res_g[group_id]'");
-					$total_units = $res_size[units];
+					$total_units = $res_g[units];
 					
-					$or_unit = $res_size[units];
+					$or_unit = $res_g[units];
 					$per_unit = 45; //minute
 					$tot_unit = $or_unit * $per_unit;
 					$hr = $tot_unit / 60;
@@ -317,7 +318,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">Level: </span><span class="cer_my_head_bold"><?php echo $eng_course_name;?></span><span class="cer_my_head"> with a total number of </span><span class="cer_my_head_bold"> <?php echo $hr;?></span>&nbsp;<span class="cer_my_head">hours</span></th>
                                       </tr>
                                     <tr>
-                                      <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">From: </span><span class="cer_my_head_bold"><?php echo $res_g["start_date"];?> &nbsp;</span><span class="cer_my_head">to:</span><span class="cer_my_head_bold">&nbsp;<?php echo $res_g["end_date"];?> </span></th>
+                                      <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">From: </span><span class="cer_my_head_bold"><?php echo date("d-m-Y",strtotime($res_g["start_date"]));?> &nbsp;</span><span class="cer_my_head">to:</span><span class="cer_my_head_bold">&nbsp;<?php echo date("d-m-Y",strtotime($res_g["end_date"]));?> </span></th>
                                       </tr>
                                     <tr>
                                       <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">That correspond to the Hijra dates</span></th>
@@ -373,7 +374,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $arb_course_name;?>  , وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span></th>
                                       </tr>
                                     <tr>
-                                      <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في الفترة من: <?php echo $dbf->enNo2ar($res_g["start_date"],'-');?>   إلى: <?php echo $dbf->enNo2ar($res_g["end_date"],'-');?></span></th>
+										<?php $ar_start_date=date("d-m-Y",strtotime($res_g["start_date"]));$ar_end_date=date("d-m-Y",strtotime($res_g["end_date"]));?>
+                                      <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في الفترة من: <?php echo $dbf->enNo2ar($ar_start_date,'-');?>   إلى: <?php echo $dbf->enNo2ar($ar_end_date,'-');?></span></th>
                                       </tr>
                                     <!--
 									<tr>

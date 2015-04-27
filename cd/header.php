@@ -300,18 +300,18 @@ $(document).ready(function() {
       
        <!--student drop down menu -->
         <div id="rpt_student" class="dropmenudiv_d"> 
-			<a href="s_age.php"><?php echo constant("CD_MENU_WIZBASESTD");?></a>
+			<!--<a href="s_age.php"><?php echo constant("CD_MENU_WIZBASESTD");?></a>-->
 			<a href="s_classic.php"><?php echo constant("SA_MENU_CLASSIC");?></a>
 			<!--<a href="s_manage.php"><?php //echo constant("SA_MENU_STUDENT_DETAILS");?></a>-->
             <a href="arf_manage.php"><?php echo constant("ACTION_ARF_REPORT");?></a>
             <a href="cancel_manage.php"><?php echo constant("CANCELLATION_REQUEST");?></a>
             <a href="hold_manage.php"><?php echo constant("MANAGE_ONHOLD");?></a>
-            <a href="single-student.php"><?php echo constant("STUDENT_INFORMATON");?></a>
+           <!-- <a href="single-student.php"><?php echo constant("STUDENT_INFORMATON");?></a>-->
 		</div>
       
       <!-- grouping -->
      <div id="rel_group" class="dropmenudiv_d">
-     	<a href="group_course.php"><?php echo constant("SA_MENU_WIZARD_BASED");?></a>
+     	<!--<a href="group_course.php"><?php echo constant("SA_MENU_WIZARD_BASED");?></a>-->
         <a href="group_quick.php"><?php echo constant("QUICK_ADD_GROUP");?></a>
 		<a href="group_manage.php"><?php echo constant("SA_MENU_GROUP");?></a>
         <a href="view_group_size.php"><?php echo constant("SA_MENU_GROUP_SIZE");?></a>

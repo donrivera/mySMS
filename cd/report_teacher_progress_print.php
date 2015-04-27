@@ -171,7 +171,7 @@ font-weight:bold;
                 <td width="34%" height="20" align="left" valign="middle" class="leftmenu"> <?php echo constant("CD_GROUP_PROGRESS_LESSIONTAKEN");?>:</td>
                 <?php
 				//Get number of Attendace present in e-PEDCARD (table : ped_attendance)
-				$num_total_class=$res_g["units"];
+				$num_total_class=$res_g["units"]/2;
 				?>
                 <td width="45%" align="left" valign="middle" class="content"><?php echo $num_total_class;?></td>
                 <td width="16%" align="center" valign="middle" class="nametext" >&nbsp;</td>
@@ -203,9 +203,9 @@ font-weight:bold;
             <td height="20" align="left" valign="middle" class="leftmenu">&nbsp;<?php echo constant("STUDENT_PROGRESS_REPORT_ATTENDANCE");?> : </td>
             <?php
 			//Get number of Attendace present in e-PEDCARD (table : ped_attendance)
-			#$num_att=$dbf->countRows('ped_attendance',"student_id='$teacher_id' And (shift1<>'' OR shift2<>'' OR shift3<>'' OR shift4<>'' OR shift5<>'' OR shift6<>'' OR shift7<>'' OR shift8<>'' OR shift9<>'')");
-			$num_att=$dbf->No_Of_Attendance($_REQUEST['teacher_id'], $_REQUEST["group_id"]);#/$res_g["unit_per_day"]
-			$num_total_unit_teach=$res_g[units];#$dbf->getDataFromTable("ped_units","MAX(units)","group_id='$_REQUEST[group_id]'");# / $res_g["unit_per_day"]
+			$progress_units=($res_g[units]/2)/$res_g[unit_per_day];
+			$num_att=$dbf->printProgressAttendance($_REQUEST['teacher_id'],$_REQUEST["group_id"],$progress_units);//$num_att=$dbf->No_Of_Attendance($_REQUEST['teacher_id'], $_REQUEST['group_id']);#/$res_g["unit_per_day"]
+			$num_total_unit_teach=$res_g[units]/ 2;
 			?>
             <td align="left" valign="middle" class="content"><b><?php echo $num_att;?></b>&nbsp;&nbsp;&nbsp;<?php echo constant("CD_REPORT_TEACHER_PROGRESS_OUTOF");?> &nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo $num_total_unit_teach;?></b></td>
             <td>&nbsp;</td>

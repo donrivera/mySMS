@@ -16,11 +16,12 @@ $attendance_per_unit=$_POST['atendance_per_unit'];
 $attendance=$_POST['shift'];
 $attend_date=$_POST['attend_date'][0];
 $ped_id=$_POST['ped_id'];
+if($_POST[mate]!=''){$mate = implode(",",$_POST[mate]);}
 $num=$dbf->countRows('ped',"teacher_id='$uid' and group_id='$_REQUEST[cmbgroup]' and course_id='$course_id'");
 if($num == 0)
 { 
 	#$string="teacher_id='$uid',group_id='$_POST[cmbgroup]',course_id='$course_id',estart_date='$attend_date',material='$mate',bl='$_POST[bl]',arf_submit='$_POST[arf]',level='$_POST[level]',comments='$_POST[comments]',location='$_POST[location]',checklist='$chklist',point_cover1='$_POST[point_cover1]',point_date1='$_POST[point_date1]', point_cover2='$_POST[point_cover2]', point_date2='$_POST[point_date2]', ini_feedback='$ini_feedback', inst1='$_POST[inst1]', date1='$_POST[date1]',arf1='$_POST[arf1]', dby1='$_POST[dby1]', dby1_date1='$_POST[dby1_date1]', cby1='$_POST[cby1]', cby1_date1='$_POST[cby1_date1]', inst2='$_POST[inst2]', inst2_date2='$_POST[inst2_date2]', counselling='$counselling', inst3='$_POST[inst3]', inst3_date3='$_POST[inst3_date3]', inst4='$_POST[inst4]', inst4_date4='$_POST[inst4_date4]', not_apply='$_POST[not_apply]',distrbute_by='$_POST[distrbute_by]',distrbute_date='$_POST[distrbute_date]',collect_by='$_POST[collect_by]',collect_date='$_POST[collect_date]',pro_report='$_POST[pro_report]'";
-	$string="teacher_id='$uid',group_id='$_POST[cmbgroup]',course_id='$course_id',estart_date='$attend_date'";
+	$string="material='$mate',teacher_id='$uid',group_id='$_POST[cmbgroup]',course_id='$course_id',estart_date='$attend_date'";
 	//Excute the query And Get the recent Insert ID
 	$id = $dbf->insertSet("ped",$string);
 	
@@ -57,7 +58,7 @@ else
 {	
 	//Query string
 	#$string="level='$_POST[level]',estart_date='$_POST[estart_date]',material='$mate',bl='$_POST[bl]',arf_submit='$_POST[arf]',comments='$_POST[comments]',location='$_POST[location]',checklist='$chklist',point_cover1='$_POST[point_cover1]',point_date1='$_POST[point_date1]',point_cover2='$_POST[point_cover2]', point_date2='$_POST[point_date2]', ini_feedback='$ini_feedback', inst1='$_POST[inst1]', date1='$_POST[date1]', arf1='$_POST[arf1]',dby1='$_POST[dby1]',dby1_date1='$_POST[dby1_date1]', cby1='$_POST[cby1]', cby1_date1='$_POST[cby1_date1]', inst2='$_POST[inst2]', inst2_date2='$_POST[inst2_date2]',counselling='$counselling',inst3='$_POST[inst3]', inst3_date3='$_POST[inst3_date3]', inst4='$_POST[inst4]',inst4_date4='$_POST[inst4_date4]', not_apply='$_POST[not_apply]',distrbute_by='$_POST[distrbute_by]',distrbute_date='$_POST[distrbute_date]',collect_by='$_POST[collect_by]',collect_date='$_POST[collect_date]',pro_report='$_POST[pro_report]'";
-	$string="teacher_id='$uid',group_id='$_POST[cmbgroup]',course_id='$course_id',estart_date='$attend_date'";
+	$string="material='$mate',teacher_id='$uid',group_id='$_POST[cmbgroup]',course_id='$course_id',estart_date='$attend_date'";
 	//Excute the query
 	$dbf->updateTable("ped",$string,"teacher_id='$uid' and group_id='$_POST[cmbgroup]' and course_id='$course_id'");
 }
@@ -82,7 +83,7 @@ for($u=1;$u<=$res_group['units'];$u++)
 	$unit=$attendance_per_unit[$counter];
 	$hw=$homework[$counter];
 	$mc=$material_covered[$counter];
-	$ped_units=$dbf->genericQuery("SELECT * FROM ped_units WHERE units='$unit' AND teacher_id='$uid' and group_id='$_POST[cmbgroup]' and course_id='$course_id'");
+	$ped_units=$dbf->genericQuery("SELECT * FROM ped_units WHERE units='$unit' AND group_id='$_POST[cmbgroup]' AND course_id='$course_id'");
 	if(empty($ped_units))
 	{
 		if($u==$unit)
@@ -153,6 +154,10 @@ foreach($_POST[student_id] as $s=>$s_value)
 			endforeach;
 		}
 	}
+	$date_time = date('Y-m-d H:i:s A');
+	$status="status_id='5',group_id='$_POST[cmbgroup]',date_time='$date_time'";
+	$dbf->updateTable("student_moving",$status,"student_id='$student_id'");
+	$dbf->updateTable("student_moving_history",$status,"student_id='$student_id' And course_id='$course_id'");
 }
 
 
@@ -167,7 +172,7 @@ $group_size = $dbf->strRecordID("student_group","*","id='$_POST[cmbgroup]'");
 	
 $original_unit = $group_size["units"];
 	
-$group_size = $dbf->strRecordID("ped_units","COUNT(id)","group_id='$_POST[cmbgroup]' AND dated !='0000-00-00'");
+$group_size = $dbf->strRecordID("ped_units","COUNT(id)","group_id='$_POST[cmbgroup]' AND dated !='0000-00-00' AND ped_id !='0'");
 $pending_unit = $group_size["COUNT(id)"];	
 	
 //teacher

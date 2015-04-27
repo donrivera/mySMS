@@ -172,32 +172,71 @@ function dateAdd(datepart,number,objDate){
    return objNewDate;
 }
 
-function date_change(){
-	dateParts = document.getElementById('date_value').value;	
-	totalunit = document.getElementById('totalunit').value;
-	unit=document.getElementById('unit').value;
-	unit_per_week= 5 * unit;
-	if(totalunit == ''){
-		alert("Select the Units");
-		document.getElementById('totalunit').focus();
-		document.getElementById('gr_course_endt').value = '';
-	}else{
-		totalunit = (parseInt(totalunit)/unit_per_week) * 7;
-		newDays = totalunit;	
-		var myDate=new Date(dateParts);
-		var x = myDate.setDate(myDate.getDate()+parseInt(newDays));
-		var end_day= myDate.getDay();
-		var end_date=new Date(x);
-		switch(end_day)
+function date_change()
+{
+	var unit=$("#unit").val();
+	var totalunit=$("#totalunit").val();
+	var class_days = []
+	$("input[name='class_day[]']:checked").each(function (){class_days.push(($(this).val()));});
+	var class_per_week=class_days.length;
+	unit_per_week= class_per_week * unit;
+	dateParts = document.getElementById('date_value').value;
+	if(class_per_week<=0)
+	{
+		//alert("Select Days!");
+		document.getElementById('class_day').focus();
+	}
+	else
+	{
+		switch(class_per_week)
 		{
-			case 0:{var z = end_date.setDate(myDate.getDate() - parseInt(3));}break;
-			case 1:{var z = end_date.setDate(myDate.getDate() - parseInt(1));}break;
-			case 2:{var z = end_date.setDate(myDate.getDate() - parseInt(1));}break;
-			case 3:{var z = end_date.setDate(myDate.getDate() - parseInt(1));}break;
-			case 4:{var z = end_date.setDate(myDate.getDate() - parseInt(1));}break;
-			case 5:{var z = end_date.setDate(myDate.getDate() + parseInt(2));}break;
-			case 6:{var z = end_date.setDate(myDate.getDate() + parseInt(1));}break;
-			default:{var z = end_date.setDate(myDate.getDate());}break;
+			case 1:
+			case 2:
+			case 3:
+			case 4:	{	
+						totunit= Math.floor(parseInt(totalunit)/unit_per_week);
+						totalunit=totunit* 7; 
+						if(isNaN(totalunit))
+						{
+							alert("Select the Units");
+							document.getElementById('totalunit').focus();
+							document.getElementById('gr_course_endt').value = '';
+						}
+						newDays = totalunit;	
+						new_computed_units = (newDays  % 2 == 0 ? Math.floor(newDays) : Math.ceil(newDays));
+						var myDate=new Date(dateParts);
+						var x = myDate.setDate(myDate.getDate()+parseInt(new_computed_units));
+						var end_day= myDate.getDay();
+						var end_date=new Date(x);
+						var z = end_date.setDate(myDate.getDate());
+					}break;
+			case 5:
+			default:{
+						totalunit = (parseInt(totalunit)/unit_per_week) * 7;
+						if(isNaN(totalunit))
+						{
+							alert("Select the Units");
+							document.getElementById('totalunit').focus();
+							document.getElementById('gr_course_endt').value = '';
+						}
+						newDays = totalunit;	
+						new_computed_units = (newDays  % 2 == 0 ? Math.floor(newDays) : Math.ceil(newDays));
+						var myDate=new Date(dateParts);
+						var x = myDate.setDate(myDate.getDate()+parseInt(new_computed_units));
+						var end_day= myDate.getDay();
+						var end_date=new Date(x);
+						switch(end_day)
+						{
+							case 0:{var z = end_date.setDate(myDate.getDate() - parseInt(3));}break;
+							case 1:{var z = end_date.setDate(myDate.getDate() - parseInt(1));}break;
+							case 2:{var z = end_date.setDate(myDate.getDate() - parseInt(1));}break;
+							case 3:{var z = end_date.setDate(myDate.getDate() - parseInt(1));}break;
+							case 4:{var z = end_date.setDate(myDate.getDate() - parseInt(1));}break;
+							case 5:{var z = end_date.setDate(myDate.getDate() + parseInt(2));}break;
+							case 6:{var z = end_date.setDate(myDate.getDate() + parseInt(1));}break;
+							default:{var z = end_date.setDate(myDate.getDate());}break;
+						}
+					}break;
 		}
 		var d  = end_date.getDate();
 		var day = (d < 10) ? '0' + d : d;
@@ -206,6 +245,7 @@ function date_change(){
 		var yy = end_date.getFullYear();
 		var year = (yy < 1000) ? yy + 1900 : yy;
 		new_end_date = year + "-" + month + "-" + day;
+		//alert(new_end_date+'-class per week:'+class_days[0]);
 		document.getElementById('gr_course_endt').value = new_end_date;
 	}
 }
@@ -500,6 +540,18 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                     <?php } ?>
                                     </select>
                                   </td>
+                                </tr>
+								<tr>
+									<td height="25" align="right" valign="middle"><?php echo "Class Days";?> : &nbsp;</td>
+									<td align="left" valign="middle">
+									<?php
+										foreach($dbf->fetchOrder('working_day',"status='0'","") as $day_class):
+									?>
+										<input type="checkbox" name="class_day[]" id="class_day[]" value="<?=strtolower(substr($day_class['dyname'],0,3));?>"/><?=$day_class['dyname'];?><br/>
+									<?php
+										endforeach;
+									?>
+									</td>
                                 </tr>
                               <tr>
                                 <td height="25" align="right" valign="middle"><?php echo constant("ADMIN_REPORT_TEACHER_BOARD_TEACHERNAME");?> :<span class="nametext1">*</span></td>

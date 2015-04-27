@@ -339,7 +339,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     </tr>
                   <tr>
                     <td height="25" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_NOFSTUDENT");?>  : <?php echo $no_student;?></td>
-                    <td align="left" valign="middle" class="pedtext"><strong><?php echo "Frequency: ".$res_group[unit_per_day]."&nbsp;x 5 days";/*constant("STUDENT_ADVISOR_PED_TXT");*/?></strong></td>
+                    <td align="left" valign="middle" class="pedtext"><strong><?php echo "Frequency: ".$res_group[unit_per_day]."&nbsp;x&nbsp;".(empty($res_group[class_per_week])?5:$res_group[class_per_week])."&nbsp;days";/*constant("STUDENT_ADVISOR_PED_TXT");*/?></strong></td>
                     </tr>
                   <tr>
                     <td height="25" align="left" valign="middle" class="pedtext"><strong><?php echo constant("STUDENT_ADVISOR_PED_SLSPERSON");?></strong> : <?php echo $sa_name;?></td>

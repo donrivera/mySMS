@@ -599,6 +599,9 @@ if($_REQUEST['action']=='classic'){
 				$dbf->updateTable("student_group_dtls",$string_g1,"parent_id='$group'");
 			}
 		}
+		#PROCESS PAYMENT
+		$dbf->processPayment($_POST["pay_status"],$sid,$course_id,$_POST["pay_type"],$_POST["pay_amt"],$_POST["discount"]);
+		#PROCESS PAYMENT
 	}
 	//End re-sizing   >================================
 	
@@ -692,7 +695,22 @@ if($_REQUEST['action']=='classic'){
 	}
 	else
 	{
-		header("Location:search.php");exit;
+		#header("Location:search.php");exit;
+		#POST ADVANCE PAYMENT
+		if($_POST["pay_status"]!='' && $_POST["pay_type"]!='' && empty($group))
+		{
+			$count = $_POST[count];
+			for($i=1; $i<=$count; $i++)
+			{
+				$c = "course".$i;
+				$c = $_REQUEST[$c];		
+				if($c != '')
+				{$course_id=$c;}
+			}
+			$dbf->processPayment($_POST["pay_status"],$sid,$course_id,$_POST["pay_type"],$_POST["pay_amt"],$_POST["discount"]);
+			header("Location:search_advance.php?student_id=$sid&course_id=$course_id");exit;
+		}else{header("Location:search.php");exit;}
+		#POST ADVANCE PAYMENT
 	}
 }
 

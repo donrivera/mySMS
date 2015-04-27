@@ -35,12 +35,12 @@ if($_REQUEST['action']=='update')
 	$centre_id = $stu_cancel["centre_id"];
 	
 	//Get group id
-	$groupdtls = $dbf->strRecordID("student_enroll","group_id","student_id='$student_id' And course_id='$course_id'");
+	$groupdtls = $dbf->strRecordID("student_enroll","group_id","student_id='$student_id' And course_id='$course_id' ORDER BY id DESC LIMIT 0,1");
 	$group = $groupdtls["group_id"];
 	
 	//Resize if Approved here
 	if($_REQUEST["status"] == 'Approved')
-	{
+	{	
 		//remove student on the group
 		$dbf->deleteFromTable("student_group_dtls","parent_id='$group' AND student_id='$student_id'");	
 		//DON RIVERA 10-11-2013 Deflate Group/s If not in their current group size.
@@ -153,8 +153,7 @@ if($_REQUEST['action']=='update')
 
 		if($to_user != '' || $admin_mail != ''){
 	
-			$headers .= 'MIME-Version: 1.0' . "\n";
-			$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+			$headers .= "MIME-Version: 1.0\r\nContent-type: text/html; charset=UTF-8\r\n";
 			$headers .= "From:".$from."\n";	
 			
 			$email_cont = $dbf->strRecordID("email_templetes","*","id='6'");
@@ -225,7 +224,7 @@ if($_REQUEST['action']=='update')
 		$str_d="parent_id='$hid',student_id='$student_id'";
 		$dbf->insertSet("student_group_history_dtls",$str_d);
 		// End ==============================================	
-
+	
 	}	
 	
 	// Start Mail to Student Advisor

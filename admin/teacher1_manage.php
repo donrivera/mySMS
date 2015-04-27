@@ -217,13 +217,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					  if($num_sg > 0)
 					  {
 						  ?>
-                          <td width="5%" align="center" valign="middle" style="background-color:<?php echo $color;?>" ><a href="" onClick="errorconfirm();"><img src="../images/delete.png" width="16" height="16" border="0" title="<?php echo ACTION_CAPTION_DELETE ?>" /></a></td>
+                          <!--<td width="5%" align="center" valign="middle" style="background-color:<?php echo $color;?>" ><a href="" onClick="errorconfirm();"><img src="../images/delete.png" width="16" height="16" border="0" title="<?php echo ACTION_CAPTION_DELETE ?>" /></a></td>-->
                           <?php
 					  }
 					  else
 					  {
 					  ?>
-                      <td width="5%" align="center" valign="middle" style="background-color:<?php echo $color;?>" ><a href="teacher1_process.php?action=delete&amp;id=<?php echo $val[id];?>"  class="linktext" onClick="return confirm('Are you sure you want to delete this record ?')"><img src="../images/delete.png" width="16" height="16" border="0" title="<?php echo ACTION_CAPTION_DELETE ?>" /></a></td>
+                      <!--<td width="5%" align="center" valign="middle" style="background-color:<?php echo $color;?>" ><a href="teacher1_process.php?action=delete&amp;id=<?php echo $val[id];?>"  class="linktext" onClick="return confirm('Are you sure you want to delete this record ?')"><img src="../images/delete.png" width="16" height="16" border="0" title="<?php echo ACTION_CAPTION_DELETE ?>" /></a></td>-->
                       <?php
 					  }
 					  $i = $i + 1;

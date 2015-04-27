@@ -240,7 +240,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td width="34%" height="20" align="left" valign="middle" class="leftmenu"><?php echo constant("CD_GROUP_PROGRESS_LESSIONTAKEN");?>:</td>
                 <?php				
 				//Get number of Attendace present in e-PEDCARD (table : ped_attendance)
-				$num_total_class=$dbf->countRows('ped_units',"group_id='$_REQUEST[cmbgroup]'");# / $res_g["unit_per_day"]
+				$num_total_class=$dbf->getDataFromTable("ped_units","MAX(units)","group_id='$_REQUEST[cmbgroup]' AND dated != '0000-00-00'");
+				//$dbf->countRows('ped_units',"group_id='$_REQUEST[cmbgroup]'");# / $res_g["unit_per_day"]
 				?>
                 <td width="45%" align="left" valign="middle" class="pedtext_normal"><?php echo $num_total_class;?></td>
                 <td width="16%" align="center" valign="middle" class="nametext" >&nbsp;</td>
@@ -324,7 +325,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$avg = $avg / 7;
 						$avg = round($avg,1);
 					}
-					$at = $res_progress["course_attendance"] * $res_g["unit_per_day"];
+					//$at = $res_progress["course_attendance"] * $res_g["unit_per_day"];
+					$at=$res_progress["course_attendance_perc"];
 					$parti = $res_progress["course_partication"];
 					$home = $res_progress["course_homework"];
 					$flu = $res_progress["course_fluency"];

@@ -61,7 +61,7 @@ if($_REQUEST['action']=='edit_payment'){
 		$dbf->insertSet("student_fee_edit_history",$string2);
 		
 	}
-	$dbf->updateTable("student_fees","fee_amt='$_POST[amt]',paid_amt='$_POST[amt]',payment_type='$_POST[payment_type]',fee_date='$_POST[dated]',paid_date='$_POST[dated]'","id='$_REQUEST[schid]'");
+	$dbf->updateTable("student_fees","comments='$_POST[comment]',fee_amt='$_POST[amt]',paid_amt='$_POST[amt]',payment_type='$_POST[payment_type]',fee_date='$_POST[dated]',paid_date='$_POST[dated]'","id='$_REQUEST[schid]'");
 	//=================================================================================
 	
 	header("Location:single-payment.php?student_id=$student_id&course_id=$course_id");

@@ -16,13 +16,13 @@ $Arabic = new I18N_Arabic('Transliteration');
 $name="$_REQUEST[search_group1]";
 if($name == "") { exit; }
 
-foreach($dbf->fetchOrder("student","(family_name LIKE '$_REQUEST[fname]%' OR family_name1 LIKE '$_REQUEST[fname]%' OR first_name LIKE '$name%' OR student_first_name LIKE '$name%' OR first_name1 LIKE '$name%') And centre_id='$_SESSION[centre_id]' And email <> ''") as $val){
+foreach($dbf->fetchOrder("student","(family_name LIKE '%$name%' OR family_name1 LIKE '%$name%' OR first_name LIKE '%$name%' OR first_name LIKE '%$name%' OR first_name1 LIKE '%$name%') And centre_id='$_SESSION[centre_id]' And email <> ''") as $val){
 	
 	$is_complete = $dbf->countRows("student_group m,student_group_dtls d", "m.centre_id='$_SESSION[centre_id]' And m.id=d.parent_id And d.student_id='$val[id]' And m.status='Completed'");
 	if($is_complete > 0){
 ?>
   <tr>
-    <td width="126" align="left" valign="top" style="padding-left:2px; font-size:12px; font-family:Arial, Helvetica, sans-serif; color:#000;"><a href="search_group_f.php?student=<?php echo $val["id"];?>" style="text-decoration:none;"><?php echo $val["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($val["id"]));?></a></td>
+    <td width="126" align="left" valign="top" style="padding-left:2px; font-size:12px; font-family:Arial, Helvetica, sans-serif; color:#000;"><a href="search_group_f.php?student=<?php echo $val["id"];?>" style="text-decoration:none;"><?php echo $dbf->printStudentName($val["id"]);?></a></td>
     <td width="111" align="left" valign="top" style="padding-left:2px; font-size:12px; font-family:Arial, Helvetica, sans-serif; color:#000;"><a href="search_group_f.php?student=<?php echo $val["id"];?>" style="text-decoration:none;"><?php echo $val["student_mobile"];?></a></td>
     <td width="105" align="left" valign="top" style="padding-left:2px; font-size:12px; font-family:Arial, Helvetica, sans-serif; color:#000;"><a href="search_group_f.php?student=<?php echo $val["id"];?>" style="text-decoration:none;"><?php echo $val["email"];?></a></td>
   </tr>

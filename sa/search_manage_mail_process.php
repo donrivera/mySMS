@@ -84,6 +84,6 @@ if($mobile_no != ''){
 		}
 	}
 }
-header("Location:search_manage.php?student_id=$student_id");
+header("Location:search_manage.php?student_id=$student_id&course_id=$course_id");
 exit;
 ?>

@@ -73,6 +73,7 @@ if($LANGUAGE=='AR'){
 <script>	
 $(document).ready(function() {	
 	$("#frm").validationEngine()
+	hidePaymentTab();
 });
 function isNumberKey(evt){
  var charCode = (evt.which) ? evt.which : event.keyCode
@@ -184,6 +185,7 @@ function get_interest_group(){
 	
 	// Get interest course id
 	var i_count = document.getElementById('count').value;
+	if(i_count==""){hidePaymentTab();}else{showPaymentTab();}
 	for(k = 1; k <= i_count; k++){
 		
 		var c_id = "course"+k;
@@ -1077,6 +1079,93 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							</tr>
 							
 							<!--CORPORATE ACCOUNT OPTION-->
+							<!--CORPORATE ACCOUNT OPTION-->
+							<!--PAYMENT-->
+							<script language="javascript" type="text/javascript">
+							function showPaymentTab() 
+							{
+								var paymentOption = document.getElementById("paymentOption");
+								var paymentOption1 = document.getElementById("paymentOption1");
+								var paymentOption2 = document.getElementById("paymentOption2");
+								var paymentOption3 = document.getElementById("paymentOption3");
+								paymentOption.style.visibility = "visible";
+								paymentOption1.style.visibility = "visible";
+								paymentOption2.style.visibility = "visible";
+								paymentOption3.style.visibility = "visible";
+							}
+							function hidePaymentTab()
+							{
+								var paymentOption = document.getElementById("paymentOption");
+								var paymentOption1 = document.getElementById("paymentOption1");
+								var paymentOption2 = document.getElementById("paymentOption2");
+								var paymentOption3 = document.getElementById("paymentOption3");
+								paymentOption.style.visibility = "hidden";
+								paymentOption1.style.visibility = "hidden";
+								paymentOption2.style.visibility = "hidden";
+								paymentOption3.style.visibility = "hidden";
+							}
+							</script>
+							<tr id="paymentOption">
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td width="31%" align="right" valign="middle" class="leftmenu">
+									Payment Status:
+								</td>
+								<td width="3%">&nbsp;</td>
+								<td width="66%" align="left" valign="middle">
+									<select name="pay_status" id="pay_status" style="width:100px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;">
+										<option>Select</option>
+										<option value="advance">Advance</option>
+										<option value="enroll">Enrollment</option>
+									</select>
+								</td>
+							</tr>
+							<tr id="paymentOption1">
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td width="31%" align="right" valign="middle" class="leftmenu">
+									Payment Type:
+								</td>
+								<td width="3%">&nbsp;</td>
+								<td width="66%" align="left" valign="middle">
+										<select name="pay_type" id="pay_type" style="width:103px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;">
+                                            <option value="">Select</option>
+                                            <?php
+												foreach($dbf->fetchOrder('common',"type='payment type'","") as $resp):
+											?>
+                                            <option value="<?php echo $resp['id'];?>"><?php echo $resp['name'];?></option>
+                                            <?php 
+												endforeach; 
+											?>
+                                        </select>
+								</td>
+							</tr>
+							<tr id="paymentOption2">
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td width="31%" align="right" valign="middle" class="leftmenu">
+									Amount:
+								</td>
+								<td width="3%">&nbsp;</td>
+								<td width="66%" align="left" valign="middle">
+									<input type="text" name="pay_amt" id="pay_amt" onKeyPress="return isNumberKey(event);" style="width:90px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;"/>
+								</td>
+							</tr>
+							<tr id="paymentOption3">
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td width="31%" align="right" valign="middle" class="leftmenu">
+									Discount:
+								</td>
+								<td width="3%">&nbsp;</td>
+								<td width="66%" align="left" valign="middle">
+									<input type="text" name="discount" id="discount" onKeyPress="return isNumberKey(event);" style="width:90px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;"/>
+								</td>
+							</tr>
+							<tr>
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td width="31%" align="right" valign="middle" class="leftmenu">&nbsp;</td>
+								<td width="3%">&nbsp;</td>
+								<td width="66%" align="left" valign="middle">&nbsp;</td>
+							</tr>
+							
+                            <!--PAYMENT-->
                             <tr>
                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                               <td height="25" align="left" valign="middle" class="leftmenu">&nbsp;</td>

@@ -177,7 +177,7 @@ function gotfocus()
                                       <tr>
                                         <td width="17">&nbsp;</td>
                                         <td width="118" height="30" align="right" class="pedtext"><?php echo constant("TEACHER_ARF_MANAGE_STUDENTNAME");?> : </td>
-                                        <td width="283" align="left" valign="middle" class="red_smalltext">&nbsp;<?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";?></td>
+                                        <td width="283" align="left" valign="middle" class="red_smalltext">&nbsp;<?php echo $dbf->printStudentName($student_id);?></td>
                                         <td width="330" rowspan="7" align="center" valign="top">
                                         <?php
                                         $enroll = $dbf->strRecordID("student_enroll",'*',"student_id='$student_id' And course_id='$course_id'");
@@ -185,7 +185,8 @@ function gotfocus()
 										$course_fees = $dbf->getDataFromTable("course_fee","fees","id='$enroll[fee_id]'");
 										
 										$course_fee = $course_fees;
-										$discount = $enroll["discount"];
+										$discount_student_fee=$dbf->getDataFromTable('student_fees',"discount","course_id='$course_id' And student_id='$student_id'");
+										$discount =(empty($enroll["discount"])?$discount_student_fee:$enroll["discount"]);
 										$other_amt = $enroll["other_amt"];
 										
 										$en_amt = $course_fee - $discount;

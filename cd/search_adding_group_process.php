@@ -58,17 +58,17 @@ foreach($prev_group as $p_grp):$previous_group_status=$p_grp['status'];endforeac
 if($num_student == 0)
 {	
 	$duplicate_course=$dbf->countRows('student_group_dtls',"course_id='$course_id' && student_id='$student_id'");
-	if($duplicate_course==1 && $previous_group_status!='Completed')
+	if($duplicate_course >0 && ($previous_group_status!='Completed' || $previous_group_status!='Not Started'))
 	{
-		echo '<script type="text/javascript">alert("Duplicate Course!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Duplicate Course!");var err="1";</script>';
 	}
 	elseif($corporate_account==1)
 	{
-		echo '<script type="text/javascript">alert("Corporate Account Exists!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Corporate Account Exists!");var err="1";</script>';
 	}
 	elseif($corporate_count_student > $corporate_student_limit)
 	{
-		echo '<script type="text/javascript">alert("Corporate Account Exceeded!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Corporate Account Exceeded!");var err="1";</script>';
 	}
 	else
 	{	$studentSendSMS=1;
@@ -137,6 +137,7 @@ if($num_student == 0)
 		if(!empty($_REQUEST['account']) && !empty($_REQUEST['corp_acct']))
 		{$dbf->addCorporateStudent($_REQUEST['corp_acct'],$_REQUEST['account'],$student_id,$course_id,$_SESSION['id']);}
 		#corporate account insert to db
+		echo '<script type="text/javascript">var err="2";</script>';
 	}
 }
 else
@@ -155,27 +156,27 @@ else
 	$student_limit=$dbf->getDataFromTable("common","name","type='class limit'");
 	if($group_status=='Completed')
 	{
-		echo '<script type="text/javascript">alert("Group Status: Completed");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Group Status: Completed");var err="1";</script>';
 	}
 	elseif($total_students >$student_limit)
 	{
-		echo '<script type="text/javascript">alert("Group has '.$student_limit.' students!!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Group has '.$student_limit.' students!!");var err="1";</script>';
 	}
 	elseif($duplicate_course > 0 && $group_status!='Completed')
 	{
-		echo '<script type="text/javascript">alert("Duplicate Course!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Duplicate Course!");var err="1";</script>';
 	}
 	elseif($validate > 0)
 	{
-		echo '<script type="text/javascript">alert("Duplicate Entry!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Duplicate Entry!");var err="1";</script>';
 	}
 	elseif($corporate_account==1)
 	{
-		echo '<script type="text/javascript">alert("Corporate Account Exists!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Corporate Account Exists!");var err="1";</script>';
 	}
 	elseif($corporate_count_student > $corporate_student_limit)
 	{
-		echo '<script type="text/javascript">alert("Corporate Account Exceeded!");self.parent.location.href="search.php?";self.parent.tb_remove();</script>';
+		echo '<script type="text/javascript">alert("Corporate Account Exceeded!");var err="1";</script>';
 	}
 	else
 	{	$studentSendSMS=1;
@@ -294,6 +295,7 @@ else
 				//$subject ="Group size has been changed Notification !!!";
 				mail($to_user,$subject,$body1,$headers);
 		}
+		echo '<script type="text/javascript">var err="2";</script>';
 	}
 }
 if($studentSendSMS==1)
@@ -335,6 +337,8 @@ if($studentSendSMS==1)
 ?>
 
 <script type="text/javascript">
-	self.parent.location.href='search_manage.php?student_id=<?php echo $student_id;?>';
-	self.parent.tb_remove();
+if(err==1)
+{self.parent.tb_remove();}
+else
+{self.parent.location.href='search_manage.php?student_id=<?php echo $student_id;?>';self.parent.tb_remove();}
 </script>

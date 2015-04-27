@@ -13,6 +13,7 @@ $sms_gateway = $dbf->strRecordID("sms_gateway","*","");
 
 $mobile_no = '';
 $student_id = $_REQUEST['student_id'];
+$course_id= $_REQUEST['course_id'];
 //============
 // SMS
 //============
@@ -61,6 +62,6 @@ if($mobile_no != ''){
 		}
 	}
 }
-header("Location:search_manage.php?student_id=$student_id");
+header("Location:search_manage.php?student_id=$student_id&course_id=$course_id");
 exit;
 ?>

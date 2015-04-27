@@ -175,7 +175,7 @@ font-style:italic;
                     <th height="28" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">Level: <span class="cer_my_head_bold"><?php echo $eng_course_name;?></span> with a total number of <span class="cer_my_head_bold"><?php echo $hr;?></span> hours </span></th>
                   </tr>
                   <tr>
-                    <th height="28" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">From: </span><span class="cer_my_head_bold"><?php echo $res_g[start_date];?></span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="cer_my_head">to: </span><span class="cer_my_head_bold"><?php echo $res_g[end_date];?></span></th>
+                    <th height="28" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">From: </span><span class="cer_my_head_bold"><?php echo date("d-m-Y",strtotime($res_g["start_date"]));?></span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="cer_my_head">to: </span><span class="cer_my_head_bold"><?php echo date("d-m-Y",strtotime($res_g["end_date"]));?></span></th>
                   </tr>
                   <tr>
                     <th height="28" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">That correspond to the Hijra dates</span></th>
@@ -231,7 +231,8 @@ font-style:italic;
                     <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $arb_course_name;?>  , وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span></th>
                     </tr>
                   <tr>
-                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في الفترة من: <?php echo $dbf->enNo2ar($res_g[start_date],'-');?> إلى: <?php echo $dbf->enNo2ar($res_g[end_date],'-');?></span></th>
+					<?php $ar_start_date=date("d-m-Y",strtotime($res_g["start_date"]));$ar_end_date=date("d-m-Y",strtotime($res_g["end_date"]));?>
+                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في الفترة من: <?php echo $dbf->enNo2ar($ar_start_date,'-');?> إلى: <?php echo $dbf->enNo2ar($ar_end_date,'-');?></span></th>
                     </tr>
                   <!--
 				  <tr>
@@ -239,7 +240,7 @@ font-style:italic;
                     </tr>
                   -->
 				  <tr>
-                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">الموافق من: <?php if($_REQUEST[student_id] !='' ) { ?> <?php if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($res_g[start_date],'-');}?> <?php } ?>إلى: <?php if($_REQUEST[student_id] !='' ) { ?><?php if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($res_g[start_date],'');}?><?php } ?></span>                    
+                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">الموافق من: <?php if($_REQUEST[student_id] !='' ) { ?> <?php if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($sdt,'-');}?> <?php } ?>إلى: <?php if($_REQUEST[student_id] !='' ) { ?><?php if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($edt,'-');}?><?php } ?></span>                    
                     </th>
                     </tr>
                   <tr>
@@ -256,8 +257,8 @@ font-style:italic;
       </tr>
       <tr>
         <td align="left" valign="top">
-			<!--
-			<table width="900" border="0" cellspacing="0" cellpadding="0" style="display:none;">
+			
+			<table width="900" border="0" cellspacing="0" cellpadding="0"><!-- style="display:none;"-->
 			<tr>
 			<td width="349" align="center" valign="middle"><p dir="rtl"><span dir="rtl"> </span><strong><span dir="rtl"> </span>   تصادق إدارة التربية والتعليم  علي صحة ختم وتوقيع مدير المعهد</strong></p>
 				<p align="center" dir="rtl"><strong>مدير عام التربية والتعليم بمحافظة الإحساء</strong><br />
@@ -272,7 +273,7 @@ font-style:italic;
 			</td>
 			</tr>
 			</table>
-			-->
+			
 		</td>
       </tr>
       <tr>

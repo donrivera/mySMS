@@ -96,7 +96,7 @@ header("Content-Disposition: attachment; Filename=group_progress_report.doc");
 			$res_course = $dbf->strRecordID("course","*","id='$res_g[course_id]'");
 			#$res_student = $dbf->strRecordID("student","*","id='$_REQUEST[teacher_id]'");
 		  
-			$res_size = $dbf->strRecordID("group_size","*","group_id='$res_g[group_id]'");
+			//$res_size = $dbf->strRecordID("group_size","*","group_id='$res_g[group_id]'");
 			$res_group = $dbf->strRecordID("common","*","id='$res_g[group_id]'");
 			if($_REQUEST[group_id]!='')
 			{
@@ -139,7 +139,7 @@ header("Content-Disposition: attachment; Filename=group_progress_report.doc");
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
 						<td width="41%" height="20" align="left" valign="middle" class="leftmenu"><?php echo constant("CD_GROUP_PROGRESS_PROGRAMLENGTH");?>: </td>
-						<td width="59%" align="left" valign="middle" class="pedtext" ><?php echo $res_size[units];?></td>
+						<td width="59%" align="left" valign="middle" class="pedtext" ><?php echo $res_g[units];?></td>
 					</tr>
 				</table>
 			</td>
@@ -154,7 +154,8 @@ header("Content-Disposition: attachment; Filename=group_progress_report.doc");
 							$tot_unit = $or_unit * $per_unit;
 							$hr = $tot_unit / 60;*/
 							//Get number of Attendace present in e-PEDCARD (table : ped_attendance)
-							$num_total_class=$dbf->countRows('ped_units',"group_id='$_REQUEST[group_id]'");
+							$num_total_class=$dbf->getDataFromTable("ped_units","MAX(units)","group_id='$_REQUEST[group_id]' AND dated != '0000-00-00'");
+							//$num_total_class=$dbf->countRows('ped_units',"group_id='$_REQUEST[group_id]'");
 						?>
 						<td width="45%" align="left" valign="middle" class="pedtext"><?php echo $num_total_class;?></td>
 						<td width="16%" align="center" valign="middle" class="nametext" >&nbsp;</td>
@@ -232,7 +233,8 @@ header("Content-Disposition: attachment; Filename=group_progress_report.doc");
 								$avg = $avg / 7;
 								$avg = round($avg,1);
 							}
-							$at = $res_progress["course_attendance"] * $res_g["unit_per_day"];
+							//$at = $res_progress["course_attendance"] * $res_g["unit_per_day"];
+							$at=$res_progress["course_attendance_perc"];
 							$parti = $res_progress["course_partication"];
 							$home = $res_progress["course_homework"];
 							$flu = $res_progress["course_fluency"];

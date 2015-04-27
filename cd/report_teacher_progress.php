@@ -256,7 +256,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td width="34%" height="20" align="left" valign="middle" class="leftmenu"> <?php echo constant("CD_GROUP_PROGRESS_LESSIONTAKEN");?>:</td>
                 <?php				
 				//Get number of Attendace present in e-PEDCARD (table : ped_attendance)
-				$num_total_class=$res_g["units"];
+				$num_total_class=$res_g["units"]/2;//$dbf->getDataFromTable("ped_units","MAX(units)","group_id='$_REQUEST[cmbgroup]' AND dated != '0000-00-00'");//$res_g["units"];
 				?>
                 <td width="45%" align="left" valign="middle" class="pedtext_normal"><?php echo $num_total_class;?></td>
                 <td width="16%" align="center" valign="middle" class="nametext" >&nbsp;</td>
@@ -288,8 +288,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
             <td height="20" align="left" valign="middle" class="leftmenu">&nbsp;<?php echo constant("STUDENT_PROGRESS_REPORT_ATTENDANCE");?> : </td>
             <?php
 			//Get number of Attendace present in e-PEDCARD (table : ped_attendance)
-			$num_att=$dbf->No_Of_Attendance($_REQUEST['teacher_id'], $_REQUEST["cmbgroup"]);# / $res_g["unit_per_day"]
-			$num_total_unit_teach=$res_g[units];#$dbf->getDataFromTable("ped_units","MAX(units)","group_id='$_REQUEST[cmbgroup]'");# / $res_g["unit_per_day"]
+			$progress_units=($res_g[units]/2)/$res_g[unit_per_day];
+			$num_att=$dbf->printProgressAttendance($_REQUEST['teacher_id'],$_REQUEST["cmbgroup"],$progress_units);//$dbf->No_Of_Attendance($_REQUEST['teacher_id'], $_REQUEST["cmbgroup"]);#/ $res_g["unit_per_day"]
+			$num_total_unit_teach=$res_g[units] / 2;
 			?>
             <td align="left" valign="middle" class="pedtext_normal"><b><?php echo $num_att;?></b>&nbsp;&nbsp;&nbsp;<?php echo constant("CD_REPORT_TEACHER_PROGRESS_OUTOF");?> &nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo $num_total_unit_teach;?></b></td>
             <td>&nbsp;</td>

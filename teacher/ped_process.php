@@ -1,12 +1,10 @@
 <?php
-#echo print_r($_POST);
-#ini_set('max_input_vars', 9999);
-
 ob_start();
 session_start();
 include_once '../includes/class.Main.php';
 include("../includes/saudismsNET-API.php");
-
+#echo print_r($_POST);
+#echo var_dump($_POST);
 //Object initialization
 $dbf = new User();
 $uid = $_SESSION['uid'];
@@ -16,117 +14,95 @@ if($_POST[ini_feedback]!=''){	$ini_feedback = implode(",",$_POST[ini_feedback]);
 if($_POST[counselling]!=''){	$counselling = implode(",",$_POST[counselling]);}
 if($_POST[mate]!=''){			$mate = implode(",",$_POST[mate]);}
 $res_group = $dbf->strRecordID("student_group","*","id='$_REQUEST[cmbgroup]'");
-$course_id = $res_group[course_id];
+$course_id = $res_group['course_id'];
+$estart_date=date("Y-m-d");
+$group_id=$_POST['cmbgroup'];
 //Check duplicate
 $num=$dbf->countRows('ped',"teacher_id='$uid' and group_id='$_REQUEST[cmbgroup]' and course_id='$course_id'");
-
-
-if($num == 0)
+if($num==0)
 {
-	$string="teacher_id='$uid',group_id='$_POST[cmbgroup]',course_id='$course_id',estart_date='$_POST[estart_date]',material='$mate',bl='$_POST[bl]',arf_submit='$_POST[arf]',level='$_POST[level]',comments='$_POST[comments]',location='$_POST[location]',checklist='$chklist',point_cover1='$_POST[point_cover1]',point_date1='$_POST[point_date1]', point_cover2='$_POST[point_cover2]', point_date2='$_POST[point_date2]', ini_feedback='$ini_feedback', inst1='$_POST[inst1]', date1='$_POST[date1]',arf1='$_POST[arf1]', dby1='$_POST[dby1]', dby1_date1='$_POST[dby1_date1]', cby1='$_POST[cby1]', cby1_date1='$_POST[cby1_date1]', inst2='$_POST[inst2]', inst2_date2='$_POST[inst2_date2]', counselling='$counselling', inst3='$_POST[inst3]', inst3_date3='$_POST[inst3_date3]', inst4='$_POST[inst4]', inst4_date4='$_POST[inst4_date4]', not_apply='$_POST[not_apply]',distrbute_by='$_POST[distrbute_by]',distrbute_date='$_POST[distrbute_date]',collect_by='$_POST[collect_by]',collect_date='$_POST[collect_date]',pro_report='$_POST[pro_report]'";
+	$string="	teacher_id='$uid',
+				group_id='$group_id',
+				course_id='$course_id',
+				estart_date='$estart_date',
+				material='$mate',
+				bl='$_POST[bl]',
+				arf_submit='$_POST[arf]',
+				level='$_POST[level]',
+				comments='$_POST[comments]',
+				location='$_POST[location]',
+				checklist='$chklist',
+				point_cover1='$_POST[point_cover1]',
+				point_date1='$_POST[point_date1]', 
+				point_cover2='$_POST[point_cover2]', 
+				point_date2='$_POST[point_date2]', 
+				ini_feedback='$ini_feedback', 
+				inst1='$_POST[inst1]', 
+				date1='$_POST[date1]',
+				arf1='$_POST[arf1]', 
+				dby1='$_POST[dby1]', 
+				dby1_date1='$_POST[dby1_date1]', 
+				cby1='$_POST[cby1]', 
+				cby1_date1='$_POST[cby1_date1]', 
+				inst2='$_POST[inst2]', 
+				inst2_date2='$_POST[inst2_date2]', 
+				counselling='$counselling', 
+				inst3='$_POST[inst3]', 
+				inst3_date3='$_POST[inst3_date3]', 
+				inst4='$_POST[inst4]', 
+				inst4_date4='$_POST[inst4_date4]', 
+				not_apply='$_POST[not_apply]',
+				distrbute_by='$_POST[distrbute_by]',
+				distrbute_date='$_POST[distrbute_date]',
+				collect_by='$_POST[collect_by]',
+				collect_date='$_POST[collect_date]',
+				pro_report='$_POST[pro_report]'";
 	//Excute the query And Get the recent Insert ID
 	$id = $dbf->insertSet("ped",$string);
 	//Insert in PED Units table
-	$ucount = $_POST[ucount];
-	for($i=1; $i<=$ucount; $i++)
-	{
-		$dt = "u_dated".$i;
-		$dt = $_REQUEST[$dt];
-		
-		$material_overed = "material_overed".$i;
-		$material_overed = $_REQUEST[$material_overed];
-		
-		$homework = "homework".$i;
-		$homework = $_REQUEST[$homework];
-		
-		if($dt != '')
+	foreach($_POST['ped_unit'] as $p=>$ped_unit):
+		//echo $p."date".$ped_unit['date']."mc:".$ped_unit['material_covered']."hw:".$ped_unit['homework'];
+		$pd_units=$p;
+		$pd_date=$ped_unit['date'];
+		$pd_mc=$ped_unit['material_covered'];
+		$pd_hw=$ped_unit['homework'];
+		$num=$dbf->countRows('ped_units',"units='$pd_units' AND teacher_id='$uid' and group_id='$group_id' and course_id='$course_id'");
+		if($num==0)
 		{
-			//Check duplicate
-			$num=$dbf->countRows('ped_units',"units='$i' AND teacher_id='$uid' and group_id='$_POST[cmbgroup]' and course_id='$course_id'");
-			if($num==0)
-			{
-				$string="ped_id='$id',teacher_id='$uid', group_id='$_POST[cmbgroup]',course_id='$course_id', units='$i',dated='$dt', material_overed='$material_overed', homework='$homework'";
-				$dbf->insertSet("ped_units",$string);
-			}else
-			{
-				$string="dated='$dt',material_overed='$material_overed',homework='$homework'";
-				$dbf->updateTable("ped_units",$string,"teacher_id='$uid' AND units='$i' and group_id='$_POST[cmbgroup]' and course_id='$course_id'");
-			}
+			$string="ped_id='$id',teacher_id='$uid', group_id='$group_id',course_id='$course_id', units='$pd_units',dated='$pd_date', material_overed='$pd_mc', homework='$pd_hw'";
+			$dbf->insertSet("ped_units",$string);
 		}
-	}
-	// -- End
-	$count = $_POST[no_unit];
-	$c_count = $_POST['count_course'];
-	//No of Course belongs
-	//Start => Loop 1st (Course)
-	for($i=1; $i<=$c_count; $i++)
-	{
-		$s_count = 's_count'.$i;
-		$s_count = $_REQUEST[$s_count];
-		//Start => Loop 2nd (No of Student)
-		for($j=1; $j<=$s_count; $j++)
+		else
 		{
-			//No of columns
-			//Start => Loop 3rd
-			for($k=1; $k<=$count; $k++)
-			{
-				
-				$attend_date = "attend_date".$k;
-				$attend_date = $_REQUEST[$attend_date];
-				
-				$student_id = "student_id".$j."_".$i;
-				$student_id = $_REQUEST[$student_id];
-				
-				$shift1 = "shift1_".$j."_".$k."_".$i;
-				$shift1 = $_REQUEST[$shift1];
-				
-				$shift2 = "shift2_".$j."_".$k."_".$i;
-				$shift2 = $_REQUEST[$shift2];
-				
-				$shift3 = "shift3_".$j."_".$k."_".$i;
-				$shift3 = $_REQUEST[$shift3];
-				
-				$shift4 = "shift4_".$j."_".$k."_".$i;
-				$shift4 = $_REQUEST[$shift4];
-				
-				$shift5 = "shift5_".$j."_".$k."_".$i;
-				$shift5 = $_REQUEST[$shift5];
-				
-				$shift6 = "shift6_".$j."_".$k."_".$i;
-				$shift6 = $_REQUEST[$shift6];
-				
-				$shift7 = "shift4_".$j."_".$k."_".$i;
-				$shift7 = $_REQUEST[$shift7];
-				
-				$shift8 = "shift5_".$j."_".$k."_".$i;
-				$shift8 = $_REQUEST[$shift8];
-				
-				$shift9 = "shift6_".$j."_".$k."_".$i;
-				$shift9 = $_REQUEST[$shift9];
-
-				$course_id = "course_id".$i;
-				$course_id = $_REQUEST[$course_id];
-
-				//Check duplicate
-				$num=$dbf->countRows('ped_attendance',"ped_id='$id' AND teacher_id='$uid' AND course_id='$course_id' AND student_id='$student_id' AND unit='$k' and group_id='$_POST[cmbgroup]'");
-				if($num>0){
-					
-				$string="shift1='$shift1',shift2='$shift2',shift3='$shift3',shift4='$shift4',shift5='$shift5',shift6='$shift6',shift7='$shift7',shift8='$shift8',shift9='$shift9',attend_date='$attend_date'";
-					
-					$dbf->updateTable("ped_attendance",$string,"ped_id='$id' AND teacher_id='$uid' AND course_id='$course_id' AND student_id='$student_id' AND unit='$k' and group_id='$_POST[cmbgroup]'");
-				}else{
-					
-					$dt = date('Y-m-d');
-					$string="ped_id='$id',teacher_id='$uid',course_id='$course_id',student_id='$student_id',unit='$k',shift1='$shift1',shift2='$shift2',shift3='$shift3',dated='$dt', group_id='$_POST[cmbgroup]',attend_date='$attend_date'";
-					$duplicate_attendance=$dbf->genericQuery("SELECT * FROM ped_attendance WHERE group_id='$_POST[cmbgroup]' AND student_id='$student_id' AND unit='$k' AND (shift1 !='' OR shift2 !='')");
-					if(empty($duplicate_attendance)){$dbf->insertSet("ped_attendance",$string);}
-					#$dbf->insertSet("ped_attendance",$string);
-				}
-			}
+			$string="dated='$pd_date',material_overed='$pd_mc',homework='$pd_hw'";
+			//$dbf->updateTable("ped_units",$string,"teacher_id='$uid' AND units='$pd_units' and group_id='$group_id' and course_id='$course_id'");
 		}
-	}
-	//End => Loop 1st
-	
+	endforeach;
+	foreach($_POST['ped_attendance'] as $p_a):
+		$pa_unit=$p_a['unit'];
+		foreach($p_a['student'] as $ped_attendance):
+			//echo $p_a['date']."unit:".$p_a['unit']."id:".$ped_attendance['student_id']."attendance:".$ped_attendance['1'].$ped_attendance['2'];
+			$pa_date=$p_a['date'];
+			//$pa_unit=$p_a['unit'];
+			$pa_stid=$ped_attendance['student_id'];
+			$shift1=(empty($ped_attendance['1'])?'':$ped_attendance['1']);
+			$shift2=(empty($ped_attendance['2'])?'':$ped_attendance['2']);
+			$shift3=(empty($ped_attendance['3'])?'':$ped_attendance['3']);
+			$shift4=(empty($ped_attendance['4'])?'':$ped_attendance['4']);
+			$shift5=(empty($ped_attendance['5'])?'':$ped_attendance['5']);
+			$shift6=(empty($ped_attendance['6'])?'':$ped_attendance['6']);
+			$shift7=(empty($ped_attendance['7'])?'':$ped_attendance['7']);
+			$shift8=(empty($ped_attendance['8'])?'':$ped_attendance['8']);
+			$shift9=(empty($ped_attendance['9'])?'':$ped_attendance['9']);
+			$dt = date('Y-m-d');
+			$string="ped_id='$id',teacher_id='$uid',course_id='$course_id',student_id='$pa_stid',unit='$pa_unit',shift1='$shift1',shift2='$shift2',shift3='$shift3',dated='$dt', group_id='$_POST[cmbgroup]',attend_date='$pa_date'";
+			$dbf->insertSet("ped_attendance",$string);
+			$date_time = date('Y-m-d H:i:s A');
+			$status="status_id='5',group_id='$_POST[cmbgroup]',date_time='$date_time'";
+			$dbf->updateTable("student_moving",$status,"student_id='$pa_stid' And course_id='$course_id'");
+			$dbf->updateTable("student_moving_history",$status,"student_id='$pa_stid' And course_id='$course_id'");
+		endforeach;
+	endforeach;
 	//======================================
 	//Start Insert in daily status
 	//======================================
@@ -144,36 +120,61 @@ if($num == 0)
 	//UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
 	//=======================================================
 	$date_time = date('Y-m-d H:i:s A');
-	
-	foreach($dbf->fetchOrder('student_group_dtls',"parent_id='$_POST[cmbgroup]'") as $ingroup){
-		
+	foreach($dbf->fetchOrder('student_group_dtls',"parent_id='$_POST[cmbgroup]'") as $ingroup)
+	{
 		$student_id = $ingroup["student_id"];
 		$course_id = $ingroup["course_id"];
-		
 		$num_st = $dbf->countRows('student_moving',"student_id='$student_id' And course_id='$course_id' And status_id <='4'"); // Means If status is blank or Enrolled
-		if($num_st > 0){
+		if($num_st > 0)
+		{
 			$string_st="group_id='$_POST[cmbgroup]',status_id='5'"; //Active Status		
 			$dbf->updateTable("student_moving",$string_st,"student_id='$student_id' And course_id='$course_id'");
-			
 			$string2="student_id='$student_id',group_id='$_POST[cmbgroup]',course_id='$course_id',date_time='$date_time',user_id='$_SESSION[id]',status_id='5'";
 			$dbf->insertSet("student_moving_history",$string2);
-			
 			$string_st="status_id='5'"; //Completed Status
 			$dbf->updateTable("student_enroll",$string_st,"student_id='$student_id' And course_id='$course_id'");
 		}
 	}	
 	//=======================================================
 	//UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
-	
 }
 else
-{#echo "1";echo var_dump($_POST);
-	
-	//Query string
-	$string="level='$_POST[level]',estart_date='$_POST[estart_date]',material='$mate',bl='$_POST[bl]',arf_submit='$_POST[arf]',comments='$_POST[comments]',location='$_POST[location]',checklist='$chklist',point_cover1='$_POST[point_cover1]',point_date1='$_POST[point_date1]',point_cover2='$_POST[point_cover2]', point_date2='$_POST[point_date2]', ini_feedback='$ini_feedback', inst1='$_POST[inst1]', date1='$_POST[date1]', arf1='$_POST[arf1]',dby1='$_POST[dby1]',dby1_date1='$_POST[dby1_date1]', cby1='$_POST[cby1]', cby1_date1='$_POST[cby1_date1]', inst2='$_POST[inst2]', inst2_date2='$_POST[inst2_date2]',counselling='$counselling',inst3='$_POST[inst3]', inst3_date3='$_POST[inst3_date3]', inst4='$_POST[inst4]',inst4_date4='$_POST[inst4_date4]', not_apply='$_POST[not_apply]',distrbute_by='$_POST[distrbute_by]',distrbute_date='$_POST[distrbute_date]',collect_by='$_POST[collect_by]',collect_date='$_POST[collect_date]',pro_report='$_POST[pro_report]'";
+{
+	$string="	level='$_POST[level]',
+				estart_date='$estart_date',
+				material='$mate',bl='$_POST[bl]',
+				arf_submit='$_POST[arf]',
+				comments='$_POST[comments]',
+				location='$_POST[location]',
+				checklist='$chklist',
+				point_cover1='$_POST[point_cover1]',
+				point_date1='$_POST[point_date1]',
+				point_cover2='$_POST[point_cover2]', 
+				point_date2='$_POST[point_date2]', 
+				ini_feedback='$ini_feedback', 
+				inst1='$_POST[inst1]', 
+				date1='$_POST[date1]', 
+				arf1='$_POST[arf1]',
+				dby1='$_POST[dby1]',
+				dby1_date1='$_POST[dby1_date1]', 
+				cby1='$_POST[cby1]', 
+				cby1_date1='$_POST[cby1_date1]', 
+				inst2='$_POST[inst2]', 
+				inst2_date2='$_POST[inst2_date2]',
+				counselling='$counselling',
+				inst3='$_POST[inst3]', 
+				inst3_date3='$_POST[inst3_date3]', 
+				inst4='$_POST[inst4]',
+				inst4_date4='$_POST[inst4_date4]', 
+				not_apply='$_POST[not_apply]',
+				distrbute_by='$_POST[distrbute_by]',
+				distrbute_date='$_POST[distrbute_date]',
+				collect_by='$_POST[collect_by]',
+				collect_date='$_POST[collect_date]',
+				pro_report='$_POST[pro_report]'";
 		
 	//Excute the query
-	$dbf->updateTable("ped",$string,"teacher_id='$uid' and group_id='$_POST[cmbgroup]' and course_id='$course_id'");	
+	$dbf->updateTable("ped",$string,"teacher_id='$uid' and group_id='$group_id' and course_id='$course_id'");	
 	
 	//======================================
 	//Start Insert in daily status
@@ -182,101 +183,79 @@ else
 	
 	//Check duplicate
 	$num=$dbf->countRows('ped_daily_status',"dated='$today' And teacher_id='$uid' And group_id='$_POST[cmbgroup]' And course_id='$course_id'");
-	if($num==0){
-	
+	if($num==0)
+	{
 		$string="dated='$today',teacher_id='$uid',group_id='$_POST[cmbgroup]',course_id='$course_id',ped_id='$id'";		
 		$dbf->insertSet("ped_daily_status",$string);
 	}
-
 	//======================================
 	//End status
 	//======================================
+	/*
 		
-	//Insert in PED Units table
-	$ucount = $_POST[ucount];
-	for($i=1; $i<=$ucount; $i++){
-		
-		$dt = "u_dated".$i;
-		$dt = $_REQUEST[$dt];
-		
-		$material_overed = "material_overed".$i;
-		$material_overed = $_REQUEST[$material_overed];
-		
-		$homework = "homework".$i;
-		$homework = $_REQUEST[$homework];
-		
-		if($dt != ''){
-			//Check duplicate
-			$num=$dbf->countRows('ped_units',"units='$i' AND teacher_id='$uid' and group_id='$_POST[cmbgroup]' and course_id='$course_id'");
-			if($num==0){
-				$string="ped_id='$_POST[ped_id]', teacher_id='$uid',group_id='$_POST[cmbgroup]', course_id='$course_id', units='$i',dated='$dt', material_overed='$material_overed',homework='$homework'";
-				$dbf->insertSet("ped_units",$string);
-			}else{
-				$string="dated='$dt',material_overed='$material_overed',homework='$homework'";
-				$dbf->updateTable("ped_units",$string,"teacher_id='$uid' AND units='$i' and group_id='$_POST[cmbgroup]' and course_id='$course_id'");
-			}
-		}
-	}
-	// -- End
-					
+	*/
+	//$file_ped_unit=serialize($_POST['ped_unit']);
+	//$filename_ped_unit="ped_unit".$group_id.$today.".txt";
+	//file_put_contents($filename_ped_unit, $file_ped_unit);
 	
-	$count = $_POST[no_unit];	
-	$c_count = $_POST['count_course'];	
-	
-	//No of Course belongs
-	//Start => Loop 1st (Course)
-	for($i=1; $i<=$c_count; $i++){
-		$s_count = 's_count'.$i;
-		$s_count = $_REQUEST[$s_count];
-			
-		//Start => Loop 2nd (No of Student)
-		for($j=1; $j<=$s_count; $j++){
-			
-			//No of columns
-			//Start => Loop 3rd
-			for($k=1; $k<=$count; $k++){
-				
-				$attend_date = "attend_date".$k;
-				$attend_date = $_REQUEST[$attend_date];
-				
-				$student_id = "student_id".$j."_".$i;
-				$student_id = $_REQUEST[$student_id];
-				
-				$shift1 = "shift1_".$j."_".$k."_".$i;
-				$shift1 = $_REQUEST[$shift1];
-				
-				$shift2 = "shift2_".$j."_".$k."_".$i;
-				$shift2 = $_REQUEST[$shift2];
-				
-				$shift3 = "shift3_".$j."_".$k."_".$i;
-				$shift3 = $_REQUEST[$shift3];
-										
-				$course_id = "course_id".$i;
-				$course_id = $_REQUEST[$course_id];
-				#echo $_POST[ped_id].$uid.course_id.$student_id.$k.$_POST[cmbgroup]."<BR/>";									
-				//Check duplicate
-				$num=$dbf->countRows('ped_attendance',"ped_id='$_POST[ped_id]' AND teacher_id='$uid' AND course_id='$course_id' AND student_id='$student_id' AND unit='$k' and group_id='$_POST[cmbgroup]'");
-				
-				#$ped_attendance=$dbf->genericQuery("SELECT * FROM ped_attendance WHERE group_id='$_POST[cmbgroup]' AND student_id='$student_id' AND unit='$k' AND (shift1 !='' OR shift2 !='')");
-				if($num>0){echo "a";
-				#if(!empty($ped_attendance)){
-					
-					$string="shift1='$shift1',shift2='$shift2',shift3='$shift3',attend_date='$attend_date'";
-					//echo '<br>';
-					$dbf->updateTable("ped_attendance",$string,"ped_id='$_POST[ped_id]' AND teacher_id='$uid' AND course_id='$course_id' AND student_id='$student_id' AND unit='$k' and group_id='$_POST[cmbgroup]'");
-					
-				}else{echo "b";
-					
-					$dt = date('Y-m-d');
-					$string="ped_id='$_POST[ped_id]',teacher_id='$uid',course_id='$course_id',student_id='$student_id',unit='$k',shift1='$shift1',shift2='$shift2',shift3='$shift3',dated='$dt',group_id='$_POST[cmbgroup]',attend_date='$attend_date'";
-					$duplicate_attendance=$dbf->genericQuery("SELECT * FROM ped_attendance WHERE group_id='$_POST[cmbgroup]' AND student_id='$student_id' AND unit='$k' AND (shift1 !='' OR shift2 !='')");
-					if(empty($duplicate_attendance)){$dbf->insertSet("ped_attendance",$string);}
-					$dbf->insertSet("ped_attendance",$string);
-					
-				}
-			}
+	foreach($_POST['ped_unit'] as $p=>$ped_unit):
+		$pd_units=$p;
+		$pd_date=$ped_unit['date'];
+		$pd_mc=$ped_unit['material_covered'];
+		$pd_hw=$ped_unit['homework'];
+		$num=$dbf->countRows('ped_units',"units='$pd_units' AND group_id='$group_id' AND course_id='$course_id'");
+		if($num==0)
+		{
+			$string="ped_id='$_POST[ped_id]',teacher_id='$uid', group_id='$group_id',course_id='$course_id', units='$pd_units',dated='$pd_date', material_overed='$pd_mc', homework='$pd_hw'";
+			$dbf->insertSet("ped_units",$string);
 		}
-	}
+		else
+		{
+			$string="dated='$pd_date',material_overed='$pd_mc',homework='$pd_hw'";
+			$dbf->updateTable("ped_units",$string,"teacher_id='$uid' AND units='$pd_units' and group_id='$group_id' and course_id='$course_id'");
+		}
+	endforeach;
+	//$file_ped_attendance=serialize($_POST['ped_attendance']);
+	//$filename_ped_attendance="ped_attendance".$group_id.$today.".txt";
+	//file_put_contents($filename_ped_attendance, $file_ped_attendance);
+	foreach($_POST['ped_attendance'] as $p_a):
+		$pa_unit=$p_a['unit'];
+		
+		foreach($p_a['student'] as $ped_attendance):
+			//echo $p_a['date']."unit:".$p_a['unit']."id:".$ped_attendance['student_id']."attendance:".$ped_attendance['1'].$ped_attendance['2'];
+			$pa_date=$p_a['date'];
+			//$pa_unit=$p_a['unit'];
+			$pa_stid=$ped_attendance['student_id'];
+			$shift1=(empty($ped_attendance['1'])?'':$ped_attendance['1']);
+			$shift2=(empty($ped_attendance['2'])?'':$ped_attendance['2']);
+			$shift3=(empty($ped_attendance['3'])?'':$ped_attendance['3']);
+			$shift4=(empty($ped_attendance['4'])?'':$ped_attendance['4']);
+			$shift5=(empty($ped_attendance['5'])?'':$ped_attendance['5']);
+			$shift6=(empty($ped_attendance['6'])?'':$ped_attendance['6']);
+			$shift7=(empty($ped_attendance['7'])?'':$ped_attendance['7']);
+			$shift8=(empty($ped_attendance['8'])?'':$ped_attendance['8']);
+			$shift9=(empty($ped_attendance['9'])?'':$ped_attendance['9']);
+			$num=$dbf->countRows('ped_attendance',"student_id='$pa_stid' AND ped_id='$_POST[ped_id]' AND course_id='$course_id' AND group_id='$group_id' AND unit='$pa_unit'");
+			//echo $attd_stid.$num."<BR/>";
+			if($num>0)
+			{
+				$string="shift1='$shift1',shift2='$shift2',shift3='$shift3',shift4='$shift4',shift5='$shift5',shift6='$shift6',shift7='$shift7',shift8='$shift8',shift9='$shift9',attend_date='$pa_date'";
+				$dbf->updateTable("ped_attendance",$string,"ped_id='$_POST[ped_id]' AND teacher_id='$uid' AND course_id='$course_id' AND student_id='$pa_stid' AND unit='$pa_unit' and group_id='$group_id'");
+				
+			}
+			else
+			{
+				$dt = date('Y-m-d');
+				$string="ped_id='$_POST[ped_id]',teacher_id='$uid',course_id='$course_id',student_id='$pa_stid',unit='$pa_unit',shift1='$shift1',shift2='$shift2',shift3='$shift3',dated='$dt', group_id='$_POST[cmbgroup]',attend_date='$pa_date'";
+				$dbf->insertSet("ped_attendance",$string);
+				
+			}
+			$date_time = date('Y-m-d H:i:s A');
+			$status="status_id='5',group_id='$group_id',date_time='$date_time'";
+			$dbf->updateTable("student_moving",$status,"student_id='$pa_stid'");
+			$dbf->updateTable("student_moving_history",$status,"student_id='$pa_stid' And course_id='$course_id'");
+		endforeach;
+	endforeach;
 	//End => Loop 1st	
 		
 	//======================================
@@ -298,17 +277,17 @@ else
 	
 	$original_unit = $group_size["units"];
 	
-	$group_size = $dbf->strRecordID("ped_units","COUNT(id)","group_id='$_POST[cmbgroup]' AND dated != '0000-00-00'");
+	$group_size = $dbf->strRecordID("ped_units","COUNT(id)","group_id='$_POST[cmbgroup]' AND dated != '0000-00-00' AND ped_id !='0'");
 	$pending_unit = $group_size["COUNT(id)"];	
 	
 	//teacher
 	$res_teacher=$dbf->fetchSingle("teacher","id='$uid'");
 	$to = $res_teacher[email];
 		
-	if($pending_unit == $original_unit){
-		
-		foreach($dbf->fetchOrder('student_moving',"status_id='5' And group_id='$_REQUEST[cmbgroup]'") as $move){
-		
+	if($pending_unit == $original_unit)
+	{
+		foreach($dbf->fetchOrder('student_moving',"status_id='5' And group_id='$_REQUEST[cmbgroup]'") as $move)
+		{
 			//Update in student_enroll table
 			$string_st="status_id='8'"; //Completed Status
 			$dbf->updateTable("student_enroll",$string_st,"student_id='$move[student_id]' And course_id='$course_id'");
@@ -370,10 +349,9 @@ else
 	}
 	else
 	{
-		
 		// Moving to Life Cycle
-		foreach($dbf->fetchOrder('student_group_dtls',"parent_id='$_POST[cmbgroup]'") as $ingroup){
-		
+		foreach($dbf->fetchOrder('student_group_dtls',"parent_id='$_POST[cmbgroup]'") as $ingroup)
+		{
 			$student_id = $ingroup["student_id"];
 			$course_id = $ingroup["course_id"];
 			
@@ -400,15 +378,13 @@ else
 	foreach($dbf->fetchOrder('ped_attendance',"group_id='$_POST[cmbgroup]'","","student_id","student_id") as $val_at)
 	{
 		$at_count = 0;
-		
 		//Get per units
-		foreach($dbf->fetchOrder('ped_attendance',"group_id='$_POST[cmbgroup]' And student_id='$val_at[student_id]'","","","") as $val_ab){
+		foreach($dbf->fetchOrder('ped_attendance',"group_id='$_POST[cmbgroup]' And student_id='$val_at[student_id]'","","","") as $val_ab)
+		{
 			//Get per units
 			$nnn = $dbf->countRows('ped_attendance',"group_id='$_POST[cmbgroup]' And student_id='$val_at[student_id]' And unit='$val_ab[unit]' And attend_date='$today' And (shift1='A' Or shift2='A' Or shift3='A' Or shift4='A' Or shift5='A' Or shift6='A' Or shift7='A' Or shift8='A' Or shift9='A')");
 			#echo $nnn;
-			if($nnn > 0){
-				$at_count = $at_count + 1;
-			}			
+			if($nnn > 0){$at_count = $at_count + 1;}			
 		}
 		//if($at_count == 3 || $at_count == 6 || $at_count == 9 || $at_count == 12 || $at_count == 15 || $at_count == 18 || $at_count == 21 || $at_count == 24 || $at_count == 27 || $at_count == 30 || $at_count == 33 || $at_count == 36 || $at_count == 39 || $at_count == 42 || $at_count == 45 || $at_count == 48 || $at_count == 51 || $at_count == 54 || $at_count == 57 || $at_count == 60|| $at_count == 63 || $at_count == 66 || $at_count == 69|| $at_count == 72 || $at_count == 75 || $at_count == 78 || $at_count == 81)
 		if($at_count ==1 || $at_count==3 || $at_count==5)
@@ -541,35 +517,9 @@ else
 		}
 				
 	}
-	
 }
+//echo var_dump($_POST['ped_attendance']);
 //Header location
 header("Location:ped.php?msg=added&cmbgroup=$_POST[cmbgroup]");
 exit;
-//Update the status when newly attandance has been made !!!
-//=========================================================
-/*$num=$dbf->countRows('ped_attendance',"group_id='$_REQUEST[cmbgroup]'");
-if($num>0){
-	
-	//Update the student_group table where teacher_id='$uid' and group_id='$_POST[cmbgroup]' and course_id='$course_id'
-	$string = "status='Continue'";
-	$dbf->updateTable("student_group",$string,"id='$_REQUEST[cmbgroup]'");
-	
-	foreach($dbf->fetchOrder('student_moving',"status_id='4' And group_id='$_REQUEST[cmbgroup]'") as $move){
-		
-		//Update in student_enroll table
-		$string_st="status_id='5'"; //Active Status
-		$dbf->updateTable("student_enroll",$string_st,"student_id='$move[student_id]' And course_id='$course_id'");
-		
-		//Update in student_moving table	
-		$dbf->updateTable("student_moving",$string_st,"student_id='$move[student_id]' And course_id='$course_id'");
-		
-		//Insert in student_moving_history table
-		$date_time = date('Y-m-d H:i:s A');
-		$string2="student_id='$move[student_id]',course_id='$course_id',group_id='$_REQUEST[cmbgroup]',date_time='$date_time',user_id='$_SESSION[id]',status_id='5'";
-		$dbf->insertSet("student_moving_history",$string2);
-		
-	}
-}*/
-//=========================================================
 ?>

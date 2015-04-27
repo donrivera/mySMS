@@ -141,7 +141,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
           <tr>
             <td height="0" align="left" valign="middle" bgcolor="#b4b4b4" style="background:url(../images/footer_repeat.png) repeat-x;"><table width="100%" border="0" cellspacing="0">
               <tr>
-                <td width="54%" height="30" align="left" class="logintext"><?php echo constant("STUDENT_ADVISOR_STUDENT_MANAGE_MANAGE_STUDENTS");?></td>
+                <td width="54%" height="30" align="left" class="logintext"><?php echo "Student Enquiry List";?></td>
                 <td width="22%">&nbsp;</td>
                 <td width="8%" align="left">&nbsp;</td>
                 <td width="8%" align="left">&nbsp;</td>
@@ -235,8 +235,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					
 					$i = 1;
 					$color = "#ECECFF";
-                    $num=$dbf->countRows('student', $condition);					
-					foreach($dbf->fetchOrder('student',$condition,"id DESC ","*") as $val){
+                    $num=$dbf->countRows('student', $condition."AND student_id='' LIMIT 0,50");					
+					foreach($dbf->fetchOrder('student',$condition."AND student_id=''","id DESC LIMIT 0,50","*") as $val){
 					
 						//Latest comments
 						$comm_id = $dbf->strRecordID("student_comment","MAX(id)","student_id='$val[id]'");

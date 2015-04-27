@@ -94,11 +94,9 @@ $(document).ready(function() {
 			//document.getElementById('othertext').focus();
 			return false;
 		}
-		if(amt_total>balance)
+		if(Number(amt_total)>Number(balance))
 		{
 			alert("Payment Exceeds Balance!");
-			//alert(amt_total+'-'+balance);
-			//document.getElementById('othertext').focus();
 			return false;
 		}
 	});

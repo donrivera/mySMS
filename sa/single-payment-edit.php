@@ -62,7 +62,7 @@ if($_REQUEST['action']=='edit_payment'){
 		
 	}
 	//=================================================================================
-	
+	$dbf->updateTable("student_fees","comments='$_POST[comment]',fee_amt='$_POST[amt]',paid_amt='$_POST[amt]',payment_type='$_POST[payment_type]',fee_date='$_POST[dated]',paid_date='$_POST[dated]'","id='$_REQUEST[schid]'");
 	header("Location:single-payment.php?student_id=$student_id&course_id=$course_id");
 	exit;
 }
@@ -222,7 +222,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
                   <tr>
                     <td width="25%" height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?> :</td>
-                    <td width="75%" align="left" valign="middle" class="mytext"><?php echo $student["first_name"];?><?php echo $Arabic->en2ar($dbf->StudentName($student["id"]));?></td>
+                    <td width="75%" align="left" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student["id"]);?></td>
                   </tr>
                   <?php if($student["student_id"] > 0){?>
                   <tr>
@@ -317,7 +317,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr>
                     <td width="71%" align="left" valign="top">
                     
-                    <form action="single-payment-edit.php?action=edit_payment&ids=<?=$student_id;?>&amp;schid=<?=$_REQUEST[schid];?>&course_id=<?=$course_id;?>" name="frm" method="post" id="frm" onSubmit="return validate();">
+                    <form action="single-payment-edit.php?action=edit_payment&student_id=<?=$student_id;?>&amp;schid=<?=$_REQUEST[schid];?>&course_id=<?=$course_id;?>" name="frm" method="post" id="frm" onSubmit="return validate();">
                       <?php
                       $val = $dbf->strRecordID("student_fees","*","id='$_REQUEST[schid]'");					  
 					  ?>

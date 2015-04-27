@@ -95,9 +95,11 @@ if($_REQUEST['action']=='search'){
 			$name = $_REQUEST[$name];
 			$amt = "amt".$k;
 			$amt = $_REQUEST[$amt];
+			$inv_no = $dbf->GenerateInvoiceNo($centre_id);
+			$inv_sl = $dbf->GetBillNo($student_id, $course_id);
 			if($name != "" && $amt != "")
 			{
-				$string="student_id='$student_id',course_id='$course_id',fee_date='$name',fee_amt='$amt',created_date='$dt',created_by='$_SESSION[id]',centre_id='$_SESSION[centre_id]'";
+				$string="student_id='$student_id',course_id='$course_id',fee_date='$name',paid_date='$name',payment_type='$_REQUEST[ptype]',fee_amt='$amt',paid_amt='$amt',created_date='$dt',created_by='$_SESSION[id]',centre_id='$_SESSION[centre_id]',invoice_sl='$inv_sl',invoice_no='$inv_no',type='direct',status='1',comments='$_REQUEST[textarea]'";
 				$dbf->insertSet("student_fees",$string);
 			}
 		}
@@ -155,10 +157,16 @@ $(document).ready(function()
 			alert("Please Enroll Student!");
 			return false;
 		}
-		if(amt_total>balance)
+		var pay_type=$("#ptype").val();
+		var pay_type=$("#ptype").val();
+		if(pay_type=="")
+		{
+			alert("Please Select Payment Type");
+			return false;
+		}
+		if(Number(amt_total)>Number(balance))
 		{
 			alert("Payment Exceeds Balance!");
-			//document.getElementById('othertext').focus();
 			return false;
 		}
 	});
@@ -484,15 +492,15 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td width="53%" rowspan="4" align="left" valign="top">
                             <table width="80%" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="#000000" style="border-collapse:collapse;">
                               <?php			 
-								 $camt = $res_enroll["course_fee"]-$discount_student_payment + $res_enroll["other_amt"];
+									$camt = $course_fees-$discount_student_payment + $res_enroll["other_amt"];
 								 
-								 $fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1' And invoice_sl LIKE '$enroll_dtl%'");
-								 $feeamt = $fee["SUM(paid_amt)"];
+									$fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1' And invoice_sl LIKE '$enroll_dtl%'");
+									$feeamt = $fee["SUM(paid_amt)"];
 								  
-								 $bal_amt = $camt - $feeamt;
+									$bal_amt = $camt - $feeamt;
 							
-								//Use currency
-								$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
+									//Use currency
+									$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");
 								?>
                               <tr>
                                 <td width="62%" height="25" align="left" valign="middle" bgcolor="#A9CFFE" class="pedtext"><?php echo constant("ADMIN_COURSE_MANAGE_COURSEFEES");?> :</td>

@@ -255,7 +255,7 @@ if($_REQUEST['action']=='setstatus'){
 }
 
 if($_REQUEST['action']=='quick_add_group'){
-	#echo var_dump($_REQUEST);
+	//echo var_dump($_REQUEST);
 	#echo "<BR/>";
 	//echo var_dump($_SESSION);
 	//echo "<BR/>";
@@ -302,10 +302,11 @@ if($_REQUEST['action']=='quick_add_group'){
 	$timestamp = strtotime("$event_time");
 	
 	$group_end_time = date('h:i A',strtotime("+$event_length minutes", $timestamp));
-	//echo $group_s_time."-".$group_end_time;
+	$frequency=count($_REQUEST['class_day']);
+	$class_day=implode(",",$_REQUEST['class_day']);
 	$start=date('Hi',strtotime($_REQUEST['tm']));
 	$end=date('Hi',strtotime("+$event_length minutes", $timestamp));
-	$num = $dbf->teacherSlotAvailable($teacher_id,$choosen_date,$end_date,$start,$end);
+	$num = $dbf->teacherSlotAvailable($teacher_id,$choosen_date,$end_date,$start,$end,$class_day);
 	$current_date = date('Y-m-d H:i:s A');
 	$_SESSION["tm"] = $_REQUEST["tm"];
 	$_SESSION["end_tm"] = $group_end_time;
@@ -314,7 +315,7 @@ if($_REQUEST['action']=='quick_add_group'){
 		header("Location:group_quick.php?msg=o0k9b4");
 		exit;
 	}
-	//$_REQUEST[unit]
+	
 	$string="
 				group_name='$_REQUEST[group]',
 				centre_id='$centre_id',
@@ -322,6 +323,8 @@ if($_REQUEST['action']=='quick_add_group'){
 				teacher_id='$_REQUEST[teacher]',
 				units='$compute_units',
 				unit_per_day='$perday',
+				class_per_week='$frequency',
+				class_day='$class_day',
 				status='Not Started',
 				room_id='$_REQUEST[class_room]',
 				start_date='$_REQUEST[dt]',
@@ -616,6 +619,7 @@ if($_REQUEST['action']=='quick_add_group'){
 }
 if($_REQUEST['action']=='update_group')
 {
+	
 	$end_date=$_REQUEST[gr_course_endt];
 	$students=$_REQUEST[student_id];
 	if(empty($students) || $students==NULL):
@@ -658,47 +662,56 @@ if($_REQUEST['action']=='update_group')
 	
 	$group_end_time = date('h:i A',strtotime("+$event_length minutes", $timestamp));
 	//echo $group_s_time."-".$group_end_time;
+	$frequency=count($_REQUEST['class_day']);
+	$class_day=implode(",",$_REQUEST['class_day']);
 	$start=date('Hi',strtotime($_REQUEST['tm']));
 	$end=date('Hi',strtotime("+$event_length minutes", $timestamp));
-	$num = $dbf->teacherSlotAvailable($teacher_id,$choosen_date,$end_date,$start,$end);
+	$num = $dbf->teacherSlotAvailable($teacher_id,$choosen_date,$end_date,$start,$end,$class_day);
 
 	//echo var_dump($num);	
 	$_SESSION["tm"] = $_REQUEST["tm"];
 	$_SESSION["end_tm"] = $group_end_time;
-	$current_group=$dbf->genericQuery("SELECT * FROM student_group WHERE id='$_REQUEST[group_id]' AND (start_date='$choosen_date' AND end_date='$end_date') AND (group_time='$start' AND group_time_end='$end') ");
-	#units='$compute_units',
-	#unit_per_day='$perday',
+	//$current_group=$dbf->genericQuery("SELECT * FROM student_group WHERE id='$_REQUEST[group_id]' AND (start_date='$choosen_date' AND end_date='$end_date') AND (group_time='$start' AND group_time_end='$end') ");
+	$current_group=$dbf->genericQuery("SELECT * FROM student_group WHERE id='$_REQUEST[group_id]' AND teacher_id='$_REQUEST[teacher]'");
 	$string="
 				group_name='$_POST[group]',
 				centre_id='$centre_id',
 				course_id='$course_id',
 				teacher_id='$_REQUEST[teacher]',
-				status='Not Started',
+				units='$compute_units',
+				unit_per_day='$perday',
 				room_id='$_REQUEST[class_room]',
 				start_date='$_REQUEST[dt]',
+				class_per_week='$frequency',
+				class_day='$class_day',
 				group_time='$start',
 				group_time_end='$end',
 				group_start_time='$group_s_time',
 				group_end_time='$group_end_time',
 				end_date='$end_date',
 				sa_id='$_SESSION[id]'";
-	if($current_group >0)
-	{
-		$my_group_id = $dbf->updateTable("student_group",$string,"id='$_REQUEST[group_id]'");	
-		header("Location:group_manage.php");exit;
-	}
-	else
-	{
+	if(empty($current_group))
+	{	//Change Teacher Update Ped Cards
 		if($num == true)
-		{
-			header("Location:group_quick.php?msg=o0k9b4");
+		{	
+			header("Location:group_manage_edit.php?id=$_REQUEST[group_id]&msg=o0k9b4");
 			exit;
 		}
 		else
-		{
-			$my_group_id = $dbf->updateTable("student_group",$string,"id='$_REQUEST[group_id]'");	
+		{	
+			$ped_string="teacher_id='$_REQUEST[teacher]'";
+			$my_group_id = $dbf->updateTable("student_group",$string,"id='$_REQUEST[group_id]'");
+			$dbf->updateTable("ped",$ped_string,"group_id='$_REQUEST[group_id]'");	
+			$dbf->updateTable("ped_units",$ped_string,"group_id='$_REQUEST[group_id]' AND dated='0000-00-00'");
+			$dbf->updateTable("ped_attendance",$ped_string,"group_id='$_REQUEST[group_id]' AND attend_date='0000-00-00'");
 			header("Location:group_manage.php");exit;
 		}
 	}
+	else
+	{	
+		$my_group_id = $dbf->updateTable("student_group",$string,"id='$_REQUEST[group_id]'");	
+		header("Location:group_manage.php");exit;
+	}
+	
 }
 ?>

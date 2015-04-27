@@ -280,139 +280,121 @@ $pro = $dbf->strRecordID("teacher_progress","*","group_id='$_REQUEST[group_id]'"
                 if($_REQUEST[group_id]!='')
 				{
 				?>
-                <table width="100%" border="1" cellspacing="0" cellpadding="0" style="border:solid 1px; border-collapse:collapse;">
-                  <tr>
-                    <td width="13%" height="100" align="center" bgcolor="#E8E8E8" class="nametext"><?php echo constant("TEACHER_REPORT_TEACHER_STDNM");?></td>
-                    <td width="10%" height="20" align="center" bgcolor="#E8E8E8" class="nametext"><?php echo constant("TEACHER_REPORT_TEACHER_STDNAT");?></td>
-                    <td width="6%" height="20" align="center" bgcolor="#E8E8E8" class="nametext"><?php echo constant("TEACHER_REPORT_TEACHER_STDIDNO");?></td>
-                    <td width="6%" height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_FLUENCY");?></td>
-                    <td width="8%" height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_PRONOUN");?></td>
-                    <td width="6%" height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_GRAMMER");?></td>
-                    <td width="8%" height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_VOCABU");?></td>
-                    <td width="8%" height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_LISTCOMPREH");?></td>
-                    <td width="8%" height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_TEXT");?></td>
-                    <td width="8%" height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_ATTEND");?></td>
-                    <td width="9%" height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_TXT8");?></td>
-                    <td width="10%" height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_TXT9");?></td>
-                  </tr>
-                  <?php
-                    $student_count = 1;
-					foreach($dbf->fetchOrder('student s,student_group g,student_group_dtls c',"g.id=c.parent_id And s.id=c.student_id And g.teacher_id='$teacher_id' And g.id='$_REQUEST[group_id]'","s.first_name","s.*,c.course_id") as $r) {
-					?>
-                  <?php
-                    $res_country = $dbf->strRecordID("countries","*","id='$r[country_id]'");	
+				 <table width="1100" border="1" cellspacing="0" cellpadding="0" style="border:solid 1px; border-collapse:collapse;">
+                      
+                      <tr>
+                        <td width="250" height="100" align="center" bgcolor="#E8E8E8" class="pedtext"><?php echo constant("TEACHER_REPORT_TEACHER_STDNM");?></td>
+                        <td height="20" align="center" bgcolor="#E8E8E8" class="pedtext"><?php echo constant("TEACHER_REPORT_TEACHER_STDNAT");?></td>
+                        <td height="20" align="center" bgcolor="#E8E8E8" class="pedtext"><?php echo constant("TEACHER_REPORT_TEACHER_STDIDNO");?></td>
+                        <td height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_PARTICI");?></td>
+                        <td height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_HW");?></td>
+                        <td height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_FLUENCY");?></td>
+                        <td height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_PRONOUN");?></td>
+                        <td height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_GRAMMER");?></td>
+                        <td height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_VOCABU");?></td>
+                        <td height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_LISTCOMPREH");?></td>
+                        <td height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_ATTEND");?></td>
+                        <td height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_TXT8");?></td>
+                        <td height="20" align="center" class="rotate_text"><?php echo constant("TEACHER_REPORT_TEACHER_TXT9");?></td>
+                      </tr>
+                      <?php
+					$student_count = 1;
 					
-					$course_mark = $dbf->strRecordID("teacher_progress_certificate","*","student_id='$r[id]' AND teacher_id='$teacher_id' AND group_id='$_REQUEST[group_id]'");
-									
+					foreach($dbf->fetchOrder('student s,student_group g,student_group_dtls c',"g.id=c.parent_id And s.id=c.student_id And g.teacher_id='$teacher_id' And g.id='$_REQUEST[group_id]'","s.first_name","s.*,c.course_id,g.units") as $r) {
 					?>
-                  <tr>
-                    <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext" style="max-width:150px;overflow:hidden;text-overflow:ellipsis;"><?php echo $dbf->printStudentName($r['id']);?></td>
-                    <td align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $res_country[value];?></td>
-                    <td align="center" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[student_id];?></td>
-                    <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $course_mark['fluency'];?></td>
-                    <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $course_mark['pronunciation'];?></td>
-                    <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $course_mark['grammer'];?></td>
-                    <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $course_mark['vocabulary'];?></td>
-                    <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $course_mark['listening'];?></td>
-                    <td align="center" valign="middle" bgcolor="#E8E8E8"><?php echo $course_mark['end_of_level'];?></td>
-                    <?php
-						$count_att_1 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$r[id]' AND group_id='$_REQUEST[group_id]' AND teacher_id='$teacher_id' AND course_id='$r[course_id]' AND shift1='X'");
-						$shift1 = $count_att_1["COUNT(id)"];
-						
-						$count_att_2 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$r[id]' AND group_id='$_REQUEST[group_id]' AND teacher_id='$teacher_id' AND course_id='$r[course_id]' AND shift2='X'");
-						$shift2 = $count_att_2["COUNT(id)"];
-						
-						$count_att_3 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$r[id]' AND group_id='$_REQUEST[group_id]' AND teacher_id='$teacher_id' AND course_id='$r[course_id]' AND shift3='X'");
-						$shift3 = $count_att_3["COUNT(id)"];
-						
-						//count attendance E
-						$count_att_E1 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$r[id]' AND group_id='$_REQUEST[group_id]' AND teacher_id='$teacher_id' AND course_id='$r[course_id]' AND shift1='E'");
-						$shift1E = $count_att_E1["COUNT(id)"];
-						
-						$count_att_E2 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$r[id]' AND group_id='$_REQUEST[group_id]' AND teacher_id='$teacher_id' AND course_id='$r[course_id]' AND shift2='E'");
-						$shift2E = $count_att_E2["COUNT(id)"];
-						
-						$count_att_E3 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$r[id]' AND group_id='$_REQUEST[group_id]' AND teacher_id='$teacher_id' AND course_id='$r[course_id]' AND shift3='E'");
-						$shift3E = $count_att_E3["COUNT(id)"];
-						//count attendance B
-						$count_att_B1 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$r[id]' AND group_id='$_REQUEST[group_id]' AND teacher_id='$teacher_id' AND course_id='$r[course_id]' AND shift1='B'");
-						$shift1B = $count_att_B1["COUNT(id)"];
-						
-						$count_att_B2 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$r[id]' AND group_id='$_REQUEST[group_id]' AND teacher_id='$teacher_id' AND course_id='$r[course_id]' AND shift2='B'");
-						$shift2B = $count_att_B2["COUNT(id)"];
-						
-						$count_att_B3 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$r[id]' AND group_id='$_REQUEST[group_id]' AND teacher_id='$teacher_id' AND course_id='$r[course_id]' AND shift3='B'");
-						$shift3B = $count_att_B3["COUNT(id)"];
-						//count attendance S
-						$count_att_S1 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$r[id]' AND group_id='$_REQUEST[group_id]' AND teacher_id='$teacher_id' AND course_id='$r[course_id]' AND shift1='S'");
-						$shift1S = $count_att_S1["COUNT(id)"];
-						
-						$count_att_S2 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$r[id]' AND group_id='$_REQUEST[group_id]' AND teacher_id='$teacher_id' AND course_id='$r[course_id]' AND shift2='S'");
-						$shift2S = $count_att_S2["COUNT(id)"];
-						
-						$count_att_S3 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$r[id]' AND group_id='$_REQUEST[group_id]' AND teacher_id='$teacher_id' AND course_id='$r[course_id]' AND shift3='S'");
-						$shift3S = $count_att_S3["COUNT(id)"];
-						//count attendance V
-						$count_att_V1 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$r[id]' AND group_id='$_REQUEST[group_id]' AND teacher_id='$teacher_id' AND course_id='$r[course_id]' AND shift1='V'");
-						$shift1V = $count_att_V1["COUNT(id)"];
-						
-						$count_att_V2 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$r[id]' AND group_id='$_REQUEST[group_id]' AND teacher_id='$teacher_id' AND course_id='$r[course_id]' AND shift2='V'");
-						$shift2V = $count_att_V2["COUNT(id)"];
-						
-						$count_att_V3 = $dbf->strRecordID("ped_attendance","COUNT(id)","student_id='$r[id]' AND group_id='$_REQUEST[group_id]' AND teacher_id='$teacher_id' AND course_id='$r[course_id]' AND shift3='V'");
-						$shift3V = $count_att_V3["COUNT(id)"];
-						
-						//Sum of E,B,S,V 
-						$count_all = $shift1E+$shift2E+$shift3E+$shift1B+$shift2B+$shift3B+$shift1S+$shift2S+$shift3S+$shift1V+$shift2V+$shift3V;
-						
-						//Sum of shift 1 and shift 2
-						#$count_shift = ($shift1+$shift2+$shift3+$count_all) / 4;
-						#$count_shift = $dbf->No_Of_Attendance($r["id"], $_REQUEST["group_id"])/4;
+                      <?php
+                    $res_country = $dbf->strRecordID("countries","*","id='$r[country_id]'");					
+					$course_mark = $dbf->strRecordID("teacher_progress_course","*","student_id='$r[id]' AND teacher_id='$teacher_id' AND group_id='$_REQUEST[group_id]'");					
+					?>
+                      <tr>                  
+                        <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext" style="max-width:150px;overflow:hidden;text-overflow:ellipsis;"><?php echo $dbf->printStudentName($r[id]);?></td>
+                        <td align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $res_country[value];?></td>
+                        <td align="center" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[student_id];?>
+                        <input type="hidden" name="student_id<?php echo "_".$student_count;?>" id="student_id<?php echo "_".$student_count;?>" value="<?php echo $r[id];?>"></td>
+                        <td align="center" valign="middle" bgcolor="#FFFFFF">
+							<?=$course_mark['course_partication']?>
+                        </td>
+                        <td align="center" valign="middle" bgcolor="#FFFFFF">
+							<?=$course_mark['course_homework']?>
+                        </td>
+                        <td align="center" valign="middle" bgcolor="#FFFFFF">
+							<?=$course_mark['course_fluency']?>
+                        </td>
+                        <td align="center" valign="middle" bgcolor="#FFFFFF">
+							<?=$course_mark['course_pro']?>
+                        </td>
+                        <td align="center" valign="middle" bgcolor="#FFFFFF">
+							<?=$course_mark['course_grammer']?>
+                        </td>
+                        <td align="center" valign="middle" bgcolor="#FFFFFF">
+							<?=$course_mark['course_voca']?>
+                        </td>
+                        <td align="center" valign="middle" bgcolor="#FFFFFF">
+							<?=$course_mark['course_listen']?>
+                        </td>
+                        <?php
 						$group_id=$_REQUEST[group_id];
-						$ped_units=$dbf->getDataFromTable("ped_units","MAX(units)","group_id='$group_id'");
+						$ped_units=$dbf->getDataFromTable("ped_units","MAX(units)","group_id='$group_id' AND dated != '0000-00-00'");
+						$progress_units=($res_g[units]/2)/$res_g[unit_per_day];
 						$group_percentage=round($ped_units/$res_g[units]*100);
 						if($group_percentage<61)
-						{$count_shift = $dbf->No_Of_Attendance($r["id"], $group_id);}
+						{
+							$count_shift =  $dbf->printProgressAttendance($r["id"],$group_id,$progress_units);//$dbf->No_Of_Attendance($r["id"], $group_id);
+							$attendance_count_shift=$count_shift;
+						}
 						else if($group_percentage >= 61 && $group_percentage <= 84)
-						{$count_shift = $dbf->No_Of_Attendance($r["id"], $group_id);}
-						else if($group_percentage >= 85)
-						{$count_shift = $dbf->No_Of_Attendance($r["id"], $group_id);}	
-						?>
-                    <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $count_shift;?></td>
-                    <?php
-					//$group_unit = $res_size[effect_units];
+						{
+							$count_shift =  $dbf->printProgressAttendance($r["id"],$group_id,$progress_units);//$dbf->No_Of_Attendance($r["id"], $group_id);
+							$attendance_count_shift=$count_shift;//$count_shift/2;
+						}
+						else
+						{
+							$count_shift =  $dbf->printProgressAttendance($r["id"],$group_id,$progress_units);//$dbf->No_Of_Attendance($r["id"], $group_id);
+							$attendance_count_shift=$count_shift;//$count_shift/4;
+						}	
+					?>
+                        <td align="center" valign="middle" bgcolor="#FFFFFF">
+                          <?=$count_shift?>
+						 
+                        </td>
+                        <?php					
+					#$group_unit = $res_g[units];#$res_size[effect_units];
+					
+					$uu = $dbf->strRecordID("common","*","id='$r[units]'");
+					//get unit from common table					
+					                    
+					//$group_unit = $group_unit / $uu[name];
+					//$group_unit = $group_unit / $uu[name];
 					$group_unit = $res_g[units]/2;#$res_size[units];
+					
 					$attend_perc=0;
-					if($count_shift!='0')
-					{
-						$attend_perc=round(($count_shift/$group_unit)*100);
+					if($count_shift!='0'){
+						$attend_perc=round(($attendance_count_shift/$group_unit)*100);
 					}
-					if($attend_perc<61)
-					{
+					
+					if($attend_perc<61){
 						$rfiles = "round-red.png";
-					}
-					else if($attend_perc >= 61 && $attend_perc <= 84)
-					{
+					}else if($attend_perc >= 61 && $attend_perc <= 84){
 						$rfiles = "round-yellow.png";
-					}
-					else if($attend_perc >= 85)
-					{
+					}else if($attend_perc >= 85){
 						$rfiles = "round-green.png";
-					}
+					}										
 					?>
-                    <td align="center" valign="middle"><?php echo $group_unit;#$res_size[units];?></td>
-                    <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                      <tr>
-                        <td width="47%" align="right" valign="middle"><img src="../images/<?php echo $rfiles;?>"/></td>
-                        <td width="53%" align="center" valign="middle"><?php echo $attend_perc;?>%</td>
+                        <td align="center" valign="middle" bgcolor="#FFFFFF" class="mycon"><?php echo $group_unit;#$count_shift;?></td>
+                        <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td width="47%" align="right" valign="middle"><img src="../images/<?php echo $rfiles;?>"  /></td>
+                            <td width="53%" align="center" valign="middle" class="mycon"><?=($attend_perc>100)?100:$attend_perc?>%</td>
+							<input type="hidden" name="course_attendance<?php echo "_".$student_count;?>" id="course_attendance<?php echo "_".$student_count;?>" style="border:none; width:50px; text-align:center; font-weight:bold;" maxlength="3" onKeyPress="return isNumberKey(event);" value="<?php echo $attend_perc; ?>" readonly="">
+                            </tr>
+                        </table></td>
                       </tr>
-                    </table></td>
-                  </tr>
-                  <?php
-					$student_count++;				
-                    }
-					?>
-                </table>
+                      <?php
+                  $student_count++;
+				  }
+				  ?>
+                    </table>
+				
                 <?php
 				}
 				else

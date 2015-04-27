@@ -164,7 +164,7 @@ text-transform:uppercase;
 			  }
 			  $year_now=date('Y');
 			  $query=$dbf->genericQuery(
-												"SELECT sg.group_name,c.name,sg.id
+												"SELECT DISTINCT sg.group_name,c.name,sg.id
 													FROM student_group  sg
 													INNER JOIN student_course sc ON sg.course_id=sc.course_id
 													INNER JOIN course c ON c.id=sc.course_id

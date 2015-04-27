@@ -1773,6 +1773,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <option value=""><?php echo $select_first_value;?></option>
 
                                 <?php
+								
 								$group_query=$dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And status<>'Completed' And course_id in (".$interest_course.")","");
 							foreach($group_query as $res_g) {
 

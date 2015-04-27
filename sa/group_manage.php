@@ -376,7 +376,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$course_fees = $dbf->getDataFromTable("course_fee", "fees", "id='$res_enroll[fee_id]'");
 						
 						//Total Course Fee (Course fee - Discount + Other Amt) 
-						$camt = $course_fees - $res_enroll["discount"]+$res_enroll["other_amt"];
+						$discount_student_fee=$dbf->getDataFromTable('student_fees',"discount","course_id='$valinv[course_id]' And student_id='$valinv[student_id]'");
+						$discount_student_payment=(empty($res_enroll["discount"])?$discount_student_fee:$res_enroll["discount"]);
+						$camt = $course_fees - $discount_student_payment+$res_enroll["other_amt"];
 						
 						//Get Total Payment from structure
 						$fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$valinv[course_id]' And student_id='$valinv[student_id]' AND status='1'");

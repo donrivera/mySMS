@@ -73,7 +73,7 @@ if($_REQUEST['action']=='insert')
 			$attend = $attendance;
 			$totalunits = $res_size[units];
 			
-			if($totalunits!=0){$attend_calc=round((($attend/$totalunits)*100)/10);}
+			if($totalunits!=0){$attend_calc=ceil((($attend/$totalunits)*100)/10);}
 			
 			if($end_of_level > 0)
 			{
@@ -221,7 +221,7 @@ if($_REQUEST['action']=='insert')
 			
 			$course_attendance = "course_attendance"."_".$j;
 			$course_attendance_count =$dbf->No_Of_Attendance($student_id, $_POST['group_id']);#$_REQUEST[$course_attendance]/$res_group['unit_per_day'];
-			$course_attendance_perc=$_REQUEST[$course_attendance]; #get_percent($course_attendance,$total_units,10);
+			$course_attendance_perc=($_REQUEST[$course_attendance]>100)?100:$_REQUEST[$course_attendance]; #get_percent($course_attendance,$total_units,10);
 			
 			//Check duplicate
 			$num=$dbf->countRows('teacher_progress_course',"teacher_id='$uid' AND group_id='$_POST[group_id]' AND course_id='$res_group[course_id]' AND student_id='$student_id'");
@@ -248,7 +248,7 @@ if($_REQUEST['action']=='insert')
 		header("Location:report_teacher_progress.php?msg=added&group_id=$_POST[group_id]");
 	}	
 	else
-	{#echo "2";
+	{
 		
 		//Query string
  		$string="report_print='$_POST[report_print]',report_print_by='$_POST[report_print_by]',certificate_print='$_POST[certificate_print]',certificate_print_by='$_POST[certificate_print_by]', progress_report_date='$_POST[progress_report_date]', certificate='$_POST[certificate]',grade_submit='$_POST[grade_submit]',narration='$narration'";
@@ -288,20 +288,20 @@ if($_REQUEST['action']=='insert')
 			$listening = $_REQUEST[$listening];
 			
 			$end_of_level = "end_of_level"."_".$m;
-			$end_of_level = $_REQUEST[$end_of_level];
+			$end_of_level = (empty($_REQUEST[$end_of_level])?0:$_REQUEST[$end_of_level]);
 			
 			$attendance = "attendance"."_".$m;
 			$attendance = $_REQUEST[$attendance];
 			
-			$attend = $attendance;
-			$totalunits = $res_size[units];
+			$attend = $dbf->No_Of_Attendance($student_id, $_POST['group_id']);//$attendance;
+			$totalunits = $res_group[units];
 				
 			if($totalunits!=0)
 			{
-				$attend_calc=round((($attend/$totalunits)*100)/10);
+				$attend_calc=ceil((($attend/$totalunits)*100)/10);
 			}
 			
-			if($end_of_level > 0)
+			if($end_of_level >=0)
 			{
 				$grade_sheet = $dbf->strRecordID("grade_sheet","*","'$end_of_level' BETWEEN frm and tto");					
 				$nos = $grade_sheet[nos];
@@ -333,47 +333,47 @@ if($_REQUEST['action']=='insert')
 							course_id='$res_group[course_id]',
 							student_id='$student_id',
 							fluency='$fluency',
-							fluency_perc='$fluency_perc', 
+							fluency_perc='".get_percent($fluency)."', 
 							pronunciation='$pronunciation',
-							pronunciation_perc='$pronunciation_perc',
+							pronunciation_perc='".get_percent($pronunciation)."',
 							grammer='$grammer',
-							grammer_perc='$grammer_perc',
+							grammer_perc='".get_percent($grammer)."',
 							vocabulary='$vocabulary',
-							vocabulary_perc='$vocabulary_perc', 
+							vocabulary_perc='".get_percent($vocabulary)."', 
 							listening='$listening', 
-							listening_perc='$listening_perc',
+							listening_perc='".get_percent($listening)."',
 							end_of_level='$end_of_level', 
-							end_of_level_perc='$end_of_level_perc', 
+							end_of_level_perc='$benifit', 
 							attendance='$attendance', 
 							attendance_perc='$attend_calc',
 							parent_id='$ids',
 							final_percent='$final_grade',
 							grade_id='$grade_id'";
 				
-				$dbf->insertSet("teacher_progress_certificate",$string);
+				#$dbf->insertSet("teacher_progress_certificate",$string);
 			}
 			else
 			{
 				//update progress certificate table
 				$string="	fluency='$fluency',
-							fluency_perc='$fluency_perc', 
+							fluency_perc='".get_percent($fluency)."', 
 							pronunciation='$pronunciation', 
-							pronunciation_perc='$pronunciation_perc', 
+							pronunciation_perc='".get_percent($pronunciation)."', 
 							grammer='$grammer',
-							grammer_perc='$grammer_perc',
+							grammer_perc='".get_percent($grammer)."',
 							vocabulary='$vocabulary',
-							vocabulary_perc='$vocabulary_perc', 
+							vocabulary_perc='".get_percent($vocabulary)."', 
 							listening='$listening', 
-							listening_perc='$listening_perc', 
+							listening_perc='".get_percent($listening)."', 
 							end_of_level='$end_of_level',
-							end_of_level_perc='$end_of_level_perc', 
+							end_of_level_perc='$benifit', 
 							attendance='$attendance', 
 							attendance_perc='$attend_calc', 
 							parent_id='$ids',
 							final_percent='$final_grade',
 							grade_id='$grade_id'";
 				
-				$dbf->updateTable("teacher_progress_certificate",$string,"teacher_id='$uid' AND group_id='$_POST[group_id]' AND course_id='$res_group[course_id]' AND student_id='$student_id'");
+				$dbf->updateTable("teacher_progress_certificate",$string,"teacher_id='$uid' AND group_id='$_POST[group_id]' AND  student_id='$student_id'");
 			
 			}
 			#echo "<BR/>".$student_id."-".$res_group['course_id']."-".$_POST[group_id];
@@ -423,7 +423,7 @@ if($_REQUEST['action']=='insert')
 			#$course_attendance_perc= get_percent($course_attendance,$total_units,10);
 			
 			$course_attendance_count=$dbf->No_Of_Attendance($student_id,$_POST['group_id']);
-			$course_attendance_perc=$_REQUEST[$course_attendance];
+			$course_attendance_perc=($_REQUEST[$course_attendance]>100)?100:$_REQUEST[$course_attendance];
 			
 			//Check duplicate
 			$num=$dbf->countRows('teacher_progress_course',"teacher_id='$uid' AND group_id='$_POST[group_id]' AND course_id='$res_group[course_id]' AND student_id='$student_id'");
@@ -437,7 +437,7 @@ if($_REQUEST['action']=='insert')
 			{
 				$string="course_partication='$course_partication',course_partication_perc='$course_partication_perc',course_homework='$course_homework', course_homework_perc='$course_homework_perc', course_fluency='$course_fluency', course_fluency_perc='$course_fluency_perc', course_pro='$course_pro', course_pro_perc='$course_pro_perc',course_grammer='$course_grammer', course_grammer_perc='$course_grammer_perc', course_voca='$course_voca', course_voca_perc='$course_voca_perc', course_listen='$course_listen',course_listen_perc='$course_listen_perc',course_attendance='$course_attendance_count',course_attendance_perc='$course_attendance_perc',parent_id='$ids'";
 				
-			$dbf->updateTable("teacher_progress_course",$string,"teacher_id='$uid' AND group_id='$_POST[group_id]' AND course_id='$res_group[course_id]' AND student_id='$student_id'");
+			$dbf->updateTable("teacher_progress_course",$string,"teacher_id='$uid' AND group_id='$_POST[group_id]' AND student_id='$student_id'");
 			
 			}
 			
@@ -445,7 +445,9 @@ if($_REQUEST['action']=='insert')
 		}
 		//End 1st
 		//Header location
-		header("Location:report_teacher_progress.php?msg=added&group_id=$_POST[group_id]");
+		header("Location:report_teacher_progress.php?group_id=$_POST[group_id]&mystatus=$_POST[mystatus]");
+		
 	}
 }
+
 ?>

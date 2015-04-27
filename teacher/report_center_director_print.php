@@ -51,6 +51,7 @@ else
  padding-left:10px;
  }
 </style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
@@ -91,7 +92,7 @@ else
               $res_course = $dbf->strRecordID("course","*","id='$res_g[course_id]'");
               ?>
               <td width="72%" align="left" valign="middle" bgcolor="#FFCB7D" class="leftmenu">
-                <?php echo $res_g["group_name"]; ?> <?php echo $res_g["group_time"];?>-<?php echo $dbf->GetGroupTime($res_g["id"]);?>
+                <?php echo $res_g["group_name"]; ?> <?php //echo $res_g["group_time"];?><?php //echo $dbf->GetGroupTime($res_g["id"]);?>
               </td>
             </tr>
            
@@ -375,7 +376,7 @@ else
                                                     
             if($totalunits!=0)
             {
-                $attend_calc=round((($attend/$totalunits)*100)/10);
+                $attend_calc=ceil((($attend/$totalunits)*100)/10);
             }
             
             if($course_mark[end_of_level] > 0)
@@ -401,7 +402,7 @@ else
             
         ?>
         <tr>
-          <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[first_name];?></td>
+          <td height="25" align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext" style="max-width:150px;overflow:hidden;text-overflow:ellipsis;"><?php echo $dbf->printStudentName($r['id']);?></td>
           <td align="left" valign="middle" bgcolor="#E8E8E8" class="mycon"><?php echo $res_country[value];?></td>
           <td align="left" valign="middle" bgcolor="#E8E8E8" class="smalltext"><?php echo $r[student_id];?></td>
           <td align="center" valign="middle" bgcolor="#FFFFFF" class="mycon"><?php if($course_mark[fluency]>0) { echo get_percent($course_mark[fluency]); }?></td>

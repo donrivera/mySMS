@@ -202,7 +202,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <table width="95%" border="1" cellspacing="0" cellpadding="0" bordercolor="#999" style="border-collapse:collapse;">
                     <tr>
                       <td width="77%" height="22" align="right" valign="middle" class="pedtext">Adding for Another Group : &nbsp;</td>
-                      <td width="23%" align="center" valign="middle" class="mytext"><a href="search_adding_group.php?student_id=<?php echo $student[id];?>&page=search_adding_group.php&amp;TB_iframe=true&amp;height=250&amp;width=465&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox">
+                      <td width="23%" align="center" valign="middle" class="mytext"><a href="search_adding_group.php?student_id=<?php echo $student[id];?>&page=search_adding_group.php&amp;TB_iframe=true&amp;height=350&amp;width=465&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox">
                   <?php //if($numg > 0 || $is_hold > 0) {?>
                   <img src="../images/group.png" width="16" height="16" border="0" title="Adding to Group">
                   <?php //} ?>

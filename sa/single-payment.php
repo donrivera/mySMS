@@ -93,22 +93,28 @@ if($_REQUEST['action']=='search'){
 		//----------------------------------------------------
 		//Insert in student course_fees table
 		$tot = $_REQUEST['count'];
+		echo var_dump($_REQUEST);
 		for($k=1; $k<=$tot;$k++)
 		{
 			$name = "pdate".$k;
 			$name = $_REQUEST[$name];
 			$amt = "amt".$k;
 			$amt = $_REQUEST[$amt];
+			$inv_no = $dbf->GenerateInvoiceNo($centre_id);
+			$inv_sl = $dbf->GetBillNo($student_id, $course_id);
 			if($name != "" && $amt != "")
 			{
-			$string="student_id='$student_id',course_id='$course_id',fee_date='$name',fee_amt='$amt',created_date='$dt',created_by='$_SESSION[id]',centre_id='$_SESSION[centre_id]'";
+			$string="student_id='$student_id',course_id='$course_id',fee_date='$name',paid_date='$name',payment_type='$_REQUEST[ptype]',fee_amt='$amt',paid_amt='$amt',created_date='$dt',created_by='$_SESSION[id]',centre_id='$_SESSION[centre_id]',invoice_sl='$inv_sl',invoice_no='$inv_no',type='direct',status='1',comments='$_REQUEST[textarea]'";
 			$dbf->insertSet("student_fees",$string);
 			}
 		}
 		//----------------------------------------------------
 		header("Location:single-payment.php?student_id=$student_id&course_id=$course_id");
 		exit;
-	}else{header("Location:single-payment.php?student_id=$student_id&course_id=$course_id&msg=duplicate");exit;}
+	}else
+	{
+		header("Location:single-payment.php?student_id=$student_id&course_id=$course_id&msg=duplicate");exit;
+	}
 }
 
 ?>
@@ -139,6 +145,7 @@ if($_SESSION[font]=='big'){
 <script src="datepicker/jquery.ui.widget.js"></script>
 <script src="datepicker/jquery.ui.datepicker.js"></script>
 <link rel="stylesheet" href="datepicker/demos.css">
+
 <script>	
 $(document).ready(function() 
 {	
@@ -155,10 +162,15 @@ $(document).ready(function()
 			alert("Please Enroll Student!");
 			return false;
 		}
-		if(amt_total>balance)
+		var pay_type=$("#ptype").val();
+		if(pay_type=="")
+		{
+			alert("Please Select Payment Type");
+			return false;
+		}
+		if(Number(amt_total)>Number(balance))
 		{
 			alert("Payment Exceeds Balance!");
-			//document.getElementById('othertext').focus();
 			return false;
 		}
 	});
@@ -267,6 +279,8 @@ function countdown_trigger(){
 	}
 }
 </script>
+
+
 <?php
 //Get from the table
 $res_logout = $dbf->strRecordID("conditions","*","type='Logout Time'");
@@ -541,7 +555,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             </tr>
                           <tr>
                             <td height="28" align="left" valign="middle" class="mytext"><select name="ptype" id="ptype" class="validate[required]" style="width:103px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;">
-                              <option>---Select---</option>
+                              <option value="">---Select---</option>
                                 <?php
 									foreach($dbf->fetchOrder('common',"type='payment type'","") as $resp) {
 								  ?>
@@ -650,7 +664,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 									  //if course not completed
 								  	if($num_complete == 0) {
 								  ?>
-                                    <a href="single-payment-edit.php?student_id=<?php echo $student_id;?>&amp;schid=<?php echo $vali["id"];?>&amp;course_id=<?php echo $course_id;?>"> <img src="../images/edit.gif" width="16" height="16" border="0" title="Edit" /></a>
+                                    <!--<a href="single-payment-edit.php?student_id=<?php echo $student_id;?>&amp;schid=<?php echo $vali["id"];?>&amp;course_id=<?php echo $course_id;?>"> <img src="../images/edit.gif" width="16" height="16" border="0" title="Edit" /></a>-->
                                     <?php }} ?></td>
                                     
                                     

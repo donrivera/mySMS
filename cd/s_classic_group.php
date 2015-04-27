@@ -17,7 +17,7 @@ if($_SESSION['lang']=='EN'){?>
 <select name="group" class="combo" id="group" style="width:370px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onBlur="checkTab('group');">
     <option value=""><?php echo $select_first_value;?></option>
     <?php
-    foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And status<>'Completed' And course_id in (".$interest_course.")","") as $res_g) {
+    foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And status<>'Completed' And course_id in (".$interest_course.") And YEAR(end_date)='".date('Y')."' ORDER BY id DESC","") as $res_g) {
     ?>
     <option value="<?php echo $res_g['id']?>"><?php echo $res_g['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_g['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_g['end_date'])) ?>,  <?php echo $dbf->printClassTimeFormat($res_g["group_start_time"],$res_g["group_end_time"]);?></option>
     </option>

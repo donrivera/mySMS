@@ -170,8 +170,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
                   <?php } ?>
                 </table></td>
-                <td align="left" valign="top"><?php
-				echo $strXML1="<chart palette='4' decimals='0' bgColor='99CC99,FFFFFF' bgAlpha='40,100' bgRatio='0,100' bgAngle='300' >";
+                <td align="center" valign="top"><?php
+				echo $strXML1="<chart palette='4' decimals='0' thousandSeparator=',' formatNumberScale='2' bgColor='99CC99,FFFFFF' bgAlpha='10,100' bgRatio='0,100' bgAngle='50' >";
 				
 				
 				foreach($dbf->fetchOrder('centre',"","") as $val_cen) {
@@ -196,7 +196,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				}
 				
 				$strXML1.="</chart>";
-				echo renderChartHTML("../FusionCharts/Charts/Pie3D.swf", "", $strXML1, "myNext", 325, 205);
+				echo renderChartHTML("../FusionCharts/Charts/Pie3D.swf", "", $strXML1, "myNext", 370,200);
 				?></td>
                 <td>&nbsp;</td>
                 <td align="center" valign="top"><table width="99%" border="1" cellspacing="0" bordercolor="#999999" cellpadding="0" style="border-collapse:collapse;" >

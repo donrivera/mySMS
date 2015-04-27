@@ -510,7 +510,7 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
                             <td width="66" align="center" valign="middle" bgcolor="#CCCCCC" class="leftmenu"><?php echo constant("ADMIN_REPORT_GROUP_TO_FINISH_ENDDT");?></td>
                           </tr>
                           <?php
-						  foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And (start_date<='$dt' And end_date>='$dt')","start_date DESC LIMIT 0,10") as $val_d)
+						  foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And (start_date<='$dt' And end_date>='$dt')","start_date DESC LIMIT 0,15") as $val_d)
 							{
 							
 								//Get the Course Name
@@ -520,7 +520,7 @@ $_SESSION['ALERT_DISPLAY'] = 'TRUE';
 								$val_teacher = $dbf->strRecordID("teacher","*","id='$val_d[teacher_id]'");
 								?>
                           <tr>
-                            <td align="center" valign="middle" class="mycon"><?php echo $val_d[group_name];?>/<?php echo $val_course[name];?></td>
+                            <td align="center" valign="middle" class="mycon"><?php echo $val_d[group_name];?><!--/--><?php //echo $val_course[name];?></td>
                             <td align="left" valign="middle" class="mycon"><?php echo $val_teacher[name];?></td>
                             <td align="center" valign="middle" class="mycon"><?php echo $val_d[group_start_time];?></td>
                             <td align="center" valign="middle" class="mycon"><?php echo $val_d[start_date];?></td>

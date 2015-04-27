@@ -70,7 +70,7 @@ if($_REQUEST['action']=='update'){
 		if($num_student == 0){
 			
 			//Get all students from transfer dtls for transert one group to another
-			foreach($dbf->fetchOrder('transfer_centre_to_centre_dtls',"parent_id='$tran_id'") as $transfer){
+			foreach($dbf->fetchOrder('transfer_centre_to_centre',"id='$tran_id'") as $transfer){
 				
 				$transfermain = $dbf->strRecordID("transfer_centre_to_centre","*","parent_id='$transfer[parent_id]'");
 				
@@ -81,7 +81,7 @@ if($_REQUEST['action']=='update'){
 				$dbf->insertSet("student_group_dtls",$str_d);
 				
 				//Update in student Table
-				$string="centre_id='$centre_id'";
+				$string="centre_id='$transfer[centre_to]'";
 				$dbf->updateTable("student",$string,"id='$id1'");
 								
 				//Update in ENROLLED Table
@@ -335,7 +335,7 @@ if($_REQUEST['action']=='update'){
 			}else{
 				
 				//Get all students from transfer dtls for transert one group to another
-				foreach($dbf->fetchOrder('transfer_centre_to_centre_dtls',"parent_id='$tran_id'") as $transfer){
+				foreach($dbf->fetchOrder('transfer_centre_to_centre',"id='$tran_id'") as $transfer){
 				
 					$id3 = $transfer["student_id"];
 											
@@ -344,7 +344,7 @@ if($_REQUEST['action']=='update'){
 					$dbf->insertSet("student_group_dtls",$str_d);		
 					
 					//Update in student Table
-					$string="centre_id='$centre_id'";
+					$string="centre_id='$transfer[centre_to]'";
 					$dbf->updateTable("student",$string,"id='$id3'");
 										
 					//Update in ENROLLED Table

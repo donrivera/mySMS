@@ -26,8 +26,8 @@ $resc = $dbf->strRecordID("countries","*","id='$res[country_id]'");
 
 $course_name = $dbf->strRecordID("course","*","id='$_REQUEST[course_id]'");
 $exp_course_name=explode("-",$course_name[name]);
-$eng_course_name=$exp_course_name[0];
-$arb_course_name=$exp_course_name[1];
+$eng_course_name=filter_var($exp_course_name[0], FILTER_SANITIZE_NUMBER_INT);
+$arb_course_name=filter_var($exp_course_name[1], FILTER_SANITIZE_NUMBER_INT);
 $res_enroll = $dbf->strRecordID("student_enroll","*","student_id='$_REQUEST[student_id]' And course_id='$_REQUEST[course_id]'");
 $res_g = $dbf->strRecordID("student_group","*","id='$res_enroll[group_id]'");
 $res_size = $dbf->strRecordID("group_size","*","group_id='$res_g[group_id]'");
@@ -101,13 +101,19 @@ color:#000000;
 
 .cer_my_head{
 font-family:Arial, Helvetica, sans-serif;
-font-size:14px;
+font-size:16px;
 color:#000000;
 font-weight:normal;
 }
 .cer_my_head_bold{
 font-family:Arial, Helvetica, sans-serif;
-font-size:14px;
+font-size:16px;
+color:#000000;
+font-weight:bold;
+}
+.ar_cer_my_head_bold{
+font-family:Arial, Helvetica, sans-serif;
+font-size:17px;
 color:#000000;
 font-weight:bold;
 }
@@ -118,6 +124,7 @@ color:#000000;
 font-weight:bold;
 font-style:italic;
 }
+
 </style>
 
 <table width="1000" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -139,7 +146,7 @@ font-style:italic;
             <td class="test">&nbsp;</td>
             </tr>
           <tr>
-            <td height="40" align="center" valign="middle"><p align="center" dir="rtl" class="cer_my_head_bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;شهادة اجتياز دورة في اللغة الانجليزية</p></td>
+            <td height="40" align="middle" class="ar_cer_my_head_bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;شهادة اجتياز دورة في اللغة الانجليزية </td>
             </tr>
           <tr>
             <td align="center" valign="middle" class="cer_my_cer_head_bold">A CERTIFICATE OF ACHIEVEMENT IN THE ENGLISH LANGUAGE</td>
@@ -175,7 +182,7 @@ font-style:italic;
                     <th height="28" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">Level: <span class="cer_my_head_bold"><?php echo $eng_course_name;?></span> with a total number of <span class="cer_my_head_bold"><?php echo $hr;?></span> hours </span></th>
                   </tr>
                   <tr>
-                    <th height="28" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">From: </span><span class="cer_my_head_bold"><?php echo $res_g[start_date];?></span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="cer_my_head">to: </span><span class="cer_my_head_bold"><?php echo $res_g[end_date];?></span></th>
+                    <th height="28" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">From: </span><span class="cer_my_head_bold"><?php echo date("d-m-Y",strtotime($res_g["start_date"]));?></span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="cer_my_head">to: </span><span class="cer_my_head_bold"><?php echo date("d-m-Y",strtotime($res_g["end_date"]));?></span></th>
                   </tr>
                   <tr>
                     <th height="28" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">That correspond to the Hijra dates</span></th>
@@ -231,7 +238,8 @@ font-style:italic;
                     <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $arb_course_name;?>  , وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span></th>
                     </tr>
                   <tr>
-                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في الفترة من: <?php echo $dbf->enNo2ar($res_g[start_date],'-');?> إلى: <?php echo $dbf->enNo2ar($res_g[end_date],'-');?></span></th>
+					<?php $ar_start_date=date("d-m-Y",strtotime($res_g["start_date"]));$ar_end_date=date("d-m-Y",strtotime($res_g["end_date"]));?>
+                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في الفترة من: <?php echo $dbf->enNo2ar($ar_start_date,'-');?> إلى: <?php echo $dbf->enNo2ar($ar_end_date,'-');?></span></th>
                     </tr>
                   <!--
 				  <tr>
@@ -239,7 +247,7 @@ font-style:italic;
                     </tr>
 					-->
                   <tr>
-                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">الموافق من: <?php if($_REQUEST[student_id] !='' ) { ?> <?php if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($res_g[start_date],'-');}?> <?php } ?>إلى: <?php if($_REQUEST[student_id] !='' ) { ?><?php if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($res_g[start_date],'');}?><?php } ?></span>                    
+                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">الموافق من: <?php if($_REQUEST[student_id] !='' ) { ?> <?php if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($sdt,'-');}?> <?php } ?>إلى: <?php if($_REQUEST[student_id] !='' ) { ?><?php if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($edt,'-');}?><?php } ?></span>                    
                     </th>
                     </tr>
                   <tr>
@@ -257,8 +265,8 @@ font-style:italic;
       </tr>
       <tr>
         <td align="left" valign="top">
-			<!--
-			<table width="900" border="0" cellspacing="0" cellpadding="0" style="display:none;">
+			
+			<table width="900" border="0" cellspacing="0" cellpadding="0"><!--style="display:none;"-->
 			<tr>
 				<td width="349" align="center" valign="middle"><p dir="rtl"><span dir="rtl"> </span><strong><span dir="rtl"> </span>   تصادق إدارة التربية والتعليم  علي صحة ختم وتوقيع مدير المعهد</strong></p>
 				<p align="center" dir="rtl"><strong>مدير عام التربية والتعليم بمحافظة الإحساء</strong><br />
@@ -267,13 +275,13 @@ font-style:italic;
 				<td width="87" align="center" valign="middle"><p align="center" dir="rtl"><strong>ختم المعهد</strong><strong><span dir="ltr"> </span></strong><br />
 					<strong><span dir="ltr">Stamp</span></strong></p></td>
 				<td width="115">&nbsp;</td>
-				<td width="255" align="center" valign="middle"><p dir="rtl"><span dir="rtl"> </span><strong><span dir="rtl"> </span>            المدير  العام</strong><br />
+				<td width="255" align="center" valign="middle"><p dir="rtl"><span dir="rtl"> </span><strong><span dir="rtl"> </span>            المدير العام</strong><br />
 					<strong><span dir="ltr">Managing  Director&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></strong></p>
-					<strong><span dir="rtl">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;م /مشارى بن عبد اللطيف الحليبى</span></strong>
+					<strong><span dir="rtl">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;د / مشاري بن عبد اللطيف الحليبي</span></strong>
 				</td>
 			</tr>
 			</table>
-			-->
+			
 		</td>
       </tr>
       <tr>

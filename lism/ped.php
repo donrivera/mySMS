@@ -119,7 +119,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <?php //if($_REQUEST[cmbgroup]!='') { ?>
                 <table width="30%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
-                    <td width="36" align="center" valign="middle"><a href="ped_word.php?cmbgroup=<?php echo $_REQUEST[cmbgroup];?>"><img src="../images/word2007.png" width="20" height="20" border="0" title="Export to Word"></a></td>
+                    <!--<td width="36" align="center" valign="middle"><a href="ped_word.php?cmbgroup=<?php echo $_REQUEST[cmbgroup];?>"><img src="../images/word2007.png" width="20" height="20" border="0" title="Export to Word"></a></td>-->
                     <td width="36" align="center" valign="middle"><a href="ped_print.php?cmbgroup=<?php echo $_REQUEST[cmbgroup];?>" target="_blank"><!--&mystatus=<?php echo $_REQUEST['mystatus'];?>-->                  
                       <img src="../images/print.png" alt="" width="16" height="16" border="0" title="Print"></a></td>
 					<!--<td width="36" align="center" valign="middle"><a href="ped_pdf.php?cmbgroup=<?php echo $_REQUEST[cmbgroup];?>"><img src="../images/pdf.png" width="20" height="20" border="0" title="Export to Word"></a></td>-->
@@ -340,7 +340,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     </tr>
                   <tr>
                     <td height="25" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_NOFSTUDENT");?>  : <?php echo $no_student;?></td>
-                    <td align="left" valign="middle" class="pedtext"><strong><?php echo "Frequency: ".$res_group[unit_per_day]."&nbsp;x 5 days";/*constant("STUDENT_ADVISOR_PED_TXT");*/?></strong></td>
+                    <td align="left" valign="middle" class="pedtext"><strong><?php echo "Frequency: ".$res_group[unit_per_day]."&nbsp;x&nbsp;".(empty($res_group[class_per_week])?5:$res_group[class_per_week])."&nbsp;days";/*constant("STUDENT_ADVISOR_PED_TXT");*/?></strong></td>
                     </tr>
                   <tr>
                     <td height="25" align="left" valign="middle" class="pedtext"><strong><?php echo constant("STUDENT_ADVISOR_PED_SLSPERSON");?></strong> : <?php echo $sa_name;?></td>
@@ -895,11 +895,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         for($i = 1; $i<=$unit; $i++) { 
 						
 						//Get record from PED units
-						$res_unit = $dbf->strRecordID("ped_units","*","group_id='$_REQUEST[cmbgroup]' And teacher_id='$teacher_id' AND units='$i'");
+						$res_unit = $dbf->strRecordID("ped_units","*","group_id='$_REQUEST[cmbgroup]' AND units='$i'");
 						
 						//Get the Number of Present in a particular Units
 						#$present = $dbf->strRecordID("ped_attendance","COUNT(id)","unit='$res_unit[units]' And teacher_id='$teacher_id' And group_id='$_REQUEST[cmbgroup]' And (shift1='X' OR shift2='X' OR shift3='X' OR shift4='X' OR shift5='X' OR shift6='X' OR shift7='X' OR shift8='X' OR shift9='X')");
-						$present = $dbf->strRecordID("ped_attendance","COUNT(id) as total","attend_date='$res_unit[dated]' And teacher_id='$teacher_id' And group_id='$_REQUEST[cmbgroup]' And (shift1='X' OR shift2='X' OR shift3='X' OR shift4='X' OR shift5='X' OR shift6='X' OR shift7='X' OR shift8='X' OR shift9='X')");
+						$present = $dbf->strRecordID("ped_attendance","COUNT(id) as total","attend_date='$res_unit[dated]' And group_id='$_REQUEST[cmbgroup]' And (shift1='X' OR shift2='X' OR shift3='X' OR shift4='X' OR shift5='X' OR shift6='X' OR shift7='X' OR shift8='X' OR shift9='X')");
 						$res_teacher = $dbf->strRecordID("teacher","*","id='$teacher_id'");
 						?>
                           <tr>
@@ -907,7 +907,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td width="100" align="center" valign="middle" bgcolor="#F7F3F8" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;"><?php echo $res_unit["dated"];?></td>
                             <td width="31" align="center" valign="middle" bgcolor="#F7F3F8" class="pedtext_normal" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;"><?php echo $present["total"];?></td>
                             <td width="130" align="center" valign="middle" bgcolor="#F7F3F8" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px; ">
-							<?php echo $res_teacher[name];?></td>
+							<?php echo $dbf->getDataFromTable("teacher","name","id='$res_unit[teacher_id]'");?></td>
                             <td width="230" align="middle" valign="middle" bgcolor="#F7F3F8" style="border-right:solid 1px; border-color:#000000;border-bottom:solid 1px;">
                             <?php echo $res_unit["material_overed"];?></td>
                             <td  align="left" valign="middle" bgcolor="#F7F3F8" style="border-bottom:solid 1px; border-color:#000000;">&nbsp;
@@ -944,175 +944,227 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						//Get Group Name
 						foreach($dbf->fetchOrder('student_group',"id='$_REQUEST[cmbgroup]'","","") as $val_course)
 						{
-							$courseName=$dbf->getDataFromTable('course','name',"id='$val_course[course_id]'");
-							$labels=1;#$dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*");
+							 $courseName=$dbf->getDataFromTable('course','name',"id='$val_course[course_id]'");
+				$unit_per_day=$val_course['unit_per_day'];
+				$first_block=$val_course['units']/2/$unit_per_day;
+				$second_block=$first_block+$unit_per_day;
+				
+            ?>
+              <div style="width:100%;">
+                <div style="width:100%; overflow:scroll;overflow-y:hidden; margin-bottom:15px;" >
+                  <table width="100%" border="1" align="center" cellpadding="0" bordercolor="#000000" cellspacing="0" style="border-collapse:collapse;">
+                    <!-- Start Column Heading -->
+                    <tr>
+                      <td width="10%" align="left" bgcolor="#4D7373"><div class="logouttext" style="width:130px;"><strong><?php echo "Student Name";?></strong>
+                        
+                        </div></td>
+                      <?php
+						
+						$no_cols = $first_block;//$unit / $unit_per_day;
+						$num = cal_days_in_month(CAL_GREGORIAN, $month, $year); 
+						$j=1;
+						for($i=0;$i<$no_cols;$i++)
+						{
+							$dayNum = date('d/m', strtotime($hs_date));
+							$attend_unit_per_day=$j * $unit_per_day;
+							$attend_date=$dbf->getDataFromTable("ped_units","dated","group_id='$_REQUEST[cmbgroup]' AND units='$attend_unit_per_day'");
+							$attend_dt=($attend_date=='00-00' ? '' : $attend_date);
 						?>
-						<style>
-						#rowScroll { height: 205px; } /* Subtract the scrollbar height */
-						#contentScroll { height: 210px; width: 500px; }
-						#colScroll { width: 500px; } /* Subtract the scrollbar width */
-					</style>
-					<table  cellspacing="0" cellpadding="0" align="center" style="width:850px;margin-right:0px;float:right;" >
-						 <tr>
-							<td width="30%" height="6%" align="left" bgcolor="#4D7373">
-								<?php echo "Student Name";?>
-								<input type="hidden" name="course_id<?php echo $count_course;?>" id="course_id<?php echo $count_course;?>" value="<?php echo $val_course["course_id"];?>">
-							</td>
-							<td id="rowHeaders" width="70%">
-								<div id="colScroll" style="overflow-x:hidden;">
-									<table cellspacing="0" cellpadding="1" style="width: 600px;">
-										<tr>
-											<?php
-												$unit_per_day=$val_course['unit_per_day'];
-												$no_cols = $unit / $unit_per_day;
-												$num = cal_days_in_month(CAL_GREGORIAN, $month, $year); 
-												$j = 1;
-												$z = 1;
-												for($i=0;$i<$no_cols;$i++)
-												{
-													$dayNum = date('d/m', strtotime($hs_date));
-													//Get per unit date
-													//echo "unit='$j' And ped_id='$res_ped[id]'";
-													$attend_date=$dbf->strRecordID('ped_attendance','*',"unit='$j' And ped_id='$res_ped[id]'");
-													if($attend_date["attend_date"] == '0000-00-00'){ $attend_dt = '';}else{ $attend_dt = $attend_date["attend_date"]; }
-											?>
-											
-											<th align="center" bgcolor="#4D7373" colspan="3">
-												<strong><?php echo $j;?></strong>
-												<input type="text" readonly="" class="attendance_datepick" style="width:60px; height:12px; font-size:10px;" name="attend_date<?php echo $j;?>" id="attend_date<?php echo $j;?>"  value="<?php echo $attend_dt;?>">
-											</th>
-											<?php
-													$j++;							 
-													$z = $z + $perday;
-												}
-											?>
-										</tr>
-									</table>
-									
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td id="colHeaders">
-								<div id="rowScroll" style="overflow-y:hidden">
-									<table cellspacing="0" cellpadding="0" border="1">
-										<?php
-											$s_count = 1;
-											//Retrive all records the table
-											$student_name=$dbf->genericQuery("SELECT student_id as id FROM student_group_dtls WHERE parent_id='$_REQUEST[cmbgroup]'");
-											#foreach($dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*") as $r) 
-											foreach($student_name as $r)
-											{
-										?>
-										<tr>
-											<td height="47" bgcolor="#E9EFEF" class="pedtext" style="max-width:300px;">
-												<?php echo $dbf->printStudentName($r["id"]);?>
-												<input type="hidden" name="student_id<?php echo $s_count."_".$count_course;?>" id="student_id<?php echo $s_count."_".$count_course;?>" value="<?php echo $r["id"];?>">
-											</td>
-										</tr>
-										<?php
-											$s_count++;
-											}
-										?>
-									</table>
-								</div>
-							</td>
-							<td id="content">
-								 <div id="contentScroll" style="overflow:auto">
-									
-									<table cellspacing="0" cellpadding="0" style="width: 600px;" border="1">
-										<?php
-											$s_count = 1;
-											//Retrive all records the table
-											#foreach($dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*") as $r) 
-											foreach($student_name as $r)
-											{
-										?>
-										<tr>
-										<?php
-												$no_cols = $unit / $unit_per_day;
-												$num = cal_days_in_month(CAL_GREGORIAN, $month, $year); 
-												$j=1;
-												$st = 1;
-												$shift_count = 1;
-												//$no_shift = $val_course[units];
-												//echo var_dump($val_course);
-												//Get the number of shift in a Days
-												$no_shift =$val_course[unit_per_day]; //$dbf->getDataFromTable("common","name","id='$val_course[units]'");
-												for($i=0;$i<$no_cols;$i++)
-												{
-										?>
-										
-										<td align="center" bgcolor="#E9EFEF" style="border:0;padding:1px;">&nbsp;</td>
-										<td bgcolor="#E9EFEF"  height="33" align="center">
-										<?php
-													$status_shift1 = $dbf->getDataFromTable("ped_attendance","shift1","ped_id='$res_ped[id]' AND teacher_id='$teacher_id' AND student_id='$r[id]' AND unit='$shift_count'");
-													$status_shift2 = $dbf->getDataFromTable("ped_attendance","shift2","ped_id='$res_ped[id]' AND teacher_id='$teacher_id' AND student_id='$r[id]' AND unit='$shift_count'");
-													$status_shift3 = $dbf->getDataFromTable("ped_attendance","shift3","ped_id='$res_ped[id]' AND teacher_id='$teacher_id' AND student_id='$r[id]' AND unit='$shift_count'");
-													$status_shift4 = $dbf->getDataFromTable("ped_attendance","shift4","ped_id='$res_ped[id]' AND teacher_id='$teacher_id' AND student_id='$r[id]' AND unit='$shift_count'");
-													$status_shift5 = $dbf->getDataFromTable("ped_attendance","shift5","ped_id='$res_ped[id]' AND teacher_id='$teacher_id' AND student_id='$r[id]' AND unit='$shift_count'");
-													$status_shift6 = $dbf->getDataFromTable("ped_attendance","shift6","ped_id='$res_ped[id]' AND teacher_id='$teacher_id' AND student_id='$r[id]' AND unit='$shift_count'");
-													$status_shift7 = $dbf->getDataFromTable("ped_attendance","shift7","ped_id='$res_ped[id]' AND teacher_id='$teacher_id' AND student_id='$r[id]' AND unit='$shift_count'");
-													$status_shift8 = $dbf->getDataFromTable("ped_attendance","shift8","ped_id='$res_ped[id]' AND teacher_id='$teacher_id' AND student_id='$r[id]' AND unit='$shift_count'");
-													$status_shift9 = $dbf->getDataFromTable("ped_attendance","shift9","ped_id='$res_ped[id]' AND teacher_id='$teacher_id' AND student_id='$r[id]' AND unit='$shift_count'");
-													$shift_no = 1;
-													for($k=0;$k<$no_shift;$k++)
-													{
-														if($k == 0){$status_shift1 = $status_shift1;}
-														else if($k == 1){$status_shift1 = $status_shift2;}
-														else if($k == 2){$status_shift1 = $status_shift3;}
-														else if($k == 3){$status_shift1 = $status_shift4;}
-														else if($k == 4){$status_shift1 = $status_shift5;}
-														else if($k == 5){$status_shift1 = $status_shift6;}
-														else if($k == 6){$status_shift1 = $status_shift7;}
-														else if($k == 7){$status_shift1 = $status_shift8;}
-														else if($k == 8){$status_shift1 = $status_shift9;}
-										?>
-											
-												<select  name="shift<?php echo $shift_no;?>_<?php echo $s_count."_".$st."_".$count_course;?>" id="shift<?php echo $shift_no;?>_<?php echo $s_count."_".$st."_".$count_course;?>" disabled>
-													<option value=""></option>
-													<option value="X" <?php if($status_shift1=="X") { ?> selected="selected" <?php } ?>>X</option>
-													<option value="E" <?php if($status_shift1=="E") { ?> selected="selected" <?php } ?>>E</option>
-													<option value="S" <?php if($status_shift1=="S") { ?> selected="selected" <?php } ?>>S</option>
-													<option value="B" <?php if($status_shift1=="B") { ?> selected="selected" <?php } ?>>B</option>
-													<option value="V" <?php if($status_shift1=="V") { ?> selected="selected" <?php } ?>>V</option>
-													<option value="A" <?php if($status_shift1=="A") { ?> selected="selected" <?php } ?>>A</option>
-													<option value="L" <?php if($status_shift1=="L") { ?> selected="selected" <?php } ?>>L</option>
-												</select>
-											
-										<?php
-													$shift_no++;
-													}
-										?>
-										</td>
-										<td align="center" bgcolor="#E9EFEF" style="border:0;padding:1px;">&nbsp;</td>
-										<td  align="right" bgcolor="#E9EFEF" style="border:0;"><?php echo (($k%5)?'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;':'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');?></td>
-								<?php
-												$st++;
-												$shift_count++;
-												}
-								?>
-										</tr>
-										<?php
-											$s_count++;
-											}
-										?>
-									</table>
-								</div>
-							</td>
-						</tr>
-						<input type="hidden" name="s_count<?php echo $count_course;?>" id="s_count<?php echo $count_course;?>" value="<?php echo $s_count-1;?>">
-					</table>
-					<script type="text/javascript">
-						var content = $("#contentScroll");
-						var headers = $("#colScroll");
-						var rows = $("#rowScroll");
-						content.scroll(function () {headers.scrollLeft(content.scrollLeft());rows.scrollTop(content.scrollTop());});
-					</script>
-						<?php
-							$count_course++;
+                      <td height="28" width="4%"  align="center" bgcolor="#4D7373" class="logouttext"><strong><?php echo date('m-d',strtotime($attend_dt));?></strong></td>
+                      <?php
+                     $j++;
+                    }
+                    ?>
+                  </tr>
+                <?php
+              
+                $s_count = 1;
+              
+                //Retrive all records the table
+                foreach($dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*") as $r) 
+				{
+                ?>
+                    <tr>
+						<td  width="12%" align="left" bgcolor="#E9EFEF" style="font-family:Arial, Helvetica, sans-serif;font-size:10px;color:#000000;font-weight:bold;max-width:100px;overflow:hidden;text-overflow:ellipsis;">
+							<?php echo $dbf->printStudentName($r["id"]);?>
+                        </td>
+					<?php
+						$no_cols = $first_block;//$unit / $unit_per_day;
+						$num = cal_days_in_month(CAL_GREGORIAN, $month, $year); 
+						$j=1;
+						$st = 1;
+						$shift_count = 1;
+						$no_shift = $val_course[units];
+						//Get the number of shift in a Days
+						#$no_shift = $dbf->getDataFromTable("common","name","id='$val_course[units]'");
+						#echo $unit_per_day;
+						for($i=0;$i<$no_cols;$i++)
+						{
+                    ?>
+						<td  width="4%" align="center" bgcolor="#E9EFEF">
+					<?php
+                
+						//Get status of the student in a particular Unit
+						$status_shift1 = $dbf->getDataFromTable("ped_attendance","shift1","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+						$status_shift2 = $dbf->getDataFromTable("ped_attendance","shift2","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+						$status_shift3 = $dbf->getDataFromTable("ped_attendance","shift3","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+						$status_shift4 = $dbf->getDataFromTable("ped_attendance","shift4","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+						$status_shift5 = $dbf->getDataFromTable("ped_attendance","shift5","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+						$status_shift6 = $dbf->getDataFromTable("ped_attendance","shift6","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+						$status_shift7 = $dbf->getDataFromTable("ped_attendance","shift7","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+						$status_shift8 = $dbf->getDataFromTable("ped_attendance","shift8","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+						$status_shift9 = $dbf->getDataFromTable("ped_attendance","shift9","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+						$shift_no = 1;
+						for($k=0;$k<$no_cols;$k++)
+						{
+					?>
+						<div>
+					<?php
+						//echo "shift".$shift_no."_".$s_count."_".$st."_".$count_course;
+						if($k == 0){$status_shift1 = $status_shift1;}
+						else if($k == 1){$status_shift1 = $status_shift2;}
+						else if($k == 2){$status_shift1 = $status_shift3;}
+						else if($k == 3){$status_shift1 = $status_shift4;}
+						else if($k == 4){$status_shift1 = $status_shift5;}
+						else if($k == 5){$status_shift1 = $status_shift6;}
+						else if($k == 6){$status_shift1 = $status_shift7;}
+						else if($k == 7){$status_shift1 = $status_shift8;}
+						else if($k == 8){$status_shift1 = $status_shift9;}
+						#echo '<span class="pedtext_normal">'.$status_shift1.'</span>';
+						echo (empty($status_shift1)?'':'<span style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#000000;font-weight:bold;">'.$status_shift1.'</span>');
+						
+					?>
+						</div>
+					<?php
+						$shift_no++;
 						}
+					?>
+						</td>
+					<?php
+						$st++;
+						$shift_count++;
+						}
+					?>
+                     </tr>
+                    <!-- End Column Heading -->
+                    <?php                      
+                      $s_count++;
+                }
+					?>
+                    </table>
+                  </div>
+                </div>
+				<br/>
+				<div style="width:100%;">
+                <div style="width:100%; overflow:scroll;overflow-y:hidden; margin-bottom:15px;" >
+                  <table width="100%" border="1" align="center" cellpadding="0" bordercolor="#000000" cellspacing="0" style="border-collapse:collapse;">
+                    <!-- Start Column Heading -->
+                    <tr>
+                      <td width="10%" align="left" bgcolor="#4D7373"><div class="logouttext" style="width:130px;"><strong><?php echo "Student Name";?></strong>
+                        
+                        </div></td>
+                      <?php
+						
+						$unit_per_day=$val_course['unit_per_day'];
+						//$no_cols = $val_course['units']/$unit_per_day;//$unit / $unit_per_day;
+						$num = cal_days_in_month(CAL_GREGORIAN, $month, $year); 
+						
+						$j=$first_block+1;
+						for($i=0;$i<$first_block;$i++)
+						{
+							$dayNum = date('d/m', strtotime($hs_date));
+							$attend_unit_per_day=$j * $unit_per_day;
+							$attend_date=$dbf->getDataFromTable("ped_units","dated","group_id='$_REQUEST[cmbgroup]' AND units='$attend_unit_per_day'");
+							$attend_dt=($attend_date=='00-00' ? '' : $attend_date);
 						?>
+                      <td height="28" width="4%"  align="center" bgcolor="#4D7373" class="logouttext"><strong><?php echo date('m-d',strtotime($attend_dt));?></strong></td>
+                      <?php
+                     $j++;
+                    }
+                    ?>
+                  </tr>
+                <?php
+              
+                $s_count = 1;
+              
+                //Retrive all records the table
+                foreach($dbf->fetchOrder('student_group_dtls d,student s',"s.id=d.student_id AND d.parent_id='$_REQUEST[cmbgroup]'","s.first_name","s.*") as $r) 
+				{
+                ?>
+                    <tr>
+						<td  width="12%" align="left" bgcolor="#E9EFEF" style="font-family:Arial, Helvetica, sans-serif;font-size:10px;color:#000000;font-weight:bold;max-width:100px;overflow:hidden;text-overflow:ellipsis;">
+							<?php echo $dbf->printStudentName($r["id"]);?>
+                        </td>
+					<?php
+						$no_cols = $val_course['units']/$unit_per_day;//$unit / $unit_per_day;
+						$num = cal_days_in_month(CAL_GREGORIAN, $month, $year); 
+						$j=1;
+						$st = 1;
+						$shift_count = round($first_block+1);
+						$no_shift = $val_course[units];
+						//Get the number of shift in a Days
+						#$no_shift = $dbf->getDataFromTable("common","name","id='$val_course[units]'");
+						#echo $unit_per_day;
+						for($i=0;$i<$first_block;$i++)
+						{
+                    ?>
+						<td  width="4%" align="center" bgcolor="#E9EFEF">
+					<?php
+							
+						//Get status of the student in a particular Unit
+						$status_shift1 = $dbf->getDataFromTable("ped_attendance","shift1","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+						$status_shift2 = $dbf->getDataFromTable("ped_attendance","shift2","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+						$status_shift3 = $dbf->getDataFromTable("ped_attendance","shift3","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+						$status_shift4 = $dbf->getDataFromTable("ped_attendance","shift4","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+						$status_shift5 = $dbf->getDataFromTable("ped_attendance","shift5","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+						$status_shift6 = $dbf->getDataFromTable("ped_attendance","shift6","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+						$status_shift7 = $dbf->getDataFromTable("ped_attendance","shift7","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+						$status_shift8 = $dbf->getDataFromTable("ped_attendance","shift8","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+						$status_shift9 = $dbf->getDataFromTable("ped_attendance","shift9","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+						$shift_no = 1;
+						for($k=0;$k<$no_cols;$k++)
+						{
+					?>
+						<div>
+					<?php
+						//echo "shift".$shift_no."_".$s_count."_".$st."_".$count_course;
+						if($k == 0){$status_shift1 = $status_shift1;}
+						else if($k == 1){$status_shift1 = $status_shift2;}
+						else if($k == 2){$status_shift1 = $status_shift3;}
+						else if($k == 3){$status_shift1 = $status_shift4;}
+						else if($k == 4){$status_shift1 = $status_shift5;}
+						else if($k == 5){$status_shift1 = $status_shift6;}
+						else if($k == 6){$status_shift1 = $status_shift7;}
+						else if($k == 7){$status_shift1 = $status_shift8;}
+						else if($k == 8){$status_shift1 = $status_shift9;}
+						#echo '<span class="pedtext_normal">'.$status_shift1.'</span>';
+						echo (empty($status_shift1)?'':'<span style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#000000;font-weight:bold;">'.$status_shift1.'</span>');
+					?>
+						</div>
+					<?php
+						$shift_no++;
+						}
+					?>
+						</td>
+					<?php
+						$st++;
+						$shift_count++;
+						}
+					?>
+                     </tr>
+                    <!-- End Column Heading -->
+                    <?php                      
+                      $s_count++;
+                }
+					?>
+                    </table>
+                  </div>
+                </div>
+				
+              <?php
+              $count_course++;
+              }
+            ?>
                       </td>
                     </tr>
                   

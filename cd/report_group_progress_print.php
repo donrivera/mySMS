@@ -144,7 +144,8 @@ header("Content-Disposition: attachment; Filename=group_progress_report.doc");
 				$hr = $tot_unit / 60;*/
 				
 				//Get number of Attendace present in e-PEDCARD (table : ped_attendance)
-				$num_total_class=$dbf->countRows('ped_units',"group_id='$_REQUEST[group_id]'");
+				$num_total_class=$dbf->getDataFromTable("ped_units","MAX(units)","group_id='$_REQUEST[group_id]' AND dated != '0000-00-00'");
+				//$dbf->countRows('ped_units',"group_id='$_REQUEST[group_id]'");
 				?>
             <td width="45%" align="left" valign="middle" class="pedtext_normal"><?php echo $num_total_class;?></td>
             <td width="16%" align="center" valign="middle" class="nametext" >&nbsp;</td>
@@ -218,7 +219,8 @@ header("Content-Disposition: attachment; Filename=group_progress_report.doc");
 						$avg = $avg / 7;
 						$avg = round($avg,1);
 					}
-					$at = $res_progress["course_attendance"] * $res_g["unit_per_day"];
+					#$at = $res_progress["course_attendance"] * $res_g["unit_per_day"];
+					$at=$res_progress["course_attendance_perc"];
 					$parti = $res_progress["course_partication"];
 					$home = $res_progress["course_homework"];
 					$flu = $res_progress["course_fluency"];

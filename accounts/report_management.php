@@ -305,6 +305,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
                     <td align="center" valign="middle" class="pedtext"><?php echo $no_of_attand;?></td>
                   </tr>
+				  <!--
                   <tr>
                     <td align="left">&nbsp;</td>
                     <td height="25" align="right" valign="middle" class="lable1">&nbsp; <?php echo constant("MANAGE_LISM_REPORT_STUDENT_ABSENT");?>:</td>
@@ -314,6 +315,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					?>
                     <td align="center" valign="middle" class="pedtext"><?php echo $sms;?></td>
                   </tr>
+				  -->
                   <tr>
                     <td width="6%">&nbsp;</td>
                     <td width="61%" height="25" align="right" valign="middle" class="lable1">&nbsp;<?php echo constant("MANAGE_LISM_REPORT_STUDENT_CANCEL");?>:</td>

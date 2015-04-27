@@ -363,7 +363,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$res_enroll = $dbf->strRecordID("student_enroll","*","course_id='$valinv[course_id]' And student_id='$valinv[student_id]'");
 						
 						//Total Course Fee (Course fee - Discount + Other Amt) 
-						$camt = $res_enroll["course_fee"]-$res_enroll["discount"]+$res_enroll["other_amt"];
+						$discount_student_fee=$dbf->getDataFromTable('student_fees',"discount","course_id='$valinv[course_id]' And student_id='$valinv[student_id]'");
+						$discount_student_payment=(empty($res_enroll["discount"])?$discount_student_fee:$res_enroll["discount"]);
+						$camt = $res_enroll["course_fee"]-$discount_student_payment+$res_enroll["other_amt"];
 						
 						//Get Total Payment from structure
 						$fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$valinv[course_id]' And student_id='$valinv[student_id]' AND status='1'");
@@ -384,7 +386,12 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                       <td align="left" valign="middle"><?php if($val_student[student_id]>0) { echo $val_student[student_id]; } ?></td>
                       <td align="left" valign="middle"><?php echo $val_student[student_mobile];?></td>
                       <td align="left" valign="middle"><?php echo $val_student[email];?></td>
-                      <td width="10%" align="center" valign="middle"><?php if($bal_amt>0) { echo "Partial Payment <br> (".$bal_amt." ".$res_currency["symbol"].")"; } else if($bal_amt<0){ echo "Paid Excess ".abs($bal_amt).'&nbsp;'.$res_currency[symbol];}?></td>
+                      <td width="10%" align="center" valign="middle">
+						<?php  if($bal_amt>0) { 
+					  	echo "Partial Payment <br> (".$bal_amt." ".$res_currency["symbol"].")";
+					  }else if($bal_amt<0){
+						echo "Paid Excess ".abs($bal_amt).'&nbsp;'.$res_currency["symbol"];
+					  }?></td>
                       <td width="10%" align="center" valign="middle"><?php if($bal_amt==0 && $feeamt>0) { echo "Full Payment"; } ?></td>
                       
                       <td align="center" valign="middle">

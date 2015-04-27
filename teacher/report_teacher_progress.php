@@ -103,7 +103,8 @@ function setsubmit(){
 	var group_id = document.getElementById('group_id').value;
 	var mystatus = document.getElementById('mystatus').value;
 	
-	document.location.href='report_teacher_progress.php?group_id='+group_id+'&mystatus='+mystatus;
+		document.location.href='report_teacher_progress.php?group_id='+group_id+'&mystatus='+mystatus;
+	
 }
 
 $(document).ready(function(){
@@ -112,6 +113,7 @@ $(document).ready(function(){
 		.html("Wait...")
 		.load("group_id.php", {status: $(this).val()}); // Page Name and Condition
 	});
+	
 });
 </script>
 <?php
@@ -190,6 +192,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						  }else{
 							  $status = $_REQUEST['mystatus'];
 						  }
+						 
 						  foreach($dbf->fetchOrder('student_group',"status='$status' And teacher_id='$teacher_id'","group_name","") as $res_group) {
 							  ?>
                           <option value="<?php echo $res_group['id'];?>" <?php if($_REQUEST[group_id]==$res_group["id"]) { ?> selected="selected" <?php } ?>><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>, <?php echo $dbf->printClassTImeFormat($res_group['group_start_time'],$res_group['group_end_time']);?></option>
@@ -536,21 +539,31 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         </td>
                         <?php
 						$group_id=$_REQUEST[group_id];
-						$ped_units=$dbf->getDataFromTable("ped_units","MAX(units)","group_id='$group_id'");
-						$group_percentage=round($ped_units/$res_g[units]*100);
+						$ped_units=$dbf->getDataFromTable("ped_units","MAX(units)","group_id='$group_id' AND dated != '0000-00-00'");
+						$progress_units=($res_g[units]/2)/$res_g[unit_per_day];
+						$group_percentage=round($ped_units/($res_g[units])*100);
 						if($group_percentage<61)
-						{$count_shift = $dbf->No_Of_Attendance($r["id"], $group_id);}
+						{
+							$count_shift = $dbf->printProgressAttendance($r["id"],$group_id,$progress_units);//$dbf->No_Of_Attendance($r["id"], $group_id);
+							$attendance_count_shift=$count_shift;
+						}
 						else if($group_percentage >= 61 && $group_percentage <= 84)
-						{$count_shift = $dbf->No_Of_Attendance($r["id"], $group_id);}
-						else if($group_percentage >= 85)
-						{$count_shift = $dbf->No_Of_Attendance($r["id"], $group_id);}	
+						{
+							$count_shift = $dbf->printProgressAttendance($r["id"],$group_id,$progress_units);//$dbf->No_Of_Attendance($r["id"], $group_id);
+							$attendance_count_shift=$count_shift;//$count_shift/2;
+						}
+						else
+						{
+							$count_shift = $dbf->printProgressAttendance($r["id"],$group_id,$progress_units);//$count_shift = $dbf->No_Of_Attendance($r["id"], $group_id);
+							$attendance_count_shift=$count_shift;//$count_shift/4;
+						}	
 					?>
                         <td align="center" valign="middle" bgcolor="#FFFFFF">
                           <input type="text" name="course_student_attendance" id="course_student_attendance" style="border:none; width:50px; text-align:center; font-weight:bold;" maxlength="3" onKeyPress="return isNumberKey(event);" value="<?php echo $count_shift; ?>" readonly="">
 						  <!--<input type="hidden" name="course_attendance<?php echo "_".$student_count;?>" id="course_attendance<?php echo "_".$student_count;?>" style="border:none; width:50px; text-align:center; font-weight:bold;" maxlength="3" onKeyPress="return isNumberKey(event);" value="<?php echo $group_percentage; ?>" readonly="">-->
                         </td>
                         <?php					
-					$group_unit = $res_g[units];#$res_size[effect_units];
+					#$group_unit = $res_g[units];#$res_size[effect_units];
 					
 					$uu = $dbf->strRecordID("common","*","id='$r[units]'");
 					//get unit from common table					
@@ -558,10 +571,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					//$group_unit = $group_unit / $uu[name];
 					//$group_unit = $group_unit / $uu[name];
 					$group_unit = $res_g[units]/2;#$res_size[units];
+					#echo $group_unit."-".$attendance_count_shift."<BR/>";
 					
 					$attend_perc=0;
 					if($count_shift!='0'){
-						$attend_perc=round(($count_shift/$group_unit)*100);
+						$attend_perc=round(($attendance_count_shift/$group_unit)*100);
 					}
 					
 					if($attend_perc<61){
@@ -576,7 +590,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <td align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                           <tr>
                             <td width="47%" align="right" valign="middle"><img src="../images/<?php echo $rfiles;?>"  /></td>
-                            <td width="53%" align="center" valign="middle" class="mycon"><?php echo $attend_perc;?>%</td>
+                            <td width="53%" align="center" valign="middle" class="mycon"><?=($attend_perc>100)?100:$attend_perc?>%</td>
 							<input type="hidden" name="course_attendance<?php echo "_".$student_count;?>" id="course_attendance<?php echo "_".$student_count;?>" style="border:none; width:50px; text-align:center; font-weight:bold;" maxlength="3" onKeyPress="return isNumberKey(event);" value="<?php echo $attend_perc; ?>" readonly="">
                             </tr>
                         </table></td>

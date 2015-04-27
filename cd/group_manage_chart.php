@@ -36,7 +36,7 @@ $group_unit = $res_group["units"];
 
 $group_name = $res_group["group_name"];
 
-$left_units = $dbf->countRows('ped_units',"group_id='$group_id'");
+$left_units = $dbf->countRows('ped_units',"group_id='$group_id' AND dated !='0000-00-00'");
 
 if($group_unit > 0){
 	$g_unit = $group_unit / 2;

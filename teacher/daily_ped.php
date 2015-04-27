@@ -80,7 +80,7 @@ $(function()
 		maxDate: new Date(<?php echo $atd_edate[0]?>,<?php echo $atd_edate[1]-1?>,<?php echo $atd_edate[2]?>),
 		beforeShowDay:function (dt){return [dt.getDay() == 5 || dt.getDay() == 6 ? false : true];},
 		dateFormat: 'yy-mm-dd',
-		onSelect: function(dateText, inst) {$('#u_dated2').val(dateText),$('#u_dated1').val(dateText);}
+		onSelect: function(dateText, inst) {$('#u_dated3').val(dateText),$('#u_dated2').val(dateText),$('#u_dated1').val(dateText);}
 	});
 });
 </script>
@@ -1059,7 +1059,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							<td id="content">
 								 <div id="contentScroll" style="overflow:auto">
 									
-									<table cellspacing="0" cellpadding="0" style="width: 100px;" border="0">
+									<table cellspacing="0" cellpadding="0" style="width: 100px;" border="1">
 										<?php
 											$s_count = 1;
 											//Retrive all records the table
@@ -1084,7 +1084,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 										?>
 										
 										<td align="center" bgcolor="#E9EFEF" style="border:0;padding:1px;">&nbsp;</td>
-										<td bgcolor="#E9EFEF"  height="36"  align="center">
+										<td bgcolor="#E9EFEF"  height="33"  align="center">
 										<?php
 													#$status_shift1 = $dbf->getDataFromTable("ped_attendance","shift1","ped_id='$res_ped[id]' AND teacher_id='$teacher_id' AND student_id='$r[id]' AND unit='$shift_count'");
 													#$status_shift2 = $dbf->getDataFromTable("ped_attendance","shift2","ped_id='$res_ped[id]' AND teacher_id='$teacher_id' AND student_id='$r[id]' AND unit='$shift_count'");

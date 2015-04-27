@@ -144,7 +144,8 @@ $centre_id = $_REQUEST["centre_id"];
 													AND (p.attend_date BETWEEN '$start_date' AND '$end_date') AND sg.centre_id='$centre_id'");
 					foreach($attend as $atd){$no_of_attand=$atd['total'];}
                     $html.='<td align="center" valign="middle" class="pedtext">'.$no_of_attand.'</td>
-                  </tr>
+                  </tr>';
+				  /*
                   <tr>
                     <td align="left">&nbsp;</td>
                     <td height="25" align="left" valign="middle" class="lable1">&nbsp;Total number of students SMS (automatically by the system) :&nbsp;</td>';
@@ -154,6 +155,8 @@ $centre_id = $_REQUEST["centre_id"];
 					
                     $html.='<td align="center" valign="middle" class="pedtext">'.$sms.'</td>
                   </tr>
+				  */
+				  $html .='
                   <tr>
                     <td width="6%">&nbsp;</td>
                     <td width="67%" height="25" align="left" valign="middle" class="lable1">&nbsp;Total number of students cancelled :&nbsp;</td>';

@@ -450,10 +450,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$totalunits=$res_size[units];
 															
 					if($totalunits!=0){
-						$attend_calc=round((($attend/$totalunits)*100)/10);
+						$attend_calc=ceil((($attend/$totalunits)*100)/10);
 					}
 					
-					if($course_mark[end_of_level] > 0){
+					if($course_mark[end_of_level] >= 0){
 						$grade_sheet = $dbf->strRecordID("grade_sheet","*","'$course_mark[end_of_level]' BETWEEN frm and tto");					
 						$nos = $grade_sheet[nos];
 						$benifit = 18 - (3 * $nos);
@@ -473,7 +473,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$res_grade = $dbf->strRecordID("grade","*","'$final_grade' BETWEEN frm and tto");
 				?>
                 <tr>
-                  <td height="25" align="left" valign="middle" class="smalltext"><?php echo $r[first_name]."&nbsp;".$r[father_name]."&nbsp;".$r[family_name]."&nbsp;(".$r[first_name1]."&nbsp;".$r[father_name1]."&nbsp;".$r[grandfather_name1]."&nbsp;".$r[family_name1].")";?></td>
+                  <td height="25" align="left" valign="middle" class="smalltext" style="max-width:150px;overflow:hidden;text-overflow:ellipsis;"><?php echo $dbf->printStudentName($r['id']);?></td>
                   <td align="left" valign="middle"><?php echo $res_country[value];?></td>
                   <td align="left" valign="middle" class="smalltext"><?php echo $r[student_id];?></td>
 				  <input type="hidden" name="st<?php echo $student_count;?>" id="st<?php echo $student_count;?>" value="<?php echo $r[id];?>">
@@ -488,7 +488,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <td align="center" valign="middle" bgcolor="#FFFFFF"><?php echo $benifit;?></td>
                   <td align="center" valign="middle" bgcolor="#FFFFFF"><?php if($course_mark[attendance]>0) { echo $course_mark[attendance]; }?></td>
                   <td align="center" valign="middle" bgcolor="#FFFFFF"><?php if($res_size[units]) { echo $res_size[units]; }?></td>
-                  <td align="center" valign="middle" bgcolor="#FFFFFF"><?php if($attend_calc>0) { echo round($attend_calc); }?></td>
+                  <td align="center" valign="middle" bgcolor="#FFFFFF"><?php if($attend_calc>0) { echo $attend_calc; }?></td>
                   <td align="center" valign="middle" bgcolor="#E8E8E8"><?php if($final_grade>0) { echo $final_grade; }?></td>
                   <td align="center" valign="middle" bgcolor="#E8E8E8"><?php echo $res_grade[name];?></td>
                 </tr>
