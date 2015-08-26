@@ -33,14 +33,14 @@ $group_id = $_REQUEST[group_id];
 .cer1
 {
 font-family:Arial, Helvetica, sans-serif;
-font-size:10px;
+font-size:16px;
 color:#333333;
 }
 
 .cer2
 {
 font-family:Arial, Helvetica, sans-serif;
-font-size:9px;
+font-size:16px;
 font-weight:normal;
 color:#333333;
 }
@@ -78,13 +78,13 @@ color:#000000;
 
 .cer_my_head{
 font-family:Arial, Helvetica, sans-serif;
-font-size:14px;
+font-size:17px;
 color:#000000;
 font-weight:normal;
 }
 .cer_my_head_bold{
 font-family:Arial, Helvetica, sans-serif;
-font-size:14px;
+font-size:17px;
 color:#000000;
 font-weight:bold;
 }
@@ -96,7 +96,7 @@ font-weight:bold;
 }
 .cer_my_cer_head_bold{
 font-family:"Monotype Corsiva";
-font-size:16px;
+font-size:17px;
 color:#000000;
 font-weight:bold;
 font-style:italic;
@@ -137,7 +137,7 @@ table {page-break-after:always}
 <?php
 $sl = 0;
 $height = 0;
-$show_passing_grade=$dbf->getDataFromTable("grade","frm","name='Fair'");
+$show_passing_grade=$dbf->getDataFromTable("grade","frm","name='Satisfactory'");
 $sql=$dbf->genericQuery("	SELECT m.*,d.* 
 							FROM student_group m 
 							INNER JOIN student_group_dtls d ON m.id=d.parent_id
@@ -154,14 +154,28 @@ foreach($sql as $val_my_group)
 	$resc = $dbf->strRecordID("countries","*","id='$res[country_id]'");
 	
 	$course_name = $dbf->strRecordID("course","*","id='$course_id'");
-	$exp_course_name=explode("-",$course_name[name]);
-	$eng_course_name=filter_var($exp_course_name[0], FILTER_SANITIZE_NUMBER_INT);
-	$arb_course_name=filter_var($exp_course_name[1], FILTER_SANITIZE_NUMBER_INT);
+	$exp_course_name=explode("-",$course_name[certificate]);
+	$eng_course_name=$exp_course_name[0];//filter_var($exp_course_name[0], FILTER_SANITIZE_NUMBER_INT);
+	$arb_course_name=$exp_course_name[1];//filter_var($exp_course_name[1], FILTER_SANITIZE_NUMBER_INT);
 	$res_enroll = $dbf->strRecordID("student_enroll","*","student_id='student_id' And course_id='$course_id'");
 	$res_size = $dbf->strRecordID("group_size","*","group_id='$res_g[group_id]'");
-	$total_units = $res_size[units];
-	
-	$or_unit = $res_g[units];
+	switch($res_g[course_id])
+	{
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+		case 10:
+		case 11:
+		case 12:
+		case 13:{$total_units = 90;$or_unit = 80;}break;
+		default:{$total_units = $res_g[units];$or_unit = $res_g[units];}
+	}
 	$per_unit = 45; //minute
 	$tot_unit = $or_unit * $per_unit;
 	$hr = $tot_unit / 60;
@@ -340,16 +354,12 @@ foreach($sql as $val_my_group)
 		<td width="40" height="28">&nbsp;</td>
 		<td width="40" height="28">&nbsp;</td>
 	</tr>
-	<tr>
-		<td width="40" height="28">&nbsp;</td>
-		<td width="40" height="28">&nbsp;</td>
-		<td width="40" height="28">&nbsp;</td>
-		<td width="40" height="28">&nbsp;</td>
-	</tr>
+	
 	<tr>
 		<td width="40" height="28">&nbsp;</td>
 		<td colspan="2" align="center">
-			<p  dir="rtl" class="cer_my_head_bold">شهادة اجتياز دورة في اللغة الانجليزية &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+			<p>&nbsp;</p>
+			<p  dir="rtl" class="ar_cer_my_head_bold">شهادة اجتياز دورة في اللغة الانجليزية &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
 			<p class="cer_my_cer_head_bold">A CERTIFICATE OF ACHIEVEMENT IN ENGLISH LANGUAGE</p>
 		</td>
 		<td width="40" height="28">&nbsp;</td>
@@ -384,7 +394,7 @@ foreach($sql as $val_my_group)
 				</p>
 				<p align="left" class="cer1" scope="col"><span class="cer_my_head">
 					<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-					From: </span><span class="cer_my_head_bold"><?php echo date("d-m-Y",strtotime($res_g["start_date"]));?></span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="cer_my_head">to: </span><span class="cer_my_head_bold"><?php echo date("d-m-Y",strtotime($res_g["start_date"]));?></span>
+					From: </span><span class="cer_my_head_bold"><?php echo date("d-m-Y",strtotime($res_g["start_date"]));?></span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="cer_my_head">to: </span><span class="cer_my_head_bold"><?php echo date("d-m-Y",strtotime($res_g["end_date"]));?></span>
 				</p>
 				<p align="left" class="cer1" scope="col"><span class="cer_my_head">
 					<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
@@ -430,7 +440,7 @@ foreach($sql as $val_my_group)
 					<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
 				</p>
 				<p align="right" class="cer2" scope="col">&nbsp;<span class="cer_my_head_bold"><span dir="rtl">
-					الجنسية: <?php echo $Arabic->en2ar($resc[value]);?></span> </span>
+					الجنسية: <?php echo $resc['arabic'];?></span> </span>
 					<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
 				</p>
 				<p align="right" class="cer2" scope="col"><span class="cer_my_head_bold"></span>&nbsp;<span class="cer_my_head_bold" dir="rtl">
@@ -442,21 +452,20 @@ foreach($sql as $val_my_group)
 					<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
 				</p>
 				<p align="right" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">
-					في المستوى <?php echo $arb_course_name;?>  , وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					في المستوى <?php echo $arb_course_name;?>  ، وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span>
+					<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
 				</p>
 				<?php $ar_start_date=date("d-m-Y",strtotime($res_g["start_date"]));$ar_end_date=date("d-m-Y",strtotime($res_g["end_date"]));?>
 				<p align="right" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">
 					في الفترة من: <?php echo $dbf->enNo2ar($ar_start_date,'-');?>   إلى: <?php echo $dbf->enNo2ar($ar_end_date,'-');?></span>
 					<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
 				</p>
-				<p align="right" class="cer2" scope="col">&nbsp;</p>
 				<p align="right" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">
 					الموافق من: <?php if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($sdt,'-');} ?>إلى: <?php if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($edt,'-');} ?></span>
 					<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
 				</p>
 				<p align="right" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">
-					وحصل على تقدير  <?php echo $res_grade["arabic"];?> , ونسبة  <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %</span>
+					وحصل على تقدير  <?php echo $res_grade["arabic"];?> ، ونسبة  <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %</span>
 					<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
 				</p>
 				<p align="right" class="cer_my_head_bold" scope="col"><span dir="rtl">

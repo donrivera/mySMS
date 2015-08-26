@@ -704,6 +704,9 @@ if($_REQUEST['action']=='update_group')
 			$dbf->updateTable("ped",$ped_string,"group_id='$_REQUEST[group_id]'");	
 			$dbf->updateTable("ped_units",$ped_string,"group_id='$_REQUEST[group_id]' AND dated='0000-00-00'");
 			$dbf->updateTable("ped_attendance",$ped_string,"group_id='$_REQUEST[group_id]' AND attend_date='0000-00-00'");
+			$dbf->updateTable("teacher_progress",$ped_string,"group_id='$_REQUEST[group_id]'");
+			$dbf->updateTable("teacher_progress_course",$ped_string,"group_id='$_REQUEST[group_id]'");
+			$dbf->updateTable("teacher_progress_certificate",$ped_string,"group_id='$_REQUEST[group_id]'");
 			header("Location:group_manage.php");exit;
 		}
 	}

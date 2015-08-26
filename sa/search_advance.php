@@ -1,4 +1,5 @@
 <?php
+
 ob_start();
 session_start();
 if(($_COOKIE['cook_username'])=='')
@@ -139,6 +140,11 @@ function validate(){
 		document.getElementById('comment').focus();
 		return false;
 	}
+	
+	if(document.getElementById('payment_type').value == ''){
+		document.getElementById('payment_type').focus();
+		return false;
+	}
 }
 
 function isNumberKey(evt){
@@ -151,6 +157,13 @@ function isNumberKey(evt){
 function getAdvance(){
 	var course_id = document.getElementById('course_id').value;	
 	document.location.href='search_advance.php?student_id='+<?php echo $_REQUEST["student_id"];?>+'&course_id='+course_id;
+}
+function getDiscount(discount)
+{
+	var course_fee=document.getElementById('fee_course').value;
+	var net_amt=course_fee - ((discount * course_fee));
+	document.getElementById('discount').value=(discount * course_fee);
+	document.getElementById('net_amount').value=net_amt;
 }
 </script>
 <script language="Javascript" type="text/javascript">
@@ -302,28 +315,54 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         <?php if($_REQUEST["course_id"] != ""){?>
                         <form action="s1_process.php?action=advance" name="frm" method="post" id="frm" onSubmit="return validate();">
                         <table width="97%" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#cccccc;">
-                              <tr>
-                                <td height="30" align="left" valign="middle">&nbsp;</td>
+                            <tr>
+								<td height="30" align="left" valign="middle">&nbsp;</td>
                                 <td>&nbsp;<input type="hidden" name="student_id" id="student_id" value="<?php echo $student_id;?>"></td>
                                 <td width="7%">&nbsp;<input type="hidden" name="course_id" id="course_id" value="<?php echo $course_id;?>"></td>
-                                </tr>
-								<!--
-                              <tr>
-                                <td width="25%" height="28" align="right" valign="middle"><span class="leftmenu">&nbsp;<?php echo constant("STUDENT_MYACCOUNT_PAYMENTDATE");?> :</span></td>
-                                <td width="24%" align="left" valign="middle"><input name="dated" type="text" class="datepickFuture new_textbox100" readonly="" id="dated"/></td>
+                            </tr>
+							<tr>
+                                <td width="25%" height="28" align="right" valign="middle"><span class="leftmenu">&nbsp;<?php echo "Course Fee";?> :</span></td>
+                                <td width="24%" align="left" valign="middle">
+									<input name="fee_course" id="fee_course" type="text"  readonly="readonly"  class="new_textbox100" value="<?=$dbf->getDataFromTable("course_fee","fees","course_id='$course_id'");?>"/></td>
                                 <td rowspan="2" align="left" valign="top" id="lblname">&nbsp;</td>
-                                </tr>
-								-->
-                              <tr>
+                            </tr>
+							<tr>
+                                <td height="28" align="right" valign="middle"><span class="leftmenu">&nbsp;<?php echo "Discount Type";?> :</span></td>
+                                <td align="left" valign="middle">
+								<select name="opDiscount" onChange="return getDiscount(this.value)">
+									<option value="">Discount</option>
+									<?php
+											$percent=$dbf->genericQuery("
+																			SELECT percent,code
+																			FROM discount 
+																			WHERE centre='$_SESSION[centre_id]'
+																		");
+											foreach($percent as $pct) 
+											{
+										
+									?>
+									<option value="<?=$pct['percent'];?>"><?php echo $pct['code'] ?></option>
+									<?php 	} ?>
+								</select>
+                                </td>
+                            </tr>
+							<tr>
+                                <td width="25%" height="28" align="right" valign="middle"><span class="leftmenu">&nbsp;<?php echo "Net Amount";?> :</span></td>
+                                <td width="24%" align="left" valign="middle">
+									<input name="net_amount" id="net_amount" type="text"  readonly="readonly"  class="new_textbox100" value=""/></td>
+                                <td rowspan="2" align="left" valign="top" id="lblname">&nbsp;</td>
+                            </tr>
+							<tr>
                                 <td height="28" align="right" valign="middle"><span class="leftmenu">&nbsp;<?php echo constant("CD_SEARCH_INVOICE_FEES");?> :</span></td>
                                 <td align="left" valign="middle">
                                 <input name="amts" type="text"  class="new_textbox100" id="amts" onKeyPress="return isNumberKey(event);"/>
                                 </td>
-                                </tr>
-                              <tr>
+                            </tr>
+                            <tr>
                                 <td height="28" align="right" valign="middle"><span class="leftmenu">&nbsp;<?php echo constant("CD_SEARCH_INVOICE_PAIDBY");?> : </span></td>
                                 <td align="left" valign="middle"><span class="text_structure">
                                   <select name="payment_type" id="payment_type" style="width:102px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;">
+									<option value="">---Select---</option>
                                     <?php
 									foreach($dbf->fetchOrder('common',"type='payment type'","") as $resp) {
 									  ?>
@@ -332,31 +371,32 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                     </select>
                                   </span></td>
                                 <td>&nbsp;</td>
-                                </tr>
-							
-								<tr>
+                            </tr>
+							<!--
+							<tr>
                                 <td height="28" align="right" valign="middle"><span class="leftmenu">&nbsp;Discount :</span></td>
                                 <td align="left" valign="middle">
-                                <input name="discount" type="text"  class="new_textbox100" id="discount" onKeyPress="return isNumberKey(event);"/>
+                               
                                 </td>
-                                </tr>
-								
-                              <tr>
+                            </tr>
+							-->
+							 <input name="discount" type="hidden"  class="new_textbox100" id="discount" onKeyPress="return isNumberKey(event);"/>
+							<tr>
                                 <td height="28" align="right" valign="top" class="leftmenu"><?php echo constant("ADMIN_COMMNAME");?>:</td>
                                 <td align="left" valign="middle"><textarea name="comment" id="comment" rows="5" cols="30" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF;"></textarea></td>
                                 <td>&nbsp;</td>
-                                </tr>
-                              <tr>
+                            </tr>
+                            <tr>
                                 <td height="28" align="left" valign="middle">&nbsp;</td>
                                 <td align="left" valign="middle">&nbsp;</td>
                                 <td>&nbsp;</td>
-                                </tr>
-                              <tr>
+                            </tr>
+                            <tr>
                                 <td height="28" align="left" valign="middle">&nbsp;</td>
                                 <td align="left" valign="middle"><input type="submit" name="submit2" id="submit2" value="<?php echo constant("btn_save_btn");?>" class="btn1"/></td>
                                 <td>&nbsp;</td>
-                                </tr>
-                              <tr>
+                            </tr>
+                            <tr>
                                 <td height="28" colspan="3" align="center" valign="middle">
                                   <table width="97%" border="0" cellspacing="0" cellpadding="0">
                                     <tr>

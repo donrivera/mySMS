@@ -19,12 +19,14 @@ include 'application_top.php';
 //Object initialization
 $dbf = new User();
 include_once '../includes/language.php';
-?>	
+?>
+<!--	
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Welcome to Berlitz</title>
+-->
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <?php
 if($_SESSION[font]=='big')
@@ -89,247 +91,515 @@ $count = $res_logout["name"]; // Set timeout period in seconds
     <td height="104" align="left" valign="top"><?php include 'header.php';?></td>
   </tr>
   <tr>
-    <td align="left" valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
-      <tr>
-        <td width="3%"><p>&nbsp;</p>
-          <p>&nbsp;</p>
-          <p>&nbsp;</p>
-          <p>&nbsp;</p>
-          <p>&nbsp;</p>
-          <p>&nbsp;</p>
-          <p>&nbsp;</p>
-          <p>&nbsp;</p></td>
-        <td width="97%" align="left" valign="top">
-        
-        <form name="frm" id="frm" method="post">
-          <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#000000;">
-            <tr>
-              <td height="0" align="left" valign="middle" bgcolor="#b4b4b4" style="background:url(../images/footer_repeat.png) repeat-x;"><table width="100%" border="0" cellspacing="0">
-                <tr>
-                  <td width="54%" height="30" align="left" class="logintext"><?php echo constant("STUDENT_ADVISOR_CENTRE_SCHEDULE_HEADTEXT");?></td>
-                  <td width="22%">&nbsp;</td>
-                  <td width="8%" align="left">&nbsp;</td>
-                  <td width="8%" align="left">&nbsp;</td>
-                  <td width="8%" align="left">&nbsp;</td>
-                </tr>
-              </table></td>
-            </tr>
-            <tr>
-              <td height="40" align="left" valign="middle" bgcolor="#EFEFEF" style="padding-left:15px;">
-                <table width="350" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#993030;">
-                    <tr>
-                      <td width="70" height="35" align="left" valign="middle" bgcolor="#FFCB7D" class="leftmenu"><?php echo constant("ADMIN_VIEW_GROUP_SIZE_CENTRE");?></td>
-                      <td width="10" align="left" valign="middle" bgcolor="#FFCB7D">&nbsp;</td>
-                      <?php
-                      if($_REQUEST[centre_id] == ''){
-						$cid = $_SESSION['centre_id'];
-					  }else{
-						  $cid = $_REQUEST['centre_id'];
-					  }
-					  ?>
-                      <td width="270" align="left" valign="middle" bgcolor="#FFCB7D">
-                          <select name="centre_id" id="centre_id"  style="border:solid 1px; border-color:#FFCC33; height:20px; width:210px;" onchange="javascript:document.frm.action='centre_schedule.php',document.frm.submit();">
-                            <option value="">-- All Centre --</option>
-                            <?php
-                                foreach($dbf->fetchOrder('centre',"","name") as $val1) {	
-                              ?>
-                            <option value="<?php echo $val1[id];?>" <?php if($cid==$val1["id"]) { ?> selected="selected" <?php } ?>><?php echo $val1[name];?></option>
-                            <?php } ?>
-                          </select>
-                      </td>
-                    </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td height="40" align="left" valign="middle" bgcolor="#EFEFEF" style="padding-left:15px;">
-              <table width="350" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#999999;">
-                <tr>
-                  <td width="24" align="left" valign="middle" bgcolor="#DDDDDD"><input name="status" type="radio" id="status" value="All" checked="checked" onchange="javascript:document.frm.action='centre_schedule.php',document.frm.submit();" /></td>
-                  <td width="46" height="25" align="left" valign="middle" bgcolor="#DDDDDD" class="mycon"><?php echo constant("CD_CENTRE_SCHEDULE_All");?></td>
-                  <td width="20" align="left" valign="middle" bgcolor="#DDDDDD"><input type="radio" name="status" id="status" value="Not Started" <?php if($_REQUEST[status]=="Not Started") {?> checked="checked" <?php } ?> onchange="javascript:document.frm.action='centre_schedule.php',document.frm.submit();"/></td>
-                  <td width="69" align="left" valign="middle" bgcolor="#DDDDDD" class="mycon"><?php echo constant("CD_CENTRE_SCHEDULE_NOTSATRTED");?></td>
-                  <td width="20" align="left" valign="middle" bgcolor="#DDDDDD" class="mycon">
-                    <input type="radio" name="status" id="status" value="Continue" <?php if($_REQUEST[status]=="Continue") {?> checked="checked" <?php } ?> onchange="javascript:document.frm.action='centre_schedule.php',document.frm.submit();"/>
-                  </td>
-                  <td width="71" align="left" valign="middle" bgcolor="#DDDDDD" class="mycon"><?php echo constant("CD_CENTRE_SCHEDULE_CONTINUE");?></td>
-                  <td width="20" align="left" valign="middle" bgcolor="#DDDDDD" class="mycon">
-                    <input type="radio" name="status" id="status" value="Completed" <?php if($_REQUEST[status]=="Completed") {?> checked="checked" <?php } ?> onchange="javascript:document.frm.action='centre_schedule.php',document.frm.submit();"/>
-                  </td>
-                  <td width="80" align="left" valign="middle" bgcolor="#DDDDDD" class="mycon"><?php echo constant("STUDENT_ADVISOR_AUDITING_COMPLETED");?></td>
-                </tr>
-              </table></td>
-            </tr>
-            <tr>
-              <td align="left" valign="top" bgcolor="#EFEFEF"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                <tr bgcolor="#EFEFEF" class="mycon">
-                  <td align="left" valign="middle" style="padding-left:15px;"><div id="ganttChart"></div>
-                    <!--<link rel="stylesheet" type="text/css" href="js_gchart/jquery-ui-1.8.4.css" />-->
-                    <!--<link rel="stylesheet" type="text/css" href="js_gchart/reset.css" />-->
-                    <link rel="stylesheet" type="text/css" href="js_gchart/jquery.ganttView.css" />
-                    <script type="text/javascript" src="js_gchart/jquery-1.4.2.js"></script>
-                    <script type="text/javascript" src="js_gchart/date.js"></script>
-                    <script type="text/javascript" src="js_gchart/jquery-ui-1.8.4.js"></script>
-                    <script type="text/javascript" src="js_gchart/jquery.ganttView.js"></script>
-                    <script type="text/javascript">
-                    $(function () {
-                        $("#ganttChart").ganttView({ 
-							
-                            data: ganttData,
-							slideWidth: 1000,
-                            behavior: {
-                                onClick: function (data) { 
-                                    var msg = "You clicked on an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
-                                    $("#eventMessage").text(msg);
-                                },
-                                onResize: function (data) { 
-                                    var msg = "You resized an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
-                                    $("#eventMessage").text(msg);
-                                },
-                                onDrag: function (data) { 
-                                    var msg = "You dragged an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
-                                    $("#eventMessage").text(msg);
-                                }
-                            }
-                        });
-                        
-                        // $("#ganttChart").ganttView("setSlideWidth", 600);
-                    });
-                </script>
-                    <?php				
-				if($_REQUEST[status]=='' || $_REQUEST[status]=='All'){
-					$cond = '';
-				}else{
-					$cond = "status='$_REQUEST[status]'";
-				}
-				if($_REQUEST[centre_id]!=''){
-					if($cond == ''){
-						$cond = "centre_id='$_REQUEST[centre_id]'";
-					}else{
-						$cond = $cond." And centre_id='$_REQUEST[centre_id]'";
-					}
-				}else{
-					$cond = "centre_id='$_SESSION[centre_id]'";
-				}
-				//echo "d".$cond;
-				$i = 1;
-				$a="";
-				$year_now=date('Y');
-				foreach($dbf->fetchOrder('student_group',$cond."AND YEAR(start_date) = '$year_now'","group_name ASC") as $val){
-					
-					//Get Unit
-					$val_unit = $dbf->strRecordID("common","*","id='$val[units]'");
-										
-					//Get course according to group
-					$res_course = $dbf->strRecordID("course","*","id='$val[course_id]'");
-					
-					//Count the Number of students withing a group
-					$count_student = $dbf->countRows('student_group_dtls',"parent_id='$val[id]'");
-					
-					//Get Teacher Name according to group
-					$res_teacher = $dbf->strRecordID("teacher","*","id='$val[teacher_id]'");
-					
-					//Starting date of the group
-					$sy = date('Y',strtotime($val[start_date]));
-					$sm = date('m',strtotime($val[start_date]))-1;
-					$sd = date('d',strtotime($val[start_date]));
-					$ssm=(strlen($sm)==1?'0'.$sm:$sm);
-					$ssd=(strlen($sd)==1?'0'.$sd:$sd);
-					//Ending date of the group
-					$ey = date('Y',strtotime($val[end_date]));
-					$em = date('m',strtotime($val[end_date]))-1;
-					$ed = date('d',strtotime($val[end_date]));
-					$eem=(strlen($em)==1?'0'.$em:$em);
-					$eed=(strlen($ed)==1?'0'.$ed:$ed);
-					////Starting date of the group from Units Table (Min date)
-					$num=$dbf->countRows('ped_units',"group_id='$val[id]'");
-					if($num==0){
-						//Starting date of the group
-						$psy = $sy;
-						$psm = $sm;
-						$psd = $sd;
-						$ppsm=(strlen($psm)==1?'0'.$psm:$psm);
-						$ppsd=(strlen($psd)==1?'0'.$psd:$psd);
-						//Ending date of the group
-						$pey = $sy;
-						$pem = $sm;
-						$ped = $sd;
-						$ppem=(strlen($pem)==1?'0'.$pem:$pem);
-						$pped=(strlen($ped)==1?'0'.$ped:$ped);
-					}else{
-						$res_min = $dbf->strRecordID("ped_units","MIN(dated)","group_id='$val[id]'");
-						
-						
-						//Starting date of the group
-						$psy = date('Y',strtotime($res_min["MIN(dated)"]));
-						$psm = date('m',strtotime($res_min["MIN(dated)"]))-1;
-						$psd = date('d',strtotime($res_min["MIN(dated)"]));
-						$ppsm=(strlen($psm)==1?'0'.$psm:$psm);
-						$ppsd=(strlen($psd)==1?'0'.$psd:$psd);
-						$res_min1 = $dbf->strRecordID("ped_units","MAX(dated)","group_id='$val[id]'");						
-						
-						//Ending date of the group
-						$pey = date('Y',strtotime($res_min1["MAX(dated)"]));
-						$pem = date('m',strtotime($res_min1["MAX(dated)"]))-1;
-						$ped = date('d',strtotime($res_min1["MAX(dated)"]));
-						$ppem=(strlen($pem)==1?'0'.$pem:$pem);
-						$pped=(strlen($ped)==1?'0'.$ped:$ped);
-					}
-					
-					$smonth = $sm + 1;
-					
-					if($count_student > 1){
-						$count_student = $count_student. ' students';
-					}else{
-						$count_student = $count_student. ' student';
-					}
-					$title=strtoupper($val['group_name']);
-					$timeSlot=$dbf->printClassTimeFormat($val['group_start_time'],$val['group_end_time']);
-					/*
-					$a =$a.','. '
-					{id: 1, name: "'.$val[group_name].' ('.$res_course[name].')<br>['.$count_student.']<br>Teacher : '.$res_teacher[name].'", series: [{ name: "Start : '.date('d/M/Y',strtotime($val[start_date])).'<br>'.$val[group_time].'", start: new Date('.$sy.','.$sm.','.$sd.'), end: new Date('.$ey.','.$em.','.$ed.') },
-																   { name: "End : '.date('d/M/Y',strtotime($val[end_date])).'<br>'.$val[group_time_end].'", start: new Date('.$psy.','.$psm.','.$psd.'), end: new Date('.$pey.','.$pem.','.$ped.'), color: "#FFF000" }]
-					}
-					';
-					*/
-					//Start:'.date('d/M/Y',strtotime($val[start_date])).'
-					$a =$a.','. '
+	
+	<td align="center" valign="top">
+		<table width="98%" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="10%">
+					<BR/>
+					<table style="width:100px;" border="1">
+					<tr><td><b>Group Size</b></td></tr>
+					<tr><td><b>Group Name</b></td></tr>
+					<tr><td><b>Program</b></td></tr>
+					<tr><td><b>Level</b></td></tr>
+					<tr><td><b>Teacher</b></td></tr>
+					<tr><td><b>Start Date</b></td></tr>
+					<tr><td><b>End Date</b></td></tr>
+					<tr><td><b>Units/Day</b></td></tr>
+					<tr><td><b>Working Days</b></td></tr>
+					<tr><td><b>Time</b></td></tr>
+					<tr><td><b>Duration</b></td></tr>
+					<tr><td><b>Units</b></td></tr>
+					</table>
+				</td>
+				<td width="97%" height="10%" align="left" valign="top">
+					<form name="frm" id="frm" method="post">
+						<table border="0">
+							<tr>
+								<td>&nbsp;</td>
+								<td>
+									Year:
+									<select name="year">
+										<?php $year_select=(empty($_REQUEST['year'])?date('Y'):$_REQUEST['year']);?>
+										<?php foreach(range(2000,(int)date("Y")) as $year):?>
+											<option value="<?php echo $year; ?>" <?php if ($year_select == $year) { echo 'selected="selected"'; } ?>>
+												<?=$year;?>
+											</option>
+										<?php	endforeach;?>
+									</select>
+									Month:
+									<select name="month">
+										<?php $month_select=(empty($_REQUEST['month'])?date('n'):$_REQUEST['month']);?>
+										<?php foreach(range('1', '12') as $m) : ?>
+											<option value="<?php echo $m; ?>" <?php if ($month_select == $m) { echo 'selected="selected"'; } ?>>
+												<?=date("F", mktime(0, 0, 0, $m, 10));?>
+											</option>
+										<?php endforeach; ?>
+									</select>
+									Course:
+									<select name="course">
+										<option value=''>Course</option>
+										<?php $course_option=$dbf->genericQuery("SELECT id,name FROM course ORDER BY id");?>
+										<?php foreach($course_option as $c) : ?>
+											<option value="<?php echo $c['id']; ?>" <?php if ($_REQUEST['course'] == $c['id']) { echo 'selected="selected"'; } ?>>
+												<?=$c['name']?>
+											</option>
+										<?php endforeach; ?>
+									</select>
+									<input type="submit" value="Search" class="btn1" border="0" align="left" />
+									&nbsp;
+									<a href="center_schedule_csv.php?year=<?=$_REQUEST["year"];?>&month=<?=$_REQUEST["month"];?>&course=<?=$_REQUEST["course"];?>"><img src="../images/excel2007.PNG" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_XLS ?>"></a>
+									<!--
+									<a href="print_schedule_word.php?year=<?=$_REQUEST["year"];?>&month=<?=$_REQUEST["month"];?>&course=<?=$_REQUEST["course"];?>"><img src="../images/word2007.png" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_WORD ?>"></a>
+									&nbsp;
+									<a href="center_schedule_csv.php?year=<?=$_REQUEST["year"];?>&month=<?=$_REQUEST["month"];?>&course=<?=$_REQUEST["course"];?>"><img src="../images/excel2007.PNG" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_XLS ?>"></a>
+									&nbsp;
+									<a href="print_schedule_pdf.php?year=<?=$_REQUEST["year"];?>&month=<?=$_REQUEST["month"];?>&course=<?=$_REQUEST["course"];?>"><img src="../images/pdf.png" width="20" height="20" border="0" title="<?php echo ICON_EXPORT_PDF ?>"></a>
+									&nbsp;
+									<a href="print_schedule_print.php?year=<?=$_REQUEST["fname"];?>&month=<?=$_REQUEST["month"];?>&course=<?=$_REQUEST["course"];?>" target="_blank"><img src="../images/print.png" alt="" width="16" height="16" border="0" title="<?php echo STUDENT_ADVISOR_SEARCH_MANAGE_PRINT ?>"></a>
+									-->
+								</td>
+							</tr>
+						</table>
+						<style>
+						#rowScroll { height: <?=$table_height?>; } /* Student Names */
+						#contentScroll { height: 210; width: 1250px; }/*Group Class*/
+						<!--#activeScroll { height: 210; width: 1250px; }/*Group Class*/-->
+						#colScroll { height: 210; width: 1250px; } /* date */
+						</style>
+						<div id="colScroll" style="overflow-x:hidden;">
+						<table border="0" >
+							<?php
+								$year=$_REQUEST['year'];
+								$month=$_REQUEST['month'];
+								$course=$_REQUEST['course'];
+								$centre=$_SESSION['centre_id'];
+								if(!empty($year) && !empty($month) AND !empty($course))
 								{
-									id: 1, name: "'.$val[group_name].' <br/>'.$timeSlot.'",
-									series: [
-												{	name:"Start: '.date('d/M/Y',strtotime($val[start_date])).'<br>End : '.date('d/M/Y',strtotime($val[end_date])).'", 
-													title: "'.$title.'",
-													start: new Date('.$sy.','.$ssm.','.$ssd.'),
-													end: new Date('.$ey.','.$eem.','.$eed.'),
-													color: "#f7c89a"
-												},
-												{	name:"Attendance:", 
-													title: "'.$title.'",
-													start: new Date('.$psy.','.$ppsm.','.$ppsd.'),
-													end: new Date('.$pey.','.$ppem.','.$pped.'),
-													color: "#FFF000"
-												}
-											]	
-								}';
-				}
-				$a='['.substr($a,1).']';
-				?>
-                <script language="JavaScript" type="text/javascript">
-                var ganttData =<?php echo $a;?>;
-								/*$("#ganttChart").gantt({source: data, navigate: 'scroll', scale: 'days', maxScale: 'weeks', minScale: 'hours'});*/
-                </script></td>
-                </tr>
-              </table></td>
-            </tr>
-            <tr>
-              <td height="300" align="left" valign="top" bgcolor="#EFEFEF">&nbsp;</td>
-            </tr>
-          </table>
-        </form>
-        
-        </td>
-      </tr>
-    </table></td>
+									$cond="YEAR(sg.start_date) = '$year' AND MONTH(sg.start_date) = '$month' AND sg.course_id='$course' AND sg.centre_id='$centre'";
+								}
+								elseif(!empty($year) && !empty($month) AND empty($course))
+								{
+									$cond="YEAR(sg.start_date) = '$year' AND MONTH(sg.start_date) = '$month' AND sg.centre_id='$centre'";
+								}
+								else
+								{$cond="";}
+								$class_sql=$dbf->genericQuery("	SELECT sg.id,sg.group_id,sg.group_name,sg.units,sg.unit_per_day,sg.class_per_week,sg.class_day,sg.start_date,sg.end_date,sg.group_start_time,sg.group_end_time,t.name as teacher,c.code,c.name as course_name
+																		FROM student_group sg
+																		INNER JOIN teacher t ON sg.teacher_id=t.id
+																		INNER JOIN course c ON sg.course_id=c.id
+																		WHERE $cond
+																		ORDER BY sg.start_date
+																	");
+								//CONVERT(SUBSTRING(group_name, 10), SIGNED INTEGER)
+							?>
+							<tr>
+								<? foreach($class_sql as $c_sql):?>
+										<td colspan="2" width="250" class="pedtext_normal">
+											<table style="width:250px;" border="1">
+												<tr><td align="center"><?=$dbf->getDataFromTable("common","name","id='$c_sql[group_id]'")?></td></tr>
+												<tr><td align="center"><b><a href="group_manage_edit.php?id=<?=$c_sql['id']?>"><?=$c_sql['group_name']?></a></b></td></tr>
+												<tr><td align="center"><?=$c_sql['code']?></td></tr>
+												<tr><td align="center"><?=$c_sql['course_name']?></td></tr>
+												<tr><td align="center"><?=$c_sql['teacher']?></td></tr>
+												<tr><td align="center"><?=date("d/m/Y", strtotime($c_sql['start_date']))?></td></tr>
+												<tr><td align="center"><?=date("d/m/Y", strtotime($c_sql['end_date']))?></td></tr>
+												<tr><td align="center"><?=$c_sql['unit_per_day']?>units/day</td></tr>
+												<tr>
+													<td align="center">
+														<?#=(empty($c_sql['class_day'])?"N/A":$c_sql['class_day'])?>
+														<?php
+															if(empty($c_sql['class_day']))
+															{echo "N/A";}
+															else
+															{
+																$days=explode(',',$c_sql['class_day']);
+																foreach($days as $dy):
+																	echo ucfirst($dy)."&nbsp;"; 
+																endforeach;
+															}
+														?>
+													</td>
+												</tr>
+												<tr><td align="center"><?=$c_sql['group_start_time']?>-<?=$c_sql['group_end_time']?></td></tr>
+												<tr>
+													<td align="center">
+														<?php
+															if(empty($c_sql['class_per_week']) && empty($c_sql['class_day']))
+															{$class_duration=$dbf->getDataFromTable("group_size","week_id","group_id='$c_sql[group_id]'");}
+															else
+															{
+																$frequency=floor($c_sql['units']/$c_sql['unit_per_day']/$c_sql['class_per_week']);
+																$class_duration=($frequency>1?$frequency."&nbsp;weeks":$frequency."&nbsp;week");
+															}
+														?>
+														<?=$class_duration?>
+													</td>
+												</tr>
+												<tr><td align="center"><?=$c_sql['units']?></td></tr>
+												<?$groups[]=$c_sql[id];?>
+											</table><br/>
+										</td>
+								<?endforeach;?>
+							</tr>
+						</table>
+						</div>
+					</form>
+				</td>
+			</tr>
+			
+			<tr>
+				<td width="10%" valign="top">
+					<table border="1">
+					<tr><td><b>Active</b></td></tr>
+					<tr><td>*Legend:</td></tr>
+					<tr><td><font color="red">Remaining Money</font></td></tr>
+					<tr><td><font color="#52D017">Full Payment</font></td></tr>
+					<tr><td><font color="black">No Payment</font></td></tr>
+					</table>
+				</td>
+				<td width="97%" align="left" valign="top">
+				<div id="contentScroll" style="overflow:auto">
+				<table border="0">
+						<tr>
+							<?php 
+								
+								
+								//$count_groups=count($groups);
+								//echo var_dump($class_student);
+								foreach($groups as $g):
+									$class_student=$dbf->genericQuery("SELECT student_id,course_id FROM student_group_dtls WHERE parent_id='$g'");
+							?>
+								<td colspan="2" width="220" class="pedtext_normal" valign="top">
+									<table style="width:250px;" border="1">
+									<tr><td align="center"><b><?=$dbf->getDataFromTable("student_group","group_name","id='$g'")?></b>(<?="STU:".count($class_student)?>)</td></tr>
+									<?php
+										
+										
+										
+										foreach($class_student as $cs):
+										$corporate=$dbf->getDataFromTable("student","corporate","id='$cs[student_id]'");
+										$font_weight=(empty($corporate)?"normal":"bold");
+										$invoice=$dbf->getInvoiceCode($cs['student_id'],$cs['course_id']);
+									?>
+										<tr>
+											<td align="center">
+												<?php
+													$balance = $dbf->BalanceAmount($cs['student_id'],$cs['course_id']);
+													$stu_course_fee=$dbf->getDataFromTable("course_fee","fees","course_id='$cs[course_id]'");
+													if($balance==0)
+													{$ws_link="#52D017";}
+													elseif($balance>0)
+													{$ws_link=($balance==$stu_course_fee?"black":"red");}
+													else{$ws_link="black";}
+												?>
+												<a href="single-home.php?student_id=<?=$cs['student_id']?>" style="color:<?=$ws_link?>;font-weight:<?=$font_weight?>">
+													<?=$dbf->acctPrintStudentName($cs['student_id']);?>
+												</a>
+											</td>
+										</tr>
+									<?php
+										endforeach;
+									?>
+									</table>
+								</td>
+							<?	endforeach;?>
+						</tr>
+				</table>
+				</div>
+				</td>
+			</tr>
+			<tr>
+				<td width="10%" valign="top">
+					&nbsp;
+				</td>
+				<td width="97%" height="10%" align="left" valign="top">
+					<table border="0">
+						<tr>
+							<td colspan="2" width="180" class="pedtext_normal" valign="top">
+								<center><b>On Hold</b></center> 
+								<?php
+										if(empty($course))
+										{$onhold_cond="";}//$waiting_cond="sm.status_id='3' AND s.centre_id='$centre'";
+										else{$onhold_cond="sm.status_id='6' AND sf.course_id='$course' AND sf.type='on hold'  AND s.centre_id='$centre'";}
+										$onhold_student=$dbf->genericQuery("	SELECT DISTINCT(s.id),sf.course_id 
+																				FROM student s
+																				INNER JOIN student_moving sm ON sm.student_id=s.id
+																				INNER JOIN student_fees sf ON sf.student_id=s.id
+																				WHERE $onhold_cond
+																				ORDER BY sf.created_date DESC
+																				LIMIT 0,50");
+										foreach($onhold_student as $ohs):
+											$corporate=$dbf->getDataFromTable("student","corporate","id='$ohs[id]'");
+											$font_weight=(empty($corporate)?"normal":"bold");
+											$balance = $dbf->BalanceAmount($ohs['id'],$ohs['course_id']);
+											$stu_course_fee=$dbf->getDataFromTable("course_fee","fees","course_id='$ohs[course_id]'");
+											if($balance==0)
+											{$ws_link="#52D017";}
+											elseif($balance>0)
+											{$ws_link=($balance==$stu_course_fee?"black":"red");}
+											else{$ws_link="black";}
+									?>
+										<table style="width:250px;" border="1">
+										<tr>
+											<td align="center">
+												<a href="single-home.php?student_id=<?=$ohs['id']?>" style="color:<?=$ws_link?>;font-weight:<?=$font_weight?>">
+													<?=$dbf->acctPrintStudentName($ohs['id']);?>
+												</a>
+											</td>
+										</tr>
+										</table>
+									<?php
+										endforeach;
+									?>
+							</td>
+							<td colspan="2" width="180" class="pedtext_normal" valign="top">
+								<center><b>Waiting</b></center> 
+								<?php
+										if(empty($course))
+										{$waiting_cond="";}//$waiting_cond="sm.status_id='3' AND s.centre_id='$centre'";
+										else{$waiting_cond="sm.status_id='3' AND sf.course_id='$course' AND sf.type='advance' AND s.centre_id='$centre'";}
+										$waiting_student=$dbf->genericQuery("	SELECT DISTINCT(s.id),sf.course_id 
+																				FROM student s
+																				INNER JOIN student_moving sm ON sm.student_id=s.id
+																				INNER JOIN student_fees sf ON sf.student_id=s.id
+																				WHERE $waiting_cond
+																				ORDER BY sf.created_date DESC
+																				LIMIT 0,50");
+										foreach($waiting_student as $ws):
+											$corporate=$dbf->getDataFromTable("student","corporate","id='$ws[id]'");
+											$font_weight=(empty($corporate)?"normal":"bold");
+											$balance = $dbf->printBalanceAmount($ws['id'],$course);//BalanceAmount($ws['id'],$ws['course_id']);
+											if($balance==0)
+													{$ws_link="#52D017";}
+													elseif($balance>=0)
+													{$ws_link="red";}
+													else{$ws_link="black";}
+									?>
+										<table style="width:250px;" border="1">
+											<tr>
+												<td align="center">
+													<a href="single-home.php?student_id=<?=$ws['id']?>" style="color:<?=$ws_link?>;font-weight:<?=$font_weight?>">
+														<?=$dbf->acctPrintStudentName($ws['id']);?>
+													</a>
+												</td>
+											</tr>
+										</table>
+									<?php
+										endforeach;
+									?>
+							</td>
+							<td colspan="2" width="180" class="pedtext_normal" valign="top">
+								<center><b>Potential</b></center>
+								<?php
+										if(empty($course))
+										{$potential_cond="";}//$waiting_cond="sm.status_id='3' AND s.centre_id='$centre'";
+										else{$potential_cond="sm.status_id='2' AND sc.course_id='$course' AND s.centre_id='$centre'";}
+										$potential_student=$dbf->genericQuery("	SELECT s.id 
+																				FROM student s
+																				INNER JOIN student_moving sm ON sm.student_id=s.id
+																				INNER JOIN student_course sc ON sc.student_id=s.id
+																				WHERE $potential_cond
+																				ORDER BY s.id DESC
+																				LIMIT 0,50");
+										foreach($potential_student as $ps):
+										$corporate=$dbf->getDataFromTable("student","corporate","id='$ps[id]'");
+											$font_weight=(empty($corporate)?"normal":"bold");
+										$ws_link="black";
+									?>
+										<table style="width:250px;" border="1">
+										<tr>
+											<td align="center">
+												<a href="single-home.php?student_id=<?=$ps['id']?>" style="color:<?=$ws_link?>;;font-weight:<?=$font_weight?>">
+													<?=$dbf->acctPrintStudentName($ps['id']);?>
+												</a>
+											</td>
+										</tr>
+										</table>
+									<?php
+										endforeach;
+									?>
+							</td>
+						</tr>
+					</table>
+				</td>
+				
+			</tr>
+			<!--
+			<tr>
+				<td width="10%" valign="top">
+					<table border="1">
+						<tr><td><b>Waiting</b></td></tr>
+					</table>
+				</td>
+				<td width="97%" align="left" valign="top">
+				<table border="0">
+						<tr>
+							<?php 
+								
+								
+								//$count_groups=count($groups);
+								//echo var_dump($class_student);
+								//foreach($groups as $g):
+							?>
+								<td colspan="2" width="180" class="pedtext_normal">
+									
+									<?php
+										if(empty($course))
+										{$waiting_cond="";}//$waiting_cond="sm.status_id='3' AND s.centre_id='$centre'";
+										else{$waiting_cond="sm.status_id='3' AND sc.course_id='$course' AND s.centre_id='$centre'";}
+										$waiting_student=$dbf->genericQuery("	SELECT s.id,sc.course_id 
+																				FROM student s
+																				INNER JOIN student_moving sm ON sm.student_id=s.id
+																				INNER JOIN student_course sc ON sc.student_id=s.id
+																				WHERE $waiting_cond
+																				LIMIT 0,10");
+										foreach($waiting_student as $ws):
+										
+											$balance = $dbf->printBalanceAmount($ws['id'],$course);//BalanceAmount($ws['id'],$ws['course_id']);
+											if($balance==0)
+													{$ws_link="#52D017";}
+													elseif($balance>=0)
+													{$ws_link="red";}
+													else{$ws_link="black";}
+									?>
+										<table style="width:250px;" border="1">
+											<tr>
+												<td align="center">
+													<a href="single-home.php?student_id=<?=$ws['id']?>" style="color:<?=$ws_link?>">
+														<?=$dbf->acctPrintStudentName($ws['id']);?>
+													</a>
+												</td>
+											</tr>
+										</table>
+									<?php
+										endforeach;
+									?>
+									
+								</td>
+							<?	//endforeach;?>
+						</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td width="10%" valign="top">
+					<table border="1">
+						<tr><td><b>Potential</b></td></tr>
+					</table>
+				</td>
+				</td>
+				<td width="97%" align="left" valign="top">
+				<table border="0">
+						<tr>
+							<?php 
+								
+								
+								//$count_groups=count($groups);
+								//echo var_dump($class_student);
+								//foreach($groups as $g):
+							?>
+								<td colspan="2" width="180" class="pedtext_normal">
+									
+									<?php
+										if(empty($course))
+										{$potential_cond="";}//$waiting_cond="sm.status_id='3' AND s.centre_id='$centre'";
+										else{$potential_cond="sm.status_id='2' AND sc.course_id='$course' AND s.centre_id='$centre'";}
+										$potential_student=$dbf->genericQuery("	SELECT s.id 
+																				FROM student s
+																				INNER JOIN student_moving sm ON sm.student_id=s.id
+																				INNER JOIN student_course sc ON sc.student_id=s.id
+																				WHERE $potential_cond
+																				ORDER BY s.created_datetime");
+										foreach($potential_student as $ps):
+										$ws_link="black";
+									?>
+										<table style="width:250px;" border="1">
+										<tr>
+											<td align="center">
+												<a href="single-home.php?student_id=<?=$ps['id']?>" style="color:<?=$ws_link?>">
+													<?=$dbf->acctPrintStudentName($ps['id']);?>
+												</a>
+											</td>
+										</tr>
+										</table>
+									<?php
+										endforeach;
+									?>
+									
+								</td>
+							<?	//endforeach;?>
+						</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td width="10%" valign="top">
+					<table border="1">
+						<tr><td><b>On Hold</b></td></tr>
+					</table>
+				</td>
+				</td>
+				<td width="97%" align="left" valign="top">
+				<table border="0">
+						<tr>
+							<?php 
+								
+								
+								//$count_groups=count($groups);
+								//echo var_dump($class_student);
+								//foreach($groups as $g):
+							?>
+								<td colspan="2" width="180" class="pedtext_normal">
+									
+									<?php
+										if(empty($course))
+										{$onhold_cond="";}//$waiting_cond="sm.status_id='3' AND s.centre_id='$centre'";
+										else{$onhold_cond="sm.status_id='6' AND sc.course_id='$course' AND s.centre_id='$centre'";}
+										$onhold_student=$dbf->genericQuery("	SELECT s.id,sc.course_id 
+																				FROM student s
+																				INNER JOIN student_moving sm ON sm.student_id=s.id
+																				INNER JOIN student_course sc ON sc.student_id=s.id
+																				WHERE $onhold_cond
+																				LIMIT 0,10");
+										foreach($onhold_student as $ohs):
+											$balance = $dbf->BalanceAmount($ohs['id'],$ohs['course_id']);
+											if($balance==0)
+											{$ws_link="#52D017";}
+											elseif($balance>0)
+											{$ws_link="red";}
+											else{$ws_link="black";}
+									?>
+										<table style="width:250px;" border="1">
+										<tr>
+											<td align="center">
+												<a href="single-home.php?student_id=<?=$ohs['id']?>" style="color:<?=$ws_link?>">
+													<?=$dbf->acctPrintStudentName($ohs['id']);?>
+												</a>
+											</td>
+										</tr>
+										</table>
+									<?php
+										endforeach;
+									?>
+									
+								</td>
+							<?	//endforeach;?>
+						</tr>
+				</table>
+				</td>
+			</tr>
+			-->
+		</table>
+		<script type="text/javascript">
+			var content = $("#contentScroll");
+			//var active = $("#activeScroll");
+			var headers = $("#colScroll");
+			var rows = $("#rowScroll");
+			content.scroll(function () {headers.scrollLeft(content.scrollLeft());rows.scrollTop(content.scrollTop());});
+			//active.scroll(function () {headers.scrollLeft(active.scrollLeft());rows.scrollTop(active.scrollTop());});
+		</script>
+	</td>
   </tr>
   <tr>
     <td align="center" valign="top">&nbsp;</td>
@@ -343,221 +613,6 @@ $count = $res_logout["name"]; // Set timeout period in seconds
   </tr>
   <tr>
     <td height="104" align="left" valign="top"><?php include 'header_right.php';?></td>
-  </tr>
-  <tr>
-    <td align="left" valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
-      <tr>
-        <td width="3%"><p>&nbsp;</p>
-          <p>&nbsp;</p>
-          <p>&nbsp;</p>
-          <p>&nbsp;</p>
-          <p>&nbsp;</p>
-          <p>&nbsp;</p>
-          <p>&nbsp;</p>
-          <p>&nbsp;</p></td>
-        <td width="97%" align="left" valign="top">
-        
-        <form name="frm" id="frm" method="post">
-          <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#000000;">
-            <tr>
-              <td height="0" align="left" valign="middle" bgcolor="#b4b4b4" style="background:url(../images/footer_repeat.png) repeat-x;"><table width="100%" border="0" cellspacing="0">
-                <tr>
-                  
-                  <td width="22%">&nbsp;</td>
-                  <td width="8%" align="left">&nbsp;</td>
-                  <td width="8%" align="left">&nbsp;</td>
-                  <td width="8%" align="left">&nbsp;</td>
-                  <td width="54%" height="30" align="right" class="logintext"><?php echo constant("STUDENT_ADVISOR_CENTRE_SCHEDULE_HEADTEXT");?></td>
-                </tr>
-              </table></td>
-            </tr>
-            <tr>
-              <td height="40" align="right" valign="middle" bgcolor="#EFEFEF" style="padding-left:15px;">
-                <table width="350" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#993030;">
-                    <tr>
-                      
-                      <td width="10" align="left" valign="middle" bgcolor="#FFCB7D">&nbsp;</td>
-                      <?php
-                      if($_REQUEST['centre_id'] == ''){
-						$cid = $_SESSION['centre_id'];
-					  }else{
-						  $cid = $_REQUEST['centre_id'];
-					  }
-					  ?>
-                      <td width="270" align="right" valign="middle" bgcolor="#FFCB7D">
-                          <select name="centre_id" id="centre_id"  style="border:solid 1px; border-color:#FFCC33; height:20px; width:210px;" onchange="javascript:document.frm.action='centre_schedule.php',document.frm.submit();">
-                            <option value="">--<?php echo constant("ALL_CENTER");?>--</option>
-                            <?php
-                                foreach($dbf->fetchOrder('centre',"","name") as $val1) {	
-                              ?>
-                            <option value="<?php echo $val1[id];?>" <?php if($cid==$val1["id"]) { ?> selected="selected" <?php } ?>><?php echo $val1[name];?></option>
-                            <?php
-                               }
-                               ?>
-                          </select>
-                      </td>
-                      <td width="70" height="35" align="right" valign="middle" bgcolor="#FFCB7D" class="leftmenu"><?php echo constant("ADMIN_VIEW_GROUP_SIZE_CENTRE");?></td>
-                    </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td height="40" align="right" valign="middle" bgcolor="#EFEFEF" style="padding-left:15px;">
-              <table width="350" border="0" cellspacing="0" cellpadding="0" style="border:solid 1px; border-color:#999999;">
-                <tr>
-                  
-                  <td width="46" height="25" align="right" valign="middle" bgcolor="#DDDDDD" class="mycon"><?php echo constant("CD_CENTRE_SCHEDULE_All");?></td>
-                  <td width="24" align="left" valign="middle" bgcolor="#DDDDDD"><input name="status" type="radio" id="status" value="All" checked="checked" onchange="javascript:document.frm.action='centre_schedule.php',document.frm.submit();" /></td>
-                  <td width="69" align="right" valign="middle" bgcolor="#DDDDDD" class="mycon"><?php echo constant("CD_CENTRE_SCHEDULE_NOTSATRTED");?></td>
-                  <td width="20" align="left" valign="middle" bgcolor="#DDDDDD"><input type="radio" name="status" id="status" value="Not Started" <?php if($_REQUEST[status]=="Not Started") {?> checked="checked" <?php } ?> onchange="javascript:document.frm.action='centre_schedule.php',document.frm.submit();"/></td>
-                  <td width="71" align="right" valign="middle" bgcolor="#DDDDDD" class="mycon"><?php echo constant("CD_CENTRE_SCHEDULE_CONTINUE");?></td>
-                  <td width="20" align="left" valign="middle" bgcolor="#DDDDDD" class="mycon">
-                    <input type="radio" name="status" id="status" value="Continue" <?php if($_REQUEST[status]=="Continue") {?> checked="checked" <?php } ?> onchange="javascript:document.frm.action='centre_schedule.php',document.frm.submit();"/>
-                  </td>
-                  <td width="80" align="right" valign="middle" bgcolor="#DDDDDD" class="mycon"><?php echo constant("STUDENT_ADVISOR_AUDITING_COMPLETED");?></td>
-                  <td width="20" align="left" valign="middle" bgcolor="#DDDDDD" class="mycon">
-                    <input type="radio" name="status" id="status" value="Completed" <?php if($_REQUEST[status]=="Completed") {?> checked="checked" <?php } ?> onchange="javascript:document.frm.action='centre_schedule.php',document.frm.submit();"/>
-                  </td>
-                </tr>
-              </table></td>
-            </tr>
-            <tr>
-              <td align="left" valign="top" bgcolor="#EFEFEF"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                <tr bgcolor="#EFEFEF" class="mycon">
-                  <td align="left" valign="middle" style="padding-left:15px;"><div id="ganttChart"></div>
-                    <!--<link rel="stylesheet" type="text/css" href="js_gchart/jquery-ui-1.8.4.css" />-->
-                    <!--<link rel="stylesheet" type="text/css" href="js_gchart/reset.css" />-->
-                    <link rel="stylesheet" type="text/css" href="js_gchart/jquery.ganttView.css" />
-                    <script type="text/javascript" src="js_gchart/jquery-1.4.2.js"></script>
-                    <script type="text/javascript" src="js_gchart/date.js"></script>
-                    <script type="text/javascript" src="js_gchart/jquery-ui-1.8.4.js"></script>
-
-                    <script type="text/javascript" src="js_gchart/jquery.ganttView.js"></script>
-                    <script type="text/javascript">
-                    $(function () {
-                        $("#ganttChart").ganttView({ 
-                            data: ganttData,
-                            slideWidth: 1000,
-                            behavior: {
-                                onClick: function (data) { 
-                                    var msg = "You clicked on an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
-                                    $("#eventMessage").text(msg);
-                                },
-                                onResize: function (data) { 
-                                    var msg = "You resized an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
-                                    $("#eventMessage").text(msg);
-                                },
-                                onDrag: function (data) { 
-                                    var msg = "You dragged an event: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
-                                    $("#eventMessage").text(msg);
-                                }
-                            }
-                        });
-                        
-                        // $("#ganttChart").ganttView("setSlideWidth", 600);
-                    });
-                </script>
-                    <?php				
-				if($_REQUEST['status']=='' || $_REQUEST['status']=='All'){
-					$cond = '';
-				}else{
-					$cond = "status='$_REQUEST[status]'";
-				}
-				if($_REQUEST[centre_id]!=''){
-					if($cond == ''){
-						$cond = "centre_id='$_REQUEST[centre_id]'";
-					}else{
-						$cond = $cond." And centre_id='$_REQUEST[centre_id]'";
-					}
-				}else{
-					$cond = "centre_id='$_SESSION[centre_id]'";
-				}
-				
-				$i = 1;
-				$a="";
-				foreach($dbf->fetchOrder('student_group',$cond,"") as $val){
-					
-					//Get Unit
-					$val_unit = $dbf->strRecordID("common","*","id='$val[units]'");
-										
-					//Get course according to group
-					$res_course = $dbf->strRecordID("course","*","id='$val[course_id]'");
-					
-					//Count the Number of students withing a group
-					$count_student = $dbf->countRows('student_group_dtls',"parent_id='$val[id]'");
-					
-					//Get Teacher Name according to group
-					$res_teacher = $dbf->strRecordID("teacher","*","id='$val[teacher_id]'");
-					
-					//Starting date of the group
-					$sy = date('Y',strtotime($val[start_date]));
-					$sm = date('m',strtotime($val[start_date]))-1;
-					$sd = date('d',strtotime($val[start_date]));
-					
-					//Ending date of the group
-					$ey = date('Y',strtotime($val[end_date]));
-					$em = date('m',strtotime($val[end_date]))-1;
-					$ed = date('d',strtotime($val[end_date]));
-					
-					////Starting date of the group from Units Table (Min date)
-					$num=$dbf->countRows('ped_units',"group_id='$val[id]'");
-					if($num==0){
-						//Starting date of the group
-						$psy = $sy;
-						$psm = $sm;
-						$psd = $sd;
-						
-						//Ending date of the group
-						$pey = $sy;
-						$pem = $sm;
-						$ped = $sd;
-					}else{
-						$res_min = $dbf->strRecordID("ped_units","MIN(dated)","group_id='$val[id]'");
-						
-						
-						//Starting date of the group
-						$psy = date('Y',strtotime($res_min["MIN(dated)"]));
-						$psm = date('m',strtotime($res_min["MIN(dated)"]))-1;
-						$psd = date('d',strtotime($res_min["MIN(dated)"]));
-						
-						$res_min = $dbf->strRecordID("ped_units","MAX(dated)","group_id='$val[id]'");						
-						
-						//Ending date of the group
-						$pey = date('Y',strtotime($res_min["MAX(dated)"]));
-						$pem = date('m',strtotime($res_min["MAX(dated)"]))-1;
-						$ped = date('d',strtotime($res_min["MAX(dated)"]));
-					}
-					
-					$smonth = $sm + 1;
-					
-					if($count_student > 1){
-						$count_student = $count_student. ' students';
-					}else{
-						$count_student = $count_student. ' student';
-					}
-					$a =$a.','. '
-					{id: 1, name: "'.$val[group_name].' ('.$res_course[name].')<br>['.$count_student.']<br>Teacher : '.$res_teacher[name].'", series: [{ name: "Start : '.date('d/M/Y',strtotime($val[start_date])).'<br>'.$val[group_time].'", start: new Date('.$sy.','.$sm.','.$sd.'), end: new Date('.$ey.','.$em.','.$ed.') },
-																   { name: "End : '.date('d/M/Y',strtotime($val[end_date])).'<br>'.$dbf->GetGroupTime($val[id]).'", start: new Date('.$psy.','.$psm.','.$psd.'), end: new Date('.$pey.','.$pem.','.$ped.'), color: "#FFF000" }]
-					}
-					';
-				}
-				$a='['.substr($a,1).']';
-				?>
-                    <script language="JavaScript" type="text/javascript">
-                var ganttData = <?php echo $a;?>;
-                </script></td>
-                </tr>
-              </table></td>
-            </tr>
-            <tr>
-              <td height="300" align="left" valign="top" bgcolor="#EFEFEF">&nbsp;</td>
-            </tr>
-          </table>
-        </form>
-        
-        </td>
-      </tr>
-    </table></td>
   </tr>
   <tr>
     <td align="center" valign="top">&nbsp;</td>

@@ -284,7 +284,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 </a></td>
                 <td width="4%" align="center" valign="middle" ><a href="search_advance.php?student_id=<?php echo $val["id"];?>">
                 <img src="../images/ex-btn.png" width="16" height="16" border="0" title="<?php echo ICON_ADVANCE ?>"></a></td>
-                <td width="4%" align="center" valign="middle" ><a href="search_manage.php?student_id=<?php echo $val["id"];?>">
+                <td width="4%" align="center" valign="middle" ><a href="single-payment.php?student_id=<?php echo $val["id"];?>">
                 <img src="../images/additional.png" width="15" height="15"  border="0" title="<?php echo ICON_DOLLAR ?>">             
                 </a></td>
                 <td width="4%" align="center" valign="middle" ><?php if($num_comment!=0){?>

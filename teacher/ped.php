@@ -122,6 +122,20 @@ function countdown_trigger(){
 		window.location.href='../logout.php';
 	}
 }
+function attendance(AttendSlct,Shft,StuId,Units)
+{
+	
+	
+	var attendVar=document.getElementById(AttendSlct).value;
+	alert(attendVar+'-'+Shft+'-'+StuId+'-'+Units);
+	for (i = 1; i < Units; i++)
+	{
+		var AssignSelect=ped_attendance[1][2244][1];
+		//var selectBox=document.getElementById(AssignSelect);
+		//selectBox.value = attendVar;
+		document.getElementById(AssignSelect).value = attendVar;
+	}
+}
 </script>
 <?php
 //Get from the table
@@ -279,7 +293,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   
                   ?>
                   <tr>
-                    <td width="35%" height="25" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_UNITS");?> : <?php echo $res_teacher_group[units];#$res_size[units];?></td>
+                    <td width="35%" height="25" align="left" valign="middle" class="pedtext"><?php echo constant("STUDENT_ADVISOR_PED_UNITS");?> : <?php echo $res_teacher_group[units];//$res_size[units];?></td>
                     <td width="65%" align="left" valign="middle" class="pedtext"><?php echo constant("CD_EP_ADDING_STUDENT_GROUPADD");?> : <?php echo $res_teacher_group[group_name];/*$res_group_name[name];*/?></td>
                     </tr>
                   <tr>
@@ -933,7 +947,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						//Get record from PED units
 						$res_unit = $dbf->strRecordID("ped_units","dated,material_overed,homework,teacher_id","group_id='$_REQUEST[cmbgroup]' AND units='$i'");
 						//Get the Number of Present in a particular Units
-						$present = $dbf->strRecordID("ped_attendance","COUNT(id) as total","attend_date='$res_unit[dated]' And group_id='$_REQUEST[cmbgroup]' And (shift1='X' OR shift2='X' OR shift3='X' OR shift4='X' OR shift5='X' OR shift6='X' OR shift7='X' OR shift8='X' OR shift9='X' OR shift1='L' OR shift2='L' OR shift3='L' OR shift4='L' OR shift5='L' OR shift6='L' OR shift7='L' OR shift8='L' OR shift9='L')");
+						$ped_attendance_table=($res_teacher_group['status']=='Completed')?"ped_attendance_complete":"ped_attendance";
+						$present = $dbf->strRecordID($ped_attendance_table,"COUNT(id) as total","attend_date='$res_unit[dated]' And group_id='$_REQUEST[cmbgroup]' And (shift1='X' OR shift2='X' OR shift3='X' OR shift4='X' OR shift5='X' OR shift6='X' OR shift7='X' OR shift8='X' OR shift9='X' OR shift1='L' OR shift2='L' OR shift3='L' OR shift4='L' OR shift5='L' OR shift6='L' OR shift7='L' OR shift8='L' OR shift9='L')");
 						//$present_unit_per_day=$dbf->getDataFromTable("student_group","unit_per_day","id='$_REQUEST[cmbgroup]'");
 						$res_teacher = $dbf->strRecordID("teacher","*","id='$res_teacher_group[teacher_id]'");
 						if($i==9 || $i==10){$row_bg_color="#CCCCCC";}
@@ -1183,15 +1198,16 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 										<td align="center" bgcolor="#E9EFEF" style="border:0;padding:1px;">&nbsp;</td>
 										<td bgcolor="#E9EFEF"  height="33"  align="center">
 										<?php
-													$status_shift1 = $dbf->getDataFromTable("ped_attendance","shift1","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
-													$status_shift2 = $dbf->getDataFromTable("ped_attendance","shift2","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
-													$status_shift3 = $dbf->getDataFromTable("ped_attendance","shift3","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
-													$status_shift4 = $dbf->getDataFromTable("ped_attendance","shift4","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
-													$status_shift5 = $dbf->getDataFromTable("ped_attendance","shift5","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
-													$status_shift6 = $dbf->getDataFromTable("ped_attendance","shift6","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
-													$status_shift7 = $dbf->getDataFromTable("ped_attendance","shift7","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
-													$status_shift8 = $dbf->getDataFromTable("ped_attendance","shift8","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
-													$status_shift9 = $dbf->getDataFromTable("ped_attendance","shift9","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+													$ped_attendance_table=($res_teacher_group['status']=='Completed')?"ped_attendance_complete":"ped_attendance";
+													$status_shift1 = $dbf->getDataFromTable($ped_attendance_table,"shift1","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+													$status_shift2 = $dbf->getDataFromTable($ped_attendance_table,"shift2","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+													$status_shift3 = $dbf->getDataFromTable($ped_attendance_table,"shift3","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+													$status_shift4 = $dbf->getDataFromTable($ped_attendance_table,"shift4","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+													$status_shift5 = $dbf->getDataFromTable($ped_attendance_table,"shift5","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+													$status_shift6 = $dbf->getDataFromTable($ped_attendance_table,"shift6","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+													$status_shift7 = $dbf->getDataFromTable($ped_attendance_table,"shift7","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+													$status_shift8 = $dbf->getDataFromTable($ped_attendance_table,"shift8","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
+													$status_shift9 = $dbf->getDataFromTable($ped_attendance_table,"shift9","ped_id='$res_ped[id]' AND student_id='$r[id]' AND unit='$shift_count'");
 													$shift_no = 1;
 													for($k=0;$k<$no_shift;$k++)
 													{
@@ -1206,7 +1222,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 														else if($k == 8){$status_shift1 = $status_shift9;}
 										?>
 												<input type="hidden" name="ped_attendance[<?=$i?>][student][<?=$r['id']?>][student_id]" id="ped_attendance[<?=$i?>][student][<?=$r['id']?>][student_id]" value="<?php echo $r["id"];?>">
-												<select  name="ped_attendance[<?=$i?>][student][<?=$r['id']?>][<?=$k+1?>]" id="ped_attendance[<?=$i?>][<?=$r['id']?>][<?=$k+1?>]">
+												<select  name="ped_attendance[<?=$i?>][student][<?=$r['id']?>][<?=$k+1?>]" id="ped_attendance[<?=$i?>][<?=$r['id']?>][<?=$k+1?>]" onChange="attendance('ped_attendance[<?=$i?>][<?=$r['id']?>][<?=$k+1?>]',<?=$i?>,<?=$r['id']?>,<?=$no_shift?>);">
 													<option value=""></option>
 													<option value="X" <?php if($status_shift1=="X") { ?> selected="selected" <?php } ?>>X</option>
 													<option value="E" <?php if($status_shift1=="E") { ?> selected="selected" <?php } ?>>E</option>

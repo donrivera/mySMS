@@ -87,6 +87,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
     <td align="left" valign="top"><table width="98%" border="0" cellpadding="0" cellspacing="0">
       <tr>
         <td width="19%" align="left" valign="top">
+			
+			
         <?php include 'single-menu.php';?>
         </td>
         <td width="2%"><p>&nbsp;</p>
@@ -106,9 +108,30 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               <tr>
                 <td width="25%" height="30" align="left" class="logintext"> <?php echo constant("STUDENT_INFORMATON");?></td>
                 <td width="6%" id="lblname">&nbsp;</td>
-                <td width="10%" align="left">&nbsp;</td>
+                <td width="10%" align="left">
+					<input type="hidden" name="student_id" value="<?=$student_id?>"/>
+					<!--
+					<select name="course_id" id="course_id"  style="border:solid 1px; border-color:#FFCC33; height:20px; width:210px;" onChange="javascript:document.frm.action='single-home.php?student_id=<?=$student_id?>',document.frm.submit();">
+                    <option value="">-- Select Course --</option>
+                    <?php
+						$query=$dbf->genericQuery("
+													SELECT DISTINCT sc.course_id as id ,c.name 
+													FROM student_course sc 
+													INNER JOIN course c ON c.id=sc.course_id
+													WHERE sc.student_id='$student_id' 
+													");
+						foreach($query as $q) {
+					  ?>
+                    <option value="<?php echo $q[id];?>" <?php if($course_id==$q["id"]) { ?> selected="selected" <?php }?>><?php echo $q[name];?></option>
+					
+                    <?php
+					   }
+					   ?>
+                  </select>
+				  -->
+				</td>
                 <td width="41%" align="left">&nbsp;</td>
-                <td width="18%" align="right"><a href="single-student.php">
+                <td width="18%" align="right"><a href="search.php">
                     <input type="button" value="<?php echo constant("btn_cancel_btn2");?>" class="btn1" border="0" align="left" /></a></td>
               </tr>
               <tr>
@@ -137,7 +160,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   </tr>
                   <tr>
                     <td width="25%" height="22" align="right" valign="middle" class="pedtext"><?php echo constant("ADMIN_TEACHER1_MANAGE_NAME");?> :</td>
-                    <td width="75%" align="left" valign="middle" class="mytext"><?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";?></td>
+                    <td width="75%" align="left" valign="middle" class="mytext"><?php echo $dbf->printStudentName($student[id]);?></td>
                   </tr>
                   <?php if($student["student_id"] > 0){?>
                   <tr>
@@ -169,6 +192,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td height="22" align="right" valign="middle" class="pedtext">Add Date :</td>
                     <td align="left" valign="middle" class="mytext"><?php echo date('D,d M Y , h:i A',strtotime($student["created_datetime"]));?></td>
                   </tr>
+				   <tr>
+                    <td height="22" align="right" valign="middle" class="pedtext">Corporate :</td>
+                    <td align="left" valign="middle" class="mytext"><?php echo (empty($student['corporate'])?"Individual":$student['corporate']);?></td>
+                  </tr>
                 </table>
                 </td>
                 <td>&nbsp;</td>
@@ -182,15 +209,18 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				  ?>
                 <table width="80%" border="1" cellspacing="0" cellpadding="0" bordercolor="#999" style="border-collapse:collapse;">
                   <tr>
-                    <td align="center"><img src="<?php echo $photo;?>" width="120" height="130"></td>
+                    <td align="center"><img src="<?php echo $photo;?>" width="220" height="130"></td>
                   </tr>
+				  
                 </table></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>&nbsp;</td>
+                <td align="center" valign="middle">
+					<!--Agreement Location-->
+				</td>
                 <td align="center" valign="middle"><?php echo $dbf->VVIP_Big_Icon($_REQUEST["student_id"]);?></td>
               </tr>
               <tr>

@@ -174,9 +174,11 @@ text-transform:uppercase;
 												INNER JOIN student_course sc ON sg.course_id=sc.course_id
 												INNER JOIN course c ON c.id=sc.course_id
 												INNER JOIN student_moving smv ON smv.student_id=sc.student_id
+												INNER JOIN student_fees sf ON sf.student_id=sc.student_id AND sf.course_id=sg.course_id 
 												WHERE sc.student_id='$student_id' 
 												AND smv.status_id >'1' AND sg.centre_id='$_SESSION[centre_id]'
 												AND sg.status!='Completed' AND YEAR(sg.start_date) = '$year_now'
+												AND sf.type IN('advance','on hold')
 												ORDER BY substring('sg.group_name',1,2) ASC
 					");
 				  ?>

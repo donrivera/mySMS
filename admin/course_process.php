@@ -15,7 +15,7 @@ if($_REQUEST['action']=='insert')
 	{
 		$cr_date = date('Y-m-d H:i:s A');
 		
-		$string="name='$_POST[name]',code='$_POST[code]',slno='$_POST[maxid]',descr='$_POST[descr]',created_datetime='$cr_date',created_by='$_SESSION[id]'";
+		$string="name='$_POST[name]',code='$_POST[code]',certificate='$_POST[certificate]',slno='$_POST[maxid]',descr='$_POST[descr]',created_datetime='$cr_date',created_by='$_SESSION[id]'";
 		$dbf->insertSet("course",$string);
 		
 		header("Location:course_manage.php");
@@ -31,7 +31,7 @@ if($_REQUEST['action']=='edit')
 {
 	$cr_date = date('Y-m-d H:i:s A');
 	
-	$string="name='$_POST[name]',code='$_POST[code]',descr='$_POST[descr]',last_updated='$cr_date',updated_by='$_SESSION[id]'";
+	$string="name='$_POST[name]',code='$_POST[code]',certificate='$_POST[certificate]',descr='$_POST[descr]',last_updated='$cr_date',updated_by='$_SESSION[id]'";
 	$dbf->updateTable("course",$string,"id='$_REQUEST[id]'");
 	
 	header("Location:course_manage.php");

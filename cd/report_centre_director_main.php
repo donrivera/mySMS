@@ -463,7 +463,7 @@ function setsubmit()
 					
 				?>
                 <tr>
-                  <td height="25" align="left" valign="middle" class="smalltext"><?php echo $dbf->printStudentName($r["id"]);?></td>
+                  <td height="25" align="left" valign="middle" class="smalltext" style="max-width:100px;overflow:hidden;text-overflow:ellipsis;"><?php echo $dbf->printStudentName($r["id"]);?></td>
                   <td align="left" valign="middle"><?php echo $res_country[value];?></td>
                   <td align="left" valign="middle" class="smalltext"><?php echo $r[student_id];?></td>
 				  <input type="hidden" name="st<?php echo $student_count;?>" id="st<?php echo $student_count;?>" value="<?php echo $r[id];?>">

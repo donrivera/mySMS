@@ -6,7 +6,7 @@ include("../includes/saudismsNET-API.php");
 
 //Object initialization
 $dbf = new User();
-
+echo var_dump($_REQUEST);
 $res_sms = $dbf->strRecordID("sms_gateway","*","status='Disable'");
 if($res_sms[status] != ''){
 	header("Location:sms.php?msg=block");
@@ -29,7 +29,10 @@ if($_REQUEST['opval']=='student'){
 	}else{
 		$student_mobile_no = $_POST[number];
 	}	
-}else if($_REQUEST['opval']=='group'){
+}
+/*
+else if($_REQUEST['opval']=='group')
+{
 	foreach($dbf->fetchOrder('student_group_dtls',"parent_id='$_REQUEST[group]'","","","") as $val_course){
 		
 		$res_student = $dbf->strRecordID("student","*","id='$val_course[student_id]' And sms_status='1'");
@@ -49,8 +52,24 @@ if($_REQUEST['opval']=='student'){
 			}
 		}		
 	}
-}else{
-	$student_mobile_no = $_POST[number];;
+}
+*/
+elseif($_REQUEST['opval']=='groupfinish' || $_REQUEST['opval']=='groupcontinue' || $_REQUEST['opval']=='group')
+{
+	
+	$sql=$dbf->genericQuery("	SELECT s.student_mobile as mobile
+								FROM student s
+								INNER JOIN student_group_dtls sgd ON sgd.student_id=s.id
+								WHERE sgd.parent_id='$_REQUEST[group]'");
+	foreach($sql as $q):
+		$contacts[]=str_replace("00966", "0", $q['mobile']);
+	endforeach;
+	$student_mobile_no=implode(', ',$contacts);
+	//echo "<BR/>".$student_mobile_no;
+	//$student_mobile_no='0561367402,0568098445,0538163275,0556283484,0580117726,0598547940,0506738332,0538632256';
+}
+else{
+	$student_mobile_no = $_POST[number];
 }
 
 //SMS details saved in Table

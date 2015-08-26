@@ -216,9 +216,14 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$res_enroll = $dbf->strRecordID("student_enroll","*","student_id='$_REQUEST[student]' And course_id='$_REQUEST[course_id]'");
 					$res_g = $dbf->strRecordID("student_group","*","id='$res_enroll[group_id]'");
 					$res_size = $dbf->strRecordID("group_size","*","group_id='$res_g[group_id]'");
-					$total_units = $res_size[units];
-					
-					$or_unit = $res_size[units];
+					switch($res_g[course_id])
+					{
+						case 10:
+						case 11:
+						case 12:
+						case 13:{$total_units = 90;$or_unit = 90;}break;
+						default:{$total_units = $res_size[units];$or_unit = $res_size[units];}
+					}
 					$per_unit = 45; //minute
 					$tot_unit = $or_unit * $per_unit;
 					$hr = $tot_unit / 60;

@@ -354,7 +354,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       <th height="21" align="right" valign="middle" class="cer_my_head_bold" scope="col"><span class="cer_my_head_bold" dir="rtl">قد اجتاز دورة في اللغة  الانجليزية لغير الناطقين بها:</span></th>
                                       </tr>
                                     <tr>
-                                      <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $eng_course_name;?>  , وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span></th>
+                                      <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $eng_course_name;?>  ، وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span></th>
                                       </tr>
                                     <tr>
 										<?php $ar_start_date=date("d-m-Y",strtotime($res_g["start_date"]));$ar_end_date=date("d-m-Y",strtotime($res_g["end_date"]));?>
@@ -372,7 +372,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       </tr>
                                   </table>
                                   <br />
-                                  <span class="cer_my_head_bold" dir="rtl">وحصل على تقدير  <?php echo $res_grade["arabic"];?> , ونسبة  <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %</span></td>
+                                  <span class="cer_my_head_bold" dir="rtl">وحصل على تقدير  <?php echo $res_grade["arabic"];?> ، ونسبة  <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %</span></td>
                                   </tr>
                                 </table></td>
                               </tr>

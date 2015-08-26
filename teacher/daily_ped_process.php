@@ -125,20 +125,20 @@ foreach($_POST[student_id] as $s=>$s_value)
 	for($u=1;$u<=$get_attendance_per_day;$u++)
 	{
 		$ped_attendance=$dbf->genericQuery("SELECT * FROM ped_attendance WHERE group_id='$_POST[cmbgroup]' AND student_id='$student_id' AND unit='$u' AND (shift1 !='' OR shift2 !='')");
-		#echo var_dump($ped_attendance);
+		//echo var_dump($ped_attendance);
 		$get_ped_id=$dbf->getDataFromTable("ped","id","group_id='$_POST[cmbgroup]'");
 		$ped_card_id=(empty($ped_id)?$get_ped_id:$ped_id);
 		if(empty($ped_attendance))
 		{
 			
-			$unit=$attendance_per_unit[1]/$res_group['unit_per_day'];
+			$unit=round(end($attendance_per_unit)/$res_group['unit_per_day']);
 			if($u==$unit)
-			{	#echo "p_attendance1-".$u."<BR/>";
+			{	//echo "p_attendance1-".$u."<BR/>";
 				$string="ped_id='$ped_card_id',teacher_id='$uid',course_id='$course_id',student_id='$student_id',unit='$unit',shift1='$shift1',shift2='$shift2',shift3='$shift3',shift4='$shift4',shift5='$shift5',shift6='$shift6',shift7='$shift7',shift8='$shift8',shift9='$shift9',dated='$dt',group_id='$_POST[cmbgroup]',attend_date='$attend_date'";
 				$dbf->insertSet("ped_attendance",$string);
 			}
 			else
-			{	#echo "p_attendance2-".$u."<BR/>";
+			{	//echo "p_attendance2-".$u."<BR/>";
 				$string="ped_id='$ped_card_id',teacher_id='$uid',course_id='$course_id',student_id='$student_id',unit='$u',group_id='$_POST[cmbgroup]'";
 				$ped_attendance=$dbf->genericQuery("SELECT * FROM ped_attendance WHERE group_id='$_POST[cmbgroup]' AND student_id='$student_id' AND unit='$u'");
 				if(empty($ped_attendance)){$dbf->insertSet("ped_attendance",$string);}
@@ -146,9 +146,10 @@ foreach($_POST[student_id] as $s=>$s_value)
 			}
 		}
 		else
-		{	$unit=$attendance_per_unit[1]/$res_group['unit_per_day'];
+		{	$unit=round(end($attendance_per_unit)/$res_group['unit_per_day']);
 			foreach($attendance_per_unit as $a=>$a_value):
-				#echo "p_attendance-update-".$a_value."<BR/>";
+				//echo print_r($attendance_per_unit)."<BR/>";
+				//echo "p_attendance-update-".$a_value."<BR/>";
 				$string="shift1='$shift1',shift2='$shift2',shift3='$shift3',shift4='$shift4',shift5='$shift5',shift6='$shift6',shift7='$shift7',shift8='$shift8',shift9='$shift9',attend_date='$attend_date'";
 				$dbf->updateTable("ped_attendance",$string,"ped_id='$ped_card_id' AND teacher_id='$uid' AND course_id='$course_id' AND student_id='$student_id' AND unit='$unit' and group_id='$_POST[cmbgroup]'");
 			endforeach;

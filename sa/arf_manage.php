@@ -192,7 +192,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					$i = 1;
 					$color="#ECECFF";					
 					$centre_id = $_SESSION['centre_id'];
-					$condition = $dbf->getSearchStrings($_REQUEST["fname"],$_REQUEST["stid"],$_REQUEST["mobile"],$_REQUEST["email"], $centre_id,"s."," And s.id=c.student_id AND sa_status='1'");
+					$condition = $dbf->getSearchStrings($_REQUEST["fname"],$_REQUEST["stid"],$_REQUEST["mobile"],$_REQUEST["email"], $centre_id,"s."," And s.id=c.student_id");
 					//End 4.					
 					$num=$dbf->countRows('student s, arf c', $condition);
 					foreach($dbf->fetchOrder('student s, arf c', $condition ,"c.dated desc") as $val) {

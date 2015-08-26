@@ -228,7 +228,7 @@ $count = $res_logout[name]+1; // Set timeout period in seconds
                               <td height="28" align="right" valign="middle" class="leftmenu"><?php echo "Student Per Class";?> : <!--<span class="nametext1">*</span>--> </td>
                               <td>&nbsp;</td>
                               <td align="left" valign="middle">
-									<input name="name" type="text" class="validate[required] new_textbox1" id="name" size="45" minlength="4" value="<?php echo $res['name'];?>"/>
+									<input name="name" type="text" class="validate[required] new_textbox1" id="name" size="45" minlength="2" value="<?php echo $res['name'];?>"/>
 							  </td>
                               <td>&nbsp;</td>
                               <td align="left" valign="middle">&nbsp;</td>

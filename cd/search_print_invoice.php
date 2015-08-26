@@ -61,7 +61,7 @@ function print_page()
 			<?php 
 					#$course=$dbf->getDataFromTable("course","name","id='$course_id'");
 					#$print_course = explode("-", $course);
-					echo "Customer Enrollment Agreement";
+					echo "Customer Enrollment Inovice";
 					echo "<BR/>";
 					echo INVOICE_TITLE;
 			?>
@@ -95,11 +95,11 @@ function print_page()
             <td width="29%" align="right" valign="middle" bgcolor="#FFF2F7"><?php echo INVOICE_STUDENT_NAME;?>&nbsp;</td>
           </tr>
           <tr class="suc_msg">
-			<td width="50%" align="left" valign="top" bgcolor="#FFF2F7">
+			<td width="40%" align="left" valign="top" bgcolor="#FFF2F7">
 				<?php echo $val['first_name']."&nbsp;".$val['father_name']."&nbsp;".$val['family_name'];?>
 			</td>
-			<td width="50%" align="left" valign="top" bgcolor="#FFF2F7">
-				<?php echo "&nbsp;(".$val['first_name1']."&nbsp;".$val['father_name1']."&nbsp;".$val['grandfather_name1']."&nbsp;".$val['family_name1'].")";?>
+			<td width="60%" align="left" valign="top" bgcolor="#FFF2F7">
+				<?php echo $val['first_name1']."&nbsp;".$val['father_name1']."&nbsp;".$val['family_name1']."&nbsp;";?>
 			</td>
           </tr>
 		  <tr class="smalltext">
@@ -208,7 +208,7 @@ function print_page()
 			$res_currency = $dbf->strRecordID("currency_setup","*","use_currency='1'");			
 			$j = 1;
 			 	
-			foreach($dbf->fetchOrder('student_fees',"paid_amt>0 And course_id='$course_id' And student_id='$student_id' And invoice_sl LIKE '$enroll_dtl%'","") as $vali) {
+			foreach($dbf->fetchOrder('student_fees',"course_id='$course_id' And student_id='$student_id' And invoice_sl LIKE '$enroll_dtl%'","") as $vali) {
 			$dt="";
 			$ptype = $dbf->strRecordID("common","*","id='$vali[payment_type]'");
 			?>
@@ -317,7 +317,7 @@ function print_page()
       <tr>
         <td colspan="5" align="right" valign="middle" class="chtext" style="padding-right:10px;">
 		<br/><br/><br/>
-		<?php echo $dbf->getDataFromTable("conditions","name","type='Invoice'");?></td>
+		<?php //echo $dbf->getDataFromTable("conditions","name","type='Invoice'");?></td>
         </tr>
       <tr>
         <td align="center" valign="middle" class="chtext">&nbsp;</td>

@@ -691,7 +691,7 @@ if($_REQUEST['action']=='classic'){
 	session_unregister('classic_email');
 	if($group > 0)
 	{
-		header("Location:search_manage.php?student_id=$sid");exit;
+		header("Location:single-payment.php?student_id=$sid&course_id=$course_id");exit;
 	}
 	else
 	{

@@ -311,6 +311,50 @@ function show_staff_mobile(){
 	ajaxRequest.open("GET", "sms_staff_mobile.php" + "?staff_id=" + opval , true);
 	ajaxRequest.send(null);
 }
+function show_group_mobile(){
+/*
+	var ajaxRequest;  // The variable that makes Ajax possible!	
+	try{
+		// Opera 8.0+, Firefox, Safari
+		ajaxRequest = new XMLHttpRequest();
+	} catch (e){
+		// Internet Explorer Browsers
+		try{
+			ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch (e) {
+			try{
+				ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (e){
+				// Something went wrong
+				alert("Your browser broke!");
+				return false;
+			}
+		}
+	}
+	
+	// Create a function that will receive data sent from the server
+	ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState != 4){
+			//var c = ajaxRequest.responseText;
+			document.getElementById('td_state').innerHTML="Loading----";
+			
+		}
+			if(ajaxRequest.readyState == 4){
+			var c = ajaxRequest.responseText;
+			
+			document.getElementById('td_state').innerHTML=c;
+		}
+		
+	}
+	var opval = document.getElementById('group').value;
+	
+	ajaxRequest.open("GET", "sms_group_mobile.php" + "?group_id=" + opval , true);
+	ajaxRequest.send(null);
+	*/
+	document.getElementById('number').value = '00966561367402';
+	document.getElementById("number").readOnly = true;
+	//document.getElementById('number').innerHTML="00966561367402";
+}
 </script>
 
 <SCRIPT LANGUAGE="JavaScript">

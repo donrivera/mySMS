@@ -175,8 +175,15 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <td width="141" height="36" align="left" valign="middle" bgcolor="#FFFFFF"><input name="stid" type="text" class="new_textbox100" id="stid" value="<?php echo $_REQUEST[stid];?>" onKeyPress="return PhoneNo(event);"></td>
                     <td width="71" height="36" align="right" valign="middle" bgcolor="#FFFFFF" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_SEARCH_MOBILENO");?> :&nbsp;</td>
                     <td width="108" height="36" align="left" valign="middle" bgcolor="#FFFFFF"><input name="mobile" type="text" class="new_textbox100" id="mobile" value="<?php echo $_REQUEST[mobile];?>" onKeyPress="return PhoneNo(event);"></td>
-                    <td width="57" height="36" align="right" valign="middle" bgcolor="#FFFFFF" class="leftmenu"><?php echo constant("STUDENT_ADVISOR_SEARCH_EMAIL");?> :&nbsp;</td>
-                    <td width="123" height="36" align="left" valign="middle" bgcolor="#FFFFFF"><input name="email" type="text" class="new_textbox100" id="email" value="<?php echo $_REQUEST[email];?>"></td>
+                    <td width="57" height="36" align="right" valign="middle" bgcolor="#FFFFFF" class="leftmenu"><?php echo "Status";?> :&nbsp;</td>
+                    <td width="123" height="36" align="left" valign="middle" bgcolor="#FFFFFF">
+						<select name="status">
+							<option>Select Status</option>
+							<? foreach($dbf->fetchOrder('student_status',"","id ASC") as $stu_status):?>
+							<option value=<?=$stu_status[id]?>><?=$stu_status[name]?></option>
+							<? endforeach;?>
+						</select>
+					</td>
                     <td width="186" align="right" valign="middle" bgcolor="#FFFFFF">
                     <input type="submit" name="submit" id="submit" value="<?php echo constant("btn_search");?>" class="btn1"/></td>
                   </tr>
@@ -193,73 +200,85 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <th width="25%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("STUDENT_ADVISOR_HOME_S_MANAGE_STUDENTNAME");?></th>
                   <th width="9%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("STUDENT_ADVISOR_HOME_S_MANAGE_STUDENTID");?></th>
                   <th width="13%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("STUDENT_ADVISOR_HOME_S_MANAGE_MOBILENO");?></th>
-                  <th width="13%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("STUDENT_ADVISOR_HOME_S_MANAGE_EMAILADDRESS");?></th>
+                  <th width="13%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo "Type";?></th>
                   <th width="9%" align="left" valign="middle" bgcolor="#99CC99" class="pedtext">Latest Status</th>
                   <th colspan="7" align="center" valign="middle" bgcolor="#99CC99" class="pedtext"><?php echo constant("COMMON_ACTION");?></th>
                 </tr>
               </thead>
-              <?php			  	
+              <?php			
+				
 			  	$condition = '';
 				$stid=trim($_REQUEST[stid]);
 				//Concate the Condition
 				//1.
-				if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[email]==''){
-					$condition = "(family_name LIKE '$_REQUEST[fname]%' OR family_name1 LIKE '$_REQUEST[fname]%' OR first_name LIKE '$_REQUEST[fname]%' OR first_name1 LIKE '$_REQUEST[fname]%') And centre_id='$centre_id'";
-				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[email]==''){
-					$condition = "student_id LIKE '%$stid%'  And centre_id='$centre_id'";
-				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[email]==''){
-					$condition = "student_mobile LIKE '$_REQUEST[mobile]%'  And centre_id='$centre_id'";
-				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[email]!=''){
-					$condition = "email LIKE '$_REQUEST[email]%'  And centre_id='$centre_id'";
+				if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[status]==''){
+					$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.first_name1 LIKE '$_REQUEST[fname]%') And s.centre_id='$centre_id'";
+				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[status]==''){
+					$condition = "s.student_id LIKE '%$stid%'  And s.centre_id='$centre_id'";
+				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[status]==''){
+					$condition = "s.student_mobile LIKE '$_REQUEST[mobile]%'  And s.centre_id='$centre_id'";
+				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[status]!=''){
+					$condition = "smv.status_id='$_REQUEST[status]'  And s.centre_id='$centre_id'";
 				}
 				//End 1.
 				
 				//2.
-				else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[email]==''){
-					$condition = "(family_name LIKE '$_REQUEST[fname]%' OR family_name1 LIKE '$_REQUEST[fname]%' OR first_name LIKE '$_REQUEST[fname]%' OR first_name1 LIKE '$_REQUEST[fname]%') AND student_id LIKE '$_REQUEST[stid]%'  And centre_id='$centre_id'";
-				}else if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[email]==''){
-					$condition = "(family_name LIKE '$_REQUEST[fname]%' OR family_name1 LIKE '$_REQUEST[fname]%' OR first_name LIKE '$_REQUEST[fname]%' OR first_name1 LIKE '$_REQUEST[fname]%') AND student_mobile LIKE '$_REQUEST[mobile]%'  And centre_id='$centre_id'";
-				}else if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[email]!=''){
-					$condition = "(family_name LIKE '$_REQUEST[fname]%' OR family_name1 LIKE '$_REQUEST[fname]%' OR first_name LIKE '$_REQUEST[fname]%' OR first_name1 LIKE '$_REQUEST[fname]%') AND email LIKE '$_REQUEST[email]%' And centre_id='$centre_id'";
-				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[email]==''){
-					$condition = "student_mobile LIKE '$_REQUEST[mobile]%' AND student_id LIKE '$_REQUEST[stid]%' And centre_id='$centre_id'";
-				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[email]!=''){
-					$condition = "student_mobile LIKE '$_REQUEST[mobile]%' AND email LIKE '$_REQUEST[email]%' And centre_id='$centre_id'";
-				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[email]!=''){
-					$condition = "student_id LIKE  '$_REQUEST[stid]%' AND email LIKE '%$_REQUEST[email]%' And centre_id='$centre_id'";
+				else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[status]==''){
+					$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.first_name1 LIKE '$_REQUEST[fname]%') AND s.student_id LIKE '$_REQUEST[stid]%'  And s.centre_id='$centre_id'";
+				}else if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[status]==''){
+					$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.first_name1 LIKE '$_REQUEST[fname]%') AND s.student_mobile LIKE '$_REQUEST[mobile]%'  And s.centre_id='$centre_id'";
+				}else if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[status]!=''){
+					$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.first_name1 LIKE '$_REQUEST[fname]%') AND s.email LIKE '$_REQUEST[email]%' And s.centre_id='$centre_id'";
+				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[status]==''){
+					$condition = "s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.student_id LIKE '$_REQUEST[stid]%' And s.centre_id='$centre_id'";
+				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[status]!=''){
+					$condition = "s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.email LIKE '$_REQUEST[email]%' And s.centre_id='$centre_id'";
+				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[status]!=''){
+					$condition = "s.student_id LIKE  '$_REQUEST[stid]%' AND s.email LIKE '%$_REQUEST[email]%' And s.centre_id='$centre_id'";
 				}
 				//End 2.
 				
 				//3.
-				else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[email]==''){
-					$condition = "(family_name LIKE '$_REQUEST[fname]%' OR family_name1 LIKE '$_REQUEST[fname]%' OR first_name LIKE '$_REQUEST[fname]%' OR first_name1 LIKE '$_REQUEST[fname]%') AND student_id LIKE '$_REQUEST[stid]%' AND student_mobile LIKE '$_REQUEST[mobile]%' And centre_id='$centre_id'";
-				}else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[email]!=''){
-					$condition = "(family_name LIKE '$_REQUEST[fname]%' OR family_name1 LIKE '$_REQUEST[fname]%' OR first_name LIKE '$_REQUEST[fname]%' OR first_name1 LIKE '$_REQUEST[fname]%') AND student_id LIKE '$_REQUEST[stid]%' AND email LIKE '$_REQUEST[email]%' And centre_id='$centre_id'";
-				}else if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[email]!=''){
-					$condition = "(family_name LIKE '$_REQUEST[fname]%' OR family_name1 LIKE '$_REQUEST[fname]%' OR first_name LIKE '$_REQUEST[fname]%' OR first_name1 LIKE '$_REQUEST[fname]%') AND student_mobile LIKE '$_REQUEST[mobile]%' AND email LIKE '$_REQUEST[email]%' And centre_id='$centre_id'";
-				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[email]!=''){
-					$condition = "student_id LIKE '$_REQUEST[stid]%' AND student_mobile LIKE '$_REQUEST[mobile]%' AND email LIKE '$_REQUEST[email]%' And centre_id='$centre_id'";
+				else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[status]==''){
+					$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.first_name1 LIKE '$_REQUEST[fname]%') AND s.student_id LIKE '$_REQUEST[stid]%' AND s.student_mobile LIKE '$_REQUEST[mobile]%' And s.centre_id='$centre_id'";
+				}else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]=='' && $_REQUEST[status]!=''){
+					$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.first_name1 LIKE '$_REQUEST[fname]%') AND s.student_id LIKE '$_REQUEST[stid]%' AND s.email LIKE '$_REQUEST[email]%' And s.centre_id='$centre_id'";
+				}else if($_REQUEST[fname]!='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]!='' && $_REQUEST[status]!=''){
+					$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.first_name1 LIKE '$_REQUEST[fname]%') AND s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.email LIKE '$_REQUEST[email]%' And s.centre_id='$centre_id'";
+				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[status]!=''){
+					$condition = "s.student_id LIKE '$_REQUEST[stid]%' AND s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.email LIKE '$_REQUEST[email]%' And s.centre_id='$centre_id'";
 				}
 				//End 3.
 				
 				//4.
-				else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[email]!=''){
-					$condition = "(family_name LIKE '$_REQUEST[fname]%' OR family_name1 LIKE '$_REQUEST[fname]%' OR first_name LIKE '$_REQUEST[fname]%' OR first_name1 LIKE '$_REQUEST[fname]%') AND student_id LIKE  '$_REQUEST[stid]%' AND student_mobile LIKE '$_REQUEST[mobile]%' AND email LIKE '$_REQUEST[email]%' And centre_id='$centre_id'";
-				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[email]==''){
-					$condition = "id>'0' And centre_id='$centre_id'";
+				else if($_REQUEST[fname]!='' && $_REQUEST[stid]!='' && $_REQUEST[mobile]!='' && $_REQUEST[status]!=''){
+					$condition = "(s.family_name LIKE '$_REQUEST[fname]%' OR s.family_name1 LIKE '$_REQUEST[fname]%' OR s.first_name LIKE '$_REQUEST[fname]%' OR s.first_name1 LIKE '$_REQUEST[fname]%') AND s.student_id LIKE  '$_REQUEST[stid]%' AND s.student_mobile LIKE '$_REQUEST[mobile]%' AND s.email LIKE '$_REQUEST[email]%' And s.centre_id='$centre_id'";
+				}else if($_REQUEST[fname]=='' && $_REQUEST[stid]=='' && $_REQUEST[mobile]=='' && $_REQUEST[status]==''){
+					$condition = "s.id>'0' And s.centre_id='$centre_id'";
 				}
 				//End 4.
 				
 			  
 				$i = 1;
 				$color = "#ECECFF";
-				$num=$dbf->countRows('student',$condition);
-				foreach($dbf->fetchOrder('student',$condition,"id DESC LIMIT 0,100") as $val){
+				$sql=$dbf->genericQuery("SELECT s.*,sstat.name as status,st.type_id as student_type
+										FROM student s 
+										INNER JOIN student_moving smv ON smv.student_id=s.id 
+										INNER JOIN student_status sstat ON sstat.id=smv.status_id
+										INNER JOIN student_type st ON st.student_id=s.id
+										WHERE ".$condition." ORDER BY s.id DESC LIMIT 0,100
+										");
+										
+				$num=count($sql);//$dbf->countRows('student',$condition);
+				//foreach($dbf->fetchOrder('student',$condition,"id DESC LIMIT 0,100") as $val){
+				foreach($sql as $val){	
 					$num_comment=$dbf->countRows('student_comment',"student_id='$val[id]'");
 					$valc = $dbf->strRecordID("common","*","id='$val[studentstatus_id]'");
 					
-					$status_id = $dbf->getDataFromTable("student_moving", "MAX(id)", "student_id='$val[id]'");
+					//$status_id = $dbf->getDataFromTable("student_moving", "MAX(id)", "student_id='$val[id]'");
 					$status_id = $dbf->getDataFromTable("student_moving", "status_id", "id='$status_id'");
+					$student_type= $dbf->getDataFromTable("common", "name", "id='$val[student_type]'");
+					$a=explode('-',$student_type);
 					$moving = $dbf->strRecordID("student_status","*","id='$status_id'");
 			  ?>
               <tr bgcolor="<?php echo $color;?>" onMouseover="this.bgColor='#FDE6D0'" onMouseout="this.bgColor='<?php echo $color;?>'">
@@ -269,8 +288,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				<?php if($val[student_id] > 0) { echo $val[student_id]; } ?>
                 </td>
                 <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[student_mobile];?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val[email];?></td>
-                <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $moving["name"];?></td>
+                <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo (empty($a[0])?"N/A":$a[0]);?></td>
+                <td align="left" valign="middle" class="mycon" style="padding-left:5px;"><?php echo $val["status"];?></td>
                 <td width="4%" align="center" valign="middle" ><?php echo $dbf->VVIP_Icon($val["id"]);?></td>
                 <?php
 				  //If student in a group then additional information button will be shown
@@ -284,7 +303,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 </a></td>
                 <td width="4%" align="center" valign="middle" ><a href="search_advance.php?student_id=<?php echo $val["id"];?>">
                 <img src="../images/ex-btn.png" width="16" height="16" border="0" title="<?php echo ICON_ADVANCE ?>"></a></td>
-                <td width="4%" align="center" valign="middle" ><a href="search_manage.php?student_id=<?php echo $val["id"];?>">
+                <td width="4%" align="center" valign="middle" ><a href="single-payment.php?student_id=<?php echo $val["id"];?>">
                 <img src="../images/additional.png" width="15" height="15"  border="0" title="<?php echo ICON_DOLLAR ?>">             
                 </a></td>
                 <td width="4%" align="center" valign="middle" ><?php if($num_comment!=0){?>

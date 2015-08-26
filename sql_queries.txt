@@ -1,0 +1,9 @@
+/*
+ENRoll,Paid, Balance for enrolled students
+SELECT c.fees,e.student_id,sf.fees as payment,c.fees - sf.fees as balance
+FROM student_enroll e
+INNER JOIN course cs ON cs.id=e.course_id
+INNER JOIN course_fee c ON c.id=e.course_id
+LEFT JOIN (SELECT SUM(paid_amt) as fees,student_id,course_id FROM student_fees GROUP BY student_id) sf ON e.student_id=sf.student_id AND sf.course_id=e.course_id 
+WHERE enroll_date BETWEEN '01-01-2015' AND '31-01-2015'
+*/

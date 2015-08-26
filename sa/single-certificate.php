@@ -268,12 +268,20 @@ $count = $res_logout["name"]; // Set timeout period in seconds
               <?php
 				$resc = $dbf->strRecordID("countries","*","id='$student[country_id]'");									
 				$course_name = $dbf->strRecordID("course","*","id='$course_id'");
+				$exp_course_name=explode("-",$course_name[certificate]);
+				$eng_course_name=$exp_course_name[0];//filter_var($exp_course_name[0], FILTER_SANITIZE_NUMBER_INT);
+				$arb_course_name=$exp_course_name[1];//filter_var($exp_course_name[1], FILTER_SANITIZE_NUMBER_INT);
 				$res_enroll = $dbf->strRecordID("student_enroll","*","student_id='$student_id' And course_id='$course_id'");
 				$res_g = $dbf->strRecordID("student_group","*","id='$res_enroll[group_id]'");
 				$res_size = $dbf->strRecordID("group_size","*","group_id='$res_g[group_id]'");
-				$total_units = $res_size[units];
-				
-				$or_unit = $res_size[units];
+				switch($res_g[course_id])
+				{
+					case 10:
+					case 11:
+					case 12:
+					case 13:{$total_units = 90;$or_unit = 90;}break;
+					default:{$total_units = $res_size[units];$or_unit = $res_size[units];}
+				}
 				$per_unit = 45; //minute
 				$tot_unit = $or_unit * $per_unit;
 				$hr = $tot_unit / 60;
@@ -281,7 +289,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 				?>
               <tr>
                 <td colspan="5" align="left" valign="top">               
-                <?php if($level_test>0): ?>
+                <?php if($level_test>0 && $res_g[status]=='Completed' ): ?>
 				<table width="820" border="0" align="center" cellpadding="0" cellspacing="0" style="border:solid 1px #ccc;" bgcolor="#FFFFFF">
                   <tr>
                     <td width="110"><img src="../images/left-img.jpg" alt="left-img" width="110" height="670" /></td>
@@ -334,16 +342,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <tr>
                                 <th height="21" align="left" valign="middle" scope="col" class="cer_my_head">This is to certify that</th>
                               </tr>
-                              <?php
-							  if($student[gender]=='female'){
-								  $gender = 'Ms.';
-							  }else{
-								  $gender = 'Mr.';
-							  }
-							  ?>
+                              <?php $gender=($res[gender]=='female'?'Ms.':'Mr.');?>
                               <tr>
                                 <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head"><?php echo $gender;?>&nbsp;</span><span class="cer_my_head_bold">
-									<?php echo $student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name]."&nbsp;(".$student[first_name1]."&nbsp;".$student[father_name1]."&nbsp;".$student[grandfather_name1]."&nbsp;".$student[family_name1].")";?>
+									<?php echo $student['first_name']."&nbsp;".$student['father_name']."&nbsp;".$student['family_name'];?>
 								</span></th>
                               </tr>
                               <tr>
@@ -358,10 +360,10 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head"> passed the following English language course</span><span class="cer9_arial">:</span></th>
                               </tr>
                               <tr>
-                                <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">Level: </span><span class="cer_my_head_bold"><?php echo $course_name[name];?></span><span class="cer_my_head"> with a total number of </span><span class="cer_my_head_bold"> <?php echo $hr;?></span>&nbsp;<span class="cer_my_head">hours</span></th>
+                                <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">Level: </span><span class="cer_my_head_bold"><?php echo $eng_course_name;?></span><span class="cer_my_head"> with a total number of </span><span class="cer_my_head_bold"> <?php echo $hr;?></span>&nbsp;<span class="cer_my_head">hours</span></th>
                               </tr>
                               <tr>
-                                <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">From: </span><span class="cer_my_head_bold"><?php echo $res_g[start_date];?> &nbsp;</span><span class="cer_my_head">to:</span><span class="cer_my_head_bold">&nbsp;<?php echo $res_g[end_date];?></span></th>
+                                <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">From: </span><span class="cer_my_head_bold"><?php echo date("d-m-Y",strtotime($res_g["start_date"]));?> &nbsp;</span><span class="cer_my_head">to:</span><span class="cer_my_head_bold">&nbsp;<?php echo date("d-m-Y",strtotime($res_g["end_date"]));?></span></th>
                               </tr>
                               <tr>
                                 <th height="21" align="left" valign="middle" class="cer1" scope="col"><span class="cer_my_head">That correspond to the Hijra dates</span></th>
@@ -406,56 +408,34 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <th height="21" align="right" valign="middle" class="cer9_arial" scope="col"><span class="cer_my_head_bold" dir="rtl">يشهد معهد دار الخبرة لتعليم اللغة  الانجليزية بالاحساء</span></th>
                               </tr>
                               <tr>
-                                <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">بأن المتدرب: <?php echo $res[arabic_name];?></span></th>
+                                <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">بأن المتدرب: <?php echo $student['first_name1']."&nbsp;".$student['father_name1']."&nbsp;".$student['grandfather_name1']."&nbsp;".$student['family_name1'];?></span>&nbsp; </th>
                               </tr>
                               <tr>
-                                <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold"><?php echo $Arabic->en2ar($resc[value]);?></span><span class="cer_my_head_bold">&nbsp;:<span dir="rtl">الجنسية  </span></span></th>
+                                <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold"><span dir="rtl">الجنسية: <?php echo $resc['arabic'];?></span></span></th>
                               </tr>
                               <tr>
-                                <th height="21" align="right" valign="middle" class="cer2" scope="col" ><span class="cer_my_head_bold">
-                                  <?php if($res[student_id]>0) { echo $res[student_id]; } ?>
-                                </span>&nbsp;<span class="cer_my_head_bold" dir="rtl">رقم السجل المدني / الإقامة:</span></th>
+                                <th height="21" align="right" valign="middle" class="cer2" scope="col" ><span class="cer_my_head_bold"></span>&nbsp;<span class="cer_my_head_bold" dir="rtl">رقم السجل المدني / الإقامة: <?php if($res[student_id]>0) { echo $dbf->enNo2ar($res[student_id],''); } ?></span></th>
                               </tr>
                               <tr>
-                                <th height="21" align="right" valign="middle" class="cer_my_head_bold" scope="col"><span class="cer_my_head_bold" dir="rtl">قد اجتاز دورة في اللغة  الانجليزية لغير الناطقين بها:</span></th>
+                                <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">قد اجتاز دورة في اللغة  الانجليزية لغير الناطقين بها:</span></th>
                               </tr>
                               <tr>
-                                <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $course_name[name];?> , وأكمل   <?php echo $hr;?>   ساعة دراسية</span></th>
+                                <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $arb_course_name;?>  ، وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span></th>
                               </tr>
                               <tr>
-                                <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في الفترة من: <?php echo $res_g[start_date];?> إلى: <?php echo $res_g[end_date];?></span></th>
+								<span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $arb_course_name;?>  ، وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span>
+                                <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في الفترة من: <?php echo $dbf->enNo2ar($ar_start_date,'-');?> إلى: <?php echo $dbf->enNo2ar($ar_end_date,'-');?></span></th>
                               </tr>
                               <tr>
                                 <th height="21" align="right" valign="middle" class="cer2" scope="col"></th>
                               </tr>
-                              <?php
-								include_once '../includes/hijri.php';
-								
-								$DateConv=new Hijri_GregorianConvert;
-								$format="YYYY/MM/DD";
-								
-								//Start date
-								$date=$res_g[start_date];
-								$sdt = $DateConv->GregorianToHijri($date,$format);
-								
-								//End date
-								$date=$res_g[end_date];
-								$edt = $DateConv->GregorianToHijri($date,$format);
-								?>
+                              
                               <tr>
-                                <th height="21" align="right" valign="middle" class="cer2" scope="col" dir="rtl"> <span class="cer_my_head_bold" dir="rtl">الموافق من:
-                                  <?php if($student_id !='' ) { ?>
-                                  <?php if($res_g[start_date]!='0000-00-00') { echo $sdt;}?>
-                                  <?php } ?>
-                                  إلى:
-                                  <?php if($student_id !='' ) { ?>
-                                  <?php if($res_g[start_date]!='0000-00-00') { echo $edt;}?>
-                                  <?php } ?>
-                                </span></th>
+                                <th height="21" align="right" valign="middle" class="cer2" scope="col" dir="rtl"> <span class="cer_my_head_bold" dir="rtl">الموافق من: <?php if($_REQUEST[student_id] !='' ) { ?> <?php if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($sdt,'-');}?> <?php } ?>إلى: <?php if($_REQUEST[student_id] !='' ) { ?><?php if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($edt,'-');}?><?php } ?></span>   </th>
                               </tr>
                             </table>
                               <br />
-                              <span class="cer_my_head_bold" dir="rtl">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;وحصل على تقدير   <?php echo $res_per["final_percent"];?> %  , ونسبة  <?php echo $res_grade["name"];?></span></td>
+                              <span class="cer2" dir="rtl">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;وحصل على تقدير   <?php echo $res_grade["arabic"];?> ، ونسبة  <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %</span></td>
                           </tr>
                         </table></td>
                       </tr>
@@ -466,9 +446,6 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                             <td align="right" valign="middle" class="cer9_arial_bold"><span dir="rtl">وبناء عليه مُنح هذه  الشهادة.</span></td>
                           </tr>
                         </table></td>
-                      </tr>
-                      <tr>
-                        <td height="30">sdf</td>
                       </tr>
                       <tr>
                         <td align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -492,7 +469,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     </table></td>
                   </tr>
                 </table>
-				<?php else: echo "The Student did not complete his end-of-level test...";endif;?>
+				<?php else: echo "The Student did not complete his end-of-level test or Group status not Completed...";endif;?>
 				</td>
                 </tr>
               <tr>
@@ -834,7 +811,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <th height="21" align="right" valign="middle" class="cer9_arial" scope="col"><span class="cer_my_head_bold" dir="rtl">يشهد معهد دار الخبرة لتعليم اللغة  الانجليزية بالاحساء</span></th>
                               </tr>
                               <tr>
-                                <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">بأن المتدرب: <?php echo $res[arabic_name];?></span></th>
+                                <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">بأن المتدرب:<?php echo $student['first_name1']."&nbsp;".$student['father_name1']."&nbsp;".$student['grandfather_name1']."&nbsp;".$student['family_name1'];?></span>&nbsp; </th>
                               </tr>
                               <tr>
                                 <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold"><?php echo $Arabic->en2ar($resc[value]);?></span><span class="cer_my_head_bold">&nbsp;:<span dir="rtl">الجنسية  </span></span></th>
@@ -848,10 +825,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                 <th height="21" align="right" valign="middle" class="cer_my_head_bold" scope="col"><span class="cer_my_head_bold" dir="rtl">قد اجتاز دورة في اللغة  الانجليزية لغير الناطقين بها:</span></th>
                               </tr>
                               <tr>
-                                <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $course_name[name];?> , وأكمل   <?php echo $hr;?>   ساعة دراسية</span></th>
+                                <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $arb_course_name;?> , وأكمل   <?php echo $hr;?>   ساعة دراسية</span></th>
                               </tr>
                               <tr>
-                                <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في الفترة من: <?php echo $res_g[start_date];?> إلى: <?php echo $res_g[end_date];?></span></th>
+								<?php $ar_start_date=date("d-m-Y",strtotime($res_g["start_date"]));$ar_end_date=date("d-m-Y",strtotime($res_g["end_date"]));?>
+                                <th height="21" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في الفترة من: <?php echo $dbf->enNo2ar($ar_start_date,'-');?> إلى: <?php echo $dbf->enNo2ar($ar_end_date,'-');?></span></th>
                               </tr>
                               <tr>
                                 <th height="21" align="right" valign="middle" class="cer2" scope="col"></th>
@@ -872,31 +850,22 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 								?>
                               <tr>
                                 <th height="21" align="right" valign="middle" class="cer2" scope="col" dir="rtl"> <span class="cer_my_head_bold" dir="rtl">الموافق من:
-                                  <?php if($student_id !='' ) { ?>
-                                  <?php if($res_g[start_date]!='0000-00-00') { echo $sdt;}?>
-                                  <?php } ?>
-                                  إلى:
-                                  <?php if($student_id !='' ) { ?>
-                                  <?php if($res_g[start_date]!='0000-00-00') { echo $edt;}?>
-                                  <?php } ?>
+                                  <?php if($_REQUEST[student_id] !='' ) { ?> <?php if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($sdt,'-');}?> <?php } ?>إلى: <?php if($_REQUEST[student_id] !='' ) { ?><?php if($res_g[start_date]!='0000-00-00') { echo $dbf->enNo2ar($edt,'-');}?><?php } ?>
                                 </span></th>
                               </tr>
                             </table>
                               <br />
-                              <span class="cer_my_head_bold" dir="rtl">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;وحصل على تقدير   <?php echo $res_per["final_percent"];?> %  , ونسبة  <?php echo $res_grade["name"];?></span></td>
+                              <span class="cer_my_head_bold" dir="rtl">وحصل على تقدير  <?php echo $res_grade["arabic"];?> , ونسبة  <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %</span></td>
                           </tr>
                         </table></td>
                       </tr>
                       <tr>
                         <td class="cer_my_head"><table width="97%" border="0" cellspacing="0" cellpadding="0">
                           <tr>
-                            <td align="left" valign="middle">Berlitz issued this certificate in recognition of the above. </td>
+                           <!-- <td align="left" valign="middle">Berlitz issued this certificate in recognition of the above. </td>-->
                             <td align="right" valign="middle" class="cer9_arial_bold"><span dir="rtl">وبناء عليه مُنح هذه  الشهادة.</span></td>
                           </tr>
                         </table></td>
-                      </tr>
-                      <tr>
-                        <td height="30">sdf</td>
                       </tr>
                       <tr>
                         <td align="left" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">

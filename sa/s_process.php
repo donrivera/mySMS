@@ -691,8 +691,8 @@ if($_REQUEST['action']=='classic')
 	session_unregister('classic_email');
 	
 	if($group > 0)
-	{
-		header("Location:search_manage.php?student_id=$sid");exit;
+	{	
+		header("Location:single-payment.php?student_id=$sid&course_id=$course_id");exit;
 	}
 	else
 	{
@@ -1001,7 +1001,8 @@ if($_REQUEST['action'] == 'edit_from_student_profile'){
 				student_mobile='$_REQUEST[mobile]',
 				id_type='$_REQUEST[id_type]',
 				area_code='$_POST[area_code]',
-				address='$address'";
+				address='$address',
+				corporate='$_POST[corp_acct]'";
 	
 	$dbf->updateTable("student",$string,"id='$student_id'");
 	
@@ -1010,11 +1011,16 @@ if($_REQUEST['action'] == 'edit_from_student_profile'){
 	
 	$string_st="status_id='2',grade_online='$grade_online',grade_speak='$grade_speak'"; //Potential Status		
 	$status=$dbf->getDataFromTable("student_moving","status_id","student_id='$student_id'");
+	/*
 	switch($status)
 	{
-		case 4:	{}break;
+		case 4:	
+		{}break;
 		default:{$dbf->updateTable("student_moving",$string_st,"student_id='$student_id'");}break;
 	}
+	*/
+	if($status<3)
+	{$dbf->updateTable("student_moving",$string_st,"student_id='$student_id'");}
 	//UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE
 	//=======================================================
 	$date_time = date('Y-m-d H:i:s A');	

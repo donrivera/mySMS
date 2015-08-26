@@ -28,6 +28,7 @@ $centre_id = $_SESSION['centre_id'];
 $student_id = $_REQUEST['student_id'];
 $course_id =  $_REQUEST['course_id'];
 $enroll_dtl=$dbf->getInvoiceCode($student_id,$course_id);
+//echo $enroll_dtl;
 if($_REQUEST['action']=='sch_del'){
 	$dbf->deleteFromTable("student_fees","id='$_REQUEST[schid]'");	
 	header("Location:single-payment.php?student_id=$student_id&course_id=$course_id");
@@ -319,9 +320,17 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td width="25%" height="30" align="left" class="logintext"> <?php echo constant("STUDENT_INFORMATON");?></td>
                 <td width="6%" id="lblname">&nbsp;</td>
                 <td width="10%" align="left">&nbsp;</td>
-                <td width="41%" align="left">&nbsp;</td>
-                <td width="18%" align="right"><a href="single-home.php?student_id=<?php echo $_REQUEST[student_id];?>">
-                    <input type="button" value="<?php echo constant("btn_cancel_btn2");?>" class="btn1" border="0" align="left" /></a></td>
+                <td width="21%" align="left">&nbsp;</td>
+                <td width="38%" align="right">
+					<!--
+					<a href="single-home.php?student_id=<?php echo $_REQUEST[student_id];?>">
+						<input type="button" value="<?php echo constant("btn_cancel_btn2");?>" class="btn1" border="0" align="left" />
+					</a>
+					-->
+					<a href="search_advance.php?student_id=<?php echo $_REQUEST[student_id];?>">
+						<input type="button" value="<?php echo "New Enrollment";?>" class="btn1" border="0" align="left" />
+					</a>
+				</td>
               </tr>
               <tr>
                 <td height="15" colspan="5" align="left" valign="middle" bgcolor="#FFFFFF" >&nbsp;</td>
@@ -436,24 +445,40 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <table width="98%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <td width="1%">&nbsp;</td>
-                    <td height="30" colspan="2" align="left" valign="middle" class="mytext"><table width="90%" border="0" cellspacing="0" cellpadding="0">
-                      <tr>
-                        <td width="26%" align="left" valign="middle" class="pedtext"><?php echo constant("SELECT_COURSE");?> :</td>
-                        <td width="74%" align="left">
-                        <select name="course" id="course" style="width:200px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onChange="show_payment();">
-                          <option value="">---Select---</option>
-                          <?php
-							$query=$dbf->genericQuery("SELECT DISTINCT(course_id) FROM student_fees WHERE student_id ='$student_id'");
-							#$query=$dbf->fetchOrder('student_course',"student_id='$student_id'","");
-							foreach($query as $rescourse) {
-								$course = $dbf->strRecordID("course","*","id='$rescourse[course_id]'");
-						  ?>
-                          <option value="<?php echo $course['id'];?>" <?php if($course_id==$course["id"]) { ?> selected="selected" <?php } ?>><?php echo $course['name'];?></option>
-                          <?php } ?>
-                        </select></td>
-                      </tr>
-                    </table></td>
-                    <td width="27%">&nbsp;</td>
+                    <td height="30" colspan="2" align="left" valign="middle" class="mytext">
+						<table width="90%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td width="26%" align="left" valign="middle" class="pedtext"><?php echo constant("SELECT_COURSE");?> :</td>
+								<td width="74%" align="left">
+									<select name="course" id="course" style="width:200px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;" onChange="show_payment();">
+										<option value="">---Select---</option>
+										<?php
+											$query=$dbf->genericQuery("SELECT DISTINCT(course_id) FROM student_fees WHERE student_id ='$student_id'");
+											#$query=$dbf->fetchOrder('student_course',"student_id='$student_id'","");
+											foreach($query as $rescourse) {
+											$course = $dbf->strRecordID("course","*","id='$rescourse[course_id]'");
+										?>
+										<option value="<?php echo $course['id'];?>" <?php if($course_id==$course["id"]) { ?> selected="selected" <?php } ?>><?php echo $course['name'];?></option>
+										<?php } ?>
+									</select>
+								</td>
+							</tr>
+						</table>
+						
+						</td>
+                    <td width="27%">
+					<?
+							//if($num11>0) { 
+						?>
+                        <a href="search_print_invoice.php?course_id=<?php echo $_REQUEST[course_id];?>&amp;student_id=<?php echo $student_id;?>&amp;page=search_print_invoice.php&amp;TB_iframe=true&amp;height=600&amp;width=690&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox">
+                            <input type="button" value="<?php echo constant("btn_prnt_inv_btn");?>" class="btn1" border="0" align="left" />
+                        </a>
+                        <?php //} ?>
+						
+						<a href="search_print_agreement.php?course_id=<?php echo $_REQUEST[course_id];?>&amp;student_id=<?php echo $student_id;?>&amp;page=search_print_invoice.php&amp;TB_iframe=true&amp;height=600&amp;width=690&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox">
+                            <input type="button" value="<?php echo "Agreement";?>" class="btn1" border="0" align="left" />
+						</a>
+					</td>
                     <td width="18%" align="center" valign="top"><?php echo $dbf->VVIP_Big_Icon($_REQUEST["student_id"]);?></td>
                     </tr>
                   <tr>
@@ -546,12 +571,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							  $valno = $dbf->strRecordID("student_fees","*","id='$maxid'");
 							  $status = $valno["status"];								
 							  $num11=$dbf->countRows('student_fees',"course_id='$course_id' And student_id='$student_id' And invoice_sl LIKE '$enroll_dtl%'");
-								
-							if($num11>0) { ?>
-                              <a href="search_print_invoice.php?course_id=<?php echo $_REQUEST[course_id];?>&amp;student_id=<?php echo $student_id;?>&amp;page=search_print_invoice.php&amp;TB_iframe=true&amp;height=600&amp;width=690&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox">
-                                <input type="button" value="<?php echo constant("btn_prnt_inv_btn");?>" class="btn1" border="0" align="left" />
-                                </a>
-                              <?php } ?></td>
+							  /*Invoice Button Location*/
+							  ?>
+							</td>
                             </tr>
                           <tr>
                             <td height="28" align="left" valign="middle" class="mytext"><select name="ptype" id="ptype" class="validate[required]" style="width:103px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;">

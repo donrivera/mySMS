@@ -239,6 +239,14 @@ $(document).ready(function() {
 		<a href="report_student_type.php"><?php echo constant("REPORT_STUDENT_TYPE");?></a>
         <a href="report_corp_acct.php"><?php echo constant("REPORT_CORPORATE_ACCT");?></a>
 		<a href="report_student_address.php"><?php echo constant("REPORT_STUDENT_ADDRESS_REPORT");?></a>
+		<a href="report_journal.php">Journal Transactions</a>
+		<a href="report_general_ledger.php">Ledger</a>
+		<a href="report_journal.php">Cost & Expense</a>
+		<a href="report_journal.php">Assets Depreciation</a>
+		<a href="report_journal.php">Balance Sheet</a>
+		<a href="report_journal.php">Income</a>
+		<a href="report_journal.php">Cash Flow</a>
+		<a href="report_journal.php">Analysis(Income)</a>
 		</div>
         
         <!-- Transfer -->
@@ -266,6 +274,9 @@ $(document).ready(function() {
 		<a href="audit_history.php"><?php echo constant("STUDENT_AUDITDATA");?></a>
 		<a href="payment_history.php"><?php echo constant("STUDENT_MYACCOUNT_PAYMENTHISTORY");?></a>
 		<a href="corporate_accounts.php"><?php echo constant("STUDENT_MYACCOUNT_CORPACCT");?></a>
+		<a href="view_payment_voucher.php">Payment Voucher</a>
+		<a href="view_receipt_voucher.php">Receipt Voucher</a>
+		<a href="view_journal.php">Journal Entry</a>
 	  </div>
       
       <div id="vacation" class="dropmenudiv_d">

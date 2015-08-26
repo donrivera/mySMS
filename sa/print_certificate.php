@@ -25,15 +25,29 @@ $res = $dbf->strRecordID("student","*","id='$_REQUEST[student_id]'");
 $resc = $dbf->strRecordID("countries","*","id='$res[country_id]'");
 
 $course_name = $dbf->strRecordID("course","*","id='$_REQUEST[course_id]'");
-$exp_course_name=explode("-",$course_name[name]);
-$eng_course_name=filter_var($exp_course_name[0], FILTER_SANITIZE_NUMBER_INT);
-$arb_course_name=filter_var($exp_course_name[1], FILTER_SANITIZE_NUMBER_INT);
+$exp_course_name=explode("-",$course_name[certificate]);
+$eng_course_name=$exp_course_name[0];//filter_var($exp_course_name[0], FILTER_SANITIZE_NUMBER_INT);
+$arb_course_name=$exp_course_name[1];//filter_var($exp_course_name[1], FILTER_SANITIZE_NUMBER_INT);
 $res_enroll = $dbf->strRecordID("student_enroll","*","student_id='$_REQUEST[student_id]' And course_id='$_REQUEST[course_id]'");
 $res_g = $dbf->strRecordID("student_group","*","id='$res_enroll[group_id]'");
 $res_size = $dbf->strRecordID("group_size","*","group_id='$res_g[group_id]'");
-$total_units = $res_size[units];
-
-$or_unit = $res_size[units];
+switch($res_g[course_id])
+{
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+	case 7:
+	case 8:
+	case 9:
+	case 10:
+	case 11:
+	case 12:
+	case 13:{$total_units = 90;$or_unit = 80;}break;
+	default:{$total_units = $res_g[units];$or_unit = $res_g[units];}
+}
 $per_unit = 45; //minute
 $tot_unit = $or_unit * $per_unit;
 $hr = $tot_unit / 60;
@@ -56,14 +70,14 @@ if($is_exist == 0){
 .cer1
 {
 font-family:Arial, Helvetica, sans-serif;
-font-size:10px;
+font-size:16px;
 color:#333333;
 }
 
 .cer2
 {
 font-family:Arial, Helvetica, sans-serif;
-font-size:9px;
+font-size:16px;
 font-weight:normal;
 color:#333333;
 }
@@ -101,13 +115,13 @@ color:#000000;
 
 .cer_my_head{
 font-family:Arial, Helvetica, sans-serif;
-font-size:16px;
+font-size:17px;
 color:#000000;
 font-weight:normal;
 }
 .cer_my_head_bold{
 font-family:Arial, Helvetica, sans-serif;
-font-size:16px;
+font-size:17px;
 color:#000000;
 font-weight:bold;
 }
@@ -119,7 +133,7 @@ font-weight:bold;
 }
 .cer_my_cer_head_bold{
 font-family:"Monotype Corsiva";
-font-size:16px;
+font-size:17px;
 color:#000000;
 font-weight:bold;
 font-style:italic;
@@ -142,10 +156,7 @@ font-style:italic;
           <tr>
             <td height="10" align="left" valign="top"></td>
             </tr>
-          <tr>
-            <td class="test">&nbsp;</td>
-            </tr>
-          <tr>
+         <tr>
             <td height="40" align="middle" class="ar_cer_my_head_bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;شهادة اجتياز دورة في اللغة الانجليزية </td>
             </tr>
           <tr>
@@ -235,7 +246,7 @@ font-style:italic;
                     <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">قد اجتاز دورة في اللغة  الانجليزية لغير الناطقين بها:</span></th>
                     </tr>
                   <tr>
-                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $arb_course_name;?>  , وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span></th>
+                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">في المستوى <?php echo $arb_course_name;?>  ، وأكمل   <?php echo $dbf->enNo2ar($hr,'');?>   ساعة دراسية</span></th>
                     </tr>
                   <tr>
 					<?php $ar_start_date=date("d-m-Y",strtotime($res_g["start_date"]));$ar_end_date=date("d-m-Y",strtotime($res_g["end_date"]));?>
@@ -251,7 +262,7 @@ font-style:italic;
                     </th>
                     </tr>
                   <tr>
-                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">وحصل على تقدير  <?php echo $res_grade["arabic"];?> , ونسبة  <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %</span></th>
+                    <th height="28" align="right" valign="middle" class="cer2" scope="col"><span class="cer_my_head_bold" dir="rtl">وحصل على تقدير  <?php echo $res_grade["arabic"];?> ، ونسبة  <?php echo $dbf->enNo2ar($res_per["final_percent"],'');?> %</span></th>
                   </tr>
                   
 				  <tr>

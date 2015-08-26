@@ -127,6 +127,15 @@ if($num_student == 0)
 			$student_reenroll=1;
 		}
 		$dbf->updateTable("student_enroll", $string_status, "student_id='$student_id' And course_id='$course_id'");
+		//Update Advanced Payment
+		$advance_payment=$dbf->countRows('student_fees',"student_id='$student_id' And course_id='$course_id' AND type='advance'");
+		if($advance_payment>0)
+		{
+			$invoice=$dbf->GetBillNo($student_id,$course_id);//getInvoiceCode($student_id,$course_id);
+			$string_st="invoice_sl='$invoice',type='opening'"; //Enrolled Status		
+			$dbf->updateTable("student_fees",$string_st,"student_id='$student_id' And course_id='$course_id' AND type='advance'");
+		}
+		//Update Advanced Payment
 		$prev_num_student = $dbf->countRows('student_group_dtls',"parent_id='$group'");
 		$sizegroup = $dbf->strRecordID("group_size","*","(size_to>='$prev_num_student' And size_from<='$prev_num_student')");
 		$string_g="group_id='$sizegroup[group_id]'";
@@ -236,7 +245,16 @@ else
 		}
 		$dbf->updateTable("student_enroll", $string_status, "student_id='$student_id' And course_id='$course_id'");
 		# End
-		//=====================================		
+		//=====================================	
+		//Update Advanced Payment
+		$advance_payment=$dbf->countRows('student_fees',"student_id='$student_id' And course_id='$course_id' AND type='advance'");
+		if($advance_payment>0)
+		{
+			$invoice=$dbf->GetBillNo($student_id,$course_id);//getInvoiceCode($student_id,$course_id);
+			$string_st="invoice_sl='$invoice',type='opening'"; //Enrolled Status		
+			$dbf->updateTable("student_fees",$string_st,"student_id='$student_id' And course_id='$course_id' AND type='advance'");
+		}
+		//Update Advanced Payment
 		//Get number of student recently added
 		$prev_num_student = $dbf->countRows('student_group_dtls',"parent_id='$group'");
 		//Get the range from (group_size) Table
@@ -340,5 +358,10 @@ if($studentSendSMS==1)
 if(err==1)
 {self.parent.tb_remove();}
 else
-{self.parent.location.href='search_manage.php?student_id=<?php echo $student_id;?>';self.parent.tb_remove();}
+{
+	/*self.parent.location.href='search_manage.php?student_id=<?php echo $student_id;?>';*/
+	self.parent.location.href='single-payment.php?student_id=<?=$student_id;?>&course_id=<?=$course_id?>';
+	self.parent.tb_remove();
+	self.parent.tb_remove();
+}
 </script>

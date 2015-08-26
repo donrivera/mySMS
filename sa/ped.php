@@ -898,9 +898,9 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$res_unit = $dbf->strRecordID("ped_units","*","group_id='$_REQUEST[cmbgroup]' AND units='$i'");
 						
 						//Get the Number of Present in a particular Units
-						#$present = $dbf->strRecordID("ped_attendance","COUNT(id)","unit='$res_unit[units]' And teacher_id='$teacher_id' And group_id='$_REQUEST[cmbgroup]' And (shift1='X' OR shift2='X' OR shift3='X' OR shift4='X' OR shift5='X' OR shift6='X' OR shift7='X' OR shift8='X' OR shift9='X')");
+						//$present = $dbf->strRecordID("ped_attendance","COUNT(id)","unit='$res_unit[units]' And teacher_id='$teacher_id' And group_id='$_REQUEST[cmbgroup]' And (shift1='X' OR shift2='X' OR shift3='X' OR shift4='X' OR shift5='X' OR shift6='X' OR shift7='X' OR shift8='X' OR shift9='X')");
 						$present = $dbf->strRecordID("ped_attendance","COUNT(id) as total","attend_date='$res_unit[dated]' And group_id='$_REQUEST[cmbgroup]' And (shift1='X' OR shift2='X' OR shift3='X' OR shift4='X' OR shift5='X' OR shift6='X' OR shift7='X' OR shift8='X' OR shift9='X' OR shift1='L' OR shift2='L' OR shift3='L' OR shift4='L' OR shift5='L' OR shift6='L' OR shift7='L' OR shift8='L' OR shift9='L')");
-						#$present_unit_per_day=$dbf->getDataFromTable("student_group","unit_per_day","id='$_REQUEST[cmbgroup]'");
+						//$present_unit_per_day=$dbf->getDataFromTable("student_group","unit_per_day","id='$_REQUEST[cmbgroup]'");
 						$res_teacher = $dbf->strRecordID("teacher","*","id='$teacher_id'");
 						?>
                           <tr>
@@ -998,8 +998,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$shift_count = 1;
 						$no_shift = $val_course[units];
 						//Get the number of shift in a Days
-						#$no_shift = $dbf->getDataFromTable("common","name","id='$val_course[units]'");
-						#echo $unit_per_day;
+						//$no_shift = $dbf->getDataFromTable("common","name","id='$val_course[units]'");
+						//echo $unit_per_day;
 						for($i=0;$i<$no_cols;$i++)
 						{
                     ?>
@@ -1032,7 +1032,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						else if($k == 6){$status_shift1 = $status_shift7;}
 						else if($k == 7){$status_shift1 = $status_shift8;}
 						else if($k == 8){$status_shift1 = $status_shift9;}
-						#echo '<span class="pedtext_normal">'.$status_shift1.'</span>';
+						//echo '<span class="pedtext_normal">'.$status_shift1.'</span>';
 						echo (empty($status_shift1)?'':'<span style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#000000;font-weight:bold;">'.$status_shift1.'</span>');
 						
 					?>
@@ -1105,8 +1105,8 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						$shift_count = round($first_block+1);
 						$no_shift = $val_course[units];
 						//Get the number of shift in a Days
-						#$no_shift = $dbf->getDataFromTable("common","name","id='$val_course[units]'");
-						#echo $unit_per_day;
+						//$no_shift = $dbf->getDataFromTable("common","name","id='$val_course[units]'");
+						//echo $unit_per_day;
 						for($i=0;$i<$first_block;$i++)
 						{
                     ?>
@@ -1139,7 +1139,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 						else if($k == 6){$status_shift1 = $status_shift7;}
 						else if($k == 7){$status_shift1 = $status_shift8;}
 						else if($k == 8){$status_shift1 = $status_shift9;}
-						#echo '<span class="pedtext_normal">'.$status_shift1.'</span>';
+						//echo '<span class="pedtext_normal">'.$status_shift1.'</span>';
 						echo (empty($status_shift1)?'':'<span style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#000000;font-weight:bold;">'.$status_shift1.'</span>');
 					?>
 						</div>

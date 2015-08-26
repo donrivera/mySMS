@@ -182,7 +182,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td width="6%" id="lblname">&nbsp;</td>
                 <td width="10%" align="left">&nbsp;</td>
                 <td width="41%" align="left">&nbsp;</td>
-                <td width="18%" align="right"><a href="single-student.php">
+                <td width="18%" align="right"><a href="search.php">
                     <input type="button" value="<?php echo constant("btn_cancel_btn2");?>" class="btn1" border="0" align="left" /></a></td>
               </tr>
             </table></td>
@@ -709,6 +709,30 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                               <td align="left" valign="middle"><input type="file" name="signature" id="signature" /></td>
                               <td align="left" valign="middle">&nbsp;</td>
                             </tr>
+							<!--CORPORATE ACCOUNT-->
+							<?php
+								$sql=$dbf->genericQuery("SELECT code,name FROM corporate WHERE centre_id='".$_SESSION[centre_id]."'");
+							?>
+							<tr>
+								<td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+								<td width="31%" align="right" valign="middle" class="leftmenu">
+									Corporate Account:
+								</td>
+								<td width="3%">&nbsp;</td>
+								<td width="66%" align="left" valign="middle">
+									<select name="corp_acct" 
+											class="combo" 
+											id="corp_acct" 
+											style="width:180px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;"
+											<?php #echo (empty($group_query)?'disabled':'');?>>
+										<option value=""> Select Account</option>
+										<?php foreach($sql as $s):?>
+										<option value="<?php echo $s['code'];?>" <?php echo ($s['code']==$res_edit_student["corporate"]?"selected":"");?>><?php echo $s['name'];?></option>
+										<?php endforeach;?>
+									</select>
+								</td>
+							</tr>
+							<!--CORPORATE ACCOUNT-->
                             <tr>
                               <td height="10" colspan="5" align="left" valign="middle"></td>
                             </tr>
@@ -1313,6 +1337,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                                       <td align="left" valign="middle" class="leftmenu">: <?php echo constant("STUDENT_ADVISOR_HOME_S_CLASSIC_STDPHOTO");?></td>
                                       <td align="left" valign="middle">&nbsp;</td>
                                     </tr>
+									
                                     <tr>
                                       <td height="10" colspan="5" align="left" valign="middle"></td>
                                     </tr>

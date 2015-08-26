@@ -206,6 +206,14 @@ $count = $res_logout[name]+1; // Set timeout period in seconds
                               <td>&nbsp;</td>
                               <td align="left" valign="middle">&nbsp;</td>
                             </tr>
+							 <tr>
+                              <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
+                              <td height="28" align="right" valign="middle" class="leftmenu"><?php echo "Certificate Level Name";?>  :</td>
+                              <td>&nbsp;</td>
+                              <td align="left" valign="middle"><input name="certificate" type="text" class="new_textbox190" id="certificate" value="<?php echo $res[certificate];?>" /></td>
+                              <td>&nbsp;</td>
+                              <td align="left" valign="middle">&nbsp;</td>
+                            </tr>
                             <tr>
                               <td align="left" valign="middle" class="leftmenu">&nbsp;</td>
                               <td height="28" align="right" valign="top" class="leftmenu"><?php echo constant("ADMIN_COURSE_MANAGE_COURSEDESCRIPTION");?>  :</td>

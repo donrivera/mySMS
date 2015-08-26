@@ -58,7 +58,7 @@ if($_REQUEST['action']=='insert')
 	$from = $dbf->getDataFromTable("teacher","email","id='$_SESSION[uid]'");
 	$to = $dbf->getDataFromTable("user","email","user_type='Student Advisor' And center_id='$_SESSION[centre_id]'");
 	
-	$cd = $dbf->getDataFromTable("user","user_name","user_type='Student Advisor' And center_id='$_SESSION[centre_id]'");
+	$cd = $dbf->getDataFromTable("user","user_name","user_type='Student Advisor' And center_id='$res_centre[centre_id]'");
 	$teacher = $dbf->getDataFromTable("teacher","name","id='$teacher_id'");
 	
 	$res_student = $dbf->strRecordID("student","*","id='$_POST[student]'");

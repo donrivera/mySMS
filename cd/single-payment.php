@@ -313,10 +313,19 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                 <td width="25%" height="30" align="left" class="logintext"> <?php echo constant("STUDENT_INFORMATON");?></td>
                 <td width="6%" id="lblname">&nbsp;</td>
                 <td width="10%" align="left">&nbsp;</td>
-                <td width="41%" align="left">&nbsp;</td>
-                <td width="18%" align="right"><a href="single-home.php?student_id=<?php echo $_REQUEST[student_id];?>">
-                    <input type="button" value="<?php echo constant("btn_cancel_btn2");?>" class="btn1" border="0" align="left" /></a></td>
-              </tr>
+                <td width="21%" align="left">&nbsp;</td>
+                
+				<td width="38%" align="right">
+					<!--
+					<a href="single-home.php?student_id=<?php echo $_REQUEST[student_id];?>">
+						<input type="button" value="<?php echo constant("btn_cancel_btn2");?>" class="btn1" border="0" align="left" />
+					</a>
+					-->
+					<a href="search_advance.php?student_id=<?php echo $_REQUEST[student_id];?>">
+						<input type="button" value="<?php echo "New Enrollment";?>" class="btn1" border="0" align="left" />
+					</a>
+				</td>
+			   </tr>
               <tr>
                 <td height="15" colspan="5" align="left" valign="middle" bgcolor="#FFFFFF" >&nbsp;</td>
               </tr>
@@ -445,7 +454,19 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         </select></td>
                       </tr>
                     </table></td>
-                    <td width="27%">&nbsp;</td>
+                    <td width="27%">
+						<?
+							//if($num11>0) { 
+						?>
+                        <a href="search_print_invoice.php?course_id=<?php echo $_REQUEST[course_id];?>&amp;student_id=<?php echo $student_id;?>&amp;page=search_print_invoice.php&amp;TB_iframe=true&amp;height=600&amp;width=690&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox">
+                            <input type="button" value="<?php echo constant("btn_prnt_inv_btn");?>" class="btn1" border="0" align="left" />
+                        </a>
+                        <?php //} ?>
+						
+						<a href="search_print_agreement.php?course_id=<?php echo $_REQUEST[course_id];?>&amp;student_id=<?php echo $student_id;?>&amp;page=search_print_invoice.php&amp;TB_iframe=true&amp;height=600&amp;width=690&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox">
+                            <input type="button" value="<?php echo "Agreement";?>" class="btn1" border="0" align="left" />
+						</a>
+					</td>
                     <td width="18%" align="center" valign="top"><?php echo $dbf->VVIP_Big_Icon($_REQUEST["student_id"]);?></td>
                     </tr>
                   <tr>
@@ -538,11 +559,13 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 							  $status = $valno["status"];								
 							  $num11=$dbf->countRows('student_fees',"course_id='$course_id' And student_id='$student_id' And invoice_sl LIKE '$enroll_dtl%'");
 								
-							if($num11>0) { ?>
+							//if($num11>0) { ?>
+								<!--
                               <a href="search_print_invoice.php?course_id=<?php echo $_REQUEST[course_id];?>&amp;student_id=<?php echo $student_id;?>&amp;page=search_print_invoice.php&amp;TB_iframe=true&amp;height=600&amp;width=690&amp;inlineId=hiddenModalContent&amp;modal=true" class="top_menu_link thickbox">
                                 <input type="button" value="<?php echo constant("btn_prnt_inv_btn");?>" class="btn1" border="0" align="left" />
                                 </a>
-                              <?php } ?></td>
+								-->
+                              <?php //} ?></td>
                             </tr>
                           <tr>
                             <td height="28" align="left" valign="middle" class="mytext"><select name="ptype" id="ptype" class="validate[required]" style="width:103px; border:solid 1px; border-color:#999999;background-color:#ECF1FF;">

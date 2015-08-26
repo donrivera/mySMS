@@ -362,7 +362,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
 					<tr>
 						<td>&nbsp;</td>
 						<td align="left" valign="middle" class="leftmenu"><?php echo constant("TEACHER_ARF_MANAGE_DATE");?> : 
-							<input name="action_taken_date"  type="text" class="new_textbox100" id="action_taken_date" size="45" value=""/>
+							<input name="action_taken_date"  type="text" class="new_textbox100" id="action_taken_date" size="45" value="<?php echo $res_arf[action_taken_date];?>"/>
 							<?php echo constant("TEACHER_ARF_MANAGE_SIGNED");?>:
 						</td>
 					</tr>

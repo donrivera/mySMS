@@ -109,7 +109,8 @@ $(document).ready(function() {
         
          <?php
 	  $mystyle = '';
-	  if(	$page_name == "report_teacher_board.php" || 
+	  if(	$page_name == "report_centre_director_main.php" || 
+			$page_name == "report_teacher_board.php" || 
 			$page_name == "report_teacher_schedule.php" || 
 			$page_name == "report_student_awaiting.php" || 
 			$page_name == "report_group_to_finish.php" || 
@@ -252,24 +253,25 @@ $(document).ready(function() {
       
 	<!--RSeport drop down menu -->                                                   
 	<div id="rpt_report" class="dropmenudiv_d">
-        <a href="report_teacher_board.php"><?php echo constant("ADMIN_MENU_REPORTS_BOARD");?></a>
+       <!-- <a href="report_teacher_board.php"><?php echo constant("ADMIN_MENU_REPORTS_BOARD");?></a>-->
+	   <a href="report_centre_director_main.php" title="Cetificate Report"><?php echo constant("CD_MENU_CENTRE_REPORT");?></a>      
         <a href="report_teacher_schedule.php"><?php echo constant("ADMIN_MENU_REPORTS_SCHEDULE");?></a>
         <a href="report_student_awaiting.php"><?php echo constant("ADMIN_MENU_REPORTS_AWAIT");?></a>
         <a href="report_group_to_finish.php"><?php echo constant("ADMIN_MENU_REPORTS_FINISH");?></a>
         <a href="report_certificate_not_collect.php"><?php echo constant("ADMIN_MENU_REPORTS_COLLECT");?></a>
         <a href="report_absent_report.php"><?php echo constant("ADMIN_MENU_REPORTS_ABSENT");?></a>
         <a href="report_teacher_leave_report.php"><?php echo constant("ADMIN_MENU_REPORTS_TEACHER_LEAVE");?></a>
-        <a href="report_teacher_capacity.php"><?php echo constant("ADMIN_MENU_REPORTS_TEACHER_CAPACITY");?></a>
+        <!--<a href="report_teacher_capacity.php"><?php echo constant("ADMIN_MENU_REPORTS_TEACHER_CAPACITY");?></a>-->
         <a href="report_certificate_report.php"><?php echo constant("ADMIN_MENU_REPORTS_SUMMARY");?></a>
-        <a href="report_freq_customer_report.php"><?php echo constant("ADMIN_MENU_REPORTS_CUSTOMER");?></a>
+        <!--<a href="report_freq_customer_report.php"><?php echo constant("ADMIN_MENU_REPORTS_CUSTOMER");?></a>-->
         <a href="report_student_group_grade.php"><?php echo constant("ADMIN_MENU_REPORTS_GROUP_GRADE");?></a>
         <a href="report_student_not_enrolled.php"><?php echo constant("ADMIN_MENU_REPORTS_NOT_ENROLLED");?></a>
         <a href="report_student_on_hold.php"><?php echo constant("ADMIN_MENU_REPORTS_ON_HOLD");?></a>
-        <a href="view_student_comments_history.php"><?php echo constant("ADMIN_MENU_RULE_VIEW_COMMENT_HISTORY");?></a>
-        <a href="report_student_cycle.php"><?php echo constant("REPORT_STUDENT_LIFE_CYCLE");?></a>
+        <!--<a href="view_student_comments_history.php"><?php echo constant("ADMIN_MENU_RULE_VIEW_COMMENT_HISTORY");?></a>-->
+        <!--<a href="report_student_cycle.php"><?php echo constant("REPORT_STUDENT_LIFE_CYCLE");?></a>-->
 		<a href="report_student_type.php"><?php echo constant("REPORT_STUDENT_TYPE");?></a>
 		<a href="report_corp_acct.php"><?php echo constant("REPORT_CORPORATE_ACCT");?></a>
-		<a href="report_student_address.php"><?php echo constant("REPORT_STUDENT_ADDRESS_REPORT");?></a>
+		<!--<a href="report_student_address.php"><?php echo constant("REPORT_STUDENT_ADDRESS_REPORT");?></a>-->
 		<a href="report_transaction.php"><?php echo constant("ACCOUNTANT_TRANS");?></a> 
 	</div>
      
@@ -279,6 +281,7 @@ $(document).ready(function() {
         <a href="group_quick.php"><?php echo constant("QUICK_ADD_GROUP");?></a>
         <a href="group_manage.php"><?php echo constant("SA_MENU_GROUP");?></a>        
         <a href="view_group_size.php"><?php echo constant("SA_MENU_GROUP_SIZE");?></a>
+		<a href="centre_schedule.php"><?php echo constant("RE_MENU_CS");?></a>
     </div>
     
     <!-- Transfer -->
@@ -291,7 +294,7 @@ $(document).ready(function() {
 	<!--student drop down menu -->
     <div id="rpt_student" class="dropmenudiv_d"> 
         <!--<a href="s_age.php"><?php echo constant("CD_MENU_WIZBASESTD");?></a>-->
-        <a href="s_classic.php"><?php echo constant("SA_MENU_CLASSIC");?></a>
+        <!--<a href="s_classic.php"><?php echo constant("SA_MENU_CLASSIC");?></a>-->
         <a href="student_appoint_manage.php"><?php echo constant("SA_MENU_APPOINT");?></a>
         <a href="arf_manage.php"><?php echo constant("ACTION_ARF_REPORT");?></a>
         <a href="cancel_manage.php"><?php echo constant("CANCELLATION_REQUEST");?></a>

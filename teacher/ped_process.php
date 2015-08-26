@@ -215,9 +215,9 @@ else
 			$dbf->updateTable("ped_units",$string,"teacher_id='$uid' AND units='$pd_units' and group_id='$group_id' and course_id='$course_id'");
 		}
 	endforeach;
-	//$file_ped_attendance=serialize($_POST['ped_attendance']);
-	//$filename_ped_attendance="ped_attendance".$group_id.$today.".txt";
-	//file_put_contents($filename_ped_attendance, $file_ped_attendance);
+	$file_ped_attendance=serialize($_POST['ped_attendance']);
+	$filename_ped_attendance="ped_attendance".$group_id.$today.".txt";
+	file_put_contents($filename_ped_attendance, $file_ped_attendance);
 	foreach($_POST['ped_attendance'] as $p_a):
 		$pa_unit=$p_a['unit'];
 		

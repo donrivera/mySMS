@@ -316,7 +316,11 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                   <tr>
                     <td>&nbsp;</td>
                     <td height="25" align="left" valign="middle" class="lable1"><?php echo constant("MANAGE_LISM_REPORT_STUDENT_TRANSFER");?>&nbsp;:&nbsp;&nbsp;</td>
-                    <td align="center" valign="middle" class="pedtext">&nbsp;</td>
+                    <?php
+					$transfer = $dbf->strRecordID("transfer_centre_to_centre","COUNT(id)","(created_date BETWEEN '$start_date' And '$end_date') And centre_from='$centre_id'");
+					$transfer = $transfer["COUNT(id)"];
+					?>
+					<td align="center" valign="middle" class="pedtext"><?=$transfer?></td>
                   </tr>
                   <tr>
                     <td>&nbsp;</td>

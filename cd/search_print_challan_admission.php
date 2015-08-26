@@ -149,7 +149,7 @@ function print_page()
 				<td align="right" valign="middle" class="suc_msg">
 					<?php echo $val['first_name']."&nbsp;".$val['father_name']."&nbsp;".$val['family_name'];?>
 					&nbsp;
-					<?php echo "(".$val['first_name1']."&nbsp;".$val['father_name1']."&nbsp;".$val['grandfather_name1']."&nbsp;".$val['family_name1'].")";?>
+					<?php echo "(".$val['first_name1']."&nbsp;".$val['father_name1']."&nbsp;".$val['family_name1'].")";?>
 				</td>
 				<td>&nbsp;</td>
 				<td height="30" align="right" valign="middle" class="smalltext">

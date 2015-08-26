@@ -287,6 +287,7 @@ $(document).ready(function() {
 			<a href="material_manage.php"><?php echo constant("ADMIN_MENU_RULE_MATERIAL");?></a>
             <a href="unit_manage.php"><?php echo constant("ADMIN_MENU_RULE_UNI");?></a>
             <a href="comments_manage.php"><?php echo constant("ADMIN_MENU_RULE_COMMENTS");?></a>
+			<a href="discount_manage.php"><?="Manage discount"?></a>
             <a href="timeout_manage.php"><?php echo constant("ADMIN_MENU_RULE_LOGOUT_TIME");?></a>
             <a href="sms_gateway_manage.php"><?php echo constant("ADMIN_MENU_RULE_SMS");?></a>
             <a href="view_group_size.php"><?php echo constant("ADMIN_MENU_RULE_VIEW_GROUP_SIZE");?></a>

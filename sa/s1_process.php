@@ -1229,6 +1229,74 @@ if($_REQUEST['action']=='advance')
 	}*/
 	# UPDATE THE STATUS OF THE STUDENT FOR STUDENT LIFE CYCLE	
 	
+	#ACCOUNTING ENTRY#
+	$contract_fee=$dbf->getDataFromTable("course_fee","fees","course_id='$course_id'");
+	#$total_contract_fee=$contract_fee - $_REQUEST[discount];
+	switch($_REQUEST[payment_type])
+	{
+		case '60':
+					{
+						$course_code=$dbf->getDataFromTable("course","code","id='$course_id'");
+						$account_number=$course_code."-".$student_id;
+						$coa_acct_dir=array(
+												'account_number' 				=> $account_number,
+												'account_group_name'      	 	=> 'Individual Client',
+												'parent_account_number'     	=> 1322,
+												'account_name'					=> $course_code."-".$dbf->acctPrintStudentName($student_id),
+												'account_sign'					=> 'C'
+										);
+						$coa=$dbf->acctAddToChart($coa_acct_dir);
+						$coa_account=$account_number;//$dbf->getDataFromTable("acct_chart_accounts","account_number","id='$coa'");
+						//$account=1344;
+						$account=($_SESSION[centre_id]=='1'||$_SESSION[centre_id]=='2'?1345:1346);
+						#Journal Entry#
+						$jl_acc_dir_desc="Agreement Issued From: ".$dbf->printStudentName($student_id);
+						$rc_acc_dir_desc="Payment Received From: ".$dbf->printStudentName($student_id);
+						$jl_acc_dir=array($coa_account,4111);
+						$jl_acc_dir_value=array(-abs($contract_fee),$contract_fee);
+						$jl_acc_dir_cost_ctr=array($_SESSION[centre_id],$_SESSION[centre_id]);
+						$jl_transaction = array(
+													'transaction_amount' 			=> $contract_fee,
+													'transaction_date'      	 	=> $dated,
+													'remarks'     					=> $jl_acc_dir_desc,
+												);
+						$jl_acct_dir=array(
+												'account_debit'					=> $jl_acc_dir_value,
+												'account_credit'				=> $jl_acc_dir_value,
+												'account_desc'      	 		=> $jl_acc_dir_desc,
+												'account_no'     				=> $jl_acc_dir,
+												'cost_center'					=> $jl_acc_dir_cost_ctr
+											);
+						$validate_acct_code=$dbf->getDataFromTable("acct_chart_accounts","account_number","account_number='$account_number'");
+						$dbf->insertJournal($jl_transaction,$jl_acct_dir);
+						#(empty($validate_acct_code)?$dbf->insertJournal($jl_transaction,$jl_acct_dir):"");//validate double entry journal
+						#Journal Entry#
+						#Receipt Voucher#
+						$rc_acc_dir_value=array(-abs($_REQUEST[amts]),$_REQUEST[amts]);
+						$rc_acc_dir_no=array($account,$coa_account);
+						$rc_transaction = array(
+													'party_id'						=> $student_id,
+													'transaction_pay_type'			=> $account,
+													'transaction_amount' 			=> $_REQUEST[amts],
+													'bank_check_no'					=> "",
+													'transaction_date'      	 	=> $dated,
+													'remarks'     					=> $rc_acc_dir_desc,
+													'party_code'					=> "ST"
+												);
+						$rc_acct_dir=array(
+												'account_value' 				=> $rc_acc_dir_value,
+												'account_desc'      	 		=> $jl_acc_dir_desc,
+												'account_no'     				=> $rc_acc_dir_no,
+												'cost_center'					=> $jl_acc_dir_cost_ctr
+											);
+						$dbf->receiptVoucher($rc_transaction,$rc_acct_dir);
+						#Receipt Voucher#
+					}break;
+			case '61':	{$account=1332;}break;
+			case '131':	{$account="";}break;
+			default:	{echo "No Payment Type!";}break;
+		}
+	#ACCOUNTING ENTRY#
 	$is_enable = $dbf->countRows("sms_gateway","status='Enable'");
 	if($is_enable > 0)
 	{

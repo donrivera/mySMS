@@ -541,10 +541,11 @@ class User extends Dbfunctions{
 		
 		$dbf = new User();
 		
-		$res_enroll = $dbf->strRecordID("student_enroll","*","course_id='$course_id' And student_id='$student_id'");
+		$res_enroll = $dbf->strRecordID("student_enroll","*","course_id='$course_id' And student_id='$student_id' ORDER BY id DESC LIMIT 0,1");
 		$course = $dbf->getDataFromTable("course_fee","fees","id='$res_enroll[fee_id]'");
 		$advance_discount=$dbf->getDataFromTable("student_fees","discount","student_id='$student_id' AND course_id='$course_id'");
-		$camt = (($course - $res_enroll["discount"]) - $advance_discount) + $res_enroll["other_amt"];
+		$discount_student_payment=(empty($res_enroll["discount"])?$advance_discount:$res_enroll["discount"]);
+		$camt = (($course - $discount_student_payment)) + $res_enroll["other_amt"];
 		$fee = $dbf->strRecordID("student_fees","SUM(paid_amt)","course_id='$course_id' And student_id='$student_id' AND status='1'");
 		$feeamt = $fee["SUM(paid_amt)"];
 		
@@ -2346,13 +2347,13 @@ class User extends Dbfunctions{
 		foreach($p_group as $p_grp):$previous_group_status=$p_grp['status'];endforeach;	
 		$advance_fee=$this->countRows('student_fees',"student_id='$student_id' And course_id='$course_id' And type='advance'");
 		$enroll=$this->genericQuery("
-										SELECT e.id
+										SELECT DISTINCT(e.id)
 										FROM student_enroll e 
 										INNER JOIN student_group_dtls sgd ON e.student_id=sgd.student_id
 										INNER JOIN student_group sg ON sgd.parent_id=sg.id
 										INNER JOIN student_fees sf ON sg.course_id=sf.course_id AND e.student_id=sf.student_id
 										WHERE e.student_id='$student_id' AND e.course_id='$course_id' AND (sg.status IN('Continue','Not Started') OR sf.type!='advance') 
-										LIMIT 0,1
+										ORDER BY enroll_date DESC LIMIT 0,1
 									");
 		//$student_status=$this->countRows('student_moving',"student_id='$student_id' AND course_id='$course_id' AND status_id==4");
 		foreach($enroll as $e):$enroll_id=$e['id'];endforeach;
@@ -2397,5 +2398,233 @@ class User extends Dbfunctions{
 		
 		return $shift1+$shift2+$shift3+$shift4+$shift5+$shift6+$shift7+$shift8+$shift9;
 	}
+	/*Accounting Functions*/
+	function paymentVoucher($transaction,$acct_dir)
+	{
+		$now=date("Y-m-d G:i:s");
+		extract($transaction);
+		extract($acct_dir);
+		$trans_type_code=$this->getDataFromTable("acct_transaction_types","transaction_type_code","transaction_type_desc='Payment'");
+		$party_type_code=$this->getDataFromTable("acct_parties","party_type_code","id='$party_id'");
+		$trans_string="	transaction_type_code='$trans_type_code',
+						transaction_date='$transaction_date',
+						transaction_pay_type='$transaction_pay_type',
+						transaction_amount='$transaction_amount',
+						transaction_datetime='$now',
+						transaction_description='$remarks',
+						transaction_cost_center='$cost_center[0]'";
+		$duplicate=$this->genericQuery("SELECT * 
+										FROM acct_financial_transactions 
+										WHERE transaction_date='$transaction_date' 
+										AND transaction_amount='$transaction_amount' 
+										AND transaction_cost_center='$cost_center[0]'");
+		if($duplicate <= 0 || empty($duplicate))
+		{
+			$trans_id=$this->insertSet("acct_financial_transactions",$trans_string);
+			$parties_string="transaction_id='$trans_id',party_id='$party_id',party_code='$party_type_code'";
+			$supplier=$this->insertSet("acct_parties_in_transaction",$parties_string);
+			$loop=count($account_no);
+			for($a=0;$a<$loop;$a++):
+				//$ledger_amount=($account_debit[$a]==""?$account_credit[$a]:-abs($account_debit[$a]));
+				$account_string="	transaction_id='$trans_id',
+									account_number='$account_no[$a]',
+									amount='$account_value[$a]'";
+				$this->insertSet("acct_in_transactions",$account_string);
+				$this->insertLedger($account_no[$a],$trans_id,$account_value[$a],$account_desc[$a],"");
+			endfor;
+			return true;
+		}else{return false;}
+	}
+	function receiptVoucher($transaction,$acct_dir)
+	{
+		$now=date("Y-m-d G:i:s");
+		extract($transaction);
+		extract($acct_dir);
+		$trans_type_code=$this->getDataFromTable("acct_transaction_types","transaction_type_code","transaction_type_desc='Receipt'");
+		$party_type_code=$this->getDataFromTable("acct_parties","party_type_code","id='$party_id'");
+		$trans_string="	transaction_type_code='$trans_type_code',
+						transaction_date='$transaction_date',
+						transaction_pay_type='$transaction_pay_type',
+						transaction_amount='$transaction_amount',
+						transaction_datetime='$now',
+						transaction_description='$remarks',
+						transaction_cost_center='$cost_center[0]'";
+		$duplicate=$this->genericQuery("SELECT * 
+										FROM acct_financial_transactions 
+										WHERE transaction_date='$transaction_date' 
+										AND transaction_amount='$transaction_amount' 
+										AND transaction_cost_center='$cost_center[0]'");
+		if($duplicate <= 0 || empty($duplicate))
+		{
+			$trans_id=$this->insertSet("acct_financial_transactions",$trans_string);
+			$parties_string="transaction_id='$trans_id',party_id='$party_id',party_code='$party_type_code'";
+			$supplier=$this->insertSet("acct_parties_in_transaction",$parties_string);
+			$loop=count($account_no);
+			for($a=0;$a<$loop;$a++):
+				//$ledger_amount=($account_debit[$a]==""?$account_credit[$a]:-abs($account_debit[$a]));
+				$account_string="	transaction_id='$trans_id',
+									account_number='$account_no[$a]',
+									amount='$account_value[$a]'";
+				$this->insertSet("acct_in_transactions",$account_string);
+				$this->insertLedger($account_no[$a],$trans_id,$account_value[$a],$account_desc[$a],"");
+			endfor;
+			return true;
+		}else{return false;}
+	}
+	function insertJournal($transaction,$acct_dir)
+	{
+		$now=date("Y-m-d G:i:s");
+		extract($transaction);
+		extract($acct_dir);
+		$trans_type_code=$this->getDataFromTable("acct_transaction_types","transaction_type_code","transaction_type_desc='Journal'");
+		$trans_string="	transaction_type_code='$trans_type_code',
+						transaction_date='$transaction_date',
+						transaction_amount='$transaction_amount',
+						transaction_datetime='$now',
+						transaction_description='$remarks',
+						transaction_cost_center='$cost_center[0]'";
+		$duplicate=$this->genericQuery("SELECT * 
+										FROM acct_financial_transactions 
+										WHERE transaction_date='$transaction_date' 
+										AND transaction_amount='$transaction_amount' 
+										AND transaction_cost_center='$cost_center[0]' 
+										AND transaction_type_code='$trans_type_code'");
+		if($duplicate <= 0 || empty($duplicate))
+		{
+			$trans_id=$this->insertSet("acct_financial_transactions",$trans_string);
+			//$parties_string="transaction_id='$trans_id',party_id='$party_id',party_code='$party_type_code'";
+			//$supplier=$this->insertSet("acct_parties_in_transaction",$parties_string);
+			$loop=count(array_filter($account_no));
+			
+			for($a=0;$a<$loop;$a++):
+				$account_amount=($account_debit[$a]==""?$account_credit[$a]:$account_debit[$a]);
+				//$ledger_amount=($account_debit[$a]==""?$account_credit[$a]:-abs($account_debit[$a]));
+				$account_string="	transaction_id='$trans_id',
+									account_number='$account_no[$a]',
+									amount='$account_amount'";
+				$this->insertSet("acct_in_transactions",$account_string);
+				$this->insertLedger($account_no[$a],$trans_id,$account_amount,$account_desc[$a],"");
+			endfor;
+			return true;
+		}else{return false;}
+	}
+	function insertLedger($acct_no,$trans_id,$acct_amount,$acct_desc="",$acct_remarks="")
+	{
+		/*
+		$acct_type=$this->getDataFromTable("acct_chart_accounts","account_sign","account_number='".$acct_no."'");
+		//$amount=($acct_type=='C'?$acct_amount:(-abs($acct_amount)));
+		switch($acct_type)
+		{
+			case 'C':	{$amount=$acct_amount;}break;
+			case 'D':	{$amount=-abs($acct_amount);}break;
+			default:	{$amount=$acct_amount;}break;
+		}
+		*/
+		$amount=$acct_amount;
+		$ledger_string="	account_number='$acct_no',
+							transaction_id='$trans_id',
+							entry_amount='$amount',
+							entry_description='$acct_desc',
+							remarks='$acct_remarks'";
+		$this->insertSet("acct_general_ledger",$ledger_string);	
+	}
+	function selectAcctChart($param,$acct_sign)
+	{
+		echo "<select name='$param'>";
+		switch($acct_sign)
+		{
+			case 'D':{echo "<option value=''>Select Debit</option>";}break;
+			case 'C':{echo "<option value=''>Select Credit</option>";}break;
+			default:{echo "<option value=''>Select Account</option>";}break;
+		}
+		$sql=$this->genericQuery("	SELECT a.account_name,a.account_number 
+									FROM acct_chart_accounts a
+									INNER JOIN acct_account_groups b ON b.id=a.parent_account_number
+									ORDER BY a.id");
+		foreach($sql as $q):
+			$acct_group_name=$q['account_name'];
+			$acct_group_id=$q['account_number'];
+			echo "<option value='$acct_group_id'>".$acct_group_name."</option>";
+			$sub=$this->genericQuery("SELECT account_name,account_number FROM acct_chart_accounts WHERE parent_account_number='$acct_group_id'");
+			foreach($sub as $s):
+				$sub_menu=$s['account_name'];
+				$sub_menu_id=$s['account_number'];
+				echo "<option value='$sub_menu_id'>&nbsp;&nbsp;&nbsp;-".$sub_menu."</option>";
+				$sub1=$this->genericQuery("SELECT account_name,account_number FROM acct_chart_accounts WHERE parent_account_number='$sub_menu_id'");
+				foreach($sub1 as $s1):
+					$sub_menu1=$s1['account_name'];
+					$sub_menu_id1=$s1['account_number'];
+					echo "<option value='$sub_menu_id1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--".$sub_menu1."</option>";
+						/*
+						if($sub_menu1=='Individual Revenue' && $sub_menu_id1='4111')
+						{
+							$sub2=$this->genericQuery("	SELECT apt.party_id as id,apt.transaction_id
+														FROM acct_parties_in_transaction apt
+														INNER JOIN acct_in_transactions at ON at.account_number='$sub_menu_id1'");
+							foreach($sub2 as $student):
+								$student_name=$this->acctPrintStudentName($student['id']);
+								$student_transaction="trans".$student['transaction_id'];//array($sub_menu_id1,$student['transaction_id']);
+								$sub_menu_id2=$sub_menu_id1;
+								echo "<option value='$student_transaction'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---".$student_name."</option>";
+							endforeach;
+						}
+						else
+						{
+							$sub2=$this->genericQuery("SELECT account_name,account_number FROM acct_chart_accounts WHERE parent_account_number='$sub_menu_id1'");
+							foreach($sub2 as $s2):
+								$sub_menu2=$s2['account_name'];
+								$sub_menu_id2=$s2['account_number'];
+								echo "<option value='$sub_menu_id2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---".$sub_menu2."</option>";
+							endforeach;
+						}
+						*/
+						$sub2=$this->genericQuery("SELECT account_name,account_number FROM acct_chart_accounts WHERE parent_account_number='$sub_menu_id1'");
+						foreach($sub2 as $s2):
+							$sub_menu2=$s2['account_name'];
+							$sub_menu_id2=$s2['account_number'];
+							echo "<option value='$sub_menu_id2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---".$sub_menu2."</option>";
+								$sub3=$this->genericQuery("SELECT account_name,account_number FROM acct_chart_accounts WHERE parent_account_number='$sub_menu_id2'");
+								foreach($sub3 as $s3):
+										$sub_menu3=$s3['account_name'];
+										$sub_menu_id3=$s3['account_number'];
+									echo "<option value='$sub_menu_id3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;----".$sub_menu3."</option>";
+								endforeach;	
+					endforeach;
+				endforeach;
+			endforeach;
+		endforeach;
+		echo "</select>";
+	}
+	function studentPayments($pay_type)
+	{
+		switch($pay_type)
+		{
+			case 'POS':{}break;
+			case 'Cash':{}break;
+			default:{}break;
+		}
+		
+	}
+	function acctPrintStudentName($id)
+	{
+		$student = $this->strRecordID("student","*","id='$id'");
+		$student_name=$student[first_name]."&nbsp;".$student[father_name]."&nbsp;".$student[family_name];
+		return $student_name;
+	}
+	function acctAddToChart($dtls)
+	{
+		extract($dtls);
+		$dtls_string="	account_number='$account_number',
+						account_group_name='$account_group_name',
+						parent_account_number='$parent_account_number',
+						account_name='$account_name',
+						account_sign='$account_sign'";
+		$this->insertSet("acct_chart_accounts",$dtls_string);
+	}
+	/*Accounting Functions*/
+	/*
+		Nakhuda Password: YkdsMGJXRnVaVzQ9
+	*/
+	
 }
 ?>

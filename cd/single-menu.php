@@ -1,6 +1,6 @@
 <?php
 $student_id = $_REQUEST['student_id'];
-
+$course_id = $_REQUEST['course_id'];
 $currentFile = $_SERVER["PHP_SELF"];
 $parts = explode('/', $currentFile);
 $page = $parts[count($parts) - 1];
@@ -13,6 +13,27 @@ $page = $parts[count($parts) - 1];
   .sbuttonh a{color:#FFF;text-decoration:none;}
 	</style>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td></td>
+				<td>
+					<!--javascript:document.frm.action='single-home.php?student_id=<?=$student_id?>&course_id=<?=$course_id?>',document.frm.submit();-->
+					<input type="hidden" name="student_id" value="<?=$student_id?>"/>
+					<select name="course_id" id="course_id"  style="border:solid 1px; border-color:#FFCC33; height:20px; width:210px;" onChange="javascript:location.href = this.value;">
+					<option value="">-- Select Course --</option>
+                    <?php
+						$query=$dbf->genericQuery("
+													SELECT DISTINCT sc.course_id as id ,c.name 
+													FROM student_course sc 
+													INNER JOIN course c ON c.id=sc.course_id
+													WHERE sc.student_id='$student_id' 
+													");
+						foreach($query as $q):
+					?>
+                <option value="single-home.php?student_id=<?=$student_id?>&course_id=<?=$q['id']?>" <?php if($course_id==$q["id"]) { ?> selected="selected" <?php }?>><?php echo $q[name];?></option>
+				<?php	endforeach;?>
+            </select>
+				</td>
+			</tr>
           <tr>
             <td width="13%">&nbsp;</td>
             <?php if($page == "single-home.php"){ $class="sbuttonh"; }else{ $class = "sbutton"; } ?>
@@ -34,7 +55,7 @@ $page = $parts[count($parts) - 1];
           <tr>
             <td>&nbsp;</td>
             <?php if($page == "single-payment.php" || $page == "single-payment-edit.php" || $page == "single-payment-made.php"){ $class="sbuttonh"; }else{ $class = "sbutton"; } ?>
-            <td height="26" align="center" valign="middle" class="<?php echo $class;?>"><a href="single-payment.php?student_id=<?php echo $student_id;?>"><?php echo constant("STUDENT_ADVISOR_SEARCH_MANAGE_PAYMENT");?></a></td>
+            <td height="26" align="center" valign="middle" class="<?php echo $class;?>"><a href="single-payment.php?student_id=<?php echo $student_id;?>&course_id=<?=$course_id?>"><?php echo constant("STUDENT_ADVISOR_SEARCH_MANAGE_PAYMENT");?></a></td>
           </tr>
           <tr>
             <td height="2"></td>

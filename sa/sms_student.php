@@ -92,30 +92,30 @@ if($status_id > 0){
 </select>
 <?php } ?>
 <?php if($_REQUEST['opval']=="group"){?>
-<select name="group" id="group" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; width:192px;" >
+<select name="group" id="group" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; width:192px;"  onChange="show_group_mobile();">
     <option value="">-- <?php echo constant('SELECT_GROUP');?> --</option>
     <?php
-	foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And status='Not Started'","","","") as $res_group){
+	foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And status='Not Started'","group_name","","") as $res_group){
 	?>
 	<option value="<?php echo $res_group['id'];?>"><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>, <?php echo $res_group["group_time"];?>-<?php echo $dbf->GetGroupTime($res_group["id"]);?></option>
 	<?php } ?>
 </select>
 <?php } ?>
 <?php if($_REQUEST['opval']=="groupcontinue"){?>
-<select name="group" id="group" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; width:192px;" >
+<select name="group" id="group" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; width:192px;"  onChange="show_group_mobile();">
     <option value="">-- <?php echo constant('SELECT_GROUP');?> --</option>
     <?php
-	foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And status='Continue'","","","") as $res_group){
+	foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And status='Continue'","group_name","","") as $res_group){
 	?>
 	<option value="<?php echo $res_group['id'];?>"><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>, <?php echo $res_group["group_time"];?>-<?php echo $dbf->GetGroupTime($res_group["id"]);?></option>
 	<?php } ?>
 </select>
 <?php } ?>
 <?php if($_REQUEST['opval']=="groupfinish"){?>
-<select name="group" id="group" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; width:192px;" >
-    <option value="">-- <?php echo constant('SELECT_GROUP');?> --</option>
+<select name="group" id="group" style="border:solid 1px; border-color:#999999;background-color:#ECF1FF; width:192px;" onChange="show_group_mobile();">
+    <option value="">-- <?php echo constant('SELECT_GROUP');?>--</option>
     <?php
-	foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And status='Completed'","","","") as $res_group){
+	foreach($dbf->fetchOrder('student_group',"centre_id='$_SESSION[centre_id]' And status='Completed'","group_name","","") as $res_group){
 	?>
 	<option value="<?php echo $res_group['id'];?>"><?php echo $res_group['group_name'] ?>, <?php echo date('d/m/Y',strtotime($res_group['start_date']));?> - <?php echo date('d/m/Y',strtotime($res_group['end_date'])) ?>, <?php echo $res_group["group_time"];?>-<?php echo $dbf->GetGroupTime($res_group["id"]);?></option>
 	<?php } ?>

@@ -293,7 +293,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                     <?php
                     //Loop start
 					$chk = 'first';
-					$sql1=$dbf->genericQuery("SELECT cs.id,cs.sub_account,cs.student_id,s.address,s.student_id,s.student_mobile,c.name,sg.group_name,sg.start_date,sg.end_date 
+					$sql1=$dbf->genericQuery("SELECT cs.student_id as st_id,cs.sub_account,cs.student_id,s.address,s.student_id,s.student_mobile,c.name,sg.group_name,sg.start_date,sg.end_date 
 												FROM corporate_students cs 
 												INNER JOIN student s ON s.id=cs.student_id
 												INNER JOIN student_group_dtls sgd ON sgd.course_id=cs.course_id	AND sgd.student_id=cs.student_id		
@@ -328,7 +328,7 @@ $count = $res_logout["name"]; // Set timeout period in seconds
                         -->
 						<?php echo $student[sub_account];?>
 						</td>
-                        <td width="30%" align="left" valign="middle" class="mycon"><?php echo $dbf->printStudentName($student[id]);?></td>
+                        <td width="30%" align="left" valign="middle" class="mycon"><?php echo $dbf->printStudentName($student[st_id]);?></td>
                         <td width="19%" align="center" valign="middle" class="mycon">
 							<?php echo $student[group_name]."&nbsp;<BR/>".$student[start_date]."&nbsp;to&nbsp;".$student[end_date];?>
 						</td>

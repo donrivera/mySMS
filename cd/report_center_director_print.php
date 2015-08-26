@@ -348,7 +348,7 @@ $dbf->updateTable("teacher_progress_certificate",$string,"group_id='$_REQUEST[gr
 					$res_grade = $dbf->strRecordID("grade","*","'$final_grade' BETWEEN frm and tto");					
 				?>
                 <tr>
-                  <td height="25" align="left" valign="middle" class="smalltext"><?php echo $dbf->printStudentName($r[id]);?></td>
+                  <td height="25" align="left" valign="middle" class="smalltext" style="max-width:100px;overflow:hidden;text-overflow:ellipsis;"><?php echo $dbf->printStudentName($r[id]);?></td>
                   <td align="left" valign="middle" class="content"><?php echo $res_country["value"];?></td>
                   <td align="left" valign="middle" class="content"><?php echo $r["student_id"];?></td>
 				  

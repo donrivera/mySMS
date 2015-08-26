@@ -320,7 +320,7 @@ define("ADMIN_NEWS_MANAGE_NEWS_MANAGEMENT","News management");
 define("ADMIN_NEWS_MANAGE_DATE","Date");
 define("ADMIN_NEWS_MANAGE_ALERTTYPE","Alert type");
 define("ADMIN_NEWS_MANAGE_IMPORTANTINFO","Important Information");
-define("ADMIN_NEWS_MANAGE_INFORMATION","Information");
+define("ADMIN_NEWS_MANAGE_INFORMATION","Interview");
 define("ADMIN_NEWS_MANAGE_CD","CD");
 define("ADMIN_NEWS_MANAGE_SA","SA");
 define("ADMIN_NEWS_MANAGE_RECEIPTION","Reception");
@@ -1891,7 +1891,7 @@ define("CD_SEARCH_INVOICE_PAYMENTADD","Add payment");
 define("CD_SEARCH_INVOICE_PAYMENTRECEIVE","Payment received from");
 define("CD_SEARCH_INVOICE_PAIDAMOUNT","Paid amount");
 define("CD_SEARCH_INVOICE_BALANCEAMOUNT","Balance amount");
-define("CD_SEARCH_INVOICE_FEES","Fees");
+define("CD_SEARCH_INVOICE_FEES","Initial Payment");
 define("CD_SEARCH_INVOICE_PAIDBY","Paid by");
 
 //search_print_challan_admission.php
@@ -2091,7 +2091,7 @@ define("btn_english","Convert to gregorian");
 define("btn_hijri","Convert to Hijri");
 
 //Student Informaton
-define("STUDENT_INFORMATON","Student information");
+define("STUDENT_INFORMATON","Student File");
 define("UPDATNG_STUDENT_INFORMATON","Updating student information");
 define("VIEW_STUDENT_INFORMATON","View student information");
 
